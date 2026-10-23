@@ -41,6 +41,7 @@ Three things are missing.
   - **A (recommended).** Set its `linkedProcessIds` to `["CM 1.3.7.4.2"]`. The step revises the credit limit and risk code, which CM 1.3.7.4.2 decides and reviews ("periodic and event-triggered reviews"); monitoring (CM 1.3.7.4.3) watches exposure against a limit and does not decide it. The decision owner's relationship-management stage names the annual credit limit review.
   - **B.** Set it to `["CM 1.3.7.4.3"]`, the closest process the file records.
   - **C.** Leave it unlinked, as the file's gap analysis records.
+- *2026-10-23:* **Applied.** The decision owner chose A (EPM-DEC-001-0087); `value-stream` 1.1.0 carries the link, and the gap-analysis entry is removed (EPM-DEC-001-0090).
 
 ### MPC-P10.3: a customer master data product
 

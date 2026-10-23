@@ -26,7 +26,7 @@ PACKAGES = [
     ("lane", "1.0.0"), ("market-data", "1.0.0"),
     ("organization", "1.0.0"), ("organization", "2.0.0"), ("party", "1.0.0"),
     ("ref-mpc", "1.0.0"), ("ref-mpc", "1.1.0"), ("ref-mpc", "1.2.0"),
-    ("system", "1.0.0"), ("value-stream", "1.0.0"),
+    ("system", "1.0.0"), ("value-stream", "1.0.0"), ("value-stream", "1.1.0"),
 ]
 
 

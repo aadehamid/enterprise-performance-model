@@ -102,14 +102,17 @@ MODULES = {
     "value-stream": {
         "title": "LSC Value Stream Module",
         "description": "The Commercial Hydrocarbon Lifecycle and Order to Cash value streams: their stages, capabilities and value-stream processes, which realize core processes, produce and consume data products and carry cited measure links (Step 7).",
-        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        # 1.1.0 is a minor the decision owner approved with the close-out releases: the Order to Cash credit
+        # review realizes CM 1.3.7.4.2 (MPC-P10.2), and vs:produces and vs:consumes gain rdfs:range skos:Concept;
+        # it requires the current core, data-product and kpi releases (EPM-DEC-001-0087, 0088, 0090).
+        "version": "1.1.0", "stage": None, "issued": "2026-10-23",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
         "parts": ["value-stream/vocabulary.ttl", "value-stream/value-streams.ttl"],
         "shapes": ["value-stream/shapes.ttl"],
         "depends_on": ["core", "data-product", "kpi"],
         # Every dependency pinned: a later kpi or data-product release must not change this package.
-        "pins": {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"},
-        "decisions": ["EPM-DEC-001-0054", "EPM-DEC-001-0077"],
+        "pins": {"core": "2.3.0", "data-product": "1.0.0", "kpi": "1.1.0"},
+        "decisions": ["EPM-DEC-001-0054", "EPM-DEC-001-0077", "EPM-DEC-001-0087", "EPM-DEC-001-0088", "EPM-DEC-001-0090"],
     },
     "system": {
         "title": "LSC System Module",

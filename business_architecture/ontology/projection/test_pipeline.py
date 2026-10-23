@@ -139,7 +139,7 @@ class Build(unittest.TestCase):
         # Pinned by hand (EPM-DEC-001-0036, amendment of 2026-10-22); a new release must be added here.
         self.assertEqual(pl.PACKAGES, [
             ("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.0.0"),
-            ("data-product", "1.0.0"), ("value-stream", "1.0.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
+            ("data-product", "1.0.0"), ("value-stream", "1.1.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
             ("market-data", "1.0.0"), ("integration", "1.0.0")])
         import glob, os
         newest = {}

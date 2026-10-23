@@ -1,0 +1,1143 @@
+@prefix capability: <https://w3id.org/lsc/ontology/modules/value-stream/capability/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix mlink: <https://w3id.org/lsc/ontology/modules/value-stream/measure-link/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rel: <https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix stage: <https://w3id.org/lsc/ontology/modules/value-stream/stage/> .
+@prefix stream: <https://w3id.org/lsc/ontology/modules/value-stream/stream/> .
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix vsprocess: <https://w3id.org/lsc/ontology/modules/value-stream/process/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/value-stream> a owl:Ontology ;
+    dcterms:description "The Commercial Hydrocarbon Lifecycle and Order to Cash value streams: their stages, capabilities and value-stream processes, which realize core processes, produce and consume data products and carry cited measure links (Step 7)."@en ;
+    dcterms:issued "2026-10-23"^^xsd:date ;
+    dcterms:modified "2026-10-23"^^xsd:date ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.3.0>,
+        dp:1.0.0,
+        kpi:1.1.0 ;
+    dcterms:title "LSC Value Stream Module"@en ;
+    owl:versionIRI vs:1.1.0 ;
+    owl:versionInfo "1.1.0" .
+
+vs:alignsToProcessGroup a owl:ObjectProperty ;
+    rdfs:label "aligns to process group"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, alignsToProcessGroups"@en ;
+    rdfs:domain vs:Capability ;
+    rdfs:range skos:Concept ;
+    skos:definition "A process-map process group the capability aligns to."@en .
+
+vs:consumes a owl:ObjectProperty ;
+    rdfs:label "consumes"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, consumes; competency question 7"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:range skos:Concept ;
+    skos:definition "A data product, or a whole data product line, that the value-stream process critically depends on."@en .
+
+vs:feeds a owl:ObjectProperty ;
+    rdfs:label "feeds"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, flows"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:range vs:ValueStreamProcess ;
+    skos:definition "The process's results feed the other process, outside the stage order."@en .
+
+vs:hasProcess a owl:ObjectProperty ;
+    rdfs:label "has process"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    rdfs:domain vs:Stage ;
+    rdfs:range vs:ValueStreamProcess ;
+    skos:definition "A value-stream process done in the stage."@en .
+
+vs:hasStage a owl:ObjectProperty ;
+    rdfs:label "has stage"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    rdfs:domain vs:ValueStream ;
+    rdfs:range vs:Stage ;
+    skos:definition "A stage of the value stream."@en .
+
+vs:informs a owl:ObjectProperty ;
+    rdfs:label "informs"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, flows"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:range vs:ValueStreamProcess ;
+    skos:definition "The process informs the other process, outside the stage order."@en .
+
+vs:loopsTo a owl:ObjectProperty ;
+    rdfs:label "loops to"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, flows"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:range vs:ValueStreamProcess ;
+    skos:definition "The value stream returns from this process to the other, starting a new cycle."@en .
+
+vs:measure a owl:ObjectProperty ;
+    rdfs:label "measure"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, measureId"@en ;
+    rdfs:domain vs:MeasureLink ;
+    rdfs:range kpi:MeasureDefinition ;
+    skos:definition "The measure the link names."@en .
+
+vs:measureLink a owl:ObjectProperty ;
+    rdfs:label "measure link"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, measures"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:range vs:MeasureLink ;
+    skos:definition "A cited link from the value-stream process to a measure."@en .
+
+vs:outcome a owl:DatatypeProperty ;
+    rdfs:label "outcome"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    rdfs:domain vs:ValueStream ;
+    rdfs:range xsd:string ;
+    skos:definition "What the value stream delivers when it ends."@en .
+
+vs:produces a owl:ObjectProperty ;
+    rdfs:label "produces"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, produces; competency question 7"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:range skos:Concept ;
+    skos:definition "A data product, or a whole data product line, that the value-stream process owns or publishes. The process is the data product's owning process."@en .
+
+vs:realizes a owl:ObjectProperty ;
+    rdfs:label "realizes"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, linkedProcessIds"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:range skos:Concept ;
+    skos:definition "A process-map process the value-stream process realizes or references. The process stays where the hierarchy puts it."@en .
+
+vs:relationship a owl:ObjectProperty ;
+    rdfs:label "relationship"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, relationship"@en ;
+    rdfs:domain vs:MeasureLink ;
+    rdfs:range skos:Concept ;
+    skos:definition "How the process relates to the measure, from the measure-relationship code list."@en .
+
+vs:sequence a owl:DatatypeProperty ;
+    rdfs:label "sequence"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    rdfs:domain vs:Stage ;
+    rdfs:range xsd:integer ;
+    skos:definition "The stage's position in its value stream, from 1."@en .
+
+vs:sourceDomain a owl:DatatypeProperty ;
+    rdfs:label "source domain"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0054"@en ;
+    rdfs:domain vs:ValueStream ;
+    rdfs:range xsd:string ;
+    skos:definition "The domain the value stream's source file names, kept as written. It is not mapped to the core business-domain list (EPM-DEC-001-0054)."@en .
+
+stream:commercial-hydrocarbon-lifecycle a vs:ValueStream ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "End-to-end commercial lifecycle for hydrocarbon supply, trading, logistics, channel sales, and control: market intelligence through deal execution, physical operations, pricing/retail, risk, settlement, and backcasting."@en ;
+    skos:notation "vs-commercial-hydrocarbon-lifecycle"^^xsd:string ;
+    skos:prefLabel "Commercial Hydrocarbon Lifecycle"@en ;
+    vs:hasStage stage:execution-operations,
+        stage:market-strategy-formation,
+        stage:risk-performance-control ;
+    vs:outcome "Profitable placement of crude/products with controlled risk, settled transactions, and learnings fed back to planning"^^xsd:string ;
+    vs:sourceDomain "Commercial"^^xsd:string ;
+    vs:trigger "Market/supply opportunity informed by strategic supply & demand plan"^^xsd:string ;
+    vs:usesCapabilityInStream capability:channel-pricing-sales,
+        capability:commercial-risk-position-management,
+        capability:deal-capture-contracting,
+        capability:logistics-planning-scheduling,
+        capability:market-intelligence,
+        capability:performance-management-backcasting,
+        capability:planning-optimization,
+        capability:price-management,
+        capability:product-quality-loss-management,
+        capability:settlement-reconciliation,
+        capability:supply-trading-strategy,
+        capability:terminal-transport-execution .
+
+stream:order-to-cash a vs:ValueStream ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "Customer-triggered value stream from master data readiness and quote through order, fulfillment, billing, cash application, collections, disputes, and sub-ledger close."@en ;
+    skos:notation "vs-order-to-cash"^^xsd:string ;
+    skos:prefLabel "Order to Cash"@en ;
+    vs:hasStage stage:otc-billing,
+        stage:otc-close,
+        stage:otc-collection,
+        stage:otc-credit-risk,
+        stage:otc-dispute,
+        stage:otc-master-data,
+        stage:otc-order-fulfilment,
+        stage:otc-quote-sale,
+        stage:otc-receipt ;
+    vs:outcome "Cash collected, disputes resolved, revenue recognized, AR sub-ledger closed"^^xsd:string ;
+    vs:sourceDomain "Commercial"^^xsd:string ;
+    vs:trigger "Customer quote request / order"^^xsd:string ;
+    vs:usesCapabilityInStream capability:otc-billing,
+        capability:otc-cash-application,
+        capability:otc-close,
+        capability:otc-collections,
+        capability:otc-customer-credit,
+        capability:otc-disputes,
+        capability:otc-master-data-management,
+        capability:otc-order-management,
+        capability:otc-quote-sale .
+
+vs:trigger a owl:DatatypeProperty ;
+    rdfs:label "trigger"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    rdfs:domain vs:ValueStream ;
+    rdfs:range xsd:string ;
+    skos:definition "What starts the value stream."@en .
+
+vs:usesCapability a owl:ObjectProperty ;
+    rdfs:label "uses capability"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, capabilityId"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:range vs:Capability ;
+    skos:definition "The capability the value-stream process uses."@en .
+
+vs:usesCapabilityInStream a owl:ObjectProperty ;
+    rdfs:label "uses capability"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, capabilities"@en ;
+    rdfs:domain vs:ValueStream ;
+    rdfs:range vs:Capability ;
+    skos:definition "A capability the value stream's stages use."@en .
+
+capability:planning-optimization a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Cross-stage value chain planning and optimization capability; owns the Planning & Optimization data product line."@en ;
+    skos:notation "cap-planning-optimization"^^xsd:string ;
+    skos:prefLabel "Planning & Optimization"@en ;
+    vs:alignsToProcessGroup proc:CM-1-1 .
+
+mlink:market-price-calculation-validation--crack-spreads a vs:MeasureLink ;
+    dcterms:bibliographicCitation "MPC's market benchmarks are the Gulf Coast, Mid-Continent and West Coast 3-2-1 crack spreads; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"^^xsd:string ;
+    vs:measure measure:crack-spreads ;
+    vs:relationship rel:benchmarks .
+
+mlink:market-price-calculation-validation--rm-margin-per-barrel a vs:MeasureLink ;
+    dcterms:bibliographicCitation "MPC defines R&M margin as the difference between the prices of refined products sold and the costs of crude oil and other charge and blendstocks refined, including transport to the refineries and products purchased for resale; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"^^xsd:string ;
+    vs:measure measure:rm-margin-per-barrel ;
+    vs:relationship rel:informs .
+
+mlink:performance-tracking-analysis--crack-spreads a vs:MeasureLink ;
+    dcterms:bibliographicCitation "MPC states that the sweet and sour crude differentials explain why realized margin differs from the blended crack; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"^^xsd:string ;
+    vs:measure measure:crack-spreads ;
+    vs:relationship rel:benchmarks .
+
+mlink:performance-tracking-analysis--distribution-cost-per-barrel a vs:MeasureLink ;
+    dcterms:bibliographicCitation "MPC reports distribution costs per barrel, excluding D&A, for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"^^xsd:string ;
+    vs:measure measure:distribution-cost-per-barrel ;
+    vs:relationship rel:measures-performance .
+
+mlink:performance-tracking-analysis--refining-opex-per-barrel a vs:MeasureLink ;
+    dcterms:bibliographicCitation "MPC reports refining operating costs per barrel, excluding planned turnaround and D&A, for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"^^xsd:string ;
+    vs:measure measure:refining-opex-per-barrel ;
+    vs:relationship rel:measures-performance .
+
+mlink:performance-tracking-analysis--rm-margin-per-barrel a vs:MeasureLink ;
+    dcterms:bibliographicCitation "MPC reports R&M margin per barrel for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"^^xsd:string ;
+    vs:measure measure:rm-margin-per-barrel ;
+    vs:relationship rel:measures-performance .
+
+mlink:performance-tracking-analysis--turnaround-cost-per-barrel a vs:MeasureLink ;
+    dcterms:bibliographicCitation "MPC reports planned turnaround costs per barrel for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"^^xsd:string ;
+    vs:measure measure:turnaround-cost-per-barrel ;
+    vs:relationship rel:measures-performance .
+
+rel:informs a skos:Concept ;
+    skos:definition "The process uses the measure as an input."@en ;
+    skos:inScheme vs:MeasureRelationship ;
+    skos:notation "informs" ;
+    skos:prefLabel "Informs"@en .
+
+vsprocess:deal-negotiation-capture a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Traders engage counterparties to execute the deal: bilateral (phone/chat), through brokers, or on electronic platforms."@en ;
+    skos:notation "p-deal-negotiation-capture"^^xsd:string ;
+    skos:prefLabel "Deal Negotiation & Capture"@en ;
+    skos:scopeNote "Front-office deal capture owns the trade facts (Physical Trading); constrained by risk limits and validated price curves."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing> ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading> ;
+    vs:realizes proc:CM-1-2-1-2,
+        proc:CM-1-2-1-3 ;
+    vs:usesCapability capability:deal-capture-contracting .
+
+vsprocess:logistics-planning-scheduling a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Focus shifts to physically moving the crude; schedulers/logistics coordinators work with traders to nominate and schedule transport from seller to buyer."@en ;
+    skos:notation "p-logistics-planning-scheduling"^^xsd:string ;
+    skos:prefLabel "Logistics Planning & Scheduling"@en ;
+    skos:scopeNote "Schedulers nominate against trades and plan and own the logistics execution data."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading> ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/logistic-execution> ;
+    vs:realizes proc:CM-1-1-3-6,
+        proc:CM-1-2-7,
+        proc:CM-1-3-10-2 ;
+    vs:usesCapability capability:logistics-planning-scheduling .
+
+vsprocess:market-price-calculation-validation a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Transform raw market data and internal price assessment into official, validated system of record for all product prices."@en ;
+    skos:notation "p-market-price-calculation-validation"^^xsd:string ;
+    skos:prefLabel "Market Price Calculation & Validation"@en ;
+    skos:scopeNote "Classic price SoR publish (market operations): owns Master Pricing; consumes market feeds and deal context."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/external-market-data>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading> ;
+    vs:measureLink mlink:market-price-calculation-validation--crack-spreads,
+        mlink:market-price-calculation-validation--rm-margin-per-barrel ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing> ;
+    vs:realizes proc:CM-1-3-3-2,
+        proc:CM-1-3-6-3,
+        proc:CM-1-3-7-2 ;
+    vs:usesCapability capability:price-management .
+
+vsprocess:otc-accounting-self-billing a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with recognizing customer relationships where billing (i.e., creation of AR) takes place but not invoicing (i.e., invoices are not sent to the customer) due to self-billing by the customer at the “receiving” point."@en ;
+    skos:notation "p-otc-accounting-self-billing"^^xsd:string ;
+    skos:prefLabel "Perform Accounting for Self-Billing"@en ;
+    vs:realizes proc:CM-1-3-8-1-2 ;
+    vs:usesCapability capability:otc-billing .
+
+vsprocess:otc-allocate-release-order a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to confirm product availability, perform product allocation, and release the order for fulfillment and shipment."@en ;
+    skos:notation "p-otc-allocate-release-order"^^xsd:string ;
+    skos:prefLabel "Allocate & Release Order"@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/product-availability-allocations> ;
+    vs:realizes proc:CM-1-3-7-3-2 ;
+    vs:usesCapability capability:otc-order-management .
+
+vsprocess:otc-analyze-ar-aging a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with deploying analytics to identify opportunities to optimize collections efforts and more proactively manage the effectiveness of the collections process."@en ;
+    skos:notation "p-otc-analyze-ar-aging"^^xsd:string ;
+    skos:prefLabel "Analyze AR Aging"@en ;
+    vs:realizes proc:CM-1-3-8-3-2 ;
+    vs:usesCapability capability:otc-collections .
+
+vsprocess:otc-analyze-customer-profitability a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to analyze the costs of customers against the revenue they provide, and generate insights that may inform changes or adjustments in commercial terms in specific accounts or more broadly inform the strategy associated with commercial terms."@en ;
+    skos:notation "p-otc-analyze-customer-profitability"^^xsd:string ;
+    skos:prefLabel "Analyze Customer Profitability"@en ;
+    vs:realizes proc:CM-1-3-7-2-5 ;
+    vs:usesCapability capability:otc-quote-sale .
+
+vsprocess:otc-analyze-portfolio-credit-risk a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated analyzing and developing insights associated with the health of the AR portfolio.  Additionally, contains the sub-processes for defining and refining the parameters for risk tolerances within the portfolio as well as approvals and escalations for exceptions."@en ;
+    skos:notation "p-otc-analyze-portfolio-credit-risk"^^xsd:string ;
+    skos:prefLabel "Analyze Portfolio Credit Risk"@en ;
+    vs:realizes proc:CM-1-3-7-4-4 ;
+    vs:usesCapability capability:otc-customer-credit .
+
+vsprocess:otc-apply-receipts a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with applying customer payments to the respective open invoices, clearing the AR sub-ledger."@en ;
+    skos:notation "p-otc-apply-receipts"^^xsd:string ;
+    skos:prefLabel "Apply Receipts"@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/retail-payments> ;
+    vs:realizes proc:CM-1-3-8-2-3 ;
+    vs:usesCapability capability:otc-cash-application .
+
+vsprocess:otc-capture-validate-order a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains sub-processes associated with capturing customer orders, which can be automated (e.g., EDI, online) or manual (e.g., phone, fax, email), and performing key validations, mostly related to master data (e.g., customer, product, pricing, discounts), before accepting the order."@en ;
+    skos:notation "p-otc-capture-validate-order"^^xsd:string ;
+    skos:prefLabel "Capture & Validate Order"@en ;
+    vs:realizes proc:CM-1-3-7-3-1 ;
+    vs:usesCapability capability:otc-order-management .
+
+vsprocess:otc-change-cancel-order a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to perform and manage order changes and cancelations.  This includes the sub-processes to interact with customers and other functions within the business and flows through to the fulfillment or returns process."@en ;
+    skos:notation "p-otc-change-cancel-order"^^xsd:string ;
+    skos:prefLabel "Change / Cancel Order"@en ;
+    vs:realizes proc:CM-1-3-7-3-3 ;
+    vs:usesCapability capability:otc-order-management .
+
+vsprocess:otc-close-ar-sub-ledger a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to close the AR sub ledger and reconcile to the GL.  In addition, it includes addressing unreconciled items and booking adjustments as needed (e.g., unapplied cash)."@en ;
+    skos:notation "p-otc-close-ar-sub-ledger"^^xsd:string ;
+    skos:prefLabel "Close AR Sub Ledger"@en ;
+    vs:realizes proc:CM-1-3-8-4-1,
+        proc:CM-1-3-8-4-2 ;
+    vs:usesCapability capability:otc-close .
+
+vsprocess:otc-create-credit-memo-chargeback a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with creating credit memos resulting from approved claims and with creating chargebacks associated with the invalid deductions."@en ;
+    skos:notation "p-otc-create-credit-memo-chargeback"^^xsd:string ;
+    skos:prefLabel "Create Credit Memo / Charge Back"@en ;
+    vs:realizes proc:CM-1-3-8-1-4 ;
+    vs:usesCapability capability:otc-disputes .
+
+vsprocess:otc-create-distribute-bill a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes that trigger the creation of the invoice (e.g., billing due list), record revenue and AR, as well as distribute the customer invoice.  This is largely an automated environment with exception handling activities."@en ;
+    skos:notation "p-otc-create-distribute-bill"^^xsd:string ;
+    skos:prefLabel "Create & Distribute Bill"@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing> ;
+    vs:realizes proc:CM-1-3-8-1-1 ;
+    vs:usesCapability capability:otc-billing .
+
+vsprocess:otc-create-exception-invoice a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to create exception invoices - either driven by billing errors or by the need to, on an exception basis, create a manual invoice."@en ;
+    skos:notation "p-otc-create-exception-invoice"^^xsd:string ;
+    skos:prefLabel "Create Exception Invoice"@en ;
+    vs:realizes proc:CM-1-3-8-1-5 ;
+    vs:usesCapability capability:otc-billing .
+
+vsprocess:otc-customer-closure-reinstatement a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to perform customer credit line closure and reinstatements as it relates to the ability to accept and process orders to a specific customer on a credit basis."@en ;
+    skos:notation "p-otc-customer-closure-reinstatement"^^xsd:string ;
+    skos:prefLabel "Perform Customer Closure and Reinstatement"@en ;
+    vs:realizes proc:CM-1-3-7-4-5 ;
+    vs:usesCapability capability:otc-customer-credit .
+
+vsprocess:otc-define-financing-payment-methods a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to define payment methods and financing options being made available to the customers in the stages leading to pricing and quoting activities with the potential customers."@en ;
+    skos:notation "p-otc-define-financing-payment-methods"^^xsd:string ;
+    skos:prefLabel "Define Financing & Payment Methods"@en ;
+    vs:realizes proc:CM-1-3-7-2-4 ;
+    vs:usesCapability capability:otc-quote-sale .
+
+vsprocess:otc-determine-taxability a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to determine the proper taxability of invoices to support the calculation and reporting of tax related transactions and record tax liabilities."@en ;
+    skos:notation "p-otc-determine-taxability"^^xsd:string ;
+    skos:prefLabel "Determine Taxability & Record Tax Liabilities"@en ;
+    vs:realizes proc:CM-1-3-8-1-3 ;
+    vs:usesCapability capability:otc-billing .
+
+vsprocess:otc-develop-monitor-revenue-plan a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to develop and monitor the revenue plan on the basis of past, actual and expected future sales, to guide quote development, support product allocation, and promotion development.  Additionally, this is a key part of monthly, quarterly, and annual planning and forecasting processes."@en ;
+    skos:notation "p-otc-develop-monitor-revenue-plan"^^xsd:string ;
+    skos:prefLabel "Develop & Monitor Revenue Plan"@en ;
+    vs:realizes proc:CM-1-3-7-2-3 ;
+    vs:usesCapability capability:otc-quote-sale .
+
+vsprocess:otc-establish-collection-targets a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to determine collection targets used to optimize collections activities. This allows operations to focus resources on the accounts that are most likely to pay and help improve the effectiveness of the collections process by recovering a higher amount of outstanding balances."@en ;
+    skos:notation "p-otc-establish-collection-targets"^^xsd:string ;
+    skos:prefLabel "Establish Collection Targets"@en ;
+    vs:realizes proc:CM-1-3-8-3-2 ;
+    vs:usesCapability capability:otc-collections .
+
+vsprocess:otc-establish-commercial-terms-contracts a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to establish and execute commercial contracts, licenses, agreements with customers and/or partners.  It incorporates the steps of drafting, approving, executing and sending the commercial contract with the commercial terms and conditions to be included in commercial contracts."@en ;
+    skos:notation "p-otc-establish-commercial-terms-contracts"^^xsd:string ;
+    skos:prefLabel "Establish Commercial Terms & Contracts"@en ;
+    vs:realizes proc:CM-1-3-7-2-1 ;
+    vs:usesCapability capability:otc-quote-sale .
+
+vsprocess:otc-establish-credit-limit-risk-code a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to assess the customer's creditworthiness in order to establish the customer's credit limit and assign a risk code (e.g., risk rating and risk category). The credit assessment is largely based on customer financials and third party credit agency scores."@en ;
+    skos:notation "p-otc-establish-credit-limit-risk-code"^^xsd:string ;
+    skos:prefLabel "Establish Credit Limit & Risk Code"@en ;
+    vs:realizes proc:CM-1-3-7-4-2 ;
+    vs:usesCapability capability:otc-customer-credit .
+
+vsprocess:otc-execute-collections a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with collecting overdue receivables thru engagement with customers."@en ;
+    skos:notation "p-otc-execute-collections"^^xsd:string ;
+    skos:prefLabel "Execute Collections"@en ;
+    vs:realizes proc:CM-1-3-8-3-2 ;
+    vs:usesCapability capability:otc-collections .
+
+vsprocess:otc-initiate-legal-action a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process includes the sub-processes associated with initiating and managing customer accounts where legal action has or is to be taken to address unpaid balances."@en ;
+    skos:notation "p-otc-initiate-legal-action"^^xsd:string ;
+    skos:prefLabel "Initiate Legal Action"@en ;
+    vs:realizes proc:CM-1-3-8-3-2 ;
+    vs:usesCapability capability:otc-collections .
+
+vsprocess:otc-issue-quotes-renewals a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to initiate, issue and close quotes and renewals when requested by, or targeted to the customer for a particular product and service. It also includes managing responses to RFPs and creating sale contracts."@en ;
+    skos:notation "p-otc-issue-quotes-renewals"^^xsd:string ;
+    skos:prefLabel "Issue Quotes & Renewals"@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/product-availability-allocations> ;
+    vs:realizes proc:CM-1-3-7-2-2 ;
+    vs:usesCapability capability:otc-quote-sale .
+
+vsprocess:otc-maintain-credit-policies a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to maintain the customer credit policies and aims at driving the strategic and tactical use of credit as a tool to support the sales strategy while managing credit related losses (i.e., bad debt) to the desired target."@en ;
+    skos:notation "p-otc-maintain-credit-policies"^^xsd:string ;
+    skos:prefLabel "Maintain Credit Policies"@en ;
+    vs:realizes proc:CM-1-3-7-4-1 ;
+    vs:usesCapability capability:otc-customer-credit .
+
+vsprocess:otc-maintain-customer-master a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with the creation of a new customer and/or maintenance of current customers master data attributes.  The customer master retains the fundamental attributes that enable key activities across Orders & Fulfilment (e.g., order validation), Billing (e.g., invoice generation) and other areas across O2C (e.g., taxation)."@en ;
+    skos:notation "p-otc-maintain-customer-master"^^xsd:string ;
+    skos:prefLabel "Maintain Customer Master"@en ;
+    vs:realizes proc:CM-1-3-7-1-1 ;
+    vs:usesCapability capability:otc-master-data-management .
+
+vsprocess:otc-maintain-price-discount-master a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with managing and maintaining attributes associated with prices and discounts.  The maturity level of this environment influences directly the volume and impact of price related disputes."@en ;
+    skos:notation "p-otc-maintain-price-discount-master"^^xsd:string ;
+    skos:prefLabel "Maintain Price & Discount Master"@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing> ;
+    vs:realizes proc:CM-1-3-7-1-2 ;
+    vs:usesCapability capability:otc-master-data-management .
+
+vsprocess:otc-maintain-product-master a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "The process contains the sub-processes associated with creating and maintaining all the product related attributes and is a key component supporting the order in-take supporting validation and accuracy."@en ;
+    skos:notation "p-otc-maintain-product-master"^^xsd:string ;
+    skos:prefLabel "Maintain Product Master"@en ;
+    vs:realizes proc:CM-1-3-7-1-3 ;
+    vs:usesCapability capability:otc-master-data-management .
+
+vsprocess:otc-maintain-tax-master a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to populate and maintain key master data attributes that supports the effective and accurate calculation of indirect tax - which is usually maintained within a bolt-on environment outside of the customer and product master data environment."@en ;
+    skos:notation "p-otc-maintain-tax-master"^^xsd:string ;
+    skos:prefLabel "Maintain Tax Master"@en ;
+    vs:realizes proc:CM-1-3-7-1-4 ;
+    vs:usesCapability capability:otc-master-data-management .
+
+vsprocess:otc-maintain-workflows a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to manage the rules and hierarchy associated with functioning of workflows across O2C - and it is fundamental to support enforcement of controls and approval hierarchy."@en ;
+    skos:notation "p-otc-maintain-workflows"^^xsd:string ;
+    skos:prefLabel "Maintain Workflows"@en ;
+    vs:realizes proc:CM-1-3-7-1-5 ;
+    vs:usesCapability capability:otc-master-data-management .
+
+vsprocess:otc-manage-fulfillment a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "The process contains the sub-processes associated with fulfilling orders.  It is largely focused on the interactions between the order management team and the fulfillment team in support of accuracy, timeliness, and exceptions resolution."@en ;
+    skos:notation "p-otc-manage-fulfillment"^^xsd:string ;
+    skos:prefLabel "Manage Fulfillment"@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/logistic-execution> ;
+    vs:realizes proc:CM-1-3-7-3-4 ;
+    vs:usesCapability capability:otc-order-management .
+
+vsprocess:otc-manage-returns a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with managing product returns - including setting returns budget for return to stock (RTS) products as well as receiving, approving, and creating the return authorization (RA) across all return types (e.g., RTS, defective, shipment integrity)."@en ;
+    skos:notation "p-otc-manage-returns"^^xsd:string ;
+    skos:prefLabel "Manage Returns"@en ;
+    vs:realizes proc:CM-1-3-7-3-6 ;
+    vs:usesCapability capability:otc-order-management .
+
+vsprocess:otc-manage-unapplied-receipts a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with identifying and addressing unapplied receipts.  This includes activities associated with identifying, evaluating and addressing exceptions."@en ;
+    skos:notation "p-otc-manage-unapplied-receipts"^^xsd:string ;
+    skos:prefLabel "Manage Unapplied Receipts"@en ;
+    vs:realizes proc:CM-1-3-8-2-4 ;
+    vs:usesCapability capability:otc-cash-application .
+
+vsprocess:otc-monitor-credit-against-limit a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to monitor, evaluate, and release credit order blocks - i.e., orders “held” in queue due to systematic holds triggered by credit based violations usually set based on the credit risk category (a customer master attribute).  It also triggers potential reviews and revisions of the credit limit."@en ;
+    skos:notation "p-otc-monitor-credit-against-limit"^^xsd:string ;
+    skos:prefLabel "Monitor Credit Against Limit"@en ;
+    vs:realizes proc:CM-1-3-7-4-3 ;
+    vs:usesCapability capability:otc-customer-credit .
+
+vsprocess:otc-negotiate-settlements a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process includes the sub-processes associated with negotiated settlements with customers who are in an overdue position.  Reviews and approvals are sometimes part of the settlement process."@en ;
+    skos:notation "p-otc-negotiate-settlements"^^xsd:string ;
+    skos:prefLabel "Negotiate Settlements"@en ;
+    vs:realizes proc:CM-1-3-8-3-2 ;
+    vs:usesCapability capability:otc-collections .
+
+vsprocess:otc-perform-appeasements a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to review, approve, issue, and manage customer / consumer related appeasement / concessions."@en ;
+    skos:notation "p-otc-perform-appeasements"^^xsd:string ;
+    skos:prefLabel "Perform Appeasements"@en ;
+    vs:realizes proc:CM-1-3-8-3-1 ;
+    vs:usesCapability capability:otc-disputes .
+
+vsprocess:otc-perform-reconciliations-settlements a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with performing reconciliations and settlements largely associated with highly transactional environments where high frequency reconciliations (e.g., daily) are a key component of managing and conducting business (e.g., sales audit, credit card settlements, rebate settlements)."@en ;
+    skos:notation "p-otc-perform-reconciliations-settlements"^^xsd:string ;
+    skos:prefLabel "Perform Reconciliations & Settlements"@en ;
+    vs:realizes proc:CM-1-3-8-2-5 ;
+    vs:usesCapability capability:otc-cash-application .
+
+vsprocess:otc-perform-revenue-accounting a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to review contracts to determine appropriate GAAP treatment and book the entries including revenue recognition, accruals (e.g., shipped but not billed) and to calculate, evaluate and record revenue impacting provisions or reserves (e.g., product returns, post-invoice discounts)."@en ;
+    skos:notation "p-otc-perform-revenue-accounting"^^xsd:string ;
+    skos:prefLabel "Perform Revenue Accounting"@en ;
+    vs:realizes proc:CM-1-3-8-2-6 ;
+    vs:usesCapability capability:otc-close .
+
+vsprocess:otc-process-bad-debt a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with calculating, evaluating, and determining proper bad debt reserve levels and recording respective accrual to bring bad debt reserves to required levels"@en ;
+    skos:notation "p-otc-process-bad-debt"^^xsd:string ;
+    skos:prefLabel "Process Bad Debt"@en ;
+    vs:realizes proc:CM-1-3-8-3-3 ;
+    vs:usesCapability capability:otc-close .
+
+vsprocess:otc-receive-payments a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with the receiving of customer payment information - usually through a bank lock-box interface.  This is a fundamental input to support the cash application process (i.e., apply receipts)."@en ;
+    skos:notation "p-otc-receive-payments"^^xsd:string ;
+    skos:prefLabel "Receive Payments"@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/retail-payments> ;
+    vs:realizes proc:CM-1-3-8-2-1 ;
+    vs:usesCapability capability:otc-cash-application .
+
+vsprocess:otc-receive-remittance-advice a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with receiving of customer remittance information to support effective and efficient execution of cash application activities (i.e., apply receipts)."@en ;
+    skos:notation "p-otc-receive-remittance-advice"^^xsd:string ;
+    skos:prefLabel "Receive Remittance Advice"@en ;
+    vs:realizes proc:CM-1-3-8-2-2 ;
+    vs:usesCapability capability:otc-cash-application .
+
+vsprocess:otc-receive-validate-queries a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to receive and validate a customer query / claim. A customer query / claim is usually associated with perceived errors associated with products (e.g., product type, quantity of products) which are largely classified as “shipment integrity” claims or pricing and discounts."@en ;
+    skos:notation "p-otc-receive-validate-queries"^^xsd:string ;
+    skos:prefLabel "Receive & Validate Queries"@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/loss-control> ;
+    vs:realizes proc:CM-1-3-8-3-1 ;
+    vs:usesCapability capability:otc-disputes .
+
+vsprocess:otc-reconcile-indirect-tax a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to reconcile indirect taxes and identify and resolve unreconciled items."@en ;
+    skos:notation "p-otc-reconcile-indirect-tax"^^xsd:string ;
+    skos:prefLabel "Reconcile Indirect Tax"@en ;
+    vs:realizes proc:CM-1-3-8-4-4 ;
+    vs:usesCapability capability:otc-close .
+
+vsprocess:otc-review-credit-limit-risk-code a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to review the existing customers' creditworthiness to revise the customer's credit limit and risk code.  The credit assessment is conducted based on information from customer financials, third party credit agencies and past order / credit history with the organization."@en ;
+    skos:notation "p-otc-review-credit-limit-risk-code"^^xsd:string ;
+    skos:prefLabel "Review Credit Limit & Risk Code"@en ;
+    skos:scopeNote "Realizes Establish Credit Limit & Risk Code (CM 1.3.7.4.2), whose scope includes periodic and event-triggered reviews of the limit and risk code (MPC-P10.2, EPM-DEC-001-0087). Monitor Credit Against Limit (CM 1.3.7.4.3) watches exposure against a limit and does not revise it."@en ;
+    vs:realizes proc:CM-1-3-7-4-2 ;
+    vs:usesCapability capability:otc-customer-credit .
+
+vsprocess:otc-root-cause-action-plan a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with analyzing valid claims and deductions with the purpose of identifying the root cause and inform upstream processes to take corrective action.  This is a fundamental capability needed to support continuous improvement across the end-to-end O2C process."@en ;
+    skos:notation "p-otc-root-cause-action-plan"^^xsd:string ;
+    skos:prefLabel "Develop Root Cause Analysis & Action Plan"@en ;
+    vs:feeds vsprocess:otc-maintain-commercial-policies ;
+    vs:realizes proc:CM-1-3-8-3-4 ;
+    vs:usesCapability capability:otc-disputes .
+
+vsprocess:otc-track-forecast-order a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to monitor the customer order status and respond to their inquiries including backorder management.  Additionally, the process also includes the use of the order book as a predictor of product demand and revenues."@en ;
+    skos:notation "p-otc-track-forecast-order"^^xsd:string ;
+    skos:prefLabel "Track & Forecast Order"@en ;
+    vs:realizes proc:CM-1-3-7-3-5 ;
+    vs:usesCapability capability:otc-order-management .
+
+vsprocess:otc-validate-deductions a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes to initiate, analyze, and approve deductions. Deductions are initiated by the customer upon payment and are consequently managed and monitored. A valid and approved deduction requires no action while an invalid or rejected deduction triggers the action of a charge back to the customer."@en ;
+    skos:notation "p-otc-validate-deductions"^^xsd:string ;
+    skos:prefLabel "Validate Deductions"@en ;
+    vs:realizes proc:CM-1-3-8-3-1 ;
+    vs:usesCapability capability:otc-disputes .
+
+vsprocess:performance-tracking-analysis a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Track financial and operational performance of trades; through backcasting, compare actual results against the perfect-foresight optimum to quantify value leakage and identify root causes."@en ;
+    skos:notation "p-performance-tracking-analysis"^^xsd:string ;
+    skos:prefLabel "Performance Tracking & Analysis"@en ;
+    skos:scopeNote "Backcasting owns the Backcasting & Refining CI product; consumes margin outcomes and the planning line as baseline."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/operational-margin> ;
+    vs:feeds vsprocess:market-intelligence-planning ;
+    vs:measureLink mlink:performance-tracking-analysis--crack-spreads,
+        mlink:performance-tracking-analysis--distribution-cost-per-barrel,
+        mlink:performance-tracking-analysis--refining-opex-per-barrel,
+        mlink:performance-tracking-analysis--rm-margin-per-barrel,
+        mlink:performance-tracking-analysis--turnaround-cost-per-barrel ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/backcasting-refining-ci> ;
+    vs:realizes proc:CM-1-1-5,
+        proc:CM-1-1-6 ;
+    vs:usesCapability capability:performance-management-backcasting .
+
+vsprocess:quality-assessment-blending a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Traders use lab data to assess crude quality, from assay data at loading or internal lab samples on receipt."@en ;
+    skos:notation "p-quality-assessment-blending"^^xsd:string ;
+    skos:prefLabel "Quality Assessment & Blending Ops"@en ;
+    skos:scopeNote "Lab/assay operations own the Quality Assurance product; parcel/cargo context and loss data consumed."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/loss-control>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading> ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/quality-assurance> ;
+    vs:realizes proc:CM-1-2-5-1,
+        proc:CM-1-2-6 ;
+    vs:usesCapability capability:product-quality-loss-management .
+
+vsprocess:rack-price-setting a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Calculate, approve, and publish competitive and profitable wholesale rack prices for the next sales cycle."@en ;
+    skos:notation "p-rack-price-setting"^^xsd:string ;
+    skos:prefLabel "Rack Price Setting"@en ;
+    skos:scopeNote "Wholesale rack publish informed by the master price SoR and margin targets."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/operational-margin> ;
+    vs:informs vsprocess:risk-management-position-monitoring ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing> ;
+    vs:realizes proc:CM-1-3-6-3 ;
+    vs:usesCapability capability:channel-pricing-sales .
+
+vsprocess:retail-sales-payment a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Execute the final sale to the end consumer at branded retail sites, securely process payments, and capture granular transaction data. Applicability: where independent jobbers and dealers run the sites, as at MPC since it sold its company-operated retail in 2021 (MPC FY2025 Form 10-K, Item 1), they make the sale and set the pump price; for the brand owner this process is an external interface, not one it performs; the scope note is Claude's, under the delegation (EPM-DEC-001-0047, MPC-P07)."@en ;
+    skos:notation "p-retail-sales-payment"^^xsd:string ;
+    skos:prefLabel "Retail Sales & Payment"@en ;
+    skos:scopeNote "Channel sales/payment capture owns Retail Payments; rack price is the critical input."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing> ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/retail-payments> ;
+    vs:realizes proc:CM-1-3-6,
+        proc:CM-1-3-6-6 ;
+    vs:usesCapability capability:channel-pricing-sales .
+
+vsprocess:settlement-post-trade-reconciliation a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Finalize all financial aspects of wholesale and retail transactions, accurately allocate costs, and manage claims arising from physical discrepancies."@en ;
+    skos:notation "p-settlement-post-trade-reconciliation"^^xsd:string ;
+    skos:prefLabel "Settlement and Post-Trade Reconciliation"@en ;
+    skos:scopeNote "Back office settles trades against price SoRs and risk data. Loss Control and Retail Payments enter via claims/retail settlement."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing> ;
+    vs:loopsTo vsprocess:market-intelligence-planning ;
+    vs:realizes proc:CM-1-2-3,
+        proc:CM-1-2-4 ;
+    vs:usesCapability capability:settlement-reconciliation .
+
+vsprocess:supply-procurement-strategy a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Based on market analysis and refinery needs, traders devise a procurement strategy: which crude grades/finished product to buy, in what quantities."@en ;
+    skos:notation "p-supply-procurement-strategy"^^xsd:string ;
+    skos:prefLabel "Supply & Procurement Strategy"@en ;
+    skos:scopeNote "Strategy formation needs current positions, risk appetite/limits, and the planning/optimization line."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading> ;
+    vs:realizes proc:CM-1-1-2,
+        proc:CM-1-2-1-4,
+        proc:CM-1-2-5 ;
+    vs:usesCapability capability:supply-trading-strategy .
+
+vsprocess:terminal-transport-operations a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Execute the planned physical movement and loading of bulk product safely and efficiently."@en ;
+    skos:notation "p-terminal-transport-operations"^^xsd:string ;
+    skos:prefLabel "Terminal & Transport Operations"@en ;
+    skos:scopeNote "Physical execution produces movement actuals (Logistic Execution); custody-transfer loss and quality data are critical operating inputs."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/loss-control>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/quality-assurance> ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/logistic-execution> ;
+    vs:realizes proc:CM-1-2-3,
+        proc:CM-1-2-7-2,
+        proc:CM-1-3-10 ;
+    vs:usesCapability capability:terminal-transport-execution .
+
+stage:execution-operations a vs:Stage ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Physical movement, quality, wholesale and retail execution."@en ;
+    skos:notation "stg-execution-operations"^^xsd:string ;
+    skos:prefLabel "Execution & Operations"@en ;
+    vs:hasProcess vsprocess:logistics-planning-scheduling,
+        vsprocess:quality-assessment-blending,
+        vsprocess:rack-price-setting,
+        vsprocess:retail-sales-payment,
+        vsprocess:terminal-transport-operations ;
+    vs:sequence 2 .
+
+stage:market-strategy-formation a vs:Stage ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "From market monitoring to executed deals."@en ;
+    skos:notation "stg-market-strategy-formation"^^xsd:string ;
+    skos:prefLabel "Market & Strategy Formation"@en ;
+    vs:hasProcess vsprocess:deal-negotiation-capture,
+        vsprocess:market-intelligence-planning,
+        vsprocess:market-price-calculation-validation,
+        vsprocess:supply-procurement-strategy ;
+    vs:sequence 1 .
+
+stage:otc-billing a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in the creation, distribution, and management of billings."@en ;
+    skos:notation "stg-otc-billing"^^xsd:string ;
+    skos:prefLabel "Billing"@en ;
+    vs:hasProcess vsprocess:otc-accounting-self-billing,
+        vsprocess:otc-create-distribute-bill,
+        vsprocess:otc-create-exception-invoice,
+        vsprocess:otc-determine-taxability ;
+    vs:sequence 5 .
+
+stage:otc-close a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in the close of the sub ledger, including rev rec, AR and revenue related provisions, and reconciliations."@en ;
+    skos:notation "stg-otc-close"^^xsd:string ;
+    skos:prefLabel "Close"@en ;
+    vs:hasProcess vsprocess:otc-close-ar-sub-ledger,
+        vsprocess:otc-perform-revenue-accounting,
+        vsprocess:otc-process-bad-debt,
+        vsprocess:otc-reconcile-indirect-tax ;
+    vs:sequence 9 .
+
+stage:otc-collection a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in executing and managing collections - including short-term forecast."@en ;
+    skos:notation "stg-otc-collection"^^xsd:string ;
+    skos:prefLabel "Collection"@en ;
+    vs:hasProcess vsprocess:otc-analyze-ar-aging,
+        vsprocess:otc-establish-collection-targets,
+        vsprocess:otc-execute-collections,
+        vsprocess:otc-initiate-legal-action,
+        vsprocess:otc-negotiate-settlements ;
+    vs:sequence 7 .
+
+stage:otc-credit-risk a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in assessing, measuring, and managing credit risk. It also includes maintaining policies and analyzing portfolio credit risk."@en ;
+    skos:notation "stg-otc-credit-risk"^^xsd:string ;
+    skos:prefLabel "Credit & Risk"@en ;
+    vs:hasProcess vsprocess:otc-analyze-portfolio-credit-risk,
+        vsprocess:otc-customer-closure-reinstatement,
+        vsprocess:otc-establish-credit-limit-risk-code,
+        vsprocess:otc-maintain-credit-policies,
+        vsprocess:otc-monitor-credit-against-limit,
+        vsprocess:otc-review-credit-limit-risk-code ;
+    vs:sequence 3 .
+
+stage:otc-dispute a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in executing and managing disputes (i.e., claims and deductions) - including the analysis associated with identifying root cause and supporting upstream continuous improvement."@en ;
+    skos:notation "stg-otc-dispute"^^xsd:string ;
+    skos:prefLabel "Dispute"@en ;
+    vs:hasProcess vsprocess:otc-create-credit-memo-chargeback,
+        vsprocess:otc-perform-appeasements,
+        vsprocess:otc-receive-validate-queries,
+        vsprocess:otc-root-cause-action-plan,
+        vsprocess:otc-validate-deductions ;
+    vs:sequence 8 .
+
+stage:otc-master-data a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses processes involved with the management and maintenance of key master data environments (i.e., Customer, Price & Discount, Product, and Tax) that are fundamental to enable the transactions across the end-to-end O2C process."@en ;
+    skos:notation "stg-otc-master-data"^^xsd:string ;
+    skos:prefLabel "Master Data Mgmt."@en ;
+    vs:hasProcess vsprocess:otc-maintain-customer-master,
+        vsprocess:otc-maintain-price-discount-master,
+        vsprocess:otc-maintain-product-master,
+        vsprocess:otc-maintain-tax-master,
+        vsprocess:otc-maintain-workflows ;
+    vs:sequence 1 .
+
+stage:otc-order-fulfilment a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in key components of order management (i.e., capture & validation, allocation & release, monitoring and changing orders) and fulfillment.  In addition, it also addresses reverse orders (i.e., returns) and the analytics deployed across the order book."@en ;
+    skos:notation "stg-otc-order-fulfilment"^^xsd:string ;
+    skos:prefLabel "Order & Fulfilment"@en ;
+    vs:hasProcess vsprocess:otc-allocate-release-order,
+        vsprocess:otc-capture-validate-order,
+        vsprocess:otc-change-cancel-order,
+        vsprocess:otc-manage-fulfillment,
+        vsprocess:otc-manage-returns,
+        vsprocess:otc-track-forecast-order ;
+    vs:sequence 4 .
+
+stage:otc-quote-sale a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved with supporting and executing commercial transactions (i.e., policies, terms & contracts, financing & payment methods, quotes & renewals) along with managing the revenue plan and analyzing customer profitability."@en ;
+    skos:notation "stg-otc-quote-sale"^^xsd:string ;
+    skos:prefLabel "Quote & Sale"@en ;
+    vs:hasProcess vsprocess:otc-analyze-customer-profitability,
+        vsprocess:otc-define-financing-payment-methods,
+        vsprocess:otc-develop-monitor-revenue-plan,
+        vsprocess:otc-establish-commercial-terms-contracts,
+        vsprocess:otc-issue-quotes-renewals,
+        vsprocess:otc-maintain-commercial-policies ;
+    vs:sequence 2 .
+
+stage:otc-receipt a vs:Stage ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in the execution of receiving and applying payments, settling other tender type transactions (e.g., credit cards), and performing high frequency reconciliations (e.g., daily) in the course of the business."@en ;
+    skos:notation "stg-otc-receipt"^^xsd:string ;
+    skos:prefLabel "Receipt"@en ;
+    vs:hasProcess vsprocess:otc-apply-receipts,
+        vsprocess:otc-manage-unapplied-receipts,
+        vsprocess:otc-perform-reconciliations-settlements,
+        vsprocess:otc-receive-payments,
+        vsprocess:otc-receive-remittance-advice ;
+    vs:sequence 6 .
+
+stage:risk-performance-control a vs:Stage ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Risk, settlement, and performance feedback into the next cycle."@en ;
+    skos:notation "stg-risk-performance-control"^^xsd:string ;
+    skos:prefLabel "Risk, Performance, and Control"@en ;
+    vs:hasProcess vsprocess:performance-tracking-analysis,
+        vsprocess:risk-management-position-monitoring,
+        vsprocess:settlement-post-trade-reconciliation ;
+    vs:sequence 3 .
+
+capability:commercial-risk-position-management a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "EOD valuation of positions against closing prices; official daily P&L, VaR, and risk metrics."@en ;
+    skos:notation "cap-commercial-risk-position-management"^^xsd:string ;
+    skos:prefLabel "Commercial Risk & Position Management"@en ;
+    vs:alignsToProcessGroup proc:CM-1-2-2 .
+
+capability:deal-capture-contracting a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Negotiate and execute deals with counterparties; capture trades and contracts."@en ;
+    skos:notation "cap-deal-capture-contracting"^^xsd:string ;
+    skos:prefLabel "Deal Capture & Contracting"@en ;
+    vs:alignsToProcessGroup proc:CM-1-2-1 .
+
+capability:logistics-planning-scheduling a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Nominate and schedule physical movement of crude and products from seller to buyer."@en ;
+    skos:notation "cap-logistics-planning-scheduling"^^xsd:string ;
+    skos:prefLabel "Logistics Planning & Scheduling"@en ;
+    vs:alignsToProcessGroup proc:CM-1-1-3,
+        proc:CM-1-2-7 .
+
+capability:market-intelligence a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Monitor and interpret market data, competitor actions, and internal performance to inform commercial decisions."@en ;
+    skos:notation "cap-market-intelligence"^^xsd:string ;
+    skos:prefLabel "Market Intelligence"@en ;
+    vs:alignsToProcessGroup proc:CM-1-1-1,
+        proc:CM-1-3-1 .
+
+capability:performance-management-backcasting a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Compare actuals against perfect-foresight optimum; quantify value leakage; identify root causes for improvement."@en ;
+    skos:notation "cap-performance-management-backcasting"^^xsd:string ;
+    skos:prefLabel "Performance Management & Backcasting"@en ;
+    vs:alignsToProcessGroup proc:CM-1-1-5,
+        proc:CM-1-1-6 .
+
+capability:price-management a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Transform market data and internal assessment into validated price systems of record."@en ;
+    skos:notation "cap-price-management"^^xsd:string ;
+    skos:prefLabel "Price Management"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-3,
+        proc:CM-1-3-6 .
+
+capability:product-quality-loss-management a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Assess product quality via assay/lab data; manage custody transfer gains/losses."@en ;
+    skos:notation "cap-product-quality-loss-management"^^xsd:string ;
+    skos:prefLabel "Product Quality & Loss Management"@en ;
+    vs:alignsToProcessGroup proc:CM-1-2-5,
+        proc:CM-1-2-6 .
+
+capability:settlement-reconciliation a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Finalize financial aspects of wholesale and retail transactions; allocate costs; manage claims from physical discrepancies."@en ;
+    skos:notation "cap-settlement-reconciliation"^^xsd:string ;
+    skos:prefLabel "Settlement & Reconciliation"@en ;
+    vs:alignsToProcessGroup proc:CM-1-2-3,
+        proc:CM-1-2-4 .
+
+capability:supply-trading-strategy a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Devise procurement and trading strategy: which crude grades/products to buy and sell, in what quantities."@en ;
+    skos:notation "cap-supply-trading-strategy"^^xsd:string ;
+    skos:prefLabel "Supply & Trading Strategy"@en ;
+    vs:alignsToProcessGroup proc:CM-1-2-1,
+        proc:CM-1-2-5 .
+
+capability:terminal-transport-execution a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Execute planned physical movement and bulk loading safely and efficiently."@en ;
+    skos:notation "cap-terminal-transport-execution"^^xsd:string ;
+    skos:prefLabel "Terminal & Transport Execution"@en ;
+    vs:alignsToProcessGroup proc:CM-1-2-3,
+        proc:CM-1-2-7,
+        proc:CM-1-3-10 .
+
+rel:benchmarks a skos:Concept ;
+    skos:definition "The process compares results against the measure as an external reference."@en ;
+    skos:inScheme vs:MeasureRelationship ;
+    skos:notation "benchmarks" ;
+    skos:prefLabel "Benchmarks"@en .
+
+vsprocess:otc-maintain-commercial-policies a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process contains the sub-processes associated with maintaining the underlying policies associated with commercial terms (e.g., payment terms, discounts, rebates).  It aims at establishing a common standard understanding of the commercial terms to establish contracts between seller, partners, and buyer."@en ;
+    skos:notation "p-otc-maintain-commercial-policies"^^xsd:string ;
+    skos:prefLabel "Maintain Commercial Policies"@en ;
+    vs:realizes proc:CM-1-3-7-1-6 ;
+    vs:usesCapability capability:otc-quote-sale .
+
+vsprocess:risk-management-position-monitoring a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Runs in parallel to trading and scheduling: official EOD valuation of all positions against closing market prices; calculate and validate official daily P&L, VaR, and key risk metrics."@en ;
+    skos:notation "p-risk-management-position-monitoring"^^xsd:string ;
+    skos:prefLabel "Risk Management and Position Monitoring"@en ;
+    skos:scopeNote "Middle office owns the Commercial Risk product (positions, P&L, VaR) computed from trades and validated prices."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading> ;
+    vs:produces <https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk> ;
+    vs:realizes proc:CM-1-2-2 ;
+    vs:usesCapability capability:commercial-risk-position-management .
+
+vs:MeasureRelationship a skos:ConceptScheme ;
+    rdfs:label "measure relationship"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    skos:definition "The three ways a value-stream process can relate to a measure."@en .
+
+capability:channel-pricing-sales a vs:Capability ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Set wholesale rack prices and execute final sale to end consumers at branded retail."@en ;
+    skos:notation "cap-channel-pricing-sales"^^xsd:string ;
+    skos:prefLabel "Channel Pricing & Sales"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-6 .
+
+vsprocess:market-intelligence-planning a vs:ValueStreamProcess ;
+    dcterms:source src:value-stream-commercial-lifecycle ;
+    skos:definition "Continuously monitor real-time market data, competitor actions, and internal sales performance; informed by the strategic supply & demand plan, forming the tactical foundation for daily commercial decisions."@en ;
+    skos:notation "p-market-intelligence-planning"^^xsd:string ;
+    skos:prefLabel "Market Intelligence & Planning"@en ;
+    skos:scopeNote "Consumes market feeds, plan context (whole P&O line), and margin signal; does not own a trade or price system of record."@en ;
+    vs:consumes <https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/external-market-data>,
+        <https://w3id.org/lsc/ontology/modules/data-product/product/operational-margin> ;
+    vs:realizes proc:CM-1-1-1,
+        proc:CM-1-3-1 ;
+    vs:usesCapability capability:market-intelligence .
+
+rel:measures-performance a skos:Concept ;
+    skos:definition "The process tracks the measure as a result of the business."@en ;
+    skos:inScheme vs:MeasureRelationship ;
+    skos:notation "measures-performance" ;
+    skos:prefLabel "Measures performance"@en .
+
+capability:otc-billing a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in the creation, distribution, and management of billings."@en ;
+    skos:notation "cap-otc-billing"^^xsd:string ;
+    skos:prefLabel "Billing"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-8-1 .
+
+capability:otc-close a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in the close of the sub ledger, including rev rec, AR and revenue related provisions, and reconciliations."@en ;
+    skos:notation "cap-otc-close"^^xsd:string ;
+    skos:prefLabel "Close"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-8-2,
+        proc:CM-1-3-8-4 .
+
+capability:otc-cash-application a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in the execution of receiving and applying payments, settling other tender type transactions (e.g., credit cards), and performing high frequency reconciliations (e.g., daily) in the course of the business."@en ;
+    skos:notation "cap-otc-cash-application"^^xsd:string ;
+    skos:prefLabel "Receipt"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-8-2 .
+
+capability:otc-collections a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in executing and managing collections - including short-term forecast."@en ;
+    skos:notation "cap-otc-collections"^^xsd:string ;
+    skos:prefLabel "Collection"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-8-3 .
+
+capability:otc-disputes a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in executing and managing disputes (i.e., claims and deductions) - including the analysis associated with identifying root cause and supporting upstream continuous improvement."@en ;
+    skos:notation "cap-otc-disputes"^^xsd:string ;
+    skos:prefLabel "Dispute"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-8-3 .
+
+capability:otc-master-data-management a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses processes involved with the management and maintenance of key master data environments (i.e., Customer, Price & Discount, Product, and Tax) that are fundamental to enable the transactions across the end-to-end O2C process."@en ;
+    skos:notation "cap-otc-master-data-management"^^xsd:string ;
+    skos:prefLabel "Master Data Management"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-7-1 .
+
+vs:ValueStream a owl:Class ;
+    rdfs:label "value stream"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json; ontology-playbook.md, Step 7; EPM-DEC-001-0054"@en ;
+    skos:definition "An end-to-end sequence of stages that delivers an outcome, from a trigger, cutting across the process hierarchy. It references processes; it is never their parent."@en .
+
+capability:otc-customer-credit a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in assessing, measuring, and managing credit risk. It also includes maintaining policies and analyzing portfolio credit risk."@en ;
+    skos:notation "cap-otc-customer-credit"^^xsd:string ;
+    skos:prefLabel "Credit & Risk"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-7-4 .
+
+capability:otc-order-management a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved in key components of order management (i.e., capture & validation, allocation & release, monitoring and changing orders) and fulfillment.  In addition, it also addresses reverse orders (i.e., returns) and the analytics deployed across the order book."@en ;
+    skos:notation "cap-otc-order-management"^^xsd:string ;
+    skos:prefLabel "Order & Fulfilment"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-7-3 .
+
+capability:otc-quote-sale a vs:Capability ;
+    dcterms:source src:value-stream-order-to-cash ;
+    skos:definition "This process group houses the processes involved with supporting and executing commercial transactions (i.e., policies, terms & contracts, financing & payment methods, quotes & renewals) along with managing the revenue plan and analyzing customer profitability."@en ;
+    skos:notation "cap-otc-quote-sale"^^xsd:string ;
+    skos:prefLabel "Quote & Sale"@en ;
+    vs:alignsToProcessGroup proc:CM-1-3-7-2 .
+
+vs:MeasureLink a owl:Class ;
+    rdfs:label "measure link"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, measures; EPM-DEC-001-0047 (MPC-P09)"@en ;
+    skos:definition "A cited link between a value-stream process and a measure of the kpi module, with the kind of relationship. Context for where the measure is used, not a KPI designation and not a certification of the process."@en .
+
+vs:Stage a owl:Class ;
+    rdfs:label "value-stream stage"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    skos:definition "One step of a value stream, in a fixed sequence, grouping the value-stream processes done in it."@en .
+
+vs:Capability a owl:Class ;
+    rdfs:label "capability"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    skos:definition "An enduring ability the business needs, which a value stream's stages use and which processes realize. Reusable across value streams."@en .
+
+src:value-stream-commercial-lifecycle a dcterms:BibliographicResource ;
+    dcterms:title "Value stream Commercial Hydrocarbon Lifecycle, business_architecture/business_process/value_stream_commercial_lifecycle.json, generated 2026-08-05, from: Commercial Business Process Lifecycle slide (stages 1-3, processes a-l); EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (Domain > Value Stream > Stage > Capability > Process); Industry grounding: ETRM front/middle/back office lifecycle; downstream commercial value chain (trading & supply, planning & optimization, marketing/pricing/retail)"@en .
+
+src:value-stream-order-to-cash a dcterms:BibliographicResource ;
+    dcterms:title "Value stream Order to Cash, business_architecture/business_process/value_stream_order_to_cash.json, generated 2026-08-05, from: Domains/O2C/02_O2C Process Taxonomy.pptx (9 process groups / capabilities, 46 L2 process definitions); EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (Commercial O2C value stream pattern); downstream_process_map.json CM 1.3.7 / CM 1.3.8 (linkedProcessIds)"@en .
+
+vs:ValueStreamProcess a owl:Class ;
+    rdfs:label "value-stream process"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, $defs.process"@en ;
+    skos:definition "A unit of work in a value-stream stage, as the value stream's source names it. It uses one capability and realizes the process-map processes its source names, which it references by IRI; the source may name none."@en .
+

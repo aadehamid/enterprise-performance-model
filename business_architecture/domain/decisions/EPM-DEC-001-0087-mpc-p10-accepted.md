@@ -22,7 +22,7 @@ EPM-DEC-001-0070 linked the decision owner's customer lifecycle to existing proc
 **What follows (Claude, under EPM-DEC-001-0028):**
 
 1. **P10.1 lands in `core` 2.3.0,** a minor release: it adds a concept and changes no released IRI. The process gets its ID, slug and definition through Steps 2 and 3, as every accepted process does. The `party` module's onboarding stage then also links to it, in `party` 1.1.0.
-2. **P10.2 lands in `value-stream` 1.1.0.** The value-stream file's gap analysis entry for the process is updated to say it is linked.
+2. **P10.2 lands in `value-stream` 1.1.0.** The value-stream file's gap analysis entry for the process is updated to say it is linked. *2026-10-23:* the entry is removed instead, since the process is no longer a gap, and its rationale says why it realizes CM 1.3.7.4.2 (EPM-DEC-001-0090, item 2).
 3. **P10.3 lands in `data-product` 1.1.0,** which the data-product module builds from `data_product_portfolio.json` (EPM-DEC-001-0053).
 4. **The proposal's status** becomes Accepted, with this record.
 

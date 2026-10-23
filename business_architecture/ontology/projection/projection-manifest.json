@@ -1,6 +1,6 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "6aae11fa8136e67f650059ada139893dc18aa4a7e2ff1227ab2c85b26dcc6b2d",
+  "input_fingerprint": "e49b2b534b2af5f701bb80caab645bdbbbc3c829821a9d739a3220efd3167800",
   "inputs": {
     "releases/core/2.3.0/core.ttl": "ebf7be2b6e65df2fc16e6af79af55f4d6a6b36ae652cf3823153b6082625c01e",
     "releases/data-product/1.0.0/data-product.ttl": "0d320b325b3f20358d3620b38825a62b06d6758aec80e24ba806c7ed9dd891e8",
@@ -12,9 +12,9 @@
     "releases/party/1.0.0/party.ttl": "f9d4774e442cd652a3fbe000a56e920896e236314e786cf9384ffdd0b46e9663",
     "releases/ref-mpc/1.2.0/ref-mpc.ttl": "75078639bfc5d5284bb204dc9c202a27acb8767f4097700d97878b0be5fd9867",
     "releases/system/1.0.0/system.ttl": "b9dea5ded1a3f1f41069354cdfac692ab200635278971b242bed2fdf9af665b5",
-    "releases/value-stream/1.0.0/value-stream.ttl": "1ccd96bd0aa3fbe9b02aff23196a21c170984a148ad34af8de7801e9568b4a94"
+    "releases/value-stream/1.1.0/value-stream.ttl": "89c952bf76b12d916b7ca583e78354d197b6bb8596b6519f00917804a3f0a5db"
   },
-  "loadable_triples": 33751,
+  "loadable_triples": 33754,
   "release_exceptions": {
     "Rule 1: https://w3id.org/lsc/ontology/modules/consumer/reliesOn has no single concrete range": "integration 1.0.0 declares no rdfs:range; its objects are properties, a concept and other terms, so the next integration release gives it one concrete range",
     "Rule 1: https://w3id.org/lsc/ontology/modules/party/carries has no single concrete range": "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range rdf:langString",
@@ -22,8 +22,6 @@
     "Rule 1: https://w3id.org/lsc/ontology/modules/party/evidenceInput has no single concrete range": "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range xsd:string",
     "Rule 1: https://w3id.org/lsc/ontology/modules/placement/placementKind has no single concrete range": "integration 1.0.0 declares no rdfs:range; the next integration release adds rdfs:range skos:Concept",
     "Rule 1: https://w3id.org/lsc/ontology/modules/population/populationEvidence has no single concrete range": "kpi 1.1.0 declares no rdfs:range; the next kpi release adds rdfs:range xsd:string",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/value-stream/consumes has no single concrete range": "value-stream 1.0.0 declares no rdfs:range; the next value-stream release adds rdfs:range skos:Concept (it consumes data products and data product lines)",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/value-stream/produces has no single concrete range": "value-stream 1.0.0 declares no rdfs:range; the next value-stream release adds rdfs:range dp:DataProduct",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/evidenceTier": "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/rank": "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/feeds": "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
@@ -46,7 +44,7 @@
     "releases/party/1.0.0/shapes.ttl": "bebaa0c631ee06235c2ad420af43800c3e0fa112cb6d1cb5afd312d7a28d4d47",
     "releases/ref-mpc/1.2.0/shapes.ttl": "8b1e041ccc26fe7495acb0fcbdef722d45cf6c0686983c4429adba4b60b6cd3a",
     "releases/system/1.0.0/shapes.ttl": "845e0c6913f7d74a0bab7e7c29c6ccdf5167fc73a8c7143d5a366ef2213311f1",
-    "releases/value-stream/1.0.0/shapes.ttl": "f533ecd331e474f5f4507734e59c8fafa86d526a6bc11483c7e4d5ae6f0bb53c",
+    "releases/value-stream/1.1.0/shapes.ttl": "f533ecd331e474f5f4507734e59c8fafa86d526a6bc11483c7e4d5ae6f0bb53c",
     "step4/scoped-sequence/shapes.ttl": "6d9acb78ae3a464aad7d76b694d16e8f43122ba9bbff97d41a5eff99072d51e3"
   },
   "versions": {

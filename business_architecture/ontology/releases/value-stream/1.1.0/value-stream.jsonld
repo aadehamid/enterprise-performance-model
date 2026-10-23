@@ -1,0 +1,5260 @@
+[
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Ontology"
+  ],
+  "http://purl.org/dc/terms/description": [
+   {
+    "@language": "en",
+    "@value": "The Commercial Hydrocarbon Lifecycle and Order to Cash value streams: their stages, capabilities and value-stream processes, which realize core processes, produce and consume data products and carry cited measure links (Step 7)."
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-23"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-23"
+   }
+  ],
+  "http://purl.org/dc/terms/requires": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/core/2.3.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/1.0.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/1.1.0"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "LSC Value Stream Module"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionIRI": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/1.1.0"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionInfo": [
+   {
+    "@value": "1.1.0"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/Capability",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "capability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An enduring ability the business needs, which a value stream's stages use and which processes realize. Reusable across value streams."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, measures; EPM-DEC-001-0047 (MPC-P09)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "measure link"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A cited link between a value-stream process and a measure of the kpi module, with the kind of relationship. Context for where the measure is used, not a KPI designation and not a certification of the process."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/MeasureRelationship",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "measure relationship"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The three ways a value-stream process can relate to a measure."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/Stage",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "value-stream stage"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "One step of a value stream, in a fixed sequence, grouping the value-stream processes done in it."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStream",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json; ontology-playbook.md, Step 7; EPM-DEC-001-0054"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "value stream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An end-to-end sequence of stages that delivers an outcome, from a trigger, cutting across the process hierarchy. It references processes; it is never their parent."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, $defs.process"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "value-stream process"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A unit of work in a value-stream stage, as the value stream's source names it. It uses one capability and realizes the process-map processes its source names, which it references by IRI; the source may name none."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, alignsToProcessGroups"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "aligns to process group"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A process-map process group the capability aligns to."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/channel-pricing-sales",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Set wholesale rack prices and execute final sale to end consumers at branded retail."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-channel-pricing-sales"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Channel Pricing & Sales"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-6"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/commercial-risk-position-management",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "EOD valuation of positions against closing prices; official daily P&L, VaR, and risk metrics."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-commercial-risk-position-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Commercial Risk & Position Management"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-2"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/deal-capture-contracting",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Negotiate and execute deals with counterparties; capture trades and contracts."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-deal-capture-contracting"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Deal Capture & Contracting"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-1"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/logistics-planning-scheduling",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Nominate and schedule physical movement of crude and products from seller to buyer."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-logistics-planning-scheduling"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Logistics Planning & Scheduling"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-7"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/market-intelligence",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Monitor and interpret market data, competitor actions, and internal performance to inform commercial decisions."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-market-intelligence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Market Intelligence"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-1"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-billing",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in the creation, distribution, and management of billings."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-billing"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Billing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-cash-application",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in the execution of receiving and applying payments, settling other tender type transactions (e.g., credit cards), and performing high frequency reconciliations (e.g., daily) in the course of the business."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-cash-application"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Receipt"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-close",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in the close of the sub ledger, including rev rec, AR and revenue related provisions, and reconciliations."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-close"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Close"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-collections",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in executing and managing collections - including short-term forecast."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-collections"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Collection"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-customer-credit",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in assessing, measuring, and managing credit risk. It also includes maintaining policies and analyzing portfolio credit risk."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-customer-credit"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Credit & Risk"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-disputes",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in executing and managing disputes (i.e., claims and deductions) - including the analysis associated with identifying root cause and supporting upstream continuous improvement."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-disputes"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Dispute"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-master-data-management",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses processes involved with the management and maintenance of key master data environments (i.e., Customer, Price & Discount, Product, and Tax) that are fundamental to enable the transactions across the end-to-end O2C process."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-master-data-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Master Data Management"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-order-management",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in key components of order management (i.e., capture & validation, allocation & release, monitoring and changing orders) and fulfillment.  In addition, it also addresses reverse orders (i.e., returns) and the analytics deployed across the order book."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-order-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Order & Fulfilment"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-quote-sale",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved with supporting and executing commercial transactions (i.e., policies, terms & contracts, financing & payment methods, quotes & renewals) along with managing the revenue plan and analyzing customer profitability."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-otc-quote-sale"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Quote & Sale"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/performance-management-backcasting",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Compare actuals against perfect-foresight optimum; quantify value leakage; identify root causes for improvement."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-performance-management-backcasting"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Performance Management & Backcasting"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/planning-optimization",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Cross-stage value chain planning and optimization capability; owns the Planning & Optimization data product line."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-planning-optimization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Planning & Optimization"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/price-management",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Transform market data and internal assessment into validated price systems of record."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-price-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Price Management"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-6"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/product-quality-loss-management",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Assess product quality via assay/lab data; manage custody transfer gains/losses."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-product-quality-loss-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Product Quality & Loss Management"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-6"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/settlement-reconciliation",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Finalize financial aspects of wholesale and retail transactions; allocate costs; manage claims from physical discrepancies."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-settlement-reconciliation"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Settlement & Reconciliation"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-4"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/supply-trading-strategy",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Devise procurement and trading strategy: which crude grades/products to buy and sell, in what quantities."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-supply-trading-strategy"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Supply & Trading Strategy"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-5"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/terminal-transport-execution",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Execute planned physical movement and bulk loading safely and efficiently."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cap-terminal-transport-execution"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Terminal & Transport Execution"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/alignsToProcessGroup": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-10"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/consumes",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, consumes; competency question 7"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "consumes"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A data product, or a whole data product line, that the value-stream process critically depends on."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/feeds",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, flows"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "feeds"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process's results feed the other process, outside the stage order."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "has process"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A value-stream process done in the stage."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/hasStage",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStream"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "has stage"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A stage of the value stream."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/informs",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, flows"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "informs"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process informs the other process, outside the stage order."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/loopsTo",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, flows"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "loops to"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The value stream returns from this process to the other, starting a new cycle."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, measureId"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "measure"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The measure the link names."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/market-price-calculation-validation--crack-spreads",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC's market benchmarks are the Gulf Coast, Mid-Continent and West Coast 3-2-1 crack spreads; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measure": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/relationship": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/benchmarks"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/market-price-calculation-validation--rm-margin-per-barrel",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC defines R&M margin as the difference between the prices of refined products sold and the costs of crude oil and other charge and blendstocks refined, including transport to the refineries and products purchased for resale; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measure": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/relationship": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/informs"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--crack-spreads",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC states that the sweet and sour crude differentials explain why realized margin differs from the blended crack; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measure": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/relationship": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/benchmarks"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--distribution-cost-per-barrel",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC reports distribution costs per barrel, excluding D&A, for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measure": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/distribution-cost-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/relationship": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/measures-performance"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--refining-opex-per-barrel",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC reports refining operating costs per barrel, excluding planned turnaround and D&A, for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measure": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/refining-opex-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/relationship": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/measures-performance"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--rm-margin-per-barrel",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC reports R&M margin per barrel for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measure": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/relationship": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/measures-performance"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--turnaround-cost-per-barrel",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC reports planned turnaround costs per barrel for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measure": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/turnaround-cost-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/relationship": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/measures-performance"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/benchmarks",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process compares results against the measure as an external reference."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/MeasureRelationship"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "benchmarks"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Benchmarks"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/informs",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process uses the measure as an input."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/MeasureRelationship"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "informs"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Informs"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/measures-performance",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process tracks the measure as a result of the business."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/MeasureRelationship"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "measures-performance"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Measures performance"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measureLink",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, measures"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "measure link"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A cited link from the value-stream process to a measure."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/outcome",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStream"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "outcome"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What the value stream delivers when it ends."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/deal-negotiation-capture",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Traders engage counterparties to execute the deal: bilateral (phone/chat), through brokers, or on electronic platforms."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-deal-negotiation-capture"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Deal Negotiation & Capture"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Front-office deal capture owns the trade facts (Physical Trading); constrained by risk limits and validated price curves."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/deal-capture-contracting"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/logistics-planning-scheduling",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Focus shifts to physically moving the crude; schedulers/logistics coordinators work with traders to nominate and schedule transport from seller to buyer."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-logistics-planning-scheduling"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Logistics Planning & Scheduling"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Schedulers nominate against trades and plan and own the logistics execution data."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/logistic-execution"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-10-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/logistics-planning-scheduling"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/market-intelligence-planning",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Continuously monitor real-time market data, competitor actions, and internal sales performance; informed by the strategic supply & demand plan, forming the tactical foundation for daily commercial decisions."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-market-intelligence-planning"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Market Intelligence & Planning"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Consumes market feeds, plan context (whole P&O line), and margin signal; does not own a trade or price system of record."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/external-market-data"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/operational-margin"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/market-intelligence"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/market-price-calculation-validation",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Transform raw market data and internal price assessment into official, validated system of record for all product prices."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-market-price-calculation-validation"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Market Price Calculation & Validation"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Classic price SoR publish (market operations): owns Master Pricing; consumes market feeds and deal context."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/external-market-data"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measureLink": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/market-price-calculation-validation--crack-spreads"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/market-price-calculation-validation--rm-margin-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-6-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/price-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-accounting-self-billing",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with recognizing customer relationships where billing (i.e., creation of AR) takes place but not invoicing (i.e., invoices are not sent to the customer) due to self-billing by the customer at the “receiving” point."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-accounting-self-billing"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Perform Accounting for Self-Billing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-billing"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-allocate-release-order",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to confirm product availability, perform product allocation, and release the order for fulfillment and shipment."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-allocate-release-order"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Allocate & Release Order"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/product-availability-allocations"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-order-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-analyze-ar-aging",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with deploying analytics to identify opportunities to optimize collections efforts and more proactively manage the effectiveness of the collections process."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-analyze-ar-aging"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Analyze AR Aging"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-collections"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-analyze-customer-profitability",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to analyze the costs of customers against the revenue they provide, and generate insights that may inform changes or adjustments in commercial terms in specific accounts or more broadly inform the strategy associated with commercial terms."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-analyze-customer-profitability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Analyze Customer Profitability"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-quote-sale"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-analyze-portfolio-credit-risk",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated analyzing and developing insights associated with the health of the AR portfolio.  Additionally, contains the sub-processes for defining and refining the parameters for risk tolerances within the portfolio as well as approvals and escalations for exceptions."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-analyze-portfolio-credit-risk"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Analyze Portfolio Credit Risk"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-customer-credit"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-apply-receipts",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with applying customer payments to the respective open invoices, clearing the AR sub-ledger."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-apply-receipts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Apply Receipts"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/retail-payments"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-cash-application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-capture-validate-order",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains sub-processes associated with capturing customer orders, which can be automated (e.g., EDI, online) or manual (e.g., phone, fax, email), and performing key validations, mostly related to master data (e.g., customer, product, pricing, discounts), before accepting the order."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-capture-validate-order"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Capture & Validate Order"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-order-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-change-cancel-order",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to perform and manage order changes and cancelations.  This includes the sub-processes to interact with customers and other functions within the business and flows through to the fulfillment or returns process."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-change-cancel-order"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Change / Cancel Order"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-order-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-close-ar-sub-ledger",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to close the AR sub ledger and reconcile to the GL.  In addition, it includes addressing unreconciled items and booking adjustments as needed (e.g., unapplied cash)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-close-ar-sub-ledger"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Close AR Sub Ledger"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-close"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-create-credit-memo-chargeback",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with creating credit memos resulting from approved claims and with creating chargebacks associated with the invalid deductions."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-create-credit-memo-chargeback"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Create Credit Memo / Charge Back"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-disputes"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-create-distribute-bill",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes that trigger the creation of the invoice (e.g., billing due list), record revenue and AR, as well as distribute the customer invoice.  This is largely an automated environment with exception handling activities."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-create-distribute-bill"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Create & Distribute Bill"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-billing"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-create-exception-invoice",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to create exception invoices - either driven by billing errors or by the need to, on an exception basis, create a manual invoice."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-create-exception-invoice"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Create Exception Invoice"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-billing"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-customer-closure-reinstatement",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to perform customer credit line closure and reinstatements as it relates to the ability to accept and process orders to a specific customer on a credit basis."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-customer-closure-reinstatement"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Perform Customer Closure and Reinstatement"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-customer-credit"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-define-financing-payment-methods",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to define payment methods and financing options being made available to the customers in the stages leading to pricing and quoting activities with the potential customers."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-define-financing-payment-methods"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Define Financing & Payment Methods"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-quote-sale"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-determine-taxability",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to determine the proper taxability of invoices to support the calculation and reporting of tax related transactions and record tax liabilities."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-determine-taxability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Determine Taxability & Record Tax Liabilities"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-billing"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-develop-monitor-revenue-plan",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to develop and monitor the revenue plan on the basis of past, actual and expected future sales, to guide quote development, support product allocation, and promotion development.  Additionally, this is a key part of monthly, quarterly, and annual planning and forecasting processes."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-develop-monitor-revenue-plan"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Develop & Monitor Revenue Plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-quote-sale"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-establish-collection-targets",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to determine collection targets used to optimize collections activities. This allows operations to focus resources on the accounts that are most likely to pay and help improve the effectiveness of the collections process by recovering a higher amount of outstanding balances."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-establish-collection-targets"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Establish Collection Targets"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-collections"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-establish-commercial-terms-contracts",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to establish and execute commercial contracts, licenses, agreements with customers and/or partners.  It incorporates the steps of drafting, approving, executing and sending the commercial contract with the commercial terms and conditions to be included in commercial contracts."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-establish-commercial-terms-contracts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Establish Commercial Terms & Contracts"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-quote-sale"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-establish-credit-limit-risk-code",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to assess the customer's creditworthiness in order to establish the customer's credit limit and assign a risk code (e.g., risk rating and risk category). The credit assessment is largely based on customer financials and third party credit agency scores."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-establish-credit-limit-risk-code"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Establish Credit Limit & Risk Code"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-customer-credit"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-execute-collections",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with collecting overdue receivables thru engagement with customers."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-execute-collections"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Execute Collections"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-collections"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-initiate-legal-action",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process includes the sub-processes associated with initiating and managing customer accounts where legal action has or is to be taken to address unpaid balances."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-initiate-legal-action"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Initiate Legal Action"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-collections"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-issue-quotes-renewals",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to initiate, issue and close quotes and renewals when requested by, or targeted to the customer for a particular product and service. It also includes managing responses to RFPs and creating sale contracts."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-issue-quotes-renewals"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Issue Quotes & Renewals"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/product-availability-allocations"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-quote-sale"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-commercial-policies",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with maintaining the underlying policies associated with commercial terms (e.g., payment terms, discounts, rebates).  It aims at establishing a common standard understanding of the commercial terms to establish contracts between seller, partners, and buyer."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-maintain-commercial-policies"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Maintain Commercial Policies"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-quote-sale"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-credit-policies",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to maintain the customer credit policies and aims at driving the strategic and tactical use of credit as a tool to support the sales strategy while managing credit related losses (i.e., bad debt) to the desired target."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-maintain-credit-policies"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Maintain Credit Policies"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-customer-credit"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-customer-master",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with the creation of a new customer and/or maintenance of current customers master data attributes.  The customer master retains the fundamental attributes that enable key activities across Orders & Fulfilment (e.g., order validation), Billing (e.g., invoice generation) and other areas across O2C (e.g., taxation)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-maintain-customer-master"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Maintain Customer Master"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-master-data-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-price-discount-master",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with managing and maintaining attributes associated with prices and discounts.  The maturity level of this environment influences directly the volume and impact of price related disputes."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-maintain-price-discount-master"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Maintain Price & Discount Master"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-master-data-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-product-master",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process contains the sub-processes associated with creating and maintaining all the product related attributes and is a key component supporting the order in-take supporting validation and accuracy."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-maintain-product-master"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Maintain Product Master"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-master-data-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-tax-master",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to populate and maintain key master data attributes that supports the effective and accurate calculation of indirect tax - which is usually maintained within a bolt-on environment outside of the customer and product master data environment."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-maintain-tax-master"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Maintain Tax Master"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-master-data-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-workflows",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to manage the rules and hierarchy associated with functioning of workflows across O2C - and it is fundamental to support enforcement of controls and approval hierarchy."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-maintain-workflows"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Maintain Workflows"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-master-data-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-manage-fulfillment",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process contains the sub-processes associated with fulfilling orders.  It is largely focused on the interactions between the order management team and the fulfillment team in support of accuracy, timeliness, and exceptions resolution."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-manage-fulfillment"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Manage Fulfillment"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/logistic-execution"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-order-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-manage-returns",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with managing product returns - including setting returns budget for return to stock (RTS) products as well as receiving, approving, and creating the return authorization (RA) across all return types (e.g., RTS, defective, shipment integrity)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-manage-returns"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Manage Returns"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-order-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-manage-unapplied-receipts",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with identifying and addressing unapplied receipts.  This includes activities associated with identifying, evaluating and addressing exceptions."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-manage-unapplied-receipts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Manage Unapplied Receipts"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-cash-application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-monitor-credit-against-limit",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to monitor, evaluate, and release credit order blocks - i.e., orders “held” in queue due to systematic holds triggered by credit based violations usually set based on the credit risk category (a customer master attribute).  It also triggers potential reviews and revisions of the credit limit."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-monitor-credit-against-limit"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Monitor Credit Against Limit"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-customer-credit"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-negotiate-settlements",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process includes the sub-processes associated with negotiated settlements with customers who are in an overdue position.  Reviews and approvals are sometimes part of the settlement process."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-negotiate-settlements"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Negotiate Settlements"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-collections"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-perform-appeasements",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to review, approve, issue, and manage customer / consumer related appeasement / concessions."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-perform-appeasements"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Perform Appeasements"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-disputes"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-perform-reconciliations-settlements",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with performing reconciliations and settlements largely associated with highly transactional environments where high frequency reconciliations (e.g., daily) are a key component of managing and conducting business (e.g., sales audit, credit card settlements, rebate settlements)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-perform-reconciliations-settlements"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Perform Reconciliations & Settlements"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-cash-application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-perform-revenue-accounting",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to review contracts to determine appropriate GAAP treatment and book the entries including revenue recognition, accruals (e.g., shipped but not billed) and to calculate, evaluate and record revenue impacting provisions or reserves (e.g., product returns, post-invoice discounts)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-perform-revenue-accounting"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Perform Revenue Accounting"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-close"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-process-bad-debt",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with calculating, evaluating, and determining proper bad debt reserve levels and recording respective accrual to bring bad debt reserves to required levels"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-process-bad-debt"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Process Bad Debt"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-close"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-receive-payments",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with the receiving of customer payment information - usually through a bank lock-box interface.  This is a fundamental input to support the cash application process (i.e., apply receipts)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-receive-payments"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Receive Payments"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/retail-payments"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-cash-application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-receive-remittance-advice",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with receiving of customer remittance information to support effective and efficient execution of cash application activities (i.e., apply receipts)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-receive-remittance-advice"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Receive Remittance Advice"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-cash-application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-receive-validate-queries",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to receive and validate a customer query / claim. A customer query / claim is usually associated with perceived errors associated with products (e.g., product type, quantity of products) which are largely classified as “shipment integrity” claims or pricing and discounts."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-receive-validate-queries"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Receive & Validate Queries"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/loss-control"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-disputes"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-reconcile-indirect-tax",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to reconcile indirect taxes and identify and resolve unreconciled items."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-reconcile-indirect-tax"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Reconcile Indirect Tax"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-close"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-review-credit-limit-risk-code",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to review the existing customers' creditworthiness to revise the customer's credit limit and risk code.  The credit assessment is conducted based on information from customer financials, third party credit agencies and past order / credit history with the organization."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-review-credit-limit-risk-code"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Review Credit Limit & Risk Code"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Realizes Establish Credit Limit & Risk Code (CM 1.3.7.4.2), whose scope includes periodic and event-triggered reviews of the limit and risk code (MPC-P10.2, EPM-DEC-001-0087). Monitor Credit Against Limit (CM 1.3.7.4.3) watches exposure against a limit and does not revise it."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-customer-credit"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-root-cause-action-plan",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes associated with analyzing valid claims and deductions with the purpose of identifying the root cause and inform upstream processes to take corrective action.  This is a fundamental capability needed to support continuous improvement across the end-to-end O2C process."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-root-cause-action-plan"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Develop Root Cause Analysis & Action Plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/feeds": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-commercial-policies"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-disputes"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-track-forecast-order",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to monitor the customer order status and respond to their inquiries including backorder management.  Additionally, the process also includes the use of the order book as a predictor of product demand and revenues."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-track-forecast-order"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Track & Forecast Order"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-order-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-validate-deductions",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process contains the sub-processes to initiate, analyze, and approve deductions. Deductions are initiated by the customer upon payment and are consequently managed and monitored. A valid and approved deduction requires no action while an invalid or rejected deduction triggers the action of a charge back to the customer."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-otc-validate-deductions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Validate Deductions"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-disputes"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/performance-tracking-analysis",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Track financial and operational performance of trades; through backcasting, compare actual results against the perfect-foresight optimum to quantify value leakage and identify root causes."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-performance-tracking-analysis"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Performance Tracking & Analysis"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Backcasting owns the Backcasting & Refining CI product; consumes margin outcomes and the planning line as baseline."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/operational-margin"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/feeds": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/market-intelligence-planning"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/measureLink": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--crack-spreads"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--distribution-cost-per-barrel"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--refining-opex-per-barrel"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--rm-margin-per-barrel"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measure-link/performance-tracking-analysis--turnaround-cost-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/backcasting-refining-ci"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/performance-management-backcasting"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/quality-assessment-blending",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Traders use lab data to assess crude quality, from assay data at loading or internal lab samples on receipt."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-quality-assessment-blending"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Quality Assessment & Blending Ops"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Lab/assay operations own the Quality Assurance product; parcel/cargo context and loss data consumed."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/loss-control"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/quality-assurance"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/product-quality-loss-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/rack-price-setting",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Calculate, approve, and publish competitive and profitable wholesale rack prices for the next sales cycle."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-rack-price-setting"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Rack Price Setting"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Wholesale rack publish informed by the master price SoR and margin targets."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/operational-margin"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/informs": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/risk-management-position-monitoring"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-6-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/channel-pricing-sales"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/retail-sales-payment",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Execute the final sale to the end consumer at branded retail sites, securely process payments, and capture granular transaction data. Applicability: where independent jobbers and dealers run the sites, as at MPC since it sold its company-operated retail in 2021 (MPC FY2025 Form 10-K, Item 1), they make the sale and set the pump price; for the brand owner this process is an external interface, not one it performs; the scope note is Claude's, under the delegation (EPM-DEC-001-0047, MPC-P07)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-retail-sales-payment"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Retail Sales & Payment"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Channel sales/payment capture owns Retail Payments; rack price is the critical input."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/retail-payments"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/channel-pricing-sales"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/risk-management-position-monitoring",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Runs in parallel to trading and scheduling: official EOD valuation of all positions against closing market prices; calculate and validate official daily P&L, VaR, and key risk metrics."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-risk-management-position-monitoring"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Risk Management and Position Monitoring"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Middle office owns the Commercial Risk product (positions, P&L, VaR) computed from trades and validated prices."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/commercial-risk-position-management"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/settlement-post-trade-reconciliation",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Finalize all financial aspects of wholesale and retail transactions, accurately allocate costs, and manage claims arising from physical discrepancies."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-settlement-post-trade-reconciliation"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Settlement and Post-Trade Reconciliation"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Back office settles trades against price SoRs and risk data. Loss Control and Retail Payments enter via claims/retail settlement."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/loopsTo": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/market-intelligence-planning"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/settlement-reconciliation"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/supply-procurement-strategy",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Based on market analysis and refinery needs, traders devise a procurement strategy: which crude grades/finished product to buy, in what quantities."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-supply-procurement-strategy"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Supply & Procurement Strategy"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Strategy formation needs current positions, risk appetite/limits, and the planning/optimization line."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-1-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/supply-trading-strategy"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/terminal-transport-operations",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Execute the planned physical movement and loading of bulk product safely and efficiently."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "p-terminal-transport-operations"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Terminal & Transport Operations"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Physical execution produces movement actuals (Logistic Execution); custody-transfer loss and quality data are critical operating inputs."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/consumes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/loss-control"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/quality-assurance"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/produces": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/logistic-execution"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/realizes": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-10"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/terminal-transport-execution"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/produces",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, produces; competency question 7"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "produces"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A data product, or a whole data product line, that the value-stream process owns or publishes. The process is the data product's owning process."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/realizes",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, linkedProcessIds"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "realizes"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A process-map process the value-stream process realizes or references. The process stays where the hierarchy puts it."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/relationship",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, relationship"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/MeasureLink"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "relationship"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "How the process relates to the measure, from the measure-relationship code list."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/sequence",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "sequence"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The stage's position in its value stream, from 1."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/sourceDomain",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0054"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStream"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "source domain"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The domain the value stream's source file names, kept as written. It is not mapped to the core business-domain list (EPM-DEC-001-0054)."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/execution-operations",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Physical movement, quality, wholesale and retail execution."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-execution-operations"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Execution & Operations"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/logistics-planning-scheduling"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/quality-assessment-blending"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/rack-price-setting"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/retail-sales-payment"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/terminal-transport-operations"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/market-strategy-formation",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "From market monitoring to executed deals."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-market-strategy-formation"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Market & Strategy Formation"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/deal-negotiation-capture"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/market-intelligence-planning"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/market-price-calculation-validation"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/supply-procurement-strategy"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-billing",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in the creation, distribution, and management of billings."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-billing"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Billing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-accounting-self-billing"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-create-distribute-bill"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-create-exception-invoice"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-determine-taxability"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-close",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in the close of the sub ledger, including rev rec, AR and revenue related provisions, and reconciliations."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-close"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Close"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-close-ar-sub-ledger"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-perform-revenue-accounting"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-process-bad-debt"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-reconcile-indirect-tax"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 9
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-collection",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in executing and managing collections - including short-term forecast."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-collection"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Collection"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-analyze-ar-aging"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-establish-collection-targets"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-execute-collections"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-initiate-legal-action"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-negotiate-settlements"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 7
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-credit-risk",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in assessing, measuring, and managing credit risk. It also includes maintaining policies and analyzing portfolio credit risk."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-credit-risk"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Credit & Risk"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-analyze-portfolio-credit-risk"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-customer-closure-reinstatement"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-establish-credit-limit-risk-code"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-credit-policies"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-monitor-credit-against-limit"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-review-credit-limit-risk-code"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-dispute",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in executing and managing disputes (i.e., claims and deductions) - including the analysis associated with identifying root cause and supporting upstream continuous improvement."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-dispute"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Dispute"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-create-credit-memo-chargeback"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-perform-appeasements"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-receive-validate-queries"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-root-cause-action-plan"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-validate-deductions"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 8
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-master-data",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses processes involved with the management and maintenance of key master data environments (i.e., Customer, Price & Discount, Product, and Tax) that are fundamental to enable the transactions across the end-to-end O2C process."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-master-data"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Master Data Mgmt."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-customer-master"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-price-discount-master"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-product-master"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-tax-master"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-workflows"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-order-fulfilment",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in key components of order management (i.e., capture & validation, allocation & release, monitoring and changing orders) and fulfillment.  In addition, it also addresses reverse orders (i.e., returns) and the analytics deployed across the order book."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-order-fulfilment"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Order & Fulfilment"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-allocate-release-order"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-capture-validate-order"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-change-cancel-order"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-manage-fulfillment"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-manage-returns"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-track-forecast-order"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 4
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-quote-sale",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved with supporting and executing commercial transactions (i.e., policies, terms & contracts, financing & payment methods, quotes & renewals) along with managing the revenue plan and analyzing customer profitability."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-quote-sale"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Quote & Sale"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-analyze-customer-profitability"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-define-financing-payment-methods"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-develop-monitor-revenue-plan"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-establish-commercial-terms-contracts"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-issue-quotes-renewals"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-maintain-commercial-policies"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-receipt",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "This process group houses the processes involved in the execution of receiving and applying payments, settling other tender type transactions (e.g., credit cards), and performing high frequency reconciliations (e.g., daily) in the course of the business."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-otc-receipt"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Receipt"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-apply-receipts"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-manage-unapplied-receipts"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-perform-reconciliations-settlements"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-receive-payments"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/otc-receive-remittance-advice"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 6
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/risk-performance-control",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/Stage"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Risk, settlement, and performance feedback into the next cycle."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "stg-risk-performance-control"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Risk, Performance, and Control"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/performance-tracking-analysis"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/risk-management-position-monitoring"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/process/settlement-post-trade-reconciliation"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sequence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stream/commercial-hydrocarbon-lifecycle",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStream"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "End-to-end commercial lifecycle for hydrocarbon supply, trading, logistics, channel sales, and control: market intelligence through deal execution, physical operations, pricing/retail, risk, settlement, and backcasting."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "vs-commercial-hydrocarbon-lifecycle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Commercial Hydrocarbon Lifecycle"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasStage": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/execution-operations"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/market-strategy-formation"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/risk-performance-control"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/outcome": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Profitable placement of crude/products with controlled risk, settled transactions, and learnings fed back to planning"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sourceDomain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Commercial"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/trigger": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Market/supply opportunity informed by strategic supply & demand plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapabilityInStream": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/channel-pricing-sales"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/commercial-risk-position-management"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/deal-capture-contracting"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/logistics-planning-scheduling"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/market-intelligence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/performance-management-backcasting"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/planning-optimization"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/price-management"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/product-quality-loss-management"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/settlement-reconciliation"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/supply-trading-strategy"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/terminal-transport-execution"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stream/order-to-cash",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/value-stream/ValueStream"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Customer-triggered value stream from master data readiness and quote through order, fulfillment, billing, cash application, collections, disputes, and sub-ledger close."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "vs-order-to-cash"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Order to Cash"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/hasStage": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-billing"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-close"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-collection"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-credit-risk"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-dispute"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-master-data"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-order-fulfilment"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-quote-sale"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/stage/otc-receipt"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/outcome": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Cash collected, disputes resolved, revenue recognized, AR sub-ledger closed"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/sourceDomain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Commercial"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/trigger": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Customer quote request / order"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/value-stream/usesCapabilityInStream": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-billing"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-cash-application"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-close"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-collections"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-customer-credit"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-disputes"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-master-data-management"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-order-management"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/capability/otc-quote-sale"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/trigger",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStream"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "trigger"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What starts the value stream."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, capabilityId"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStreamProcess"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "uses capability"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The capability the value-stream process uses."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/usesCapabilityInStream",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/value_stream.schema.json, capabilities"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/ValueStream"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "uses capability"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/Capability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A capability the value stream's stages use."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "Value stream Commercial Hydrocarbon Lifecycle, business_architecture/business_process/value_stream_commercial_lifecycle.json, generated 2026-08-05, from: Commercial Business Process Lifecycle slide (stages 1-3, processes a-l); EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (Domain > Value Stream > Stage > Capability > Process); Industry grounding: ETRM front/middle/back office lifecycle; downstream commercial value chain (trading & supply, planning & optimization, marketing/pricing/retail)"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "Value stream Order to Cash, business_architecture/business_process/value_stream_order_to_cash.json, generated 2026-08-05, from: Domains/O2C/02_O2C Process Taxonomy.pptx (9 process groups / capabilities, 46 L2 process definitions); EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (Commercial O2C value stream pattern); downstream_process_map.json CM 1.3.7 / CM 1.3.8 (linkedProcessIds)"
+   }
+  ]
+ }
+]
