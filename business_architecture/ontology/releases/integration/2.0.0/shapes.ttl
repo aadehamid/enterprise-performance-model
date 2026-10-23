@@ -13,6 +13,20 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+authsh:AnyTier a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path auth:evidenceTier ] ;
+    sh:targetSubjectsOf auth:evidenceTier .
+
+authsh:CitedSourceTier a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "A cited source belongs to exactly one evidence tier." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path auth:evidenceTier ] ;
+    sh:targetObjectsOf dcterms:source .
+
 authsh:Tier a sh:NodeShape ;
     sh:property [ sh:datatype xsd:integer ;
             sh:maxCount 1 ;
@@ -20,15 +34,9 @@ authsh:Tier a sh:NodeShape ;
             sh:minCount 1 ;
             sh:minInclusive 1 ;
             sh:path auth:rank ] ;
-    sh:targetSubjectsOf auth:rank .
-
-authsh:TieredSource a sh:NodeShape ;
-    sh:property [ sh:maxCount 1 ;
-            sh:message "A source belongs to exactly one evidence tier." ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:path auth:evidenceTier ] ;
-    sh:targetSubjectsOf auth:evidenceTier .
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes authsh:prefixes ;
+            sh:select "SELECT ?this WHERE { ?this skos:inScheme auth:EvidenceTier }" ] .
 
 shp:Binding a sh:NodeShape ;
     sh:class dp:DataProduct ;
@@ -61,11 +69,33 @@ shp:Rule a sh:NodeShape ;
             sh:path dcterms:bibliographicCitation ] ;
     sh:targetClass con:Rule .
 
+plcsh:AnyPlacementKind a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path plc:placementKind ] ;
+    sh:targetSubjectsOf plc:placementKind .
+
 plcsh:PlacingProperty a sh:NodeShape ;
     sh:property [ sh:maxCount 1 ;
             sh:message "A placing property has exactly one placement kind." ;
             sh:minCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:path plc:placementKind ] ;
-    sh:targetSubjectsOf plc:placementKind .
+    sh:targetNode dp:anchoredIn,
+        dp:consumedBy,
+        dp:producedBy,
+        kpi:informsProcess,
+        <https://w3id.org/lsc/ontology/modules/lane/officeLane>,
+        <https://w3id.org/lsc/ontology/modules/market-data/region>,
+        <https://w3id.org/lsc/ontology/modules/system/supports>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/consumes>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/measureLink>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/produces>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/realizes>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/usesCapability> .
+
+authsh:prefixes sh:declare [ sh:namespace "https://w3id.org/lsc/ontology/modules/authority/"^^xsd:anyURI ;
+            sh:prefix "auth" ],
+        [ sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ;
+            sh:prefix "skos" ] .
 

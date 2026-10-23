@@ -14,7 +14,7 @@
         <https://w3id.org/lsc/ontology/modules/data-product/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/data-product/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/integration/1.0.0>,
-        <https://w3id.org/lsc/ontology/modules/integration/1.0.1>,
+        <https://w3id.org/lsc/ontology/modules/integration/2.0.0>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.0.1>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.1.0>,
@@ -111,14 +111,14 @@
         <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.0/integration.ttl>,
         <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.0/shapes.ttl> .
 
-<https://w3id.org/lsc/ontology/modules/integration/1.0.1> a dcat:Dataset ;
+<https://w3id.org/lsc/ontology/modules/integration/2.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/integration> ;
     dcterms:issued "2026-10-23"^^xsd:date ;
-    dcterms:title "LSC Integration Vocabularies 1.0.1"@en ;
-    owl:versionInfo "1.0.1" ;
-    dcat:distribution <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/integration.jsonld>,
-        <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/integration.ttl>,
-        <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/shapes.ttl> .
+    dcterms:title "LSC Integration Vocabularies 2.0.0"@en ;
+    owl:versionInfo "2.0.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/integration.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/integration.ttl>,
+        <https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/shapes.ttl> .
 
 <https://w3id.org/lsc/ontology/modules/kpi/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/kpi> ;
@@ -376,16 +376,16 @@
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.0/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
-<https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/integration.jsonld> a dcat:Distribution ;
-    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/integration.jsonld> ;
+<https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/integration.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/integration.jsonld> ;
     dcat:mediaType "application/ld+json" .
 
-<https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/integration.ttl> a dcat:Distribution ;
-    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/integration.ttl> ;
+<https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/integration.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/integration.ttl> ;
     dcat:mediaType "text/turtle" .
 
-<https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/shapes.ttl> a dcat:Distribution ;
-    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.1/shapes.ttl> ;
+<https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/2.0.0/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
 <https://w3id.org/lsc/ontology/modules/kpi/releases/1.0.0/kpi.jsonld> a dcat:Distribution ;

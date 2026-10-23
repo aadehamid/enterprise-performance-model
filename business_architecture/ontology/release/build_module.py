@@ -164,11 +164,12 @@ MODULES = {
     "integration": {
         "title": "LSC Integration Vocabularies",
         "description": "The rules that tie the modules together: which placing properties certify and which give context (placement), the evidence tier of every cited source (authority), and what a consumer may bind, answer and must refuse (consumer). Each vocabulary keeps its own namespace (Steps 7, 9 and 11).",
-        # 1.0.1 is a patch approved with the close-out releases: the five projection fixes (ranges for
-        # plc:placementKind and con:reliesOn, cardinality for plc:placementKind, auth:rank and auth:evidenceTier, in
-        # two new shape files packaged with consumer's), and it requires the current releases (EPM-DEC-001-0088, 0094).
-        "version": "1.0.1", "stage": None, "issued": "2026-10-23",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
+        # 2.0.0 is a major the decision owner approved: the five projection fixes (ranges for plc:placementKind and
+        # con:reliesOn, whose definition narrows from property or class to property, which makes it a major;
+        # cardinality for plc:placementKind, auth:rank and auth:evidenceTier, in two new shape files packaged with
+        # consumer's), and it requires the current releases (EPM-DEC-001-0088, 0094).
+        "version": "2.0.0", "stage": None, "issued": "2026-10-23",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Major: integration 2.0.0 (Recommended)"),
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
         "shapes": ["consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl"],

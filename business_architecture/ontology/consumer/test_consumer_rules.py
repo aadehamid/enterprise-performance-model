@@ -62,7 +62,7 @@ class Rules(unittest.TestCase):
             "no-values": {KPI.basis},
             "no-crack-from-legs": {MKT.leg, MKT.seriesOf},
             "no-report-as-kpi": {KPI.measureKind, KPI.kpiCandidate},
-            # EPM-DEC-001-0068; since integration 1.0.1 the process concept is an rdfs:seeAlso, not a reliesOn (EPM-DEC-001-0094).
+            # EPM-DEC-001-0068; since integration 2.0.0 the process concept is an rdfs:seeAlso, not a reliesOn (EPM-DEC-001-0094).
             "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/modules/party/roleType")},
             "no-context-as-ownership": {PLC.placementKind},
             "what-a-measure-counts": {POP.includes, POP.excludes, POP.populationEvidence},  # EPM-DEC-001-0062

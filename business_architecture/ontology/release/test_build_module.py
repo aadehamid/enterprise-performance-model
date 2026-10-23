@@ -39,7 +39,7 @@ APPROVALS["value-stream"] = CLOSEOUT  # value-stream 1.1.0, EPM-DEC-001-0090
 APPROVALS["data-product"] = CLOSEOUT  # data-product 1.1.0, EPM-DEC-001-0091
 APPROVALS["party"] = CLOSEOUT  # party 1.1.0, EPM-DEC-001-0092
 APPROVALS["kpi"] = CLOSEOUT  # kpi 1.1.1, EPM-DEC-001-0093
-APPROVALS["integration"] = CLOSEOUT  # integration 1.0.1, EPM-DEC-001-0094
+APPROVALS["integration"] = (CLOSEOUT[0], "Major: integration 2.0.0 (Recommended)")  # EPM-DEC-001-0094
 
 
 def approval_holds(name, m):
@@ -168,7 +168,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("system"), {"core": "2.2.0"})
         self.assertEqual(bm.dependencies("lane"), {"core": "2.2.0"})
         self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.0.1"})
-        # EPM-DEC-001-0078: integration names terms of each of these releases; 1.0.1 requires the current ones (0094).
+        # EPM-DEC-001-0078: integration names terms of each of these releases; 2.0.0 requires the current ones (0094).
         self.assertEqual(bm.dependencies("integration"), {
             "core": "2.3.0", "organization": "2.0.0", "kpi": "1.1.1", "data-product": "1.1.0",
             "value-stream": "1.1.0", "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.1.0"})
@@ -315,7 +315,7 @@ class EarlierReleases(unittest.TestCase):
     def test_released_dependents_stay_on_kpi_1_0_1(self):
         # value-stream 1.0.0, market-data and integration were released against kpi 1.0.1 and keep naming it;
         # value-stream 1.1.0 requires kpi 1.1.0 (EPM-DEC-001-0090), and its 1.0.0 manifest is unchanged.
-        # integration 1.0.1 requires kpi 1.1.1 (EPM-DEC-001-0094); its 1.0.0 manifest still names 1.0.1.
+        # integration 2.0.0 requires kpi 1.1.1 (EPM-DEC-001-0094); its 1.0.0 manifest still names 1.0.1.
         self.assertEqual(bm.dependencies("market-data")["kpi"], "1.0.1")
         self.assertEqual(bm.released_requires("integration", "1.0.0")["kpi"], "1.0.1")
         self.assertEqual(bm.released_requires("value-stream", "1.0.0")["kpi"], "1.0.1")
@@ -338,7 +338,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertFalse([s for s in released.subjects() if str(s).startswith(bm.MODULES_NS + "integration")])
 
     def test_integration_ships_its_own_shapes(self):
-        # Codex round 1: the package's shapes are the module's own, not whatever the builder names. Since 1.0.1 they
+        # Codex round 1: the package's shapes are the module's own, not whatever the builder names. Since 2.0.0 they
         # are the consumer, placement and authority shapes together (EPM-DEC-001-0094); 1.0.0 shipped consumer's only.
         packaged = Graph().parse(os.path.join(bm.release_dir("integration"), "shapes.ttl"))
         source = Graph()
@@ -372,8 +372,8 @@ class EarlierReleases(unittest.TestCase):
     def test_the_close_out_releases_carry_the_close_out_approval(self):
         # EPM-DEC-001-0088: the decision owner approved the six close-out releases together.
         for name, version in (("value-stream", "1.1.0"), ("data-product", "1.1.0"), ("party", "1.1.0"), ("kpi", "1.1.1"),
-                              ("integration", "1.0.1")):
-            self.assertEqual(bm.MODULES[name]["approval"], CLOSEOUT)
+                              ("integration", "2.0.0")):
+            self.assertEqual(bm.MODULES[name]["approval"], APPROVALS[name])  # integration's words differ (0094)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-23"))
 

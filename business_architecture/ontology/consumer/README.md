@@ -10,4 +10,4 @@ How a catalog row binds a Named KPI (competency question 35), and what a graph o
 
 No catalog row binds a measure yet: no source says which data product publishes which measure. The binding is the pattern a catalog uses when it does.
 
-Released in `integration` 1.0.0 on 2026-10-22, with `placement` and `authority`, the shapes included (EPM-DEC-001-0078): the package in `../releases/integration/1.0.0/`. *2026-10-23:* `integration` 1.0.1 (`../releases/integration/1.0.1/`): `con:reliesOn` takes `rdfs:range rdf:Property`, and one rule's process concept moves to `rdfs:seeAlso` (EPM-DEC-001-0094).
+Released in `integration` 1.0.0 on 2026-10-22, with `placement` and `authority`, the shapes included (EPM-DEC-001-0078): the package in `../releases/integration/1.0.0/`. *2026-10-23:* `integration` 2.0.0 (`../releases/integration/2.0.0/`): `con:reliesOn` takes `rdfs:range rdf:Property`, and one rule's process concept moves to `rdfs:seeAlso` (EPM-DEC-001-0094).

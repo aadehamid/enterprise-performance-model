@@ -24,7 +24,7 @@
    - `data-product` 1.1.0: the Customer Master data product;
    - `party` 1.1.0: the product values with their mappings, the onboarding stage linked to the new process, and its 8 projection fixes;
    - `kpi` 1.1.1: a range for `pop:populationEvidence`;
-   - `integration` 1.0.1: its 5 projection fixes.
+   - `integration` 1.0.1: its 5 projection fixes. *2026-10-23:* released as 2.0.0, a major, because one fix narrows a published definition; the decision owner chose it (EPM-DEC-001-0094).
 3. **Codex gives the independent review** and the Cursor bot the PR verdict, while Pi has no usage.
 
 The question put to the decision owner said 7 fixes for party and 3 for integration. `projection/pipeline.py` lists 8 and 5: party's ranges for `evidenceInput`, `customerRole` and `carries` and cardinality for `plays`, `mpcClassification`, `implements`, `governedBy` and `feeds`; integration's range and cardinality for `placementKind`, a range for `reliesOn`, and cardinality for `authority:rank` and `authority:evidenceTier`. Claude told the decision owner straight after the answer, and later asked them to approve the corrected counts; they did: "Approve 8 and 5 (Recommended)".

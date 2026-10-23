@@ -1,9 +1,9 @@
 {
   "module": "integration",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "release_candidate": false,
   "ontology_iri": "https://w3id.org/lsc/ontology/modules/integration",
-  "version_iri": "https://w3id.org/lsc/ontology/modules/integration/1.0.1",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/integration/2.0.0",
   "depends_on": {
     "core": "2.3.0",
     "organization": "2.0.0",
@@ -29,10 +29,10 @@
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md"
   },
   "files": {
-    "CHANGELOG.md": "76d3a0c0d2df2fde1ce4f486a068e733a71ec7c18e0f2924cd3dc5f07be39fbc",
-    "catalog.ttl": "e9fac623be18b6b0972dbb79b4fe26bd292d9e4e4c2d2631186b668040a5b518",
-    "integration.jsonld": "7f5621dc18bbcb140e04d4dfadac9e6d198fe84198d436fa21e3b7d312df9694",
-    "integration.ttl": "47c70cf642bcaea57c75906072bda9b1dd67c482a02dda8224d48f5ebb1feafc",
-    "shapes.ttl": "ff7abc3fe9d3ab6a4f2ef0d07b13a6874d8d82b25979b9d8726cb686949a1da9"
+    "CHANGELOG.md": "382fd02a520d3cde9c1eecd6481058d4fcbe60284f1f84b39b0b1fe739abf436",
+    "catalog.ttl": "ea7d4059374cc73b2c44bffbff386efc26052c089323921a303cc853c27ddad4",
+    "integration.jsonld": "a8bcbaba677d55db89f783f4ec423cb32506cd7aaf6d4fc94c613dae51fbfcc8",
+    "integration.ttl": "2a480bb76303585c225da367d342067c20921d8591a6d255bfe9b25911691ce5",
+    "shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d"
   }
 }

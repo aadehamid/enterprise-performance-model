@@ -363,7 +363,7 @@
   "http://www.w3.org/2004/02/skos/core#changeNote": [
    {
     "@language": "en",
-    "@value": "integration 1.0.1 (2026-10-23): the range is rdf:Property, and the definition says property, not property or class; every value was a property except one rule's process concept, which moved to rdfs:seeAlso (EPM-DEC-001-0094)."
+    "@value": "integration 2.0.0 (2026-10-23): the range is rdf:Property, and the definition says property, not property or class; every value was a property except one rule's process concept, which moved to rdfs:seeAlso (EPM-DEC-001-0094)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#definition": [
@@ -1014,12 +1014,12 @@
   ],
   "http://www.w3.org/2002/07/owl#versionIRI": [
    {
-    "@id": "https://w3id.org/lsc/ontology/modules/integration/1.0.1"
+    "@id": "https://w3id.org/lsc/ontology/modules/integration/2.0.0"
    }
   ],
   "http://www.w3.org/2002/07/owl#versionInfo": [
    {
-    "@value": "1.0.1"
+    "@value": "2.0.0"
    }
   ]
  },

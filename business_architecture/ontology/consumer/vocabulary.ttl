@@ -45,7 +45,7 @@ con:reliesOn a owl:ObjectProperty ;
     rdfs:label "relies on"@en ;
     rdfs:domain con:Rule ; rdfs:range rdf:Property ;
     skos:definition "A property the rule rests on: one an answer reads, or whose absence makes a refusal necessary."@en ;
-    skos:changeNote "integration 1.0.1 (2026-10-23): the range is rdf:Property, and the definition says property, not property or class; every value was a property except one rule's process concept, which moved to rdfs:seeAlso (EPM-DEC-001-0094)."@en ;
+    skos:changeNote "integration 2.0.0 (2026-10-23): the range is rdf:Property, and the definition says property, not property or class; every value was a property except one rule's process concept, which moved to rdfs:seeAlso (EPM-DEC-001-0094)."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0061"@en .
 
 con:RuleKind a skos:ConceptScheme ; rdfs:label "rule kind"@en ;

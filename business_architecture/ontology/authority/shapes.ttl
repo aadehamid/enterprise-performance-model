@@ -1,18 +1,30 @@
-# SHACL shapes for the authority vocabulary (EPM-DEC-001-0059). Added in integration 1.0.1 to state the
-# cardinality of auth:rank and auth:evidenceTier (EPM-DEC-001-0036, 0094).
+# SHACL shapes for the authority vocabulary (EPM-DEC-001-0059). Added in integration 2.0.0 to state the
+# cardinality of auth:rank and auth:evidenceTier (EPM-DEC-001-0036, 0094). Each required-value shape selects its
+# nodes without the property it requires, so a node that loses its value is still checked.
 @prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix authsh: <https://w3id.org/lsc/ontology/modules/authority/shapes/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-# Each evidence tier has exactly one rank, from 1.
+authsh:prefixes sh:declare [ sh:prefix "auth" ; sh:namespace "https://w3id.org/lsc/ontology/modules/authority/"^^xsd:anyURI ] ,
+    [ sh:prefix "skos" ; sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] .
+
+# Each evidence tier (a concept of the tier scheme) has exactly one rank, from 1.
 authsh:Tier a sh:NodeShape ;
-    sh:targetSubjectsOf auth:rank ;
+    sh:target [ a sh:SPARQLTarget ; sh:prefixes authsh:prefixes ;
+                sh:select "SELECT ?this WHERE { ?this skos:inScheme auth:EvidenceTier }" ] ;
     sh:property [ sh:path auth:rank ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
                   sh:message "An evidence tier has exactly one rank, from 1." ] .
 
-# Each cited source belongs to exactly one tier.
-authsh:TieredSource a sh:NodeShape ;
-    sh:targetSubjectsOf auth:evidenceTier ;
+# Each cited source (the object of a dcterms:source anywhere in the graph) belongs to exactly one tier.
+authsh:CitedSourceTier a sh:NodeShape ;
+    sh:targetObjectsOf dcterms:source ;
     sh:property [ sh:path auth:evidenceTier ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
-                  sh:message "A source belongs to exactly one evidence tier." ] .
+                  sh:message "A cited source belongs to exactly one evidence tier." ] .
+
+# Anything else with a tier has at most one.
+authsh:AnyTier a sh:NodeShape ;
+    sh:targetSubjectsOf auth:evidenceTier ;
+    sh:property [ sh:path auth:evidenceTier ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .

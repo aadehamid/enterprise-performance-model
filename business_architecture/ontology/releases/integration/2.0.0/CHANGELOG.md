@@ -1,12 +1,12 @@
 # integration changelog
 
-## 1.0.1 (2026-10-23)
+## 2.0.0 (2026-10-23)
 
-A patch: the five projection fixes, and no IRI changes. Approved by the decision owner with the close-out releases ("Approve all six (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`; EPM-DEC-001-0088, 0094).
+A major: the five projection fixes, and no IRI changes. `con:reliesOn`'s definition narrows from property or class to property, which makes it a major. Approved by the decision owner: "Major: integration 2.0.0 (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md` (EPM-DEC-001-0088, 0094).
 
-- [patch] `plc:placementKind` takes `rdfs:range skos:Concept`, and a shape states it: exactly one per placing property (`placement/shapes.ttl`).
-- [patch] `con:reliesOn` takes `rdfs:range rdf:Property`, and its definition says property, not property or class. Every value was a property except the process concept CM 1.3.7.1.1 on the rule "Name the customer without a role", which moves to `rdfs:seeAlso` on that rule.
-- [patch] Shapes state the cardinality of `auth:rank` (exactly one per tier, from 1) and `auth:evidenceTier` (exactly one per source) (`authority/shapes.ttl`).
+- [minor] `plc:placementKind` takes `rdfs:range skos:Concept`, and a shape states it: exactly one for each of the twelve placing properties (`placement/shapes.ttl`).
+- [major] `con:reliesOn` takes `rdfs:range rdf:Property`, and its definition says property, not property or class. Every value was a property except the process concept CM 1.3.7.1.1 on the rule "Name the customer without a role", which moves to `rdfs:seeAlso` on that rule.
+- [minor] Shapes state the cardinality of `auth:rank` (exactly one per tier, from 1) and `auth:evidenceTier` (exactly one per source) (`authority/shapes.ttl`).
 - The package's `shapes.ttl` holds the consumer, placement and authority shapes together.
 - It requires the current releases: core 2.3.0, organization 2.0.0, kpi 1.1.1, data-product 1.1.0, value-stream 1.1.0, system 1.0.0, lane 1.0.0, market-data 1.0.0 and party 1.1.0.
 

@@ -1,0 +1,48 @@
+# EPM-DEC-001-0094: Release `integration` 2.0.0; the projection's list of release gaps is empty
+
+| Field | Value |
+|---|---|
+| Status | Decided (the decision owner, 2026-10-23, for the release and for making it a major; the package's contents delegated under EPM-DEC-001-0028) |
+| Date | 2026-10-23 |
+| Questions | The sixth and last close-out release (EPM-DEC-001-0088): integration's five projection gaps (EPM-DEC-001-0036) |
+| Source | Claude Code session of 2026-10-23; `answers-2026-10-23-closeout.md` |
+
+## Context
+
+After value-stream 1.1.0, party 1.1.0 and kpi 1.1.1, five gaps remained in the projection's list, all in integration 1.0.0 (EPM-DEC-001-0036, 0090, 0092, 0093): no range for `plc:placementKind` or `con:reliesOn`, and no shape stating the cardinality of `plc:placementKind`, `auth:rank` or `auth:evidenceTier`. `con:reliesOn` is defined as "the property or class an answer reads"; 24 of its 25 values are properties, and one, on the rule "Name the customer without a role", is the process concept CM 1.3.7.1.1, which is neither.
+
+## Decision
+
+**The decision owner's approval:** "Approve all six (Recommended)", with the counts corrected to five integration fixes: "Approve 8 and 5 (Recommended)". The release was approved as a patch, 1.0.1. The independent review held it: narrowing `con:reliesOn`'s published definition from property or class to property is a changed meaning, which the playbook makes a major release (`ontology-playbook.md`, Appendix B). Claude asked again, and the decision owner chose "Major: integration 2.0.0 (Recommended)".
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+1. **A major release, 2.0.0, issued 2026-10-23.** No IRI changes; `con:reliesOn`'s meaning narrows (item 3). No class value was ever used, and nothing consumes the ontology yet.
+2. **`plc:placementKind` takes `rdfs:range skos:Concept`**, the type of the placement-kind values. `placement/shapes.ttl` names the twelve placing properties EPM-DEC-001-0058 classifies and states exactly one kind for each, so a property that loses its kind still fails; any other property with a kind has at most one.
+3. **`con:reliesOn` takes `rdfs:range rdf:Property`,** and its definition says property, not property or class, with a change note. The one value that was not a property, CM 1.3.7.1.1, moves to `rdfs:seeAlso` on its rule, so the rule still points to it. `dcterms:references` was tried first; the consumer shapes read its object as a cited source. The narrowed definition makes the release a major.
+4. **`authority/shapes.ttl` states** exactly one `auth:rank` per tier (an integer from 1), selecting the tiers by their scheme, and exactly one `auth:evidenceTier` per cited source, selecting the sources by their IRI namespace, so a node that loses its value still fails. All 5 tiers and 65 sources conform, and a test pins each tier's rank: process-authority 1, mpc 2, peers 3, industry 4, framework 5.
+5. **The package's `shapes.ttl` holds the consumer, placement and authority shapes together.** `release/build_module.py` gains an `own_shapes` count, so a module can package more than one shape file of its own; every other module keeps one.
+6. **It requires the current releases:** core 2.3.0, organization 2.0.0, kpi 1.1.1, data-product 1.1.0, value-stream 1.1.0, system 1.0.0, lane 1.0.0, market-data 1.0.0 and party 1.1.0. 1.0.0 stays on disk as released.
+7. **The projection** loads integration 2.0.0, and its list of release gaps is empty: the 16 gaps of EPM-DEC-001-0036's amendment of 2026-10-22 are all closed. The rerun gave 34,058 triples, 3,971 nodes and 19,843 relationships, no SHACL violation in the graph over 602 in-graph constraints (the mutant still caught), an empty round-trip diff and equal hashes for the sorted and shuffled loads.
+
+## Alternatives considered
+
+- **`owl:Thing` as `con:reliesOn`'s range.** Not chosen: it is concrete only in name and says nothing about the values.
+- **Keep property or class and a patch, 1.0.1, with `con:reliesOn` left on the exception list.** Not chosen by the decision owner.
+- **Split `con:reliesOn` into a property link and a concept link.** Not chosen: it adds a property for one value, and the rule's link to the concept is context, which `rdfs:seeAlso` states.
+
+## The decision owner's recorded words
+
+From `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`: "Approve all six (Recommended)", "Approve 8 and 5 (Recommended)" and "Major: integration 2.0.0 (Recommended)".
+
+## Evidence
+
+- `placement/vocabulary.ttl`, `consumer/vocabulary.ttl`, `authority/vocabulary.ttl`, `authority/source-tiers.ttl`; `consumer/shapes.ttl`.
+- EPM-DEC-001-0036, 0058, 0059, 0061, 0078, 0088, 0090, 0092, 0093.
+
+## Consequences
+
+- `releases/integration/2.0.0/` is written; `scripts/check.sh` fails unless it equals a fresh build.
+- `projection/pipeline.py`'s `RELEASE_EXCEPTIONS` is empty; a new gap fails the build until a release closes it or it is listed with its fix.
+- Tag `integration-v2.0.0` after the merge.
+- EPM-DEC-001-0088, which approved this release as 1.0.1, carries a dated note.

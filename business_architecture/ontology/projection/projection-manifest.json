@@ -1,10 +1,10 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "c5d73b4b0e2ad11a8b0724ef1105cfbba9cc887e55c5724eaa50132f80e78384",
+  "input_fingerprint": "a3428e9333e3817fe3b3985d49b06a2401414e7c43f065d027abbc623ed771c4",
   "inputs": {
     "releases/core/2.3.0/core.ttl": "ebf7be2b6e65df2fc16e6af79af55f4d6a6b36ae652cf3823153b6082625c01e",
     "releases/data-product/1.1.0/data-product.ttl": "1aba055c2e2e53c33e857b0ed5e65de8df5cab9f039dabc863f8c6e11f4d8af8",
-    "releases/integration/1.0.1/integration.ttl": "47c70cf642bcaea57c75906072bda9b1dd67c482a02dda8224d48f5ebb1feafc",
+    "releases/integration/2.0.0/integration.ttl": "2a480bb76303585c225da367d342067c20921d8591a6d255bfe9b25911691ce5",
     "releases/kpi/1.1.1/kpi.ttl": "02ccaffa3c52d48724201633ebd4efd4d5b747c82a3f4fd97cfa983ac5e9bffb",
     "releases/lane/1.0.0/lane.ttl": "fbd5fb5f14cb7fa700bcc1c517af55fdf1b18cc46e6a959ff8d28c72b6395e7e",
     "releases/market-data/1.0.0/market-data.ttl": "7dae8ac0768cf230495a827b85e2e9e91a3125aaa97e7f9237d6146048b0ed6b",
@@ -21,7 +21,7 @@
     "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
     "releases/core/2.3.0/shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680",
     "releases/data-product/1.1.0/shapes.ttl": "5cef5ecad215a39ceda7ee113e68eaf78cfb5aee84bc7eb085d0ccd5ba5bd2fd",
-    "releases/integration/1.0.1/shapes.ttl": "ff7abc3fe9d3ab6a4f2ef0d07b13a6874d8d82b25979b9d8726cb686949a1da9",
+    "releases/integration/2.0.0/shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d",
     "releases/kpi/1.1.1/shapes.ttl": "b304afbf2f20ab9be97410c9fb129d7e030da33a8f58a582255c25253e3525f0",
     "releases/lane/1.0.0/shapes.ttl": "f1afea34b3232b1c07eb66667981d8c22bd6eaab5351e2570ad1af97f3626b94",
     "releases/market-data/1.0.0/shapes.ttl": "6d377fb7cf400d6c627027bb5de29c1141157ace54185046c8819d8aedee4535",
