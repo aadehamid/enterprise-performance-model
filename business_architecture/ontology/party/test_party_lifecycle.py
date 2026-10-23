@@ -45,7 +45,8 @@ class Lifecycle(unittest.TestCase):
     def test_each_stage_and_its_processes(self):
         expected = {
             "prospect": {"CM-1-3-6-2-1", "CM-1-3-6-6-1", "CM-1-3-7-4-2"},
-            "onboarding": {"CM-1-3-7-4-6", "CM-1-3-7-4-2", "CM-1-3-7-1-1", "CM-1-3-7-2-1"},
+            # CM 1.3.7.1.7 since 2026-10-23 (MPC-P10.1, EPM-DEC-001-0087, 0092).
+            "onboarding": {"CM-1-3-7-4-6", "CM-1-3-7-4-2", "CM-1-3-7-1-1", "CM-1-3-7-2-1", "CM-1-3-7-1-7"},
             "payment-management": {"CM-1-3-8-2-1", "CM-1-3-8-2-3", "CM-1-3-8-3-2"},
             "risk-management": {"CM-1-3-7-4-3", "CM-1-3-7-4-4"},
             "relationship-management": {"CM-1-3-6-2-2", "CM-1-3-7-5-5", "CM-1-3-7-2-6", "CM-1-3-7-4-2"},

@@ -24,7 +24,7 @@ PACKAGES = [
     ("data-product", "1.0.0"), ("data-product", "1.1.0"), ("integration", "1.0.0"),
     ("kpi", "1.0.0"), ("kpi", "1.0.1"), ("kpi", "1.1.0"),
     ("lane", "1.0.0"), ("market-data", "1.0.0"),
-    ("organization", "1.0.0"), ("organization", "2.0.0"), ("party", "1.0.0"),
+    ("organization", "1.0.0"), ("organization", "2.0.0"), ("party", "1.0.0"), ("party", "1.1.0"),
     ("ref-mpc", "1.0.0"), ("ref-mpc", "1.1.0"), ("ref-mpc", "1.2.0"),
     ("system", "1.0.0"), ("value-stream", "1.0.0"), ("value-stream", "1.1.0"),
 ]

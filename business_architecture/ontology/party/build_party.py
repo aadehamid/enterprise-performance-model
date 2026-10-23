@@ -18,9 +18,9 @@ names a listed system, a category, an entity of the module and, if any, a shared
 Each flow must carry something; each source must have a note (blank text counts as none) and name a party role, customer
 class, line of business or party type; and every cited input must be one of the seven.
 
-lifecycle.csv links each business lifecycle stage to the core 2.1.0 processes that do its work,
+lifecycle.csv links each business lifecycle stage to the core 2.3.0 processes that do its work,
 each system stage to the customer systems that hold the record, and business stages to the system
-stages they span (EPM-DEC-001-0070). The build fails unless every process is in core 2.1.0, every
+stages they span (EPM-DEC-001-0070). The build fails unless every process is in core 2.3.0, every
 system is a customer system, only a business stage links to processes and system stages, only a
 system stage links to systems, every stage has a link, no link is listed twice, and each stage has
 exactly the links EPM-DEC-001-0070 decides, written out in DECIDED_LIFECYCLE.
@@ -39,7 +39,7 @@ TABLE = os.path.join(HERE, "code-lists.csv")
 OUTPUT = os.path.join(HERE, "code-lists.ttl")
 SYSTEMS_OUTPUT = os.path.join(HERE, "systems.ttl")
 LIFECYCLE_OUTPUT = os.path.join(HERE, "lifecycle.ttl")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.1.0", "core.ttl")
+CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 SYSTEM_MODULE = os.path.join(HERE, "..", "system", "systems.csv")
 SYSTEM = Namespace("https://w3id.org/lsc/ontology/modules/system/system/")
 ENTITIES = ("Party", "ExternalIdentifier", "Address", "ContactPoint", "PartyRole", "PartyRelationship",
@@ -69,7 +69,14 @@ SCHEMES = {
     "lifecycle-stage": ("customer lifecycle stages", "The six business stages of a customer's life with the company, from prospect to offboarding.", "EPM-DEC-001-0070"),
     "system-stage": ("customer system stages", "The five stages of a customer's record across the systems, from the first record to settlement.", "EPM-DEC-001-0070"),
     "sourcing-kind": ("customer sourcing kinds", "How a system relates to a kind of customer: where it starts, where it is set up, or a source of it.", "EPM-DEC-001-0069"),
+    "product": ("products", "The refined products the company makes and sells, as MPC's FY2025 Form 10-K names them: its six refinery product groups and the products it names under them, and renewable diesel. Each value is a party:Product.", "MPC FY2025 Form 10-K, Item 1; business_architecture/reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 4; EPM-DEC-001-0088; EPM-DEC-001-0092"),
 }
+# The product values' mappings to the Open Energy Ontology, and their PIDX product families (EPM-DEC-001-0092).
+MAPPINGS = os.path.join(HERE, "product-mappings.csv")
+PIDX = os.path.join(HERE, "pidx-families.csv")
+OEO = Namespace("https://openenergyplatform.org/ontology/oeo/")
+MATCHES = {"exactMatch": SKOS.exactMatch, "closeMatch": SKOS.closeMatch, "broadMatch": SKOS.broadMatch,
+           "narrowMatch": SKOS.narrowMatch}
 
 
 def scheme_iri(scheme):
@@ -101,11 +108,12 @@ def load():
     return rows
 
 
-def build(rows):
+def build(rows, mappings=None, pidx=None):
     g = Graph()
     g.bind("party", CUST)
     g.bind("skos", SKOS)
     g.bind("dcterms", DCTERMS)
+    g.bind("oeo", OEO)
     for scheme, (label, definition, citation) in SCHEMES.items():
         s = scheme_iri(scheme)
         g.add((s, RDF.type, SKOS.ConceptScheme))
@@ -127,7 +135,39 @@ def build(rows):
             g.add((v, SKOS.topConceptOf, scheme_iri(r["scheme"])))
         if r["mpc_class"]:
             g.add((v, CUST.mpcClassification, Literal(r["mpc_class"])))
+        if r["scheme"] == "product":
+            g.add((v, RDF.type, CUST.Product))
+            g.add((v, DCTERMS.bibliographicCitation, Literal("MPC FY2025 Form 10-K, Item 1", lang="en")))
+            g.add((v, SKOS.editorialNote, Literal(
+                "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092).", lang="en")))
+    for m in mappings or []:
+        g.add((value_iri("product", m["product"]), MATCHES[m["relation"]], OEO[m["target"]]))
+    for p in pidx or []:
+        g.add((value_iri("product", p["product"]), CUST.pidxProductFamily, Literal(p["family"])))
     return g
+
+
+def load_products(rows):
+    """The OEO mappings and PIDX families of the product values. The build fails unless every row names a product value,
+    a known SKOS mapping relation, an OEO class ID and a reason, and every PIDX family is one capital letter (EPM-DEC-001-0092)."""
+    import re
+    products = {r["notation"] for r in rows if r["scheme"] == "product"}
+    mappings, pidx = read(MAPPINGS), read(PIDX)
+    problems = [f"product-mappings.csv: {m['product']} is not a product value" for m in mappings if m["product"] not in products]
+    problems += [f"product-mappings.csv: {m['product']}: unknown relation {m['relation']!r}" for m in mappings if m["relation"] not in MATCHES]
+    problems += [f"product-mappings.csv: {m['product']}: {m['target']!r} is not an OEO class ID" for m in mappings
+                 if not re.fullmatch(r"OEO_\d{8}", m["target"])]
+    problems += [f"product-mappings.csv: {m['product']}: no reason" for m in mappings if not m["reason"].strip()]
+    keys = Counter((m["product"], m["target"]) for m in mappings)
+    problems += [f"product-mappings.csv: {k} is listed {c} times" for k, c in keys.items() if c > 1]
+    problems += [f"pidx-families.csv: {p['product']} is not a product value" for p in pidx if p["product"] not in products]
+    problems += [f"pidx-families.csv: {p['product']}: family {p['family']!r} is not one capital letter" for p in pidx
+                 if not re.fullmatch(r"[A-Z]", p["family"])]
+    fam = Counter((p["product"], p["family"]) for p in pidx)
+    problems += [f"pidx-families.csv: {k} is listed {c} times" for k, c in fam.items() if c > 1]
+    if problems:
+        sys.exit("the product mappings do not reconcile:\n  " + "\n  ".join(problems))
+    return mappings, pidx
 
 
 def read(name):
@@ -152,7 +192,8 @@ INPUTS = {str(i) for i in range(1, 8)}
 SAME_SYSTEM = {"terminal-margin-ranking-system": "tmr"}
 DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: each stage's links, and no others
     ("lifecycle-stage/prospect", "process"): {"CM 1.3.6.2.1", "CM 1.3.6.6.1", "CM 1.3.7.4.2"},
-    ("lifecycle-stage/onboarding", "process"): {"CM 1.3.7.4.6", "CM 1.3.7.4.2", "CM 1.3.7.1.1", "CM 1.3.7.2.1"},
+    # CM 1.3.7.1.7 joined on 2026-10-23: MPC-P10.1 added it to the map (EPM-DEC-001-0087, 0092).
+    ("lifecycle-stage/onboarding", "process"): {"CM 1.3.7.4.6", "CM 1.3.7.4.2", "CM 1.3.7.1.1", "CM 1.3.7.2.1", "CM 1.3.7.1.7"},
     ("lifecycle-stage/payment-management", "process"): {"CM 1.3.8.2.1", "CM 1.3.8.2.3", "CM 1.3.8.3.2"},
     ("lifecycle-stage/risk-management", "process"): {"CM 1.3.7.4.3", "CM 1.3.7.4.4"},
     ("lifecycle-stage/relationship-management", "process"): {"CM 1.3.6.2.2", "CM 1.3.7.5.5", "CM 1.3.7.2.6", "CM 1.3.7.4.2"},
@@ -234,7 +275,7 @@ def load_lifecycle(codes, systems):
     owner = {"process": "lifecycle-stage", "system": "system-stage", "stage": "lifecycle-stage"}
     problems += [f"{r['stage']}: only a {owner[r['link']]} has a {r['link']} link" for r in rows
                  if r["link"] in owner and r["stage"].split("/")[0] != owner[r["link"]]]
-    problems += [f"{r['stage']}: process {r['target']} is not in core 2.1.0" for r in rows if r["link"] == "process" and r["target"] not in procs]
+    problems += [f"{r['stage']}: process {r['target']} is not in core 2.3.0" for r in rows if r["link"] == "process" and r["target"] not in procs]
     problems += [f"{r['stage']}: system {r['target']} is not a customer system" for r in rows if r["link"] == "system" and r["target"] not in slugs]
     problems += [f"{r['stage']}: {r['target']} is not a system stage" for r in rows
                  if r["link"] == "stage" and (not r["target"].startswith("system-stage/") or tuple(r["target"].split("/", 1)) not in values)]
@@ -333,21 +374,22 @@ def main():
     rows = load()
     systems, flows, sources, attrs, existing = load_systems(rows)
     lrows, procs = load_lifecycle(rows, systems)
+    mappings, pidx = load_products(rows)
     ltext = ("# The customer lifecycle's links to processes, systems and system stages (EPM-DEC-001-0070).\n"
-             "# Built by build_party.py from lifecycle.csv and core 2.1.0. Do not edit by hand.\n"
+             "# Built by build_party.py from lifecycle.csv and core 2.3.0. Do not edit by hand.\n"
              + build_lifecycle(lrows, procs).serialize(format="turtle"))
     stext = ("# The customer systems, data flows and attributes (EPM-DEC-001-0069). Built by build_party.py\n"
              "# from systems.csv, data-flows.csv, customer-sources.csv and attributes.csv. Do not edit by hand.\n"
              + build_systems(systems, flows, sources, attrs, existing).serialize(format="turtle"))
     text = ("# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069, 0070).\n"
-            "# Built by build_party.py from code-lists.csv. Do not edit by hand.\n"
-            + build(rows).serialize(format="turtle"))
+            "# Built by build_party.py from code-lists.csv, product-mappings.csv and pidx-families.csv. Do not edit by hand.\n"
+            + build(rows, mappings, pidx).serialize(format="turtle"))
     counts = Counter(r["scheme"] for r in rows)
     print("code lists " + ", ".join(f"{s} {counts[s]}" for s in SCHEMES))
     cat = Counter(r["category"] for r in attrs)
     print(f"systems {len(systems)} ({sum(1 for r in systems if r['slug'] in existing or r['slug'] in SAME_SYSTEM)} already in the system module); "
           f"flows {len(flows)}; sourcings {len(sources)}; attributes {len(attrs)} (create {cat['create']}, enrich {cat['enrich']}); "
-          f"lifecycle links {len(lrows)}")
+          f"lifecycle links {len(lrows)}; product mappings {len(mappings)}; PIDX families {len(pidx)}")
     if args.verify:
         if not (os.path.exists(OUTPUT) and open(OUTPUT).read() == text):
             sys.exit("code-lists.ttl is not current: run build_party.py --write")

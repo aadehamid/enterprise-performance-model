@@ -36,7 +36,7 @@ They asked for the lifecycle to be captured (EPM-DEC-001-0067, "both the life cy
    - **P10.1:** onboarding coordination for every customer. Core 2.1.0's scope note for CM 1.3.7.1.1 names "prospect onboarding coordination", but the map's only onboarding coordinator for commercial customers is under Loyalty and Cards (trading counterparties have CM 1.2.1.2.1 Create New Counterparty). The recommendation is a new L5 process under the L4 CM 1.3.7.1.
    - **P10.2:** the Order to Cash process "Review Credit Limit & Risk Code" has no linked process. The value stream's own rationale names CM 1.3.7.4.3 Monitor Credit Against Limit as the closest; the proposal recommends CM 1.3.7.4.2, which revises limits and risk codes, and gives the decision owner both.
    - **P10.3:** a customer master data product, produced by CM 1.3.7.1.1, on the Marketing & Sales line.
-   - *2026-10-23:* the decision owner accepted all three (EPM-DEC-001-0087).
+   - *2026-10-23:* the decision owner accepted all three (EPM-DEC-001-0087). `party` 1.1.0 links the onboarding stage to the new CM 1.3.7.1.7 (EPM-DEC-001-0092).
    - Each waits for the decision owner. Until then the lifecycle rests on the existing processes.
 
 ## Alternatives considered
