@@ -15,7 +15,7 @@
 
 **The decision owner's decisions:**
 
-1. **Product values come from MPC's FY2025 Form 10-K,** in the `party` module, mapped to PIDX product codes by identifier and to OEO fuel classes, in a minor release.
+1. **Product values come from MPC's FY2025 Form 10-K,** in the `party` module, mapped to PIDX product codes by identifier and to OEO fuel classes, in a minor release. *2026-10-23:* PIDX publishes no IRIs and its codes name company-requested grades, so the decision owner chose instead to record each product's PIDX family letters as plain identifiers: "Family codes, flagged (Recommended)" (EPM-DEC-001-0092).
 2. **Six releases are approved:**
    - `core` 2.3.0: CM 1.3.7.1.7 Coordinate Customer Onboarding;
    - `value-stream` 1.1.0: the credit review's link to CM 1.3.7.4.2, and ranges for `vs:produces` and `vs:consumes`;
@@ -29,7 +29,7 @@ The question put to the decision owner said 7 fixes for party and 3 for integrat
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-1. **The product scheme** takes the 10-K's six refinery product groups (gasoline, distillates, propane, NGLs and petrochemicals, heavy fuel oil, asphalt) as top concepts and its named products beneath them, each cited to the filing (`reference/mpc/mpc-fy2025-10k-fact-sheet.md`, section 4). A mapping is added only where the external term's own definition matches; each cites the source's version and date. Under PIDX's licence, a mapping points to a PIDX code by identifier and copies no PIDX list (EPM-DEC-001-0064, item 1).
+1. **The product scheme** takes the 10-K's six refinery product groups (gasoline, distillates, propane, NGLs and petrochemicals, heavy fuel oil, asphalt) as top concepts and its named products beneath them, each cited to the filing (`reference/mpc/mpc-fy2025-10k-fact-sheet.md`, section 4). A mapping is added only where the external term's own definition matches; each cites the source's version and date. Under PIDX's licence, a mapping points to a PIDX code by identifier and copies no PIDX list (EPM-DEC-001-0064, item 1). *2026-10-23:* superseded for PIDX: products carry PIDX family letters, not mappings to codes (EPM-DEC-001-0092).
 2. **Each release has its own pull request and release record,** in the order above, through `check.sh`, the sweep, Codex's independent review, the Cursor bot's verdict and a merge.
 3. **The product list is a point for the business** in the close-out package (EPM-DEC-001-0086): MPC's own product list can refine or replace the public categories.
 
