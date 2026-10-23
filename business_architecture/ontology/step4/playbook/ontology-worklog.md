@@ -962,6 +962,12 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### The open-ontologies trial (2026-10-22)
+- Under the delegation (EPM-DEC-001-0085), queue item 9 ran: the tool's
+  plan of core 2.1.0 against 2.2.0 and its OWL coherence check found no
+  defect that `check.sh` and the regression miss, so it is not adopted.
+  Run it again if a release adds OWL axioms that SHACL does not test.
+
 ### Phase F is approved (2026-10-22)
 - The decision owner approved the Phase F plan (EPM-DEC-001-0084): the
   `ontology` skill is rebuilt as planned, with neutral examples and public

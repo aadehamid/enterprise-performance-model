@@ -1,4 +1,4 @@
-# EPM-DEC-001-0085: The open-ontologies trial: not adopted; it found nothing the checks miss
+# EPM-DEC-001-0085: The open-ontologies trial: not adopted; it found no defect the checks miss
 
 | Field | Value |
 |---|---|
