@@ -89,10 +89,32 @@ root.
 
 ## Status
 
-The worklog's plan table (`step4/playbook/ontology-worklog.md` §2)
-is authoritative for step status. As of 2026-09-30: Steps 0–3c and 8 are
-done; Step 3d is complete with explicit open exceptions; **Step 4 is
-PROMOTED** (2026-09-30), which approved the relationship-layer review,
-not a release. Next is Phase 1 (source-workbook corrections), then the
-`core` 1.0.0 release (EPM-DEC-001-0013). Steps 5 to 7 and 9 to 12 are
-planned.
+The worklog's plan table (`step4/playbook/ontology-worklog.md` §2) is
+authoritative for step status. As of 2026-10-22, Phase E is closed
+(EPM-DEC-001-0083): Steps 0 to 12 are done or stand as recorded, each with
+its listed exceptions.
+
+- **Releases:** 19 packages under `releases/`, listed in
+  `releases/catalog.ttl` (EPM-DEC-001-0082). The newest of each module:
+  `core` 2.2.0, organization 2.0.0, ref-mpc 1.2.0, kpi 1.1.0, party 1.0.0,
+  data-product, value-stream, system, lane and market-data 1.0.0, and
+  integration 1.0.0.
+- **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);
+  the competency regression has 43 questions answerable, 0 partial and
+  1 waiting (Q17); the Neo4j projection of every released package passes,
+  with 16 rule gaps listed for the modules' next releases
+  (EPM-DEC-001-0036).
+- **Held rows:** 462, each held with its reason: 51 Phase 1 rows and 411
+  outside Phase 1 (`python3 scripts/epm_facts.py counts`). PTC-001-B is
+  held by design.
+- **Waiting on the decision owner:** Q17, meaning ownership
+  (EPM-DEC-001-0045); MPC-P10 (EPM-DEC-001-0070); a product code list for
+  the PIDX and OEO mappings (EPM-DEC-001-0064); and Phase F, the
+  `ontology` skill.
+- **Waiting on others:** Forecaster, on the refinery Economics and
+  Planning process owner (EPM-DEC-001-0045, decision 2); the four codes
+  and TID Nbr, on the business (EPM-DEC-001-0072); the 16 projection
+  gaps, on the modules' next releases (EPM-DEC-001-0036); and the reading
+  of Crude RFC as Refinery Feedstock Coordinator, pending confirmation
+  (EPM-DEC-001-0045, decision 5).
+- **Unresolved by decision:** PSM (EPM-DEC-001-0045, decision 6).
