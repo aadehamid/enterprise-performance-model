@@ -2,7 +2,7 @@
 
 # open-ontologies trial on core 2.1.0 and 2.2.0 (2026-10-22)
 
-The tool found nothing that `scripts/check.sh` and the regression miss, so I recommend that we do not adopt it. Its `plan` from core 2.1.0 to 2.2.0 reports the same 217 added and 7 removed triples that the repo's tests already assert. Its OWL coherence check passes core 2.2.0 and the union of the newest module packages, but those graphs give it little to check: 5 named classes in core and 47 in the union. The trial plan, which the decision owner approved on 2026-10-21, said to adopt the tool only if its report finds something check.sh and the regression miss. The trial does not meet that rule.
+The tool found no defect that `scripts/check.sh` and the regression miss: its only new output was three lint notes about documentation, none of them a defect. So I recommend that we do not adopt it. Its `plan` from core 2.1.0 to 2.2.0 reports 217 added and 7 removed triples, which an independent rdflib diff confirms; the repo's tests assert the same removed set and the 23 new concepts. Its OWL coherence check passes core 2.2.0 and the union of the newest module packages, but those graphs give it little to check: 5 named classes in core and 47 in the union. The trial plan, which the decision owner approved on 2026-10-21, said to adopt the tool only if its report finds something check.sh and the regression miss. Read as a defect, which is how the record reads it, the trial does not meet that rule.
 
 Nothing in any git repository changed. The tool was built and run in `/private/tmp/claude-501/open-ontologies-trial/`, and every input was a copy. `git status` in the EPM repo was clean after the runs.
 
@@ -88,7 +88,7 @@ The projection pipeline already runs a reasoner: `pipeline.py reason --robot` ru
 
 ## Recommendation
 
-Do not adopt the tool into `check.sh` or CI. The approved trial plan was to adopt it only if its report finds something that `check.sh` and the regression miss. The trial found three lint notes about documentation and nothing else new. The plan repeats what `test_build_core_2_2.py` already asserts, and it misreads SKOS concepts and version headers. The coherence check passes because the graphs hold almost no OWL axioms to test.
+Do not adopt the tool into `check.sh` or CI. The approved trial plan was to adopt it only if its report finds something that `check.sh` and the regression miss. The trial found three lint notes about documentation and nothing else new. The plan repeats what `test_build_core_2_2.py` asserts about the removed triples and the new concepts, and it misreads SKOS concepts and version headers. The coherence check passes because the graphs hold almost no OWL axioms to test.
 
 Two things could change this view. A later release could add OWL axioms that interact, such as disjointness between process classes, domains and ranges on classes, or property chains. Then `reason owl-dl` and the plan's rule-based consequences would test something that SHACL does not test. If that happens, run this trial again with `scripts/run.sh`.
 

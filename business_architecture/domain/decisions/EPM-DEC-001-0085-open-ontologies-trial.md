@@ -15,9 +15,9 @@ On 2026-10-21 Claude proposed a local trial of open-ontologies (github.com/fabio
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-1. **The tool is not adopted** into `scripts/check.sh` or CI. The trial does not meet the adoption rule.
+1. **The tool is not adopted** into `scripts/check.sh` or CI. The trial does not meet the adoption rule, read as a finding of a defect: its only new output is three lint notes, none a defect (item 2).
 2. **What it found** (commit `93295305`, built from source, each run under a second):
-   - `plan` reports 217 added and 7 removed triples, which an independent rdflib diff confirms and `release/test_build_core_2_2.py` already asserts. It counts no `skos:Concept` as an individual, so it reports no added individuals for a release that adds 23 concepts, and it calls every release "not an extension" because each release rewrites the version header.
+   - `plan` reports 217 added and 7 removed triples, which an independent rdflib diff confirms; `release/test_build_core_2_2.py` asserts the same removed set (the version header and two APQC decisions) and the 23 new concepts. It counts no `skos:Concept` as an individual, so it reports no added individuals for a release that adds 23 concepts, and it calls every release "not an extension" because each release rewrites the version header.
    - `reason owl-dl` finds core 2.2.0, and the union of the 11 newest packages, consistent and every class satisfiable. A deliberate clash fails as it should. The graphs hold one disjointness axiom (Person and Organization in `party`), which the party shapes' `sh:xone` already enforces.
    - Three lint notes: `core:CanonicalFact` and `core:ScopedSequence` have no `rdfs:comment`, and `core:evidenceBasis` has no `rdfs:domain`. Both classes carry a `skos:definition`, which is how core defines its terms, and Rule 1 of the projection needs a range, which `evidenceBasis` has. None is a defect.
 3. **When to run it again:** if a release adds OWL axioms that SHACL does not test, such as disjointness between classes, class domains and ranges, or property chains. The trial's script is described in the report.
