@@ -45,8 +45,10 @@ class Catalog(unittest.TestCase):
             module, rest = str(dist)[len(MODULES_NS):].split("/releases/")
             version, fname = rest.split("/")
             self.assertTrue(os.path.exists(os.path.join(bc.RELEASES, module, version, fname)), dist)
-        # And every described distribution belongs to a dataset.
+        # And every described distribution is linked, only from a dataset.
         self.assertEqual(set(self.g.subjects(RDF.type, bc.DCAT.Distribution)), linked)
+        for d in self.g.subjects(bc.DCAT.distribution, None):
+            self.assertIn((d, RDF.type, bc.DCAT.Dataset), self.g)
 
     def test_a_link_to_an_undescribed_distribution_fails(self):
         dataset = URIRef(MODULES_NS + "lane/1.0.0")
