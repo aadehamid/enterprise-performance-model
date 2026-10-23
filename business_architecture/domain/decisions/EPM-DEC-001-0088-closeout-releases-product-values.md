@@ -7,6 +7,8 @@
 | Questions | The product code list that the PIDX and OEO mappings wait for (EPM-DEC-001-0064); the releases that close the 16 projection gaps (EPM-DEC-001-0036, amendment of 2026-10-22) and carry MPC-P10 (EPM-DEC-001-0087); the independent reviewer while Pi has no usage |
 | Source | Claude Code session of 2026-10-23; `answers-2026-10-23-closeout.md` |
 
+
+*2026-10-23:* the title's "mapped to PIDX" became PIDX family letters as plain identifiers; OEO is mapped (EPM-DEC-001-0092).
 ## Context
 
 `party:Product` exists with no values, so PIDX and OEO wait (EPM-DEC-001-0064, note of 2026-10-22). The projection lists 16 rule gaps that only the next release of value-stream, kpi, party and integration can close (EPM-DEC-001-0036). MPC-P10 needs releases of core, value-stream, data-product and party (EPM-DEC-001-0087). Minor and patch releases are the module owner's under the module policy; Claude asks the decision owner before each, as for every release issued on 2026-10-22 (EPM-DEC-001-0074, and 0076 to 0080).
@@ -29,7 +31,7 @@ The question put to the decision owner said 7 fixes for party and 3 for integrat
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-1. **The product scheme** takes the 10-K's six refinery product groups (gasoline, distillates, propane, NGLs and petrochemicals, heavy fuel oil, asphalt) as top concepts and its named products beneath them, each cited to the filing (`reference/mpc/mpc-fy2025-10k-fact-sheet.md`, section 4). A mapping is added only where the external term's own definition matches; each cites the source's version and date. Under PIDX's licence, a mapping points to a PIDX code by identifier and copies no PIDX list (EPM-DEC-001-0064, item 1). *2026-10-23:* superseded for PIDX: products carry PIDX family letters, not mappings to codes (EPM-DEC-001-0092).
+1. **The product scheme** takes the 10-K's six refinery product groups (gasoline, distillates, propane, NGLs and petrochemicals, heavy fuel oil, asphalt) as top concepts and its named products beneath them, each cited to the filing (`reference/mpc/mpc-fy2025-10k-fact-sheet.md`, section 4). A mapping is added only where the external term's own definition matches; each cites the source's version and date. Under PIDX's licence, a mapping points to a PIDX code by identifier and copies no PIDX list (EPM-DEC-001-0064, item 1). *2026-10-23:* superseded for PIDX: products carry PIDX family letters, not mappings to codes; the decision owner chose "Family codes, flagged (Recommended)" (EPM-DEC-001-0092).
 2. **Each release has its own pull request and release record,** in the order above, through `check.sh`, the sweep, Codex's independent review, the Cursor bot's verdict and a merge.
 3. **The product list is a point for the business** in the close-out package (EPM-DEC-001-0086): MPC's own product list can refine or replace the public categories.
 
@@ -51,5 +53,5 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Consequences
 
-- When the six releases merge, the projection's list of release gaps is empty, and PIDX and OEO are mapped where a match holds.
+- When the six releases merge, the projection's list of release gaps is empty, and PIDX and OEO are mapped where a match holds. *2026-10-23:* OEO is mapped with SKOS; PIDX is recorded as family letters, not mapped, after the decision owner chose "Family codes, flagged (Recommended)" (EPM-DEC-001-0092).
 - EPM-DEC-001-0036 and 0064 carry dated notes.
