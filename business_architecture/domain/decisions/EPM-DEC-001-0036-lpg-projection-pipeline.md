@@ -34,7 +34,7 @@ The first run found a defect in `ref-mpc`, fixed in #261 (merged as d5eb311): it
 
 ### For the decision owner
 
-*2026-10-22:* the 16 release gaps listed in the amendment of 2026-10-22 close at the next release of value-stream, kpi, party and integration. Each fix adds a range or a cardinality shape and changes no released IRI, so each fits a patch or minor release, which needs the decision owner's approval.
+*2026-10-22:* the 16 release gaps listed in the amendment of 2026-10-22 close at the next release of value-stream, kpi, party and integration. Each fix adds a range or a cardinality shape and changes no released IRI, so each fits a patch or minor release, which the module policy gives to the module owner (worklog, "Who approves a release"; EPM-DEC-001-0037). Claude asks the decision owner before building any of them, as for every release issued on 2026-10-22 (EPM-DEC-001-0074, and 0076 to 0080).
 
 The next `core` release should add `rdfs:range skos:Concept` to `core:earlierProcess` and `core:laterProcess`. The pipeline then fails until the two listed gaps are removed.
 
