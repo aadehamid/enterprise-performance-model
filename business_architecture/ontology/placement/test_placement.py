@@ -54,5 +54,27 @@ class Kinds(unittest.TestCase):
             self.assertTrue(list(MODULES.triples((p, None, None))), p)
 
 
+class PlacementShapes(unittest.TestCase):
+    """The integration 2.0.0 shape: each of the twelve placing properties has exactly one kind (EPM-DEC-001-0094)."""
+
+    def test_a_placing_property_without_its_kind_fails(self):
+        from pyshacl import validate
+        from rdflib import Graph, Namespace, URIRef
+        from rdflib.namespace import RDF, RDFS
+        SH = Namespace("http://www.w3.org/ns/shacl#")
+        kind = URIRef("https://w3id.org/lsc/ontology/modules/placement/placementKind")
+        produces = URIRef("https://w3id.org/lsc/ontology/modules/value-stream/produces")
+        shapes = Graph().parse(os.path.join(HERE, "shapes.ttl"))
+        g = Graph().parse(os.path.join(HERE, "vocabulary.ttl"))
+        self.assertTrue(validate(g, shacl_graph=shapes)[0])
+        self.assertEqual(len(set(shapes.objects(None, SH.targetNode))), 12)
+        g.remove((produces, kind, None))
+        ok, report, _ = validate(g, shacl_graph=shapes)
+        self.assertFalse(ok)
+        found = {(report.value(r, SH.focusNode), report.value(r, SH.sourceConstraintComponent))
+                 for r in report.subjects(RDF.type, SH.ValidationResult)}
+        self.assertIn((produces, SH.MinCountConstraintComponent), found)
+
+
 if __name__ == "__main__":
     unittest.main()

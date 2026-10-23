@@ -1,0 +1,1727 @@
+[
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/authority/EvidenceTier",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "AGENTS.md, Working rules; the decision owner's instruction in answers-2026-10-19-completion-search.md; EPM-DEC-001-0059"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "evidence tier"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The evidence order the repository applies: the process authority and the decision owner's own material, then Marathon Petroleum, then U.S. refining peers, then industry and regulatory sources, then generic frameworks as support only."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/authority/evidenceTier",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "AGENTS.md, Working rules (evidence order); competency question 44; EPM-DEC-001-0059"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "evidence tier"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The tier of the evidence order a source belongs to. Where two sources of one concept disagree, the source with the lower rank wins."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/authority/rank",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0059"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "rank"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The tier's place in the evidence order, from 1 (most authoritative)."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Cross-industry frameworks, method standards and academic papers, such as APQC's PCF, ASCM and SKOS. Support only."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/EvidenceTier"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "5"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Generic frameworks"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/authority/rank": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Standards bodies, exchanges, registries, regulators and agencies, such as API, the Energy Institute, CME Group, GLEIF, CFTC, EIA, EPA and FASB."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/EvidenceTier"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "4"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Industry and regulatory sources"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/authority/rank": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 4
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/mpc",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's filings and public materials, as read into business_architecture/reference/mpc/."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/EvidenceTier"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "2"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Marathon Petroleum"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/authority/rank": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/peers",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "U.S. refining peers' SEC filings, as read into business_architecture/reference/downstream-peers/."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/EvidenceTier"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "3"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "U.S. refining peers"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/authority/rank": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process map, value streams, data product portfolio and office lanes in business_architecture/, the decision owner's approved definitions and measure list, and the source author's recorded answers."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/EvidenceTier"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "1"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Process authority"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/authority/rank": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/Rule",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 41 and 42; EPM-DEC-001-0061"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "consumer rule"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A rule for an agent that answers from the graph: what it may answer without reading a table or inventing a formula, or what it must refuse."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/RuleKind",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 41 and 42"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "rule kind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The two kinds of consumer rule."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/publishesMeasure",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 35; EPM-DEC-001-0005, EPM-DEC-001-0061"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "publishes measure"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The binding a catalog row uses to point at a Named KPI: the data product that publishes a measure's values points at the measure's IRI. Both must already be defined: the measure with its kind in the kpi module, and the data product in the data-product module. The values stay in the data product's platform."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/reliesOn",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0061"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "relies on"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#changeNote": [
+   {
+    "@language": "en",
+    "@value": "integration 2.0.0 (2026-10-23): the range is rdf:Property, and the definition says property, not property or class; every value was a property except one rule's process concept, which moved to rdfs:seeAlso (EPM-DEC-001-0094)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A property the rule rests on: one an answer reads, or whose absence makes a refusal necessary."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The agent may answer from the graph alone."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/RuleKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "may-answer"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "May answer"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/must-refuse",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The agent must refuse, and say where the answer lives instead."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/RuleKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "must-refuse"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Must refuse"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/definitions",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 13, 16, 27 and 41"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The definition, name, aliases and kind of any concept, measure, data product, series, system or lane, read from its skos:definition, labels and kind."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "What a thing is"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#altLabel"
+   },
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#definition"
+   },
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#prefLabel"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measureKind"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/no-context-as-ownership",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 38; EPM-DEC-001-0058"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Say a process owns, computes or approves a measure because the measure is placed on it. Only a certification placement says that."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Present context as ownership"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/placementKind"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/must-refuse"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/no-crack-from-legs",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 32 and 42; EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Calculate a crack spread from the prices of its crude and product legs. The official series is the published one; a homemade crack is a different number."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Build a crack from its legs"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/seriesOf"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/must-refuse"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/no-customer-without-role",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 25, 26 and 42; EPM-DEC-001-0004; EPM-DEC-001-0067; EPM-DEC-001-0068"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Answer \"who is the customer\" without naming a role: sold-to, bill-to, payer or another. Customer is not a role or a KPI; the answer resolves to one role."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Name the customer without a role"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "The roles are the `party` module's party-role list, which a party role names through party:roleType (EPM-DEC-001-0068). The core concept CM 1.3.7.1.1 keeps them apart too: a customer record must not collapse Sold-To, Bill-To, Payer and the other roles. A ship-to is a site, and the party that receives product there holds the Consignee role."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/party/roleType"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/must-refuse"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/no-report-as-kpi",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 42; EPM-DEC-001-0042"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Call a tracker, report or report column a KPI, or call a KPI candidate a KPI. A tracker has no grain, and a KPI needs a recorded decision that names its target and owner."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Treat a report column as the KPI"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measureKind"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/must-refuse"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/no-values",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 42; EPM-DEC-001-0005"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Calculate a measure's value, or quote one, from the graph. The graph holds definitions; the values are in the systems that compute them. A basis is a description, not a formula."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Compute or quote a value"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/basis"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/must-refuse"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/not-to-be-confused-with",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 31, 32 and 36"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The nearby measures and series a measure is not, and how they differ."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "What a measure is not"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/seriesOf"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/placement",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 33, 37 and 38; EPM-DEC-001-0058"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The processes, capabilities and value streams a measure or data product sits on, and whether each placement certifies or is context."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Where a thing sits, and what the placement claims"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/informsProcess"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/placementKind"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/consumes"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measureLink"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/produces"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/recipe",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 31 and 34; EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A series' region, legs, barrels and RIN treatment, as a recipe, never as a value."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "What a series is built from"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/barrels"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/what-a-measure-counts",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 28; EPM-DEC-001-0062"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What a measure includes and excludes, where its source says so, and where that statement comes from."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "What a measure counts"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/population/excludes"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/population/includes"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/population/populationEvidence"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/which-source",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 44; EPM-DEC-001-0059"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The sources a definition cites, and which one is authoritative when they disagree."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Which source says so"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "http://purl.org/dc/terms/source"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/evidenceTier"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule/who-does-it",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 3 to 5"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The roles responsible, accountable, consulted and informed for a process, as the RACI assignments record them."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Who is responsible"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/reliesOn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/organization/forProcess"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/consumer/ruleKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/consumer/ruleKind",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0061"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/consumer/Rule"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "rule kind"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Whether the rule says what the agent may answer or what it must refuse."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/anchoredIn",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/consumedBy",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/producedBy",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/certification"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/integration",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Ontology"
+  ],
+  "http://purl.org/dc/terms/description": [
+   {
+    "@language": "en",
+    "@value": "The rules that tie the modules together: which placing properties certify and which give context (placement), the evidence tier of every cited source (authority), and what a consumer may bind, answer and must refuse (consumer). Each vocabulary keeps its own namespace (Steps 7, 9 and 11)."
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-23"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-23"
+   }
+  ],
+  "http://purl.org/dc/terms/requires": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/core/2.3.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/1.1.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/1.1.1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/lane/1.0.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/1.0.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/organization/2.0.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/party/1.1.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/1.0.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/value-stream/1.1.0"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "LSC Integration Vocabularies"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionIRI": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/integration/2.0.0"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionInfo": [
+   {
+    "@value": "2.0.0"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/informsProcess",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/lane/officeLane",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/placement/PlacementKind",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 38; EPM-DEC-001-0058"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "placement kind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The two things a placement can claim."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/certification",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The link names a data product's owning process: the producing process, which is the subject of vs:produces and the target of dp:producedBy."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/PlacementKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "certification"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Certification"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The link says only where one thing is used or placed with another. It does not say either end owns, computes or approves the other."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/PlacementKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "context"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/placement/placementKind",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#AnnotationProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 38; EPM-DEC-001-0058"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "placement kind"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What a placing property claims: certification (the link names the owning process of a data product) or context (the link says only where one thing is used or placed with another)."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/supports",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/consumes",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/measureLink",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/produces",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/certification"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/realizes",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/value-stream/usesCapability",
+  "https://w3id.org/lsc/ontology/modules/placement/placementKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/placement/kind/context"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/gleif-lei",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/peers"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/mpc-s01",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/mplx-s01",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/office-lanes",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-api-653-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-api-mpms-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-apqc-pcf-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ascm-cscp-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-bimco-ld-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-bjce-refps-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ccro-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ccro-002a",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ccro-002b",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-cftc-gloss-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-cftc-p180-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-cftc-p45-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-cmu-refplan-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-doe-rppl-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-doe-sprassay-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ei-hm31-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ei-hm32-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-eia-gloss-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-eia-lfmm-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-eia-pmm-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-eia-steo-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-epa-emtr-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-epa-emts-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-epa-er-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-epa-ff-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-epa-rec-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-epa-rfs-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-fasb-asc326-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-fasb-asc606-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-fasb-asc815-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ferc-rto-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-fmcsa-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ftc-adm-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ftc-rp-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-iea-omr-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-irs-p510-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-isda-ma-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-lnl-t2s-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-naesb-wgq-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-ofac-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-orp-dpsc-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-osha-psm-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-pci-dss-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-pmpa-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-reg-b-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-snf-refps-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-uspto-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/src-w3c-skos-001",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/step3c-definition-workbook",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "urn:epm:issue:205:comment:6115309253",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ },
+ {
+  "@id": "urn:epm:issue:205:comment:6116668059",
+  "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
+   }
+  ]
+ }
+]

@@ -16,7 +16,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 plc:placementKind a owl:AnnotationProperty ;
-    rdfs:label "placement kind"@en ;
+    rdfs:label "placement kind"@en ; rdfs:range skos:Concept ;
     skos:definition "What a placing property claims: certification (the link names the owning process of a data product) or context (the link says only where one thing is used or placed with another)."@en ;
     dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en .
 

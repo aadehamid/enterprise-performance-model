@@ -18,6 +18,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 # ---- Catalog binding (question 35) ----
 
@@ -42,8 +43,9 @@ con:ruleKind a owl:ObjectProperty ;
 
 con:reliesOn a owl:ObjectProperty ;
     rdfs:label "relies on"@en ;
-    rdfs:domain con:Rule ;
-    skos:definition "A graph term the rule rests on: the property or class an answer reads, or whose absence makes a refusal necessary."@en ;
+    rdfs:domain con:Rule ; rdfs:range rdf:Property ;
+    skos:definition "A property the rule rests on: one an answer reads, or whose absence makes a refusal necessary."@en ;
+    skos:changeNote "integration 2.0.0 (2026-10-23): the range is rdf:Property, and the definition says property, not property or class; every value was a property except one rule's process concept, which moved to rdfs:seeAlso (EPM-DEC-001-0094)."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0061"@en .
 
 con:RuleKind a skos:ConceptScheme ; rdfs:label "rule kind"@en ;
@@ -99,7 +101,8 @@ rule:no-report-as-kpi a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel 
 rule:no-customer-without-role a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Name the customer without a role"@en ;
     skos:definition "Answer \"who is the customer\" without naming a role: sold-to, bill-to, payer or another. Customer is not a role or a KPI; the answer resolves to one role."@en ;
     skos:scopeNote "The roles are the `party` module's party-role list, which a party role names through party:roleType (EPM-DEC-001-0068). The core concept CM 1.3.7.1.1 keeps them apart too: a customer record must not collapse Sold-To, Bill-To, Payer and the other roles. A ship-to is a site, and the party that receives product there holds the Consignee role."@en ;
-    con:reliesOn proc:CM-1-3-7-1-1, <https://w3id.org/lsc/ontology/modules/party/roleType> ;
+    con:reliesOn <https://w3id.org/lsc/ontology/modules/party/roleType> ;
+    rdfs:seeAlso proc:CM-1-3-7-1-1 ;
     dcterms:bibliographicCitation "competency questions 25, 26 and 42; EPM-DEC-001-0004; EPM-DEC-001-0067; EPM-DEC-001-0068"@en .
 rule:no-context-as-ownership a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Present context as ownership"@en ;
     skos:definition "Say a process owns, computes or approves a measure because the measure is placed on it. Only a certification placement says that."@en ;

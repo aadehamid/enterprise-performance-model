@@ -1,0 +1,28 @@
+# SHACL shapes for the placement vocabulary (EPM-DEC-001-0058). Added in integration 2.0.0 to state
+# plc:placementKind's cardinality (EPM-DEC-001-0036, 0094).
+@prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
+@prefix plcsh: <https://w3id.org/lsc/ontology/modules/placement/shapes/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+# The twelve placing properties EPM-DEC-001-0058 classifies, named one by one so that a property that loses its
+# kind is still checked: each has exactly one placement kind.
+plcsh:PlacingProperty a sh:NodeShape ;
+    sh:targetNode <https://w3id.org/lsc/ontology/modules/data-product/anchoredIn>,
+        <https://w3id.org/lsc/ontology/modules/data-product/consumedBy>,
+        <https://w3id.org/lsc/ontology/modules/data-product/producedBy>,
+        <https://w3id.org/lsc/ontology/modules/kpi/informsProcess>,
+        <https://w3id.org/lsc/ontology/modules/lane/officeLane>,
+        <https://w3id.org/lsc/ontology/modules/market-data/region>,
+        <https://w3id.org/lsc/ontology/modules/system/supports>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/consumes>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/measureLink>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/produces>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/realizes>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/usesCapability> ;
+    sh:property [ sh:path plc:placementKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "A placing property has exactly one placement kind." ] .
+
+# Any other property with a kind has at most one.
+plcsh:AnyPlacementKind a sh:NodeShape ;
+    sh:targetSubjectsOf plc:placementKind ;
+    sh:property [ sh:path plc:placementKind ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .

@@ -1,0 +1,101 @@
+@prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix authsh: <https://w3id.org/lsc/ontology/modules/authority/shapes/> .
+@prefix con: <https://w3id.org/lsc/ontology/modules/consumer/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
+@prefix plcsh: <https://w3id.org/lsc/ontology/modules/placement/shapes/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rk: <https://w3id.org/lsc/ontology/modules/consumer/rule-kind/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/consumer/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+authsh:AnyTier a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path auth:evidenceTier ] ;
+    sh:targetSubjectsOf auth:evidenceTier .
+
+authsh:CitedSourceTier a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "A cited source belongs to exactly one evidence tier." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path auth:evidenceTier ] ;
+    sh:targetObjectsOf dcterms:source .
+
+authsh:Tier a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:maxCount 1 ;
+            sh:message "An evidence tier has exactly one rank, from 1." ;
+            sh:minCount 1 ;
+            sh:minInclusive 1 ;
+            sh:path auth:rank ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes authsh:prefixes ;
+            sh:select "SELECT ?this WHERE { ?this skos:inScheme auth:EvidenceTier }" ] .
+
+shp:Binding a sh:NodeShape ;
+    sh:class dp:DataProduct ;
+    sh:message "Only a defined data product publishes a measure." ;
+    sh:property [ sh:class kpi:MeasureDefinition ;
+            sh:message "A catalog binding points at a defined measure." ;
+            sh:minCount 1 ;
+            sh:path con:publishesMeasure ] ;
+    sh:targetSubjectsOf con:publishesMeasure .
+
+shp:Rule a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:definition ],
+        [ sh:in ( rk:may-answer rk:must-refuse ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path con:ruleKind ],
+        [ sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path con:reliesOn ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dcterms:bibliographicCitation ] ;
+    sh:targetClass con:Rule .
+
+plcsh:AnyPlacementKind a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path plc:placementKind ] ;
+    sh:targetSubjectsOf plc:placementKind .
+
+plcsh:PlacingProperty a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "A placing property has exactly one placement kind." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path plc:placementKind ] ;
+    sh:targetNode dp:anchoredIn,
+        dp:consumedBy,
+        dp:producedBy,
+        kpi:informsProcess,
+        <https://w3id.org/lsc/ontology/modules/lane/officeLane>,
+        <https://w3id.org/lsc/ontology/modules/market-data/region>,
+        <https://w3id.org/lsc/ontology/modules/system/supports>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/consumes>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/measureLink>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/produces>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/realizes>,
+        <https://w3id.org/lsc/ontology/modules/value-stream/usesCapability> .
+
+authsh:prefixes sh:declare [ sh:namespace "https://w3id.org/lsc/ontology/modules/authority/"^^xsd:anyURI ;
+            sh:prefix "auth" ],
+        [ sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ;
+            sh:prefix "skos" ] .
+

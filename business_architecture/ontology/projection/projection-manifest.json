@@ -1,10 +1,10 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "3853ec7143c4821d8eda8bb292201bb73e732e388a74b0a59bbccc85590b011f",
+  "input_fingerprint": "a3428e9333e3817fe3b3985d49b06a2401414e7c43f065d027abbc623ed771c4",
   "inputs": {
     "releases/core/2.3.0/core.ttl": "ebf7be2b6e65df2fc16e6af79af55f4d6a6b36ae652cf3823153b6082625c01e",
     "releases/data-product/1.1.0/data-product.ttl": "1aba055c2e2e53c33e857b0ed5e65de8df5cab9f039dabc863f8c6e11f4d8af8",
-    "releases/integration/1.0.0/integration.ttl": "31d20746aa6dd644fe9f53156aa4a63a6b45e0ba5f929a66469128f2a89ea729",
+    "releases/integration/2.0.0/integration.ttl": "2a480bb76303585c225da367d342067c20921d8591a6d255bfe9b25911691ce5",
     "releases/kpi/1.1.1/kpi.ttl": "02ccaffa3c52d48724201633ebd4efd4d5b747c82a3f4fd97cfa983ac5e9bffb",
     "releases/lane/1.0.0/lane.ttl": "fbd5fb5f14cb7fa700bcc1c517af55fdf1b18cc46e6a959ff8d28c72b6395e7e",
     "releases/market-data/1.0.0/market-data.ttl": "7dae8ac0768cf230495a827b85e2e9e91a3125aaa97e7f9237d6146048b0ed6b",
@@ -14,20 +14,14 @@
     "releases/system/1.0.0/system.ttl": "b9dea5ded1a3f1f41069354cdfac692ab200635278971b242bed2fdf9af665b5",
     "releases/value-stream/1.1.0/value-stream.ttl": "89c952bf76b12d916b7ca583e78354d197b6bb8596b6519f00917804a3f0a5db"
   },
-  "loadable_triples": 34055,
-  "release_exceptions": {
-    "Rule 1: https://w3id.org/lsc/ontology/modules/consumer/reliesOn has no single concrete range": "integration 1.0.0 declares no rdfs:range; its objects are properties, a concept and other terms, so the next integration release gives it one concrete range",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/placement/placementKind has no single concrete range": "integration 1.0.0 declares no rdfs:range; the next integration release adds rdfs:range skos:Concept",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/evidenceTier": "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/rank": "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/placement/placementKind": "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one"
-  },
+  "loadable_triples": 34058,
+  "release_exceptions": {},
   "rule4": "4a: qualified-relation nodes (EPM-DEC-001-0020)",
   "shapes": {
     "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
     "releases/core/2.3.0/shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680",
     "releases/data-product/1.1.0/shapes.ttl": "5cef5ecad215a39ceda7ee113e68eaf78cfb5aee84bc7eb085d0ccd5ba5bd2fd",
-    "releases/integration/1.0.0/shapes.ttl": "b5dfd186039c40dc96abedd646ccd9cbbd92f4c932ce8bfb5a6e57702202491d",
+    "releases/integration/2.0.0/shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d",
     "releases/kpi/1.1.1/shapes.ttl": "b304afbf2f20ab9be97410c9fb129d7e030da33a8f58a582255c25253e3525f0",
     "releases/lane/1.0.0/shapes.ttl": "f1afea34b3232b1c07eb66667981d8c22bd6eaab5351e2570ad1af97f3626b94",
     "releases/market-data/1.0.0/shapes.ttl": "6d377fb7cf400d6c627027bb5de29c1141157ace54185046c8819d8aedee4535",

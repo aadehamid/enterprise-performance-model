@@ -50,7 +50,9 @@ MODULES = {
         "version": "1.2.0", "stage": None, "issued": "2026-10-22",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-ref-mpc-release.md", "Approve ref-mpc 1.2.0 (Recommended)"),
         "parts": ["ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl"],
-        "shapes": ["ref-mpc/shapes.ttl", "organization/shapes.ttl", "party/shapes.ttl"],
+        # Its own shapes, then the released shapes of the versions it pins, so a later party or organization
+        # release cannot change what this released package is checked against (EPM-DEC-001-0094).
+        "shapes": ["ref-mpc/shapes.ttl", "releases/organization/2.0.0/shapes.ttl", "releases/party/1.0.0/shapes.ttl"],
         "depends_on": ["organization", "party"],
         "pins": {"organization": "2.0.0", "party": "1.0.0"},
         "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033", "EPM-DEC-001-0071", "EPM-DEC-001-0075", "EPM-DEC-001-0080"],
@@ -164,16 +166,22 @@ MODULES = {
     "integration": {
         "title": "LSC Integration Vocabularies",
         "description": "The rules that tie the modules together: which placing properties certify and which give context (placement), the evidence tier of every cited source (authority), and what a consumer may bind, answer and must refuse (consumer). Each vocabulary keeps its own namespace (Steps 7, 9 and 11).",
-        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        # 2.0.0 is a major the decision owner approved: the five projection fixes (ranges for plc:placementKind and
+        # con:reliesOn, whose definition narrows from property or class to property, which makes it a major;
+        # cardinality for plc:placementKind, auth:rank and auth:evidenceTier, in two new shape files packaged with
+        # consumer's), and it requires the current releases (EPM-DEC-001-0088, 0094).
+        "version": "2.0.0", "stage": None, "issued": "2026-10-23",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Major: integration 2.0.0 (Recommended)"),
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
-        "shapes": ["consumer/shapes.ttl"],
+        "shapes": ["consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl"],
+        "own_shapes": 3,  # all three shape files are the package's own; the package's shapes.ttl holds them merged
         "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data",
                        "party"],
-        "pins": {"core": "2.2.0", "organization": "2.0.0", "kpi": "1.0.1", "data-product": "1.0.0", "value-stream": "1.0.0",
-                 "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.0.0"},
-        "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078"],
+        "pins": {"core": "2.3.0", "organization": "2.0.0", "kpi": "1.1.1", "data-product": "1.1.0", "value-stream": "1.1.0",
+                 "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.1.0"},
+        "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078", "EPM-DEC-001-0088",
+                      "EPM-DEC-001-0094"],
     },
 }
 
@@ -263,7 +271,8 @@ def check(name, g):
     """The module's shapes over the module, with the released packages it depends on loaded: core for
     the concepts a module refers to, the pinned organization release for ref-mpc, and the released
     data-product and kpi packages for value-stream and market-data."""
-    conforms, _, text = validate(validation_graph(name, g), shacl_graph=parse(MODULES[name]["shapes"]))
+    # advanced=True: SHACL-AF targets such as sh:SPARQLTarget run, as in every other check (EPM-DEC-001-0094).
+    conforms, _, text = validate(validation_graph(name, g), shacl_graph=parse(MODULES[name]["shapes"]), advanced=True)
     return conforms, text
 
 
@@ -308,7 +317,8 @@ def catalog(name):
 def package(name, g):
     m = MODULES[name]
     lab = label(m)
-    shapes = parse(m["shapes"][:1])
+    # The package's own shape files lead the list (most modules have one); the rest belong to the modules it requires.
+    shapes = parse(m["shapes"][:m.get("own_shapes", 1)])
     files = {f"{name}.ttl": g.serialize(format="turtle"), f"{name}.jsonld": jsonld(g),
              "shapes.ttl": shapes.serialize(format="turtle"), "catalog.ttl": catalog(name)}
     with open(os.path.join(ONTOLOGY, "releases", name, "CHANGELOG.md")) as f:

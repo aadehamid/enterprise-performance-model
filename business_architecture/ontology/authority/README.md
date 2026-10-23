@@ -9,4 +9,4 @@ Competency question 44 asks which definition is authoritative when two sources d
 | `build_source_tiers.py`, `source-tiers.ttl` | The build. `--verify` fails unless `source-tiers.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_source_tiers.py` | Tests: the build is current, every source the release and modules cite has a tier, and sample tiers match the record |
 
-Released in `integration` 1.0.0 on 2026-10-22, with `placement` and `consumer` (EPM-DEC-001-0078): the package in `../releases/integration/1.0.0/`.
+Released in `integration` 1.0.0 on 2026-10-22, with `placement` and `consumer` (EPM-DEC-001-0078): the package in `../releases/integration/1.0.0/`. *2026-10-23:* `integration` 2.0.0 (`../releases/integration/2.0.0/`): `authority/shapes.ttl` states one rank per tier and one tier per source (EPM-DEC-001-0094).

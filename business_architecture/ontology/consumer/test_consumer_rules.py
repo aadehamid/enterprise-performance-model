@@ -10,7 +10,7 @@ import unittest
 
 from pyshacl import validate
 from rdflib import Graph, Namespace, URIRef
-from rdflib.namespace import RDF
+from rdflib.namespace import RDF, RDFS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "regression"))
@@ -62,8 +62,8 @@ class Rules(unittest.TestCase):
             "no-values": {KPI.basis},
             "no-crack-from-legs": {MKT.leg, MKT.seriesOf},
             "no-report-as-kpi": {KPI.measureKind, KPI.kpiCandidate},
-            "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1"),
-                                         URIRef("https://w3id.org/lsc/ontology/modules/party/roleType")},  # EPM-DEC-001-0068
+            # EPM-DEC-001-0068; since integration 2.0.0 the process concept is an rdfs:seeAlso, not a reliesOn (EPM-DEC-001-0094).
+            "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/modules/party/roleType")},
             "no-context-as-ownership": {PLC.placementKind},
             "what-a-measure-counts": {POP.includes, POP.excludes, POP.populationEvidence},  # EPM-DEC-001-0062
         }
@@ -71,6 +71,13 @@ class Rules(unittest.TestCase):
         self.assertEqual(rules, {R[k] for k in expected})
         for key, terms in expected.items():
             self.assertEqual(set(VOCAB.objects(R[key], CON.reliesOn)), terms, key)
+
+    def test_relies_on_ranges_over_properties(self):
+        # EPM-DEC-001-0094: rdfs:range rdf:Property, and the one process concept is a see-also.
+        self.assertEqual(set(VOCAB.objects(CON.reliesOn, RDFS.range)), {RDF.Property})
+        rule = URIRef("https://w3id.org/lsc/ontology/modules/consumer/rule/no-customer-without-role")
+        self.assertEqual(set(VOCAB.objects(rule, RDFS.seeAlso)),
+                         {URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1")})
 
     def test_rules_rely_on_defined_terms(self):
         for term in set(VOCAB.objects(None, CON.reliesOn)):

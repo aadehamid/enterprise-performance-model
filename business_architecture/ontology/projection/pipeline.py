@@ -35,7 +35,7 @@ ONTOLOGY = os.path.join(HERE, "..")
 # value-stream 1.1.0 requires kpi 1.1.0, EPM-DEC-001-0090); their own release checks still test those pinned versions.
 PACKAGES = [("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.1"), ("party", "1.1.0"),
             ("data-product", "1.1.0"), ("value-stream", "1.1.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
-            ("market-data", "1.0.0"), ("integration", "1.0.0")]
+            ("market-data", "1.0.0"), ("integration", "2.0.0")]
 INPUTS = [f"releases/{m}/{v}/{m}.ttl" for m, v in PACKAGES]
 # Each package's own shapes. core 2.3.0's, as 2.2.0's and 2.1.0's, carry the controlled-value shapes
 # (EPM-DEC-001-0044), so validation/controlled-values.ttl is not listed again.
@@ -87,19 +87,7 @@ QUALIFIED_RELATIONS = [
 # Rule gaps in a released module, which only a new release of that module can close. Each is
 # named here with its fix target; the build fails on any gap not listed, and on a listed gap
 # that no longer occurs, so the list cannot go stale (EPM-DEC-001-0036).
-RELEASE_EXCEPTIONS = {
-    "Rule 1: https://w3id.org/lsc/ontology/modules/placement/placementKind has no single concrete range":
-        "integration 1.0.0 declares no rdfs:range; the next integration release adds rdfs:range skos:Concept",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/consumer/reliesOn has no single concrete range":
-        "integration 1.0.0 declares no rdfs:range; its objects are properties, a concept and other terms, so "
-        "the next integration release gives it one concrete range",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/placement/placementKind":
-        "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/rank":
-        "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/evidenceTier":
-        "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
-}
+RELEASE_EXCEPTIONS = {}  # every listed gap is closed by integration 2.0.0 (EPM-DEC-001-0094)
 VERSIONS = {"neo4j": "2025.06.2", "n10s": "2025.06.1", "apoc": "bundled with neo4j:2025.06.2",
             "robot": "1.9.10", "reasoner": "ELK (through ROBOT)", "guideline": "v2.2 (lpg-projection/, pin 8ce9ada)"}
 
