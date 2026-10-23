@@ -138,7 +138,7 @@ class Build(unittest.TestCase):
     def test_the_inputs_are_every_released_module_at_its_newest_version(self):
         # Pinned by hand (EPM-DEC-001-0036, amendment of 2026-10-22); a new release must be added here.
         self.assertEqual(pl.PACKAGES, [
-            ("core", "2.2.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.0.0"),
+            ("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.0.0"),
             ("data-product", "1.0.0"), ("value-stream", "1.0.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
             ("market-data", "1.0.0"), ("integration", "1.0.0")])
         import glob, os

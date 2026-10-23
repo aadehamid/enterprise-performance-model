@@ -8,7 +8,7 @@ register.csv maps every distinct string in the process map's `systems` fields to
 it names (merged on spelling, split on "/"), or to none ("no-system": Manual, TBD and plans).
 systems.csv gives each system's name and kind. The build fails unless every string in the map
 is in the register once, every system the register names is in systems.csv, and every system
-in systems.csv is named. A link to a process not in core 2.2.0 is counted as waiting for the
+in systems.csv is named. A link to a process not in core 2.3.0 is counted as waiting for the
 next core release, not emitted.
 """
 import argparse
@@ -26,7 +26,7 @@ REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 MAP = os.path.join(REPO, "business_architecture", "business_process", "downstream_process_map.json")
 REGISTER = os.path.join(HERE, "register.csv")
 SYSTEMS = os.path.join(HERE, "systems.csv")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.2.0", "core.ttl")
+CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 OUTPUT = os.path.join(HERE, "systems.ttl")
 
 SYS = Namespace("https://w3id.org/lsc/ontology/modules/system/")

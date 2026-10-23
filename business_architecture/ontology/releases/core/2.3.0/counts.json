@@ -1,0 +1,16 @@
+{
+  "canonical facts": 640,
+  "evidence rows": 812,
+  "facts assuredBy": 5,
+  "facts constrainedBy": 11,
+  "facts dependsOnOutputOf": 190,
+  "facts enabledBy": 93,
+  "facts governedBy": 35,
+  "facts informedBy": 99,
+  "facts precedes": 182,
+  "facts requires": 5,
+  "facts triggeredBy": 20,
+  "facts with two or more rows": 172,
+  "new concepts": 1,
+  "process concepts": 707
+}

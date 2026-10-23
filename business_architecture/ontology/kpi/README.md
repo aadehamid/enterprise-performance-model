@@ -1,6 +1,6 @@
 # kpi: measure definitions
 
-The `kpi` module defines the measures that the decision owner's planning team uses and that MPC publishes. It holds definitions only, never values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/kpi/`; it depends on `core` 2.2.0 for process IRIs (2.1.0 until 1.1.0, EPM-DEC-001-0079) and uses W3C ORG's `org:Role` by IRI.
+The `kpi` module defines the measures that the decision owner's planning team uses and that MPC publishes. It holds definitions only, never values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/kpi/`; its 1.1.0 release requires `core` 2.2.0 for process IRIs (2.1.0 until 1.1.0, EPM-DEC-001-0079), and its build reads `core` 2.3.0 (since 2026-10-23, EPM-DEC-001-0089) and uses W3C ORG's `org:Role` by IRI.
 
 | File | What |
 |---|---|

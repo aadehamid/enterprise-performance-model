@@ -68,6 +68,8 @@ done
 (cd business_architecture/ontology/release && run with_deps python build_core_2_1.py --verify)
 # core 2.2.0, built from 2.1.0 and the process map at its pinned commit (EPM-DEC-001-0076).
 (cd business_architecture/ontology/release && run with_deps python build_core_2_2.py --verify)
+# core 2.3.0, built from 2.2.0 and the process map at its pinned commit (EPM-DEC-001-0089).
+(cd business_architecture/ontology/release && run with_deps python build_core_2_3.py --verify)
 # Step 10: releases/catalog.ttl, one DCAT catalog of every release, must equal a fresh build (EPM-DEC-001-0082).
 (cd business_architecture/ontology/release && run with_deps python build_catalog.py --verify)
 # Step 11: the competency questions the release can answer must still answer (EPM-DEC-001-0019).
@@ -107,6 +109,7 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
   business_architecture/ontology/release/test_build_core_next.py \
   business_architecture/ontology/release/test_build_core_2_1.py \
   business_architecture/ontology/release/test_build_core_2_2.py \
+  business_architecture/ontology/release/test_build_core_2_3.py \
   business_architecture/ontology/release/test_build_catalog.py \
   business_architecture/ontology/regression/test_run.py business_architecture/ontology/organization/test_vocabulary.py \
   business_architecture/ontology/organization/test_roles.py \

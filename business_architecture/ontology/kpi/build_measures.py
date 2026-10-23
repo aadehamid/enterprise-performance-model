@@ -24,7 +24,7 @@ REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 CLASSIFICATION = os.path.join(HERE, "measure-classification.csv")
 DETAILS = os.path.join(HERE, "measure-details.csv")
 PERSONAS = os.path.join(HERE, "personas.csv")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.2.0", "core.ttl")
+CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 OUTPUT = os.path.join(HERE, "measures.ttl")
 
 KPI = Namespace("https://w3id.org/lsc/ontology/modules/kpi/")
@@ -91,7 +91,7 @@ def load():
         m = d["measure_id"]
         if not d["definition"]:
             problems.append(f"{m}: no definition")
-        problems += [f"{m}: process {p!r} is not in core 2.2.0" for p in split(d["informs_process"]) if p not in procs]
+        problems += [f"{m}: process {p!r} is not in core 2.3.0" for p in split(d["informs_process"]) if p not in procs]
         problems += [f"{m}: confused-with {o!r} is not a measure" for o in split(d["not_to_be_confused_with"])
                      if o not in ids or o == m]
         if bool(d["not_to_be_confused_with"]) != bool(d["not_note"]) and d["not_to_be_confused_with"]:

@@ -1,5 +1,5 @@
 """Tests for the APQC element list (Step 7; EPM-DEC-001-0060): the build is current, the count
-matches the workbook's Combined sheet, every element core 2.2.0 references is listed, and two
+matches the workbook's Combined sheet, every element core 2.3.0 references is listed, and two
 elements are pinned by hand.
 
 Run: python3 -m pytest test_apqc_elements.py (needs rdflib, openpyxl).
@@ -38,7 +38,7 @@ class Elements(unittest.TestCase):
         e = URIRef(ba.ELEMENT + "10002")
         self.assertEqual(DATA.value(e, RDFS.label), Literal("Develop Vision and Strategy", lang="en"))
         self.assertEqual(DATA.value(e, SKOS.notation), Literal("1.0", datatype=XSD.string))
-        # The title matches the triple core 2.2.0 already states for a referenced element.
+        # The title matches the triple core 2.3.0 already states for a referenced element.
         self.assertEqual(DATA.value(URIRef(ba.ELEMENT + "19948"), DCTERMS.title),
                          Literal("APQC Downstream Petroleum PCF v7.2.2, element 19948", lang="en"))
 

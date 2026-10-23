@@ -9,7 +9,7 @@ data products; links.csv gives the process links a recorded decision names. The 
 unless every id is unique, every line and data product has a status on the code list, every
 segment has a description and a process-domain reference that resolves to one core concept,
 every link names a data product and cites a source, a link without waits_for has its process
-in core 2.2.0, and a link with waits_for does not (once the process is in core, the row must
+in core 2.3.0, and a link with waits_for does not (once the process is in core, the row must
 drop waits_for so the link is emitted).
 """
 import argparse
@@ -27,7 +27,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 PORTFOLIO = os.path.join(REPO, "business_architecture", "business_process", "data_product_portfolio.json")
 LINKS = os.path.join(HERE, "links.csv")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.2.0", "core.ttl")
+CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 OUTPUT = os.path.join(HERE, "data-products.ttl")
 
 DP = Namespace("https://w3id.org/lsc/ontology/modules/data-product/")
@@ -109,7 +109,7 @@ def load():
         if not row["source"]:
             problems.append(f"links.csv: {row['data_product']} -> {row['process']} cites no source")
         if not row["waits_for"] and len(by_key.get(row["process"], set())) != 1:
-            problems.append(f"links.csv: process {row['process']!r} is not in core 2.2.0, and the row names no release it waits for")
+            problems.append(f"links.csv: process {row['process']!r} is not in core 2.3.0, and the row names no release it waits for")
         if row["waits_for"] and row["process"] in by_key:
             problems.append(f"links.csv: process {row['process']!r} is in core now; clear its waits_for so the link is emitted")
     for alias, target in portfolio.get("aliases", {}).items():

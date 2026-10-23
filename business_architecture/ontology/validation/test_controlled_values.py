@@ -1,5 +1,5 @@
 """Tests for the Step 9 controlled-value shapes (EPM-DEC-001-0014, EPM-DEC-001-0035, EPM-DEC-001-0044):
-the core release (2.2.0, which carries these shapes in its release shapes, as 2.1.0 did) and the organization module
+the core release (2.3.0, which carries these shapes in its release shapes, as 2.2.0 and 2.1.0 did) and the organization module
 conform, a value from the wrong list fails, and every code-list property of core has a shape.
 
 Run: python3 -m pytest test_controlled_values.py (needs rdflib, pyshacl).
@@ -19,7 +19,7 @@ ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
 SH = Namespace("http://www.w3.org/ns/shacl#")
 
 DATA = Graph()
-RELEASE = os.path.join(ONTOLOGY, "releases", "core", "2.2.0")
+RELEASE = os.path.join(ONTOLOGY, "releases", "core", "2.3.0")
 DATA.parse(os.path.join(RELEASE, "core.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "vocabulary.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "assignments.ttl"))
