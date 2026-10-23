@@ -110,7 +110,7 @@ its listed exceptions.
 - **Waiting on the decision owner:** Q17, meaning ownership
   (EPM-DEC-001-0045); MPC-P10 (EPM-DEC-001-0070); a product code list for
   the PIDX and OEO mappings (EPM-DEC-001-0064); and Phase F, the
-  `ontology` skill.
+  `ontology` skill (*2026-10-22:* approved, EPM-DEC-001-0084).
 - **Waiting on others:** Forecaster, on the refinery Economics and
   Planning process owner (EPM-DEC-001-0045, decision 2); the four codes
   and TID Nbr, on the business (EPM-DEC-001-0072); the 16 projection

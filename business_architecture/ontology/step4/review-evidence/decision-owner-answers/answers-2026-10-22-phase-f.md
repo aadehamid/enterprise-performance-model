@@ -3,7 +3,7 @@ The decision owner asked: "Can you keep going to Phase F without me. What will y
 Block 1: "Do you approve the Phase F plan (phase-f-skill-plan.md: a short SKILL.md indexing Steps 0 to 12 with their gates, one reference per step group, a governance layer, templates, plus item 6: the Going Meta and neo4j-ontology-skill proposals)?"
 Block 2: "The skill lives in personal-agent-skills, a PUBLIC repo, and this ontology is proprietary. What may the skill's worked examples use?" The recommended option said: invented examples and facts from MPC's public SEC filings only; no EPM decisions, process map, customer inputs or internal names.
 Block 3: "How should the rebuilt skill ship?" The recommended option said: the same loop as EPM (check, Pi independent review, the repo's PR reviewer, merge on its verdict).
-Block 4: "While you're away, may I make Phase F's design choices myself (file structure, wording, which proposals go in, the test domain) and log each one, as under EPM-DEC-001-0028?" The decision owner typed this answer instead of choosing an option.
+Block 4: "While you're away, may I make Phase F's design choices myself (file structure, wording, which proposals go in, the test domain) and log each one, as under EPM-DEC-001-0028?" The options offered were 1 "Yes, decide and log (Recommended)" and 2 "No, ask me each time". The decision owner typed this answer instead of choosing an option.
 Block 5: later in the session, after Claude said queue item 9 (the open-ontologies trial, added by the decision owner on 2026-10-21) sits outside the phases and waits for their go-ahead, the decision owner typed block 5 unprompted.
 Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
