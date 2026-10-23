@@ -17,7 +17,7 @@ The `party` module holds the Customer domain's concepts (EPM-DEC-001-0068), the 
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-1. **"The stable version" is `party` 1.0.0**, the module's first release, issued 2026-10-22. No `core` release was pending: the process-map changes of MPC-P10 wait for the decision owner, so no `core` version is cut.
+1. **"The stable version" is `party` 1.0.0**, the module's first release, issued 2026-10-22. No `core` release was pending: the process-map changes of MPC-P10 wait for the decision owner, so no `core` version is cut. *2026-10-23:* the decision owner accepted MPC-P10 (EPM-DEC-001-0087); `core` 2.3.0 adds CM 1.3.7.1.7 (EPM-DEC-001-0089).
 2. **The package holds** `vocabulary.ttl`, `code-lists.ttl`, `systems.ttl` and `lifecycle.ttl` (3,405 triples), with the module's shapes, a DCAT record, a changelog and a manifest, built by `release/build_module.py` as the other modules' packages are. It requires core 2.1.0, and the shapes conform with core 2.1.0 loaded.
 3. **The reference parties stay outside the package.** `party/reference-parties.ttl` describes MPC and MPLX, real companies; the playbook's module policy puts reference instances in their own module. The regression keeps loading the file. Moving it into `ref-mpc` would be a `ref-mpc` release, which needs its own approval. *2026-10-22:* the decision owner split them into their own reference module; the file is now `ref-mpc/reference-parties.ttl` (EPM-DEC-001-0075).
 4. **The examples stay outside too:** `examples.ttl` holds invented test fixtures.

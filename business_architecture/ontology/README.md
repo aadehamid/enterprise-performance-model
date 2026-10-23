@@ -54,7 +54,7 @@ root.
 | `data-product/` | The Step 7 data-product module: the portfolio's 3 segments, 19 lines and 48 data products as definitions (49 since Customer Master, 2026-10-23, EPM-DEC-001-0091), 33 of them parked for lack of a description, mapped to DCAT, not imported (EPM-DEC-001-0053); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
 | `organization/` | The Step 5 organization module: the RACI assignment and control vocabulary, its SHACL shapes and tests (EPM-DEC-001-0030), the role register with the roles built from it (EPM-DEC-001-0031), and the RACI assignments with their ledger (EPM-DEC-001-0032) |
 | `regression/` | The Step 11 SPARQL regression: one query per tested part of a question, each question's status, and the runner `check.sh` calls |
-| `release/`, `releases/` | Release builders and packages: `core` 1.0.0 (EPM-DEC-001-0029), organization 1.0.0 and ref-mpc 1.0.0 (EPM-DEC-001-0037), core 2.0.0 (EPM-DEC-001-0038), core 2.1.0 (EPM-DEC-001-0044), core 2.2.0 (EPM-DEC-001-0076), organization 2.0.0 and ref-mpc 1.1.0 (EPM-DEC-001-0045), and kpi 1.0.0 and 1.0.1 (EPM-DEC-001-0043), and party 1.0.0 (EPM-DEC-001-0074), and data-product, value-stream, system, lane and market-data 1.0.0 (EPM-DEC-001-0077), and integration 1.0.0 (EPM-DEC-001-0078), and kpi 1.1.0 (EPM-DEC-001-0079), and ref-mpc 1.2.0 (EPM-DEC-001-0080), and core 2.3.0 (EPM-DEC-001-0089), and value-stream 1.1.0 (EPM-DEC-001-0090), and data-product 1.1.0 (EPM-DEC-001-0091); `releases/catalog.ttl`, one DCAT catalog of every release, built by `release/build_catalog.py` (EPM-DEC-001-0082) |
+| `release/`, `releases/` | Release builders and packages: `core` 1.0.0 (EPM-DEC-001-0029), organization 1.0.0 and ref-mpc 1.0.0 (EPM-DEC-001-0037), core 2.0.0 (EPM-DEC-001-0038), core 2.1.0 (EPM-DEC-001-0044), core 2.2.0 (EPM-DEC-001-0076), organization 2.0.0 and ref-mpc 1.1.0 (EPM-DEC-001-0045), and kpi 1.0.0 and 1.0.1 (EPM-DEC-001-0043), and party 1.0.0 (EPM-DEC-001-0074), and data-product, value-stream, system, lane and market-data 1.0.0 (EPM-DEC-001-0077), and integration 1.0.0 (EPM-DEC-001-0078), and kpi 1.1.0 (EPM-DEC-001-0079), and ref-mpc 1.2.0 (EPM-DEC-001-0080), and core 2.3.0 (EPM-DEC-001-0089), and value-stream 1.1.0 (EPM-DEC-001-0090), and data-product 1.1.0 (EPM-DEC-001-0091), and party 1.1.0 (EPM-DEC-001-0092); `releases/catalog.ttl`, one DCAT catalog of every release, built by `release/build_catalog.py` (EPM-DEC-001-0082) |
 | `apqc-scope-decisions.md` | One-at-a-time in/out-of-scope calls for the seven APQC gap candidates |
 | `apqc-crosscheck-report.md` | Repo process map vs APQC Downstream PCF v7.2.2 consistency check (2026-09-17) |
 | `build/step2-identity-map.py` | Reproducible script: URI slug for every one of the 680 nodes |
@@ -94,17 +94,18 @@ authoritative for step status. As of 2026-10-22, Phase E is closed
 (EPM-DEC-001-0083): Steps 0 to 12 are done or stand as recorded, each with
 its listed exceptions.
 
-- **Releases:** 22 packages under `releases/`, listed in
+- **Releases:** 23 packages under `releases/`, listed in
   `releases/catalog.ttl` (EPM-DEC-001-0082). The newest of each module:
-  `core` 2.3.0 (EPM-DEC-001-0089), organization 2.0.0, ref-mpc 1.2.0, kpi 1.1.0, party 1.0.0,
+  `core` 2.3.0 (EPM-DEC-001-0089), organization 2.0.0, ref-mpc 1.2.0, kpi 1.1.0, party 1.1.0
+  (EPM-DEC-001-0092),
   value-stream 1.1.0 (EPM-DEC-001-0090), data-product 1.1.0
   (EPM-DEC-001-0091), system, lane and market-data 1.0.0, and
   integration 1.0.0.
 - **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);
   the competency regression has 43 questions answerable, 0 partial,
   0 waiting and 1 parked (Q17, EPM-DEC-001-0086); the Neo4j projection of every released package passes,
-  with 14 rule gaps listed for the modules' next releases (16 before
-  value-stream 1.1.0)
+  with 6 rule gaps listed for the modules' next releases (16 before
+  value-stream 1.1.0, 14 before party 1.1.0)
   (EPM-DEC-001-0036).
 - **Held rows:** 462, each held with its reason: 51 Phase 1 rows and 411
   outside Phase 1 (`python3 scripts/epm_facts.py counts`). PTC-001-B is
@@ -113,9 +114,9 @@ its listed exceptions.
   the ontology is first shared with business consumers (EPM-DEC-001-0086);
   MPC-P10 is accepted (EPM-DEC-001-0087); product values from MPC's FY2025
   Form 10-K, and six releases that carry these and close the 16 projection
-  gaps, are approved (EPM-DEC-001-0088). `core` 2.3.0, `value-stream` 1.1.0
-  and `data-product` 1.1.0 are released (EPM-DEC-001-0089 to 0091); the
-  other three are not yet built.
+  gaps, are approved (EPM-DEC-001-0088). `core` 2.3.0, `value-stream` 1.1.0,
+  `data-product` 1.1.0 and `party` 1.1.0 are released (EPM-DEC-001-0089
+  to 0092); the other two are not yet built.
   Phase F, the `ontology` skill, was approved on 2026-10-22
   (EPM-DEC-001-0084) and is done: personal-agent-skills pull request #45,
   merged on 2026-10-23.

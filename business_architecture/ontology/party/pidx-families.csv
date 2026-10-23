@@ -1,0 +1,11 @@
+product,family,note
+ulsd,V,
+ulsd,S,PIDX's notice of 2024-07-31 added family S for ultra-low-sulfur diesel #2; the 2015 family list names S otherwise.
+jet-fuel,K,Commercial jet fuel.
+jet-fuel,J,Military jet fuel.
+kerosene,H,
+no-1-fuel-oil,E,One of two families PIDX's 2015 family list gives for No. 1 fuel oil; the other is L.
+no-1-fuel-oil,L,One of two families PIDX's 2015 family list gives for No. 1 fuel oil; the other is E.
+no-2-fuel-oil,M,The family also holds residual fuel oil codes.
+butane,N,
+asphalt,Y,The family also holds transmix.

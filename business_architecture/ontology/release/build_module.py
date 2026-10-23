@@ -77,14 +77,18 @@ MODULES = {
         # The reference parties are reference instances of real companies, which the playbook's module policy
         # puts in their own module, so they are not part of this package. Since 2026-10-22 they are in
         # ref-mpc/reference-parties.ttl (EPM-DEC-001-0075).
-        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-21-release-playbook.md", "You have my permission to release the stable version when you are done."),
+        # 1.1.0 is a minor approved with the close-out releases: the products from MPC's FY2025 Form 10-K with their
+        # OEO mappings and PIDX families, the onboarding stage's link to CM 1.3.7.1.7, and the eight projection
+        # fixes; it requires core 2.3.0 (EPM-DEC-001-0087, 0088, 0092).
+        "version": "1.1.0", "stage": None, "issued": "2026-10-23",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],
         "shapes": ["party/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.1.0"},
+        "pins": {"core": "2.3.0"},
         "decisions": ["EPM-DEC-001-0067", "EPM-DEC-001-0068", "EPM-DEC-001-0069", "EPM-DEC-001-0070",
-                      "EPM-DEC-001-0071", "EPM-DEC-001-0072", "EPM-DEC-001-0074"],
+                      "EPM-DEC-001-0071", "EPM-DEC-001-0072", "EPM-DEC-001-0074", "EPM-DEC-001-0087", "EPM-DEC-001-0088",
+                      "EPM-DEC-001-0092"],
     },
     # The Step 7 modules' first releases, majors the decision owner approved with the release plan
     # (EPM-DEC-001-0077). Each requires core 2.2.0, the release that holds every process they link.

@@ -31,7 +31,7 @@ Three things are missing.
   - **A (recommended).** Add one L5 process under the L4 CM 1.3.7.1 Manage Commercial Master Data Stewardship, for example CM 1.3.7.1.7 "Coordinate Customer Onboarding". It would cover capturing the setup request, initiating credit, KYC and contract controls through their owners, requesting the governed master record, and confirming the customer is set up in the systems that use it. Setup Prospect stays as the card-program case.
   - **B.** Widen CM 1.3.6.6.1's scope to every customer and move it under CM 1.3.7. Not recommended: moving a node changes its place in the taxonomy, and its card-program steps would no longer fit. CM 1.2.1.2.1 Create New Counterparty is a precedent for an onboarding process kept beside the process it serves.
   - **C.** Change nothing, and let the lifecycle's prospect and onboarding stages rest on the existing processes. The gap the core definitions name stays open.
-- *2026-10-23:* **Applied.** The decision owner chose A (EPM-DEC-001-0087). `downstream_process_map.json` holds CM 1.3.7.1.7 Coordinate Customer Onboarding under CM 1.3.7.1, and the curated Step 2 identity map holds its row. It enters the ontology in `core` 2.3.0 (EPM-DEC-001-0088).
+- *2026-10-23:* **Applied.** The decision owner chose A (EPM-DEC-001-0087). `downstream_process_map.json` holds CM 1.3.7.1.7 Coordinate Customer Onboarding under CM 1.3.7.1, and the curated Step 2 identity map holds its row. It enters the ontology in `core` 2.3.0 (EPM-DEC-001-0088, 0089), and `party` 1.1.0 links the onboarding stage to it (EPM-DEC-001-0092).
 
 ### MPC-P10.2: link the Order to Cash credit review to its process
 

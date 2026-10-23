@@ -1,6 +1,7 @@
 # The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069, 0070).
-# Built by build_party.py from code-lists.csv. Do not edit by hand.
+# Built by build_party.py from code-lists.csv, product-mappings.csv and pidx-families.csv. Do not edit by hand.
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix oeo: <https://openenergyplatform.org/ontology/oeo/> .
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -506,6 +507,263 @@
     skos:prefLabel "Person"@en ;
     skos:topConceptOf party:party-type .
 
+<https://w3id.org/lsc/ontology/modules/party/product/anode-grade-coke> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00010327 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> ;
+    skos:definition "Petroleum coke used to make carbon anodes for aluminum smelting."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "anode-grade-coke" ;
+    skos:prefLabel "Anode-grade coke"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/asphalt-cement> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/asphalt> ;
+    skos:definition "Asphalt cement, the paving binder."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "asphalt-cement" ;
+    skos:prefLabel "Asphalt cement"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/benzene> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00140159 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> ;
+    skos:definition "Benzene sold as a petrochemical feedstock."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "benzene" ;
+    skos:prefLabel "Benzene"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/blend-grade-gasoline> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00000286 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/gasoline> ;
+    skos:definition "Gasoline blendstock made to be blended with ethanol before sale."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "blend-grade-gasoline" ;
+    skos:prefLabel "Blend-grade gasoline"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/butane> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00320011 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> ;
+    skos:definition "Butane recovered at the refineries and sold."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "butane" ;
+    skos:prefLabel "Butane"@en ;
+    party:pidxProductFamily "N" .
+
+<https://w3id.org/lsc/ontology/modules/party/product/cumene> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00140159 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> ;
+    skos:definition "Cumene sold as a petrochemical feedstock."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "cumene" ;
+    skos:prefLabel "Cumene"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/emulsified-asphalt> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/asphalt> ;
+    skos:definition "Asphalt the company sells in emulsified form."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "emulsified-asphalt" ;
+    skos:prefLabel "Emulsified asphalt"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/fuel-grade-coke> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00010327 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> ;
+    skos:definition "Petroleum coke used for power generation and in industrial applications."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "fuel-grade-coke" ;
+    skos:prefLabel "Fuel-grade coke"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/heavy-fuel-oil> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00010316 ;
+    skos:definition "The residual fuel oil the refineries make."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "heavy-fuel-oil" ;
+    skos:prefLabel "Heavy fuel oil"@en ;
+    skos:topConceptOf party:product .
+
+<https://w3id.org/lsc/ontology/modules/party/product/industrial-asphalt> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/asphalt> ;
+    skos:definition "Asphalt sold for industrial uses."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "industrial-asphalt" ;
+    skos:prefLabel "Industrial asphalt"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/jet-fuel> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/distillates> ;
+    skos:closeMatch oeo:OEO_00000245 ;
+    skos:definition "Kerosene-type fuel made for aviation turbine engines."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "jet-fuel" ;
+    skos:prefLabel "Jet fuel"@en ;
+    party:pidxProductFamily "J",
+        "K" .
+
+<https://w3id.org/lsc/ontology/modules/party/product/kerosene> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00000246 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/distillates> ;
+    skos:definition "Kerosene sold as a product of its own, apart from jet fuel."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "kerosene" ;
+    skos:prefLabel "Kerosene"@en ;
+    party:pidxProductFamily "H" .
+
+<https://w3id.org/lsc/ontology/modules/party/product/no-1-fuel-oil> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/distillates> ;
+    skos:definition "The distillate fuel oil grade the company sells as No. 1 fuel oil."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "no-1-fuel-oil" ;
+    skos:prefLabel "No. 1 fuel oil"@en ;
+    party:pidxProductFamily "E",
+        "L" .
+
+<https://w3id.org/lsc/ontology/modules/party/product/no-2-fuel-oil> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/distillates> ;
+    skos:closeMatch oeo:OEO_00000211 ;
+    skos:definition "The distillate fuel oil grade the company sells as No. 2 fuel oil."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "no-2-fuel-oil" ;
+    skos:prefLabel "No. 2 fuel oil"@en ;
+    party:pidxProductFamily "M" .
+
+<https://w3id.org/lsc/ontology/modules/party/product/polymer-modified-asphalt> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/asphalt> ;
+    skos:definition "Asphalt modified with polymers."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "polymer-modified-asphalt" ;
+    skos:prefLabel "Polymer-modified asphalt"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/propane> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00320011 ;
+    skos:definition "Propane recovered at the refineries and sold, mostly for home heating and the rest for industrial and petrochemical use."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "propane" ;
+    skos:prefLabel "Propane"@en ;
+    skos:topConceptOf party:product .
+
+<https://w3id.org/lsc/ontology/modules/party/product/propylene> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00140159 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> ;
+    skos:definition "Propylene sold as a petrochemical feedstock."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "propylene" ;
+    skos:prefLabel "Propylene"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/reformulated-gasoline> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00000286 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/gasoline> ;
+    skos:definition "Gasoline blended to the reformulated gasoline requirements of the areas that require it."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "reformulated-gasoline" ;
+    skos:prefLabel "Reformulated gasoline"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/renewable-diesel> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00000258,
+        oeo:OEO_00010242 ;
+    skos:definition "Diesel fuel made from renewable feedstocks in the Renewable Diesel segment."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "renewable-diesel" ;
+    skos:prefLabel "Renewable diesel"@en ;
+    skos:topConceptOf party:product .
+
+<https://w3id.org/lsc/ontology/modules/party/product/roofing-flux> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/asphalt> ;
+    skos:definition "Asphalt sold as roofing flux."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "roofing-flux" ;
+    skos:prefLabel "Roofing flux"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/toluene> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00140159 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> ;
+    skos:definition "Toluene sold as a petrochemical feedstock."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "toluene" ;
+    skos:prefLabel "Toluene"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/ulsd> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00000181 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/distillates> ;
+    skos:definition "Diesel fuel made to the ultra-low-sulfur specification."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "ulsd" ;
+    skos:prefLabel "Ultra-low-sulfur diesel"@en ;
+    party:pidxProductFamily "S",
+        "V" .
+
+<https://w3id.org/lsc/ontology/modules/party/product/xylene> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:broadMatch oeo:OEO_00140159 ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> ;
+    skos:definition "Xylene sold as a petrochemical feedstock."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "xylene" ;
+    skos:prefLabel "Xylene"@en .
+
 <https://w3id.org/lsc/ontology/modules/party/relationship-type/contact-for> a skos:Concept ;
     skos:definition "One role is the contact for the other."@en ;
     skos:inScheme party:relationship-type ;
@@ -793,6 +1051,17 @@
     skos:prefLabel "Brand-attached resellers"@en ;
     skos:topConceptOf party:customer-class .
 
+<https://w3id.org/lsc/ontology/modules/party/product/gasoline> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:closeMatch oeo:OEO_00000286 ;
+    skos:definition "Motor gasoline the company's refineries make and sell, in the grades and blends the market takes, including reformulated gasoline and blend-grade gasoline for ethanol blending."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "gasoline" ;
+    skos:prefLabel "Gasoline"@en ;
+    skos:topConceptOf party:product .
+
 <https://w3id.org/lsc/ontology/modules/party/customer-class/end-users-specialty> a skos:Concept ;
     skos:definition "The customer classes that use the product themselves, or buy a specialty product or service."@en ;
     skos:inScheme party:customer-class ;
@@ -816,6 +1085,27 @@ party:party-type a skos:ConceptScheme ;
     rdfs:label "party types"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
     skos:definition "Person or organization: the two kinds of party."@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/asphalt> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:definition "The asphalt products the refineries make: asphalt cements, polymer-modified, emulsified and industrial asphalts, and roofing flux."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "asphalt" ;
+    skos:prefLabel "Asphalt"@en ;
+    skos:topConceptOf party:product ;
+    party:pidxProductFamily "Y" .
+
+<https://w3id.org/lsc/ontology/modules/party/product/distillates> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:definition "The middle distillates the refineries make: ultra-low-sulfur diesel, jet fuel, kerosene, and No. 1 and No. 2 fuel oils."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "distillates" ;
+    skos:prefLabel "Distillates"@en ;
+    skos:topConceptOf party:product .
 
 party:contact-type a skos:ConceptScheme ;
     rdfs:label "contact types"@en ;
@@ -848,6 +1138,16 @@ party:identifier-type a skos:ConceptScheme ;
     rdfs:label "identifier types"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
     skos:definition "The kinds of external identifier of a party."@en .
+
+<https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> a skos:Concept,
+        party:Product ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
+    skos:definition "The natural gas liquids and petrochemicals the refineries make, among them propylene, xylene, butane, benzene, toluene and cumene, with fuel-grade and anode-grade coke."@en ;
+    skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
+    skos:inScheme party:product ;
+    skos:notation "ngls-and-petrochemicals" ;
+    skos:prefLabel "NGLs and petrochemicals"@en ;
+    skos:topConceptOf party:product .
 
 party:relationship-type a skos:ConceptScheme ;
     rdfs:label "party relationship types"@en ;
@@ -903,4 +1203,9 @@ party:party-role a skos:ConceptScheme ;
     rdfs:label "party roles"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
     skos:definition "The governed list of role types a party can hold. A new role type needs a governance decision."@en .
+
+party:product a skos:ConceptScheme ;
+    rdfs:label "products"@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1; business_architecture/reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 4; EPM-DEC-001-0088; EPM-DEC-001-0092"@en ;
+    skos:definition "The refined products the company makes and sells, as MPC's FY2025 Form 10-K names them: its six refinery product groups and the products it names under them, and renewable diesel. Each value is a party:Product."@en .
 

@@ -16,7 +16,7 @@ Compared against the map on `main` at `1b3105e`.
 
 MPC-P02 is raised as a proposal: `business_process/proposals/MPC-P02-refining-ids.md` (2026-10-13).
 
-MPC-P10, the customer lifecycle, is raised from the decision owner's customer inputs, not from MPC material: `business_process/proposals/MPC-P10-customer-lifecycle.md` (2026-10-21, EPM-DEC-001-0070).
+MPC-P10, the customer lifecycle, is raised from the decision owner's customer inputs, not from MPC material: `business_process/proposals/MPC-P10-customer-lifecycle.md` (2026-10-21, EPM-DEC-001-0070). *2026-10-23:* the decision owner accepted MPC-P10 (EPM-DEC-001-0087); `core` 2.3.0 adds CM 1.3.7.1.7 (EPM-DEC-001-0089).
 
 | ID | Where in the map | What MPC shows (source) | Suggestion | Ontology impact | Ruling (2026-10-18) |
 |---|---|---|---|---|---|

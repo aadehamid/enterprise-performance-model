@@ -7,6 +7,7 @@
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -105,8 +106,9 @@ party:PartyTransactionAssociation a owl:Class ;
 
 party:Product a owl:Class ;
     rdfs:label "product"@en ;
-    skos:definition "A marketable hydrocarbon product or grade. The class stands in for a Product domain that this repository does not model yet; the module gives products no properties or values. Contract terms are set per product, so specialty buyers are told apart by an agreement's product scope."@en ;
-    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+    skos:definition "A marketable hydrocarbon product or grade. The class stands in for a Product domain that this repository does not model yet. Contract terms are set per product, so specialty buyers are told apart by an agreement's product scope."@en ;
+    skos:scopeNote "Since 1.1.0 its values are the refined products MPC's FY2025 Form 10-K names, in the scheme party:product, each mapped with SKOS to the Open Energy Ontology where a class fits (OEO v2.14.0, released 2026-10-08), and given its PIDX product family where one fits (EPM-DEC-001-0088, 0092). The business confirms or replaces the list (ontology/business-closeout.md, point 5)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068; EPM-DEC-001-0092"@en .
 
 party:Site a owl:Class ;
     rdfs:label "site"@en ;
@@ -377,7 +379,7 @@ party:systemTier a owl:ObjectProperty ;
     dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
 
 party:customerRole a owl:DatatypeProperty ;
-    rdfs:label "customer role"@en ; rdfs:domain party:CustomerSystem ;
+    rdfs:label "customer role"@en ; rdfs:domain party:CustomerSystem ; rdfs:range rdf:langString ;
     skos:definition "What the system does with the customer, in a sentence or two."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
 
@@ -402,7 +404,7 @@ party:toSystem a owl:ObjectProperty ;
     dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
 
 party:carries a owl:DatatypeProperty ;
-    rdfs:label "carries"@en ; rdfs:domain party:DataFlow ;
+    rdfs:label "carries"@en ; rdfs:domain party:DataFlow ; rdfs:range rdf:langString ;
     skos:definition "What the flow carries, in a sentence."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
 
@@ -411,8 +413,14 @@ party:feeds a owl:ObjectProperty ;
     skos:definition "The system sends customer data to the other: the short form of a data flow."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
 
+party:pidxProductFamily a owl:DatatypeProperty ;
+    rdfs:label "PIDX product family"@en ; rdfs:domain party:Product ; rdfs:range xsd:string ;
+    skos:definition "The one-letter family of PIDX's downstream product codes that the product's PIDX codes belong to. A plain identifier: PIDX publishes no IRIs, and a PIDX code names one company's traded grade, so the product is not mapped to PIDX codes."@en ;
+    skos:scopeNote "Source: PIDX Downstream Product Codes, document 04-101-15-45-2010, file PIDX_ProductCodes_10_20_2026.xlsx from https://pidx.org/standards/ (retrieved 2026-10-23). Its Families sheet is dated 2015-09-29, and PIDX's notice of 2024-07-31 changed family S, so the letters are to be confirmed with PIDX (ontology/business-closeout.md, point 5). \u00a9 PIDX, Inc. 2023. Use of this copyrighted material is subject to the PIDX End User License Agreement available at www.pidx.org/license."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0064; EPM-DEC-001-0092"@en .
+
 party:evidenceInput a owl:DatatypeProperty ;
-    rdfs:label "evidence input"@en ;
+    rdfs:label "evidence input"@en ; rdfs:range xsd:string ;
     skos:definition "The numbers of the decision owner's customer inputs that show the statement, as EPM-DEC-001-0067's Context lists them. The inputs are not in this repository."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0069"@en .
 

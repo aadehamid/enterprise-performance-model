@@ -9,7 +9,7 @@
 
 ## Context
 
-EPM-DEC-001-0004 held the Customer domain until the decision owner shared their customer information. EPM-DEC-001-0052 set its scope as Phase C: a conceptual data model of Customer, the customer lifecycle from onboarding as proposed process-map nodes, and the channel dimension of MPC-P06. *2026-10-21:* the lifecycle's stages map to existing processes; only MPC-P10.1 would add a node, if the decision owner accepts it (EPM-DEC-001-0070).
+EPM-DEC-001-0004 held the Customer domain until the decision owner shared their customer information. EPM-DEC-001-0052 set its scope as Phase C: a conceptual data model of Customer, the customer lifecycle from onboarding as proposed process-map nodes, and the channel dimension of MPC-P06. *2026-10-21:* the lifecycle's stages map to existing processes; only MPC-P10.1 would add a node, if the decision owner accepts it (EPM-DEC-001-0070). *2026-10-23:* the decision owner accepted MPC-P10 (EPM-DEC-001-0087); `core` 2.3.0 adds CM 1.3.7.1.7 (EPM-DEC-001-0089).
 
 In this session the decision owner sent seven inputs, one at a time:
 

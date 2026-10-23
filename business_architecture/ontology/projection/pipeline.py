@@ -33,7 +33,7 @@ ONTOLOGY = os.path.join(HERE, "..")
 # Every released module once, at its newest release (EPM-DEC-001-0036, amendment of 2026-10-22). So
 # kpi is 1.1.0, though market-data and integration were released against 1.0.1 (as was value-stream 1.0.0;
 # value-stream 1.1.0 requires kpi 1.1.0, EPM-DEC-001-0090); their own release checks still test those pinned versions.
-PACKAGES = [("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.0.0"),
+PACKAGES = [("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.1.0"),
             ("data-product", "1.1.0"), ("value-stream", "1.1.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
             ("market-data", "1.0.0"), ("integration", "1.0.0")]
 INPUTS = [f"releases/{m}/{v}/{m}.ttl" for m, v in PACKAGES]
@@ -68,6 +68,8 @@ PREFIXES = {
     "con": "https://w3id.org/lsc/ontology/modules/consumer/",
     "skos": str(SKOS), "dcterms": "http://purl.org/dc/terms/", "org": "http://www.w3.org/ns/org#",
     "rdfs": str(RDFS), "owl": str(OWL), "rdf": str(RDF), "prov": "http://www.w3.org/ns/prov#",
+    # The party products' SKOS mappings point to Open Energy Ontology classes (EPM-DEC-001-0092).
+    "oeo": "https://openenergyplatform.org/ontology/oeo/",
 }
 # Rule 4a's qualified-relation classes: (class, ends the node points to, ends that point to the node).
 # An end that points to the node is the inverse link the guideline allows, as prov:qualifiedAssociation.
@@ -90,27 +92,11 @@ RELEASE_EXCEPTIONS = {
         "kpi 1.1.0 declares no rdfs:range; the next kpi release adds rdfs:range xsd:string",
     "Rule 1: https://w3id.org/lsc/ontology/modules/placement/placementKind has no single concrete range":
         "integration 1.0.0 declares no rdfs:range; the next integration release adds rdfs:range skos:Concept",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/party/evidenceInput has no single concrete range":
-        "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range xsd:string",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/party/customerRole has no single concrete range":
-        "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range rdf:langString",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/party/carries has no single concrete range":
-        "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range rdf:langString",
     "Rule 1: https://w3id.org/lsc/ontology/modules/consumer/reliesOn has no single concrete range":
         "integration 1.0.0 declares no rdfs:range; its objects are properties, a concept and other terms, so "
         "the next integration release gives it one concrete range",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/placement/placementKind":
         "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/plays":
-        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/mpcClassification":
-        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/implements":
-        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/governedBy":
-        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
-    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/feeds":
-        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/rank":
         "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/evidenceTier":

@@ -13,7 +13,7 @@ An external search on 2026-10-05 found no public business-architecture or proces
 
 ## Decision
 
-Keep EPM's own terms and link them to these sources with SKOS mapping properties (`skos:exactMatch`, `skos:closeMatch`) at the step where each fits: GLEIF at Step 5 (MPC and MPLX), PIDX and OEO at Step 7 and the Customer product-line facet, IOF Supply Chain at Step 7 if P01 brings in fuels logistics. Do not import them. Check PIDX's access terms before the Customer work. *2026-10-19:* checked; the standards are royalty free under PIDX's end user licence, for use without modification (EPM-DEC-001-0064). *2026-10-20:* P01 brought fuels logistics in, and IOF Supply Chain is parked until a concept layer for logistics assets or movements, or a consumer that needs IOF terms (EPM-DEC-001-0064).
+Keep EPM's own terms and link them to these sources with SKOS mapping properties (`skos:exactMatch`, `skos:closeMatch`) at the step where each fits: GLEIF at Step 5 (MPC and MPLX), PIDX and OEO at Step 7 and the Customer product-line facet, IOF Supply Chain at Step 7 if P01 brings in fuels logistics. Do not import them. Check PIDX's access terms before the Customer work. *2026-10-19:* checked; the standards are royalty free under PIDX's end user licence, for use without modification (EPM-DEC-001-0064). *2026-10-20:* P01 brought fuels logistics in, and IOF Supply Chain is parked until a concept layer for logistics assets or movements, or a consumer that needs IOF terms (EPM-DEC-001-0064). *2026-10-23:* for PIDX, which publishes no IRIs, `party` 1.1.0 records family letters as plain identifiers instead of a SKOS mapping; OEO is mapped with SKOS (EPM-DEC-001-0092).
 
 ## Alternatives considered
 

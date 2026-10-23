@@ -270,5 +270,102 @@ class Shapes(unittest.TestCase):
         self.assertRejects("ex:lonely a party:CustomerAccount .", "belongs to at least one party")
 
 
+PROD = Namespace("https://w3id.org/lsc/ontology/modules/party/product/")
+OEO = Namespace("https://openenergyplatform.org/ontology/oeo/")
+
+
+class Products(unittest.TestCase):
+    """The product values from MPC's FY2025 Form 10-K, their OEO mappings and PIDX families (EPM-DEC-001-0092).
+    Every expected value is written out by hand."""
+
+    def test_the_products_and_their_groups(self):
+        top = {"gasoline", "distillates", "propane", "ngls-and-petrochemicals", "heavy-fuel-oil", "asphalt", "renewable-diesel"}
+        children = {
+            "gasoline": {"reformulated-gasoline", "blend-grade-gasoline"},
+            "distillates": {"ulsd", "jet-fuel", "kerosene", "no-1-fuel-oil", "no-2-fuel-oil"},
+            "ngls-and-petrochemicals": {"propylene", "xylene", "butane", "benzene", "toluene", "cumene", "fuel-grade-coke",
+                                        "anode-grade-coke"},
+            "asphalt": {"asphalt-cement", "polymer-modified-asphalt", "emulsified-asphalt", "industrial-asphalt", "roofing-flux"},
+        }
+        products = {str(s)[len(str(PROD)):] for s in CODES.subjects(SKOS.inScheme, CUST["product"])}
+        self.assertEqual(len(products), 27)
+        self.assertEqual({p for p in products if (PROD[p], SKOS.topConceptOf, CUST["product"]) in CODES}, top)
+        for group, kids in children.items():
+            self.assertEqual({str(s)[len(str(PROD)):] for s in CODES.subjects(SKOS.broader, PROD[group])}, kids, group)
+        for p in products:
+            self.assertIn((PROD[p], RDF.type, CUST.Product), CODES, p)
+
+    def test_the_oeo_mappings(self):
+        expected = {
+            ("gasoline", "closeMatch", "OEO_00000286"), ("reformulated-gasoline", "broadMatch", "OEO_00000286"),
+            ("blend-grade-gasoline", "broadMatch", "OEO_00000286"), ("ulsd", "broadMatch", "OEO_00000181"),
+            ("jet-fuel", "closeMatch", "OEO_00000245"), ("kerosene", "broadMatch", "OEO_00000246"),
+            ("no-2-fuel-oil", "closeMatch", "OEO_00000211"), ("propane", "broadMatch", "OEO_00320011"),
+            ("butane", "broadMatch", "OEO_00320011"), ("propylene", "broadMatch", "OEO_00140159"),
+            ("xylene", "broadMatch", "OEO_00140159"), ("benzene", "broadMatch", "OEO_00140159"),
+            ("toluene", "broadMatch", "OEO_00140159"), ("cumene", "broadMatch", "OEO_00140159"),
+            ("fuel-grade-coke", "broadMatch", "OEO_00010327"), ("anode-grade-coke", "broadMatch", "OEO_00010327"),
+            ("heavy-fuel-oil", "broadMatch", "OEO_00010316"), ("renewable-diesel", "broadMatch", "OEO_00010242"),
+            ("renewable-diesel", "broadMatch", "OEO_00000258"),
+        }
+        found = set()
+        for rel in ("exactMatch", "closeMatch", "broadMatch", "narrowMatch"):
+            for s, o in CODES.subject_objects(SKOS[rel]):
+                if str(o).startswith(str(OEO)):
+                    found.add((str(s)[len(str(PROD)):], rel, str(o)[len(str(OEO)):]))
+        self.assertEqual(found, expected)
+
+    def test_the_pidx_families(self):
+        expected = {("ulsd", "V"), ("ulsd", "S"), ("jet-fuel", "K"), ("jet-fuel", "J"), ("kerosene", "H"),
+                    ("no-1-fuel-oil", "E"), ("no-1-fuel-oil", "L"), ("no-2-fuel-oil", "M"), ("butane", "N"), ("asphalt", "Y")}
+        found = {(str(s)[len(str(PROD)):], str(o)) for s, o in CODES.subject_objects(CUST.pidxProductFamily)}
+        self.assertEqual(found, expected)
+        note = str(VOCAB.value(CUST.pidxProductFamily, SKOS.scopeNote))
+        self.assertIn("Use of this copyrighted material is subject to the PIDX End User License Agreement", note)
+        self.assertIn("2015-09-29", note)
+
+    def test_a_third_pidx_family_fails(self):
+        # EPM-DEC-001-0092, item 4: at most two families per product (Codex round 1).
+        g = Graph() + SCHEMA
+        for letter in ("A", "B"):
+            g.add((PROD["kerosene"], CUST.pidxProductFamily, Literal(letter)))
+        ok, report, _ = validate(g, shacl_graph=SHAPES, advanced=True)
+        self.assertFalse(ok)
+        SH = Namespace("http://www.w3.org/ns/shacl#")
+        results = [(report.value(r, SH.focusNode), report.value(r, SH.sourceConstraintComponent), report.value(r, SH.resultSeverity))
+                   for r in report.subjects(RDF.type, SH.ValidationResult)]
+        self.assertIn((PROD["kerosene"], SH.MaxCountConstraintComponent, SH.Violation), results)
+
+    def test_a_bad_pidx_family_fails(self):
+        g = Graph() + SCHEMA
+        g.add((PROD["kerosene"], CUST.pidxProductFamily, Literal("HK")))
+        ok, _, text = validate(g, shacl_graph=SHAPES, advanced=True)
+        self.assertFalse(ok)
+        self.assertIn("A PIDX product family is one capital letter", text)
+
+    def test_the_vocabulary_states_the_projection_ranges(self):
+        # The three Rule 1 gaps of party 1.0.0 (EPM-DEC-001-0036; closed by 1.1.0, EPM-DEC-001-0092).
+        rdf_lang = URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#langString")
+        xsd_string = URIRef("http://www.w3.org/2001/XMLSchema#string")
+        self.assertEqual(set(VOCAB.objects(CUST.evidenceInput, RDFS.range)), {xsd_string})
+        self.assertEqual(set(VOCAB.objects(CUST.customerRole, RDFS.range)), {rdf_lang})
+        self.assertEqual(set(VOCAB.objects(CUST.carries, RDFS.range)), {rdf_lang})
+        self.assertEqual(set(VOCAB.objects(CUST.pidxProductFamily, RDFS.range)), {xsd_string})
+
+    def test_the_shapes_state_the_projection_cardinalities(self):
+        # The five Rule 2 gaps of party 1.0.0 (EPM-DEC-001-0036; closed by 1.1.0, EPM-DEC-001-0092).
+        SH = Namespace("http://www.w3.org/ns/shacl#")
+        # The exact bounds decided (EPM-DEC-001-0092, items 4 and 6), on the shape each belongs to; None is no bound.
+        shp = Namespace("https://w3id.org/lsc/ontology/modules/party/shapes/")
+        expected = {"plays": (shp.Party, 0, None), "governedBy": (shp.PartyRole, 0, None),
+                    "implements": (shp.CustomerSystem, 0, None), "feeds": (shp.CustomerSystem, 0, None),
+                    "mpcClassification": (shp.MpcClassification, 1, 1), "pidxProductFamily": (shp.Product, 0, 2)}
+        for name, (node, lo, hi) in expected.items():
+            props = [ps for ps in SHAPES.objects(node, SH.property) if SHAPES.value(ps, SH.path) == CUST[name]]
+            self.assertEqual(len(props), 1, name)
+            got = tuple(None if v is None else int(v) for v in (SHAPES.value(props[0], SH.minCount), SHAPES.value(props[0], SH.maxCount)))
+            self.assertEqual(got, (lo, hi), name)
+
+
 if __name__ == "__main__":
     unittest.main()

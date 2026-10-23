@@ -1,0 +1,20 @@
+product,relation,target,target_label,reason
+gasoline,closeMatch,OEO_00000286,motor gasoline,"OEO's motor gasoline is road gasoline with its blending components; the group is close to it, not exact, because the 10-K names the group without defining it."
+reformulated-gasoline,broadMatch,OEO_00000286,motor gasoline,Reformulated gasoline is a regulated kind of motor gasoline; OEO has no class for it.
+blend-grade-gasoline,broadMatch,OEO_00000286,motor gasoline,OEO's motor gasoline includes blending components destined for finished motor gasoline.
+ulsd,broadMatch,OEO_00000181,gas diesel oil,ULSD is one grade of gas/diesel oil.
+jet-fuel,closeMatch,OEO_00000245,jet fuel,Both are kerosene-type fuel for aviation turbine engines.
+kerosene,broadMatch,OEO_00000246,kerosene,"OEO's kerosene also covers jet fuel, which this scheme keeps apart."
+no-2-fuel-oil,closeMatch,OEO_00000211,heating oil,OEO's heating oil is gas diesel oil for heating and similar uses; No. 2 fuel oil is the heating grade.
+propane,broadMatch,OEO_00320011,liquefied petroleum gas,Commercial propane is a kind of LPG; OEO has no propane class.
+butane,broadMatch,OEO_00320011,liquefied petroleum gas,"Butane sold as LPG fits OEO's definition, which names propane and butane."
+propylene,broadMatch,OEO_00140159,hydrocarbon,Propylene is a hydrocarbon; OEO has no propylene class.
+xylene,broadMatch,OEO_00140159,hydrocarbon,Xylene is a hydrocarbon; OEO has no xylene class.
+benzene,broadMatch,OEO_00140159,hydrocarbon,Benzene is a hydrocarbon; OEO has no benzene class.
+toluene,broadMatch,OEO_00140159,hydrocarbon,Toluene is a hydrocarbon; OEO has no toluene class.
+cumene,broadMatch,OEO_00140159,hydrocarbon,Cumene is a hydrocarbon; OEO has no cumene class.
+fuel-grade-coke,broadMatch,OEO_00010327,petroleum coke,Fuel-grade coke is one grade of petroleum coke.
+anode-grade-coke,broadMatch,OEO_00010327,petroleum coke,Anode-grade coke is one grade of petroleum coke.
+heavy-fuel-oil,broadMatch,OEO_00010316,mineral oil product,OEO has no fuel oil class (OEO issue 1958); a residual fuel oil is a mineral oil product.
+renewable-diesel,broadMatch,OEO_00010242,diesel fuel,Renewable diesel is a diesel fuel; OEO has no renewable diesel class.
+renewable-diesel,broadMatch,OEO_00000258,liquid biofuel,Renewable diesel is a liquid biofuel; OEO has no renewable diesel class.

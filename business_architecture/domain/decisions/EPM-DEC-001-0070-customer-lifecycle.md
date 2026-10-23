@@ -14,16 +14,16 @@ The decision owner's inputs give two views of a customer's life (EPM-DEC-001-006
 - **Six business stages:** prospect, onboarding, payment management, risk management, relationship management and offboarding.
 - **Five system stages**, from input 6's pane on where the customer shows up in systems: prospect (Salesforce), master (SAP MDG), record (SAP S/4HANA), execute (the execution systems) and settle (invoices and postings back to SAP S/4HANA).
 
-They asked for the lifecycle to be captured (EPM-DEC-001-0067, "both the life cycle and data flow of Customer"). EPM-DEC-001-0052 says the lifecycle's process nodes are proposed, not applied, under the process-map rule (AGENTS.md).
+They asked for the lifecycle to be captured (EPM-DEC-001-0067, "both the life cycle and data flow of Customer"). EPM-DEC-001-0052 says the lifecycle's process nodes are proposed, not applied, under the process-map rule (AGENTS.md). *2026-10-23:* no longer: MPC-P10 is accepted (EPM-DEC-001-0087) and applied in `core` 2.3.0, `value-stream` 1.1.0, `data-product` 1.1.0 and `party` 1.1.0 (EPM-DEC-001-0089 to 0092).
 
 ## Decision
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
 1. **Both lifecycles are SKOS schemes** in the `party` module: `party:lifecycle-stage` (six stages) and `party:system-stage` (five). Each stage has a definition in Claude's words from the inputs.
-2. **Each business stage links to the core processes that do its work** (`party:stageProcess`). The links run to existing core 2.1.0 concepts only, so nothing in the process map changes. The mapping rests on each process's core definition and scope note; the names are core 2.1.0's labels:
+2. **Each business stage links to the core processes that do its work** (`party:stageProcess`). The links run to existing core 2.1.0 concepts only, so nothing in the process map changes. *2026-10-23:* since `party` 1.1.0 the build reads core 2.3.0, and onboarding also links to CM 1.3.7.1.7, which MPC-P10.1 added to the map (EPM-DEC-001-0087, 0092). The mapping rests on each process's core definition and scope note; the names are core 2.1.0's labels:
    - **Prospect:** Manage Sales Pipeline (CM 1.3.6.2.1), Set Up Prospect (CM 1.3.6.6.1, today card programs only), and Establish Credit Limit & Risk Code (CM 1.3.7.4.2), which assesses the credit application.
-   - **Onboarding:** Perform KYC Due Diligence (CM 1.3.7.4.6), CM 1.3.7.4.2, Maintain Customer and Commercial Account Master Data (CM 1.3.7.1.1) and Establish Commercial Terms & Contracts (CM 1.3.7.2.1).
+   - **Onboarding:** Perform KYC Due Diligence (CM 1.3.7.4.6), CM 1.3.7.4.2, Maintain Customer and Commercial Account Master Data (CM 1.3.7.1.1) and Establish Commercial Terms & Contracts (CM 1.3.7.2.1). *2026-10-23:* and Coordinate Customer Onboarding (CM 1.3.7.1.7), since `party` 1.1.0 (EPM-DEC-001-0092).
    - **Payment management:** Record Customer Receipts and Payment Notifications (CM 1.3.8.2.1), Apply Receipts (CM 1.3.8.2.3) and Manage Receivables Collections (CM 1.3.8.3.2).
    - **Risk management:** Monitor Credit Against Limit (CM 1.3.7.4.3) and Analyze Portfolio Credit Risk (CM 1.3.7.4.4).
    - **Relationship management:** Manage Key Accounts (CM 1.3.6.2.2), Conduct Customer Service Reviews (CM 1.3.7.5.5), Manage Customer Portal (CM 1.3.7.2.6) and CM 1.3.7.4.2. Core 2.1.0's scope note for CM 1.3.7.4.2 lists "periodic and event-triggered reviews" in its scope, which covers the annual credit limit review.
@@ -36,8 +36,8 @@ They asked for the lifecycle to be captured (EPM-DEC-001-0067, "both the life cy
    - **P10.1:** onboarding coordination for every customer. Core 2.1.0's scope note for CM 1.3.7.1.1 names "prospect onboarding coordination", but the map's only onboarding coordinator for commercial customers is under Loyalty and Cards (trading counterparties have CM 1.2.1.2.1 Create New Counterparty). The recommendation is a new L5 process under the L4 CM 1.3.7.1.
    - **P10.2:** the Order to Cash process "Review Credit Limit & Risk Code" has no linked process. The value stream's own rationale names CM 1.3.7.4.3 Monitor Credit Against Limit as the closest; the proposal recommends CM 1.3.7.4.2, which revises limits and risk codes, and gives the decision owner both.
    - **P10.3:** a customer master data product, produced by CM 1.3.7.1.1, on the Marketing & Sales line.
-   - *2026-10-23:* the decision owner accepted all three (EPM-DEC-001-0087).
-   - Each waits for the decision owner. Until then the lifecycle rests on the existing processes.
+   - *2026-10-23:* the decision owner accepted all three (EPM-DEC-001-0087). `party` 1.1.0 links the onboarding stage to the new CM 1.3.7.1.7 (EPM-DEC-001-0092).
+   - Each waits for the decision owner. Until then the lifecycle rests on the existing processes. *2026-10-23:* no longer: the decision owner accepted all three (EPM-DEC-001-0087), and they are applied in `core` 2.3.0, `value-stream` 1.1.0, `data-product` 1.1.0 and `party` 1.1.0 (EPM-DEC-001-0089 to 0092).
 
 ## Alternatives considered
 
@@ -56,6 +56,6 @@ This record is Claude's, under the delegation: "yes, extend the delegation to st
 
 ## Consequences
 
-- `party/lifecycle.csv` is the source of the links. `build_party.py` builds `lifecycle.ttl` from it, and fails unless each process is in core 2.1.0, each system is a customer system, each stage has a link, and each stage has exactly the links items 2 to 4 decide. The module's shapes check the decided links at graph level for each of the eleven stages that holds at least one lifecycle link, so there a real process or system on the wrong stage, a process that does not exist, or a correspondence these items do not grant fails. A stage with no link, a link under another predicate and a stage these items do not name are rejected by the build only. `scripts/check.sh` checks the file is current, and `test_party_lifecycle.py` pins the links by hand.
+- `party/lifecycle.csv` is the source of the links. `build_party.py` builds `lifecycle.ttl` from it, and fails unless each process is in core 2.1.0 (*2026-10-23:* core 2.3.0 since `party` 1.1.0, EPM-DEC-001-0092), each system is a customer system, each stage has a link, and each stage has exactly the links items 2 to 4 decide. The module's shapes check the decided links at graph level for each of the eleven stages that holds at least one lifecycle link, so there a real process or system on the wrong stage, a process that does not exist, or a correspondence these items do not grant fails. A stage with no link, a link under another predicate and a stage these items do not name are rejected by the build only. `scripts/check.sh` checks the file is current, and `test_party_lifecycle.py` pins the links by hand.
 - The regression loads `lifecycle.ttl` with the module.
 - MPC-P10 waits for the decision owner. *2026-10-23:* accepted (EPM-DEC-001-0087).

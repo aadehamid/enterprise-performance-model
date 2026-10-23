@@ -8,6 +8,7 @@
 # lifecycle link has exactly the links EPM-DEC-001-0070 decides. The build checks the rest.
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix partysh: <https://w3id.org/lsc/ontology/modules/party/shapes/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -39,7 +40,9 @@ partysh:Party a sh:NodeShape ;
     sh:xone ( [ sh:class party:Person ] [ sh:class party:Organization ] ) ;
     sh:property [ sh:path party:legalName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
     sh:property [ sh:path party:partyType ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InPartyType ] ;
-    sh:property [ sh:path party:validFrom ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] .
+    sh:property [ sh:path party:validFrom ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] ;
+    # Optional and multi-valued: a party may hold no role or several (EPM-DEC-001-0068; cardinality stated for the projection, EPM-DEC-001-0092).
+    sh:property [ sh:path party:plays ; sh:minCount 0 ; sh:class party:PartyRole ] .
 
 partysh:PersonType a sh:NodeShape ;
     sh:targetClass party:Person ;
@@ -74,7 +77,8 @@ partysh:PartyRole a sh:NodeShape ;
     sh:property [ sh:path party:validFrom ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ;
                   sh:message "A party role is held from a start date, and does not end before it starts." ] ;
     sh:property [ sh:path party:validTo ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
-    sh:property [ sh:path party:atSite ; sh:class party:Site ] .
+    sh:property [ sh:path party:atSite ; sh:class party:Site ] ;
+    sh:property [ sh:path party:governedBy ; sh:minCount 0 ; sh:class party:Agreement ] .
 
 partysh:PartyRelationship a sh:NodeShape ;
     sh:targetClass party:PartyRelationship ;
@@ -155,8 +159,26 @@ partysh:CustomerSystem a sh:NodeShape ;
                           party:PartyRelationship party:CustomerAccount party:CustomerClass party:LineOfBusiness
                           party:Brand party:Agreement party:SiteBrandAssignment party:PartyTransactionAssociation
                           party:Product party:Site ) ;
+                  sh:minCount 0 ;
                   sh:message "A customer system implements entities of the conceptual model only." ] ;
-    sh:property [ sh:path party:feeds ; sh:class party:CustomerSystem ] .
+    sh:property [ sh:path party:feeds ; sh:minCount 0 ; sh:class party:CustomerSystem ] .
+
+# A customer class's MPC classification: at most one code, C1 to C8 (EPM-DEC-001-0068; stated for the projection, EPM-DEC-001-0092).
+partysh:MpcClassification a sh:NodeShape ;
+    sh:targetSubjectsOf party:mpcClassification ;
+    sh:property [ sh:path party:mpcClassification ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ;
+                  sh:in ( "C1" "C2" "C3" "C4" "C5" "C6" "C7" "C8" ) ] .
+
+# ---- Products (EPM-DEC-001-0092) ----
+
+partysh:Product a sh:NodeShape ;
+    sh:targetClass party:Product ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue party:product ] ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path party:pidxProductFamily ; sh:minCount 0 ; sh:maxCount 2 ; sh:datatype xsd:string ;
+                  sh:pattern "^[A-Z]$" ;
+                  sh:message "A PIDX product family is one capital letter; a product has at most two." ] .
 
 partysh:DataFlow a sh:NodeShape ;
     sh:targetClass party:DataFlow ;
@@ -242,9 +264,9 @@ partysh:Decided-lifecycle-stage-prospect a sh:NodeShape ;
 partysh:Decided-lifecycle-stage-onboarding a sh:NodeShape ;
     sh:target [ a sh:SPARQLTarget ; sh:prefixes partysh: ;
                 sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/onboarding>) }" ] ;
-    sh:property [ sh:path party:stageProcess ; sh:in ( <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-6> <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2> <https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1> <https://w3id.org/lsc/ontology/process/CM-1-3-7-2-1> ) ;
-                  sh:minCount 4 ; sh:maxCount 4 ;
-                  sh:message "lifecycle-stage/onboarding has exactly the processes EPM-DEC-001-0070 decides." ] ;
+    sh:property [ sh:path party:stageProcess ; sh:in ( <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-6> <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2> <https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1> <https://w3id.org/lsc/ontology/process/CM-1-3-7-2-1> <https://w3id.org/lsc/ontology/process/CM-1-3-7-1-7> ) ;
+                  sh:minCount 5 ; sh:maxCount 5 ;
+                  sh:message "lifecycle-stage/onboarding has exactly the processes EPM-DEC-001-0070 and 0087 decide." ] ;
     sh:property [ sh:path party:correspondsTo ; sh:in ( <https://w3id.org/lsc/ontology/modules/party/system-stage/master> <https://w3id.org/lsc/ontology/modules/party/system-stage/record> ) ;
                   sh:minCount 2 ; sh:maxCount 2 ;
                   sh:message "lifecycle-stage/onboarding has exactly the system stages EPM-DEC-001-0070 decides." ] .
