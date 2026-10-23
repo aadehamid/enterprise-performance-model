@@ -1,0 +1,109 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/data-product/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix status: <https://w3id.org/lsc/ontology/modules/data-product/status/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:ActiveIsDefined a sh:NodeShape ;
+    sh:message "An active data product or line has a definition." ;
+    sh:or ( [ sh:not [ sh:hasValue status:active ;
+                        sh:path dp:portfolioStatus ] ] [ sh:minCount 1 ;
+                sh:path skos:definition ] ) ;
+    sh:targetClass dp:DataProduct,
+        dp:DataProductLine .
+
+shp:Line a sh:NodeShape ;
+    sh:property [ sh:class dp:PortfolioSegment ;
+            sh:maxCount 1 ;
+            sh:message "A data product line sits in exactly one segment." ;
+            sh:minCount 1 ;
+            sh:path skos:broader ],
+        [ sh:in ( status:active status:defined-only status:open-decision ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:portfolioStatus ] ;
+    sh:targetClass dp:DataProductLine .
+
+shp:NoValuesOnProducts a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:inScheme skos:definition skos:editorialNote skos:altLabel skos:scopeNote skos:broader dcterms:source dp:portfolioStatus dp:producedBy dp:consumedBy ) ;
+    sh:message "A data product carries only its definition and links, never data values (EPM-DEC-001-0005)." ;
+    sh:targetClass dp:DataProduct .
+
+shp:PortfolioItem a sh:NodeShape ;
+    sh:message "A portfolio item has a definition or a note saying why it is parked, not both." ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:languageIn ( "en" ) ;
+            sh:maxCount 1 ;
+            sh:message "A portfolio item has exactly one English name." ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "A portfolio item keeps its portfolio id as its notation." ;
+            sh:minCount 1 ;
+            sh:path skos:notation ],
+        [ sh:hasValue dp:DataProducts ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:inScheme ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:definition ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:editorialNote ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:altLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:scopeNote ],
+        [ sh:message "A portfolio item cites its source." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ] ;
+    sh:targetClass dp:DataProduct,
+        dp:DataProductLine,
+        dp:PortfolioSegment ;
+    sh:xone ( [ sh:minCount 1 ;
+                sh:path skos:definition ] [ sh:minCount 1 ;
+                sh:path skos:editorialNote ] ) .
+
+shp:Product a sh:NodeShape ;
+    sh:property [ sh:class dp:DataProductLine ;
+            sh:maxCount 1 ;
+            sh:message "A data product sits in exactly one data product line." ;
+            sh:minCount 1 ;
+            sh:path skos:broader ],
+        [ sh:in ( status:active status:defined-only status:open-decision ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:portfolioStatus ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:producedBy ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:consumedBy ] ;
+    sh:targetClass dp:DataProduct .
+
+shp:Segment a sh:NodeShape ;
+    sh:property [ sh:hasValue dp:DataProducts ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:topConceptOf ],
+        [ sh:maxCount 0 ;
+            sh:path skos:broader ],
+        [ sh:maxCount 1 ;
+            sh:message "A segment is anchored in exactly one part of the process map." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:anchoredIn ] ;
+    sh:targetClass dp:PortfolioSegment .
+

@@ -54,6 +54,19 @@ product:commercial-risk a skos:Concept,
     skos:prefLabel "Commercial Risk"@en ;
     dp:portfolioStatus status:active .
 
+product:customer-master a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:marketing-sales ;
+    skos:definition "The governed customer master: the customer records, accounts and their attributes that the systems which serve customers share."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-customer-master"^^xsd:string ;
+    skos:prefLabel "Customer Master"@en ;
+    skos:scopeNote "Produced by CM 1.3.7.1.1 Maintain Customer Master Data (MPC-P10.3, EPM-DEC-001-0087)."@en,
+        "The decision owner's customer inputs name a data products platform that serves the customer master, fed by the customer data store (business_process/proposals/MPC-P10-customer-lifecycle.md, MPC-P10.3); the description is Claude's words."@en ;
+    dp:portfolioStatus status:active ;
+    dp:producedBy proc:CM-1-3-7-1-1 .
+
 product:devsecops a skos:Concept,
         dp:DataProduct ;
     dcterms:source src:data-product-portfolio ;
@@ -618,16 +631,6 @@ line:energy-trading-risk-management a skos:Concept,
     skos:prefLabel "Energy Trading & Risk Management"@en ;
     dp:portfolioStatus status:active .
 
-line:marketing-sales a skos:Concept,
-        dp:DataProductLine ;
-    dcterms:source src:data-product-portfolio ;
-    skos:broader segment:commercial ;
-    skos:definition "Customer-facing marketing and sales data products."@en ;
-    skos:inScheme dp:DataProducts ;
-    skos:notation "dpl-marketing-sales"^^xsd:string ;
-    skos:prefLabel "Marketing & Sales"@en ;
-    dp:portfolioStatus status:active .
-
 line:pipelines a skos:Concept,
         dp:DataProductLine ;
     dcterms:source src:data-product-portfolio ;
@@ -669,6 +672,16 @@ line:infrastructure-platforms a skos:Concept,
     skos:prefLabel "Infrastructure Platforms"@en ;
     skos:scopeNote "Platform product line; not expected to map to business process nodes."@en ;
     dp:portfolioStatus status:defined-only .
+
+line:marketing-sales a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:commercial ;
+    skos:definition "Customer-facing marketing and sales data products."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-marketing-sales"^^xsd:string ;
+    skos:prefLabel "Marketing & Sales"@en ;
+    dp:portfolioStatus status:active .
 
 line:ng-ngl a skos:Concept,
         dp:DataProductLine ;

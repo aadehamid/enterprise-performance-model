@@ -47,6 +47,7 @@ Three things are missing.
 
 - **Gap.** `data_product_portfolio.json` has no data product for the customer master. The decision owner's inputs name one: a data products platform that serves the customer master, sales, credit exposure and delinquency, fed by the customer data store.
 - **Proposal.** Add a "Customer Master" data product to the Marketing & Sales line (`dpl-marketing-sales`), produced by CM 1.3.7.1.1 Maintain Customer and Commercial Account Master Data (the process map's name for it is Maintain Customer Master Data). The data-product module then links it like the others (EPM-DEC-001-0053).
+- *2026-10-23:* **Applied.** The decision owner accepted it (EPM-DEC-001-0087); `data-product` 1.1.0 carries `dp-customer-master` and its producer link (EPM-DEC-001-0091).
 
 ## How the ontology takes it
 

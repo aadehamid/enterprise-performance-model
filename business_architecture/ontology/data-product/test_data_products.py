@@ -58,13 +58,14 @@ class Build(unittest.TestCase):
 
     def test_figures(self):
         # Counted by hand from data_product_portfolio.json on 2026-10-19; Loss Control's link is
-        # emitted since core 2.2.0 (2026-10-22, EPM-DEC-001-0076).
+        # emitted since core 2.2.0 (2026-10-22, EPM-DEC-001-0076). Customer Master and its producer joined on
+        # 2026-10-23 (MPC-P10.3, EPM-DEC-001-0087, 0091).
         portfolio, links, *_ = bd.load()
         self.assertEqual(bd.figures(portfolio, links), {
-            "segments": 3, "lines": 19, "data products": 48, "active products": 15,
+            "segments": 3, "lines": 19, "data products": 49, "active products": 16,
             "defined_only products": 33, "open_decision products": 0, "parked without a description": 33,
-            "process links": 1, "links waiting for a core release": 0})
-        self.assertEqual(len(set(PRODUCTS.subjects(RDF.type, DP.DataProduct))), 48)
+            "process links": 2, "links waiting for a core release": 0})
+        self.assertEqual(len(set(PRODUCTS.subjects(RDF.type, DP.DataProduct))), 49)
         self.assertEqual(len(set(PRODUCTS.subjects(RDF.type, DP.DataProductLine))), 19)
 
     def test_segment_anchors(self):
@@ -93,8 +94,14 @@ class Build(unittest.TestCase):
                          URIRef("https://w3id.org/lsc/ontology/process/CM-1-1-3-7-13"))
         _, links, by_key, _ = bd.load()
         self.assertEqual([(r["data_product"], r["process"], r["waits_for"]) for r in links],
-                         [("dp-loss-control", "CM 1.1.3.7.13", "")])
+                         [("dp-loss-control", "CM 1.1.3.7.13", ""), ("dp-customer-master", "CM 1.3.7.1.1", "")])
         self.assertIn("CM 1.1.3.7.13", by_key)
+
+    def test_customer_master_is_produced_by_its_process(self):
+        # MPC-P10.3 (EPM-DEC-001-0087, 0091): Customer Master, on the Marketing & Sales line, produced by CM 1.3.7.1.1.
+        self.assertEqual(PRODUCTS.value(PRODUCT["customer-master"], DP.producedBy),
+                         URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1"))
+        self.assertEqual(PRODUCTS.value(PRODUCT["customer-master"], SKOS.broader), LINE["marketing-sales"])
 
     def test_aliases(self):
         self.assertIn((PRODUCT["commercial-risk"], SKOS.altLabel, Literal("Risk", lang="en")), PRODUCTS)

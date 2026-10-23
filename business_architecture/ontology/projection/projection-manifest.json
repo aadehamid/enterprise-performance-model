@@ -1,9 +1,9 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "e49b2b534b2af5f701bb80caab645bdbbbc3c829821a9d739a3220efd3167800",
+  "input_fingerprint": "ea540d855b098b992d99d63b9a5fee98fd59910c6ae4b1d9b23b86eca95af219",
   "inputs": {
     "releases/core/2.3.0/core.ttl": "ebf7be2b6e65df2fc16e6af79af55f4d6a6b36ae652cf3823153b6082625c01e",
-    "releases/data-product/1.0.0/data-product.ttl": "0d320b325b3f20358d3620b38825a62b06d6758aec80e24ba806c7ed9dd891e8",
+    "releases/data-product/1.1.0/data-product.ttl": "1aba055c2e2e53c33e857b0ed5e65de8df5cab9f039dabc863f8c6e11f4d8af8",
     "releases/integration/1.0.0/integration.ttl": "31d20746aa6dd644fe9f53156aa4a63a6b45e0ba5f929a66469128f2a89ea729",
     "releases/kpi/1.1.0/kpi.ttl": "eddb6306fac8b89f497d45b9f5b222b551c9e845c7e52227d5e44e1b57e60ee4",
     "releases/lane/1.0.0/lane.ttl": "fbd5fb5f14cb7fa700bcc1c517af55fdf1b18cc46e6a959ff8d28c72b6395e7e",
@@ -14,7 +14,7 @@
     "releases/system/1.0.0/system.ttl": "b9dea5ded1a3f1f41069354cdfac692ab200635278971b242bed2fdf9af665b5",
     "releases/value-stream/1.1.0/value-stream.ttl": "89c952bf76b12d916b7ca583e78354d197b6bb8596b6519f00917804a3f0a5db"
   },
-  "loadable_triples": 33754,
+  "loadable_triples": 33766,
   "release_exceptions": {
     "Rule 1: https://w3id.org/lsc/ontology/modules/consumer/reliesOn has no single concrete range": "integration 1.0.0 declares no rdfs:range; its objects are properties, a concept and other terms, so the next integration release gives it one concrete range",
     "Rule 1: https://w3id.org/lsc/ontology/modules/party/carries has no single concrete range": "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range rdf:langString",
@@ -35,7 +35,7 @@
   "shapes": {
     "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
     "releases/core/2.3.0/shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680",
-    "releases/data-product/1.0.0/shapes.ttl": "5cef5ecad215a39ceda7ee113e68eaf78cfb5aee84bc7eb085d0ccd5ba5bd2fd",
+    "releases/data-product/1.1.0/shapes.ttl": "5cef5ecad215a39ceda7ee113e68eaf78cfb5aee84bc7eb085d0ccd5ba5bd2fd",
     "releases/integration/1.0.0/shapes.ttl": "b5dfd186039c40dc96abedd646ccd9cbbd92f4c932ce8bfb5a6e57702202491d",
     "releases/kpi/1.1.0/shapes.ttl": "b304afbf2f20ab9be97410c9fb129d7e030da33a8f58a582255c25253e3525f0",
     "releases/lane/1.0.0/shapes.ttl": "f1afea34b3232b1c07eb66667981d8c22bd6eaab5351e2570ad1af97f3626b94",

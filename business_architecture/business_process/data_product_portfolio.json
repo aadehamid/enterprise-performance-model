@@ -73,6 +73,15 @@
               "name": "Product Availability & Allocations",
               "description": "Product avails and allocation decisions data supporting order validation and channel supply.",
               "status": "active"
+            },
+            {
+              "id": "dp-customer-master",
+              "name": "Customer Master",
+              "description": "The governed customer master: the customer records, accounts and their attributes that the systems which serve customers share.",
+              "status": "active",
+              "notes": [
+                "Produced by CM 1.3.7.1.1 Maintain Customer Master Data (MPC-P10.3, EPM-DEC-001-0087).", "The decision owner's customer inputs name a data products platform that serves the customer master, fed by the customer data store (business_process/proposals/MPC-P10-customer-lifecycle.md, MPC-P10.3); the description is Claude's words."
+              ]
             }
           ]
         },
