@@ -12,7 +12,7 @@ import unittest
 
 from pyshacl import validate
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import OWL, RDF, SKOS, XSD
+from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -42,6 +42,20 @@ def conforms(data):
 
 
 class Vocabulary(unittest.TestCase):
+    def test_produces_and_consumes_range_over_skos_concept(self):
+        # EPM-DEC-001-0090, item 3: both take rdfs:range skos:Concept, not dp:DataProduct, because a data product
+        # line is an allowed value. Checked in the source and in the released 1.1.0 package.
+        released = Graph().parse(os.path.join(HERE, "..", "releases", "value-stream", "1.1.0", "value-stream.ttl"))
+        for g in (VOCAB, released):
+            for p in (VS.produces, VS.consumes):
+                self.assertEqual(set(g.objects(p, RDFS.range)), {SKOS.Concept}, p)
+        # A line is a real object of vs:consumes, and both kinds are SKOS concepts in the pinned data-product package.
+        dp = Graph().parse(os.path.join(HERE, "..", "releases", "data-product", "1.0.0", "data-product.ttl"))
+        line = URIRef("https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization")
+        self.assertIn(line, set(STREAMS.objects(None, VS.consumes)))
+        for o in set(STREAMS.objects(None, VS.produces)) | set(STREAMS.objects(None, VS.consumes)):
+            self.assertIn((o, RDF.type, SKOS.Concept), dp, o)
+
     def test_every_term_is_defined_and_cited(self):
         kinds = (OWL.Class, OWL.ObjectProperty, OWL.DatatypeProperty)
         terms = {t for k in kinds for t in VOCAB.subjects(RDF.type, k)}
