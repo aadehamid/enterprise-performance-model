@@ -17,6 +17,7 @@
         <https://w3id.org/lsc/ontology/modules/kpi/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.0.1>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.1.0>,
+        <https://w3id.org/lsc/ontology/modules/kpi/1.1.1>,
         <https://w3id.org/lsc/ontology/modules/lane/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/market-data/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/organization/1.0.0>,
@@ -135,6 +136,15 @@
     dcat:distribution <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.0/kpi.jsonld>,
         <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.0/kpi.ttl>,
         <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.0/shapes.ttl> .
+
+<https://w3id.org/lsc/ontology/modules/kpi/1.1.1> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/kpi> ;
+    dcterms:issued "2026-10-23"^^xsd:date ;
+    dcterms:title "LSC KPI Module 1.1.1"@en ;
+    owl:versionInfo "1.1.1" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/kpi.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/kpi.ttl>,
+        <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/shapes.ttl> .
 
 <https://w3id.org/lsc/ontology/modules/lane/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/lane> ;
@@ -390,6 +400,18 @@
 
 <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.0/shapes.ttl> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/kpi.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/kpi.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/kpi.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/kpi.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
 <https://w3id.org/lsc/ontology/modules/lane/releases/1.0.0/lane.jsonld> a dcat:Distribution ;

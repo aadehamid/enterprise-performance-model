@@ -1,11 +1,11 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "a0680b8a8be21e949b619d0b7b622c0652f8bfaa44b89f18882138ba1ed5dadd",
+  "input_fingerprint": "3853ec7143c4821d8eda8bb292201bb73e732e388a74b0a59bbccc85590b011f",
   "inputs": {
     "releases/core/2.3.0/core.ttl": "ebf7be2b6e65df2fc16e6af79af55f4d6a6b36ae652cf3823153b6082625c01e",
     "releases/data-product/1.1.0/data-product.ttl": "1aba055c2e2e53c33e857b0ed5e65de8df5cab9f039dabc863f8c6e11f4d8af8",
     "releases/integration/1.0.0/integration.ttl": "31d20746aa6dd644fe9f53156aa4a63a6b45e0ba5f929a66469128f2a89ea729",
-    "releases/kpi/1.1.0/kpi.ttl": "eddb6306fac8b89f497d45b9f5b222b551c9e845c7e52227d5e44e1b57e60ee4",
+    "releases/kpi/1.1.1/kpi.ttl": "02ccaffa3c52d48724201633ebd4efd4d5b747c82a3f4fd97cfa983ac5e9bffb",
     "releases/lane/1.0.0/lane.ttl": "fbd5fb5f14cb7fa700bcc1c517af55fdf1b18cc46e6a959ff8d28c72b6395e7e",
     "releases/market-data/1.0.0/market-data.ttl": "7dae8ac0768cf230495a827b85e2e9e91a3125aaa97e7f9237d6146048b0ed6b",
     "releases/organization/2.0.0/organization.ttl": "3b951fbe287d42f4c52e6c85cf498b1113d6a5b9280b45c010fde17fc7e52439",
@@ -14,11 +14,10 @@
     "releases/system/1.0.0/system.ttl": "b9dea5ded1a3f1f41069354cdfac692ab200635278971b242bed2fdf9af665b5",
     "releases/value-stream/1.1.0/value-stream.ttl": "89c952bf76b12d916b7ca583e78354d197b6bb8596b6519f00917804a3f0a5db"
   },
-  "loadable_triples": 34054,
+  "loadable_triples": 34055,
   "release_exceptions": {
     "Rule 1: https://w3id.org/lsc/ontology/modules/consumer/reliesOn has no single concrete range": "integration 1.0.0 declares no rdfs:range; its objects are properties, a concept and other terms, so the next integration release gives it one concrete range",
     "Rule 1: https://w3id.org/lsc/ontology/modules/placement/placementKind has no single concrete range": "integration 1.0.0 declares no rdfs:range; the next integration release adds rdfs:range skos:Concept",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/population/populationEvidence has no single concrete range": "kpi 1.1.0 declares no rdfs:range; the next kpi release adds rdfs:range xsd:string",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/evidenceTier": "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/rank": "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
     "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/placement/placementKind": "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one"
@@ -29,7 +28,7 @@
     "releases/core/2.3.0/shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680",
     "releases/data-product/1.1.0/shapes.ttl": "5cef5ecad215a39ceda7ee113e68eaf78cfb5aee84bc7eb085d0ccd5ba5bd2fd",
     "releases/integration/1.0.0/shapes.ttl": "b5dfd186039c40dc96abedd646ccd9cbbd92f4c932ce8bfb5a6e57702202491d",
-    "releases/kpi/1.1.0/shapes.ttl": "b304afbf2f20ab9be97410c9fb129d7e030da33a8f58a582255c25253e3525f0",
+    "releases/kpi/1.1.1/shapes.ttl": "b304afbf2f20ab9be97410c9fb129d7e030da33a8f58a582255c25253e3525f0",
     "releases/lane/1.0.0/shapes.ttl": "f1afea34b3232b1c07eb66667981d8c22bd6eaab5351e2570ad1af97f3626b94",
     "releases/market-data/1.0.0/shapes.ttl": "6d377fb7cf400d6c627027bb5de29c1141157ace54185046c8819d8aedee4535",
     "releases/organization/2.0.0/shapes.ttl": "2f3a700dc332c23cff4c78a574afeca8995ae914187aecc078ea21f3e3cb3338",
