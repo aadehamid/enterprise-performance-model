@@ -114,5 +114,7 @@ its listed exceptions.
 - **Waiting on others:** Forecaster, on the refinery Economics and
   Planning process owner (EPM-DEC-001-0045, decision 2); the four codes
   and TID Nbr, on the business (EPM-DEC-001-0072); the 16 projection
-  gaps, on the modules' next releases (EPM-DEC-001-0036). PSM stays
-  unresolved (EPM-DEC-001-0045, decision 6).
+  gaps, on the modules' next releases (EPM-DEC-001-0036); and the reading
+  of Crude RFC as Refinery Feedstock Coordinator, pending confirmation
+  (EPM-DEC-001-0045, decision 5).
+- **Unresolved by decision:** PSM (EPM-DEC-001-0045, decision 6).

@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-22 |
-| Questions | Phase E of EPM-DEC-001-0052: which plan steps are done, what each leaves open, and which items wait on the decision owner |
+| Questions | Phase E of EPM-DEC-001-0052: which plan steps are done, what each leaves open, and which items wait on whom |
 | Source | Claude Code session of 2026-10-22 (Phase E); `answers-2026-10-22-phase-e.md` |
 
 ## Context
@@ -16,7 +16,7 @@ EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontolo
 **What follows (Claude, under EPM-DEC-001-0028):**
 
 1. **Steps 5, 6, 7, 9, 10, 11 and 12 are done.** The worklog's plan table marks each one, with its exceptions:
-   - Step 5: Forecaster stays apart from the Local Refinery Forecaster until the refinery Economics and Planning process owner confirms they are the same (EPM-DEC-001-0045, decision 2), and PSM stays unresolved (decision 6).
+   - Step 5: Forecaster stays apart from the Local Refinery Forecaster until the refinery Economics and Planning process owner confirms they are the same (EPM-DEC-001-0045, decision 2), and PSM stays unresolved (decision 6). Crude RFC is read as Refinery Feedstock Coordinator, a contextual reading pending confirmation (decision 5).
    - Step 6: runs stay with the consumers, by design (EPM-DEC-001-0016); `provenance/run-shapes.ttl` checks them there (EPM-DEC-001-0034).
    - Step 7: PIDX and OEO wait for product values, and IOF Supply Chain is parked, each with its trigger (EPM-DEC-001-0064). MPC-P10 is the decision owner's (EPM-DEC-001-0070). The four codes and TID Nbr wait for the business to confirm them when the ontology is shared (EPM-DEC-001-0072).
    - Step 9: the run shapes stay with the consumers, by design (EPM-DEC-001-0081).
@@ -32,6 +32,7 @@ EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontolo
      - a product code list, which would let PIDX and OEO be mapped; Claude asks the decision owner before building it (EPM-DEC-001-0064);
      - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6).
    - **On a process owner:** Forecaster, until the refinery Economics and Planning process owner confirms it is the Local Refinery Forecaster (EPM-DEC-001-0045, decision 2).
+   - **Pending confirmation, no confirmer named:** the reading of Crude RFC as Refinery Feedstock Coordinator, a contextual reading pending confirmation (EPM-DEC-001-0045, decision 5); `organization/roles.csv` says it is to be confirmed with the process owner.
    - **On the business:** the four codes and TID Nbr, which the business confirms when the ontology is shared (EPM-DEC-001-0072).
    - **Unresolved by decision:** PSM (EPM-DEC-001-0045, decision 6).
    - **On the next releases:** the 16 projection gaps close at the next release of value-stream, kpi, party and integration. Each is a patch or minor, the module owner's under the module policy; Claude asks the decision owner before building any (EPM-DEC-001-0036).
