@@ -21,7 +21,7 @@ import build_module  # noqa: E402
 # Pinned by hand: a new release must join this list, so its package is checked here.
 PACKAGES = [
     ("core", "1.0.0"), ("core", "2.0.0"), ("core", "2.1.0"), ("core", "2.2.0"), ("core", "2.3.0"),
-    ("data-product", "1.0.0"), ("integration", "1.0.0"),
+    ("data-product", "1.0.0"), ("data-product", "1.1.0"), ("integration", "1.0.0"),
     ("kpi", "1.0.0"), ("kpi", "1.0.1"), ("kpi", "1.1.0"),
     ("lane", "1.0.0"), ("market-data", "1.0.0"),
     ("organization", "1.0.0"), ("organization", "2.0.0"), ("party", "1.0.0"),

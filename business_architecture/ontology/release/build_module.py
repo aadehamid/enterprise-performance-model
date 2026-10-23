@@ -91,13 +91,16 @@ MODULES = {
     "data-product": {
         "title": "LSC Data Product Module",
         "description": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them (Step 7). Definitions only, never data values; mapped to DCAT, not imported.",
-        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        # 1.1.0 is a minor approved with the close-out releases: the Customer Master data product, produced by
+        # CM 1.3.7.1.1 (MPC-P10.3); it requires core 2.3.0 (EPM-DEC-001-0087, 0088, 0091).
+        "version": "1.1.0", "stage": None, "issued": "2026-10-23",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
         "parts": ["data-product/vocabulary.ttl", "data-product/data-products.ttl"],
         "shapes": ["data-product/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.2.0"},
-        "decisions": ["EPM-DEC-001-0005", "EPM-DEC-001-0048", "EPM-DEC-001-0053", "EPM-DEC-001-0077"],
+        "pins": {"core": "2.3.0"},
+        "decisions": ["EPM-DEC-001-0005", "EPM-DEC-001-0048", "EPM-DEC-001-0053", "EPM-DEC-001-0077", "EPM-DEC-001-0087",
+                      "EPM-DEC-001-0088", "EPM-DEC-001-0091"],
     },
     "value-stream": {
         "title": "LSC Value Stream Module",

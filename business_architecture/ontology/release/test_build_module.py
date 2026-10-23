@@ -36,6 +36,7 @@ APPROVALS["kpi"] = PLAN  # kpi 1.1.0, EPM-DEC-001-0079
 # The close-out releases, approved together (EPM-DEC-001-0088).
 CLOSEOUT = ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)")
 APPROVALS["value-stream"] = CLOSEOUT  # value-stream 1.1.0, EPM-DEC-001-0090
+APPROVALS["data-product"] = CLOSEOUT  # data-product 1.1.0, EPM-DEC-001-0091
 
 
 def approval_holds(name, m):
@@ -128,7 +129,7 @@ class EarlierReleases(unittest.TestCase):
     def test_earlier_packages_are_untouched(self):
         # The builder now builds organization 2.0.0 and ref-mpc 1.1.0; each released 1.0.0 package
         # must still match its own manifest.
-        for name in ("organization", "ref-mpc", "kpi", "value-stream"):
+        for name in ("organization", "ref-mpc", "kpi", "value-stream", "data-product"):
             out = os.path.join(bm.ONTOLOGY, "releases", name, "1.0.0")
             with open(os.path.join(out, "manifest.json")) as f:
                 manifest = json.load(f)
@@ -158,7 +159,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.2.0"})  # since 1.1.0 (EPM-DEC-001-0079)
         self.assertEqual(bm.dependencies("party"), {"core": "2.1.0"})
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
-        self.assertEqual(bm.dependencies("data-product"), {"core": "2.2.0"})
+        self.assertEqual(bm.dependencies("data-product"), {"core": "2.3.0"})  # since 1.1.0 (EPM-DEC-001-0091)
         # value-stream 1.1.0 requires the current releases (EPM-DEC-001-0090).
         self.assertEqual(bm.dependencies("value-stream"), {"core": "2.3.0", "data-product": "1.0.0", "kpi": "1.1.0"})
         self.assertEqual(bm.dependencies("system"), {"core": "2.2.0"})
@@ -342,7 +343,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(undefined, set())
 
     def test_the_step7_releases_carry_the_release_plan_approval(self):
-        for name in tuple(n for n in STEP7 if n != "value-stream") + ("integration",):
+        for name in tuple(n for n in STEP7 if n not in ("value-stream", "data-product")) + ("integration",):
             self.assertEqual(bm.MODULES[name]["approval"], PLAN)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              ("1.0.0", None, "2026-10-22"))
@@ -350,7 +351,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_the_close_out_releases_carry_the_close_out_approval(self):
         # EPM-DEC-001-0088: the decision owner approved the six close-out releases together.
-        for name, version in (("value-stream", "1.1.0"),):
+        for name, version in (("value-stream", "1.1.0"), ("data-product", "1.1.0")):
             self.assertEqual(bm.MODULES[name]["approval"], CLOSEOUT)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-23"))

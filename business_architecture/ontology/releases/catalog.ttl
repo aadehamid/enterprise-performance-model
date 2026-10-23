@@ -12,6 +12,7 @@
         <https://w3id.org/lsc/ontology/modules/core/2.2.0>,
         <https://w3id.org/lsc/ontology/modules/core/2.3.0>,
         <https://w3id.org/lsc/ontology/modules/data-product/1.0.0>,
+        <https://w3id.org/lsc/ontology/modules/data-product/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/integration/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.0.1>,
@@ -88,6 +89,15 @@
     dcat:distribution <https://w3id.org/lsc/ontology/modules/data-product/releases/1.0.0/data-product.jsonld>,
         <https://w3id.org/lsc/ontology/modules/data-product/releases/1.0.0/data-product.ttl>,
         <https://w3id.org/lsc/ontology/modules/data-product/releases/1.0.0/shapes.ttl> .
+
+<https://w3id.org/lsc/ontology/modules/data-product/1.1.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/data-product> ;
+    dcterms:issued "2026-10-23"^^xsd:date ;
+    dcterms:title "LSC Data Product Module 1.1.0"@en ;
+    owl:versionInfo "1.1.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/data-product.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/data-product.ttl>,
+        <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/shapes.ttl> .
 
 <https://w3id.org/lsc/ontology/modules/integration/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/integration> ;
@@ -310,6 +320,18 @@
 
 <https://w3id.org/lsc/ontology/modules/data-product/releases/1.0.0/shapes.ttl> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/data-product/releases/1.0.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/data-product.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/data-product.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/data-product.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/data-product.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
 <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.0/integration.jsonld> a dcat:Distribution ;

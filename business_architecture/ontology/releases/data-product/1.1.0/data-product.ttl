@@ -1,0 +1,829 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix line: <https://w3id.org/lsc/ontology/modules/data-product/line/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix product: <https://w3id.org/lsc/ontology/modules/data-product/product/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix segment: <https://w3id.org/lsc/ontology/modules/data-product/segment/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix status: <https://w3id.org/lsc/ontology/modules/data-product/status/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/data-product> a owl:Ontology ;
+    dcterms:description "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them (Step 7). Definitions only, never data values; mapped to DCAT, not imported."@en ;
+    dcterms:issued "2026-10-23"^^xsd:date ;
+    dcterms:modified "2026-10-23"^^xsd:date ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.3.0> ;
+    dcterms:title "LSC Data Product Module"@en ;
+    owl:versionIRI dp:1.1.0 ;
+    owl:versionInfo "1.1.0" .
+
+dp:anchoredIn a owl:ObjectProperty ;
+    rdfs:label "anchored in"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json, processDomainRef"@en ;
+    rdfs:domain dp:PortfolioSegment ;
+    rdfs:range skos:Concept ;
+    skos:definition "The part of the process map a segment's data products serve, from the portfolio's process-domain reference. Context, not ownership."@en .
+
+dp:consumedBy a owl:ObjectProperty ;
+    rdfs:label "consumed by"@en ;
+    dcterms:bibliographicCitation "competency question 7; EPM-DEC-001-0053"@en ;
+    rdfs:domain dp:DataProduct ;
+    rdfs:range skos:Concept ;
+    skos:definition "A process that uses the data product's data as an input. Context for where the data is used, not ownership."@en .
+
+dp:portfolioStatus a owl:ObjectProperty ;
+    rdfs:label "portfolio status"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/data_product_portfolio.schema.json"@en ;
+    rdfs:range skos:Concept ;
+    skos:definition "Whether the portfolio describes the data product or line (active), only names it (defined only), or leaves a decision about it open, from the portfolio status code list."@en .
+
+dp:producedBy a owl:ObjectProperty ;
+    rdfs:label "produced by"@en ;
+    dcterms:bibliographicCitation "competency question 7; EPM-DEC-001-0048, EPM-DEC-001-0053"@en ;
+    rdfs:domain dp:DataProduct ;
+    rdfs:range skos:Concept ;
+    skos:definition "The process whose work creates the data product's data, named by a recorded decision or the process authority. A data product with no producing process has no owning process (competency question 7)."@en .
+
+product:backcasting-refining-ci a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:planning-optimization ;
+    skos:definition "Backcast results vs plan/perfect-foresight, value leakage, and continuous improvement data."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-backcasting-refining-ci"^^xsd:string ;
+    skos:prefLabel "Backcasting & Refining Continuous Improvement"@en ;
+    dp:portfolioStatus status:active .
+
+product:bpa a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:finance ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-bpa"^^xsd:string ;
+    skos:prefLabel "BP&A"@en ;
+    skos:scopeNote "Closest LSC anchor: Enabling Functions > Finance (stub)."@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:brand-data-integration a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:marketing-sales ;
+    skos:definition "Brand, branded-site, and brand-partner data integration."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-brand-data-integration"^^xsd:string ;
+    skos:prefLabel "Brand Data & Integration"@en ;
+    dp:portfolioStatus status:active .
+
+product:commercial-risk a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:altLabel "Risk"@en ;
+    skos:broader line:energy-trading-risk-management ;
+    skos:definition "Commodity trading risk data: positions, exposures, P&L, VaR, limits, counterparty credit in the trading context. Distinct from Order-to-Cash customer AR credit."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-commercial-risk"^^xsd:string ;
+    skos:prefLabel "Commercial Risk"@en ;
+    dp:portfolioStatus status:active .
+
+product:customer-master a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:marketing-sales ;
+    skos:definition "The governed customer master: the customer records, accounts and their attributes that the systems which serve customers share."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-customer-master"^^xsd:string ;
+    skos:prefLabel "Customer Master"@en ;
+    skos:scopeNote "Produced by CM 1.3.7.1.1 Maintain Customer Master Data (MPC-P10.3, EPM-DEC-001-0087)."@en,
+        "The decision owner's customer inputs name a data products platform that serves the customer master, fed by the customer data store (business_process/proposals/MPC-P10-customer-lifecycle.md, MPC-P10.3); the description is Claude's words."@en ;
+    dp:portfolioStatus status:active ;
+    dp:producedBy proc:CM-1-3-7-1-1 .
+
+product:devsecops a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:software-development-platforms ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-devsecops"^^xsd:string ;
+    skos:prefLabel "DevSecOps"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:ess a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:ess-law ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-ess"^^xsd:string ;
+    skos:prefLabel "ES&S"@en ;
+    skos:scopeNote "Closest LSC anchor: Enabling Functions > EHS & Gov Reporting (stub)."@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:external-market-data a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:market-structure-logistics-management ;
+    skos:definition "Third-party market feeds: price assessments, indices, market intelligence inputs."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-external-market-data"^^xsd:string ;
+    skos:prefLabel "External Market Data"@en ;
+    dp:portfolioStatus status:active .
+
+product:field-operations a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:reliability ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-field-operations"^^xsd:string ;
+    skos:prefLabel "Field Operations"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:gathering-compression a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:ng-ngl ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-gathering-compression"^^xsd:string ;
+    skos:prefLabel "Gathering & Compression"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:gis a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:data-platforms ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-gis"^^xsd:string ;
+    skos:prefLabel "GIS"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:hess a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:midstream-back-office ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-hess"^^xsd:string ;
+    skos:prefLabel "HES&S"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:hr a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:hr ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-hr"^^xsd:string ;
+    skos:prefLabel "HR"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:it a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:it ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-it"^^xsd:string ;
+    skos:prefLabel "IT"@en ;
+    skos:scopeNote "Closest LSC anchors: Enabling Functions > Process Excellence & IT; CM 1.4 IT Services (both stubs)."@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:legal a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:ess-law ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-legal"^^xsd:string ;
+    skos:prefLabel "Legal"@en ;
+    skos:scopeNote "Closest LSC anchor: Enabling Functions > Legal & Corp Comm (stub)."@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:local-production-planning-crude-scheduling a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:planning-optimization ;
+    skos:definition "Refinery/local production planning and crude scheduling data."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-local-production-planning-crude-scheduling"^^xsd:string ;
+    skos:prefLabel "Local Production Planning & Crude Scheduling"@en ;
+    dp:portfolioStatus status:active .
+
+product:logistic-execution a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:market-structure-logistics-management ;
+    skos:definition "Nominations, scheduling, and physical movement execution data (pipeline, marine, rail, truck from the commercial view)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-logistic-execution"^^xsd:string ;
+    skos:prefLabel "Logistic Execution"@en ;
+    dp:portfolioStatus status:active .
+
+product:loss-control a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:market-structure-logistics-management ;
+    skos:definition "Custody transfer, gain/loss, and shrinkage data across movements and terminal operations."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-loss-control"^^xsd:string ;
+    skos:prefLabel "Loss Control"@en ;
+    skos:scopeNote "Produced by CM 1.1.3.7.13 Reconcile Movement Losses and Gains (EPM-DEC-001-0048)."@en,
+        "Product line placement provisional; confirm with data owners."@en ;
+    dp:portfolioStatus status:active ;
+    dp:producedBy proc:CM-1-1-3-7-13 .
+
+product:marine-rail-ops a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:midstream-logistics ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-marine-rail-ops"^^xsd:string ;
+    skos:prefLabel "Marine & Rail Ops"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:master-pricing a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:market-structure-logistics-management ;
+    skos:definition "Validated price system of record: official product prices derived from market data and internal assessment."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-master-pricing"^^xsd:string ;
+    skos:prefLabel "Master Pricing"@en ;
+    dp:portfolioStatus status:active .
+
+product:measurement-lab a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:ng-ngl ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-measurement-lab"^^xsd:string ;
+    skos:prefLabel "Measurement & Lab"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:midstream-quality-assurance a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:software-development-platforms ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-midstream-quality-assurance"^^xsd:string ;
+    skos:prefLabel "Quality Assurance (Software)"@en ;
+    skos:scopeNote "Software QA; distinct from Commercial product Quality Assurance (dp-quality-assurance)."@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:operational-margin a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:market-structure-logistics-management ;
+    skos:definition "Margin measurement data across commercial operations (supply, logistics, channel)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-operational-margin"^^xsd:string ;
+    skos:prefLabel "Operational Margin"@en ;
+    dp:portfolioStatus status:active .
+
+product:operations-administration a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:reliability ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-operations-administration"^^xsd:string ;
+    skos:prefLabel "Operations & Administration"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:ops-intel a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:data-platforms ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-ops-intel"^^xsd:string ;
+    skos:prefLabel "Ops Intel"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:ops-support a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:midstream-back-office ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-ops-support"^^xsd:string ;
+    skos:prefLabel "Ops Support"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:ot-communication-platform a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:infrastructure-platforms ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-ot-communication-platform"^^xsd:string ;
+    skos:prefLabel "OT Communication Platform"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:ot-compute-platforms a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:infrastructure-platforms ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-ot-compute-platforms"^^xsd:string ;
+    skos:prefLabel "OT Compute Platforms"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:ot-platform-development a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:infrastructure-platforms ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-ot-platform-development"^^xsd:string ;
+    skos:prefLabel "OT Platform Development"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:ot-windows-platforms a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:infrastructure-platforms ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-ot-windows-platforms"^^xsd:string ;
+    skos:prefLabel "OT Windows Platforms"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:physical-trading a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:energy-trading-risk-management ;
+    skos:definition "Deal/trade facts for physical commodity transactions: trade capture, contracts, positions, movements context."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-physical-trading"^^xsd:string ;
+    skos:prefLabel "Physical Trading"@en ;
+    dp:portfolioStatus status:active .
+
+product:pipeline-ops-integrity a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:pipelines ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-pipeline-ops-integrity"^^xsd:string ;
+    skos:prefLabel "Pipeline Ops & Integrity"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:pipeline-ot a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:pipelines ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-pipeline-ot"^^xsd:string ;
+    skos:prefLabel "Pipeline OT"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:pipeline-ras a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:pipelines ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-pipeline-ras"^^xsd:string ;
+    skos:prefLabel "Pipeline RA&S"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:processing-fractionation a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:ng-ngl ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-processing-fractionation"^^xsd:string ;
+    skos:prefLabel "Processing & Fractionation"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:product-availability-allocations a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:marketing-sales ;
+    skos:definition "Product avails and allocation decisions data supporting order validation and channel supply."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-product-availability-allocations"^^xsd:string ;
+    skos:prefLabel "Product Availability & Allocations"@en ;
+    dp:portfolioStatus status:active .
+
+product:quality-assurance a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:altLabel "QA (Commercial)"@en ;
+    skos:broader line:energy-trading-risk-management ;
+    skos:definition "Product/crude quality data: assays, lab results, specifications, blending quality outcomes."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-quality-assurance"^^xsd:string ;
+    skos:prefLabel "Quality Assurance"@en ;
+    dp:portfolioStatus status:active .
+
+product:rack-pricing a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:market-structure-logistics-management ;
+    skos:definition "Wholesale rack price data: calculated, approved, published rack prices per sales cycle. Distinct portfolio from Master Pricing."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-rack-pricing"^^xsd:string ;
+    skos:prefLabel "Rack Pricing"@en ;
+    skos:scopeNote "Product line placement provisional; confirm with data owners."@en ;
+    dp:portfolioStatus status:active .
+
+product:regional-production-distribution-planning a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:planning-optimization ;
+    skos:definition "Regional optimization and distribution planning data."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-regional-production-distribution-planning"^^xsd:string ;
+    skos:prefLabel "Regional Production & Distribution Planning"@en ;
+    dp:portfolioStatus status:active .
+
+product:reliability-center a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:reliability ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-reliability-center"^^xsd:string ;
+    skos:prefLabel "Reliability Center"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:retail-payments a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:altLabel "Retail Payment"@en ;
+    skos:broader line:marketing-sales ;
+    skos:definition "Retail transaction and payment data captured at branded retail sites (tender, cards, loyalty-linked payment)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-retail-payments"^^xsd:string ;
+    skos:prefLabel "Retail Payments"@en ;
+    skos:scopeNote "Applicability: at a brand owner that runs no retail sites (MPC since 2021), the sites are operated by independent jobbers and dealers (MPC FY2025 Form 10-K, Item 1). Which retail transactions reach the brand owner is not stated in the sources; the scope note is Claude's, under the delegation (EPM-DEC-001-0047, MPC-P07)."@en ;
+    dp:portfolioStatus status:active .
+
+product:revenue-accounting-scheduling a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:ng-ngl ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-revenue-accounting-scheduling"^^xsd:string ;
+    skos:prefLabel "Revenue Accounting & Scheduling"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:sbd a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:sbd ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-sbd"^^xsd:string ;
+    skos:prefLabel "S&BD"@en ;
+    skos:scopeNote "No LSC anchor; Strategy & Business Development absent from Enabling Functions."@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:service-management a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:reliability ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-service-management"^^xsd:string ;
+    skos:prefLabel "Service Management"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:supply-chain a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:supply-chain ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-supply-chain"^^xsd:string ;
+    skos:prefLabel "SC"@en ;
+    skos:scopeNote "Closest LSC anchor: Enabling Functions > Supply Chain Mgmt. (stub)."@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:terminal-automation a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:terminals ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-terminal-automation"^^xsd:string ;
+    skos:prefLabel "Terminal Automation"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:terminal-ops-it a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:terminals ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-terminal-ops-it"^^xsd:string ;
+    skos:prefLabel "Terminal Ops (IT)"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:terminal-ot a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:terminals ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-terminal-ot"^^xsd:string ;
+    skos:prefLabel "Terminal OT"@en ;
+    dp:portfolioStatus status:defined-only .
+
+product:truck-ops a skos:Concept,
+        dp:DataProduct ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader line:midstream-logistics ;
+    skos:editorialNote "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dp-truck-ops"^^xsd:string ;
+    skos:prefLabel "Truck Ops"@en ;
+    dp:portfolioStatus status:defined-only .
+
+status:open-decision a skos:Concept ;
+    skos:definition "A decision about the data product or line is open."@en ;
+    skos:inScheme dp:PortfolioStatus ;
+    skos:notation "open_decision" ;
+    skos:prefLabel "Open decision"@en .
+
+line:finance a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:corporate ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-finance"^^xsd:string ;
+    skos:prefLabel "Finance"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:hr a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:corporate ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-hr"^^xsd:string ;
+    skos:prefLabel "HR"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:it a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:corporate ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-it"^^xsd:string ;
+    skos:prefLabel "IT"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:sbd a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:corporate ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-sbd"^^xsd:string ;
+    skos:prefLabel "S&BD"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:supply-chain a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:corporate ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-supply-chain"^^xsd:string ;
+    skos:prefLabel "SC"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:data-platforms a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-data-platforms"^^xsd:string ;
+    skos:prefLabel "Data Platforms"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:ess-law a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:corporate ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-ess-law"^^xsd:string ;
+    skos:prefLabel "ES&S / Law"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:midstream-back-office a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-midstream-back-office"^^xsd:string ;
+    skos:prefLabel "Back Office"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:midstream-logistics a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-midstream-logistics"^^xsd:string ;
+    skos:prefLabel "Logistics"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:software-development-platforms a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-software-development-platforms"^^xsd:string ;
+    skos:prefLabel "Software Development Platforms"@en ;
+    skos:scopeNote "Platform product line; not expected to map to business process nodes."@en ;
+    dp:portfolioStatus status:defined-only .
+
+dp:PortfolioStatus a skos:ConceptScheme ;
+    rdfs:label "portfolio status"@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/data_product_portfolio.schema.json"@en ;
+    skos:definition "The three statuses the portfolio schema allows a data product or line. The portfolio uses two of them."@en .
+
+line:energy-trading-risk-management a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:commercial ;
+    skos:definition "Data products supporting physical/financial trading and commercial risk management (ETRM domain)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-energy-trading-risk-management"^^xsd:string ;
+    skos:prefLabel "Energy Trading & Risk Management"@en ;
+    dp:portfolioStatus status:active .
+
+line:pipelines a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-pipelines"^^xsd:string ;
+    skos:prefLabel "Pipelines"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:planning-optimization a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:altLabel "P&O"@en ;
+    skos:broader segment:commercial ;
+    skos:definition "Value chain planning and optimization data products. Referenced as 'P&O' (a product line, not a portfolio item)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-planning-optimization"^^xsd:string ;
+    skos:prefLabel "Planning & Optimization"@en ;
+    dp:portfolioStatus status:active .
+
+line:terminals a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-terminals"^^xsd:string ;
+    skos:prefLabel "Terminals"@en ;
+    dp:portfolioStatus status:defined-only .
+
+dp:PortfolioSegment a owl:Class ;
+    rdfs:label "portfolio segment"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json; EPM-DEC-001-0053"@en ;
+    skos:definition "One of the portfolio's top-level groups of data product lines: Commercial, Midstream or Corporate. Each is anchored in a part of the process map."@en .
+
+line:infrastructure-platforms a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-infrastructure-platforms"^^xsd:string ;
+    skos:prefLabel "Infrastructure Platforms"@en ;
+    skos:scopeNote "Platform product line; not expected to map to business process nodes."@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:marketing-sales a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:commercial ;
+    skos:definition "Customer-facing marketing and sales data products."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-marketing-sales"^^xsd:string ;
+    skos:prefLabel "Marketing & Sales"@en ;
+    dp:portfolioStatus status:active .
+
+line:ng-ngl a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-ng-ngl"^^xsd:string ;
+    skos:prefLabel "NG & NGL"@en ;
+    dp:portfolioStatus status:defined-only .
+
+line:reliability a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:midstream ;
+    skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-reliability"^^xsd:string ;
+    skos:prefLabel "Reliability"@en ;
+    dp:portfolioStatus status:defined-only .
+
+segment:commercial a skos:Concept,
+        dp:PortfolioSegment ;
+    dcterms:source src:data-product-portfolio ;
+    skos:definition "Commercial hydrocarbon data domains: trading, marketing & sales, market structure & logistics, planning & optimization."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "seg-commercial"^^xsd:string ;
+    skos:prefLabel "Commercial"@en ;
+    skos:topConceptOf dp:DataProducts ;
+    dp:anchoredIn proc:CM-1 .
+
+line:market-structure-logistics-management a skos:Concept,
+        dp:DataProductLine ;
+    dcterms:source src:data-product-portfolio ;
+    skos:broader segment:commercial ;
+    skos:definition "Pricing structures, logistics execution, margin and external market data products."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "dpl-market-structure-logistics-management"^^xsd:string ;
+    skos:prefLabel "Market Structure & Logistics Management"@en ;
+    dp:portfolioStatus status:active .
+
+segment:corporate a skos:Concept,
+        dp:PortfolioSegment ;
+    dcterms:source src:data-product-portfolio ;
+    skos:definition "Corporate/enabling function data domains. Maps loosely to the Enabling Functions L0 in the LSC map (all L1 stubs)."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "seg-corporate"^^xsd:string ;
+    skos:prefLabel "Corporate"@en ;
+    skos:topConceptOf dp:DataProducts ;
+    dp:anchoredIn proc:L0-enabling-functions .
+
+segment:midstream a skos:Concept,
+        dp:PortfolioSegment ;
+    dcterms:source src:data-product-portfolio ;
+    skos:definition "Midstream operations data domains. Since 2026-10-18 the map decomposes Midstream as fuels logistics (MS 1: pipeline, terminal, marine and storage services, EPM-DEC-001-0047); the portfolios below are not yet linked to those processes."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "seg-midstream"^^xsd:string ;
+    skos:prefLabel "Midstream"@en ;
+    skos:topConceptOf dp:DataProducts ;
+    dp:anchoredIn proc:L1-midstream .
+
+dp:DataProductLine a owl:Class ;
+    rdfs:label "data product line"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json; EPM-DEC-001-0053"@en ;
+    skos:definition "A group of related data products in one segment of the portfolio, such as Energy Trading & Risk Management."@en .
+
+status:active a skos:Concept ;
+    skos:definition "The portfolio describes the data product or line, and it is in use."@en ;
+    skos:inScheme dp:PortfolioStatus ;
+    skos:notation "active" ;
+    skos:prefLabel "Active"@en .
+
+status:defined-only a skos:Concept ;
+    skos:definition "The portfolio names the data product or line but does not describe it. Its definition waits for its data owners."@en ;
+    skos:inScheme dp:PortfolioStatus ;
+    skos:notation "defined_only" ;
+    skos:prefLabel "Defined only"@en .
+
+dp:DataProduct a owl:Class ;
+    rdfs:label "data product"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json; W3C Data Catalog Vocabulary (DCAT) Version 3, W3C Recommendation, 22 August 2024; EPM-DEC-001-0053"@en ;
+    skos:closeMatch dcat:Dataset ;
+    skos:definition "A named, governed set of data that a business area publishes for others to use, defined by what it covers. A definition, never the data: the platforms that hold the data product hold its records."@en ;
+    skos:scopeNote "Mapped to DCAT 3's dcat:Dataset with skos:closeMatch, not imported (EPM-DEC-001-0023). A data product here is the business definition; a DCAT dataset record of it would describe one published release of its data."@en .
+
+src:data-product-portfolio a dcterms:BibliographicResource ;
+    dcterms:title "Data product portfolio, business_architecture/business_process/data_product_portfolio.json, generated 2026-08-05, from: Data Product Lines & Data Portfolio slide (Commercial / Midstream / Corporate); Commercial Business Process Lifecycle slide (Rack Pricing, Loss Control additions); EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (term: Data Product Portfolio)"@en .
+
+dp:DataProducts a skos:ConceptScheme ;
+    rdfs:label "data product portfolio"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json"@en ;
+    skos:definition "The portfolio's segments, data product lines and data products, as one hierarchy: a data product's skos:broader is its line, and a line's is its segment."@en .
+
