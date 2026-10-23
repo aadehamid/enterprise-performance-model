@@ -9,7 +9,7 @@
 
 ## Context
 
-EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontology is complete when every competency question is answerable or parked by a recorded decision, every module is released and approved, the external mappings are done, and the projection passes. Phases A to D are done (EPM-DEC-001-0053 to 0080). Phase E's work has merged: Step 9's release-package test (EPM-DEC-001-0081), Step 10's catalog of every release (EPM-DEC-001-0082), the re-check of the external-mapping triggers (EPM-DEC-001-0064, note of 2026-10-22), and Step 12's projection of every released package (EPM-DEC-001-0036, amendment of 2026-10-22). The R2 backlog was decided earlier (EPM-DEC-001-0063), and so were the partial questions Q11, Q40, Q43 and Q44 (EPM-DEC-001-0059 to 0061).
+EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontology is complete when every competency question is answerable or parked by a recorded decision, every module is released and approved, the external mappings are done, and the projection passes. Phases A to D are done (EPM-DEC-001-0053 to 0080). Phase E's work has merged: Step 9's release-package test (EPM-DEC-001-0081), Step 10's catalog of every release (EPM-DEC-001-0082), the re-check of the external-mapping triggers (EPM-DEC-001-0064, note of 2026-10-22), and Step 12's projection of every released package (EPM-DEC-001-0036, amendment of 2026-10-22). The R2 backlog was decided earlier (EPM-DEC-001-0063), and so were the partial questions Q11, Q40, Q43 and Q44 (EPM-DEC-001-0059 and 0060).
 
 ## Decision
 
