@@ -494,7 +494,8 @@ vsprocess:otc-review-credit-limit-risk-code a vs:ValueStreamProcess ;
     skos:definition "This process contains the sub-processes to review the existing customers' creditworthiness to revise the customer's credit limit and risk code.  The credit assessment is conducted based on information from customer financials, third party credit agencies and past order / credit history with the organization."@en ;
     skos:notation "p-otc-review-credit-limit-risk-code"^^xsd:string ;
     skos:prefLabel "Review Credit Limit & Risk Code"@en ;
-    skos:scopeNote "Present in the O2C process with a definition; no dedicated L5 in LSC. Closest: Monitor Credit Against Limit (CM 1.3.7.4.3)."@en ;
+    skos:scopeNote "Realizes Establish Credit Limit & Risk Code (CM 1.3.7.4.2), whose scope includes periodic and event-triggered reviews of the limit and risk code (MPC-P10.2, EPM-DEC-001-0087). Monitor Credit Against Limit (CM 1.3.7.4.3) watches exposure against a limit and does not revise it."@en ;
+    vs:realizes proc:CM-1-3-7-4-2 ;
     vs:usesCapability capability:otc-customer-credit .
 
 vsprocess:otc-root-cause-action-plan a vs:ValueStreamProcess ;

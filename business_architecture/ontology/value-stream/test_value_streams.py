@@ -64,11 +64,13 @@ class Build(unittest.TestCase):
     def test_figures(self):
         # Pinned on 2026-10-19. Streams, stages, capabilities, processes, flows and gap notes were
         # counted by hand in the two files; the link counts are the build's.
+        # 2026-10-23: MPC-P10.2 linked Review Credit Limit & Risk Code to CM 1.3.7.4.2 and removed its gap
+        # note (EPM-DEC-001-0087): one more core link, no process without one, one gap note fewer.
         streams, *_ = bv.load()
         self.assertEqual(bv.figures(streams), {
             "value streams": 2, "stages": 12, "capabilities": 21, "value-stream processes": 58,
-            "links to core processes": 72, "processes with no core link": 1, "produces links": 9,
-            "consumes links": 37, "measure links": 7, "flows": 4, "gap notes (no nodes)": 9})
+            "links to core processes": 73, "processes with no core link": 0, "produces links": 9,
+            "consumes links": 37, "measure links": 7, "flows": 4, "gap notes (no nodes)": 8})
 
     def test_stage_order(self):
         stages = sorted((int(STREAMS.value(s, VS.sequence)), s) for s in STREAMS.objects(STREAM["order-to-cash"], VS.hasStage))
@@ -109,8 +111,9 @@ class Build(unittest.TestCase):
         self.assertEqual(STREAMS.value(link, VS.relationship), REL["measures-performance"])
         self.assertEqual(STREAMS.value(STREAM["commercial-hydrocarbon-lifecycle"], VS.sourceDomain),
                          Literal("Commercial", datatype=XSD.string))
-        # The one value-stream process the source links to no map node.
-        self.assertFalse(list(STREAMS.objects(VSP["otc-review-credit-limit-risk-code"], VS.realizes)))
+        # The one value-stream process the source linked to no map node; since MPC-P10.2 it realizes
+        # CM 1.3.7.4.2 (EPM-DEC-001-0087, 0090).
+        self.assertEqual(list(STREAMS.objects(VSP["otc-review-credit-limit-risk-code"], VS.realizes)), [PROC["CM-1-3-7-4-2"]])
 
     def test_gap_analysis_creates_nothing(self):
         # Every node with a notation comes from an id in the source files, never from gapAnalysis.

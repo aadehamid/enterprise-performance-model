@@ -104,13 +104,13 @@ vs:alignsToProcessGroup a owl:ObjectProperty ;
 
 vs:produces a owl:ObjectProperty ;
     rdfs:label "produces"@en ;
-    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:domain vs:ValueStreamProcess ; rdfs:range skos:Concept ;
     skos:definition "A data product, or a whole data product line, that the value-stream process owns or publishes. The process is the data product's owning process."@en ;
     dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, produces; competency question 7"@en .
 
 vs:consumes a owl:ObjectProperty ;
     rdfs:label "consumes"@en ;
-    rdfs:domain vs:ValueStreamProcess ;
+    rdfs:domain vs:ValueStreamProcess ; rdfs:range skos:Concept ;
     skos:definition "A data product, or a whole data product line, that the value-stream process critically depends on."@en ;
     dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, consumes; competency question 7"@en .
 
