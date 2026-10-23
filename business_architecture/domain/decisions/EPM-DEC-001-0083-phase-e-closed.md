@@ -30,7 +30,7 @@ EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontolo
      - Q17, meaning ownership (EPM-DEC-001-0045, decision 7);
      - MPC-P10 (EPM-DEC-001-0070; `business_process/proposals/MPC-P10-customer-lifecycle.md`);
      - a product code list, which would let PIDX and OEO be mapped; Claude asks the decision owner before building it (EPM-DEC-001-0064);
-     - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6).
+     - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6). *2026-10-22:* approved (EPM-DEC-001-0084).
    - **On a process owner:** Forecaster, until the refinery Economics and Planning process owner confirms it is the Local Refinery Forecaster (EPM-DEC-001-0045, decision 2).
    - **Pending confirmation, no confirmer named:** the reading of Crude RFC as Refinery Feedstock Coordinator, a contextual reading pending confirmation (EPM-DEC-001-0045, decision 5); `organization/roles.csv` says it is to be confirmed with the process owner.
    - **On the business:** the four codes and TID Nbr, which the business confirms when the ontology is shared (EPM-DEC-001-0072).
@@ -53,4 +53,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 ## Consequences
 
 - The ontology README's Status section names where the build stands, and what waits on whom.
-- Phase F waits for the decision owner's yes.
+- Phase F waits for the decision owner's yes. *2026-10-22:* approved (EPM-DEC-001-0084).
