@@ -18,24 +18,24 @@ EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontolo
 1. **Steps 5, 6, 7, 9, 10, 11 and 12 are done.** The worklog's plan table marks each one, with its exceptions:
    - Step 5: Forecaster stays apart from the Local Refinery Forecaster until the refinery Economics and Planning process owner confirms they are the same (EPM-DEC-001-0045, decision 2), and PSM stays unresolved (decision 6). Crude RFC is read as Refinery Feedstock Coordinator, a contextual reading pending confirmation (decision 5).
    - Step 6: runs stay with the consumers, by design (EPM-DEC-001-0016); `provenance/run-shapes.ttl` checks them there (EPM-DEC-001-0034).
-   - Step 7: PIDX and OEO wait for product values, and IOF Supply Chain is parked, each with its trigger (EPM-DEC-001-0064). MPC-P10 is the decision owner's (EPM-DEC-001-0070). The four codes and TID Nbr wait for the business to confirm them when the ontology is shared (EPM-DEC-001-0072).
+   - Step 7: PIDX and OEO wait for product values, and IOF Supply Chain is parked, each with its trigger (EPM-DEC-001-0064). MPC-P10 is the decision owner's (EPM-DEC-001-0070). *2026-10-23:* accepted (EPM-DEC-001-0087), and the product values approved (EPM-DEC-001-0088). The four codes and TID Nbr wait for the business to confirm them when the ontology is shared (EPM-DEC-001-0072).
    - Step 9: the run shapes stay with the consumers, by design (EPM-DEC-001-0081).
    - Step 10: "catalog resolves" stays parked, because the namespace is not hosted (EPM-DEC-001-0039).
-   - Step 11: 43 questions answerable, 0 partial, 1 waiting (`regression/run.py`). Q17 waits on the decision owner (EPM-DEC-001-0045, decision 7).
+   - Step 11: 43 questions answerable, 0 partial, 1 waiting (`regression/run.py`). Q17 waits on the decision owner (EPM-DEC-001-0045, decision 7). *2026-10-23:* parked by the decision owner: 43 answerable, 0 partial, 0 waiting and 1 parked (EPM-DEC-001-0086).
    - Step 12: 16 rule gaps in released modules are listed, each to close at that module's next release (EPM-DEC-001-0036, amendment of 2026-10-22).
 2. **Steps 0 to 4 and 8 stand as recorded.** Step 3d is complete with its open exceptions; its sub-step 3d-b holds PTC-001-B by design (the decision owner, 2026-09-22). Step 4 is promoted.
 3. **The held rows stay held, each with its reason.** `python3 scripts/epm_facts.py counts` gives 462 held rows: 51 Phase 1 rows (EPM-DEC-001-0025), and 411 outside Phase 1: 167 context-pass holds, 114 uses-input holds, 80 informed-by holds, 40 uses-input G1a holds, 9 governed-by holds and 1 property-rule hold. None blocks completion. A held row gets a fresh verdict only if its source is corrected, through the source-correction backlog (EPM-DEC-001-0025).
 4. **Phase E is complete, except for items that wait on others.** None waits on this work.
    - **On the decision owner:**
-     - Q17, meaning ownership (EPM-DEC-001-0045, decision 7);
-     - MPC-P10 (EPM-DEC-001-0070; `business_process/proposals/MPC-P10-customer-lifecycle.md`);
-     - a product code list, which would let PIDX and OEO be mapped; Claude asks the decision owner before building it (EPM-DEC-001-0064);
-     - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6). *2026-10-22:* approved (EPM-DEC-001-0084).
+     - Q17, meaning ownership (EPM-DEC-001-0045, decision 7); *2026-10-23:* parked until the ontology is first shared with business consumers (EPM-DEC-001-0086);
+     - MPC-P10 (EPM-DEC-001-0070; `business_process/proposals/MPC-P10-customer-lifecycle.md`); *2026-10-23:* accepted (EPM-DEC-001-0087);
+     - a product code list, which would let PIDX and OEO be mapped; Claude asks the decision owner before building it (EPM-DEC-001-0064); *2026-10-23:* approved, from MPC's FY2025 Form 10-K, in `party` (EPM-DEC-001-0088);
+     - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6). *2026-10-22:* approved (EPM-DEC-001-0084). *2026-10-23:* done: personal-agent-skills pull request #45 merged.
    - **On a process owner:** Forecaster, until the refinery Economics and Planning process owner confirms it is the Local Refinery Forecaster (EPM-DEC-001-0045, decision 2).
    - **Pending confirmation, no confirmer named:** the reading of Crude RFC as Refinery Feedstock Coordinator, a contextual reading pending confirmation (EPM-DEC-001-0045, decision 5); `organization/roles.csv` says it is to be confirmed with the process owner.
-   - **On the business:** the four codes and TID Nbr, which the business confirms when the ontology is shared (EPM-DEC-001-0072).
+   - **On the business:** the four codes and TID Nbr, which the business confirms when the ontology is shared (EPM-DEC-001-0072). *2026-10-23:* this item, Forecaster, Crude RFC, PSM and Q17 are in the business close-out package, `ontology/business-closeout.md` (EPM-DEC-001-0086).
    - **Unresolved by decision:** PSM (EPM-DEC-001-0045, decision 6).
-   - **On the next releases:** the 16 projection gaps close at the next release of value-stream, kpi, party and integration. Each is a patch or minor, the module owner's under the module policy; Claude asks the decision owner before building any (EPM-DEC-001-0036).
+   - **On the next releases:** the 16 projection gaps close at the next release of value-stream, kpi, party and integration. Each is a patch or minor, the module owner's under the module policy; Claude asks the decision owner before building any (EPM-DEC-001-0036). *2026-10-23:* all approved (EPM-DEC-001-0088).
 
 ## Alternatives considered
 
@@ -53,4 +53,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 ## Consequences
 
 - The ontology README's Status section names where the build stands, and what waits on whom.
-- Phase F waits for the decision owner's yes. *2026-10-22:* approved (EPM-DEC-001-0084).
+- Phase F waits for the decision owner's yes. *2026-10-22:* approved (EPM-DEC-001-0084). *2026-10-23:* done: personal-agent-skills pull request #45 merged.

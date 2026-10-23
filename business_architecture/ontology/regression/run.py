@@ -2,7 +2,8 @@
 
 expected.csv gives each of the 44 questions in competency-questions.md a status:
 answerable (its queries must run), partial (the graph part's queries must run;
-waits_for names the rest), or waits:<step or decision> (no query yet). A query
+waits_for names the rest), waits:<step or decision> (no query yet), or
+parked:<decision> (parked by a recorded decision, which counts as green; no query). A query
 whose first comment line says "(must be none)" must return zero rows; every other
 query must return at least one row. Prints a coverage summary; exits 1 on a failure.
 
@@ -52,6 +53,8 @@ def check(graph, rows):
             failures.append(f"Q{row['question']}: {status} with no query")
         if status.startswith("waits:") and queries:
             failures.append(f"Q{row['question']}: waits but lists queries")
+        if status.startswith("parked:") and queries:
+            failures.append(f"Q{row['question']}: parked but lists queries")
         for name in queries:
             with open(os.path.join(HERE, "queries", name)) as f:
                 text = f.read()
@@ -77,7 +80,8 @@ def main(path):
     graph = load(path)
     failures, statuses = check(graph, rows)
     print(f"competency coverage on {os.path.relpath(path, HERE)}: {len(rows)} questions; "
-          f"answerable {statuses['answerable']}, partial {statuses['partial']}, waiting {statuses['waits']}")
+          f"answerable {statuses['answerable']}, partial {statuses['partial']}, waiting {statuses['waits']}, "
+          f"parked {statuses['parked']}")
     for line in failures:
         print("FAIL", line)
     return 1 if failures else 0

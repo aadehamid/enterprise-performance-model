@@ -54,5 +54,5 @@ The rest of this record is Claude's, under the delegation: "yes, extend the dele
 ## Consequences
 
 - MPLX's FY2025 Form 10-K, which the reference parties cite, is a described source (`src:mplx-s01`) in evidence tier 2, as one of the MPC evidence files in `reference/mpc/` (EPM-DEC-001-0059).
-- The regression stands at 42 answerable, 1 partial (Q7) and 1 waiting (Q17, EPM-DEC-001-0045).
+- The regression stands at 42 answerable, 1 partial (Q7) and 1 waiting (Q17, EPM-DEC-001-0045). *2026-10-23:* the decision owner parked Q17 until the ontology is first shared with business consumers: 43 answerable, 0 partial, 0 waiting and 1 parked (EPM-DEC-001-0086).
 - The `party` module is not released. A release needs the decision owner's approval. *2026-10-22:* released as 1.0.0 with their approval (EPM-DEC-001-0074).
