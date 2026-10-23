@@ -69,6 +69,20 @@ class Rules(unittest.TestCase):
         problems = rule_problems(lambda g: g.add((seq, URIRef(CORE + "earlierProcess"), URIRef(CORE + "other"))))
         self.assertTrue(any(x.startswith("Rule 4a") and str(seq) in x for x in problems), problems)
 
+    def test_a_measure_link_with_two_processes_fails_rule_4a(self):
+        # The process end points to the link (vs:measureLink), as prov:qualifiedAssociation does.
+        vs = "https://w3id.org/lsc/ontology/modules/value-stream/"
+        link = next(DATA.subjects(RDF.type, URIRef(vs + "MeasureLink")))
+        problems = rule_problems(lambda g: g.add((URIRef(vs + "process/other"), URIRef(vs + "measureLink"), link)))
+        self.assertTrue(any(x.startswith("Rule 4a") and str(link) in x and "measureLink" in x for x in problems),
+                        problems)
+
+    def test_a_data_flow_with_two_sources_fails_rule_4a(self):
+        party = "https://w3id.org/lsc/ontology/modules/party/"
+        flow = next(DATA.subjects(RDF.type, URIRef(party + "DataFlow")))
+        problems = rule_problems(lambda g: g.add((flow, URIRef(party + "fromSystem"), URIRef(party + "system/other"))))
+        self.assertTrue(any(x.startswith("Rule 4a") and str(flow) in x for x in problems), problems)
+
     def test_lpg_names_carry_their_prefix_for_rule_5(self):
         # In SHORTEN mode the prefix keeps org:identifier and dcterms:identifier apart; a term whose
         # local part has a slash gets no name, and check_rules reports it.
@@ -109,7 +123,7 @@ class Rules(unittest.TestCase):
         self.assertTrue(any(x.startswith("SHACL") and "broader" in x for x in problems), problems)
 
     def test_a_listed_release_gap_that_no_longer_occurs_fails_the_build(self):
-        # core 2.0.0 closed the two real gaps, so the list is empty; list one that does not occur.
+        # core 2.0.0 closed core's two gaps; list one that does not occur.
         gap = f"Rule 1: {CORE}earlierProcess has no single concrete range"
         with mock.patch.dict(pl.RELEASE_EXCEPTIONS, {gap: "closed by core 2.0.0"}):
             problems = pl.check(DATA, SHAPES)
@@ -121,6 +135,20 @@ class Rules(unittest.TestCase):
 
 
 class Build(unittest.TestCase):
+    def test_the_inputs_are_every_released_module_at_its_newest_version(self):
+        # Pinned by hand (EPM-DEC-001-0036, amendment of 2026-10-22); a new release must be added here.
+        self.assertEqual(pl.PACKAGES, [
+            ("core", "2.2.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.0.0"),
+            ("data-product", "1.0.0"), ("value-stream", "1.0.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
+            ("market-data", "1.0.0"), ("integration", "1.0.0")])
+        import glob, os
+        newest = {}
+        for d in glob.glob(os.path.join(pl.ONTOLOGY, "releases", "*", "*", "")):
+            module, version = d.rstrip(os.sep).split(os.sep)[-2:]
+            if module not in newest or tuple(map(int, version.split("."))) > tuple(map(int, newest[module].split("."))):
+                newest[module] = version
+        self.assertEqual(dict(pl.PACKAGES), newest)
+
     def test_the_manifest_is_current(self):
         _, _, manifest = pl.build()
         with open(pl.MANIFEST) as f:
@@ -162,6 +190,15 @@ class RoundTripRules(unittest.TestCase):
             self.assertNotIn((None, p, None), g)
         self.assertTrue(set(g.subjects(pl.SH.targetClass, None)))
 
+    def test_in_graph_shapes_drop_a_literal_list_but_keep_an_iri_list(self):
+        # market-data's sh:in (true) on mkt:legsUnstated goes; party's list of entity classes stays.
+        g = pl.in_graph_shapes(SHAPES)
+        lists = [pl.Collection(g, o) for o in g.objects(None, pl.SH["in"])]
+        self.assertTrue(lists)
+        self.assertFalse(any(isinstance(m, Literal) for c in lists for m in c))
+        party = URIRef("https://w3id.org/lsc/ontology/modules/party/Party")
+        self.assertTrue(any(party in list(c) for c in lists))
+
 
 class Report(unittest.TestCase):
     def test_a_shape_change_makes_the_report_stale(self):
@@ -169,7 +206,7 @@ class Report(unittest.TestCase):
         real_open = open
         def edited(path, *a, **k):
             f = real_open(path, *a, **k)
-            if str(path).endswith("organization/shapes.ttl"):
+            if str(path).endswith("releases/organization/2.0.0/shapes.ttl"):
                 import io
                 return io.StringIO(f.read() + "\n# edited\n")
             return f

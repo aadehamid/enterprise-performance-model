@@ -25,33 +25,102 @@ from collections import Counter, defaultdict
 
 from pyshacl import validate
 from rdflib import BNode, Graph, Literal, Namespace, URIRef
+from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
-INPUTS = ["releases/core/2.2.0/core.ttl", "organization/vocabulary.ttl", "organization/roles.ttl",
-          "organization/assignments.ttl", "ref-mpc/ref-mpc.ttl"]
-# core 2.2.0's release shapes, as 2.1.0's, carry the controlled-value shapes (EPM-DEC-001-0044), so
-# validation/controlled-values.ttl is not listed again.
-SHAPES = ["releases/core/2.2.0/shapes.ttl", "step4/scoped-sequence/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl",
-          "provenance/run-shapes.ttl"]
+# Every released module once, at its newest release (EPM-DEC-001-0036, amendment of 2026-10-22). So
+# kpi is 1.1.0, though value-stream, market-data and integration were released against 1.0.1; their own release
+# checks still test those pinned versions.
+PACKAGES = [("core", "2.2.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.0.0"),
+            ("data-product", "1.0.0"), ("value-stream", "1.0.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
+            ("market-data", "1.0.0"), ("integration", "1.0.0")]
+INPUTS = [f"releases/{m}/{v}/{m}.ttl" for m, v in PACKAGES]
+# Each package's own shapes. core 2.2.0's, as 2.1.0's, carry the controlled-value shapes
+# (EPM-DEC-001-0044), so validation/controlled-values.ttl is not listed again.
+SHAPES = [f"releases/{m}/{v}/shapes.ttl" for m, v in PACKAGES] + ["step4/scoped-sequence/shapes.ttl",
+                                                                    "provenance/run-shapes.ttl"]
 LOADABLE = os.path.join(HERE, "loadable.nt")
 INFERRED = os.path.join(HERE, "inferred.nt")
 MANIFEST = os.path.join(HERE, "projection-manifest.json")
 REPORT = os.path.join(HERE, "projection-report.json")
 SH = Namespace("http://www.w3.org/ns/shacl#")
-OWN = ("https://w3id.org/lsc/ontology/modules/core/", "https://w3id.org/lsc/ontology/modules/organization/")
+MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
+# Our own namespaces, one per module.
+OWN = tuple(MODULES_NS + m + "/" for m in ("core", "organization", "kpi", "population", "party", "data-product",
+                                           "value-stream", "system", "lane", "market-data", "placement",
+                                           "authority", "consumer"))
 # Fixed prefixes (Rule 3). n10s gets exactly these, in this order, so no ns0-style prefix is invented.
 PREFIXES = {
     "core": "https://w3id.org/lsc/ontology/modules/core/",
     "orgm": "https://w3id.org/lsc/ontology/modules/organization/",
+    "kpi": "https://w3id.org/lsc/ontology/modules/kpi/",
+    "pop": "https://w3id.org/lsc/ontology/modules/population/",
+    "party": "https://w3id.org/lsc/ontology/modules/party/",
+    "dp": "https://w3id.org/lsc/ontology/modules/data-product/",
+    "vs": "https://w3id.org/lsc/ontology/modules/value-stream/",
+    "sys": "https://w3id.org/lsc/ontology/modules/system/",
+    "lane": "https://w3id.org/lsc/ontology/modules/lane/",
+    "mkt": "https://w3id.org/lsc/ontology/modules/market-data/",
+    "plc": "https://w3id.org/lsc/ontology/modules/placement/",
+    "auth": "https://w3id.org/lsc/ontology/modules/authority/",
+    "con": "https://w3id.org/lsc/ontology/modules/consumer/",
     "skos": str(SKOS), "dcterms": "http://purl.org/dc/terms/", "org": "http://www.w3.org/ns/org#",
     "rdfs": str(RDFS), "owl": str(OWL), "rdf": str(RDF), "prov": "http://www.w3.org/ns/prov#",
 }
+# Rule 4a's qualified-relation classes: (class, ends the node points to, ends that point to the node).
+# An end that points to the node is the inverse link the guideline allows, as prov:qualifiedAssociation.
+QUALIFIED_RELATIONS = [
+    ("core/ScopedSequence", ("core/earlierProcess", "core/laterProcess"), ()),  # EPM-DEC-001-0026
+    ("core/CanonicalFact", ("core/factSubject", "core/factPredicate", "core/factObject"), ()),  # EPM-DEC-001-0044
+    ("organization/ResponsibilityAssignment", ("organization/forProcess", "organization/assignedRole"), ()),
+    ("organization/ControlRelationship", ("organization/controllingEntity", "organization/controlledEntity"), ()),
+    ("value-stream/MeasureLink", ("value-stream/measure",), ("value-stream/measureLink",)),  # EPM-DEC-001-0054
+    ("market-data/Leg", ("market-data/benchmark",), ("market-data/leg",)),  # EPM-DEC-001-0057, 0066
+    ("party/PartyRole", ("party/roleType",), ("party/plays",)),  # EPM-DEC-001-0068
+    ("party/DataFlow", ("party/fromSystem", "party/toSystem"), ()),  # EPM-DEC-001-0069
+    ("party/CustomerSourcing", ("party/sourcingSystem", "party/sourcedConcept"), ()),  # EPM-DEC-001-0069
+]
 # Rule gaps in a released module, which only a new release of that module can close. Each is
 # named here with its fix target; the build fails on any gap not listed, and on a listed gap
 # that no longer occurs, so the list cannot go stale (EPM-DEC-001-0036).
-RELEASE_EXCEPTIONS = {}
+RELEASE_EXCEPTIONS = {
+    "Rule 1: https://w3id.org/lsc/ontology/modules/value-stream/produces has no single concrete range":
+        "value-stream 1.0.0 declares no rdfs:range; the next value-stream release adds rdfs:range dp:DataProduct",
+    "Rule 1: https://w3id.org/lsc/ontology/modules/value-stream/consumes has no single concrete range":
+        "value-stream 1.0.0 declares no rdfs:range; the next value-stream release adds rdfs:range skos:Concept "
+        "(it consumes data products and data product lines)",
+    "Rule 1: https://w3id.org/lsc/ontology/modules/population/populationEvidence has no single concrete range":
+        "kpi 1.1.0 declares no rdfs:range; the next kpi release adds rdfs:range xsd:string",
+    "Rule 1: https://w3id.org/lsc/ontology/modules/placement/placementKind has no single concrete range":
+        "integration 1.0.0 declares no rdfs:range; the next integration release adds rdfs:range skos:Concept",
+    "Rule 1: https://w3id.org/lsc/ontology/modules/party/evidenceInput has no single concrete range":
+        "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range xsd:string",
+    "Rule 1: https://w3id.org/lsc/ontology/modules/party/customerRole has no single concrete range":
+        "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range rdf:langString",
+    "Rule 1: https://w3id.org/lsc/ontology/modules/party/carries has no single concrete range":
+        "party 1.0.0 declares no rdfs:range; the next party release adds rdfs:range rdf:langString",
+    "Rule 1: https://w3id.org/lsc/ontology/modules/consumer/reliesOn has no single concrete range":
+        "integration 1.0.0 declares no rdfs:range; its objects are properties, a concept and other terms, so "
+        "the next integration release gives it one concrete range",
+    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/placement/placementKind":
+        "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
+    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/plays":
+        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
+    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/mpcClassification":
+        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
+    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/implements":
+        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
+    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/governedBy":
+        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
+    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/party/feeds":
+        "party 1.0.0 has no shape stating its cardinality; the next party release adds one",
+    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/rank":
+        "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
+    "Rule 2: no cardinality stated for https://w3id.org/lsc/ontology/modules/authority/evidenceTier":
+        "integration 1.0.0 has no shape stating its cardinality; the next integration release adds one",
+}
 VERSIONS = {"neo4j": "2025.06.2", "n10s": "2025.06.1", "apoc": "bundled with neo4j:2025.06.2",
             "robot": "1.9.10", "reasoner": "ELK (through ROBOT)", "guideline": "v2.2 (lpg-projection/, pin 8ce9ada)"}
 
@@ -119,17 +188,15 @@ def check_rules(data, shapes):
         if not any(str(p).startswith(ns) for ns in PREFIXES.values()):
             problems.append(f"Rule 3: no fixed prefix for {p}")
     # Rule 4a: every qualified-relation node has an IRI and one value for each end. These are the
-    # four qualified-relation classes the modules define (core's scoped sequence, EPM-DEC-001-0026,
-    # and canonical fact, EPM-DEC-001-0044; the organization module's assignment and control
-    # relationship); a new one must be added here.
-    for cls, ends in ((URIRef(OWN[0] + "ScopedSequence"), (OWN[0] + "earlierProcess", OWN[0] + "laterProcess")),
-                      (URIRef(OWN[0] + "CanonicalFact"), (OWN[0] + "factSubject", OWN[0] + "factPredicate", OWN[0] + "factObject")),
-                      (URIRef(OWN[1] + "ResponsibilityAssignment"), (OWN[1] + "forProcess", OWN[1] + "assignedRole")),
-                      (URIRef(OWN[1] + "ControlRelationship"), (OWN[1] + "controllingEntity", OWN[1] + "controlledEntity"))):
-        for node in data.subjects(RDF.type, cls):
+    # qualified-relation classes the modules define; a new one must be added to QUALIFIED_RELATIONS.
+    for cls, ends, inbound in QUALIFIED_RELATIONS:
+        for node in data.subjects(RDF.type, URIRef(MODULES_NS + cls)):
             for end in ends:
-                if len(list(data.objects(node, URIRef(end)))) != 1:
-                    problems.append(f"Rule 4a: {node} has not exactly one {end}")
+                if len(list(data.objects(node, URIRef(MODULES_NS + end)))) != 1:
+                    problems.append(f"Rule 4a: {node} has not exactly one {MODULES_NS + end}")
+            for end in inbound:
+                if len(list(data.subjects(URIRef(MODULES_NS + end), node))) != 1:
+                    problems.append(f"Rule 4a: {node} is not the object of exactly one {MODULES_NS + end}")
     # Rule 5: every predicate and class gets a name in the graph, and no two share one. In n10s's
     # SHORTEN mode the name is the fixed prefix plus the local name (EPM-DEC-001-0036).
     used = defaultdict(set)
@@ -223,8 +290,11 @@ def literal_multivalued(data, shapes):
 # What n10s 2025.06.1 cannot validate in the graph. Step 1 has already validated every one of these
 # with pySHACL on the exact triples that are loaded, and the round trip proves the graph holds those
 # triples, so the full shapes hold in the graph (EPM-DEC-001-0036).
+# sh:pattern is among them: n10s matches the pattern against the whole string, where SHACL searches
+# it, so "\S" fails on every value longer than one character (EPM-DEC-001-0036, amendment of
+# 2026-10-22). So is an sh:in list of literals: n10s does not match a loaded true to the list's true.
 N10S_UNSUPPORTED = [SH["not"], SH.languageIn, SH.targetObjectsOf, SH.targetSubjectsOf, SH.node,
-                    SH.message, SH.severity]
+                    SH.message, SH.severity, SH.pattern]
 
 
 def in_graph_shapes(shapes):
@@ -234,6 +304,8 @@ def in_graph_shapes(shapes):
         if p in N10S_UNSUPPORTED:
             continue
         if p == SH.datatype and o == RDF.langString:
+            continue
+        if p == SH["in"] and any(isinstance(m, Literal) for m in Collection(shapes, o)):
             continue
         g.add((s, p, o))
     # Drop node shapes left with no target class: n10s validates only targeted shapes.
@@ -364,7 +436,7 @@ def load_verify(bolt, password, import_dir):
                            "RETURN focusNode, propertyShape, resultMessage").data()
         out = roundtrip(s)
         # The in-graph check must be able to fail: remove one role's name, which every role must
-        # have exactly once (organization/shapes.ttl), and count the violations n10s reports.
+        # have exactly once (the organization package's shapes.ttl), and count the violations n10s reports.
         shapes_loaded = s.run("CALL n10s.validation.shacl.listShapes() YIELD target RETURN count(*) AS n").single()["n"]
         s.run("MATCH (r:org__Role) WITH r ORDER BY r.uri LIMIT 1 REMOVE r.skos__prefLabel").consume()
         caught = len(s.run("CALL n10s.validation.shacl.validate() YIELD focusNode RETURN focusNode").data())

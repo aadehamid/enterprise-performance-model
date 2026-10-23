@@ -1,12 +1,12 @@
 # Property-graph projection (Step 12)
 
-Projects the ontology into a Neo4j labelled property graph, following the guideline in `../lpg-projection/` (v2.2) with Rule 4a, qualified-relation nodes. Turtle stays the master copy; the graph can be rebuilt from it at any time. The design is EPM-DEC-001-0036.
+Projects the ontology into a Neo4j labelled property graph, following the guideline in `../lpg-projection/` (v2.2) with Rule 4a, qualified-relation nodes. Turtle stays the master copy; the graph can be rebuilt from it at any time. The design is EPM-DEC-001-0036. Since 2026-10-22 it projects every released package under `../releases/`, each at its newest version, with each package's own shapes (EPM-DEC-001-0036, amendment of 2026-10-22).
 
 | File | What it is |
 |---|---|
 | `pipeline.py` | The five steps: `build` (check the rules, validate, serialise), `reason` (ELK through ROBOT), `load-verify` (load with n10s, then SHACL in the graph, round trip, determinism) |
 | `inferred.nt` | The reasoner's inferences about the domain (empty today: the ontology is SKOS-first) |
-| `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none since core 2.0.0; the run is on core 2.2.0) |
+| `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none from core 2.0.0 to 2026-10-21; since 2026-10-22, 16 in value-stream, kpi, party and integration, each with its fix) |
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, and that the report is current and passed |
 
@@ -68,4 +68,4 @@ Rerun it after any input or shape changes. You need Java 11 or later ([ROBOT's G
    docker rm -f epm-lpg
    ```
 
-The last run, on core 2.2.0 with organization 2.0.0 (2026-10-22): 2,834 nodes and 14,934 relationships, no SHACL violation in the graph (133 in-graph constraints, and the deliberate mutant still caught), an empty round-trip diff, and equal hashes for the sorted and shuffled loads. core 2.2.0 adds 23 process concepts and IDs on four stubs (EPM-DEC-001-0076). *Earlier:* The last run, on core 2.1.0 with organization 2.0.0 (2026-10-19): 2,811 nodes and 14,865 relationships (organization 2.0.0 adds the three `dcterms:isReplacedBy` links of its deprecated roles), no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.
+The last run, on every released package (2026-10-22): 3,925 nodes and 19,692 relationships from 33,742 triples, no SHACL violation in the graph (588 in-graph constraints, and the deliberate mutant still caught), an empty round-trip diff, and equal hashes for the sorted and shuffled loads. `sh:pattern`, and an `sh:in` list of literals, are left to Step 1's pySHACL check, since n10s matches a pattern against the whole string. *Earlier:* on core 2.2.0 with organization 2.0.0 (2026-10-22): 2,834 nodes and 14,934 relationships, no SHACL violation in the graph (133 in-graph constraints, and the deliberate mutant still caught), an empty round-trip diff, and equal hashes for the sorted and shuffled loads. core 2.2.0 adds 23 process concepts and IDs on four stubs (EPM-DEC-001-0076). *Earlier:* The last run, on core 2.1.0 with organization 2.0.0 (2026-10-19): 2,811 nodes and 14,865 relationships (organization 2.0.0 adds the three `dcterms:isReplacedBy` links of its deprecated roles), no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.

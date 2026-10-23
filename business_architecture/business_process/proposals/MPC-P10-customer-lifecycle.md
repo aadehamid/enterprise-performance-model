@@ -48,6 +48,6 @@ Three things are missing.
 
 ## How the ontology takes it
 
-- An accepted new process gets an ID, a slug and a definition (Steps 2 and 3), and lands in the next `core` release, which needs the decision owner's approval.
+- An accepted new process gets an ID, a slug and a definition (Steps 2 and 3), and lands in the next `core` release, which needs the decision owner's approval. *2026-10-22:* under the module policy (worklog, "Who approves a release"; EPM-DEC-001-0037), a minor or patch release is the module owner's and a major the decision owner's; Claude asked the decision owner before every release issued on 2026-10-22 (EPM-DEC-001-0074, and 0076 to 0080).
 - The value-stream link and the data product are rebuilt by their modules' builds.
 - The lifecycle's links in the `party` module then gain the new process.
