@@ -728,7 +728,12 @@ What the loader and the reasoner do. Guideline v2.1 did not say these; v2.2 does
   can run, and record which ones it leaves out and why. An empty
   round-trip diff then shows the graph holds the triples that passed the
   full shapes. Prove the in-graph check can fail: remove one value in the
-  graph and require a violation.
+  graph and require a violation. (2026-10-23, EPM-DEC-001-0095: the
+  `ontology-to-lpg` skill now reads the in-graph subset from the engine.
+  After the shapes import it lists what n10s compiled with
+  `n10s.validation.shacl.listShapes()`, reports every constraint n10s did
+  not compile, and runs one fail case per compiled constraint. Its own
+  prediction of the subset is a dry run and gates nothing.)
 - **Filter the reasoner's declarations.** The OWL API writes declarations
   such as `owl:NamedIndividual` and `owl:Class` into the reasoner's
   output. They are not inferences about the domain. Drop any triple whose
@@ -753,6 +758,40 @@ What the loader and the reasoner do. Guideline v2.1 did not say these; v2.2 does
 - **Pin the tools by version and checksum.** Record the Neo4j, plugin and
   reasoner versions in the manifest, and the download URL and SHA-256 of
   each plugin jar in the pipeline's README.
+
+**Delivery to other stores (2026-10-23, EPM-DEC-001-0095 and 0096).** The
+same validated files go to every store, and each hop is checked against the
+files, so a loss shows where it happened. The `ontology-to-lpg` skill
+describes the pattern and its add-ons:
+
+1. **Source.** The released packages and their data are the master copy.
+   Give every blank node a stable IRI once (skolemization, RDF 1.1 §3.5)
+   before loading anywhere, so each store can be compared triple for
+   triple.
+2. **Triple stores.** Load one named graph per package into any SPARQL 1.1
+   store through the W3C Graph Store HTTP Protocol (tested on Apache Jena
+   Fuseki), and into Databricks as a plain Delta triple table in Unity
+   Catalog (planned). Export each store back and compare it with the
+   source.
+3. **Local Neo4j.** Project with n10s and pass the verify step above. This
+   is the gate; n10s does not run on Aura.
+4. **Aura or any Neo4j.** Copy the validated graph over the driver and
+   require its hash to equal the local graph's.
+5. **Rebuild from a store.** Empty the local Neo4j and Aura, rebuild both
+   from a triple store's export (Databricks in the plan), and compare with
+   the source. This proves the chain from the source through the store to
+   Neo4j and Aura loses nothing.
+
+The Databricks step has two modes, one per edition, with the same checks.
+On Free Edition, outbound internet is limited to trusted domains, so
+transfers run from the user's machine, which reads Databricks over its SQL
+connector. On a paid (Enterprise) workspace the same path works, and the
+load or the rebuild may also run inside the workspace when its network rules
+allow the destination. OntoBricks (Databricks Labs) holds one ontology per domain and
+builds instance data from Unity Catalog tables, so it is the later tool for
+linking Unity Catalog data and metric views to the ontology, not the
+lossless store. Steps 2 and 5 run as a separate task after the ontology
+closes (EPM-DEC-001-0096).
 
 **Done when:** the three checks in the verify step pass on the published
 release.
