@@ -781,7 +781,7 @@ Its six hops, numbered as the skill numbers them:
    is the gate; n10s does not run on Aura.
 5. **Aura or any Neo4j.** Copy the validated graph over the driver and
    require its hash to equal the local graph's.
-6. **Rebuild from a store.** Empty the local Neo4j and Aura, rebuild both
+6. **Rebuild.** Empty the local Neo4j and Aura, rebuild both
    from a triple store's export, and compare with the source. This proves
    the chain from the source through the store to Neo4j and Aura loses
    nothing.
