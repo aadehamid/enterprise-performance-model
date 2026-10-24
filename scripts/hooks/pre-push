@@ -2,4 +2,19 @@
 # Run the repo's checks before every push. Enable once per clone:
 #   git config core.hooksPath scripts/hooks
 # Skip in an emergency with: git push --no-verify
+#
+# A push that only deletes remote branches sends no commits, so it skips the checks: deleting
+# eleven merged branches took about 90 minutes when each delete ran them. Git gives the hook one
+# line per ref, "<local ref> <local sha> <remote ref> <remote sha>", and a delete's local sha is
+# all zeros. No lines at all (`git hook run pre-push`) runs the checks.
+refs=0
+deletes=0
+while read -r _local_ref local_sha _remote_ref _remote_sha; do
+  refs=$((refs + 1))
+  [[ $local_sha =~ ^0+$ ]] && deletes=$((deletes + 1))
+done
+if [ "$refs" -gt 0 ] && [ "$refs" -eq "$deletes" ]; then
+  echo "pre-push: only deletes remote refs; no commits to check"
+  exit 0
+fi
 exec "$(git rev-parse --show-toplevel)/scripts/check.sh"
