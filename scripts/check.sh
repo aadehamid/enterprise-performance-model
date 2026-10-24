@@ -104,7 +104,7 @@ done
 # The test files run in parallel, each test on whichever worker is free (pytest-xdist): the same tests and
 # assertions as a serial run, in about a third of the time. CHECK_WORKERS overrides the worker count;
 # CHECK_WORKERS=0 runs them serially.
-run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load scripts/test_epm_facts.py scripts/test_published_figures.py scripts/test_check_script.py \
+run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load scripts/test_epm_facts.py scripts/test_published_figures.py scripts/test_check_script.py scripts/test_pre_push_hook.py \
   "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py \
   business_architecture/ontology/release/test_build_module.py \
   business_architecture/ontology/release/test_build_core_next.py \
