@@ -266,7 +266,7 @@ def build():
             out.add((page, DCTERMS.title, en(f"Source-author answer, GitHub issue #{m.group(1)}, comment {m.group(2)}")))
             tally("answer pages described")
 
-    # 6. Ontology header (ontology-playbook.md, worked example).
+    # 6. Ontology header (the worklog's evidence map, §8, keeps this header; it was the playbook's worked example until 2026-10-23).
     out.add((ONTOLOGY_IRI, RDF.type, OWL.Ontology))
     # The taxonomy names its concept scheme on the same IRI; the ontology header replaces that.
     out.remove((ONTOLOGY_IRI, DCTERMS.title, None))

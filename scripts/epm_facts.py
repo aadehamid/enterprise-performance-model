@@ -13,6 +13,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
+    uv run --with rdflib python scripts/epm_facts.py playbook   # the ontology playbook names no EPM record, company or repo path
     add --json for machine-readable output
 
 How it gets the numbers:
@@ -31,7 +32,8 @@ How it gets the numbers:
   (remains held)"). Other columns are ignored (see test_review_holds_read_only_the_decision_column).
 
 Standard library only, except taxonomy triple counts, which use rdflib when it
-is installed, and the quotes command, which needs markdown-it-py (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
+is installed, the quotes command, which needs markdown-it-py, and the playbook
+command, which needs rdflib (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
 """
 import argparse
 import collections
@@ -39,15 +41,18 @@ import contextlib
 import csv
 import difflib
 import glob
+import html
 import io
 import json
 import os
+import posixpath
 import re
 import runpy
 import shutil
 import subprocess
 import sys
 import tempfile
+import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STEP4 = os.path.join(ROOT, "business_architecture", "ontology", "step4")
@@ -58,6 +63,7 @@ TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "out
 DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
 ANSWERS = os.path.join(REVIEWS, "decision-owner-answers")
 SCOPED = os.path.join(STEP4, "scoped-sequence")
+PLAYBOOK = os.path.join(ROOT, "business_architecture", "ontology", "ontology-playbook.md")
 
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
@@ -1088,6 +1094,250 @@ def cmd_names(args):
     return 1 if problems else 0
 
 
+# The ontology playbook is a method for any domain. This build's evidence for it
+# (records, companies, filings, paths, refining examples) is in the worklog's
+# "Evidence map for the playbook". Each pattern names one kind of build-specific text.
+# The check also derives names and paths from governed data (governed_organizations,
+# governed_paths), so a company or path missing from this list is still caught.
+PLAYBOOK_TERMS = [
+    ("an EPM decision record", r"EPM-DEC|\bEPM\b"),
+    ("a company or its filer names", r"\bMPC\b|Marathon|\bMPLX\b|Valero|Phillips\s+66|\bPBF\b|HF\s+Sinclair"
+                                     r"|\bDelek\b|\bCVR\b|Par\s+Pacific"),
+    ("this build's framework or namespace", r"\bAPQC\b|w3id\.org/lsc|\bLSC\b"),
+    ("a path into this repository", r"business_architecture|\bstep4/|\.\./domain|lpg-projection|ontology-worklog"
+                                    r"|competency-questions\.md|downstream_process_map|personal-agent-skills|<SKILL-"),
+    ("a row, process or proposal ID of this build", r"\bREL-\d{5}\b|\bCM[ -]\d|\bMPC-P\d"),
+    ("a refining or oil and gas term", r"refin(?:ery|eries|ing|er)|petroleum|crack\s+spread|\bbarrels?\b"
+                                       r"|\bdownstream\b|oil\s+and\s+gas|\bcrude\b"),
+    ("a reference to this repository's build", r"this\s+repository|worked\s+example's"),
+]
+
+
+RELEASES = os.path.join(ROOT, "business_architecture", "ontology", "releases")
+REFERENCE = os.path.join(ROOT, "business_architecture", "reference")
+PARTY = "https://w3id.org/lsc/ontology/modules/party/"
+W3C_ORG = "http://www.w3.org/ns/org#"
+# The classes whose individuals are companies: party:Organization (and any subclass a release
+# declares), and the W3C ORG classes the ref-mpc module also types its companies with.
+ORGANIZATION_CLASSES = (PARTY + "Organization", W3C_ORG + "FormalOrganization", W3C_ORG + "Organization")
+# A legal-form word at the end of a label. The name without it is checked too
+# ("Marathon Petroleum Corporation" also gives "Marathon Petroleum").
+LEGAL_FORM = re.compile(r"(?:,?\s+(?:Corporation|Corp\.?|Company|Co\.|Inc\.?|LP|L\.P\.|LLC|Ltd\.?|plc|N\.V\.|S\.A\.))+$", re.I)
+# Folders under business_architecture/reference/ that do not name a filer. Every other folder name
+# there names one, and the playbook must not use it.
+REFERENCE_FOLDERS_NOT_FILERS = {
+    "internal": "holds the decision owner's own definitions, not a filer's; and it is a common English word",
+    "downstream-peers": "names the group of peer filers, not one filer; its word 'downstream' is in PLAYBOOK_TERMS",
+}
+# Path tokens in the playbook that are tracked paths (or their suffixes) but name a generic
+# file every ontology build has, not this repository. Each needs a reason.
+PLAYBOOK_PATH_EXCEPTIONS = {}
+
+
+def governed_organizations(releases=RELEASES, reference=REFERENCE):
+    """The names the playbook must not use: each organization's labels in the released packages
+    (skos:prefLabel, skos:altLabel and rdfs:label, any language, with and without a legal-form
+    ending), and the folder names under the reference folder that name filers.
+    """
+    try:
+        import rdflib
+    except ImportError:
+        sys.exit("epm_facts.py playbook needs rdflib: uv run --with rdflib python scripts/epm_facts.py playbook")
+    from rdflib.namespace import RDF, RDFS, SKOS
+    g = rdflib.Graph()
+    for f in sorted(glob.glob(os.path.join(releases, "**", "*.ttl"), recursive=True)):
+        g.parse(f, format="turtle")
+    classes = {rdflib.URIRef(c) for c in ORGANIZATION_CLASSES}
+    classes |= set(g.transitive_subjects(RDFS.subClassOf, rdflib.URIRef(PARTY + "Organization")))
+    names = set()
+    for cls in classes:
+        for org in g.subjects(RDF.type, cls):
+            for prop in (SKOS.prefLabel, SKOS.altLabel, RDFS.label):
+                for label in g.objects(org, prop):
+                    label = " ".join(str(label).split())
+                    names |= {label, LEGAL_FORM.sub("", label)}
+    if os.path.isdir(reference):
+        names |= {d for d in os.listdir(reference)
+                  if os.path.isdir(os.path.join(reference, d)) and d not in REFERENCE_FOLDERS_NOT_FILERS}
+    return sorted(n for n in names if n)
+
+
+def governed_paths(root=ROOT):
+    """(paths, top-level folders): every tracked file's path (a top-level file too, such as
+    "README.md") and each suffix of two or more segments ("release/build_core.py"), every
+    tracked folder's full path ("business_architecture/ontology/step4"), and each tracked
+    top-level folder name followed by "/".
+    """
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    tracked = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], env=env).decode().split("\0")
+    paths, tops = set(), set()
+    for name in filter(None, tracked):
+        parts = name.split("/")
+        paths.add(name)
+        paths |= {"/".join(parts[i:]) for i in range(1, len(parts) - 1)}
+        paths |= {"/".join(parts[:i]) for i in range(2, len(parts))}
+        if len(parts) > 1:
+            tops.add(parts[0] + "/")
+    return paths, tops
+
+
+# A path character. A derived path matches only where no path character comes before or after
+# it, except one sentence-final "." after it.
+PATH_RUN = re.compile(r"[A-Za-z0-9_./-]+")
+# A line break between two path characters, and the narrower case of one next to a "/". Joining
+# every break also glues a word to a path on the next line ("then" + "ontology/..."), so both run.
+PATH_BREAKS = (re.compile(r"(?<=[A-Za-z0-9_./-])[ \t]*\n[ \t]*(?=[A-Za-z0-9_./-])"),
+               re.compile(r"(?<=/)[ \t]*\n[ \t]*(?=[A-Za-z0-9_./-])|(?<=[A-Za-z0-9_./-])[ \t]*\n[ \t]*(?=/)"))
+
+
+def _without_path_breaks(text, breaks):
+    """(text, offsets): text with each line break that `breaks` matches removed, so a path
+    wrapped across lines ("scripts/" then "check.sh") reads whole; offsets[i] is the position
+    in the original text of character i.
+    """
+    out, offsets, pos = [], [], 0
+    for m in breaks.finditer(text):
+        out.append(text[pos:m.start()])
+        offsets.extend(range(pos, m.start()))
+        pos = m.end()
+    out.append(text[pos:])
+    offsets.extend(range(pos, len(text)))
+    return "".join(out), offsets
+
+
+# The playbook's folder, against which a relative link in it ("../../scripts/check.sh") resolves.
+PLAYBOOK_DIR = "business_architecture/ontology"
+# A link to this repository on GitHub names it, whatever path follows. Any account matches, so a
+# fork's link is caught too, and the owner's account is not written here (EPM-DEC-001-0049).
+REPO_URL = re.compile(r"(?:github\.com|raw\.githubusercontent\.com)/[\w.-]+/enterprise-performance-model\b", re.I)
+# The repository's own folder name in an absolute path ("/Users/.../Enterprise Performance Model/README.md").
+REPO_DIR = re.compile(r"Enterprise\s+Performance\s+Model/")
+
+
+def _path_candidates(token):
+    """(spelling, may_start_with_a_top_level_folder) for each way a path run can name a tracked path.
+
+    The run as written; for a relative run ("./x", "../../x"), the run with every leading "./"
+    and "../" removed and the path it resolves to from the playbook's folder; for an absolute run
+    ("/home/u/repo/scripts/check.sh"), each tail of two or more segments.
+    """
+    yield token, True
+    if token.startswith(("./", "../")):
+        rest = re.sub(r"^(?:\.\.?/)+", "", token)
+        if not rest:  # a bare "./" or "../" names no path
+            return
+        yield rest, True
+        resolved = posixpath.normpath(posixpath.join(PLAYBOOK_DIR, token))
+        if not resolved.startswith(".."):
+            yield resolved, False
+    elif token.startswith("/"):
+        parts = token.strip("/").split("/")
+        for i in range(0, len(parts) - 1):  # "/scripts/check.sh" gives "scripts/check.sh" too
+            yield "/".join(parts[i:]), False
+
+
+# A run of percent-escapes ("%20", or "%C3%A9" for one character) or one HTML entity: named or
+# numeric, with or without its ";" ("&amp;", "&nbsp", "&#32", "&#x20"), as html.unescape reads them.
+ENCODED = re.compile(r"(?:%[0-9A-Fa-f]{2})+|&(?:#[xX][0-9A-Fa-f]+|#[0-9]+|[A-Za-z][A-Za-z0-9]*);?")
+
+
+def _decoded(text):
+    """(text, offsets): text with percent-escapes decoded once (urllib.parse.unquote) and HTML
+    entities unescaped, so "Domain%20Modeling" reads "Domain Modeling"; offsets[i] is the
+    position in the original text of character i.
+    """
+    out, offsets, pos = [], [], 0
+    for m in ENCODED.finditer(text):
+        out.append(text[pos:m.start()])
+        offsets.extend(range(pos, m.start()))
+        chunk = m.group(0)
+        plain = urllib.parse.unquote(chunk) if chunk.startswith("%") else html.unescape(chunk)
+        out.append(plain)
+        offsets.extend([m.start()] * len(plain))
+        pos = m.end()
+    out.append(text[pos:])
+    offsets.extend(range(pos, len(text)))
+    return "".join(out), offsets
+
+
+def _derived_matches(text, organizations, paths, tops):
+    """(start, kind, matched text) for each derived organization name and repository path in text."""
+    found = []
+    kind = "a path tracked in this repository"
+    # Four readings: the text as written (a line break is whitespace), twice with wrapped paths
+    # joined, and once with URL escapes and HTML entities decoded.
+    variants = [(text, range(len(text)))] + [_without_path_breaks(text, b) for b in PATH_BREAKS]
+    variants.append(_decoded(text))
+    for variant, offsets in variants:
+        for name in organizations:
+            words = r"\s+".join(re.escape(w) for w in name.split())
+            for m in re.finditer(r"(?<![\w-])" + words + r"(?![\w-])", variant, re.I):
+                found.append((offsets[m.start()], "an organization in the released ontology or the reference folders",
+                              text[offsets[m.start()]:offsets[m.end() - 1] + 1]))
+        for pattern in (REPO_URL, REPO_DIR):
+            found += [(offsets[m.start()], kind, m.group(0)) for m in pattern.finditer(variant)]
+        # A run stops at "#", "?", ":" and spaces, so a link's #fragment or ?query is never part of it.
+        for m in PATH_RUN.finditer(variant):
+            token = m.group(0)
+            if token.endswith(".") and not token.endswith("/."):
+                token = token[:-1]
+            for spelling, top_ok in _path_candidates(token):
+                if spelling in PLAYBOOK_PATH_EXCEPTIONS:
+                    break
+                if (spelling in paths or spelling.rstrip("/") in paths
+                        or (top_ok and any(spelling.startswith(t) for t in tops))):
+                    found.append((offsets[m.start()], kind, spelling))
+                    break
+        # A path or top-level folder with a space ("metadata Integration/") is searched as text.
+        for path in sorted(p for p in paths | tops if " " in p and p not in PLAYBOOK_PATH_EXCEPTIONS):
+            words = r"\s+".join(re.escape(w) for w in path.split())
+            tail = "" if path.endswith("/") else r"(?![A-Za-z0-9_/-])(?!\.[A-Za-z0-9_/-])"
+            for m in re.finditer(r"(?<![A-Za-z0-9_./-])(?:\.\.?/)*(" + words + ")" + tail, variant):
+                found.append((offsets[m.start()], kind, m.group(1)))
+    return found
+
+
+def playbook_problems(path=PLAYBOOK, releases=RELEASES, reference=REFERENCE, root=ROOT):
+    """Each playbook line that holds build-specific text, with the kind of text it holds.
+
+    Build-specific text is a PLAYBOOK_TERMS pattern, an organization named in the released
+    packages or the reference folders, or a path tracked in this repository. Lines are joined
+    first, so a term split across a line break is still found and reported at the line where
+    it starts.
+
+    Scope: the check catches those names and paths written plainly, wrapped across lines, as
+    relative, absolute or GitHub paths, and percent- or entity-encoded. It is a backstop for
+    reviewed Markdown, not a detector of deliberate obfuscation (zero-width characters,
+    look-alike letters); review catches that.
+    """
+    with open(path, encoding="utf-8") as f:
+        lines = f.read().split("\n")
+    starts, pos = [], 0
+    for line in lines:
+        starts.append(pos)
+        pos += len(line) + 1
+    text = "\n".join(lines)
+    found = [(m.start(), what, m.group(0))
+             for what, pattern in PLAYBOOK_TERMS for m in re.finditer(pattern, text, re.I)]
+    found += _derived_matches(text, governed_organizations(releases, reference), *governed_paths(root))
+    problems = []
+    for start, what, matched in found:
+        line = next(i for i in range(len(starts) - 1, -1, -1) if starts[i] <= start) + 1
+        problems.append(f"{rel(path)}:{line}: {what}: {matched!r}")
+    return sorted(set(problems), key=lambda p: int(p.split(":")[1]))
+
+
+def cmd_playbook(args):
+    problems = playbook_problems()
+    if args.json:
+        print(json.dumps({"commit": commit(), "problems": problems}, indent=2))
+    else:
+        print(f"commit {commit()}: {len(problems)} build-specific term(s) in the ontology playbook")
+        for p in problems:
+            print(f"  {p}")
+    return 1 if problems else 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="epm-facts", description=__doc__.split("\n")[0])
     parser.add_argument("--json", action="store_true", help="machine-readable output")
@@ -1104,9 +1354,10 @@ def main(argv=None):
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
+    sub.add_parser("playbook", help="check that the ontology playbook names no EPM record, company or repo path (exit 1 on problems)")
     args = parser.parse_args(argv)
     return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
-            "quotes": cmd_quotes, "names": cmd_names, "sweep": cmd_sweep}[args.cmd](args)
+            "quotes": cmd_quotes, "names": cmd_names, "playbook": cmd_playbook, "sweep": cmd_sweep}[args.cmd](args)
 
 
 if __name__ == "__main__":

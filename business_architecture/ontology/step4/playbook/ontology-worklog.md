@@ -963,6 +963,20 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### The playbook's evidence moves here (2026-10-23)
+- The decision owner: "The ontology and projection playbooks should aloso
+  be universally applicable." and "We probably should remove the evidence
+  in the below", then the choice "Strip evidence to worklog (Recommended)"
+  (`answers-2026-10-23-closeout.md`, blocks 33 to 35).
+  The playbook now names no EPM-DEC-001 record, company or path into this
+  repository. What it cited is in §8, the evidence map, by playbook section,
+  with the playbook's old §7 worked example and Appendix A's two
+  worked-example items moved there word for word. `epm_facts.py playbook`,
+  run by `scripts/check.sh`, keeps it that way. This changes the last
+  sentence of EPM-DEC-001-0024's decision ("Project examples stay in the
+  playbook's worked example (§7)"): project examples now stay in this
+  worklog, and the record carries a dated note.
+
 ### The ontology is closed (2026-10-23)
 - Under the delegation, on the goal the decision owner set on 2026-10-23
   (EPM-DEC-001-0096): every item that waited on the decision owner is
@@ -2704,6 +2718,458 @@ Facts about the source material that are easy to get wrong:
 8. **Evidence-based** — high-quality references inform; nothing copied verbatim.
 9. **Planning baseline preserved** — backcasting compares against the approved plan and contemporaneous assumptions.
 10. **Provenance-clean** — `dcterms:source` records human authorship, the decision owner's approval, and date.
+
+---
+
+## 8. Evidence map for the playbook
+
+*2026-10-23.* The decision owner asked: "The ontology and projection
+playbooks should aloso be universally applicable." and "We probably should
+remove the evidence in the below", then chose "Strip evidence to worklog
+(Recommended)". The playbook (`business_architecture/ontology/ontology-playbook.md`)
+now states each rule and its reason alone, in neutral terms, with a public
+library's lending as its example domain. This section holds what the
+playbook cited from this build before that change: every EPM-DEC-001
+record, every company and filing, and every path into this repository,
+under the playbook section heading that cited it, with the sentence it
+supported. The playbook as it stood before the change is at commit
+`f52dc80` (main after #363). `uv run --with rdflib python scripts/epm_facts.py playbook`
+fails if the playbook names an EPM record, a company or a path into this
+repository again (run by `scripts/check.sh`). It checks a fixed list of
+terms, every organization label in the released packages, the reference
+folders that name filers, and every tracked path and path suffix. It finds
+them written plainly, wrapped across lines, as relative, absolute or GitHub
+paths, and percent- or entity-encoded. It is a backstop for reviewed
+Markdown, not a detector of deliberate obfuscation such as zero-width
+characters or look-alike letters, which review catches.
+
+Section headings and numbering in the playbook are unchanged, except §7
+("Worked example: the downstream process-map ontology" is now "Worked
+example") and the titles of the two headings under Appendix A, which now
+head library examples. "Constraints module (worked example, parked
+2026-09-18)" is now "Fines and fees module (worked example, parked)".
+"Value-stream, capability, activity, event, decision, KPI and data-product
+layer (worked example, parked 2026-09-22)" keeps its title without the
+date. The old §7 and the old text of both Appendix A items moved here word
+for word, below the table. Relative paths in the moved text are relative
+to `business_architecture/ontology/`.
+
+### Citations in the other sections
+
+| Playbook section | The old wording, briefly | What it cited |
+|---|---|---|
+| About this document | "It comes from a real build: the downstream oil and gas process-map ontology in this repository. That build is the proof that the method works." | This build: the downstream oil and gas process-map ontology |
+| About this document, "How to read it" | §7 row: "How the method played out on the downstream process-map ontology" | This build's worked example (now below) |
+| About this document, "How to maintain it" | "A project example can go in §7." | The worked example (now below) |
+| About this document | "**In this repository** this rule is EPM-DEC-001-0024 (decided 2026-10-06), which amends EPM-DEC-001-0002. Project decisions get an EPM-DEC-001 record and a dated worklog pointer." | EPM-DEC-001-0024; EPM-DEC-001-0002; the EPM-DEC-001 records |
+| About this document, "Companion files in this repository" | "These hold the worked example's project record." | `step4/playbook/ontology-worklog.md` (this worklog: plan table, step log, decision journal); `../domain/decisions/` (EPM-DEC-001); `step4/step4-decisions.md` (relationship-layer design decisions); `step4/evidence-discipline.md` (the approved wording of the §3 rules, with counts and precedents); `competency-questions.md` |
+| About this document, "Companion files in this repository" | "The `ontology-to-lpg` skill (personal-agent-skills, `skills/data/ontology-to-lpg`, at `da75164`) ... `lpg-projection/` keeps the guideline's superseded v2.2 copy (*2026-10-23,* EPM-DEC-001-0095)." | The skill's location in personal-agent-skills and its merge commit; `lpg-projection/`; EPM-DEC-001-0095 |
+| Step 5, item 7 | "keep a qualifier ("for crude") on the assignment, not in the role" | A role qualifier from this build's process map (now "for the children's library") |
+| Step 7, item 2, "Name the basis" | "A ratio names its denominator (calendar-day or stream-day capacity; net or gross throughput)." | Refining capacity and throughput bases (now loans per member or per active member; issues gross or net of renewals) |
+| Step 12, "What the loader and the reasoner do" | "Guideline v2.1 did not say these; v2.2 does" | The guideline's version history: the first run on `core` 1.0.0 found what v2.1 did not cover (see §7 below, Step 12) |
+| Step 12, "Run the full shapes upstream and a subset in the graph" | "(2026-10-23, EPM-DEC-001-0095: the `ontology-to-lpg` skill now reads the in-graph subset from the engine. ...)" | EPM-DEC-001-0095. The rule itself stays in the playbook, without the date and the record |
+| Step 12, "Delivery to other stores" | "**Delivery to other stores (2026-10-23, EPM-DEC-001-0095 and 0096).**" | EPM-DEC-001-0095; EPM-DEC-001-0096 |
+| §2, Source of truth and scope | "Stable attributes of an entity (a refinery's capacity, an ownership share) are reference facts. Event records ("Customer A bought 5 barrels") and observed measure values ("the crack spread was $5") are not." | Refining examples (now a branch library's seating capacity, a loan record and loan turnover) |
+| §2, Scope and change control | "A field called `sioc` is not the W3C SIOC vocabulary until someone confirms its business meaning." | The process map's `sioc` field, which the decision owner confirmed is SIPOC (EPM-DEC-001-0038; §7 below, Step 6). The playbook's example is now a field called `org` |
+| §2, Decisions and this playbook | "In this repository this is EPM-DEC-001-0024, decided 2026-10-06." | EPM-DEC-001-0024 |
+| §3, Why each rule exists | "These failures happened in the worked example." | This build (now "a real build") |
+| §3, Why each rule exists, rules 1 to 3 | "Between two package versions, 53 rows had their target labels renamed underneath them." | 53 rows, in this build's Step 4 review packages (now "dozens of rows") |
+| §3, Why each rule exists, rule 8 | "In the worked example, 386 mentions collapsed into 193 facts once mirrors were merged." | 386 mentions and 193 facts, in this build's Step 4 (now "half as many facts") |
+| Appendix B, What counts as what | "Example: a crack spread's population changes from one product grade to a whole region." | A refining measure (now a loan count's population, from one branch to the whole library system) |
+| Appendix B, Ontology IRI and version IRI | "The worked example's header looks like this:" followed by `<https://w3id.org/lsc/ontology/modules/core>`, title "LSC Core Process Ontology", description "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle.", version IRI `<https://w3id.org/lsc/ontology/modules/core/1.0.0>`, `owl:versionInfo "1.0.0"`, `dcterms:issued "2026-09-22"`, `dcterms:creator "The decision owner"`, licence `<https://w3id.org/lsc/ontology/modules/core/license>` | This build's `core` 1.0.0 header and its placeholder namespace (EPM-DEC-001-0039). The playbook's header is now a library's lending module under `https://w3id.org/example/` |
+| Appendix C | "The worked example's process-to-process predicates, with their definitions." | This build's Step 4 predicates (now "from a real build") |
+| Appendix C | "The worked example also uses a disposition split for "enables" rows" | This build's Step 4 disposition split (now "The same build also used") |
+
+### §7 Worked example: the downstream process-map ontology (moved word for word)
+
+How the method played out on a real build. This section illustrates. The
+rules are in §0 to §6. The project's own decisions are in the decision
+records (`../domain/decisions/`, EPM-DEC-001) and `step4/step4-decisions.md`.
+Current counts and step statuses are in the worklog.
+
+**The build.** The source of truth is
+`business_architecture/business_process/downstream_process_map.json`, about
+680 process nodes on levels L0 to L6. The reference framework is the APQC
+Process Classification Framework for Downstream Petroleum, v7.2.2, stored
+with attribution. The anchor company for evidence is Marathon Petroleum
+(MPC), using its SEC filings and public materials, then U.S. refining peers'
+filings.
+
+**Step 0.** Five of six repository-cited APQC IDs matched the workbook. One
+was stale across versions (10006 in an old mirror, 20085 in v7.2.2). That
+catch is why the method says to check against the published workbook.
+
+The survey of public ontologies (2026-10-05) found no public business
+architecture or process ontology for downstream oil and gas. Public oil and
+gas ontologies cover upstream (OSDU, offshore production) or plant equipment
+(ISO 15926 and its successor IDO, ISO/FDIS 23726-3). Five sources each cover
+a piece of the scope, and each is mapped, not imported (EPM-DEC-001-0023):
+
+| Source | Covers | Step |
+|---|---|---|
+| GLEIF Level 2 ontology | Accounting consolidation between legal entities | Step 5 |
+| PIDX standards | Downstream product and terminal codes | Step 7, Customer product line |
+| Open Energy Ontology | Energy carriers and fuels | Step 7 |
+| IOF Supply Chain ontology | Supply chain and logistics | Step 7, if logistics is in scope (in EPM, logistics came in with MPC-P01, and the mapping is parked until a concept layer for logistics assets or movements, or a consumer that needs IOF terms, EPM-DEC-001-0064) |
+| FIBO | Ownership and control | Only if GLEIF is not enough |
+
+**Step 8 (done early).** Seven APQC gap candidates were reviewed one at a
+time. Five went in. Fixed-asset project accounting (ERP-native, no ontology
+hook) and external relationships (corporate affairs, no hook) went out with
+boundary notes and revival triggers.
+
+**Steps 1 and 2.** The URI base is `https://w3id.org/lsc/ontology/`. It is
+scoped to the organization and meant to sit behind a redirect, because the
+repository had already been renamed once. No redirect is registered: the base
+is a placeholder until a domain is decided (EPM-DEC-001-0039). Module namespaces follow
+`https://w3id.org/lsc/ontology/modules/{module}`. Local codes became
+`skos:notation` and slugs (`CM 1.2.1.3` became `CM-1-2-1-3`), and 11 nodes
+without IDs got minted slugs. The labels-are-presentation rule was written
+after a regeneration script silently reverted hand-applied labels.
+
+The data scope rule came later, during planning for Step 5
+(EPM-DEC-001-0005). Public facts about MPC, its refineries and MPLX are in
+scope as reference facts. Records of what happened and observed measure
+values are not.
+
+**Step 3.** One concept scheme, with definitions on every concept. Of the
+candidate definitions collected from APQC and web sources, the human gate
+adopted 1 and rejected 10. Human authors wrote the rest through the gated
+workbook. A tree pass moved the Finance and Refining subtrees, deprecated
+one node (never deleted), and left one ownership question openly blocked
+rather than forced under the wrong parent.
+
+**Step 4.** The relationship layer was built one predicate family at a time
+under the rules in §3. Appendix C lists the predicates and their
+definitions. The project's design choices for this step are recorded in
+`step4/step4-decisions.md`. They include the namespace, the release mode for
+the staging layer, the three-way split of a mixed horizon field, the
+three-dimension lifecycle, the selective alias policy, and the six
+disposition types. Held rows went to a source-correction backlog
+(`step4/source-workbook-backlog.md`), and the `core` 1.0.0 release follows
+their correction (EPM-DEC-001-0013).
+
+**The domain-question technique.** Each L1 domain got one primary question,
+used as the placement test:
+
+- Supply Chain Management: "what should move, be made, held, or
+  replenished, where and when?"
+- Commercial & Marketing: "for which customer or market, under what offer,
+  price, contract, or margin?"
+- Refining: "how is feedstock transformed into compliant products?"
+- Midstream: "how are bulk feedstocks and products physically received,
+  stored, transferred, and transported?"
+- Finance: "what is the financial position, performance, obligation,
+  exposure, and control requirement?"
+- Process Excellence & IT: "how should the enterprise operate, and what
+  technology enables it?"
+- Human Resources: "what workforce is needed, and how is it planned,
+  attracted, developed, rewarded, engaged, retained, and transitioned?"
+- Legal & Corporate Communications: "what legal obligation, advice, or
+  official internal message applies?"
+- EHS & Government Reporting: "is this safe, environmentally compliant,
+  correctly managed when events occur, and properly reported?"
+- Shared Services: executes designated services and never replaces the
+  accountable functional owner.
+
+**How Steps 5 to 12 ran.** The owner delegated the build choices for
+Steps 5 to 12 to the agent (EPM-DEC-001-0028). The owner kept the
+decisions the method reserves for the owner: scope, the meaning of a source
+field, and every major release. Each choice below has its decision record.
+Steps 5, 6 and 9 to 12 ran on 2026-10-13. Step 7 ran on 2026-10-18 and
+2026-10-19.
+
+**Step 5, organizations and roles.**
+
+- *Vocabulary* (EPM-DEC-001-0030). The `organization` module holds
+  `orgm:ResponsibilityAssignment`, one process, one role and one RACI
+  level, with the source's role text and a source. It also holds a RACI
+  level code list and `orgm:ControlRelationship`, a qualified-relation node
+  with a share, an as-of date and a source.
+- *Role register* (EPM-DEC-001-0031). The process map spells roles 91
+  ways. The register maps each string to one or more of 60 roles.
+  `build_roles.py` checks the register against the source and writes
+  `roles.ttl`. Likely misspellings and unexplained acronyms went to the
+  owner as open questions.
+- *Assignments* (EPM-DEC-001-0032). `build_assignments.py` turns the 913
+  RACI entries on 153 processes into 940 assignments: 27 extra roles come
+  from compound strings. `raci-conservation.csv` reconciles every RACI
+  level. Nothing is inferred from the hierarchy.
+- *Scope.* The owner set the RACI scope to the 153 processes with RACI in
+  the source. The other live concepts are the source author's backlog.
+  Competency questions 3 to 5 became answerable.
+- *Reference instances* (EPM-DEC-001-0033). `ref-mpc` holds MPC and MPLX,
+  MPC's control of MPLX (about 64 percent, as of 2025-12-31) as a control
+  relationship node, MPC's three reportable segments, and its 13
+  refineries as sites. Each fact cites MPC's FY2025 10-K with an as-of
+  date. Refinery capacity waits for Step 7's measure pattern.
+- *Domains.* The process map's `responsibleDomain` values looked like org
+  units. The owner decided they are business domains, and split "Commercial
+  & Marketing" by branch. No org units were made for them (EPM-DEC-001-0038).
+
+**Step 6, plans and runs** (EPM-DEC-001-0034, EPM-DEC-001-0038).
+`provenance/run-shapes.ttl` defines the run pattern with no new terms: a
+`prov:Activity` whose qualified association has `prov:hadPlan` pointing at
+a live process. A shape fails any core concept typed as an activity. The
+process map had a field named `sioc`. The agent did not guess its meaning.
+The owner confirmed it is SIPOC, and core 2.0.0 carries its inputs and
+outputs as `core:plannedInput` and `core:plannedOutput`: 362 inputs and
+219 outputs on 153 processes. The other 504 live processes have none. The
+owner made them the source author's backlog.
+
+**Step 7, integration** (EPM-DEC-001-0040 to 0043, 0046).
+
+- *The KPI seed.* The owner's list of a planning team's measures was the
+  seed, not a list of KPI categories (EPM-DEC-001-0040, amending 0017). The
+  list stays outside the repository. Its four personas became planning
+  roles, and no person's name entered the ontology; a test checks every
+  tracked file against hashed name tokens.
+- *Most of the list is not KPIs* (EPM-DEC-001-0042). The owner said so,
+  and the evidence agreed. Of 41 measures (32 from the list, 8 that MPC
+  publishes, 1 from industry practice), 15 are operational metrics, 7
+  market indicators, 6 plan-variance diagnostics, 6 trackers or reports, 2
+  alerts, 2 KPIs, 1 a decision-support indicator and 2 future capabilities. The
+  only KPIs are MPC's two annual-bonus refining measures, because only they
+  have a published target and owner. Six operational metrics are KPI
+  candidates, among them crude utilization and margin capture. MPC itself
+  files prices and crack spreads under "Market indicators", which settled
+  that class.
+- *The module* (EPM-DEC-001-0043). The `kpi` module holds the 41
+  definitions with their kind, grain, basis, aliases, "not to be confused
+  with" links, personas and process links. It took regression from 9 to 17
+  answerable questions, and was released as 1.0.0 on the owner's approval.
+- *Market Data and Commercial Risk* (EPM-DEC-001-0046). The owner defined
+  both domains and named the Risk Group as owner, Market Data
+  provisionally.
+- *The measure list's source* (kpi 1.0.1). The owner named the product
+  the list belongs to, Value Chain Optimization Decision Support and
+  Visualization (VCO DSV); the source keeps its IRI and carries that title.
+- *MPC process-map proposals* (EPM-DEC-001-0047, 0048). The owner accepted
+  the proposals and said to apply them to the map. Each landed in its own
+  pull request: Midstream as fuels logistics (`MS 1`), the Refining IDs and
+  turnaround coordination children (`RF 1`), scope notes on retail nodes,
+  environmental compliance credits kept apart from the clean-fuel tax
+  credit, renewables by reuse of existing processes, affiliate fees, and the
+  transfer coverage check. Two gaps the checks found went to the owner as
+  proposals; the owner said to address them, Marathon's public information
+  first, and each is one step in its own pull request: movement losses and
+  gains (CM 1.1.3.7.13, merged) and renewable feedstock traceability
+  (CM 1.2.5.1.5, merged). A third, the quality of transferred intermediates, was
+  answered on 2026-10-19: CM 1.2.5.1's description now covers intermediates
+  received as feed from another refinery (EPM-DEC-001-0051). P06 waits for the customer work. *2026-10-21:* the `party` module gives P06's channel dimension its values (EPM-DEC-001-0068). P09 waited for
+  the owner's approval of the measure categories, which came on 2026-10-19
+  (EPM-DEC-001-0050), and is applied: two value-stream processes name
+  five measures, each with its relationship and MPC source.
+- *The overlays* (EPM-DEC-001-0053 to 0062, 2026-10-19). Each layer came
+  in as its own module: data products (15 defined, 33 parked because the
+  portfolio names them without a description), the two value streams, the
+  map's systems through a spelling-only register, the office lanes, five
+  crack-spread series of one measure, told apart by region, legs, RIN
+  treatment and blend, from MPC's FY2025 Form 10-K, Item 7, and CME Group ("Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14), the placement kinds, the source tiers, the full APQC element list, the
+  consumer rules and the measure populations. Regression went from 17 to
+  34 answerable questions; the nine still waiting all wait on the owner.
+  *2026-10-21:* the owner then supplied their customer information, so the
+  customer questions (Q19 to Q26) wait on the plan's pull request 5, which
+  answers them after the `party` module and its data (pull requests 2 to 4;
+  EPM-DEC-001-0067, item 13); only Q17 still waits on the owner.
+  The plan's pull request 5 then made them answerable: 42, 1 and 1
+  (EPM-DEC-001-0071).
+  *2026-10-20:* the decision owner then supplied MPC Economics' own crack
+  spread definition and made it the primary source; the module grew to 13
+  series, and two planner names moved to series that deduct the RVO cost
+  (EPM-DEC-001-0066). The lesson: ask the decision owner for the
+  organization's own definition of a measure before settling it from
+  public filings.
+- *What the whole-graph gate caught* (EPM-DEC-001-0065). Every module's
+  own tests passed, yet running all the shapes together found a lane shape
+  that targeted every concept in any scheme and rules that gave
+  `dcterms:source` a text value. Both were fixed where they started.
+- *What the reviews caught.* Most review holds in Step 7 were attribution:
+  a record listed the agent's wording (role names, a rule, detail from a
+  pasted analysis) under the owner's decisions. Working agreements now say
+  where that wording goes. On the process map the holds were source
+  fidelity: a description said more than its filing (customer terms given
+  to third parties, a "physical or apparent" analysis no cited standard
+  states, "oils and fats" where the filing names soybean oil). Each was cut
+  back to what the source says.
+
+**The Customer domain, Steps 5 to 7 and 11** (EPM-DEC-001-0067 to 0072). The
+owner's seven customer inputs stayed out of the repository; with the owner's
+permission, the `party` module holds what was derived from them: fifteen entity classes, roles as
+dated nodes, 42 customer systems with their data flows and attributes, and a
+lifecycle linked to existing core processes. Each reading is marked as one,
+and the codes nobody could define stay named and open. Its reviews produced
+rules of this playbook. A shape checked only a direct subclass of
+party, so a role two steps down passed (Step 9, item 11). A query that tells
+same-named IRIs apart ignored `skos:exactMatch`, and its first test pinned
+only the shared word (Step 11, item 9). The lifecycle's guards accepted a
+real process on the wrong stage, and their description overstated what the
+shapes check (Step 9, items 9 and 10). The owner's "let us assume" about one
+system's identity was first written as "takes to be" (§2, uncertain
+identity). A new source cited by the reference parties had no evidence tier,
+which only the full check suite, not the module's tests, caught (Step 11,
+item 10). A count split across two lines escaped a sweep that searched the
+change's own words (§5.6).
+
+**Step 9, controlled values** (EPM-DEC-001-0035). The release slice in
+`core` 1.0.0 checked `conceptKind` against its own list and the other
+code-list values only as `skos:Concept`.
+`validation/controlled-values.ttl` requires each code-list property to
+take its values from its own list. Its coverage test found two properties
+with no shape. `core` 2.1.0 carries each fact's evidence in the graph,
+one node per fact with the direct triple kept, and its release shapes
+hold the controlled-value shapes and the evidence-link shapes
+(EPM-DEC-001-0044).
+
+**Step 10, publication** (EPM-DEC-001-0029, EPM-DEC-001-0037,
+EPM-DEC-001-0038, EPM-DEC-001-0044, EPM-DEC-001-0045, EPM-DEC-001-0043,
+EPM-DEC-001-0074).
+Ten releases, each issued on the owner's written approval. The first
+four were built as candidates first; the last six (`core` 2.1.0,
+`organization` 2.0.0, `ref-mpc` 1.1.0, `kpi` 1.0.0, `kpi` 1.0.1 and
+`party` 1.0.0) were cut directly on the owner's approval of each cut:
+
+| Release | What it holds | Builder |
+|---|---|---|
+| `core` 1.0.0 | The taxonomy, the 640 canonical facts, the scoped sequences and eight code lists | `release/build_core.py`, from the pinned evidence |
+| `organization` 1.0.0 | The vocabulary, the roles and the RACI assignments | `release/build_module.py` |
+| `ref-mpc` 1.0.0 | MPC and MPLX reference instances; requires `organization` 1.0.0 | `release/build_module.py` |
+| `core` 2.0.0 | The business domain list, planned inputs and outputs, two ranges; `core:responsibleDomain` deprecated, its values kept | `release/build_core_next.py`, from the released 1.0.0 |
+| `core` 2.1.0 | One evidence node per canonical fact, the controlled-value and evidence-link shapes, a rights statement | `release/build_core_2_1.py`, from the released 2.0.0 |
+| `organization` 2.0.0 | The decision owner's role answers: three roles deprecated into their successors, their assignments moved; requires `core` 2.1.0 | `release/build_module.py` |
+| `ref-mpc` 1.1.0 | The same reference instances; requires `organization` 2.0.0 | `release/build_module.py` |
+| `kpi` 1.0.0 | 41 measure definitions classified by kind, the planning personas and the processes each measure informs; requires `core` 2.1.0 | `release/build_module.py` |
+| `kpi` 1.0.1 | A patch: the measure list's source is named, Value Chain Optimization Decision Support and Visualization (VCO DSV) | `release/build_module.py` |
+| `party` 1.0.0 | The Customer domain: the conceptual model, roles as dated nodes, 18 code lists, the customer's systems and attributes, and the lifecycle; the reference parties stay outside; requires `core` 2.1.0 | `release/build_module.py` |
+
+Deprecating a property made 2.0.0 a major. Before approving it, the owner
+stated that no one used the ontology yet. The 2.0.0 cut found that the
+candidate had copied 1.0.0's `dcterms:modified`. The builder now sets it
+at the cut. The owner decided not to host the namespace, because the
+domain may change, and to keep it as a placeholder. Under the delegation,
+nothing is registered with w3id.org either, and Step 10's "catalog
+resolves" gate is parked (EPM-DEC-001-0039).
+
+**Step 11, regression.** `regression/` holds one SPARQL query per tested
+part of the 44 competency questions and a status for each question. It
+started on `core` 1.0.0 with 5 answerable. On `core` 2.0.0 with the
+organization module, 9 were answerable, 5 partial and 30 waiting. With
+the kpi module (2026-10-18), 17 are answerable, 6 partial and 21 waiting.
+With the data-product module (2026-10-19), Q7 became partial: 17, 7 and 20.
+With the value-stream module (2026-10-19), Q10 became answerable: 18, 7 and 19.
+With the system module (2026-10-19), Q6 became answerable: 19, 7 and 18.
+With the lane module (2026-10-19), Q9 became answerable: 20, 7 and 17.
+Q15, the same-word test, then became answerable across the modules: 21, 7 and 16.
+With the market-data module (2026-10-19), Q31 and Q34 became answerable: 23, 7 and 14.
+With the placement kinds (2026-10-19), Q37, Q38 and Q39 became answerable: 26, 5 and 13.
+With the source tiers (2026-10-19), Q44 became answerable: 27, 4 and 13.
+With the full APQC element list (2026-10-19), Q11 became answerable, and Q40 and Q43 count by their graph part: 30, 1 and 13.
+With the consumer rules (2026-10-19), Q35, Q41 and Q42 became answerable: 33, 1 and 10.
+With the measure populations (2026-10-19), Q28 became answerable: 34, 1 and 9. Every waiting question then waits on the decision owner.
+The waiting questions are the meaning owners (Q17) and the customer questions (Q19 to
+Q26); all wait on the decision owner. *2026-10-21:* the decision owner's customer
+information arrived, so Q19 to Q26 wait on the plan's pull request 5, which answers them after the `party` module and its data (pull requests 2 to 4; EPM-DEC-001-0067, item 13);
+only Q17 waits on the decision owner. The plan's pull request 5 (2026-10-21) then made Q19 to Q26
+answerable: 42, 1 and 1 (EPM-DEC-001-0071). *2026-10-23:* the decision owner parked Q17 until the ontology is first shared with business consumers, so none waits: 43 answerable, 0 partial, 0 waiting and 1 parked (EPM-DEC-001-0086). The first query for Q8 filtered on the "process"
+kind. It reported all 463 process-kind concepts as having no inputs or
+outputs, because the 153 processes that do have them carry no kind.
+Counting the query's population against the whole caught it.
+
+**Step 12, projection** (EPM-DEC-001-0020, EPM-DEC-001-0036).
+`projection/pipeline.py` runs the guideline in `lpg-projection/` with
+Rule 4 set to option 4a, qualified-relation nodes, because the build's
+Python tools cannot read RDF 1.2. It uses Neo4j 2025.06.2, n10s 2025.06.1,
+APOC, and ELK through ROBOT 1.9.10. The first run on `core` 1.0.0 found
+three things guideline v2.1 did not cover, and one defect. v2.2 now covers
+all three:
+
+- n10s would not import the shapes in MAP mode ("The graph is not
+  namespace aware"), so the pipeline names terms in SHORTEN mode.
+- n10s cannot run every shape, so a subset runs in the graph and Step 1
+  runs all of them.
+- ELK's output carried OWL API declarations, which the pipeline drops.
+  That leaves no inferences, because the ontology is SKOS-first.
+- The defect: `ref-mpc`'s source nodes linked their URLs through
+  `dcterms:source`, which core's source shape forbids. It was fixed in
+  `ref-mpc`.
+
+Core 1.0.0 gave `earlierProcess` and `laterProcess` no range, which breaks
+Rule 1. The pipeline listed both as release gaps until core 2.0.0 added the
+ranges. The run on core 2.1.0, organization 2.0.0 and `ref-mpc` loaded
+2,811 nodes and 14,865 relationships, with no SHACL violation in the
+graph, an empty round-trip diff and equal hashes for two load orders.
+*2026-10-22:* the run on core 2.2.0 loads 2,834 nodes and 14,934
+relationships, with the same result (`projection/projection-report.json`).
+
+**Source facts that are easy to get wrong.** Codes like `CM 1.2.1.3` are
+local notation, not APQC identifiers. Office-lane values are not declared
+disjoint. A JSON field named `sioc` is SIPOC, as the owner confirmed. The `responsibleDomain` values are business
+domains, not org units. Several Order-to-Cash processes have empty output
+sets, to be resolved in Step 7 as explicit decisions.
+
+### Appendix A, Parked items: the worked example's items (moved word for word)
+
+A parked item is something you deliberately defer. Record it with what it
+would cover, the competency questions it would answer, a "done when", and a
+revival trigger. Never delete a parked item. Revive it or close it with a
+decision. The worked example's two parked items show the pattern.
+
+#### Constraints module (worked example, parked 2026-09-18)
+
+Not modeled yet. The removed competency questions are kept so a later pass
+can use them unchanged:
+
+- What is a Constraint, a Threshold, a Breach and a Binding?
+- Does a KPI have a constraint, or is it one?
+- Who owns a constraint family (HSE, quality, commercial, planning), and who
+  owns the KPI?
+- Can more than one KPI reuse the same limit value without copying its
+  meaning?
+- How does a breach occurrence (something that happened on a date) relate
+  to the constraint definition?
+
+Done when: KPIs reference constraints and do not subclass them.
+Revival trigger: a consumer needs to reason about limits, not only KPIs.
+
+#### Value-stream, capability, activity, event, decision, KPI and data-product layer (worked example, parked 2026-09-22)
+
+Not in `core` 1.0.0. These layers will exist, but as overlays over the
+process backbone, not as a second hierarchy inside it. A value stream cuts
+across the tree (Order to Cash touches commercial, finance, credit and
+legal), and every concept has exactly one parent, so a value stream cannot
+be a parent. The existing JSON overlays already follow this pattern: they
+reference process nodes through `linkedProcessIds`
+(`business_architecture/business_process/value_stream_*.json`,
+`business_architecture/schema/value_stream.schema.json`), and the data
+product portfolio links processes to data products
+(`business_architecture/business_process/data_product_portfolio.json`).
+
+Where each layer goes:
+
+- Domain, value stream, stages, and capabilities as views: overlays.
+- Capability kind: a classification value in `core`. Actual business
+  capabilities become a future class linked to processes.
+- Business process: `core` 1.0.0.
+- Activity: a future decomposition below L6.
+- Events: occurrences, defined by the Step 6 pattern and recorded by
+  consumers.
+- Decisions: future decision modeling.
+- KPI: the `kpi` module, as definitions only.
+- Data products: the portfolio JSON now, ontology links when promoted.
+
+Done when: a consumer needs one of these layers. Then promote that overlay,
+one at a time, against the released backbone.
+Revival trigger: someone asks for, say, the Order-to-Cash value stream end
+to end, and the backbone alone cannot answer. The worked example revives
+this layer at Step 7 (EPM-DEC-001-0017). *2026-10-18:* the KPI layer is
+revived as the `kpi` module (EPM-DEC-001-0043), released as 1.0.0.
+*2026-10-19:* the data-product and value-stream layers parked here, and
+the systems and lanes, are revived as modules (EPM-DEC-001-0053 to 0056);
+they are not yet released. The Step 3 taxonomy had left systems and lanes
+for Steps 4 and 5 with the other node fields (worklog, "Step 3 — SKOS
+taxonomy"); Phase B of EPM-DEC-001-0052 scheduled them as overlays; and
+they went in their own pull requests because they are fields of the process
+map, not of the value streams (EPM-DEC-001-0054, item 7).
 
 ---
 

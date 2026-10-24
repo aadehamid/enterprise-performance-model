@@ -11,6 +11,8 @@ import os
 import subprocess
 import sys
 
+import pytest
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import epm_facts  # noqa: E402
@@ -113,9 +115,15 @@ def test_row_reports_held_provenance():
     assert r["phase1_issue"] == 203
 
 
-def test_find_catches_text_split_across_lines():
-    hits = run("find", "EPM-DEC-001-0024, decided")["hits"]
-    assert any(h["kind"] == "split" for h in hits)
+def test_find_catches_text_split_across_lines(tmp_path):
+    # A fixture repository: the live text this test first searched (the playbook's "EPM-DEC-001-0024,
+    # decided") moved to the worklog on one line when the playbook's evidence moved there (2026-10-23).
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True, env=env)
+    (tmp_path / "doc.md").write_text("In this repository this is EPM-DEC-001-0024,\n  decided 2026-10-06.\n")
+    subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
+    hits = epm_facts.find_hits("EPM-DEC-001-0024, decided", str(tmp_path))
+    assert [(name, line, kind) for name, line, kind, _ in hits] == [("doc.md", 1, "split")]
 
 
 def test_sweep_takes_the_changed_words_with_their_context():
@@ -863,3 +871,195 @@ def test_names_check_finds_the_owner_in_any_case_path_and_office_file(tmp_path):
         "link.md:1: names the decision owner",
         "prose.md:2: names the decision owner",
     ])
+
+
+def test_playbook_names_no_epm_record_company_or_repo_path():
+    assert epm_facts.playbook_problems() == []
+
+
+def test_playbook_check_finds_each_kind_of_build_specific_text(tmp_path):
+    book = tmp_path / "playbook.md"
+    book.write_text("\n".join([
+        "A neutral rule about a library's loans.",          # 1: clean
+        "In this build see EPM-DEC-001-0024.",              # 2: record
+        "The anchor is Marathon",                           # 3: company, split across lines
+        "Petroleum (mpc), then Valero.",                    # 4: company, case-insensitive, peer
+        "The base is https://w3id.org/lsc/ontology/.",      # 5: namespace
+        "See `business_architecture/ontology/` and `step4/step4-decisions.md`.",  # 6: paths
+        "Row REL-00436 on CM 1.2.1.3.",                     # 7: row and process IDs
+        "A refinery's capacity in barrels.",                # 8: refining terms
+        "The crack",                                        # 9: term split across lines
+        "spread was $5 in this repository.",                # 10: repository phrasing
+        "The W3C ORG vocabulary and a ref-<company> module.",  # 11: clean
+    ]) + "\n")
+    problems = epm_facts.playbook_problems(str(book))
+    lines = sorted({int(p.split(":")[1]) for p in problems})
+    assert lines == [2, 3, 4, 5, 6, 7, 8, 9, 10]
+    kinds = {p.split(": ")[1] for p in problems}
+    assert kinds >= {what for what, _ in epm_facts.PLAYBOOK_TERMS}
+    assert any("'Marathon'" in p and ":3:" in p for p in problems)
+    assert any("'mpc'" in p and ":4:" in p for p in problems)
+    assert any("'Valero'" in p for p in problems)
+    assert any("'crack\\nspread'" in p and ":9:" in p for p in problems)
+    assert any("'this repository'" in p and ":10:" in p for p in problems)
+
+
+def _release_with_organization(tmp_path, label):
+    """A fixture releases folder whose one package types a company as party:Organization."""
+    pkg = tmp_path / "releases" / "ref-acme" / "1.0.0"
+    pkg.mkdir(parents=True)
+    (pkg / "ref-acme.ttl").write_text(
+        "@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .\n"
+        "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\n"
+        f'<https://example.org/acme> a party:Organization ; skos:prefLabel "{label}"@en .\n')
+    return str(tmp_path / "releases")
+
+
+def _kinds(problems):
+    return {p.split(": ")[1] for p in problems}
+
+
+ORG_KIND = "an organization in the released ontology or the reference folders"
+PATH_KIND = "a path tracked in this repository"
+
+
+def test_playbook_check_rejects_the_reviewers_mutation(tmp_path):
+    # Review round 1 of the neutral-playbook branch: this line passed the fixed list.
+    book = tmp_path / "playbook.md"
+    book.write_text("Chevron evidence is in release/build_core.py.\n")
+    releases = _release_with_organization(tmp_path, "Chevron Corporation")
+    problems = epm_facts.playbook_problems(str(book), releases=releases)
+    assert _kinds(problems) == {ORG_KIND, PATH_KIND}
+    assert any("'Chevron'" in p for p in problems)
+    assert any("'release/build_core.py'" in p for p in problems)
+    # The path part is caught from the real repository, whatever the releases hold.
+    assert _kinds(epm_facts.playbook_problems(str(book))) == {PATH_KIND}
+
+
+def test_playbook_check_rejects_an_unlisted_company_from_the_released_data(tmp_path, monkeypatch):
+    # Drop the fixed list, so only the names read from the released packages can catch the company.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    labels = epm_facts.governed_organizations()
+    assert {"Marathon Petroleum Corporation", "Marathon Petroleum", "MPLX LP"} <= set(labels)
+    book = tmp_path / "playbook.md"
+    book.write_text("A rule.\nThe anchor is MPLX\nLP, a unit of marathon petroleum.\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert _kinds(problems) == {ORG_KIND}
+    assert any("'MPLX\\nLP'" in p and ":2:" in p for p in problems)
+    assert any("'marathon petroleum'" in p and ":3:" in p for p in problems)
+
+
+def test_playbook_check_rejects_an_ordinary_repo_path(tmp_path, monkeypatch):
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("\n".join([
+        "Run `scripts/check.sh` first.",                          # 1: a tracked file
+        "Then ontology/release/build_core.py builds it.",         # 2: a suffix of a tracked path
+        "Notes go in docs/ and O2C/.",                            # 3: top-level folders
+        "Draft in business_architecture/new-file.md.",            # 4: an untracked file in a tracked folder
+        "A module file such as modules/library.ttl or a/b.",      # 5: clean: not tracked
+        "See https://www.w3.org/ns/org# for the vocabulary.",     # 6: clean
+    ]) + "\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert _kinds(problems) == {PATH_KIND}
+    assert sorted({int(p.split(":")[1]) for p in problems}) == [1, 2, 3, 4]
+    assert any("'scripts/check.sh'" in p for p in problems)
+    assert any("'ontology/release/build_core.py'" in p for p in problems)
+
+
+def test_playbook_check_rejects_a_top_level_tracked_file(tmp_path, monkeypatch):
+    # Review round 2: a tracked file at the top level has no "/", and the round-1 check missed it.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("Start at README.md.\nThe rules are in `REVIEW_STANDARDS.md`, not a notes.md.\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert _kinds(problems) == {PATH_KIND}
+    assert sorted(p.split(": ", 2)[2] for p in problems) == ["'README.md'", "'REVIEW_STANDARDS.md'"]
+
+
+def test_playbook_check_rejects_a_tracked_path_split_across_lines(tmp_path, monkeypatch):
+    # Review round 2: Markdown wraps a long path at a line break.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("A rule.\nRun `scripts/\n  check.sh` and then\nontology/release/\nbuild_core.py.\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert any("'scripts/check.sh'" in p and ":2:" in p for p in problems)
+    assert any("'ontology/release/build_core.py'" in p and ":4:" in p for p in problems)
+
+
+def test_playbook_check_rejects_a_tracked_path_after_a_leading_dot_slash(tmp_path, monkeypatch):
+    # Codex quick check of 885142c: "./" in front of a tracked path hid it.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("Run ./scripts/check.sh.\nRead `././README.md` and ./\nAGENTS.md first.\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert _kinds(problems) == {PATH_KIND}
+    assert any("'scripts/check.sh'" in p and ":1:" in p for p in problems)
+    assert any("'README.md'" in p and ":2:" in p for p in problems)
+    assert any("'AGENTS.md'" in p and ":2:" in p for p in problems)
+
+
+RELATIVE_AND_ABSOLUTE_SPELLINGS = [
+    # Codex quick check of 63b9c16: each spelling of a tracked path that a run as written misses.
+    ("./ from the playbook's folder", "See [the folder](./step4/)."),
+    ("../../ to the repository root", "Run [check](../../scripts/check.sh)."),
+    ("../ wrapped across a line", "Run [check](../\n../scripts/check.sh) first."),
+    ("a GitHub blob URL", "https://github.com/someone/enterprise-performance-model/blob/main/scripts/check.sh"),
+    ("a raw URL", "https://raw.githubusercontent.com/someone/enterprise-performance-model/main/README.md"),
+    ("an absolute path", "Open /home/someone/epm/scripts/check.sh."),
+    ("a two-segment absolute path", "Run /scripts/check.sh first."),  # Cursor bot on #364
+    ("an absolute path to the repository folder", "Open /Users/someone/Enterprise Performance Model/notes.md."),
+    ("a link with an #anchor", "Read [the rules](../../REVIEW_STANDARDS.md#what-blocks-a-merge)."),
+    ("a link with a ?query", "Read [the rules](../../REVIEW_STANDARDS.md?plain=1)."),
+]
+
+
+@pytest.mark.parametrize("what,line", RELATIVE_AND_ABSOLUTE_SPELLINGS, ids=[w for w, _ in RELATIVE_AND_ABSOLUTE_SPELLINGS])
+def test_playbook_check_rejects_each_spelling_of_a_tracked_path(tmp_path, monkeypatch, what, line):
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("A rule.\n" + line + "\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert _kinds(problems) == {PATH_KIND}, what
+    lines = {int(p.split(":")[1]) for p in problems}
+    assert 2 in lines and lines <= {2, 3}, what  # a wrapped run is also caught on its second line
+
+
+def test_playbook_check_passes_a_relative_path_that_is_not_tracked(tmp_path, monkeypatch):
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    # An absolute path is compared by its tails of two or more segments, so "/README.md" alone passes.
+    book.write_text("See [notes](../../somewhere-untracked.md), ./shapes.ttl, /tmp/a/b.ttl, /README.md and ./ alone.\n")
+    assert epm_facts.playbook_problems(str(book)) == []
+
+
+def test_playbook_check_decodes_url_escapes_and_html_entities(tmp_path, monkeypatch):
+    # Codex quick check of b79512a: "%20" in a link hid a tracked path whose folder has spaces.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("\n".join([
+        "A rule.",
+        "See [guide](../../Domain%20Modeling%20Best%20Practices/app/index.html).",  # 2: tracked
+        "See [x](../../no%20such%20folder/x.md) and a&amp;b.",                     # 3: clean control
+        "The anchor is Marathon&nbsp;Petroleum.",                                  # 4: an entity hides a company
+        "Its unit is Marathon&nbsp Petroleum, or MPLX&#32LP.",                      # 5: entities without ";"
+    ]) + "\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert sorted({(int(p.split(":")[1]), p.split(": ")[1]) for p in problems}) == [(2, PATH_KIND), (4, ORG_KIND), (5, ORG_KIND)]
+    assert any(":5:" in p and "Marathon&nbsp Petroleum" in p for p in problems)
+    assert any("'Domain Modeling Best Practices/app/index.html'" in p for p in problems)
+
+
+def test_playbook_check_reads_organizations_case_insensitively_and_paths_case_sensitively(tmp_path, monkeypatch):
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("ACME corporation and Acme's plan are in Scripts/Check.sh.\n")
+    releases = _release_with_organization(tmp_path, "Acme Corporation")
+    problems = epm_facts.playbook_problems(str(book), releases=releases)
+    assert _kinds(problems) == {ORG_KIND}  # "Scripts/Check.sh" is not the tracked "scripts/check.sh"
+    assert {p.split(": ", 2)[2] for p in problems} == {"'ACME corporation'", "'ACME'", "'Acme'"}
+
+
+def test_playbook_check_runs_in_the_check_script():
+    with open(os.path.join(epm_facts.ROOT, "scripts", "check.sh")) as f:
+        assert "with_deps python scripts/epm_facts.py playbook" in f.read()

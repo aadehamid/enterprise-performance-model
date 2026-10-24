@@ -13,7 +13,7 @@ EPM-DEC-001-0002 says a decision change lands in playbook §2 first. The decisio
 
 ## Decision
 
-Amendment to EPM-DEC-001-0002: the playbook holds the method (company-neutral steps, rules and reasons) and changes only when the method changes. Project decisions land in an EPM-DEC-001 record. The worklog's §4 journal carries a dated pointer to the record, and to the playbook section when a decision also changes the method. Project examples stay in the playbook's worked example (§7).
+Amendment to EPM-DEC-001-0002: the playbook holds the method (company-neutral steps, rules and reasons) and changes only when the method changes. Project decisions land in an EPM-DEC-001 record. The worklog's §4 journal carries a dated pointer to the record, and to the playbook section when a decision also changes the method. Project examples stay in the playbook's worked example (§7). *2026-10-23:* at the decision owner's request, project examples and evidence now stay in the worklog's evidence map (§8), not in the playbook: the playbook names no EPM-DEC-001 record, company or path into this repository, its §7 is a neutral example, and `epm_facts.py playbook` checks it (worklog §4, "The playbook's evidence moves here").
 
 ## Alternatives considered
 

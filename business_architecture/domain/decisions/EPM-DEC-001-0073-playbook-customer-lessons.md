@@ -41,4 +41,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 
 ## Consequences
 
-- `ontology-playbook.md` carries the rules above. The worklog records this change.
+- `ontology-playbook.md` carries the rules above. The worklog records this change. *2026-10-23:* the §7 paragraph (item 7) moved word for word to the worklog's evidence map (§8), with the rest of the playbook's worked example; the rules stay in the playbook (worklog §4, "The playbook's evidence moves here").
