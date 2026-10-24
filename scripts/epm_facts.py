@@ -13,6 +13,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
+    python3 scripts/epm_facts.py playbook          # the ontology playbook names no EPM record, company or repo path
     add --json for machine-readable output
 
 How it gets the numbers:
@@ -58,6 +59,7 @@ TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "out
 DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
 ANSWERS = os.path.join(REVIEWS, "decision-owner-answers")
 SCOPED = os.path.join(STEP4, "scoped-sequence")
+PLAYBOOK = os.path.join(ROOT, "business_architecture", "ontology", "ontology-playbook.md")
 
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
@@ -1088,6 +1090,55 @@ def cmd_names(args):
     return 1 if problems else 0
 
 
+# The ontology playbook is a method for any domain. This build's evidence for it
+# (records, companies, filings, paths, refining examples) is in the worklog's
+# "Evidence map for the playbook". Each pattern names one kind of build-specific text.
+PLAYBOOK_TERMS = [
+    ("an EPM decision record", r"EPM-DEC|\bEPM\b"),
+    ("a company or its filer names", r"\bMPC\b|Marathon|\bMPLX\b|Valero|Phillips\s+66|\bPBF\b|HF\s+Sinclair"
+                                     r"|\bDelek\b|\bCVR\b|Par\s+Pacific"),
+    ("this build's framework or namespace", r"\bAPQC\b|w3id\.org/lsc|\bLSC\b"),
+    ("a path into this repository", r"business_architecture|\bstep4/|\.\./domain|lpg-projection|ontology-worklog"
+                                    r"|competency-questions\.md|downstream_process_map|personal-agent-skills|<SKILL-"),
+    ("a row, process or proposal ID of this build", r"\bREL-\d{5}\b|\bCM[ -]\d|\bMPC-P\d"),
+    ("a refining or oil and gas term", r"refin(?:ery|eries|ing|er)|petroleum|crack\s+spread|\bbarrels?\b"
+                                       r"|\bdownstream\b|oil\s+and\s+gas|\bcrude\b"),
+    ("a reference to this repository's build", r"this\s+repository|worked\s+example's"),
+]
+
+
+def playbook_problems(path=PLAYBOOK):
+    """Each playbook line that holds build-specific text, with the kind of text it holds.
+
+    Lines are joined first, so a term split across a line break is still found and
+    reported at the line where it starts.
+    """
+    with open(path, encoding="utf-8") as f:
+        lines = f.read().split("\n")
+    starts, pos = [], 0
+    for line in lines:
+        starts.append(pos)
+        pos += len(line) + 1
+    text = "\n".join(lines)
+    problems = []
+    for what, pattern in PLAYBOOK_TERMS:
+        for m in re.finditer(pattern, text, re.I):
+            line = next(i for i in range(len(starts) - 1, -1, -1) if starts[i] <= m.start()) + 1
+            problems.append(f"{rel(path)}:{line}: {what}: {m.group(0)!r}")
+    return sorted(problems, key=lambda p: int(p.split(":")[1]))
+
+
+def cmd_playbook(args):
+    problems = playbook_problems()
+    if args.json:
+        print(json.dumps({"commit": commit(), "problems": problems}, indent=2))
+    else:
+        print(f"commit {commit()}: {len(problems)} build-specific term(s) in the ontology playbook")
+        for p in problems:
+            print(f"  {p}")
+    return 1 if problems else 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="epm-facts", description=__doc__.split("\n")[0])
     parser.add_argument("--json", action="store_true", help="machine-readable output")
@@ -1104,9 +1155,10 @@ def main(argv=None):
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
+    sub.add_parser("playbook", help="check that the ontology playbook names no EPM record, company or repo path (exit 1 on problems)")
     args = parser.parse_args(argv)
     return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
-            "quotes": cmd_quotes, "names": cmd_names, "sweep": cmd_sweep}[args.cmd](args)
+            "quotes": cmd_quotes, "names": cmd_names, "playbook": cmd_playbook, "sweep": cmd_sweep}[args.cmd](args)
 
 
 if __name__ == "__main__":

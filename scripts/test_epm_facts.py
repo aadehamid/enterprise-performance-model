@@ -113,9 +113,15 @@ def test_row_reports_held_provenance():
     assert r["phase1_issue"] == 203
 
 
-def test_find_catches_text_split_across_lines():
-    hits = run("find", "EPM-DEC-001-0024, decided")["hits"]
-    assert any(h["kind"] == "split" for h in hits)
+def test_find_catches_text_split_across_lines(tmp_path):
+    # A fixture repository: the live text this test first searched (the playbook's "EPM-DEC-001-0024,
+    # decided") moved to the worklog on one line when the playbook's evidence moved there (2026-10-23).
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True, env=env)
+    (tmp_path / "doc.md").write_text("In this repository this is EPM-DEC-001-0024,\n  decided 2026-10-06.\n")
+    subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
+    hits = epm_facts.find_hits("EPM-DEC-001-0024, decided", str(tmp_path))
+    assert [(name, line, kind) for name, line, kind, _ in hits] == [("doc.md", 1, "split")]
 
 
 def test_sweep_takes_the_changed_words_with_their_context():
@@ -863,3 +869,39 @@ def test_names_check_finds_the_owner_in_any_case_path_and_office_file(tmp_path):
         "link.md:1: names the decision owner",
         "prose.md:2: names the decision owner",
     ])
+
+
+def test_playbook_names_no_epm_record_company_or_repo_path():
+    assert epm_facts.playbook_problems() == []
+
+
+def test_playbook_check_finds_each_kind_of_build_specific_text(tmp_path):
+    book = tmp_path / "playbook.md"
+    book.write_text("\n".join([
+        "A neutral rule about a library's loans.",          # 1: clean
+        "In this build see EPM-DEC-001-0024.",              # 2: record
+        "The anchor is Marathon",                           # 3: company, split across lines
+        "Petroleum (mpc), then Valero.",                    # 4: company, case-insensitive, peer
+        "The base is https://w3id.org/lsc/ontology/.",      # 5: namespace
+        "See `business_architecture/ontology/` and `step4/step4-decisions.md`.",  # 6: paths
+        "Row REL-00436 on CM 1.2.1.3.",                     # 7: row and process IDs
+        "A refinery's capacity in barrels.",                # 8: refining terms
+        "The crack",                                        # 9: term split across lines
+        "spread was $5 in this repository.",                # 10: repository phrasing
+        "The W3C ORG vocabulary and a ref-<company> module.",  # 11: clean
+    ]) + "\n")
+    problems = epm_facts.playbook_problems(str(book))
+    lines = sorted({int(p.split(":")[1]) for p in problems})
+    assert lines == [2, 3, 4, 5, 6, 7, 8, 9, 10]
+    kinds = {p.split(": ")[1] for p in problems}
+    assert kinds == {what for what, _ in epm_facts.PLAYBOOK_TERMS}
+    assert any("'Marathon'" in p and ":3:" in p for p in problems)
+    assert any("'mpc'" in p and ":4:" in p for p in problems)
+    assert any("'Valero'" in p for p in problems)
+    assert any("'crack\\nspread'" in p and ":9:" in p for p in problems)
+    assert any("'this repository'" in p and ":10:" in p for p in problems)
+
+
+def test_playbook_check_runs_in_the_check_script():
+    with open(os.path.join(epm_facts.ROOT, "scripts", "check.sh")) as f:
+        assert "python3 scripts/epm_facts.py playbook" in f.read()
