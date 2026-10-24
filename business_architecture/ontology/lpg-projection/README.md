@@ -1,6 +1,19 @@
-# LPG projection guideline (snapshot)
+# LPG projection guideline (superseded v2.2 copy)
 
-These two files are a pinned copy of the decision owner's guideline for projecting a W3C
+The method for projecting a W3C ontology into a Neo4j labelled property graph
+(LPG) is the `ontology-to-lpg` skill in the personal-agent-skills repository,
+`skills/data/ontology-to-lpg`, at commit `da75164` (personal-agent-skills #46).
+It is the guideline's version 2.3. Read the skill, not this folder, for the
+current method (EPM-DEC-001-0095).
+
+*2026-10-23:* the decision owner moved the guideline into the skill
+(EPM-DEC-001-0095). The two files below are the v2.2 copy that Steps 1 and
+12 followed until then. They stay here as superseded evidence; they are not
+deleted, and they are not copied again. `../projection/pipeline.py` still
+implements v2.2, as the skill allows for a project pinned to an earlier
+version.
+
+*Until 2026-10-23:* these two files are a pinned copy of the decision owner's guideline for projecting a W3C
 ontology into a Neo4j labelled property graph (LPG). The master copy is in
 the enterprise-people-graph repo. This folder is not edited here. To update
 it, change the master first, then copy the files again and record the new

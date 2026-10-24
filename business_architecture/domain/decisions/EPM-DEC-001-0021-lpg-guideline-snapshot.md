@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided |
+| Status | Decided; amended by EPM-DEC-001-0095 |
 | Date | 2026-10-05 |
 | Questions | Q31 |
 | Source | Grilling session on the handover plan |
@@ -29,6 +29,7 @@ Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with the
 
 - 2026-10-06: re-pinned to `e7b09e8` (guideline v2.1, enterprise-people-graph PR #1).
 - 2026-10-14: re-pinned to `8ce9ada` (guideline v2.2, enterprise-people-graph PR #3), which takes in the projection pipeline's findings (EPM-DEC-001-0036).
+- 2026-10-23: no further snapshot. The guideline moved into the `ontology-to-lpg` skill in personal-agent-skills, as version 2.3, and `lpg-projection/` points to it at `da75164`; the v2.2 files stay there as superseded evidence (EPM-DEC-001-0095).
 
 ## Evidence
 

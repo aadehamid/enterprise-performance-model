@@ -134,7 +134,8 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
   business_architecture/ontology/validation/test_controlled_values.py \
   business_architecture/ontology/validation/test_all_module_shapes.py \
   business_architecture/ontology/validation/test_release_package_shapes.py \
-  business_architecture/ontology/projection/test_pipeline.py
+  business_architecture/ontology/projection/test_pipeline.py \
+  business_architecture/ontology/projection/skill-run/test_skill_run.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # EPM-DEC-001-0049: the repo names the decision owner by role, never by name or account.

@@ -26,7 +26,7 @@ EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontolo
 2. **Steps 0 to 4 and 8 stand as recorded.** Step 3d is complete with its open exceptions; its sub-step 3d-b holds PTC-001-B by design (the decision owner, 2026-09-22). Step 4 is promoted.
 3. **The held rows stay held, each with its reason.** `python3 scripts/epm_facts.py counts` gives 462 held rows: 51 Phase 1 rows (EPM-DEC-001-0025), and 411 outside Phase 1: 167 context-pass holds, 114 uses-input holds, 80 informed-by holds, 40 uses-input G1a holds, 9 governed-by holds and 1 property-rule hold. None blocks completion. A held row gets a fresh verdict only if its source is corrected, through the source-correction backlog (EPM-DEC-001-0025).
 4. **Phase E is complete, except for items that wait on others.** None waits on this work.
-   - **On the decision owner:**
+   - **On the decision owner** (*2026-10-23:* all answered; the ontology is closed, EPM-DEC-001-0096):
      - Q17, meaning ownership (EPM-DEC-001-0045, decision 7); *2026-10-23:* parked until the ontology is first shared with business consumers (EPM-DEC-001-0086);
      - MPC-P10 (EPM-DEC-001-0070; `business_process/proposals/MPC-P10-customer-lifecycle.md`); *2026-10-23:* accepted (EPM-DEC-001-0087);
      - a product code list, which would let PIDX and OEO be mapped; Claude asks the decision owner before building it (EPM-DEC-001-0064); *2026-10-23:* approved, from MPC's FY2025 Form 10-K, in `party` (EPM-DEC-001-0088), and released in `party` 1.1.0 (EPM-DEC-001-0092);
@@ -54,3 +54,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 - The ontology README's Status section names where the build stands, and what waits on whom.
 - Phase F waits for the decision owner's yes. *2026-10-22:* approved (EPM-DEC-001-0084). *2026-10-23:* done: personal-agent-skills pull request #45 merged.
+- *2026-10-23:* the ontology is closed (EPM-DEC-001-0096). What stays open is listed there: the business's points in `ontology/business-closeout.md`, the items parked for other reasons, and the store tests as a separate task: Jena and a Databricks Delta triple table, then local Neo4j and Aura rebuilt from the Databricks store with checks that no data is lost, then OntoBricks for Unity Catalog metric views (blocks 30 to 32).

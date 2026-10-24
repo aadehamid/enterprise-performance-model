@@ -33,7 +33,7 @@ root.
 | `step4/playbook/ontology-worklog.md` | **Worklog** (the build record): plan table and statuses, step log, decision journal |
 | `step4/` | Step 4 working area: verb-predicate mapping, evidence gate, canonical facts, correction backlog (see `step4/README.md`) |
 | `step4/evidence-discipline.md` | The approved Step 4 evidence discipline text, moved word for word from the playbook on 2026-10-05 |
-| `lpg-projection/` | Pinned snapshot of the ontology-to-LPG projection guideline used in Step 12 (EPM-DEC-001-0020, 0021) |
+| `lpg-projection/` | The superseded v2.2 copy of the ontology-to-LPG projection guideline, kept as evidence of what Step 12 followed (EPM-DEC-001-0020, 0021). Since 2026-10-23 the method is the `ontology-to-lpg` skill in personal-agent-skills, at `da75164`; the folder's README points to it (EPM-DEC-001-0095) |
 | `../domain/decisions/` | Project decision records (EPM-DEC-001) |
 | `competency-questions.md` | The 44-question acceptance baseline, tested by the Step 11 regression in `regression/` |
 | `projection/` | Step 12: the pipeline that projects the ontology into Neo4j, its manifest and its last report (EPM-DEC-001-0036) |
@@ -89,10 +89,13 @@ root.
 
 ## Status
 
-The worklog's plan table (`step4/playbook/ontology-worklog.md` §2) is
-authoritative for step status. As of 2026-10-22, Phase E is closed
-(EPM-DEC-001-0083): Steps 0 to 12 are done or stand as recorded, each with
-its listed exceptions.
+**The ontology is closed** (EPM-DEC-001-0096, 2026-10-23). Every item that
+waited on the decision owner is answered (EPM-DEC-001-0086 to 0095), the six
+close-out releases are built and tagged, the projection's list of release
+gaps is empty, and the competency regression is green. The worklog's plan
+table (`step4/playbook/ontology-worklog.md` §2) is authoritative for step
+status: Steps 0 to 12 are done or stand as recorded, each with its listed
+exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
 
 - **Releases:** 25 packages under `releases/`, listed in
   `releases/catalog.ttl` (EPM-DEC-001-0082). The newest of each module:
@@ -116,12 +119,20 @@ its listed exceptions.
   Form 10-K, and six releases that carry these and close the 16 projection
   gaps, are approved (EPM-DEC-001-0088). `core` 2.3.0, `value-stream` 1.1.0,
   `data-product` 1.1.0, `party` 1.1.0, `kpi` 1.1.1 and `integration` 2.0.0
-  are released (EPM-DEC-001-0089 to 0094).
+  are released (EPM-DEC-001-0089 to 0094). The projection guideline moved
+  into the `ontology-to-lpg` skill (EPM-DEC-001-0095).
   Phase F, the `ontology` skill, was approved on 2026-10-22
   (EPM-DEC-001-0084) and is done: personal-agent-skills pull request #45,
   merged on 2026-10-23.
-- **Waiting on the business:** every point only the business can settle
-  is in `business-closeout.md`, with the record each answer goes to:
-  Q17, Market Data's accountable group, the four codes and TID Nbr, the
+- **Open after closure, with the business:** every point only the business
+  can settle is in `business-closeout.md`, with the record each answer goes
+  to: Q17, Market Data's accountable group, the four codes and TID Nbr, the
   product list, Forecaster, Crude RFC, PSM, four working role definitions
-  and 33 measure populations.
+  and 33 measure populations. They are settled when the ontology is first
+  shared with business consumers.
+- **Open after closure, apart from the ontology:** the store tests are a
+  separate, later task: load the ontology into Apache Jena and into a
+  Databricks Delta triple table, project it to a local Neo4j and to Aura, then
+  rebuild both from the Databricks store and check that no data is lost;
+  OntoBricks follows, to link Unity Catalog metric views to the processes
+  (EPM-DEC-001-0096).
