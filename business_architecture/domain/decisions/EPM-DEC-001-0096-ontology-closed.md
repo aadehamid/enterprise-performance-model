@@ -26,7 +26,6 @@ Phase E closed on 2026-10-22 with Steps 0 to 12 done or standing as recorded, ea
 - **With the business,** when the ontology is first shared: every point in `business-closeout.md`. These are Q17, Market Data's accountable group, the four codes and TID Nbr, the product list and its PIDX families, Forecaster, Crude RFC, PSM, four working role definitions and the 33 measures with no stated population (EPM-DEC-001-0086). Each answer is recorded as an amendment to the record the package names.
 - **Parked for other reasons,** each with its trigger: the IOF Supply Chain mapping (EPM-DEC-001-0064), IRIs that resolve (EPM-DEC-001-0039), and the 462 held process-map rows, which get a fresh verdict only if their source is corrected (EPM-DEC-001-0025, 0083; `python3 scripts/epm_facts.py counts`).
 - **A separate, later task:** loading the ontology into Apache Jena and exploring it there and in Neo4j Aura at the same time, which the decision owner set apart from the ontology goal (block 26). The decision owner later allowed Claude to delete the test data it loads into Aura and Jena after thorough testing; both are loaded again with the projection skill in that later task (block 27).
-- **An open question about the skill:** whether the `ontology-to-lpg` skill should also load the ontology into any triple store (block 28). It is a question about the skill in personal-agent-skills, not about the ontology.
 
 ## Alternatives considered
 

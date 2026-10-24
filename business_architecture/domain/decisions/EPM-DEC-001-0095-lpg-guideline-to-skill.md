@@ -30,6 +30,7 @@ Projecting every released package, through the close-out releases, taught lesson
 4. **Current references point to the skill:** the ontology README's contents table, the playbook (its file list, Step 1, item 10, and Step 12's procedure), the worklog's Step 12 row and the glossary's LPG projection entry. Dated history, earlier records and the worked example in the playbook's §7 keep their references to `lpg-projection/`, because they describe what was done then.
 5. **`projection/pipeline.py` stays on v2.2.** The skill says a project pinned to an earlier version keeps its own scripts (`SKILL.md`, "First, find where the projection stands", item 2). The pipeline, its manifest and its report still name "v2.2 (lpg-projection/, pin 8ce9ada)", which is what the pipeline implements. Moving the pipeline onto the skill's scripts would be a separate change, and no record asks for it.
 6. **Neo4j Aura.** At the decision owner's request, Claude installed the neo4j-contrib/neo4j-skills plugin, 1.0.1, at user scope. n10s is not available on Aura (the Neosemantics documentation, "Availability & Installation"), so the projection validates on a local Neo4j with n10s, and copying the verified graph to Aura is an add-on. The Aura credentials are in a local credentials file outside the repository and never enter it.
+7. **Triple stores.** The decision owner asked whether the skill should also load the ontology into any triple store (block 28) and chose "Add it now (Recommended)" (block 29): the skill loads the same validated files into any SPARQL 1.1 store through the W3C Graph Store HTTP Protocol, one named graph per package, and checks per-predicate counts against the files and the Neo4j export.
 
 ## Alternatives considered
 
@@ -37,6 +38,7 @@ Projecting every released package, through the close-out releases, taught lesson
 - **Fold the guideline into the `ontology` skill.** Not chosen by the decision owner: the projection is its own gated method, and the `ontology` skill's Step 12 hands over to it.
 - **Keep the guideline in enterprise-people-graph, with the skill pointing to it.** Not chosen by the decision owner.
 - **Keep fixing the skill's own subset of the shapes.** Not chosen by the decision owner: n10s decides which shapes it compiles, so the gate reads that answer from the engine.
+- **Add the triple-store loading later, or put it in a separate skill.** Not chosen by the decision owner (block 29).
 
 ## The decision owner's recorded words
 
