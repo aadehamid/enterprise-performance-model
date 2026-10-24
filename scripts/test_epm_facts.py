@@ -1007,6 +1007,7 @@ RELATIVE_AND_ABSOLUTE_SPELLINGS = [
     ("a GitHub blob URL", "https://github.com/someone/enterprise-performance-model/blob/main/scripts/check.sh"),
     ("a raw URL", "https://raw.githubusercontent.com/someone/enterprise-performance-model/main/README.md"),
     ("an absolute path", "Open /home/someone/epm/scripts/check.sh."),
+    ("a two-segment absolute path", "Run /scripts/check.sh first."),  # Cursor bot on #364
     ("an absolute path to the repository folder", "Open /Users/someone/Enterprise Performance Model/notes.md."),
     ("a link with an #anchor", "Read [the rules](../../REVIEW_STANDARDS.md#what-blocks-a-merge)."),
     ("a link with a ?query", "Read [the rules](../../REVIEW_STANDARDS.md?plain=1)."),
@@ -1027,7 +1028,8 @@ def test_playbook_check_rejects_each_spelling_of_a_tracked_path(tmp_path, monkey
 def test_playbook_check_passes_a_relative_path_that_is_not_tracked(tmp_path, monkeypatch):
     monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
     book = tmp_path / "playbook.md"
-    book.write_text("See [notes](../../somewhere-untracked.md), ./shapes.ttl, /tmp/a/b.ttl and ./ alone.\n")
+    # An absolute path is compared by its tails of two or more segments, so "/README.md" alone passes.
+    book.write_text("See [notes](../../somewhere-untracked.md), ./shapes.ttl, /tmp/a/b.ttl, /README.md and ./ alone.\n")
     assert epm_facts.playbook_problems(str(book)) == []
 
 

@@ -1232,7 +1232,7 @@ def _path_candidates(token):
             yield resolved, False
     elif token.startswith("/"):
         parts = token.strip("/").split("/")
-        for i in range(1, len(parts) - 1):
+        for i in range(0, len(parts) - 1):  # "/scripts/check.sh" gives "scripts/check.sh" too
             yield "/".join(parts[i:]), False
 
 

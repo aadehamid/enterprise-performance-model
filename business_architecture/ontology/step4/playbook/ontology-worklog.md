@@ -2733,7 +2733,7 @@ playbook cited from this build before that change: every EPM-DEC-001
 record, every company and filing, and every path into this repository,
 under the playbook section heading that cited it, with the sentence it
 supported. The playbook as it stood before the change is at commit
-`5af2dd8`. `uv run --with rdflib python scripts/epm_facts.py playbook`
+`f52dc80` (main after #363). `uv run --with rdflib python scripts/epm_facts.py playbook`
 fails if the playbook names an EPM record, a company or a path into this
 repository again (run by `scripts/check.sh`). It checks a fixed list of
 terms, every organization label in the released packages, the reference
@@ -2769,9 +2769,6 @@ to `business_architecture/ontology/`.
 | Step 12, "What the loader and the reasoner do" | "Guideline v2.1 did not say these; v2.2 does" | The guideline's version history: the first run on `core` 1.0.0 found what v2.1 did not cover (see §7 below, Step 12) |
 | Step 12, "Run the full shapes upstream and a subset in the graph" | "(2026-10-23, EPM-DEC-001-0095: the `ontology-to-lpg` skill now reads the in-graph subset from the engine. ...)" | EPM-DEC-001-0095. The rule itself stays in the playbook, without the date and the record |
 | Step 12, "Delivery to other stores" | "**Delivery to other stores (2026-10-23, EPM-DEC-001-0095 and 0096).**" | EPM-DEC-001-0095; EPM-DEC-001-0096 |
-| Step 12, "Delivery to other stores", hop 2 | "into Databricks as a plain Delta triple table in Unity Catalog (planned)" | This build's plan for Databricks (EPM-DEC-001-0096) |
-| Step 12, "Delivery to other stores", hop 5 | "rebuild both from a triple store's export (Databricks in the plan)" | This build's plan for Databricks (EPM-DEC-001-0096) |
-| Step 12, "Delivery to other stores" | "In this repository's build, hops 2 and 5 run as a separate task after the ontology closes (EPM-DEC-001-0096)." | EPM-DEC-001-0096. The playbook now says hops 2 and 5 can run after the ontology closes, because hop 3 is the gate |
 | §2, Source of truth and scope | "Stable attributes of an entity (a refinery's capacity, an ownership share) are reference facts. Event records ("Customer A bought 5 barrels") and observed measure values ("the crack spread was $5") are not." | Refining examples (now a branch library's seating capacity, a loan record and loan turnover) |
 | §2, Scope and change control | "A field called `sioc` is not the W3C SIOC vocabulary until someone confirms its business meaning." | The process map's `sioc` field, which the decision owner confirmed is SIPOC (EPM-DEC-001-0038; §7 below, Step 6). The playbook's example is now a field called `org` |
 | §2, Decisions and this playbook | "In this repository this is EPM-DEC-001-0024, decided 2026-10-06." | EPM-DEC-001-0024 |
