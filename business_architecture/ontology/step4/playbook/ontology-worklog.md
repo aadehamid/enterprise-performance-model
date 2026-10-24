@@ -966,7 +966,8 @@ without a dated amendment and the decision owner's explicit agreement.
 ### The playbook's evidence moves here (2026-10-23)
 - The decision owner: "The ontology and projection playbooks should aloso
   be universally applicable." and "We probably should remove the evidence
-  in the below", then the choice "Strip evidence to worklog (Recommended)".
+  in the below", then the choice "Strip evidence to worklog (Recommended)"
+  (`answers-2026-10-23-closeout.md`, blocks 33 to 35).
   The playbook now names no EPM-DEC-001 record, company or path into this
   repository. What it cited is in §8, the evidence map, by playbook section,
   with the playbook's old §7 worked example and Appendix A's two
