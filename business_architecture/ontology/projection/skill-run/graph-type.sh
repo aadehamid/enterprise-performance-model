@@ -7,7 +7,8 @@
 set -euo pipefail
 . "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 cd "$SK"
-py build.py graph-type --config "$CONFIG" "${SHAPE_ARGS[@]}" "${DATA[@]}" > "$LPG_OUT/graph-type.cypher"
+rm -f "$LPG_OUT/graph-type.cypher"
+py build.py graph-type --config "$CONFIG" "${SHAPE_ARGS[@]}" --output "$LPG_OUT/graph-type.cypher" "${DATA[@]}"
 nodes=$(grep -c '^  (:[^)]* => {' "$LPG_OUT/graph-type.cypher" || true)
 rels=$(grep -c ')-\[:' "$LPG_OUT/graph-type.cypher" || true)
 echo "wrote $LPG_OUT/graph-type.cypher: $nodes node and $rels relationship element types"
