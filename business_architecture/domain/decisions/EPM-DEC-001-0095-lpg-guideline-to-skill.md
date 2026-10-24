@@ -24,7 +24,7 @@ Projecting every released package, through the close-out releases, taught lesson
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-- **How the skill was tested.** Claude chose the method: a fresh agent ran the skill on its own library example and on EPM's released packages, and later runs used the current release set, Neo4j Aura Free and Apache Jena Fuseki (EPM-DEC-001-0096).
+- **How the skill was tested.** Claude chose the method: a fresh agent ran the skill on its own library example and on EPM's released packages. Before the skill merged, test runs on 2026-10-23 and 2026-10-24 also used the current release set, a Neo4j Aura Free instance and a local Apache Jena Fuseki, and deleted the test data afterwards, as block 27 allows (the results are in personal-agent-skills #46 and the skill's `SOURCES.md`). Those runs tested the skill. Loading the ontology for the decision owner to explore, and the Databricks steps, are the separate later task (EPM-DEC-001-0096).
 
 1. **The skill** is `skills/data/ontology-to-lpg` in personal-agent-skills, merged in personal-agent-skills #46 as `da75164`. It is the guideline's version 2.3, and its `references/versions.md` lists what 2.3 adds over 2.2. It keeps the five design rules, options 4a and 4b for Rule 4, and add-ons A to G, so the playbook's references to them still hold.
 2. **The enterprise-people-graph guideline folder** points to the skill (enterprise-people-graph #4).
@@ -64,4 +64,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 
 - `lpg-projection/README.md` names the skill as the current method and carries a dated note that the v2.2 files are superseded.
 - EPM-DEC-001-0021 carries a dated note and is amended by this record.
-- Exploring the ontology in Apache Jena and in Aura is a separate task after the ontology closes (EPM-DEC-001-0096).
+- The store tests are a separate task after the ontology closes (EPM-DEC-001-0096; blocks 26 to 32): load the ontology into Apache Jena and into a Databricks Delta triple table, project it to a local Neo4j and to Aura, rebuild both from the Databricks store and check that no data is lost, then use OntoBricks to link Unity Catalog metric views to the processes.
