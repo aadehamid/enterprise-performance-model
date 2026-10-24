@@ -54,4 +54,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 - The ontology README's Status section names where the build stands, and what waits on whom.
 - Phase F waits for the decision owner's yes. *2026-10-22:* approved (EPM-DEC-001-0084). *2026-10-23:* done: personal-agent-skills pull request #45 merged.
-- *2026-10-23:* the ontology is closed (EPM-DEC-001-0096). What stays open is listed there: the business's points in `ontology/business-closeout.md`, the items parked for other reasons, and the Jena and Aura exploration as a separate task.
+- *2026-10-23:* the ontology is closed (EPM-DEC-001-0096). What stays open is listed there: the business's points in `ontology/business-closeout.md`, the items parked for other reasons, and the store tests as a separate task: Jena and a Databricks Delta triple table, then local Neo4j and Aura rebuilt from the Databricks store with checks that no data is lost (blocks 30 to 32).

@@ -130,6 +130,9 @@ exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
   product list, Forecaster, Crude RFC, PSM, four working role definitions
   and 33 measure populations. They are settled when the ontology is first
   shared with business consumers.
-- **Open after closure, apart from the ontology:** loading the ontology into
-  Apache Jena and exploring it there and in Neo4j Aura is a separate, later
-  task (EPM-DEC-001-0096).
+- **Open after closure, apart from the ontology:** the store tests are a
+  separate, later task: load the ontology into Apache Jena and into a
+  Databricks Delta triple table, project it to a local Neo4j and to Aura, then
+  rebuild both from the Databricks store and check that no data is lost;
+  OntoBricks follows, to link Unity Catalog metric views to the processes
+  (EPM-DEC-001-0096).

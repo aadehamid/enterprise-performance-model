@@ -5,7 +5,7 @@
 | Status | Decided (delegated under EPM-DEC-001-0028, on the goal the decision owner set on 2026-10-23) |
 | Date | 2026-10-23 |
 | Questions | Is the ontology done, after every outstanding question is addressed? What stays open after it closes? |
-| Source | Claude Code session of 2026-10-23; `answers-2026-10-23-closeout.md`, blocks 8 and 26 to 28 |
+| Source | Claude Code session of 2026-10-23; `answers-2026-10-23-closeout.md`, blocks 8 and 26 to 32 |
 
 ## Context
 
@@ -30,7 +30,7 @@ Phase E closed on 2026-10-22 with Steps 0 to 12 done or standing as recorded, ea
 ## Alternatives considered
 
 - **Keep the ontology open until the business answers the package.** Not chosen: the decision owner parked those points until the ontology is first shared (EPM-DEC-001-0086), so they cannot be answered before it closes.
-- **Keep it open until the Jena and Aura exploration.** Not chosen: the decision owner made that a separate task after the ontology is complete (block 26).
+- **Keep it open until the store tests (Jena, Databricks, Neo4j and Aura).** Not chosen: the decision owner made that a separate task after the ontology is complete (block 26).
 
 ## The decision owner's recorded words
 

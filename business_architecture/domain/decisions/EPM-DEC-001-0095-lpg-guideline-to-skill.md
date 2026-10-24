@@ -5,7 +5,7 @@
 | Status | Decided (the decision owner, 2026-10-23, for making the guideline a skill, moving it into the skill, testing it and the skill's design; the skill's contents and EPM's pointers delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-23 |
 | Questions | Where the method for projecting a W3C ontology into a labelled property graph lives (EPM-DEC-001-0021); how the lessons of the close-out releases reach it |
-| Source | Claude Code session of 2026-10-23; `answers-2026-10-23-closeout.md`, blocks 12 to 26 |
+| Source | Claude Code session of 2026-10-23; `answers-2026-10-23-closeout.md`, blocks 12 to 32 |
 
 ## Context
 
@@ -19,10 +19,12 @@ Projecting every released package, through the close-out releases, taught lesson
 
 1. The guideline becomes a skill, `ontology-to-lpg`, in the personal-agent-skills repository.
 2. The guideline moves into the skill. The enterprise-people-graph repository and this repository point to it rather than keep copies.
-3. The skill is tested before it is relied on: a fresh agent runs it on the skill's own example and on EPM's released packages.
+3. The skill is tested before it is relied on (block 18).
 4. The skill's design is "Read from engine": its in-graph SHACL gate reads what n10s says it compiled (`n10s.validation.shacl.listShapes()`), its Python subset of the shapes is only an advisory dry run, and S3PG and PG-Schema are cited as background.
 
 **What follows (Claude, under EPM-DEC-001-0028):**
+
+- **How the skill was tested.** Claude chose the method: a fresh agent ran the skill on its own library example and on EPM's released packages, and later runs used the current release set, Neo4j Aura Free and Apache Jena Fuseki (EPM-DEC-001-0096).
 
 1. **The skill** is `skills/data/ontology-to-lpg` in personal-agent-skills, merged in personal-agent-skills #46 as `da75164`. It is the guideline's version 2.3, and its `references/versions.md` lists what 2.3 adds over 2.2. It keeps the five design rules, options 4a and 4b for Rule 4, and add-ons A to G, so the playbook's references to them still hold.
 2. **The enterprise-people-graph guideline folder** points to the skill (enterprise-people-graph #4).
