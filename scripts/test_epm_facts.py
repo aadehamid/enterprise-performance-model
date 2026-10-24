@@ -11,6 +11,8 @@ import os
 import subprocess
 import sys
 
+import pytest
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import epm_facts  # noqa: E402
@@ -995,6 +997,38 @@ def test_playbook_check_rejects_a_tracked_path_after_a_leading_dot_slash(tmp_pat
     assert any("'scripts/check.sh'" in p and ":1:" in p for p in problems)
     assert any("'README.md'" in p and ":2:" in p for p in problems)
     assert any("'AGENTS.md'" in p and ":2:" in p for p in problems)
+
+
+RELATIVE_AND_ABSOLUTE_SPELLINGS = [
+    # Codex quick check of 63b9c16: each spelling of a tracked path that a run as written misses.
+    ("./ from the playbook's folder", "See [the folder](./step4/)."),
+    ("../../ to the repository root", "Run [check](../../scripts/check.sh)."),
+    ("../ wrapped across a line", "Run [check](../\n../scripts/check.sh) first."),
+    ("a GitHub blob URL", "https://github.com/someone/enterprise-performance-model/blob/main/scripts/check.sh"),
+    ("a raw URL", "https://raw.githubusercontent.com/someone/enterprise-performance-model/main/README.md"),
+    ("an absolute path", "Open /home/someone/epm/scripts/check.sh."),
+    ("an absolute path to the repository folder", "Open /Users/someone/Enterprise Performance Model/notes.md."),
+    ("a link with an #anchor", "Read [the rules](../../REVIEW_STANDARDS.md#what-blocks-a-merge)."),
+    ("a link with a ?query", "Read [the rules](../../REVIEW_STANDARDS.md?plain=1)."),
+]
+
+
+@pytest.mark.parametrize("what,line", RELATIVE_AND_ABSOLUTE_SPELLINGS, ids=[w for w, _ in RELATIVE_AND_ABSOLUTE_SPELLINGS])
+def test_playbook_check_rejects_each_spelling_of_a_tracked_path(tmp_path, monkeypatch, what, line):
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("A rule.\n" + line + "\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert _kinds(problems) == {PATH_KIND}, what
+    lines = {int(p.split(":")[1]) for p in problems}
+    assert 2 in lines and lines <= {2, 3}, what  # a wrapped run is also caught on its second line
+
+
+def test_playbook_check_passes_a_relative_path_that_is_not_tracked(tmp_path, monkeypatch):
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("See [notes](../../somewhere-untracked.md), ./shapes.ttl, /tmp/a/b.ttl and ./ alone.\n")
+    assert epm_facts.playbook_problems(str(book)) == []
 
 
 def test_playbook_check_reads_organizations_case_insensitively_and_paths_case_sensitively(tmp_path, monkeypatch):

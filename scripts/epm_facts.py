@@ -44,6 +44,7 @@ import glob
 import io
 import json
 import os
+import posixpath
 import re
 import runpy
 import shutil
@@ -1161,8 +1162,9 @@ def governed_organizations(releases=RELEASES, reference=REFERENCE):
 
 def governed_paths(root=ROOT):
     """(paths, top-level folders): every tracked file's path (a top-level file too, such as
-    "README.md") and each suffix of two or more segments ("release/build_core.py"), and each
-    tracked top-level folder name followed by "/".
+    "README.md") and each suffix of two or more segments ("release/build_core.py"), every
+    tracked folder's full path ("business_architecture/ontology/step4"), and each tracked
+    top-level folder name followed by "/".
     """
     env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
     tracked = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], env=env).decode().split("\0")
@@ -1171,6 +1173,7 @@ def governed_paths(root=ROOT):
         parts = name.split("/")
         paths.add(name)
         paths |= {"/".join(parts[i:]) for i in range(1, len(parts) - 1)}
+        paths |= {"/".join(parts[:i]) for i in range(2, len(parts))}
         if len(parts) > 1:
             tops.add(parts[0] + "/")
     return paths, tops
@@ -1200,6 +1203,37 @@ def _without_path_breaks(text, breaks):
     return "".join(out), offsets
 
 
+# The playbook's folder, against which a relative link in it ("../../scripts/check.sh") resolves.
+PLAYBOOK_DIR = "business_architecture/ontology"
+# A link to this repository on GitHub names it, whatever path follows. Any account matches, so a
+# fork's link is caught too, and the owner's account is not written here (EPM-DEC-001-0049).
+REPO_URL = re.compile(r"(?:github\.com|raw\.githubusercontent\.com)/[\w.-]+/enterprise-performance-model\b", re.I)
+# The repository's own folder name in an absolute path ("/Users/.../Enterprise Performance Model/README.md").
+REPO_DIR = re.compile(r"Enterprise\s+Performance\s+Model/")
+
+
+def _path_candidates(token):
+    """(spelling, may_start_with_a_top_level_folder) for each way a path run can name a tracked path.
+
+    The run as written; for a relative run ("./x", "../../x"), the run with every leading "./"
+    and "../" removed and the path it resolves to from the playbook's folder; for an absolute run
+    ("/home/u/repo/scripts/check.sh"), each tail of two or more segments.
+    """
+    yield token, True
+    if token.startswith(("./", "../")):
+        rest = re.sub(r"^(?:\.\.?/)+", "", token)
+        if not rest:  # a bare "./" or "../" names no path
+            return
+        yield rest, True
+        resolved = posixpath.normpath(posixpath.join(PLAYBOOK_DIR, token))
+        if not resolved.startswith(".."):
+            yield resolved, False
+    elif token.startswith("/"):
+        parts = token.strip("/").split("/")
+        for i in range(1, len(parts) - 1):
+            yield "/".join(parts[i:]), False
+
+
 def _derived_matches(text, organizations, paths, tops):
     """(start, kind, matched text) for each derived organization name and repository path in text."""
     found = []
@@ -1211,21 +1245,25 @@ def _derived_matches(text, organizations, paths, tops):
     # The text as written (a line break is whitespace), then twice with wrapped paths joined.
     variants = [(text, range(len(text)))] + [_without_path_breaks(text, b) for b in PATH_BREAKS]
     for variant, offsets in variants:
+        for pattern in (REPO_URL, REPO_DIR):
+            found += [(offsets[m.start()], kind, m.group(0)) for m in pattern.finditer(variant)]
+        # A run stops at "#", "?", ":" and spaces, so a link's #fragment or ?query is never part of it.
         for m in PATH_RUN.finditer(variant):
             token = m.group(0)
             if token.endswith(".") and not token.endswith("/."):
                 token = token[:-1]
-            while token.startswith("./"):  # "./scripts/check.sh" names the tracked "scripts/check.sh"
-                token = token[2:]
-            if token in PLAYBOOK_PATH_EXCEPTIONS:
-                continue
-            if token in paths or token.rstrip("/") in paths or any(token.startswith(t) for t in tops):
-                found.append((offsets[m.start()], kind, token))
+            for spelling, top_ok in _path_candidates(token):
+                if spelling in PLAYBOOK_PATH_EXCEPTIONS:
+                    break
+                if (spelling in paths or spelling.rstrip("/") in paths
+                        or (top_ok and any(spelling.startswith(t) for t in tops))):
+                    found.append((offsets[m.start()], kind, spelling))
+                    break
         # A path or top-level folder with a space ("metadata Integration/") is searched as text.
         for path in sorted(p for p in paths | tops if " " in p and p not in PLAYBOOK_PATH_EXCEPTIONS):
             words = r"\s+".join(re.escape(w) for w in path.split())
             tail = "" if path.endswith("/") else r"(?![A-Za-z0-9_/-])(?!\.[A-Za-z0-9_/-])"
-            for m in re.finditer(r"(?<![A-Za-z0-9_./-])(?:\./)*(" + words + ")" + tail, variant):
+            for m in re.finditer(r"(?<![A-Za-z0-9_./-])(?:\.\.?/)*(" + words + ")" + tail, variant):
                 found.append((offsets[m.start()], kind, m.group(1)))
     return found
 
