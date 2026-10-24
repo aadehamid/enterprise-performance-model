@@ -55,7 +55,10 @@ project record. You do not need them to follow the method.
 - `step4/evidence-discipline.md`: the project's approved wording of the §3
   rules, with its counts and precedents.
 - `competency-questions.md`: the project's competency questions.
-- `lpg-projection/`: the property-graph projection guideline used in Step 12.
+- The `ontology-to-lpg` skill (personal-agent-skills, `skills/data/ontology-to-lpg`,
+  at `<SKILL-MERGE-COMMIT>`): the property-graph projection method used in Step 12.
+  `lpg-projection/` keeps the guideline's superseded v2.2 copy (*2026-10-23,*
+  EPM-DEC-001-0095).
 
 ---
 
@@ -267,7 +270,7 @@ later is expensive.
    active, you can retire provisional data in one release.
 10. **Target formats.** If the ontology will be projected into a labelled
     property graph (Step 12), adopt that projection's design rules now:
-    Rules 1, 2, 3 and 5 of the guideline in `lpg-projection/`, and for its
+    design Rules 1, 2, 3 and 5 of the `ontology-to-lpg` skill, and for its
     Rule 4 the qualified-relation option (4a), unless every tool in your
     pipeline reads RDF 1.2. Rules adopted late force you to remodel.
 
@@ -682,7 +685,7 @@ or is parked by a recorded decision.
 as Neo4j, for applications that query in Cypher. The Turtle files stay the
 master copy.
 
-**Procedure.** Follow the conversion guideline in `lpg-projection/`, with
+**Procedure.** Follow the `ontology-to-lpg` skill (the conversion guideline, version 2.3), with
 its Rule 4 set to option 4a. Apply its design Rules 1, 2, 3 and 5 from the
 first release (Step 1, item 10). For Rule 4, give a relationship its own
 properties with a qualified-relation node (option 4a, the guideline's

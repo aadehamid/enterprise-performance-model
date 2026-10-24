@@ -1,6 +1,6 @@
 # Property-graph projection (Step 12)
 
-Projects the ontology into a Neo4j labelled property graph, following the guideline in `../lpg-projection/` (v2.2) with Rule 4a, qualified-relation nodes. Turtle stays the master copy; the graph can be rebuilt from it at any time. The design is EPM-DEC-001-0036. Since 2026-10-22 it projects every released package under `../releases/`, each at its newest version, with each package's own shapes (EPM-DEC-001-0036, amendment of 2026-10-22).
+Projects the ontology into a Neo4j labelled property graph, following the guideline in `../lpg-projection/` (v2.2) with Rule 4a, qualified-relation nodes. *2026-10-23:* the guideline moved into the `ontology-to-lpg` skill in personal-agent-skills, version 2.3, and `../lpg-projection/` keeps the v2.2 copy as superseded evidence; this pipeline stays on v2.2, as the skill allows for a project pinned to an earlier version (EPM-DEC-001-0095). Turtle stays the master copy; the graph can be rebuilt from it at any time. The design is EPM-DEC-001-0036. Since 2026-10-22 it projects every released package under `../releases/`, each at its newest version, with each package's own shapes (EPM-DEC-001-0036, amendment of 2026-10-22).
 
 | File | What it is |
 |---|---|
