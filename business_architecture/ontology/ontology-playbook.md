@@ -762,7 +762,10 @@ What the loader and the reasoner do. Guideline v2.1 did not say these; v2.2 does
 **Delivery to other stores (2026-10-23, EPM-DEC-001-0095 and 0096).** The
 same validated files go to every store, and each hop is checked against the
 files, so a loss shows where it happened. The `ontology-to-lpg` skill
-describes the pattern and its add-ons:
+describes the pattern and its add-ons. Its `references/multi-store.md` walks
+through the data-flow diagram box by box, and the validation path check by
+check (V1 to V14, and GRAPH TYPE as G1 to G4), with the same names as the
+two diagrams:
 
 1. **Source.** The released packages and their data are the master copy.
    Give every blank node a stable IRI once (skolemization, RDF 1.1 §3.5)
@@ -790,8 +793,8 @@ load or the rebuild may also run inside the workspace when its network rules
 allow the destination. OntoBricks (Databricks Labs) holds one ontology per domain and
 builds instance data from Unity Catalog tables, so it is the later tool for
 linking Unity Catalog data and metric views to the ontology, not the
-lossless store. Steps 2 and 5 run as a separate task after the ontology
-closes (EPM-DEC-001-0096).
+lossless store. In this repository's build, hops 2 and 5 run as a separate
+task after the ontology closes (EPM-DEC-001-0096).
 
 **Done when:** the three checks in the verify step pass on the published
 release.
