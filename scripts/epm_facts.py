@@ -1215,6 +1215,8 @@ def _derived_matches(text, organizations, paths, tops):
             token = m.group(0)
             if token.endswith(".") and not token.endswith("/."):
                 token = token[:-1]
+            while token.startswith("./"):  # "./scripts/check.sh" names the tracked "scripts/check.sh"
+                token = token[2:]
             if token in PLAYBOOK_PATH_EXCEPTIONS:
                 continue
             if token in paths or token.rstrip("/") in paths or any(token.startswith(t) for t in tops):
@@ -1223,8 +1225,8 @@ def _derived_matches(text, organizations, paths, tops):
         for path in sorted(p for p in paths | tops if " " in p and p not in PLAYBOOK_PATH_EXCEPTIONS):
             words = r"\s+".join(re.escape(w) for w in path.split())
             tail = "" if path.endswith("/") else r"(?![A-Za-z0-9_/-])(?!\.[A-Za-z0-9_/-])"
-            for m in re.finditer(r"(?<![A-Za-z0-9_./-])" + words + tail, variant):
-                found.append((offsets[m.start()], kind, m.group(0)))
+            for m in re.finditer(r"(?<![A-Za-z0-9_./-])(?:\./)*(" + words + ")" + tail, variant):
+                found.append((offsets[m.start()], kind, m.group(1)))
     return found
 
 

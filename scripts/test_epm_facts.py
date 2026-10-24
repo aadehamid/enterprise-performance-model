@@ -985,6 +985,18 @@ def test_playbook_check_rejects_a_tracked_path_split_across_lines(tmp_path, monk
     assert any("'ontology/release/build_core.py'" in p and ":4:" in p for p in problems)
 
 
+def test_playbook_check_rejects_a_tracked_path_after_a_leading_dot_slash(tmp_path, monkeypatch):
+    # Codex quick check of 885142c: "./" in front of a tracked path hid it.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("Run ./scripts/check.sh.\nRead `././README.md` and ./\nAGENTS.md first.\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert _kinds(problems) == {PATH_KIND}
+    assert any("'scripts/check.sh'" in p and ":1:" in p for p in problems)
+    assert any("'README.md'" in p and ":2:" in p for p in problems)
+    assert any("'AGENTS.md'" in p and ":2:" in p for p in problems)
+
+
 def test_playbook_check_reads_organizations_case_insensitively_and_paths_case_sensitively(tmp_path, monkeypatch):
     monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
     book = tmp_path / "playbook.md"
