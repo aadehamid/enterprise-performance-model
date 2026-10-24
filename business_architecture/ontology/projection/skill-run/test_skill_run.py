@@ -46,10 +46,6 @@ class Inputs(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class Paths(unittest.TestCase):
     def test_relative_paths_become_absolute_before_any_cd(self):
         """common.sh turns relative ONTOLOGY_TO_LPG, ROBOT_JAR and MANUAL_CASES into absolute paths,
@@ -67,3 +63,7 @@ class Paths(unittest.TestCase):
             self.assertEqual(out, [os.path.join(real, "skill"), os.path.join(real, "robot.jar"),
                                    os.path.join(real, "cases.json"), os.path.join(real, "skill", "scripts"),
                                    os.path.join(real, "skill", "docker", "compose.yaml")])
+
+
+if __name__ == "__main__":
+    unittest.main()
