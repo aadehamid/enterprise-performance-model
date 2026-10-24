@@ -1160,8 +1160,9 @@ def governed_organizations(releases=RELEASES, reference=REFERENCE):
 
 
 def governed_paths(root=ROOT):
-    """(paths, top-level folders): every tracked file's path and each suffix of two or more
-    segments ("release/build_core.py"), and each tracked top-level folder name followed by "/".
+    """(paths, top-level folders): every tracked file's path (a top-level file too, such as
+    "README.md") and each suffix of two or more segments ("release/build_core.py"), and each
+    tracked top-level folder name followed by "/".
     """
     env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
     tracked = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], env=env).decode().split("\0")
@@ -1175,8 +1176,28 @@ def governed_paths(root=ROOT):
     return paths, tops
 
 
-# A run of path characters that holds a "/": the candidate path tokens in a text.
-PATH_TOKEN = re.compile(r"[\w.\-/<>]*/[\w.\-/<>]*")
+# A path character. A derived path matches only where no path character comes before or after
+# it, except one sentence-final "." after it.
+PATH_RUN = re.compile(r"[A-Za-z0-9_./-]+")
+# A line break between two path characters, and the narrower case of one next to a "/". Joining
+# every break also glues a word to a path on the next line ("then" + "ontology/..."), so both run.
+PATH_BREAKS = (re.compile(r"(?<=[A-Za-z0-9_./-])[ \t]*\n[ \t]*(?=[A-Za-z0-9_./-])"),
+               re.compile(r"(?<=/)[ \t]*\n[ \t]*(?=[A-Za-z0-9_./-])|(?<=[A-Za-z0-9_./-])[ \t]*\n[ \t]*(?=/)"))
+
+
+def _without_path_breaks(text, breaks):
+    """(text, offsets): text with each line break that `breaks` matches removed, so a path
+    wrapped across lines ("scripts/" then "check.sh") reads whole; offsets[i] is the position
+    in the original text of character i.
+    """
+    out, offsets, pos = [], [], 0
+    for m in breaks.finditer(text):
+        out.append(text[pos:m.start()])
+        offsets.extend(range(pos, m.start()))
+        pos = m.end()
+    out.append(text[pos:])
+    offsets.extend(range(pos, len(text)))
+    return "".join(out), offsets
 
 
 def _derived_matches(text, organizations, paths, tops):
@@ -1186,16 +1207,24 @@ def _derived_matches(text, organizations, paths, tops):
         words = r"\s+".join(re.escape(w) for w in name.split())
         for m in re.finditer(r"(?<![\w-])" + words + r"(?![\w-])", text, re.I):
             found.append((m.start(), "an organization in the released ontology or the reference folders", m.group(0)))
-    for m in PATH_TOKEN.finditer(text):
-        token = m.group(0).rstrip(".").removeprefix("./")
-        if token in PLAYBOOK_PATH_EXCEPTIONS:
-            continue
-        if token in paths or token.rstrip("/") in paths:
-            found.append((m.start(), "a path tracked in this repository", token))
-    # A top-level folder can hold a space ("metadata Integration/"), so it is searched as text.
-    for top in tops:
-        for m in re.finditer(r"(?<![\w./-])" + re.escape(top), text):
-            found.append((m.start(), "a path tracked in this repository", m.group(0)))
+    kind = "a path tracked in this repository"
+    # The text as written (a line break is whitespace), then twice with wrapped paths joined.
+    variants = [(text, range(len(text)))] + [_without_path_breaks(text, b) for b in PATH_BREAKS]
+    for variant, offsets in variants:
+        for m in PATH_RUN.finditer(variant):
+            token = m.group(0)
+            if token.endswith(".") and not token.endswith("/."):
+                token = token[:-1]
+            if token in PLAYBOOK_PATH_EXCEPTIONS:
+                continue
+            if token in paths or token.rstrip("/") in paths or any(token.startswith(t) for t in tops):
+                found.append((offsets[m.start()], kind, token))
+        # A path or top-level folder with a space ("metadata Integration/") is searched as text.
+        for path in sorted(p for p in paths | tops if " " in p and p not in PLAYBOOK_PATH_EXCEPTIONS):
+            words = r"\s+".join(re.escape(w) for w in path.split())
+            tail = "" if path.endswith("/") else r"(?![A-Za-z0-9_/-])(?!\.[A-Za-z0-9_/-])"
+            for m in re.finditer(r"(?<![A-Za-z0-9_./-])" + words + tail, variant):
+                found.append((offsets[m.start()], kind, m.group(0)))
     return found
 
 

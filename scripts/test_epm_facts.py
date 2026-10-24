@@ -965,6 +965,26 @@ def test_playbook_check_rejects_an_ordinary_repo_path(tmp_path, monkeypatch):
     assert any("'ontology/release/build_core.py'" in p for p in problems)
 
 
+def test_playbook_check_rejects_a_top_level_tracked_file(tmp_path, monkeypatch):
+    # Review round 2: a tracked file at the top level has no "/", and the round-1 check missed it.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("Start at README.md.\nThe rules are in `REVIEW_STANDARDS.md`, not a notes.md.\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert _kinds(problems) == {PATH_KIND}
+    assert sorted(p.split(": ", 2)[2] for p in problems) == ["'README.md'", "'REVIEW_STANDARDS.md'"]
+
+
+def test_playbook_check_rejects_a_tracked_path_split_across_lines(tmp_path, monkeypatch):
+    # Review round 2: Markdown wraps a long path at a line break.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("A rule.\nRun `scripts/\n  check.sh` and then\nontology/release/\nbuild_core.py.\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert any("'scripts/check.sh'" in p and ":2:" in p for p in problems)
+    assert any("'ontology/release/build_core.py'" in p and ":4:" in p for p in problems)
+
+
 def test_playbook_check_reads_organizations_case_insensitively_and_paths_case_sensitively(tmp_path, monkeypatch):
     monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
     book = tmp_path / "playbook.md"
