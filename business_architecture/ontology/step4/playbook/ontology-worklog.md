@@ -976,9 +976,9 @@ without a dated amendment and the decision owner's explicit agreement.
 ### The projection guideline becomes a skill (2026-10-23)
 - The decision owner moved the ontology-to-LPG guideline into the
   `ontology-to-lpg` skill in personal-agent-skills, as version 2.3, merged
-  as `<SKILL-MERGE-COMMIT>` (personal-agent-skills `#<SKILL-PR>`); the
+  as `da75164` (personal-agent-skills #46); the
   enterprise-people-graph folder points to it (enterprise-people-graph
-  `#<PG-PR>`). `lpg-projection/` points to the skill and keeps the v2.2 files
+  #4). `lpg-projection/` points to the skill and keeps the v2.2 files
   as superseded evidence; `projection/pipeline.py` stays on v2.2
   (EPM-DEC-001-0095, amending 0021).
 

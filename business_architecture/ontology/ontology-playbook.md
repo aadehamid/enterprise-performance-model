@@ -56,7 +56,7 @@ project record. You do not need them to follow the method.
   rules, with its counts and precedents.
 - `competency-questions.md`: the project's competency questions.
 - The `ontology-to-lpg` skill (personal-agent-skills, `skills/data/ontology-to-lpg`,
-  at `<SKILL-MERGE-COMMIT>`): the property-graph projection method used in Step 12.
+  at `da75164`): the property-graph projection method used in Step 12.
   `lpg-projection/` keeps the guideline's superseded v2.2 copy (*2026-10-23,*
   EPM-DEC-001-0095).
 

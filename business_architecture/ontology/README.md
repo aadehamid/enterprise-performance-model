@@ -33,7 +33,7 @@ root.
 | `step4/playbook/ontology-worklog.md` | **Worklog** (the build record): plan table and statuses, step log, decision journal |
 | `step4/` | Step 4 working area: verb-predicate mapping, evidence gate, canonical facts, correction backlog (see `step4/README.md`) |
 | `step4/evidence-discipline.md` | The approved Step 4 evidence discipline text, moved word for word from the playbook on 2026-10-05 |
-| `lpg-projection/` | The superseded v2.2 copy of the ontology-to-LPG projection guideline, kept as evidence of what Step 12 followed (EPM-DEC-001-0020, 0021). Since 2026-10-23 the method is the `ontology-to-lpg` skill in personal-agent-skills, at `<SKILL-MERGE-COMMIT>`; the folder's README points to it (EPM-DEC-001-0095) |
+| `lpg-projection/` | The superseded v2.2 copy of the ontology-to-LPG projection guideline, kept as evidence of what Step 12 followed (EPM-DEC-001-0020, 0021). Since 2026-10-23 the method is the `ontology-to-lpg` skill in personal-agent-skills, at `da75164`; the folder's README points to it (EPM-DEC-001-0095) |
 | `../domain/decisions/` | Project decision records (EPM-DEC-001) |
 | `competency-questions.md` | The 44-question acceptance baseline, tested by the Step 11 regression in `regression/` |
 | `projection/` | Step 12: the pipeline that projects the ontology into Neo4j, its manifest and its last report (EPM-DEC-001-0036) |

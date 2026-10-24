@@ -24,9 +24,9 @@ Projecting every released package, through the close-out releases, taught lesson
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-1. **The skill** is `skills/data/ontology-to-lpg` in personal-agent-skills, merged in personal-agent-skills `#<SKILL-PR>` as `<SKILL-MERGE-COMMIT>`. It is the guideline's version 2.3, and its `references/versions.md` lists what 2.3 adds over 2.2. It keeps the five design rules, options 4a and 4b for Rule 4, and add-ons A to G, so the playbook's references to them still hold.
-2. **The enterprise-people-graph guideline folder** points to the skill (enterprise-people-graph `#<PG-PR>`).
-3. **EPM's `lpg-projection/`** README points to the skill at `<SKILL-MERGE-COMMIT>`. The two v2.2 files stay in the folder as superseded evidence of what Steps 1 and 12 followed until 2026-10-23. They are not deleted and are not copied again. This amends EPM-DEC-001-0021: the repository no longer keeps a copy of the current method.
+1. **The skill** is `skills/data/ontology-to-lpg` in personal-agent-skills, merged in personal-agent-skills #46 as `da75164`. It is the guideline's version 2.3, and its `references/versions.md` lists what 2.3 adds over 2.2. It keeps the five design rules, options 4a and 4b for Rule 4, and add-ons A to G, so the playbook's references to them still hold.
+2. **The enterprise-people-graph guideline folder** points to the skill (enterprise-people-graph #4).
+3. **EPM's `lpg-projection/`** README points to the skill at `da75164`. The two v2.2 files stay in the folder as superseded evidence of what Steps 1 and 12 followed until 2026-10-23. They are not deleted and are not copied again. This amends EPM-DEC-001-0021: the repository no longer keeps a copy of the current method.
 4. **Current references point to the skill:** the ontology README's contents table, the playbook (its file list, Step 1, item 10, and Step 12's procedure), the worklog's Step 12 row and the glossary's LPG projection entry. Dated history, earlier records and the worked example in the playbook's §7 keep their references to `lpg-projection/`, because they describe what was done then.
 5. **`projection/pipeline.py` stays on v2.2.** The skill says a project pinned to an earlier version keeps its own scripts (`SKILL.md`, "First, find where the projection stands", item 2). The pipeline, its manifest and its report still name "v2.2 (lpg-projection/, pin 8ce9ada)", which is what the pipeline implements. Moving the pipeline onto the skill's scripts would be a separate change, and no record asks for it.
 6. **Neo4j Aura.** At the decision owner's request, Claude installed the neo4j-contrib/neo4j-skills plugin, 1.0.1, at user scope. n10s is not available on Aura (the Neosemantics documentation, "Availability & Installation"), so the projection validates on a local Neo4j with n10s, and copying the verified graph to Aura is an add-on. The Aura credentials are in a local credentials file outside the repository and never enter it.
@@ -55,7 +55,7 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 ## Evidence
 
 - EPM-DEC-001-0020, 0021, 0036, 0090, 0092, 0093, 0094.
-- The skill's `SKILL.md` and `references/versions.md`, in personal-agent-skills at `<SKILL-MERGE-COMMIT>`.
+- The skill's `SKILL.md` and `references/versions.md`, in personal-agent-skills at `da75164`.
 - Neo4j Labs, Neosemantics (n10s) documentation, "Availability & Installation" (neo4j.com/labs/neosemantics), read 2026-10-23.
 
 ## Consequences

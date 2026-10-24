@@ -2,7 +2,7 @@
 
 The method for projecting a W3C ontology into a Neo4j labelled property graph
 (LPG) is the `ontology-to-lpg` skill in the personal-agent-skills repository,
-`skills/data/ontology-to-lpg`, at commit `<SKILL-MERGE-COMMIT>` (personal-agent-skills `#<SKILL-PR>`).
+`skills/data/ontology-to-lpg`, at commit `da75164` (personal-agent-skills #46).
 It is the guideline's version 2.3. Read the skill, not this folder, for the
 current method (EPM-DEC-001-0095).
 
