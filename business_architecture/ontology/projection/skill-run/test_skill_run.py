@@ -48,3 +48,22 @@ class Inputs(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Paths(unittest.TestCase):
+    def test_relative_paths_become_absolute_before_any_cd(self):
+        """common.sh turns relative ONTOLOGY_TO_LPG, ROBOT_JAR and MANUAL_CASES into absolute paths,
+        because run.sh, load.sh and aura-copy.sh change directory into the skill before using them."""
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "skill", "scripts"))
+            open(os.path.join(tmp, "skill", "scripts", "build.py"), "w").close()
+            script = ('. "$1"; printf "%s\\n" "$ONTOLOGY_TO_LPG" "$ROBOT_JAR" "$MANUAL_CASES" "$SK" "$COMPOSE"')
+            env = {**os.environ, "ONTOLOGY_TO_LPG": "skill", "ROBOT_JAR": "robot.jar",
+                   "MANUAL_CASES": "cases.json", "LPG_OUT": "out"}
+            out = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp,
+                                 env=env, capture_output=True, text=True, check=True).stdout.splitlines()
+            real = os.path.realpath(tmp)
+            self.assertEqual(out, [os.path.join(real, "skill"), os.path.join(real, "robot.jar"),
+                                   os.path.join(real, "cases.json"), os.path.join(real, "skill", "scripts"),
+                                   os.path.join(real, "skill", "docker", "compose.yaml")])

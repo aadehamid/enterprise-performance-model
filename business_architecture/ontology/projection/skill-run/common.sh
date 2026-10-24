@@ -8,6 +8,7 @@ CONFIG="$HERE/epm-config.json"
 abs_path() { case "$1" in /*) printf '%s\n' "$1";; *) printf '%s/%s\n' "$(pwd -P)" "$1";; esac; }
 ONTOLOGY_TO_LPG="$(abs_path "$ONTOLOGY_TO_LPG")"
 [ -z "${ROBOT_JAR:-}" ] || ROBOT_JAR="$(abs_path "$ROBOT_JAR")"
+[ -z "${MANUAL_CASES:-}" ] || MANUAL_CASES="$(abs_path "$MANUAL_CASES")"
 SK="$ONTOLOGY_TO_LPG/scripts"
 COMPOSE="$ONTOLOGY_TO_LPG/docker/compose.yaml"
 [ -f "$SK/build.py" ] || { echo "no scripts/build.py under ONTOLOGY_TO_LPG=$ONTOLOGY_TO_LPG" >&2; exit 2; }
