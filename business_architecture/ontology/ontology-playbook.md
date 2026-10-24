@@ -767,23 +767,27 @@ through the data-flow diagram box by box, and the validation path check by
 check (V1 to V14, and GRAPH TYPE as G1 to G4), with the same names as the
 two diagrams:
 
+Its six hops, numbered as the skill numbers them:
+
 1. **Source.** The released packages and their data are the master copy.
-   Give every blank node a stable IRI once (skolemization, RDF 1.1 §3.5)
+2. **Skolemize.** Give every blank node a stable IRI once (RDF 1.1 §3.5)
    before loading anywhere, so each store can be compared triple for
    triple.
-2. **Triple stores.** Load one named graph per package into any SPARQL 1.1
-   store through the W3C Graph Store HTTP Protocol (tested on Apache Jena
-   Fuseki), and into Databricks as a plain Delta triple table in Unity
-   Catalog (planned). Export each store back and compare it with the
-   source.
-3. **Local Neo4j.** Project with n10s and pass the verify step above. This
+3. **Triple stores.** Load one named graph per package into any SPARQL 1.1
+   store through the W3C Graph Store HTTP Protocol, and into Databricks as
+   a plain Delta triple table in Unity Catalog. Export each store back and
+   compare it with the source.
+4. **Local Neo4j.** Project with n10s and pass the verify step above. This
    is the gate; n10s does not run on Aura.
-4. **Aura or any Neo4j.** Copy the validated graph over the driver and
+5. **Aura or any Neo4j.** Copy the validated graph over the driver and
    require its hash to equal the local graph's.
-5. **Rebuild from a store.** Empty the local Neo4j and Aura, rebuild both
-   from a triple store's export (Databricks in the plan), and compare with
-   the source. This proves the chain from the source through the store to
-   Neo4j and Aura loses nothing.
+6. **Rebuild from a store.** Empty the local Neo4j and Aura, rebuild both
+   from a triple store's export, and compare with the source. This proves
+   the chain from the source through the store to Neo4j and Aura loses
+   nothing.
+
+Which hops have a script and which are planned is in the skill's
+`references/multi-store.md`.
 
 The Databricks step has two modes, one per edition, with the same checks.
 On Free Edition, outbound internet is limited to trusted domains, so
@@ -793,8 +797,7 @@ load or the rebuild may also run inside the workspace when its network rules
 allow the destination. OntoBricks (Databricks Labs) holds one ontology per domain and
 builds instance data from Unity Catalog tables, so it is the later tool for
 linking Unity Catalog data and metric views to the ontology, not the
-lossless store. In this repository's build, hops 2 and 5 run as a separate
-task after the ontology closes (EPM-DEC-001-0096).
+lossless store.
 
 **Done when:** the three checks in the verify step pass on the published
 release.
