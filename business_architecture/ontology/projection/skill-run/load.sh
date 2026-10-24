@@ -30,7 +30,7 @@ sleep 5
 cd "$SK"
 rc=0
 py load_verify.py --config "$CONFIG" "${SHAPE_ARGS[@]}" --bolt "bolt://127.0.0.1:$PORT" \
-  --import-dir "$RUN/import" --plugins-dir "$RUN/plugins" --container "$PROJECT" \
+  --import-dir "$RUN/import" --plugins-dir "$RUN/plugins" --compose-project "$PROJECT" \
   --merged "$LPG_OUT/merged.ttl" --loadable "$LPG_OUT/loadable.nt" --inferred "$LPG_OUT/inferred.nt" \
   --report "$LPG_OUT/projection-report.json" ${MANUAL_CASES:+--manual-cases "$MANUAL_CASES"} "${DATA[@]}" || rc=$?
 [ $rc -eq 0 ] || fail "load_verify.py exited $rc; no report"
