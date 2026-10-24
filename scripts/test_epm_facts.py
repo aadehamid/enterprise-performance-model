@@ -1031,6 +1031,21 @@ def test_playbook_check_passes_a_relative_path_that_is_not_tracked(tmp_path, mon
     assert epm_facts.playbook_problems(str(book)) == []
 
 
+def test_playbook_check_decodes_url_escapes_and_html_entities(tmp_path, monkeypatch):
+    # Codex quick check of b79512a: "%20" in a link hid a tracked path whose folder has spaces.
+    monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
+    book = tmp_path / "playbook.md"
+    book.write_text("\n".join([
+        "A rule.",
+        "See [guide](../../Domain%20Modeling%20Best%20Practices/app/index.html).",  # 2: tracked
+        "See [x](../../no%20such%20folder/x.md) and a&amp;b.",                     # 3: clean control
+        "The anchor is Marathon&nbsp;Petroleum.",                                  # 4: an entity hides a company
+    ]) + "\n")
+    problems = epm_facts.playbook_problems(str(book))
+    assert sorted({(int(p.split(":")[1]), p.split(": ")[1]) for p in problems}) == [(2, PATH_KIND), (4, ORG_KIND)]
+    assert any("'Domain Modeling Best Practices/app/index.html'" in p for p in problems)
+
+
 def test_playbook_check_reads_organizations_case_insensitively_and_paths_case_sensitively(tmp_path, monkeypatch):
     monkeypatch.setattr(epm_facts, "PLAYBOOK_TERMS", [])
     book = tmp_path / "playbook.md"

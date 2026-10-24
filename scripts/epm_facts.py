@@ -41,6 +41,7 @@ import contextlib
 import csv
 import difflib
 import glob
+import html
 import io
 import json
 import os
@@ -51,6 +52,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STEP4 = os.path.join(ROOT, "business_architecture", "ontology", "step4")
@@ -1234,17 +1236,43 @@ def _path_candidates(token):
             yield "/".join(parts[i:]), False
 
 
+# A run of percent-escapes ("%20", or "%C3%A9" for one character) or one HTML entity ("&amp;").
+ENCODED = re.compile(r"(?:%[0-9A-Fa-f]{2})+|&#?\w+;")
+
+
+def _decoded(text):
+    """(text, offsets): text with percent-escapes decoded once (urllib.parse.unquote) and HTML
+    entities unescaped, so "Domain%20Modeling" reads "Domain Modeling"; offsets[i] is the
+    position in the original text of character i.
+    """
+    out, offsets, pos = [], [], 0
+    for m in ENCODED.finditer(text):
+        out.append(text[pos:m.start()])
+        offsets.extend(range(pos, m.start()))
+        chunk = m.group(0)
+        plain = urllib.parse.unquote(chunk) if chunk.startswith("%") else html.unescape(chunk)
+        out.append(plain)
+        offsets.extend([m.start()] * len(plain))
+        pos = m.end()
+    out.append(text[pos:])
+    offsets.extend(range(pos, len(text)))
+    return "".join(out), offsets
+
+
 def _derived_matches(text, organizations, paths, tops):
     """(start, kind, matched text) for each derived organization name and repository path in text."""
     found = []
-    for name in organizations:
-        words = r"\s+".join(re.escape(w) for w in name.split())
-        for m in re.finditer(r"(?<![\w-])" + words + r"(?![\w-])", text, re.I):
-            found.append((m.start(), "an organization in the released ontology or the reference folders", m.group(0)))
     kind = "a path tracked in this repository"
-    # The text as written (a line break is whitespace), then twice with wrapped paths joined.
+    # Four readings: the text as written (a line break is whitespace), twice with wrapped paths
+    # joined, and once with URL escapes and HTML entities decoded.
     variants = [(text, range(len(text)))] + [_without_path_breaks(text, b) for b in PATH_BREAKS]
+    variants.append(_decoded(text))
     for variant, offsets in variants:
+        for name in organizations:
+            words = r"\s+".join(re.escape(w) for w in name.split())
+            for m in re.finditer(r"(?<![\w-])" + words + r"(?![\w-])", variant, re.I):
+                found.append((offsets[m.start()], "an organization in the released ontology or the reference folders",
+                              text[offsets[m.start()]:offsets[m.end() - 1] + 1]))
         for pattern in (REPO_URL, REPO_DIR):
             found += [(offsets[m.start()], kind, m.group(0)) for m in pattern.finditer(variant)]
         # A run stops at "#", "?", ":" and spaces, so a link's #fragment or ?query is never part of it.
