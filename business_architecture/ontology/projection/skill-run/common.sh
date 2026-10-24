@@ -4,6 +4,10 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG="$HERE/epm-config.json"
 : "${ONTOLOGY_TO_LPG:?set ONTOLOGY_TO_LPG to the ontology-to-lpg skill folder}"
 : "${LPG_OUT:?set LPG_OUT to an output folder outside the repository}"
+# Make every path absolute before any script changes directory.
+abs_path() { case "$1" in /*) printf '%s\n' "$1";; *) printf '%s/%s\n' "$(pwd -P)" "$1";; esac; }
+ONTOLOGY_TO_LPG="$(abs_path "$ONTOLOGY_TO_LPG")"
+[ -z "${ROBOT_JAR:-}" ] || ROBOT_JAR="$(abs_path "$ROBOT_JAR")"
 SK="$ONTOLOGY_TO_LPG/scripts"
 COMPOSE="$ONTOLOGY_TO_LPG/docker/compose.yaml"
 [ -f "$SK/build.py" ] || { echo "no scripts/build.py under ONTOLOGY_TO_LPG=$ONTOLOGY_TO_LPG" >&2; exit 2; }

@@ -9,6 +9,7 @@
 set -euo pipefail
 [ $# -ge 1 ] || { echo "usage: $0 <target.env> [--replace]" >&2; exit 2; }
 TARGET_ENV=$1; shift
+case "$TARGET_ENV" in /*) ;; *) TARGET_ENV="$(pwd -P)/$TARGET_ENV";; esac
 [ -f "$TARGET_ENV" ] || { echo "no file $TARGET_ENV" >&2; exit 2; }
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$HERE/common.sh"
