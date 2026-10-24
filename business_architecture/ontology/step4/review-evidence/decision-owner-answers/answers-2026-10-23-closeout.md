@@ -1,4 +1,4 @@
-<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-23 (the ontology's close-out). Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 29 blocks, separated by blank lines.
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-23 (the ontology's close-out). Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 32 blocks, separated by blank lines.
 The decision owner said they wanted to close the items waiting on them so the ontology could close. Claude asked the questions with the AskUserQuestion tool, one item at a time, each with options and a recommendation.
 Block 1: "How should we settle Q17 so the ontology can close?" Options: 1 "Park until sharing (Recommended)": park Q17 by a recorded decision until the ontology is first shared with business consumers, when the business confirms meanings; 2 "Build the relation now, assign later"; 3 "Assign per module now". The decision owner typed block 1.
 Blocks 2 to 4: the three MPC-P10 questions. P10.1 (onboarding): "Add a new L5 (Recommended)", CM 1.3.7.1.7 Coordinate Customer Onboarding under CM 1.3.7.1, Set Up Prospect kept as the card-program case; "Widen Set Up Prospect"; "Change nothing". P10.2 (the Order to Cash credit review's link): "CM 1.3.7.4.2 (Recommended)"; "CM 1.3.7.4.3"; "Leave unlinked". P10.3: "Add Customer Master (Recommended)", on the Marketing & Sales line, produced by CM 1.3.7.1.1; "Don't add it". Block 2 answers P10.1, block 3 P10.2, block 4 P10.3.
@@ -15,6 +15,7 @@ Blocks 21 to 25: the decision owner asked to install the neo4j-contrib/neo4j-ski
 Block 26: the decision owner on the Aura data and Apache Jena: never empty the Aura instance without telling them first, and load the ontology into Jena and explore it in both stores as a separate task after the ontology is complete.
 Blocks 27 and 28: later the same day, the decision owner allowed Claude to delete the data it loads into Aura and Jena after thorough testing, said both would be loaded again with the projection skill in a separate task (block 27), and asked whether the projection skill should also load the ontology into any triple store (block 28).
 Block 29: Claude recommended a triple-store add-on in the ontology-to-lpg skill and asked "Add a triple-store add-on to the ontology-to-lpg skill?" Options: "Add it now (Recommended)": load the same validated files into any SPARQL store through the W3C SPARQL 1.1 Graph Store HTTP Protocol, one named graph per package, with per-predicate counts checked against the files and the Neo4j export, tested on a local Jena Fuseki and the data deleted after; "Add it later"; "Separate skill". Block 29 is the choice.
+Blocks 30 to 32: later the same day, the decision owner set out the plan for after the ontology is complete: load the whole ontology into Jena and into a Databricks triple store, project it to a local Neo4j and to Aura, then rebuild both from the Databricks store and check that no data is lost; the end goal is linking KPIs computed in Unity Catalog metric views to the business processes they support (block 30). Claude found that Databricks has no built-in triple store and compared a plain Delta triple table with OntoBricks (Databricks Labs), which holds one ontology per domain and builds instance data only from Unity Catalog tables. Claude asked "What should 'the Databricks triple store' be for the no-loss tests?" Options: "Delta table + OntoBricks later (Recommended)": a plain Delta triple table is the lossless store and the source for reloading Neo4j, and OntoBricks comes later for linking Unity Catalog data and metric views; "OntoBricks only"; "Delta table only". Block 31 is the choice. Claude asked "When should the skill get its Databricks add-on?" Options: "In the later task (Recommended)"; "Now, before merging". Block 32 is the choice.
 Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
 I agree with 1. Can we document this as a package to go with the ontology so that we know what to close out with the business.
@@ -75,3 +76,16 @@ We will load jena and aura DB back with the projection skill to test it out in a
 In that case do we also wants to add to the projection skill to alos be able to load the ontology into any triple store as well?
 
 Add it now (Recommended)
+
+Okay. Eventually I plan to load the ontology into Databricks so that I can connect data in Unity Catalog with it . This includes the KPI computed through metric view so that I can link the KPI from metric view to the end to end business process it supports through the ontology. So what this means is that I will also like to try loading the entire ontology into databrick triple store . I have a free edition of Databrick And I want to be able to load the Neo4 J database in this case both local and Aura using the data brick triplle store as the soure.
+So here is the full picture:
+1. create the ontology 100 %
+2. test and validate loading to oad to triple store, Jena and Databrick triple store
+3. Project to a local Neo4 J as planned
+4. Load Aura DB as planed and test and validate that no data is lost
+5. then delete the data in local Neo4j and Aura. and then try to load both Neo4 J local and Aura again but this time the source will be databrick triple store. test and validate with the original ontology to ensure no data is lost
+makes sesne? lest discuss
+
+Delta table + OntoBricks later (Recommended)
+
+In the later task (Recommended)
