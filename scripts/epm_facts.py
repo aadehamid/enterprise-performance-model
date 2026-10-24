@@ -13,7 +13,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
-    python3 scripts/epm_facts.py playbook          # the ontology playbook names no EPM record, company or repo path
+    uv run --with rdflib python scripts/epm_facts.py playbook   # the ontology playbook names no EPM record, company or repo path
     add --json for machine-readable output
 
 How it gets the numbers:
@@ -32,7 +32,8 @@ How it gets the numbers:
   (remains held)"). Other columns are ignored (see test_review_holds_read_only_the_decision_column).
 
 Standard library only, except taxonomy triple counts, which use rdflib when it
-is installed, and the quotes command, which needs markdown-it-py (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
+is installed, the quotes command, which needs markdown-it-py, and the playbook
+command, which needs rdflib (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
 """
 import argparse
 import collections
@@ -1093,6 +1094,8 @@ def cmd_names(args):
 # The ontology playbook is a method for any domain. This build's evidence for it
 # (records, companies, filings, paths, refining examples) is in the worklog's
 # "Evidence map for the playbook". Each pattern names one kind of build-specific text.
+# The check also derives names and paths from governed data (governed_organizations,
+# governed_paths), so a company or path missing from this list is still caught.
 PLAYBOOK_TERMS = [
     ("an EPM decision record", r"EPM-DEC|\bEPM\b"),
     ("a company or its filer names", r"\bMPC\b|Marathon|\bMPLX\b|Valero|Phillips\s+66|\bPBF\b|HF\s+Sinclair"
@@ -1107,11 +1110,102 @@ PLAYBOOK_TERMS = [
 ]
 
 
-def playbook_problems(path=PLAYBOOK):
+RELEASES = os.path.join(ROOT, "business_architecture", "ontology", "releases")
+REFERENCE = os.path.join(ROOT, "business_architecture", "reference")
+PARTY = "https://w3id.org/lsc/ontology/modules/party/"
+W3C_ORG = "http://www.w3.org/ns/org#"
+# The classes whose individuals are companies: party:Organization (and any subclass a release
+# declares), and the W3C ORG classes the ref-mpc module also types its companies with.
+ORGANIZATION_CLASSES = (PARTY + "Organization", W3C_ORG + "FormalOrganization", W3C_ORG + "Organization")
+# A legal-form word at the end of a label. The name without it is checked too
+# ("Marathon Petroleum Corporation" also gives "Marathon Petroleum").
+LEGAL_FORM = re.compile(r"(?:,?\s+(?:Corporation|Corp\.?|Company|Co\.|Inc\.?|LP|L\.P\.|LLC|Ltd\.?|plc|N\.V\.|S\.A\.))+$", re.I)
+# Folders under business_architecture/reference/ that do not name a filer. Every other folder name
+# there names one, and the playbook must not use it.
+REFERENCE_FOLDERS_NOT_FILERS = {
+    "internal": "holds the decision owner's own definitions, not a filer's; and it is a common English word",
+    "downstream-peers": "names the group of peer filers, not one filer; its word 'downstream' is in PLAYBOOK_TERMS",
+}
+# Path tokens in the playbook that are tracked paths (or their suffixes) but name a generic
+# file every ontology build has, not this repository. Each needs a reason.
+PLAYBOOK_PATH_EXCEPTIONS = {}
+
+
+def governed_organizations(releases=RELEASES, reference=REFERENCE):
+    """The names the playbook must not use: each organization's labels in the released packages
+    (skos:prefLabel, skos:altLabel and rdfs:label, any language, with and without a legal-form
+    ending), and the folder names under the reference folder that name filers.
+    """
+    try:
+        import rdflib
+    except ImportError:
+        sys.exit("epm_facts.py playbook needs rdflib: uv run --with rdflib python scripts/epm_facts.py playbook")
+    from rdflib.namespace import RDF, RDFS, SKOS
+    g = rdflib.Graph()
+    for f in sorted(glob.glob(os.path.join(releases, "**", "*.ttl"), recursive=True)):
+        g.parse(f, format="turtle")
+    classes = {rdflib.URIRef(c) for c in ORGANIZATION_CLASSES}
+    classes |= set(g.transitive_subjects(RDFS.subClassOf, rdflib.URIRef(PARTY + "Organization")))
+    names = set()
+    for cls in classes:
+        for org in g.subjects(RDF.type, cls):
+            for prop in (SKOS.prefLabel, SKOS.altLabel, RDFS.label):
+                for label in g.objects(org, prop):
+                    label = " ".join(str(label).split())
+                    names |= {label, LEGAL_FORM.sub("", label)}
+    if os.path.isdir(reference):
+        names |= {d for d in os.listdir(reference)
+                  if os.path.isdir(os.path.join(reference, d)) and d not in REFERENCE_FOLDERS_NOT_FILERS}
+    return sorted(n for n in names if n)
+
+
+def governed_paths(root=ROOT):
+    """(paths, top-level folders): every tracked file's path and each suffix of two or more
+    segments ("release/build_core.py"), and each tracked top-level folder name followed by "/".
+    """
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    tracked = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], env=env).decode().split("\0")
+    paths, tops = set(), set()
+    for name in filter(None, tracked):
+        parts = name.split("/")
+        paths.add(name)
+        paths |= {"/".join(parts[i:]) for i in range(1, len(parts) - 1)}
+        if len(parts) > 1:
+            tops.add(parts[0] + "/")
+    return paths, tops
+
+
+# A run of path characters that holds a "/": the candidate path tokens in a text.
+PATH_TOKEN = re.compile(r"[\w.\-/<>]*/[\w.\-/<>]*")
+
+
+def _derived_matches(text, organizations, paths, tops):
+    """(start, kind, matched text) for each derived organization name and repository path in text."""
+    found = []
+    for name in organizations:
+        words = r"\s+".join(re.escape(w) for w in name.split())
+        for m in re.finditer(r"(?<![\w-])" + words + r"(?![\w-])", text, re.I):
+            found.append((m.start(), "an organization in the released ontology or the reference folders", m.group(0)))
+    for m in PATH_TOKEN.finditer(text):
+        token = m.group(0).rstrip(".").removeprefix("./")
+        if token in PLAYBOOK_PATH_EXCEPTIONS:
+            continue
+        if token in paths or token.rstrip("/") in paths:
+            found.append((m.start(), "a path tracked in this repository", token))
+    # A top-level folder can hold a space ("metadata Integration/"), so it is searched as text.
+    for top in tops:
+        for m in re.finditer(r"(?<![\w./-])" + re.escape(top), text):
+            found.append((m.start(), "a path tracked in this repository", m.group(0)))
+    return found
+
+
+def playbook_problems(path=PLAYBOOK, releases=RELEASES, reference=REFERENCE, root=ROOT):
     """Each playbook line that holds build-specific text, with the kind of text it holds.
 
-    Lines are joined first, so a term split across a line break is still found and
-    reported at the line where it starts.
+    Build-specific text is a PLAYBOOK_TERMS pattern, an organization named in the released
+    packages or the reference folders, or a path tracked in this repository. Lines are joined
+    first, so a term split across a line break is still found and reported at the line where
+    it starts.
     """
     with open(path, encoding="utf-8") as f:
         lines = f.read().split("\n")
@@ -1120,12 +1214,14 @@ def playbook_problems(path=PLAYBOOK):
         starts.append(pos)
         pos += len(line) + 1
     text = "\n".join(lines)
+    found = [(m.start(), what, m.group(0))
+             for what, pattern in PLAYBOOK_TERMS for m in re.finditer(pattern, text, re.I)]
+    found += _derived_matches(text, governed_organizations(releases, reference), *governed_paths(root))
     problems = []
-    for what, pattern in PLAYBOOK_TERMS:
-        for m in re.finditer(pattern, text, re.I):
-            line = next(i for i in range(len(starts) - 1, -1, -1) if starts[i] <= m.start()) + 1
-            problems.append(f"{rel(path)}:{line}: {what}: {m.group(0)!r}")
-    return sorted(problems, key=lambda p: int(p.split(":")[1]))
+    for start, what, matched in found:
+        line = next(i for i in range(len(starts) - 1, -1, -1) if starts[i] <= start) + 1
+        problems.append(f"{rel(path)}:{line}: {what}: {matched!r}")
+    return sorted(set(problems), key=lambda p: int(p.split(":")[1]))
 
 
 def cmd_playbook(args):

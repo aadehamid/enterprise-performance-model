@@ -142,8 +142,9 @@ run with_deps python scripts/epm_facts.py quotes
 # EPM-DEC-001-0049: the repo names the decision owner by role, never by name or account.
 run python3 scripts/epm_facts.py names
 # The ontology playbook is a method for any domain: it names no EPM record, company or repo path.
+# The companies come from the released packages (rdflib) and the reference folders; the paths from git.
 # The build's evidence for each section is in the worklog's "Evidence map for the playbook".
-run python3 scripts/epm_facts.py playbook
+run with_deps python scripts/epm_facts.py playbook
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase
 # merge of the pinning PR leaves it off main (PR #225, re-pinned in #227).
 pin="$(cat "$step4/PINNED_SHA.txt")"

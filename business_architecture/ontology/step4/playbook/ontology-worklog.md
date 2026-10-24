@@ -2732,15 +2732,22 @@ playbook cited from this build before that change: every EPM-DEC-001
 record, every company and filing, and every path into this repository,
 under the playbook section heading that cited it, with the sentence it
 supported. The playbook as it stood before the change is at commit
-`5af2dd8`. `python3 scripts/epm_facts.py playbook` fails if the playbook
-names an EPM record, a company or a path into this repository again
-(run by `scripts/check.sh`).
+`5af2dd8`. `uv run --with rdflib python scripts/epm_facts.py playbook`
+fails if the playbook names an EPM record, a company or a path into this
+repository again (run by `scripts/check.sh`). It checks a fixed list of
+terms, every organization label in the released packages, the reference
+folders that name filers, and every tracked path and path suffix.
 
 Section headings and numbering in the playbook are unchanged, except §7
 ("Worked example: the downstream process-map ontology" is now "Worked
-example") and the two worked-example items under Appendix A. Both moved here
-word for word, below the table. Relative paths in the moved text are
-relative to `business_architecture/ontology/`.
+example") and the titles of the two headings under Appendix A, which now
+head library examples. "Constraints module (worked example, parked
+2026-09-18)" is now "Fines and fees module (worked example, parked)".
+"Value-stream, capability, activity, event, decision, KPI and data-product
+layer (worked example, parked 2026-09-22)" keeps its title without the
+date. The old §7 and the old text of both Appendix A items moved here word
+for word, below the table. Relative paths in the moved text are relative
+to `business_architecture/ontology/`.
 
 ### Citations in the other sections
 

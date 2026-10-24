@@ -1448,10 +1448,12 @@ The module header follows Appendix B.
 A parked item is something you deliberately defer. Record it with what it
 would cover, the competency questions it would answer, a "done when", and a
 revival trigger. Never delete a parked item. Revive it or close it with a
-decision. A library's example:
+decision. A library's two parked items show the pattern.
 
-**Fines and fees (parked).** Not modeled yet. The questions it would
-answer are kept, so a later pass can use them unchanged:
+### Fines and fees module (worked example, parked)
+
+Not modeled yet. The questions it would answer are kept, so a later pass
+can use them unchanged:
 
 - What is a fine, a fee and a waiver?
 - Does an overdue loan have a fine, or is it one?
@@ -1462,14 +1464,19 @@ Done when: loans reference fines and do not subclass them.
 Revival trigger: a consumer needs to reason about money owed, not only
 about loan states.
 
-**Parking a whole layer.** Value streams, capabilities, activities, events,
-decisions, measures and data products are often parked together. They come
-back as overlays over the process backbone, one at a time, never as a
-second hierarchy inside it. A value stream cuts across the tree (a
-borrowing journey touches membership, circulation and fines), and every
-concept has exactly one parent, so a value stream cannot be a parent.
-Overlays reference process nodes by ID. Done when: a consumer needs one of
-these layers; then promote that overlay against the released backbone.
+### Value-stream, capability, activity, event, decision, KPI and data-product layer (worked example, parked)
+
+Value streams, capabilities, activities, events, decisions, KPIs and data
+products are often parked together. They come back as overlays over the
+process backbone, one at a time, never as a second hierarchy inside it. A
+value stream cuts across the tree (a borrowing journey touches membership,
+circulation and fines), and every concept has exactly one parent, so a
+value stream cannot be a parent. Overlays reference process nodes by ID.
+
+Done when: a consumer needs one of these layers. Then promote that overlay
+against the released backbone.
+Revival trigger: someone asks for the borrowing journey end to end, and the
+backbone alone cannot answer.
 
 ---
 
