@@ -1236,8 +1236,9 @@ def _path_candidates(token):
             yield "/".join(parts[i:]), False
 
 
-# A run of percent-escapes ("%20", or "%C3%A9" for one character) or one HTML entity ("&amp;").
-ENCODED = re.compile(r"(?:%[0-9A-Fa-f]{2})+|&#?\w+;")
+# A run of percent-escapes ("%20", or "%C3%A9" for one character) or one HTML entity: named or
+# numeric, with or without its ";" ("&amp;", "&nbsp", "&#32", "&#x20"), as html.unescape reads them.
+ENCODED = re.compile(r"(?:%[0-9A-Fa-f]{2})+|&(?:#[xX][0-9A-Fa-f]+|#[0-9]+|[A-Za-z][A-Za-z0-9]*);?")
 
 
 def _decoded(text):
@@ -1303,6 +1304,11 @@ def playbook_problems(path=PLAYBOOK, releases=RELEASES, reference=REFERENCE, roo
     packages or the reference folders, or a path tracked in this repository. Lines are joined
     first, so a term split across a line break is still found and reported at the line where
     it starts.
+
+    Scope: the check catches those names and paths written plainly, wrapped across lines, as
+    relative, absolute or GitHub paths, and percent- or entity-encoded. It is a backstop for
+    reviewed Markdown, not a detector of deliberate obfuscation (zero-width characters,
+    look-alike letters); review catches that.
     """
     with open(path, encoding="utf-8") as f:
         lines = f.read().split("\n")

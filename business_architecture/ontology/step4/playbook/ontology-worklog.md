@@ -2736,7 +2736,11 @@ supported. The playbook as it stood before the change is at commit
 fails if the playbook names an EPM record, a company or a path into this
 repository again (run by `scripts/check.sh`). It checks a fixed list of
 terms, every organization label in the released packages, the reference
-folders that name filers, and every tracked path and path suffix.
+folders that name filers, and every tracked path and path suffix. It finds
+them written plainly, wrapped across lines, as relative, absolute or GitHub
+paths, and percent- or entity-encoded. It is a backstop for reviewed
+Markdown, not a detector of deliberate obfuscation such as zero-width
+characters or look-alike letters, which review catches.
 
 Section headings and numbering in the playbook are unchanged, except §7
 ("Worked example: the downstream process-map ontology" is now "Worked

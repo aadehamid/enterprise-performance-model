@@ -1040,9 +1040,11 @@ def test_playbook_check_decodes_url_escapes_and_html_entities(tmp_path, monkeypa
         "See [guide](../../Domain%20Modeling%20Best%20Practices/app/index.html).",  # 2: tracked
         "See [x](../../no%20such%20folder/x.md) and a&amp;b.",                     # 3: clean control
         "The anchor is Marathon&nbsp;Petroleum.",                                  # 4: an entity hides a company
+        "Its unit is Marathon&nbsp Petroleum, or MPLX&#32LP.",                      # 5: entities without ";"
     ]) + "\n")
     problems = epm_facts.playbook_problems(str(book))
-    assert sorted({(int(p.split(":")[1]), p.split(": ")[1]) for p in problems}) == [(2, PATH_KIND), (4, ORG_KIND)]
+    assert sorted({(int(p.split(":")[1]), p.split(": ")[1]) for p in problems}) == [(2, PATH_KIND), (4, ORG_KIND), (5, ORG_KIND)]
+    assert any(":5:" in p and "Marathon&nbsp Petroleum" in p for p in problems)
     assert any("'Domain Modeling Best Practices/app/index.html'" in p for p in problems)
 
 
