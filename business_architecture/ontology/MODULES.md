@@ -11,7 +11,7 @@ The diagram "EPM ontology: modules and how they connect" draws the same picture,
 
 ## The whole picture
 
-`core` is the process map. Every other module adds one kind of thing and links it to core's processes, mostly by using core's process IRIs (`https://w3id.org/lsc/ontology/process/CM-…`) directly. A module names the versions of the modules it was released against. When modules are loaded together, the newest release of each one is loaded.
+`core` is the process map. Most other modules add one kind of thing and link it to core's processes, mostly by using core's process IRIs (`https://w3id.org/lsc/ontology/process/CM-…`) directly. Three do not: `market-data` links to `kpi`'s measures, `ref-mpc` holds company facts in the terms of `organization` and `party`, and `integration` holds rules about the other modules' links. A module names the versions of the modules it was released against. When modules are loaded together, the newest release of each one is loaded.
 
 Some source folders are not packages of their own. `placement/`, `authority/` and `consumer/` ship together as `integration`. `population/` ships in `kpi`. `apqc/` is a reference list that ships in no package.
 

@@ -29,8 +29,11 @@ root.
 ## Modules
 
 The ontology ships as modules, each released and versioned on its own. `core` is the process
-map, and every other module adds one kind of thing and links it to core's processes. `MODULES.md`
-shows each link with an example quoted from the releases.
+map, and most other modules add one kind of thing and link it to core's processes. Three do not:
+`market-data` links to `kpi`'s measures, `ref-mpc` holds company facts in the terms of
+`organization` and `party`, and `integration` holds rules about the other modules' links.
+`MODULES.md` shows each link with an
+example quoted from the releases.
 
 | Module | What it is for |
 |---|---|
