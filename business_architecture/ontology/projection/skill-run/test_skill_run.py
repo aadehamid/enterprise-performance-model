@@ -62,8 +62,12 @@ class RunConfig(unittest.TestCase):
         self.assertEqual(self.path(self.cfg["projection_config"]), os.path.join(HERE, "epm-config.json"))
         self.assertEqual(self.path(self.cfg["queries"]), os.path.join(HERE, "queries.json"))
         self.assertEqual(os.path.realpath(self.path(self.cfg["releases"])), listed("releases")[0])
+        for key in ("inputs_script", "projection_config", "queries"):
+            self.assertTrue(os.path.isfile(self.path(self.cfg[key])), key)
 
     def test_outputs_and_credentials_live_outside_the_repository(self):
+        # Machine paths (ROBOT, the env files, the outputs) cannot exist in CI, so they must sit under the
+        # home folder, which the driver expands; the repository's own files are checked above.
         for key in ("out", "robot_jar", "target_env"):
             self.assertTrue(self.cfg[key].startswith("~/"), key)
         self.assertTrue(self.cfg["rebuild"]["out"].startswith("~/"))
