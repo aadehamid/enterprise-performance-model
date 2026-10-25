@@ -15,8 +15,9 @@ What the file describes:
 
 | Asset | Name |
 |---|---|
-| Genie agent | Crack Spread Price Analytics |
-| Metric view | `idp_sbx.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw` |
+| Genie agent | Crack Spread Price Analytics (room `01f1a79c27e9120d93e3bc2baa5b11ea`); its data source is `idp_sbx.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metricsfromsilver_vw` |
+| Metric view (traced lineage) | `idp_sbx.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw`, built from the gold table below |
+| Metric view (the agent's) | `..._metricsfromsilver_vw`: the same series with three more columns (`KPI_ID`, `Crack_Spread_Sum`, `Effective_End_Datetime`); the file traces no lineage for it |
 | Gold table | `idp_sbx.gold_commercial_core.mpr_mips_crack_spread_price_fact` |
 | Genie agent | Executive Summary KPIs Analytics |
 | Metric view | `idp_sbx.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw` |
@@ -31,9 +32,9 @@ The Executive Summary agent groups its prices into nine groups: Benchmark, Crack
 ## Decision
 
 1. **The pricing measures stay market indicators.** The decision owner: "let us keep them as market indicator. Not all of these are KPIs so our intepretation here is correct unless you think otherwise." The classes stand as EPM-DEC-001-0042 set them and EPM-DEC-001-0050 approved them: a KPI is a designation with a target and an owner, and these measures describe the market, not a result the company is accountable for. The crack-spread agent itself describes its values as market-marker estimates, not realized margin.
-2. **The KPI ID is kept as an external identifier.** The decision owner: "It is okay to leave the KPI_ID even though they may not be KPI . We will need the ID to integrate with other data (e.g governance data in Purview or unity catalog)". The crack-spread view's `KPI_ID` ("KPI Crack Spread 3-2-1"; the agent calls it KPI-0001) becomes a `dcterms:identifier` on Crack Spreads Pricing, with a note naming the system it comes from, so it carries no claim that the measure is a KPI. The file gives no KPI ID for the other measures.
+2. **The KPI ID is kept as an external identifier.** The decision owner: "It is okay to leave the KPI_ID even though they may not be KPI . We will need the ID to integrate with other data (e.g governance data in Purview or unity catalog)". The crack-spread view's `KPI_ID` ("KPI Crack Spread 3-2-1"; the agent calls it KPI-0001) becomes a `dcterms:identifier` on Crack Spreads Pricing, with a note naming the system it comes from, so it carries no claim that the measure is a KPI. The file gives no KPI ID for the other measures. The `KPI_ID` column is in the agent's view and in the gold table, where it comes only from a legacy table (see Known gaps); the bound view's definition does not expose it.
 3. **Anything crack spread comes from the crack-spread view.** The decision owner: "Crack view wins. Anyting related to crack spread comes from crack spread specific metric view". `mpr_mips_crack_spread_price_fact_metrics_vw`, built from MPR settle prices, is the bound source of Crack Spreads Pricing. The Executive Summary agent's six crack-spread blends, built from MIPS assessment values, are a second presentation of the same series, not a source.
-4. **The crack-spread view is the one whose name lacks `metricsfromsilver`.** The decision owner: "Let us use the one without" the word metricsfromsilver. The agent section of the file names `mpr_mips_crack_spread_price_fact_metricsfromsilver_vw`; the lineage section traces `mpr_mips_crack_spread_price_fact_metrics_vw` from the gold table. The second is the one bound.
+4. **The crack-spread view is the one whose name lacks `metricsfromsilver`.** The decision owner: "Let us use the one without" the word metricsfromsilver. The agent section of the file names `mpr_mips_crack_spread_price_fact_metricsfromsilver_vw`; the lineage section traces `mpr_mips_crack_spread_price_fact_metrics_vw` from the gold table. The second is the one bound. The crack-spread agent, though, queries the first; see open question 7. This item records the decision owner's choice only.
 5. **`market-data` covers every series the views hold, by naming the columns that list them.** The decision owner: "Our sereies should cover all of what I just shared. They are more comprehensive", then "can we just add the table columns that will give us this to show that the full series can be obtained ieven if we just list a few in market data". So:
    - the complete set of crack-spread series is the distinct `Price_Master_ID` values in the crack-spread view, each named by `Price_Master_Name` and grouped by `MIPS_Groups_Text`;
    - the complete set for the other groups is the distinct `MIPSDisplayName` values in the Executive Summary view, filtered as the agent's group filters do (by `Price_Group_Name` or `Price_Sheet_Name`);
@@ -52,7 +53,7 @@ The Executive Summary agent groups its prices into nine groups: Benchmark, Crack
    | Benchmark (ICE Brent, NYMEX WTI Cushing, NYMEX Natural Gas, NYMEX Heating Oil, NYMEX RBOB) | open: see question 1 | |
    | none | Price Comparison; R&M Margin Indicator | not served by either agent |
 
-   The identifiers agree where both sides hold them: Price Master IDs 37464 and 42023 (the blended cracks) and 747 (NYMEX WTI Cushing) are in the views and in `market-data` 1.0.0.
+   The identifiers agree where both sides hold them. The six primary regional 3-2-1 series the crack-spread agent names (43870 USGC MEH, 37438 Chicago WTI, 37439 Group/Tulsa WTI, 36855 LA ANS, 37443 PNW ANS, 37471 SLC WTI), the blended cracks (37464, 42023), the NYMEX crack 39998 and NYMEX WTI Cushing (747) all carry the same Price Master IDs in `market-data` 1.0.0.
 7. **Synthetic data for testing.** The decision owner: "We have the freedom when using synthetic data in Free databrick edition to shape it as we want . as long as it ihas the same shape as the one shared". The views are in another Databricks workspace, so tests in the Free Edition use synthetic tables and views with the same columns and grain.
 
 ## Differences between the views and the measures' definitions
@@ -73,7 +74,8 @@ Each is a question for the decision owner, not changed here:
 4. **Ownership and stewardship** of the views and agents: Q17, parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).
 5. **The differences above,** each kept, changed in the measure, or noted as the view's own rule.
 6. **The consumer rule for a Genie agent.** The decision owner, 2026-10-24: "We actually have a genie agent today that may be used to give a KPI value ... The intention is that the genie agent should be able to add context to the KPI value using the ontology." EPM-DEC-001-0061 (item 3) refuses "computing or quoting a value". Recommendation: an agent may quote a value that comes from the source the graph binds to that measure (`con:publishesMeasure`), naming the source, and add the ontology's context; computing a value from the graph, building a crack spread from its legs, and quoting from an unbound source stay refused. To be decided by the decision owner and recorded as an amendment to EPM-DEC-001-0061.
-7. **Sandbox or production names.** Every object named here is in `idp_sbx`, a sandbox catalog. The ontology would record these names unless the decision owner gives production ones.
+7. **The crack-spread agent's view.** The decision owner chose to bind `mpr_mips_crack_spread_price_fact_metrics_vw`, whose lineage is traced from gold (item 4). The Crack Spread Price Analytics agent queries `mpr_mips_crack_spread_price_fact_metricsfromsilver_vw`, which has three more columns and no traced lineage. Either the agent is repointed to the bound view, or the other view's lineage is traced and it is bound instead. Asked of the decision owner on 2026-10-25; not decided here.
+8. **Sandbox or production names.** Every object named here is in `idp_sbx`, a sandbox catalog. The ontology would record these names unless the decision owner gives production ones.
 
 ## What follows
 
@@ -90,7 +92,10 @@ Each of these needs the decision owner's approval of the release; none is given 
 - **Completeness of series.** Only the named series carry definitions, legs and regions; the rest are known only through the views' columns (item 5).
 - **The benchmark view's scaling defect.** The view stores ICE Brent (572), NYMEX WTI Cushing (747) and NYMEX Natural Gas (750) multiplied by 100, and the Executive Summary agent divides them back. Recorded by default as a known gap for the data product's release note; the decision owner asked what it meant on 2026-10-25 and has not yet decided otherwise.
 - **The KPI ID's lineage.** The crack-spread gold table's `KPI_ID` has no silver source; it comes only from the legacy `synapse_dev.commercial_core` table.
-- **Inferred joins.** The file's lineage infers the gold tables' joins and derived columns (`Price_Master_ID`, `ChangeValue`, `SortColumns`) from column lineage, not from pipeline code.
+- **Inferred joins.** The file's lineage infers the gold tables' join keys and some derived columns (`Price_Master_ID`, `ChangeValue` and `SortColumns` in the Executive Summary; `MIPS_Groups_Text` in the crack spread) from column lineage, not from pipeline code.
+- **The benchmark view has no lineage in the file.** Only the crack-spread and Executive Summary views are traced.
+- **Legacy reads.** Every silver table also reads a same-named table in the legacy `synapse_dev.mdm_core` or `udm_core` schema, and the crack-spread gold table reads `synapse_dev.commercial_core.mpr_mips_crack_spread_price_fact`; the file says this is likely a history backfill, reason not confirmed.
+- **The lineage's reach.** It covers the last 180 days of Unity Catalog lineage, and the `synapse_dev.replica_*` tables are the top of what it records: nothing upstream of them is traced.
 
 ## Alternatives considered
 
