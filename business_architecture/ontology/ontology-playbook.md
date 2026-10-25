@@ -312,7 +312,8 @@ Use SKOS first, not OWL.
    behind these rules").
 3. Collect candidate definitions from references, but send each one through
    a human gate. Reference text informs a definition. Never copy it
-   verbatim.
+   verbatim. Candidates a language model extracts from documents follow the
+   same gate (§6, Human-gated authoring).
 4. Do not turn each hierarchy level into OWL classes and subclasses. That
    asserts logical commitments, such as disjointness and inherited
    restrictions, that a naming hierarchy does not support.
@@ -1045,6 +1046,17 @@ process uses which input". A careless promotion corrupts those facts
 silently: the triples look fine but no longer say what the business said.
 The rules below prevent that.
 
+When the source is a spreadsheet or CSV export, write the conversion as a
+reviewed mapping and run it as a deterministic build step that fails unless
+the committed output equals a fresh build. Review the mapping, not the
+output: the output is regenerated, never edited. Build each IRI from the
+row's stable key, never from its position or its label, so a re-sorted sheet
+mints no new identities. Map every value in its final form, language tag and
+datatype included, and pin the engine's version. The `ontology` skill's
+`promotion.md`, "From a spreadsheet to triples", works one example through
+two engines (an RML mapping run by Morph-KGC, and maplib's templates over a
+dataframe) and leaves the choice of engine to the owner.
+
 ### The eleven rules
 
 1. **Pin all evidence to one commit.** Every evidence file records the
@@ -1404,6 +1416,16 @@ gate:
 3. A person reviews the meaning: parent test, sibling disjointness, primary
    purpose, stable terms, no invented owners.
 4. Every doubt goes back to the owner as a question.
+
+Candidate terms a language model extracts from documents, with a tool such
+as OntoGPT, enter the same gate as candidates, never as ontology content. Run
+the tool only on documents the owner supplied, with a model the owner
+approved for that content, and keep its raw result as evidence outside the
+graph. Each candidate cites its passage word for word. A script can prove
+the passage is in the document and the row is well formed; it cannot tell
+whether the definition says what the passage says, so a person re-checks
+each definition against its passage before the review of meaning (the
+`ontology` skill's `governance.md`, "Candidates from documents").
 
 ### One change per pull request
 Every change goes through a pull request, and a reviewer merges or holds it.

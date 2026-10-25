@@ -2796,6 +2796,8 @@ to `business_architecture/ontology/`.
 | Step 10, item 5 and "Done when" | A "Known gaps" section in every changelog | personal-agent-skills #60. A read-only trial: all 25 released packages have a CHANGELOG.md and none has the section; they stay as released and would be listed as exempt when the build adopts the check |
 | Step 10, item 6 | Widoco pages beside each released package | personal-agent-skills #59. A sample for `lane` 1.0.0 was built outside the repository; publishing waits for the hosting decision (EPM-DEC-001-0039) |
 | Step 11, item 3 | `run_regression.py` runs the suite | personal-agent-skills #49 |
+| Step 3, item 3, and §6, Human-gated authoring | Candidates a language model extracts from documents (OntoGPT) enter the human gate | personal-agent-skills #64. Asked for by the decision owner on 2026-10-24 for building from unstructured documents; no model was run on this build's documents |
+| §3, opening | A spreadsheet or CSV becomes triples through a reviewed mapping and a deterministic build | personal-agent-skills #63. Asked for by the decision owner on 2026-10-24 for later spreadsheets and CSV files; the skill leaves the choice between Morph-KGC and maplib to the decision owner, recommending Morph-KGC |
 | Step 12, hop 3 | The `rdf-store` skill and its RDFC-1.0 hash proof | personal-agent-skills #55. Live round trip on 2026-10-25 of the newest release of each of the 11 modules with their shapes and catalogs: 33 graphs, 36,575 quads, equal hashes through Jena Fuseki 6.2.0 and through the Databricks table `workspace.epm_ontology.epm_triples` |
 
 ### §7 Worked example: the downstream process-map ontology (moved word for word)
