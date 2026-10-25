@@ -41,6 +41,9 @@ SYSTEMS_OUTPUT = os.path.join(HERE, "systems.ttl")
 LIFECYCLE_OUTPUT = os.path.join(HERE, "lifecycle.ttl")
 CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 SYSTEM_MODULE = os.path.join(HERE, "..", "system", "systems.csv")
+# The definitions' sources are shared with the system module (item G, EPM-DEC-001-0099).
+SYSTEM_SOURCES = os.path.join(HERE, "..", "system", "sources.csv")
+SRC = Namespace("https://w3id.org/lsc/ontology/source/")
 SYSTEM = Namespace("https://w3id.org/lsc/ontology/modules/system/system/")
 ENTITIES = ("Party", "ExternalIdentifier", "Address", "ContactPoint", "PartyRole", "PartyRelationship",
             "CustomerAccount", "CustomerClass", "LineOfBusiness", "Brand", "Agreement", "SiteBrandAssignment",
@@ -189,7 +192,7 @@ SOURCED_SCHEMES = {"party-role", "customer-class", "line-of-business", "party-ty
 INPUTS = {str(i) for i in range(1, 8)}
 # Customer systems that are a system-module node under another slug, as the decision owner said
 # ("Terminal Margin Ranking System = TMR", EPM-DEC-001-0072). Same slugs match without an entry here.
-SAME_SYSTEM = {"terminal-margin-ranking-system": "tmr"}
+SAME_SYSTEM = {"terminal-margin-ranking-system": "tmr", "sap-s4hana": "sap"}  # sap: EPM-DEC-001-0099
 DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: each stage's links, and no others
     ("lifecycle-stage/prospect", "process"): {"CM 1.3.6.2.1", "CM 1.3.6.6.1", "CM 1.3.7.4.2"},
     # CM 1.3.7.1.7 joined on 2026-10-23: MPC-P10.1 added it to the map (EPM-DEC-001-0087, 0092).
@@ -253,8 +256,21 @@ def load_systems(codes):
     sourcing = Counter((r["system"], r["kind"], r["concept"]) for r in sources)
     problems += [f"source {k} is listed {n} times" for k, n in sourcing.items() if n > 1]
     problems += [f"attribute {k} is listed {n} times" for k, n in keys.items() if n > 1]
+    definitions = read("definitions.csv")
+    known_sources = {r["key"]: r for r in read(SYSTEM_SOURCES)}
+    problems += [f"definitions.csv lists {s} {n} times" for s, n in Counter(r["slug"] for r in definitions).items() if n > 1]
+    problems += [f"definitions.csv: {r['slug']} is not a listed system" for r in definitions if r["slug"] not in slugs]
+    problems += [f"definitions.csv: {r['slug']} has no definition" for r in definitions if not r["definition"].strip()]
+    problems += [f"definitions.csv: {r['slug']} cites {k!r}, which is not in the system module's sources.csv"
+                 for r in definitions for k in split(r["sources"]) if k not in known_sources]
+    problems += [f"definitions.csv: {r['slug']} cites no source" for r in definitions if not split(r["sources"])]
     if problems:
         sys.exit("the customer systems tables do not reconcile:\n  " + "\n  ".join(problems))
+    defined = {r["slug"]: r for r in definitions}
+    for r in systems:
+        d = defined.get(r["slug"])
+        r["definition"], r["note"] = (d["definition"], d["note"]) if d else (None, None)
+        r["sources"] = [(k, known_sources[k]["title"]) for k in split(d["sources"])] if d else []
     return systems, flows, sources, attrs, existing
 
 
@@ -316,7 +332,7 @@ def node(slug):
 
 def build_systems(systems, flows, sources, attrs, existing):
     g = Graph()
-    for prefix, ns in (("party", CUST), ("system", SYSTEM), ("skos", SKOS), ("dcterms", DCTERMS)):
+    for prefix, ns in (("party", CUST), ("system", SYSTEM), ("skos", SKOS), ("dcterms", DCTERMS), ("src", SRC)):
         g.bind(prefix, ns)
     scheme = CUST["customer-systems"]
     g.add((scheme, RDF.type, SKOS.ConceptScheme))
@@ -336,6 +352,14 @@ def build_systems(systems, flows, sources, attrs, existing):
             g.add((s, SKOS.altLabel, Literal(alt, lang="en")))
         g.add((s, CUST.systemTier, CUST[f"system-tier/{r['tier']}"]))
         g.add((s, CUST.customerRole, Literal(r["role"], lang="en")))
+        if r["definition"]:
+            g.add((s, SKOS.definition, Literal(r["definition"], lang="en")))
+        if r["note"]:
+            g.add((s, SKOS.editorialNote, Literal(r["note"], lang="en")))
+        for key, title in r["sources"]:
+            g.add((s, DCTERMS.source, SRC[key]))
+            g.add((SRC[key], RDF.type, DCTERMS.BibliographicResource))
+            g.add((SRC[key], DCTERMS.title, Literal(title, lang="en")))
         for e in split(r["implements"]):
             g.add((s, CUST.implements, CUST[e]))
     for r in flows:

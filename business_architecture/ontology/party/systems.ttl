@@ -1,8 +1,10 @@
 # The customer systems, data flows and attributes (EPM-DEC-001-0069). Built by build_party.py
 # from systems.csv, data-flows.csv, customer-sources.csv and attributes.csv. Do not edit by hand.
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
 @prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
 
 <https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/create/mdg-sap-customer-id> a party:SystemAttribute ;
@@ -2083,7 +2085,9 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/bridger-insight> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-lexisnexis-bridger-insight-xg ;
     skos:altLabel "Bridger"@en ;
+    skos:definition "LexisNexis Risk Solutions' compliance screening software, Bridger Insight XG. By the vendor's description, it automates account screening for regulatory compliance and reduces false positives."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "bridger-insight" ;
     skos:prefLabel "Bridger Insight"@en ;
@@ -2092,6 +2096,8 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/information-steward> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-sap-information-steward ;
+    skos:definition "SAP's data quality software, SAP Information Steward. By the vendor's description, it supports data profiling and monitoring and information policy management."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "information-steward" ;
     skos:prefLabel "Information Steward"@en ;
@@ -2100,6 +2106,9 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/onesource> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems,
+        src:vendor-thomson-reuters-onesource-determination ;
+    skos:definition "Thomson Reuters' tax engine, ONESOURCE Determination. By the vendor's description, it calculates sales and use tax, excise tax, VAT and GST."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "onesource" ;
     skos:prefLabel "OneSource"@en ;
@@ -2187,6 +2196,8 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/emk3> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-emk3-senergy ;
+    skos:definition "EMK3's software for energy companies, EMK3 Senergy. By the vendor's description, it covers marketing, transportation and midstream work for companies that produce, gather, transport, process and market oil, natural gas and natural gas liquids."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "emk3" ;
     skos:prefLabel "EMK3"@en ;
@@ -2205,6 +2216,8 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/flowcal> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-quorum-flowcal ;
+    skos:definition "Quorum Software's hydrocarbon measurement software, FLOWCAL. By the vendor's description, it manages gas and liquid hydrocarbon measurement data across upstream, midstream and distribution operations."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "flowcal" ;
     skos:prefLabel "FlowCal"@en ;
@@ -2222,6 +2235,8 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/lenel-onguard> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-lenels2-onguard ;
+    skos:definition "LenelS2's physical access control system, OnGuard, a Honeywell brand. By the vendor's description, it is an integrated and customizable security management system."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "lenel-onguard" ;
     skos:prefLabel "Lenel Onguard"@en ;
@@ -2274,8 +2289,56 @@
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
+src:phmsa-marathon-pipeline-noa-2024-09-26 a dcterms:BibliographicResource ;
+    dcterms:title "PHMSA, Notice of Amendment to Marathon Pipeline LLC, 2024-09-26, https://primis.phmsa.dot.gov/enforcement-documents/32024055NOA/32024055NOA_Notice%20of%20Amendment_09262024_(23-264547)_text.pdf, retrieved 2026-10-25"@en .
+
+src:vendor-emk3-senergy a dcterms:BibliographicResource ;
+    dcterms:title "EMK3, Overview, https://www.emk3.com/Pages/Overview.aspx, retrieved 2026-10-25"@en .
+
+src:vendor-gravitate a dcterms:BibliographicResource ;
+    dcterms:title "Gravitate, https://gravitate.energy/, retrieved 2026-10-25"@en .
+
+src:vendor-ion-rightangle a dcterms:BibliographicResource ;
+    dcterms:title "ION, RightAngle, https://iongroup.com/products/commodities/rightangle/ (page modified 2026-08-10), retrieved 2026-10-25"@en .
+
+src:vendor-lenels2-onguard a dcterms:BibliographicResource ;
+    dcterms:title "Honeywell, LenelS2 OnGuard, https://buildings.honeywell.com/us/en/brands/our-brands/lenels2/security-products/onguard, retrieved 2026-10-25"@en .
+
+src:vendor-lexisnexis-bridger-insight-xg a dcterms:BibliographicResource ;
+    dcterms:title "LexisNexis Risk Solutions, Bridger Insight XG, https://risk.lexisnexis.com/products/bridger-insight-xg, retrieved 2026-10-25"@en .
+
+src:vendor-profisee-platform a dcterms:BibliographicResource ;
+    dcterms:title "Profisee, Platform, https://profisee.com/platform/, retrieved 2026-10-25"@en .
+
+src:vendor-quorum-flowcal a dcterms:BibliographicResource ;
+    dcterms:title "Quorum Software, FLOWCAL, https://www.quorumsoftware.com/solutions/flowcal/, retrieved 2026-10-25"@en .
+
+src:vendor-quorum-software a dcterms:BibliographicResource ;
+    dcterms:title "Quorum Software, https://www.quorumsoftware.com/, retrieved 2026-10-25"@en .
+
+src:vendor-salesforce a dcterms:BibliographicResource ;
+    dcterms:title "Salesforce, What is Salesforce?, https://www.salesforce.com/products/what-is-salesforce/ (page modified 2026-09-24), retrieved 2026-10-25"@en .
+
+src:vendor-sap-information-steward a dcterms:BibliographicResource ;
+    dcterms:title "SAP, SAP Information Steward, https://www.sap.com/products/data-cloud/data-profiling-steward.html, retrieved 2026-10-25"@en .
+
+src:vendor-sap-mdg a dcterms:BibliographicResource ;
+    dcterms:title "SAP, SAP Master Data Governance, https://www.sap.com/products/data-cloud/master-data-governance.html, retrieved 2026-10-25"@en .
+
+src:vendor-sap-s4hana a dcterms:BibliographicResource ;
+    dcterms:title "SAP, SAP S/4HANA, https://www.sap.com/products/erp/s4hana.html, retrieved 2026-10-25"@en .
+
+src:vendor-sirion a dcterms:BibliographicResource ;
+    dcterms:title "Sirion, https://www.sirion.ai/, retrieved 2026-10-25"@en .
+
+src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResource ;
+    dcterms:title "Thomson Reuters, ONESOURCE Determination, https://tax.thomsonreuters.com/en/products/onesource-determination (published 2026-01-12), retrieved 2026-10-25"@en .
+
 <https://w3id.org/lsc/ontology/modules/party/system/allocation-manager> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems ;
+    skos:definition "An MPC-built application that derives operational decisions for a customer, such as locks and limits, from the customer data RightAngle sends it."@en ;
+    skos:editorialNote "Thin: a fuller description, such as whether it also allocates product, waits for its owners (EPM-DEC-001-0099)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "allocation-manager" ;
     skos:prefLabel "Allocation Manager"@en ;
@@ -2301,6 +2364,8 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/gravitate> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-gravitate ;
+    skos:definition "Gravitate's software for fuel operations. By the vendor's description, it optimizes supply, pricing, freight and dispatch in real time for fuel operators."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "gravitate" ;
     skos:prefLabel "Gravitate"@en ;
@@ -2309,6 +2374,8 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/sirion> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-sirion ;
+    skos:definition "Sirion's contract lifecycle management software. By the vendor's description, it uses AI to manage an enterprise's contracts and get the most value from its relationships."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "sirion" ;
     skos:prefLabel "Sirion"@en ;
@@ -2352,6 +2419,10 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/quorum> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems,
+        src:vendor-quorum-software ;
+    skos:definition "Software from Quorum Software, a vendor of software for energy companies; which Quorum product it is is not known. By the vendor's description, its software connects energy workflows from the field to the boardroom."@en ;
+    skos:editorialNote "Which Quorum product this is stays open (the decision owner, 2026-10-24); the definition is at vendor level (EPM-DEC-001-0099)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "quorum" ;
     skos:prefLabel "Quorum"@en ;
@@ -2371,7 +2442,9 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/magic> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems ;
     skos:altLabel "Marketing Applications Graphical Interface for Clients"@en ;
+    skos:definition "Marketing Applications Graphical Interface for Clients: an MPC-built integration that sets up new customer accounts. When SAP MDG creates a customer, MAGIC assigns the SAP MDG customer number and the KittyHawk territory manager to the account in Salesforce, and converts the prospect into a customer account. Every day it syncs the customer's number, name, address, FEIN, status, credit monitor and territory manager to Salesforce."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "magic" ;
     skos:prefLabel "MAGIC"@en ;
@@ -2379,10 +2452,16 @@
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/integration> .
 
+src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's identifications of systems, Claude Code session of 2026-10-24, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-24-systems.md"@en .
+
 <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems ;
     skos:altLabel "KH"@en,
         "Kittyhawk"@en ;
+    skos:definition "An MPC in-house application used by the Commercial organization. It gets all of its data from RightAngle and is almost a replica of it."@en ;
+    skos:editorialNote "Terminal Upload sends KittyHawk cross-reference customer ID mappings directly, as the decision owner's input shows; KittyHawk's customer data itself comes from RightAngle (EPM-DEC-001-0099)."@en ;
     skos:exactMatch system:kittyhawk ;
     skos:inScheme party:customer-systems ;
     skos:notation "kittyhawk" ;
@@ -2395,9 +2474,12 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-sap-s4hana ;
     skos:altLabel "S/4"@en,
         "S4"@en,
         "SAP S/4"@en ;
+    skos:definition "SAP's enterprise resource planning (ERP) system. By the vendor's description, it is a modular ERP for an enterprise's core business processes."@en ;
+    skos:exactMatch system:sap ;
     skos:inScheme party:customer-systems ;
     skos:notation "sap-s4hana" ;
     skos:prefLabel "SAP S/4HANA"@en ;
@@ -2409,7 +2491,9 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/profisee> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-profisee-platform ;
     skos:altLabel "Profisee Data Storage"@en ;
+    skos:definition "Profisee's master data management (MDM) platform. By the vendor's description, it cleans, unifies and improves the quality of an enterprise's critical data across its systems."@en ;
     skos:exactMatch system:profisee ;
     skos:inScheme party:customer-systems ;
     skos:notation "profisee" ;
@@ -2435,6 +2519,8 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/polaris> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:phmsa-marathon-pipeline-noa-2024-09-26 ;
+    skos:definition "A scheduling system of Marathon Pipeline LLC, named in a PHMSA notice of amendment of 2024-09-26. Whether MPC built or bought it is not known."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "polaris" ;
     skos:prefLabel "Polaris"@en ;
@@ -2451,7 +2537,9 @@ party:customer-systems a skos:ConceptScheme ;
 
 <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-sap-mdg ;
     skos:altLabel "MDG"@en ;
+    skos:definition "SAP's master data governance software. By the vendor's description, it is the governance layer for an enterprise's business data, unifying master data, policy and metadata."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "sap-mdg" ;
     skos:prefLabel "SAP MDG"@en ;
@@ -2471,8 +2559,10 @@ party:customer-systems a skos:ConceptScheme ;
 
 <https://w3id.org/lsc/ontology/modules/party/system/salesforce> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-salesforce ;
     skos:altLabel "SF"@en,
         "Salesforce CRM"@en ;
+    skos:definition "Salesforce's customer relationship management (CRM) platform. By the vendor's description, it helps companies connect with their customers."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "salesforce" ;
     skos:prefLabel "Salesforce"@en ;
@@ -2486,8 +2576,10 @@ party:customer-systems a skos:ConceptScheme ;
 
 <https://w3id.org/lsc/ontology/modules/party/system/rightangle> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-ion-rightangle ;
     skos:altLabel "RA"@en,
         "Right Angle"@en ;
+    skos:definition "ION's commodities trading and risk management system for liquid hydrocarbon companies, such as refiners and fuel marketers. By the vendor's description, it covers the work from front to back and is strongest in scheduling, logistics and operations."@en ;
     skos:exactMatch system:rightangle ;
     skos:inScheme party:customer-systems ;
     skos:notation "rightangle" ;

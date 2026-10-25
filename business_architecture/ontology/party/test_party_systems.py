@@ -9,7 +9,7 @@ import unittest
 
 from pyshacl import validate
 from rdflib import Graph, Namespace
-from rdflib.namespace import RDF, RDFS, SKOS
+from rdflib.namespace import DCTERMS, RDF, RDFS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -82,13 +82,31 @@ class Systems(unittest.TestCase):
         for slug, entities in expected.items():
             self.assertEqual(slugs(G.objects(S[slug], CUST.implements)), entities, slug)
 
-    def test_four_systems_match_the_system_module(self):
-        # Three share a slug with the system module; the Terminal Margin Ranking System is its TMR (EPM-DEC-001-0072).
+    def test_five_systems_match_the_system_module(self):
+        # Three share a slug with the system module; the Terminal Margin Ranking System is its TMR (EPM-DEC-001-0072);
+        # SAP S/4HANA is the process map's "SAP", by the decision owner's answer of 2026-10-25 (EPM-DEC-001-0099).
         pairs = {(str(s).rsplit("/", 1)[1], str(o).rsplit("/", 1)[1]) for s, o in G.subject_objects(SKOS.exactMatch)}
         self.assertEqual(pairs, {("rightangle", "rightangle"), ("kittyhawk", "kittyhawk"), ("profisee", "profisee"),
-                                 ("terminal-margin-ranking-system", "tmr")})
+                                 ("terminal-margin-ranking-system", "tmr"), ("sap-s4hana", "sap")})
         self.assertIn((S.rightangle, SKOS.exactMatch, SYSTEM.rightangle), G)
         self.assertIn((S["terminal-margin-ranking-system"], SKOS.exactMatch, SYSTEM.tmr), G)
+
+    def test_definitions(self):
+        # Item G (EPM-DEC-001-0099), checked by hand against definitions.csv on 2026-10-25: 18 customer systems are
+        # defined, each citing its source; the four the decision owner's customer-data owner is asked about are not.
+        systems = set(G.subjects(RDF.type, CUST.CustomerSystem))
+        defined = slugs(s for s in G.subjects(SKOS.definition, None) if s in systems)
+        self.assertEqual(defined, {"sap-mdg", "sap-s4hana", "salesforce", "rightangle", "profisee", "bridger-insight", "emk3",
+                                   "flowcal", "gravitate", "information-steward", "lenel-onguard", "sirion", "onesource",
+                                   "quorum", "kittyhawk", "magic", "allocation-manager", "polaris"})
+        for slug in ("drop-tank", "gas-buddy", "dtn-file-server", "federal-health"):
+            self.assertIsNone(G.value(S[slug], SKOS.definition))
+        src = Namespace("https://w3id.org/lsc/ontology/source/")
+        self.assertEqual(set(G.objects(S.polaris, DCTERMS.source)), {src["phmsa-marathon-pipeline-noa-2024-09-26"]})
+        self.assertIn("Terminal Upload", str(G.value(S.kittyhawk, SKOS.editorialNote)))
+        for s in systems:
+            if G.value(s, SKOS.definition) is not None:
+                self.assertIsNotNone(G.value(s, DCTERMS.source), s)
 
     def test_the_origin_patterns(self):
         def origin(concept):
@@ -173,7 +191,7 @@ class SameSystem(unittest.TestCase):
                       self.fails({"terminal-margin-ranking-system": "no-such-node"}))
 
     def test_a_node_with_another_label(self):
-        self.assertIn("terminal-margin-ranking-system: the system module calls sap 'SAP', which is not one of its labels",
+        self.assertIn("terminal-margin-ranking-system: the system module calls sap 'SAP S/4HANA', which is not one of its labels",
                       self.fails({"terminal-margin-ranking-system": "sap"}))
 
 
@@ -237,6 +255,15 @@ class Shapes(unittest.TestCase):
                                  '<http://www.w3.org/2000/01/rdf-schema#comment> "x"@en ; party:evidenceInput "2" .')
         self.assertFalse(ok)
         self.assertIn("names a party role, a customer class", text)
+
+    def test_a_definition_without_its_source(self):
+        ok, text = self.conforms('s:star <http://www.w3.org/2004/02/skos/core#definition> "A system."@en .')
+        self.assertFalse(ok)
+        self.assertIn("cites its source", text)
+
+    def test_two_definitions(self):
+        ok, _ = self.conforms('s:salesforce <http://www.w3.org/2004/02/skos/core#definition> "Another."@en .')
+        self.assertFalse(ok)
 
     def test_a_system_whose_role_is_blank(self):
         ok, text = self.conforms('party:sx a party:CustomerSystem ; <http://www.w3.org/2004/02/skos/core#prefLabel> "X"@en ; '

@@ -34,6 +34,16 @@ Each row gives the point, what the ontology holds today, what the business needs
 |---|---|---|---|---|---|
 | 10 | What each measure includes and excludes | Eight MPC-defined measures carry their population from MPC's own wording; the other 33 are parked, because no source states them (EPM-DEC-001-0062) | For each of the 33, what is in and what is out, in business words | Each measure's owner | EPM-DEC-001-0062; `kpi` |
 
+## Systems (item G, 2026-10-25)
+
+| # | Point | What the ontology holds today | What the business needs to say | Who | Record; module |
+|---|---|---|---|---|---|
+| 11 | Drop Tank, Gas Buddy, DTN File Server and Federal Health | Four customer systems downstream of MAGIC that send customer data to Profisee, each with only its customer role; no definition (EPM-DEC-001-0099, item 8) | What each is, and what MPC sends it | The customer-data owner, asked once for all four | EPM-DEC-001-0099; `party` |
+| 12 | TopDay and VALT | MPC-built, by the decision owner's answer; no definition (EPM-DEC-001-0099, item 6) | What each does | Their owners | EPM-DEC-001-0099; `system` |
+| 13 | CargoTracker and Allocation Manager | Thin descriptions the decision owner approved: what each feeds or derives, not what it is (EPM-DEC-001-0099, item 10) | A fuller description of each; for Allocation Manager, whether it also allocates product | Their owners | EPM-DEC-001-0099; `system`, `party` |
+| 14 | Hyperion and Quorum | Hyperion read as Oracle Hyperion Planning, Claude's guess, which the decision owner accepted; Quorum defined at vendor level, product not named (EPM-DEC-001-0099, items 5 and 9) | Which Oracle Hyperion product, and which Quorum product | The owners of the backcast's actual-data steps; the customer-data owner | EPM-DEC-001-0099; `system`, `party` |
+| 15 | Polaris | A Marathon Pipeline LLC scheduling system named in a PHMSA notice; built or bought unknown (EPM-DEC-001-0099, item 7) | Whether MPC built or bought it, and what it does | Marathon Pipeline LLC's scheduling owners | EPM-DEC-001-0099; `party` |
+
 ## Parked for other reasons
 
 These are not for the business. Each waits on a trigger its record names:

@@ -11,7 +11,7 @@ import unittest
 
 from pyshacl import validate
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import RDF, SKOS
+from rdflib.namespace import DCTERMS, RDF, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -37,7 +37,7 @@ class Build(unittest.TestCase):
         # register.csv and systems.csv. The link count is the build's; 3 of the 153 processes with a
         # systems field name only Manual, TBD or a plan, so 150 receive a link.
         self.assertEqual(bs.figures(*bs.load()), {
-            "map strings": 37, "systems": 32, "application": 23, "office-tool": 4, "document": 5,
+            "map strings": 37, "systems": 32, "defined": 15, "application": 23, "office-tool": 4, "document": 5,
             "no-system strings": 4, "processes with a systems field": 153,
             "processes with a link": 150, "links": 285,
             "links waiting for a core release": 0})
@@ -68,6 +68,28 @@ class Build(unittest.TestCase):
                          {PROC["CM-1-1-2-1"], PROC["CM-1-1-2-1-8"], PROC["CM-1-1-2-2"]})
 
 
+    def test_definitions(self):
+        # Item G (EPM-DEC-001-0099), checked by hand against definitions.csv on 2026-10-25: 15 systems are
+        # defined; full forms are preferred labels, with the process map's abbreviation as an alternative.
+        defined = {s for s in SYSTEMS.subjects(SKOS.definition, None)}
+        self.assertEqual(len(defined), 15)
+        for slug, label, alt in (("dpo", "Distribution Planning Optimizer", "DPO"), ("aps", "Aspen Petroleum Scheduler", "APS"),
+                                 ("sap", "SAP S/4HANA", "SAP"), ("hyperion", "Oracle Hyperion Planning", "Hyperion"),
+                                 ("pi", "AVEVA PI System", "PI")):
+            self.assertEqual(SYSTEMS.value(SYSTEM[slug], SKOS.prefLabel), Literal(label, lang="en"))
+            self.assertIn((SYSTEM[slug], SKOS.altLabel, Literal(alt, lang="en")), SYSTEMS)
+        self.assertEqual(set(SYSTEMS.objects(SYSTEM["ms-excel"], DCTERMS.source)),
+                         {bs.MAP_SOURCE, bs.SRC["vendor-microsoft-excel"]})
+        self.assertIn((bs.SRC["vendor-microsoft-excel"], RDF.type, DCTERMS.BibliographicResource), SYSTEMS)
+        self.assertIsNone(SYSTEMS.value(SYSTEM["ms-excel"], SKOS.editorialNote))
+        # Hyperion is defined, and keeps a note saying its identification was a guess the owner accepted.
+        self.assertIn("a guess", str(SYSTEMS.value(SYSTEM["hyperion"], SKOS.editorialNote)))
+        # TopDay and VALT are MPC-built and still undefined.
+        for slug in ("topday", "valt"):
+            self.assertIsNone(SYSTEMS.value(SYSTEM[slug], SKOS.definition))
+            self.assertTrue(str(SYSTEMS.value(SYSTEM[slug], SKOS.editorialNote)).startswith("MPC-built"))
+        self.assertEqual(str(SYSTEMS.value(SYSTEM["trr"], SKOS.editorialNote)), bs.UNDEFINED)
+
     def test_the_map_source_is_not_redeclared(self):
         # roles.ttl declares the process map's source node; this module only references it (Pi round 1).
         self.assertIsNone(SYSTEMS.value(bs.MAP_SOURCE, URIRef("http://purl.org/dc/terms/title")))
@@ -84,8 +106,12 @@ class Shapes(unittest.TestCase):
         edit(g)
         return conforms(g)
 
-    def test_rejects_an_invented_definition(self):
-        self.assertFalse(self.broken(lambda g: g.add((SYSTEM["xpims"], SKOS.definition, Literal("A planning tool.", lang="en")))))
+    def test_rejects_a_definition_without_its_source(self):
+        # TRR cites only the process map, which names systems but does not define them.
+        self.assertFalse(self.broken(lambda g: g.add((SYSTEM["trr"], SKOS.definition, Literal("A planning tool.", lang="en")))))
+
+    def test_rejects_a_defined_system_that_loses_its_source(self):
+        self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["ms-excel"], DCTERMS.source, bs.SRC["vendor-microsoft-excel"]))))
 
     def test_rejects_two_kinds(self):
         self.assertFalse(self.broken(lambda g: g.add((SYSTEM["xpims"], SYS.systemKind, KIND["document"]))))
@@ -97,7 +123,7 @@ class Shapes(unittest.TestCase):
         self.assertFalse(self.broken(edit))
 
     def test_rejects_a_system_without_its_note(self):
-        self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["dpo"], SKOS.editorialNote, None))))
+        self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["trr"], SKOS.editorialNote, None))))
 
 
 if __name__ == "__main__":

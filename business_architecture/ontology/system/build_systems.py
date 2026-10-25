@@ -10,6 +10,10 @@ systems.csv gives each system's name and kind. The build fails unless every stri
 is in the register once, every system the register names is in systems.csv, and every system
 in systems.csv is named. A link to a process not in core 2.3.0 is counted as waiting for the
 next core release, not emitted.
+
+definitions.csv gives a system its definition, in Claude's words from the cited sources (a vendor's
+own description of its product is marked as the vendor's), or a note in place of the standard one;
+sources.csv gives each cited source its title and evidence tier (item G, EPM-DEC-001-0099).
 """
 import argparse
 import csv
@@ -26,6 +30,8 @@ REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 MAP = os.path.join(REPO, "business_architecture", "business_process", "downstream_process_map.json")
 REGISTER = os.path.join(HERE, "register.csv")
 SYSTEMS = os.path.join(HERE, "systems.csv")
+DEFINITIONS = os.path.join(HERE, "definitions.csv")
+SOURCES = os.path.join(HERE, "sources.csv")
 CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 OUTPUT = os.path.join(HERE, "systems.ttl")
 
@@ -95,9 +101,29 @@ def load():
                 problems.append(f"{r['source_text']!r}: system {s!r} is not in systems.csv")
     problems += [f"system {s!r} is named by no register row" for s in sorted(set(slugs) - named)]
     problems += [f"{s['slug']}: kind {s['kind']!r} is not one of {KINDS}" for s in systems if s["kind"] not in KINDS]
+    definitions, sources = read_csv(DEFINITIONS), {r["key"]: r for r in read_csv(SOURCES)}
+    problems += [f"definitions.csv lists {s!r} twice" for s, n in Counter(d["slug"] for d in definitions).items() if n > 1]
+    for d in definitions:
+        if d["slug"] not in slugs:
+            problems.append(f"definitions.csv: {d['slug']!r} is not in systems.csv")
+        if not d["definition"] and not d["note"]:
+            problems.append(f"definitions.csv: {d['slug']!r} has neither a definition nor a note")
+        if not split(d["sources"]):
+            problems.append(f"definitions.csv: {d['slug']!r} cites no source")
+        problems += [f"definitions.csv: {d['slug']!r} cites {k!r}, which is not in sources.csv"
+                     for k in split(d["sources"]) if k not in sources]
     if problems:
         sys.exit("system sources do not reconcile:\n  " + "\n  ".join(problems))
-    return {r["source_text"]: r for r in register}, slugs, uses, core_processes()
+    for s in slugs.values():
+        s["definition"] = None
+        s["note"] = UNDEFINED
+        s["sources"] = []
+    for d in definitions:
+        s = slugs[d["slug"]]
+        s["definition"] = d["definition"] or None
+        s["note"] = d["note"] or None
+        s["sources"] = split(d["sources"])
+    return {r["source_text"]: r for r in register}, slugs, uses, core_processes(), sources
 
 
 def links(register, uses, procs):
@@ -106,7 +132,7 @@ def links(register, uses, procs):
     return sorted(p for p in pairs if p[1] in procs), sorted(p for p in pairs if p[1] not in procs)
 
 
-def build(register, slugs, uses, procs):
+def build(register, slugs, uses, procs, sources):
     g = Graph()
     for prefix, ns in (("sys", SYS), ("kind", KIND), ("system", SYSTEM), ("proc", PROC), ("src", SRC),
                        ("skos", SKOS), ("dcterms", DCTERMS)):
@@ -119,9 +145,19 @@ def build(register, slugs, uses, procs):
         g.add((iri, SKOS.inScheme, SYS.Systems))
         g.add((iri, SKOS.prefLabel, Literal(s["label"], lang="en")))
         g.add((iri, SKOS.notation, Literal(slug, datatype=XSD.string)))
-        g.add((iri, SKOS.editorialNote, Literal(UNDEFINED, lang="en")))
+        for alt in split(s["alt_labels"]):
+            g.add((iri, SKOS.altLabel, Literal(alt, lang="en")))
+        if s["definition"]:
+            g.add((iri, SKOS.definition, Literal(s["definition"], lang="en")))
+        if s["note"]:
+            g.add((iri, SKOS.editorialNote, Literal(s["note"], lang="en")))
         g.add((iri, SYS.systemKind, KIND[s["kind"]]))
         g.add((iri, DCTERMS.source, MAP_SOURCE))
+        for key in s["sources"]:
+            g.add((iri, DCTERMS.source, SRC[key]))
+    for key in sorted({k for s in slugs.values() for k in s["sources"]}):
+        g.add((SRC[key], RDF.type, DCTERMS.BibliographicResource))
+        g.add((SRC[key], DCTERMS.title, Literal(sources[key]["title"], lang="en")))
     for r in register.values():
         if r["rule"] == "spelling":
             g.add((SYSTEM[r["systems"]], SKOS.altLabel, Literal(r["source_text"], lang="en")))
@@ -131,12 +167,13 @@ def build(register, slugs, uses, procs):
     return g
 
 
-def figures(register, slugs, uses, procs):
+def figures(register, slugs, uses, procs, sources=None):
     emitted, waiting = links(register, uses, procs)
     kinds = Counter(s["kind"] for s in slugs.values())
     return {
         "map strings": len(register),
         "systems": len(slugs),
+        "defined": sum(1 for s in slugs.values() if s["definition"]),
         **{k: kinds[k] for k in KINDS},
         "no-system strings": sum(1 for r in register.values() if r["rule"] == "no-system"),
         "processes with a systems field": len({pid for pid, _ in uses}),
@@ -151,10 +188,10 @@ def main():
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--verify", action="store_true")
     args = ap.parse_args()
-    register, slugs, uses, procs = load()
+    register, slugs, uses, procs, sources = load()
     text = ("# Systems of the system module (Step 7; EPM-DEC-001-0055).\n"
             "# Built by build_systems.py from the process map, register.csv and systems.csv. Do not edit by hand.\n"
-            + build(register, slugs, uses, procs).serialize(format="turtle"))
+            + build(register, slugs, uses, procs, sources).serialize(format="turtle"))
     print("; ".join(f"{k} {v}" for k, v in figures(register, slugs, uses, procs).items()))
     if args.verify:
         current = os.path.exists(OUTPUT) and open(OUTPUT).read() == text

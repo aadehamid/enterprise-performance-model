@@ -9,6 +9,10 @@
 
 <https://w3id.org/lsc/ontology/source/data-product-portfolio> auth:evidenceTier tier:process-authority .
 
+<https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-24-systems> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-25-item-g> auth:evidenceTier tier:process-authority .
+
 <https://w3id.org/lsc/ontology/source/downstream-process-map> auth:evidenceTier tier:process-authority .
 
 <https://w3id.org/lsc/ontology/source/gleif-lei> auth:evidenceTier tier:industry .
@@ -24,6 +28,8 @@
 <https://w3id.org/lsc/ontology/source/mplx-s01> auth:evidenceTier tier:mpc .
 
 <https://w3id.org/lsc/ontology/source/office-lanes> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/phmsa-marathon-pipeline-noa-2024-09-26> auth:evidenceTier tier:industry .
 
 <https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18> auth:evidenceTier tier:process-authority .
 
@@ -128,6 +134,54 @@
 <https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle> auth:evidenceTier tier:process-authority .
 
 <https://w3id.org/lsc/ontology/source/value-stream-order-to-cash> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/vendor-aspentech-aspen-petroleum-scheduler> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-aspentech-aspen-pims-brochure> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-aspentech-mpims-course> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-aspentech-ppims-course> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-aveva-pi-system> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-emk3-senergy> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-gravitate> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-ion-rightangle> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-lenels2-onguard> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-lexisnexis-bridger-insight-xg> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-microsoft-excel> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-microsoft-outlook-business> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-microsoft-powerpoint> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-microsoft-teams> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-oracle-hyperion-planning-11-2> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-profisee-platform> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-quorum-flowcal> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-quorum-software> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-salesforce> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-sap-information-steward> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-sap-mdg> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-sap-s4hana> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-sirion> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-thomson-reuters-onesource-determination> auth:evidenceTier tier:industry .
 
 <urn:epm:issue:205:comment:6115309253> auth:evidenceTier tier:process-authority .
 
