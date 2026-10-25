@@ -46,8 +46,11 @@ shows each link with an example quoted from the releases.
 | `ref-mpc` | The company-specific facts: MPC and MPLX; the only module that is not company-neutral |
 | `integration` | Rules across modules: which links certify (placement), which source wins (authority), and what consumers may bind and answer (consumer) |
 
-For versions, what each module requires, triple counts and source folders, run
-`uv run --with rdflib python scripts/epm_facts.py modules`. For which processes have a RACI
+For versions, what each module requires and triple counts, run
+`uv run --with rdflib python scripts/epm_facts.py modules`. It also says what each release was built
+from where its manifest records that ("built from (release manifest)"); for the other releases it
+shows the source folders the builder packages today ("sources (builder today)"), which a later
+change to the builder can move away from what the release was built from. For which processes have a RACI
 assignment, a system, a KPI, a lane, a value-stream step or a data product, run
 `uv run --with rdflib python scripts/epm_facts.py coverage` (see `--help` for other process sets).
 The diagram "EPM ontology: modules and how they connect" draws the modules with an arrow from each to

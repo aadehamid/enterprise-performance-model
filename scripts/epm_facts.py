@@ -1363,9 +1363,11 @@ def _built_from(manifest):
     return [k if re.fullmatch(r"[0-9a-f]{64}", v) else v for k, v in sorted(manifest.get("built_from", {}).items())]
 
 
-def module_releases(releases=RELEASES, builder=MODULE_BUILDER):
+def module_releases(releases=None, builder=None):
     """One entry per released module: its newest release, the earlier ones, what the newest requires,
-    its triple count and its sources (core's from its manifest's built_from)."""
+    its triple count, what the release's manifest says it was built from (core's built_from), and,
+    for a release whose manifest records none, the source folders build_module.py packages today."""
+    releases, builder = releases or RELEASES, builder or MODULE_BUILDER
     sources = module_sources(builder)
     out = []
     for module in sorted(os.listdir(releases)):
@@ -1382,7 +1384,11 @@ def module_releases(releases=RELEASES, builder=MODULE_BUILDER):
             "earlier": versions[:-1],
             "requires": manifest.get("depends_on", {}),
             "triples": _triples(newest, module, manifest),
-            "sources": sources.get(module) or _built_from(manifest),
+            # A manifest that records what the release was built from wins; otherwise the folders are
+            # build_module.py's parts today, which a later change to the builder can move away from
+            # what this release was built from, so the output labels them as the builder's.
+            "built_from": _built_from(manifest),
+            "builder_sources": [] if manifest.get("built_from") else sources.get(module, []),
         })
     return out
 
@@ -1392,59 +1398,84 @@ def cmd_modules(args):
     if args.json:
         print(json.dumps({"commit": commit(), "modules": mods}, indent=2))
         return 0
-    print(f"commit {commit()}: {len(mods)} released modules ({rel(RELEASES)})")
+    print(f"commit {commit()}: {len(mods)} released modules")
     for m in mods:
         earlier = ", ".join(m["earlier"]) or "none"
         requires = ", ".join(f"{k} {v}" for k, v in m["requires"].items()) or "nothing"
-        print(f"  {m['module']} {m['newest']} (earlier: {earlier}); requires {requires}; {m['triples']} triples;"
-              f" sources: {', '.join(m['sources'])}")
+        where = (f"built from (release manifest): {', '.join(m['built_from'])}" if m["built_from"]
+                 else f"sources (builder today): {', '.join(m['builder_sources']) or 'none listed'}")
+        print(f"  {m['module']} {m['newest']} (earlier: {earlier}); requires {requires}; {m['triples']} triples; {where}")
     return 0
 
 
 PROCESS = "https://w3id.org/lsc/ontology/process/"
 MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
 # What a process can have, the module that says so, the predicates (each read from that module's
-# released Turtle), and which end of the triple the process is on.
+# released Turtle), the end of the triple the process must be on, and the type the other end must
+# have in that module (2026-10-25: without the type, a process IRI on the wrong end counted).
+# A data product is a dp:DataProduct; a portfolio segment's dp:anchoredIn does not count.
 COVERAGE_LINKS = [
-    ("raci", "a RACI assignment", "organization", ["organization/forProcess"], "object"),
-    ("system", "a system-module link", "system", ["system/supports"], "object"),
-    ("kpi", "a KPI", "kpi", ["kpi/informsProcess"], "object"),
-    ("lane", "a lane", "lane", ["lane/officeLane"], "subject"),
-    ("value_stream", "a value-stream step", "value-stream", ["value-stream/realizes"], "object"),
-    ("data_product", "a data product", "data-product", ["data-product/producedBy", "data-product/anchoredIn"], "object"),
+    ("raci", "a RACI assignment", "organization", ["organization/forProcess"], "object",
+     "organization/ResponsibilityAssignment"),
+    ("system", "a system-module link", "system", ["system/supports"], "object", "system/System"),
+    ("kpi", "a KPI", "kpi", ["kpi/informsProcess"], "object", "kpi/MeasureDefinition"),
+    ("lane", "a lane", "lane", ["lane/officeLane"], "subject", "lane/OfficeLane"),
+    ("value_stream", "a value-stream step", "value-stream", ["value-stream/realizes"], "object",
+     "value-stream/ValueStreamProcess"),
+    ("data_product", "a data product", "data-product", ["data-product/producedBy", "data-product/consumedBy"],
+     "object", "data-product/DataProduct"),
 ]
 
 
-def newest_graph(module, releases=RELEASES):
+def newest_graph(module, releases=None):
     import rdflib
-    folder = os.path.join(releases, module)
+    folder = os.path.join(releases or RELEASES, module)
     versions = sorted((v for v in os.listdir(folder) if os.path.isfile(os.path.join(folder, v, "manifest.json"))),
                       key=_version_key)
     return rdflib.Graph().parse(os.path.join(folder, versions[-1], module + ".ttl"), format="turtle")
 
 
-def coverage(selection="core", releases=RELEASES):
+def _linked(g, link):
+    """The nodes on the process end of a COVERAGE_LINKS pattern whose other end has the pattern's type."""
+    import rdflib
+    from rdflib.namespace import RDF
+    _key, _what, _module, preds, end, other_type = link
+    other_type = rdflib.URIRef(MODULES_NS + other_type)
+    have = set()
+    for pred in preds:
+        for subj, obj in g.subject_objects(rdflib.URIRef(MODULES_NS + pred)):
+            proc, other = (subj, obj) if end == "subject" else (obj, subj)
+            if (other, RDF.type, other_type) in g:
+                have.add(proc)
+    return have
+
+
+def coverage(selection="core", releases=None):
     """For a set of processes, how many have each kind of link, and which have none.
 
-    selection: "core" (every process concept in core), "module:<name>" (the processes that module's
-    released Turtle names), "lifecycle" (every customer-lifecycle stage's processes) or
+    selection: "core" (every process concept in core), "module:<name>" (the processes that module
+    links through its patterns in COVERAGE_LINKS, or party's stage processes), "lifecycle" (every customer-lifecycle stage's processes) or
     "stage:<name>" (one stage, by the end of its IRI or its label). Links are direct: a parent's
     link does not count for its children.
     """
     import rdflib
     from rdflib.namespace import RDF, SKOS
+    releases = releases or RELEASES
     core = newest_graph("core", releases)
     all_procs = {s for s in core.subjects(RDF.type, SKOS.Concept) if str(s).startswith(PROCESS)}
     graphs = {m: newest_graph(m, releases) for m in {link[2] for link in COVERAGE_LINKS}}
     if selection == "core":
         procs = all_procs
-    elif selection.startswith("module:"):
-        g = newest_graph(selection.split(":", 1)[1], releases)
-        procs = {t for triple in g for t in triple if isinstance(t, rdflib.URIRef) and str(t).startswith(PROCESS)}
-    elif selection == "lifecycle" or selection.startswith("stage:"):
+    elif selection.startswith("module:") and selection != "module:party":
+        module = selection.split(":", 1)[1]
+        patterns = [link for link in COVERAGE_LINKS if link[2] == module]
+        if not patterns:
+            raise ValueError("no process link is defined for module " + module)
+        procs = all_procs & set().union(*(_linked(graphs[module], link) for link in patterns))
+    elif selection in ("lifecycle", "module:party") or selection.startswith("stage:"):
         party = newest_graph("party", releases)
         stage_process = rdflib.URIRef(MODULES_NS + "party/stageProcess")
-        want = selection.split(":", 1)[1].lower() if ":" in selection else None
+        want = selection.split(":", 1)[1].lower() if selection.startswith("stage:") else None
         procs = set()
         for stage, proc in party.subject_objects(stage_process):
             labels = {str(stage).rstrip("/").rsplit("/", 1)[-1].lower()}
@@ -1457,13 +1488,9 @@ def coverage(selection="core", releases=RELEASES):
              for p in procs}
     out = {"selection": selection, "processes": len(procs), "links": {}, "with_none": []}
     linked_any = set()
-    for key, what, module, preds, end in COVERAGE_LINKS:
-        g = graphs[module]
-        have = set()
-        for pred in preds:
-            pred = rdflib.URIRef(MODULES_NS + pred)
-            have |= set(g.subjects(pred, None)) if end == "subject" else set(g.objects(None, pred))
-        have &= procs
+    for link in COVERAGE_LINKS:
+        key, what, module = link[:3]
+        have = _linked(graphs[module], link) & procs
         linked_any |= have
         out["links"][key] = {"what": what, "module": module, "with": len(have),
                              "without": sorted(label[p] for p in procs - have)}
@@ -1476,7 +1503,7 @@ def cmd_coverage(args):
     if args.json:
         print(json.dumps({"commit": commit(), **c}, indent=2))
         return 0
-    print(f"commit {commit()}: {c['processes']} processes in '{c['selection']}' (newest releases in {rel(RELEASES)})")
+    print(f"commit {commit()}: {c['processes']} processes in '{c['selection']}' (newest releases)")
     for v in c["links"].values():
         print(f"  {v['with']} have {v['what']} ({v['module']})")
     print(f"  {len(c['with_none'])} have none of these:")
@@ -1513,7 +1540,7 @@ def main(argv=None):
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
     sub.add_parser("playbook", help="check that the ontology playbook names no EPM record, company or repo path (exit 1 on problems)")
-    sub.add_parser("modules", help="each released module: newest and earlier releases, what it requires, triples, sources")
+    sub.add_parser("modules", help="each released module: newest and earlier releases, what it requires, triples, built from (manifest) or sources (builder today)")
     p = sub.add_parser("coverage", help="how many processes have a RACI assignment, system, KPI, lane, value-stream step, data product")
     p.add_argument("--processes", default="core", help="core (default), module:<name>, lifecycle or stage:<name>")
     args = parser.parse_args(argv)

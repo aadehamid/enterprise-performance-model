@@ -4,7 +4,7 @@ This guide explains what each module of the ontology holds and how the modules l
 
 The guide gives no version numbers or counts, because they change with each release. For those, run these from the repository root:
 
-- `uv run --with rdflib python scripts/epm_facts.py modules` lists each module's newest and earlier releases, the versions it requires, its triple count and the source folders it packages.
+- `uv run --with rdflib python scripts/epm_facts.py modules` lists each module's newest and earlier releases, the versions it requires and its triple count. It names what a release was built from where the release's manifest records it, and otherwise the source folders the builder packages today, labelled as the builder's.
 - `uv run --with rdflib python scripts/epm_facts.py coverage` counts how many processes have a RACI assignment, a system, a KPI, a lane, a value-stream step and a data product, and lists the ones with none. `--processes lifecycle`, `--processes stage:<name>` or `--processes module:<name>` narrows it to other sets of processes.
 
 The diagram "EPM ontology: modules and how they connect" draws the same picture, with an arrow from each module to each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
@@ -155,7 +155,7 @@ series:crack-gulf-coast-3-2-1
 
 ### data-product: the portfolio
 
-The portfolio runs from segments to product lines to data products. A data product links to core directly in a few places, through `producedBy`, `consumedBy` and `anchoredIn`. Most of its links to processes run through value-stream steps (next section).
+The portfolio runs from segments to product lines to data products. A data product links to core directly in a few places, through `producedBy` and `consumedBy`, and a segment through `anchoredIn`. Most of the portfolio's links to processes run through value-stream steps (next section).
 
 <!-- module: data-product -->
 ```turtle

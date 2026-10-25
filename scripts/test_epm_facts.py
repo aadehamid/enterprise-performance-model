@@ -1084,15 +1084,36 @@ def test_module_map_follows_a_new_release_and_a_changed_requirement(tmp_path):
     plant_release(releases, "lane", "1.0.0", {"triples": 3, "depends_on": {"core": "1.0.0"}})
     before = {m["module"]: m for m in epm_facts.module_releases(str(releases), str(builder))}
     assert before["lane"]["newest"] == "1.0.0" and before["lane"]["requires"] == {"core": "1.0.0"}
-    assert before["lane"]["sources"] == ["lane/"]
-    assert before["core"]["sources"] == ["map.json at abc"]
+    assert (before["lane"]["built_from"], before["lane"]["builder_sources"]) == ([], ["lane/"])
+    assert (before["core"]["built_from"], before["core"]["builder_sources"]) == (["map.json at abc"], [])
     plant_release(releases, "core", "2.0.0", {"triples": 6, "built_from": {"core 1.0.0 manifest": "f" * 64}})
     plant_release(releases, "lane", "1.10.0", {"triples": 4, "depends_on": {"core": "2.0.0"}})
     after = {m["module"]: m for m in epm_facts.module_releases(str(releases), str(builder))}
     # 1.10.0 sorts after 1.0.0 as a version, not as text.
     assert (after["lane"]["newest"], after["lane"]["earlier"], after["lane"]["requires"], after["lane"]["triples"]) == \
         ("1.10.0", ["1.0.0"], {"core": "2.0.0"}, 4)
-    assert after["core"]["sources"] == ["core 1.0.0 manifest"]
+    assert after["core"]["built_from"] == ["core 1.0.0 manifest"]
+
+
+def test_module_map_follows_the_manifest_and_labels_the_builders_folders(tmp_path, capsys, monkeypatch):
+    # The builder today packages lane/ and extra/, but the newer lane release's manifest says it was
+    # built from something else: the manifest wins, and a release without one shows the builder's
+    # folders under their own label, never as the release's.
+    releases, builder = tmp_path / "releases", tmp_path / "build_module.py"
+    builder.write_text('MODULES = {"lane": {"parts": ["lane/lanes.ttl", "extra/more.ttl"]},'
+                       ' "system": {"parts": ["system/systems.ttl"]}}\n')
+    plant_release(releases, "lane", "1.0.0", {"triples": 3})
+    plant_release(releases, "lane", "2.0.0", {"triples": 3, "built_from": {"lane table": "lane/old.csv at 123"}})
+    plant_release(releases, "system", "1.0.0", {"triples": 2})
+    mods = {m["module"]: m for m in epm_facts.module_releases(str(releases), str(builder))}
+    assert (mods["lane"]["built_from"], mods["lane"]["builder_sources"]) == (["lane/old.csv at 123"], [])
+    assert (mods["system"]["built_from"], mods["system"]["builder_sources"]) == ([], ["system/"])
+    monkeypatch.setattr(epm_facts, "RELEASES", str(releases))
+    monkeypatch.setattr(epm_facts, "MODULE_BUILDER", str(builder))
+    epm_facts.main(["modules"])
+    out = capsys.readouterr().out
+    assert "lane 2.0.0 (earlier: 1.0.0); requires nothing; 3 triples; built from (release manifest): lane/old.csv at 123" in out
+    assert "system 1.0.0 (earlier: none); requires nothing; 2 triples; sources (builder today): system/" in out
 
 
 def test_module_map_lists_the_released_modules():
@@ -1101,19 +1122,47 @@ def test_module_map_lists_the_released_modules():
                      "ref-mpc", "system", "value-stream"]
 
 
+M = "https://w3id.org/lsc/ontology/modules/"
+P = "https://w3id.org/lsc/ontology/process/"
+TYPE = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
 COVERAGE_TTL = {
     "core": """@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix proc: <https://w3id.org/lsc/ontology/process/> .
 proc:A a skos:Concept ; skos:notation "X 1" ; skos:prefLabel "Linked" .
 proc:B a skos:Concept ; skos:notation "X 2" ; skos:prefLabel "Bare" .
 """,
-    "organization": "<urn:asg> <https://w3id.org/lsc/ontology/modules/organization/forProcess> <https://w3id.org/lsc/ontology/process/A> .\n",
-    "system": "<urn:sys> <https://w3id.org/lsc/ontology/modules/system/supports> <https://w3id.org/lsc/ontology/process/A> .\n",
-    "kpi": "<urn:m> <https://w3id.org/lsc/ontology/modules/kpi/informsProcess> <https://w3id.org/lsc/ontology/process/A> .\n",
-    "lane": "<https://w3id.org/lsc/ontology/process/A> <https://w3id.org/lsc/ontology/modules/lane/officeLane> <urn:front> .\n",
-    "value-stream": "<urn:step> <https://w3id.org/lsc/ontology/modules/value-stream/realizes> <https://w3id.org/lsc/ontology/process/A> .\n",
-    "data-product": "<urn:dp> <https://w3id.org/lsc/ontology/modules/data-product/anchoredIn> <https://w3id.org/lsc/ontology/process/A> .\n",
-    "party": "<urn:stage/Onboarding> <https://w3id.org/lsc/ontology/modules/party/stageProcess> <https://w3id.org/lsc/ontology/process/B> .\n",
+    # Each module links A the right way, with the other end typed as its module says. B appears in
+    # each module too, but on the wrong end or with a wrongly typed other end, so it must not count.
+    "organization": f"""<urn:asg> <{M}organization/forProcess> <{P}A> .
+<urn:asg> {TYPE} <{M}organization/ResponsibilityAssignment> .
+<{P}B> <{M}organization/forProcess> <urn:asg> .
+<urn:untyped> <{M}organization/forProcess> <{P}B> .
+""",
+    "system": f"""<urn:sys> <{M}system/supports> <{P}A> .
+<urn:sys> {TYPE} <{M}system/System> .
+<{P}B> <{M}system/supports> <urn:sys> .
+""",
+    "kpi": f"""<urn:m> <{M}kpi/informsProcess> <{P}A> .
+<urn:m> {TYPE} <{M}kpi/MeasureDefinition> .
+<{P}B> <{M}kpi/informsProcess> <urn:m> .
+""",
+    "lane": f"""<{P}A> <{M}lane/officeLane> <urn:front> .
+<urn:front> {TYPE} <{M}lane/OfficeLane> .
+<urn:front> <{M}lane/officeLane> <{P}B> .
+<{P}B> <{M}lane/officeLane> <urn:not-a-lane> .
+""",
+    "value-stream": f"""<urn:step> <{M}value-stream/realizes> <{P}A> .
+<urn:step> {TYPE} <{M}value-stream/ValueStreamProcess> .
+<{P}B> <{M}value-stream/realizes> <urn:step> .
+""",
+    "data-product": f"""<urn:dp> <{M}data-product/producedBy> <{P}A> .
+<urn:dp> {TYPE} <{M}data-product/DataProduct> .
+<urn:segment> <{M}data-product/anchoredIn> <{P}B> .
+<urn:segment> {TYPE} <{M}data-product/PortfolioSegment> .
+<urn:segment> <{M}data-product/producedBy> <{P}B> .
+<{P}B> <{M}data-product/consumedBy> <urn:dp> .
+""",
+    "party": f"<urn:stage/Onboarding> <{M}party/stageProcess> <{P}B> .\n",
 }
 
 
@@ -1129,7 +1178,9 @@ def test_coverage_counts_each_link_and_lists_the_process_with_none(tmp_path):
     assert c["with_none"] == ["X 2 Bare"]
     stage = epm_facts.coverage("stage:onboarding", str(releases))
     assert (stage["processes"], stage["with_none"]) == (1, ["X 2 Bare"])
+    # module:<name> takes the same typed links: B sits in the lane module only on wrong ends.
     assert epm_facts.coverage("module:lane", str(releases))["processes"] == 1
+    assert epm_facts.coverage("module:party", str(releases))["processes"] == 1
 
 
 def test_coverage_reads_each_link_from_its_newest_release(tmp_path):
