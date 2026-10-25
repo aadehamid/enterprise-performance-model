@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (the decision owner, 2026-10-25, items 1 to 17, except the benchmark view's measure, which is open; the questions each answer replies to are in `answers-2026-10-25-item-f.md`); open questions listed below |
+| Status | Decided (the decision owner, 2026-10-25, items 1 to 17, except the benchmark view's measure, which is open, and the benchmark view's value column in item 11, delegated under EPM-DEC-001-0028; the questions each answer replies to are in `answers-2026-10-25-item-f.md`); open questions listed below |
 | Date | 2026-10-25 |
 | Questions | Which ontology measures do the pricing metric views and Genie agents serve? Are those measures KPIs? Which view is the crack spread's source? How are the views' layers, lineage and systems recorded? How does `market-data` cover every series the views hold? Which pricing tables and views are data products, and of which kind? What may a Genie agent quote? |
 | Source | Claude Code sessions of 2026-10-24 and 2026-10-25; `answers-2026-10-25-item-f.md` |
