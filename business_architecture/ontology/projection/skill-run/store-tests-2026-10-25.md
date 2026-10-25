@@ -1,6 +1,6 @@
 # Store tests, steps 3 to 5, run on 2026-10-25
 
-The record of the store tests on the released ontology: the projection into local Neo4j (step 3), the copy to Aura (step 4), and both rebuilt from the Databricks copy (step 5), each checked for no data loss, with every node tagged by its module and walked across modules in Neo4j and in Jena. Steps 2a and 2b, the round trips through Jena Fuseki and the Databricks Delta table, ran earlier the same night with the `rdf-store` skill (personal-agent-skills #55). The scripts are in this folder (README.md); the skill's add-on F (`module_tags.py`, `explore.py`, `queries/`) is personal-agent-skills #65.
+The record of the store tests on the released ontology: the projection into local Neo4j (step 3), the copy to Aura (step 4), and both rebuilt from the Databricks copy (step 5), each checked for no data loss, with every node tagged by its module and walked across modules in Neo4j and in Jena. Steps 2a and 2b, the round trips through Jena Fuseki and the Databricks Delta table, ran earlier the same night with the `rdf-store` skill (personal-agent-skills #55). The scripts are in this folder (README.md); the skill's add-on F (`module_tags.py`, `explore.py`, `queries/`) is personal-agent-skills #65, merged as `a46d1c4`.
 
 Inputs: the newest release of each of the 11 modules (`inputs.py data`), 34,058 triples, and the 13 shape files (`inputs.py shapes`). Tools: Neo4j 2025.06.2 with the skill's pinned n10s, ROBOT 1.9.10 (ELK), Jena Fuseki 6.2.0, Aura Free, Databricks Free Edition (one serverless SQL warehouse).
 
@@ -10,7 +10,7 @@ Inputs: the newest release of each of the 11 modules (`inputs.py data`), 34,058 
 |---|---|
 | `run.sh` (rules, SHACL, reasoning, serialisation, manifest) | passed; `loadable.nt` 34,058 triples, `inferred.nt` 2 |
 | `load.sh` (`load_verify.py`, then `build.py check-report`) | passed: 598 compiled shape rows, 0 violations in the graph, 1 on the mutant, round trip 0 lost and 0 added, sorted and shuffled loads both hash `5929fa670a00755d1578df27119afbd4fa48ff50ebeec2e7681520f00ed177bb`; 3,971 nodes, 20,176 relationships |
-| `tags.sh` (`module_tags.py tag`, `check`, `modules`) | every node and relationship carries exactly one module tag, equal to its package; 19,845 distinct triples plus the 331 n10s schema relationships (`n4sch__DOMAIN`, `RANGE`, `SCO`), which repeat `rdfs:` triples |
+| `tags.sh` (`module_tags.py tag`, `check`, `modules`) | every node and relationship carries exactly one module tag, equal to its package; 19,845 distinct triples plus the 331 n10s schema relationships (`n4sch__*`), which n10s derives from the ontology and which take the tag of the node they start from (rechecked on Aura under that rule after #65's last fixes) |
 | The module graph against the release manifests | 11 modules, 21 requirements; 7 pins name an older release than the one loaded: lane and system pin core 2.2.0, organization pins core 2.1.0, market-data pins kpi 1.0.1, ref-mpc pins party 1.0.0, value-stream pins data-product 1.0.0 and kpi 1.1.0 |
 | `model_review.py` | 0 errors, 34 warnings, all supernode candidates: code-list values, sources and RACI levels kept as nodes on purpose; no node near the 100,000-relationship limit |
 
