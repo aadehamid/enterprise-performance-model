@@ -65,5 +65,57 @@ class Paths(unittest.TestCase):
                                    os.path.join(real, "skill", "docker", "compose.yaml")])
 
 
+class Rebuild(unittest.TestCase):
+    """rebuild_inputs.py: the export's graphs map to inputs.py's order, and the two comparisons find a
+    planted difference (rebuild.sh step 3)."""
+
+    def setUp(self):
+        import tempfile
+        sys.path.insert(0, HERE)
+        import rebuild_inputs
+        self.ri = rebuild_inputs
+        self.tmp = tempfile.mkdtemp()
+
+    def write(self, name, text):
+        path = os.path.join(self.tmp, name)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(text)
+        return path
+
+    def test_the_export_maps_to_the_inputs_and_whole_graph_shapes_come_from_the_repository(self):
+        head = ("<https://x.org/m> a <http://www.w3.org/2002/07/owl#Ontology> ; "
+                "<http://www.w3.org/2002/07/owl#versionIRI> <https://x.org/m/1.0.0> .\n")
+        data = self.write("releases/m/1.0.0/m.ttl", head)
+        shapes = self.write("releases/m/1.0.0/shapes.ttl", "")
+        extra = self.write("other/shapes.ttl", "")
+        self.write("export/graphs.tsv", "graph-1.ttl\thttps://x.org/m/1.0.0\ngraph-2.ttl\thttps://x.org/m/1.0.0/shapes\n")
+        rows = self.ri.input_list(os.path.join(self.tmp, "export"), [data], [shapes, extra])
+        self.assertEqual(rows, [("data", os.path.join(self.tmp, "export", "graph-1.ttl")),
+                                ("shapes", os.path.join(self.tmp, "export", "graph-2.ttl")),
+                                ("shapes", os.path.abspath(extra), "repository")])
+
+    def test_triples_compare_as_rdf_terms_and_a_changed_value_differs(self):
+        xs = "<http://www.w3.org/2001/XMLSchema#string>"
+        for side, text in (("a", f'<https://x.org/s> <https://x.org/p> "v"^^{xs} .\n'),
+                           ("b", '<https://x.org/s> <https://x.org/p> "v" .\n'),
+                           ("c", '<https://x.org/s> <https://x.org/p> "w" .\n')):
+            self.write(f"{side}/loadable.nt", text)
+            self.write(f"{side}/inferred.nt", "")
+        self.assertEqual(self.ri.compare_triples(os.path.join(self.tmp, "b"), os.path.join(self.tmp, "a")), [])
+        self.assertEqual(len(self.ri.compare_triples(os.path.join(self.tmp, "c"), os.path.join(self.tmp, "a"))), 1)
+
+    def test_reports_must_carry_equal_hashes(self):
+        import json
+        a = self.write("a.json", json.dumps({"determinism_hash_sorted": "h", "nodes": 1}))
+        b = self.write("b.json", json.dumps({"determinism_hash_sorted": "h", "nodes": 2}))
+        c = self.write("c.json", json.dumps({"determinism_hash_sorted": "g"}))
+        d = self.write("d.json", json.dumps({"nodes": 1}))
+        self.assertEqual(self.ri.compare_reports(b, a), [])
+        self.assertEqual(len(self.ri.compare_reports(c, a)), 1)
+        self.assertEqual(len(self.ri.compare_reports(d, a)), 1)
+        self.assertEqual(len(self.ri.compare_reports(a, d)), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -23,8 +23,15 @@ esac
 py() { uv run -q --no-project --with rdflib --with pyshacl --with neo4j python3 "$@" < /dev/null; }
 
 # DATA, SHAPES and SHAPE_ARGS (repeated --shapes) from inputs.py, one path per line, spaces kept.
+# With INPUT_LIST set (rebuild.sh), from that file instead: lines "data<TAB>path" and "shapes<TAB>path".
 DATA=(); SHAPES=(); SHAPE_ARGS=()
-while IFS= read -r l; do [ -n "$l" ] && DATA+=("$l"); done < <(py "$HERE/inputs.py" data)
-while IFS= read -r l; do [ -n "$l" ] && SHAPES+=("$l") && SHAPE_ARGS+=(--shapes "$l"); done < <(py "$HERE/inputs.py" shapes)
+if [ -n "${INPUT_LIST:-}" ]; then
+  while IFS=$'\t' read -r kind l _; do
+    case "$kind" in data) DATA+=("$l");; shapes) SHAPES+=("$l"); SHAPE_ARGS+=(--shapes "$l");; esac
+  done < "$INPUT_LIST"
+else
+  while IFS= read -r l; do [ -n "$l" ] && DATA+=("$l"); done < <(py "$HERE/inputs.py" data)
+  while IFS= read -r l; do [ -n "$l" ] && SHAPES+=("$l") && SHAPE_ARGS+=(--shapes "$l"); done < <(py "$HERE/inputs.py" shapes)
+fi
 RELEASES="$(py "$HERE/inputs.py" releases)"
 [ ${#DATA[@]} -gt 0 ] && [ ${#SHAPES[@]} -gt 0 ] || { echo "inputs.py listed no inputs" >&2; exit 1; }

@@ -1,0 +1,19 @@
+{
+  "about": "Saved exploration queries for explore.py compare (the ontology-to-lpg skill). Each is the general walk from one node, both directions, with the hop limit given; the named shortcuts are walks too. Run against local Neo4j or Aura and against Jena (README.md, 'Exploring the stores').",
+  "queries": [
+    {"name": "process across modules", "iri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8", "hops": 2},
+    {"name": "value stream end to end", "iri": "https://w3id.org/lsc/ontology/modules/value-stream/stream/order-to-cash", "hops": 3},
+    {"name": "measure back to its processes", "iri": "https://w3id.org/lsc/ontology/modules/kpi/measure/additional-market-prices", "hops": 2},
+    {"name": "walk: a process (core)", "iri": "https://w3id.org/lsc/ontology/process/CM-1-2-1", "hops": 2},
+    {"name": "walk: a role (organization)", "iri": "https://w3id.org/lsc/ontology/modules/organization/role/action-owner", "hops": 2},
+    {"name": "walk: a measure (kpi)", "iri": "https://w3id.org/lsc/ontology/modules/kpi/measure/ad-hoc-plan-trends", "hops": 2},
+    {"name": "walk: a data product (data-product)", "iri": "https://w3id.org/lsc/ontology/modules/data-product/product/bpa", "hops": 2},
+    {"name": "walk: a value-stream step (value-stream)", "iri": "https://w3id.org/lsc/ontology/modules/value-stream/process/deal-negotiation-capture", "hops": 2},
+    {"name": "walk: a system (system)", "iri": "https://w3id.org/lsc/ontology/modules/system/system/aps", "hops": 2},
+    {"name": "walk: a lane (lane)", "iri": "https://w3id.org/lsc/ontology/modules/lane/lane/front-office", "hops": 2},
+    {"name": "walk: a customer-lifecycle stage (party)", "iri": "https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/onboarding", "hops": 2},
+    {"name": "walk: a market-data series (market-data)", "iri": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-gulf-coast-3-2-1", "hops": 2},
+    {"name": "walk: an MPC fact (ref-mpc)", "iri": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc", "hops": 2},
+    {"name": "walk: an integration rule (integration)", "iri": "https://w3id.org/lsc/ontology/modules/consumer/rule/definitions", "hops": 2}
+  ]
+}
