@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided |
 | Date | 2026-10-12 |
-| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage, 2026-10-22 on the review rounds and the PR reviewer, and 2026-10-25 on the order of independent reviewers |
+| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage, 2026-10-22 on the review rounds and the PR reviewer, and 2026-10-25 on the order of independent reviewers and, later that day, on reviewers inside Rex |
 | Source | Claude Code session, 2026-10-12; recorded on #207 comment 6137222677 |
 
 ## Context
@@ -26,9 +26,17 @@ Scope and review: the work runs until the ontology is emitted and the ontology p
 
 Merging: The decision owner asked "how do i remove the merge bock. I am going to bed and wont be around to merge". Claude answered with the steps to add the Claude Code permission rule `Bash(gh pr merge:*)`; the session then shows that rule added, and the decision owner replied "done". Claude merges a PR with a merge commit only when all of these hold for its current head: `scripts/check.sh` passes, every independent-review finding is fixed or answered, CI is green, and the PR reviewer's latest comment is MERGE. Claude records the merge on the PR. A PR that changes approval policy or routing, as this one does, still waits for the decision owner (`APPROVAL_POLICY.md`). *2026-10-20, see the amendment below on merging when the approval agent asks for a human:* the decision owner need not be the one who merges such a pull request once the PR reviewer's MERGE is on its head and `checks` passed; Step 3c definition batches still wait for them.
 
+## Amendment, 2026-10-25 (later): reviewers inside Rex
+
+On 2026-10-24 local time, two reviews ran through Rex by hand, and Claude recommended adding Rex as a second host for the review scripts, chosen automatically. The decision owner answered "And I like your recommendations." personal-agent-skills #PR_SKILLS added it: inside a Rex pane and outside Herdr, `herdr-review.sh` hands off to `rex-review.sh`, which starts the same reviewers with the same flags and prompt. Claude then asked whether, inside Rex and once that host is merged, Kimi and the Cursor agent CLI count as available for this repository's reviews. The decision owner answered "1. i agree". The decision owner also set the pane layout ("for Rex I want the first review pane to be a horizonta split pane in the current window") and allowed answering a reviewer's folder-trust question ("it is okay to always trust the folder and continue").
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+1. **Inside Rex, Kimi and the Cursor agent CLI are available** as the way-of-working skill's "Who reviews" section defines it, through `herdr-review.sh`, which hands off to `rex-review.sh` there. The order of the amendment of 2026-10-25 is unchanged: Kimi, then Pi, then Codex. The Cursor agent CLI's stand-in verdict (amendment of 2026-10-22) runs the same way.
+2. **Outside both Herdr and Rex,** Kimi and the Cursor agent CLI stay not available, and Codex runs through the Codex plugin, as before.
+
 ## Amendment, 2026-10-25: the order of independent reviewers
 
-On 2026-10-24 and 25, Pi's Ollama weekly usage limit stopped it from reviewing personal-agent-skills #50 to #52, and Codex stood in. The decision owner then set an order for the independent review: "can we use kimi K3.1 Pro at medium effort for independent review, if it is not avaliable we use Pi as before and if Pi is also not available we use codex 6.0 luna and if that is not available we use cursor agent as the fall back." Kimi offers low, high and max effort only, and the decision owner chose "set it at high". The way-of-working skill took the order in personal-agent-skills #52. The decision owner then asked for this repository to follow it: "also amend EPM's AGENTS.md to use the same order."
+On 2026-10-24 and 25, Pi's Ollama weekly usage limit stopped it from reviewing personal-agent-skills #50 to #52, and Codex stood in. The decision owner then set an order for the independent review: "can we use kimi K3.1 Pro at medium effort for independent review, if it is not avaliable we use Pi as before and if Pi is also not available we use codex 6.0 luna and if that is not available we use cursor agent as the fall back." Kimi Code 2.3.1 offers low, high and max effort for K3.1 Pro, with high as the default (`support_efforts` and `default_effort` for `kimi-code/k3.1-pro` in its model catalog, `~/.kimi-code/config.toml`, read 2026-10-24), and the decision owner chose "set it at high". The way-of-working skill took the order in personal-agent-skills #52. The decision owner then asked for this repository to follow it: "also amend EPM's AGENTS.md to use the same order."
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **The independent review is the first available of three reviewers, in this order:** Kimi on K3.1 Pro at high effort (`herdr-review.sh --kind kimi`, model `kimi-code/k3.1-pro`); then Pi (`pi-review.sh --role independent`); then Codex on gpt-6-luna (`herdr-review.sh`, or outside Herdr the Codex plugin with `--model gpt-6-luna`). A reviewer is not available as the way-of-working skill's "Who reviews" section defines it. This replaces Pi as the only independent reviewer under the amendment of 2026-10-22.
@@ -104,6 +112,8 @@ On the review rounds in session 7, in the Claude Code session on 2026-10-21 (sav
 On the extension, in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12."
 
 On the order of independent reviewers, in the Claude Code session on 2026-10-25 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-reviewer-order.md`): "can we use kimi K3.1 Pro at medium effort for independent review, if it is not avaliable we use Pi as before and if Pi is also not available we use codex 6.0 luna and if that is not available we use cursor agent as the fall back."; then "set it at high"; then "also amend EPM's AGENTS.md to use the same order."
+
+On reviewers inside Rex, in the Claude Code session of 2026-10-24 local time (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-rex-host.md`): "And I like your recommendations."; "for Rex I want the first review pane to be a horizonta split pane in the current window"; "1. i agree"; "it is okay to always trust the folder and continue. especially when you are driving work by yourself."
 
 ## Consequences
 

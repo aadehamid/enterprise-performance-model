@@ -58,8 +58,10 @@ Run these before you open a pull request, and again before you push a review fix
      effort (`herdr-review.sh --kind kimi`), then Pi (`pi-review.sh --role
      independent`), then Codex on gpt-6-luna (`herdr-review.sh`). A reviewer is not
      available as the `way-of-working` skill's "Who reviews" section defines it.
-     Outside Herdr, Kimi is not available, and Codex runs through the Codex plugin
-     (below). When none of the three is available, push nothing and tell the
+     Inside Rex, `herdr-review.sh` hands off to `rex-review.sh`, so Kimi and the
+     Cursor agent CLI are available there too (amendment of 2026-10-25, later).
+     Outside Herdr and Rex, Kimi is not available, and Codex runs through the Codex
+     plugin (below). When none of the three is available, push nothing and tell the
      decision owner. The Cursor bot gives the PR verdict. When the bot's check has
      not started 8 minutes after a push, or it has given no verdict by 9 minutes,
      the Cursor agent CLI on Auto gives the verdict (`herdr-review.sh --kind cursor
@@ -75,7 +77,7 @@ Run these before you open a pull request, and again before you push a review fix
      first available reviewer in the order, plus item 1 and CI, and the PR body
      says which checks ran and which reviewer ran each (amendments of 2026-10-22 and
      2026-10-25). PR verdict rounds are uncapped.
-   - **Codex outside Herdr:** Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main --model gpt-6-luna "<claims to verify>"`,
+   - **Codex outside Herdr and Rex:** Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main --model gpt-6-luna "<claims to verify>"`,
      and Codex CLI runs `codex review -c model="gpt-6-luna" --base main` (it rejects a prompt combined with `--base`).
 
    Record any disagreement on a judgement call in the PR body.
