@@ -53,7 +53,7 @@ The Executive Summary agent groups its prices into nine groups: Benchmark, Crack
    | Benchmark (ICE Brent, NYMEX WTI Cushing, NYMEX Natural Gas, NYMEX Heating Oil, NYMEX RBOB) | open: see question 1 | |
    | none | Price Comparison; R&M Margin Indicator | not served by either agent |
 
-   The identifiers agree where both sides hold them. The six primary regional 3-2-1 series the crack-spread agent names (43870 USGC MEH, 37438 Chicago WTI, 37439 Group/Tulsa WTI, 36855 LA ANS, 37443 PNW ANS, 37471 SLC WTI), the blended cracks (37464, 42023), the NYMEX crack 39998 and NYMEX WTI Cushing (747) all carry the same Price Master IDs in `market-data` 1.0.0.
+   The identifiers agree where both sides hold them. The six primary regional 3-2-1 series the crack-spread agent names (43870 USGC MEH, 37438 Chicago WTI, 37439 Group/Tulsa WTI, 36855 LA ANS, 37443 PNW ANS, 37471 SLC WTI), the blended cracks (37464, 42023) and the NYMEX crack 39998 are crack-spread series with the same Price Master IDs (`mkt:priceMasterId`) in `market-data` 1.0.0. NYMEX WTI Cushing (747) is there too, as a benchmark (a leg of the WTI cracks), not a series. The other NYMEX cracks the agent names (44934, 44935) are not in `market-data` 1.0.0.
 7. **Synthetic data for testing.** The decision owner: "We have the freedom when using synthetic data in Free databrick edition to shape it as we want . as long as it ihas the same shape as the one shared". The views are in another Databricks workspace, so tests in the Free Edition use synthetic tables and views with the same columns and grain.
 
 ## Differences between the views and the measures' definitions
