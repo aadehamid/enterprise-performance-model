@@ -2780,6 +2780,26 @@ to `business_architecture/ontology/`.
 | Appendix C | "The worked example's process-to-process predicates, with their definitions." | This build's Step 4 predicates (now "from a real build") |
 | Appendix C | "The worked example also uses a disposition split for "enables" rows" | This build's Step 4 disposition split (now "The same build also used") |
 
+### Evidence for the skill capabilities added on 2026-10-24 and 25
+
+*2026-10-25.* The decision owner asked during the store-tests night run (saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-playbooks.md`): "rememebr to update the playbooks - ontology and rrdf - lpg projection playbook for any net new items tonight. especially if we update the skills with any of these tools." The playbook now points to each capability the skills gained (personal-agent-skills PRs below, all merged), in neutral terms. This build's instances of each stay here.
+
+| Playbook section | Addition | This build's evidence |
+|---|---|---|
+| About this document, "Companion skills" | The `rdf-store` skill | personal-agent-skills #55 |
+| Step 0, item 5 and "Done when" | Search four registries and record each search | personal-agent-skills #58. On 2026-10-24, LOV's SPARQL endpoint and REST API answered with an HTML page and DBpedia Archivo did not answer from the build machine, so the skill records the site search as the one to use |
+| Step 3, item 2 | The definition, label and scope-note rules traced to ANSI/NISO Z39.19-2005 (R2010) | personal-agent-skills #57 |
+| Step 3, "Done when" | The qSKOS quality issues an offline build can check | personal-agent-skills #53. A read-only trial on the newest release of each module, new findings only: `scheme` 28 (code-list schemes with no top concept), `reciprocal` 109 (`skos:topConceptOf` without the scheme's `skos:hasTopConcept`, 106 of them in `party`), `collision` 11 (including seven preferred labels shared across schemes, such as Finance, IT Services, Marketing and Refining as both a business domain and a process in `core`), `disjoint-labels` 1 (in `kpi`), `uri-scheme` 0. The modules do not run the skill's checker, so nothing failed. Under the playbook's rule for checks adopted after release, each of these findings still needs a disposition by recorded decision, so this build does not yet meet that part of Step 3's gate; whether to rename the shared labels or exempt labels shared across schemes is a question for the decision owner |
+| Step 7, item 2, "Leave statistical cubes to the consumer" | RDF Data Cube guidance for measures | personal-agent-skills #56. A read-only check of `kpi` 1.1.1: all 41 measures are already `skos:Concept`, so a cube can link to them with no change; grain is free text and no unit is recorded, which matters once a cube is planned for the pricing measures' metric views |
+| Step 7, item 3 and "Done when" | Mappings kept as SSSOM files | personal-agent-skills #62. This build's APQC cross-references would be the first mapping set |
+| Step 9, item 12 | `check_code_lists.py`, `check_shapes.py` and `check_packages.py` run the gates | personal-agent-skills #49. This build runs its own builders' equivalents from `scripts/check.sh` |
+| Step 10, item 5 and "Done when" | A "Known gaps" section in every changelog | personal-agent-skills #60. A read-only trial: all 25 released packages have a CHANGELOG.md and none has the section; they stay as released and would be listed as exempt when the build adopts the check |
+| Step 10, item 6 | Widoco pages beside each released package | personal-agent-skills #59. A sample for `lane` 1.0.0 was built outside the repository. This build has not adopted the pages. EPM-DEC-001-0039 decided on 2026-10-14 not to host the namespace or any release file, so pages, if adopted, would be read from the repository like the packages |
+| Step 11, item 3 | `run_regression.py` runs the suite | personal-agent-skills #49 |
+| Step 3, item 3, and §6, Human-gated authoring | Candidates a language model extracts from documents (OntoGPT) enter the human gate | personal-agent-skills #64. Asked for by the decision owner on 2026-10-24 for building from unstructured documents; no model was run on this build's documents |
+| §3, opening | A spreadsheet or CSV becomes triples through a reviewed mapping and a deterministic build | personal-agent-skills #63. Asked for by the decision owner on 2026-10-24 for later spreadsheets and CSV files; the skill leaves the choice between Morph-KGC and maplib to the decision owner, recommending Morph-KGC |
+| Step 12, hop 3 | The `rdf-store` skill and its RDFC-1.0 hash proof | personal-agent-skills #55. Live round trip on 2026-10-25 of the newest release of each of the 11 modules with their shapes and catalogs: 33 graphs, 36,575 quads, equal hashes through Jena Fuseki 6.2.0 and through the Databricks table `workspace.epm_ontology.epm_triples` |
+
 ### §7 Worked example: the downstream process-map ontology (moved word for word)
 
 How the method played out on a real build. This section illustrates. The

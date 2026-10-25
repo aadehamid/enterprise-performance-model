@@ -47,6 +47,9 @@ carry it out:
   templates and checks.
 - The `ontology-to-lpg` skill: the property-graph projection method used in
   Step 12.
+- The `rdf-store` skill: loads the released files into a triple store (a
+  SPARQL 1.1 store or a Databricks Delta table) and proves by a round trip
+  that nothing was lost (Step 12, hop 3).
 
 ---
 
@@ -195,7 +198,14 @@ ontologies and code lists give you terms to link to.
    lists and data exchange standards), published domain ontologies (search
    GitHub, ontology portals, and Linked Open Vocabularies), legal and
    financial registries (for organizations and ownership), and W3C
-   vocabularies.
+   vocabularies. Search four registries for the domain's main nouns, and
+   record each search (the registry, the date, the query terms, and the hits
+   or "no hits"): Linked Open Vocabularies and DBpedia Archivo for RDF
+   vocabularies, BARTOC for thesauri and classifications that never became
+   RDF, and Open Knowledge Graphs for standards and tools. A registry's
+   listing is a lead; assess the source itself. The `ontology` skill's
+   `external-ontologies.md`, "The registries to search", says how to search
+   each one.
 6. Assess each candidate on five points: how much of your scope it covers;
    its license; whether it is maintained (date of the last release); whether
    it brings an upper ontology you would also have to take on; and its size.
@@ -212,8 +222,9 @@ ontologies and code lists give you terms to link to.
    that step, not all at once.
 
 **Done when:** every cited framework ID is checked against the published
-source; every divergence has a boundary note; every surveyed source has a
-recorded treatment and a target step.
+source; every divergence has a boundary note; each of the four registries
+has a recorded search; every surveyed source has a recorded treatment and a
+target step.
 
 **Pitfall.** Expect gaps. Public ontologies often cover one part of an
 industry well (equipment, or the upstream end) and leave the rest bare. A
@@ -294,10 +305,15 @@ Use SKOS first, not OWL.
 1. Create one `skos:ConceptScheme`. Use `skos:broader` and `skos:narrower`
    for the hierarchy, `skos:prefLabel` and `skos:altLabel` for names,
    `skos:notation` for local IDs, and `skos:definition` on every concept.
-2. Write definitions to the quality bar in §6.
+2. Write definitions to the quality bar in §6. The definition, label and
+   scope-note rules follow the thesaurus standard ANSI/NISO Z39.19-2005
+   (R2010), and differ from it only where a difference is declared with its
+   reason (the `ontology` skill's `quality.md`, "The vocabulary standards
+   behind these rules").
 3. Collect candidate definitions from references, but send each one through
    a human gate. Reference text informs a definition. Never copy it
-   verbatim.
+   verbatim. Candidates a language model extracts from documents follow the
+   same gate (§6, Human-gated authoring).
 4. Do not turn each hierarchy level into OWL classes and subclasses. That
    asserts logical commitments, such as disjointness and inherited
    restrictions, that a naming hierarchy does not support.
@@ -305,7 +321,14 @@ Use SKOS first, not OWL.
 **Done when:** every concept has a definition and a label; every concept
 except the scheme's top concepts (`skos:topConceptOf`) has exactly one
 parent; the mechanical checks (labels present, hierarchy integrity, no label
-collisions) pass.
+collisions) pass, including the SKOS quality issues catalogued by qSKOS that
+an offline build can check, such as invalid language tags, overlapping
+labels, relations stated one way only, and mapping clashes (the `ontology`
+skill's `quality.md`, "The qSKOS issues", which says where the skill differs
+from qSKOS on purpose). When you adopt a check on modules already released,
+record what it finds in them and give each finding a disposition by
+recorded decision (fix it in the next release, or accept it with a reason);
+a finding in new work blocks the gate.
 
 ### Step 4. The relationship layer
 
@@ -514,7 +537,23 @@ capabilities, systems, measures and data products.
      the ontology.
    - **Link measures to processes as context.** A link says which process a
      measure informs. It does not certify the process.
-3. Apply the external mappings you assigned to this step in Step 0.
+   - **Leave statistical cubes to the consumer.** A consumer that publishes
+     a measure's values as an RDF Data Cube keeps the cube, its observations
+     and its data structure; give every measure definition the type
+     `skos:Concept` as well, in a scheme, so the consumer's measure property
+     links to it with `qb:concept` and the ontology needs no change. Record a
+     measure's grain dimensions and unit as links and code values only when
+     the first cube is planned (the `ontology` skill's `integration.md`,
+     "Measures published as statistical data").
+3. Apply the external mappings you assigned to this step in Step 0. Keep
+   them as data with their justification and confidence, in an SSSOM file
+   (the Simple Standard for Sharing Ontology Mappings) beside the module,
+   and emit the `skos:*Match` triples from the accepted rows only; a
+   rejected candidate stays in the file with SSSOM's `predicate_modifier`
+   set to `Not`, so nobody proposes it again, and yields no triple. A tool's candidate mapping is
+   not a decision until a person has checked it. The `ontology` skill's
+   `external-ontologies.md`, "Record mappings as SSSOM", has the rules and
+   a checker.
 4. Resolve the gaps earlier steps exposed, such as empty output sets or
    missing owners, one at a time, each as a recorded decision. Do not invent
    an owner to fill a gap. "Unowned, parked" is better than a guess.
@@ -543,7 +582,7 @@ capabilities, systems, measures and data products.
    on, so a test can check that they exist.
 
 **Done when:** every integration gap has a decision: linked, or explicitly
-parked.
+parked; every mapping file passes the SSSOM check.
 
 ### Step 8. Scope review (do it early)
 
@@ -601,6 +640,14 @@ revival trigger.
 11. Follow the whole chain in a rule over a hierarchy. "No role is a
    subclass of party" is checked with `rdfs:subClassOf+`, not one step;
    otherwise a class two steps down passes.
+12. Let scripts run the gates, from the check script. The `ontology` skill
+   ships one per gate: `check_code_lists.py` for the code-list coverage
+   test of item 5 (it also moves one value of each property to another list
+   and expects its shape to report it), `check_shapes.py` for each module's
+   shapes and the whole-graph gate of item 7, and `check_packages.py` for
+   each release package against its own shapes over its released closure
+   (Step 10). Each run passes only when its report conforms, at any
+   severity (the skill's `shacl.md`).
 
 **Done when:** the shapes run against the data with zero unexplained
 violations.
@@ -623,9 +670,24 @@ violations.
    script. A module that depends on another names that module's version,
    and the build fails if that version does not exist. Appendix B covers
    release candidates, the cut and the next major.
+5. Give every changelog a "Known gaps" section: what the release still
+   lacks, one item per gap, each with its reason and the decision or open
+   question that records it, or "None.". A consumer reads what a release is
+   not yet fit for in the same place as what changed. Packages released
+   before you adopt the rule stay as released and are listed as exempt
+   (the `ontology` skill's `release.md`, rule 18, with
+   `check_changelogs.py`).
+6. If the project builds human-readable documentation pages, build them
+   from each released package's own Turtle (with Widoco, which runs
+   locally) and keep them beside the packages, never inside them, because a
+   released package never changes. Record which manifest each page set was
+   built from, so a check can tell stale pages from current ones. Publishing
+   them waits for the hosting decision (the skill's `release.md`,
+   "Documentation pages", has the builder and the check).
 
 **Done when:** the catalog resolves; the current release is retrievable as
-versioned distributions.
+versioned distributions; every changelog the rule covers has its "Known
+gaps" section.
 
 ### Step 11. SPARQL regression tests
 
@@ -635,8 +697,11 @@ versioned distributions.
 
 1. Convert the Step 1 competency questions into SPARQL.
 2. Re-run coverage after each module lands, not only at the end.
-3. Run the full suite on every release. A failing test is a regression or a
-   recorded, deliberate change. It is never a surprise.
+3. Run the full suite on every release, and after every module lands,
+   against the released packages, from the check script. A failing test is
+   a regression or a recorded, deliberate change. It is never a surprise.
+   The `ontology` skill's `run_regression.py` runs the suite and checks
+   each question's status (the skill's `regression.md`).
 4. Where a question depends on a system outside the ontology (a catalog
    page, an assistant), test only the part the graph supplies.
 5. Start the harness early, before most questions can pass. Give each
@@ -764,7 +829,13 @@ Its six hops, numbered as the skill numbers them:
 3. **Triple stores.** Load one named graph per package into any SPARQL 1.1
    store through the W3C Graph Store HTTP Protocol, and into Databricks as
    a plain Delta triple table in Unity Catalog. Export each store back and
-   compare it with the source.
+   compare it with the source. The `rdf-store` skill does this hop. It
+   exchanges N-Quads, which carry the graph name, and the proof is equal
+   RDFC-1.0 hashes (the W3C canonical form of a dataset, blank nodes
+   included) of the source and the store's export; counts per graph and
+   predicate are only a quick look, because counts can match while a value
+   differs. It exports everything the store holds, so a leftover graph
+   fails the comparison.
 4. **Local Neo4j.** Project with n10s and pass the verify step above. This
    is the gate; n10s does not run on Aura.
 5. **Aura or any Neo4j.** Copy the validated graph over the driver and
@@ -974,6 +1045,17 @@ properties. The staging layer may be the only copy of facts such as "which
 process uses which input". A careless promotion corrupts those facts
 silently: the triples look fine but no longer say what the business said.
 The rules below prevent that.
+
+When the source is a spreadsheet or CSV export, write the conversion as a
+reviewed mapping and run it as a deterministic build step that fails unless
+the committed output equals a fresh build. Review the mapping, not the
+output: the output is regenerated, never edited. Build each IRI from the
+row's stable key, never from its position or its label, so a re-sorted sheet
+mints no new identities. Map every value in its final form, language tag and
+datatype included, and pin the engine's version. The `ontology` skill's
+`promotion.md`, "From a spreadsheet to triples", works one example through
+two engines (an RML mapping run by Morph-KGC, and maplib's templates over a
+dataframe) and leaves the choice of engine to the owner.
 
 ### The eleven rules
 
@@ -1334,6 +1416,16 @@ gate:
 3. A person reviews the meaning: parent test, sibling disjointness, primary
    purpose, stable terms, no invented owners.
 4. Every doubt goes back to the owner as a question.
+
+Candidate terms a language model extracts from documents, with a tool such
+as OntoGPT, enter the same gate as candidates, never as ontology content. Run
+the tool only on documents the owner supplied, with a model the owner
+approved for that content, and keep its raw result as evidence outside the
+graph. Each candidate cites its passage word for word. A script can prove
+the passage is in the document and the row is well formed; it cannot tell
+whether the definition says what the passage says, so a person re-checks
+each definition against its passage before the review of meaning (the
+`ontology` skill's `governance.md`, "Candidates from documents").
 
 ### One change per pull request
 Every change goes through a pull request, and a reviewer merges or holds it.
