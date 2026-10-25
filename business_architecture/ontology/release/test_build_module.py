@@ -179,6 +179,47 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.0.1", "core": "2.1.0"})
         self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0", "core": "2.1.0"})
 
+    def test_a_release_that_loses_to_a_higher_one_adds_no_requirements(self):
+        # catalog 1.0.0 needs types 1.0.0; catalog 1.1.0 needs nothing. reviews needs catalog 1.1.0, so
+        # 1.1.0 wins and types must not load, whichever requirement is met first (the ontology skill's
+        # check_packages test, personal-agent-skills #49). The old closure loaded types.
+        table = {("catalog", "1.0.0"): {"types": "1.0.0"}, ("catalog", "1.1.0"): {},
+                 ("reviews", "1.0.0"): {"catalog": "1.1.0"}, ("types", "1.0.0"): {}}
+        real = bm.released_requires
+        bm.released_requires = lambda dep, version: dict(table[(dep, version)])
+        try:
+            for order in ({"catalog": "1.0.0", "reviews": "1.0.0"}, {"reviews": "1.0.0", "catalog": "1.0.0"}):
+                with self.subTest(order=list(order)):
+                    self.assertEqual(bm.closure(order), {"catalog": "1.1.0", "reviews": "1.0.0"})
+        finally:
+            bm.released_requires = real
+
+    def test_a_choice_justified_only_by_a_losing_release_does_not_settle(self):
+        # The case the Codex review raised: root needs a 1.0.0, which needs b 1.0.0, which needs a 2.0.0,
+        # which needs b 2.0.0. a 2.0.0 is reached only through b 1.0.0, which loses to b 2.0.0, which is
+        # reached only through a 2.0.0. A losing release adds nothing, so no set of choices justifies itself:
+        # the closure fails loudly instead of returning a wrong set.
+        table = {("a", "1.0.0"): {"b": "1.0.0"}, ("b", "1.0.0"): {"a": "2.0.0"},
+                 ("a", "2.0.0"): {"b": "2.0.0"}, ("b", "2.0.0"): {}}
+        real = bm.released_requires
+        bm.released_requires = lambda dep, version: dict(table[(dep, version)])
+        try:
+            with self.assertRaisesRegex(ValueError, "does not settle"):
+                bm.closure({"a": "1.0.0"})
+        finally:
+            bm.released_requires = real
+
+    def test_a_closure_that_never_settles_fails(self):
+        # a 1.0.0 needs b 1.0.0, which needs a 2.0.0; a 2.0.0 needs nothing, so b drops and a 1.0.0 returns.
+        table = {("a", "1.0.0"): {"b": "1.0.0"}, ("b", "1.0.0"): {"a": "2.0.0"}, ("a", "2.0.0"): {}}
+        real = bm.released_requires
+        bm.released_requires = lambda dep, version: dict(table[(dep, version)])
+        try:
+            with self.assertRaisesRegex(ValueError, "does not settle"):
+                bm.closure({"a": "1.0.0"})
+        finally:
+            bm.released_requires = real
+
     def test_the_validated_graph_holds_one_core_release(self):
         # Codex round 1 on EPM-DEC-001-0077, item 3: the graph the shapes see, not only the version table.
         core = URIRef(bm.MODULES_NS + "core")

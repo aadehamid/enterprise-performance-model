@@ -246,16 +246,23 @@ def released_closure(name):
 
 def closure(depends_on):
     """The released packages that the given dependencies load, by the rule of released_closure. A
-    written package's closure starts from its own manifest: closure(released_requires(name, version))."""
-    found = {}
-    todo = list(depends_on.items())
-    while todo:
-        dep, version = todo.pop()
-        if dep in found and tuple(map(int, found[dep].split("."))) >= tuple(map(int, version.split("."))):
-            continue
-        found[dep] = version
-        todo += list(released_requires(dep, version).items())
-    return found
+    written package's closure starts from its own manifest: closure(released_requires(name, version)).
+    It settles on the highest release of each module reachable from the given requirements through the
+    chosen releases' own requirements, so a release that loses to a higher one adds nothing (the
+    fixed point of the ontology skill's check_packages.closure, personal-agent-skills #49)."""
+    def key(version):
+        return tuple(map(int, version.split(".")))
+    chosen = {}
+    for _ in range(1000):
+        want = {}
+        for deps in [dict(depends_on)] + [released_requires(dep, version) for dep, version in chosen.items()]:
+            for dep, version in deps.items():
+                if dep not in want or key(version) > key(want[dep]):
+                    want[dep] = version
+        if want == chosen:
+            return chosen
+        chosen = want
+    raise ValueError("the dependency closure does not settle")
 
 
 def validation_graph(name, g):
