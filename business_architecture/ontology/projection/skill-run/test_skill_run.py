@@ -1,5 +1,7 @@
-"""The skill-run scripts read the same inputs as ../pipeline.py: inputs.py lists exactly its INPUTS and
-SHAPES, each file exists, and epm-config.json pins the same packages.
+"""The ontology-to-lpg skill's run_projection.py reads the same inputs as ../pipeline.py: inputs.py lists
+exactly its INPUTS and SHAPES, each file exists, and epm-config.json pins the same packages. epm-run.json,
+the run configuration, names this folder's files, keeps every output outside the repository and names
+each release's shapes and catalog, which sit beside every data file.
 
 Run: python3 -m pytest test_skill_run.py (needs rdflib, pyshacl).
 """
@@ -46,131 +48,38 @@ class Inputs(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
 
 
-class Paths(unittest.TestCase):
-    def test_relative_paths_become_absolute_before_any_cd(self):
-        """common.sh turns relative ONTOLOGY_TO_LPG, ROBOT_JAR and MANUAL_CASES into absolute paths,
-        because run.sh, load.sh and aura-copy.sh change directory into the skill before using them."""
-        import tempfile
-        with tempfile.TemporaryDirectory() as tmp:
-            os.makedirs(os.path.join(tmp, "skill", "scripts"))
-            open(os.path.join(tmp, "skill", "scripts", "build.py"), "w").close()
-            script = ('. "$1"; printf "%s\\n" "$ONTOLOGY_TO_LPG" "$ROBOT_JAR" "$MANUAL_CASES" "$SK" "$COMPOSE"')
-            env = {**os.environ, "ONTOLOGY_TO_LPG": "skill", "ROBOT_JAR": "robot.jar",
-                   "MANUAL_CASES": "cases.json", "LPG_OUT": "out"}
-            out = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp,
-                                 env=env, capture_output=True, text=True, check=True).stdout.splitlines()
-            real = os.path.realpath(tmp)
-            self.assertEqual(out, [os.path.join(real, "skill"), os.path.join(real, "robot.jar"),
-                                   os.path.join(real, "cases.json"), os.path.join(real, "skill", "scripts"),
-                                   os.path.join(real, "skill", "docker", "compose.yaml")])
-
-    def test_a_relative_env_file_reaches_module_tags_absolute(self):
-        """tags.sh changes into the skill's scripts before running module_tags.py, so a relative --env
-        file must already be absolute; a stand-in uv records the arguments it is given."""
-        import tempfile
-        with tempfile.TemporaryDirectory() as tmp:
-            os.makedirs(os.path.join(tmp, "skill", "scripts"))
-            os.makedirs(os.path.join(tmp, "bin"))
-            open(os.path.join(tmp, "skill", "scripts", "build.py"), "w").close()
-            uv = os.path.join(tmp, "bin", "uv")
-            with open(uv, "w") as f:
-                f.write('#!/bin/sh\nprintf "%s\\n" "$@" >> "$UV_LOG"\n')
-            os.chmod(uv, 0o755)
-            log, inputs = os.path.join(tmp, "uv.log"), os.path.join(tmp, "inputs.tsv")
-            with open(inputs, "w") as f:
-                f.write("data\t/a.ttl\nshapes\t/s.ttl\n")
-            env = {**os.environ, "ONTOLOGY_TO_LPG": "skill", "LPG_OUT": "out", "UV_LOG": log, "INPUT_LIST": inputs,
-                   "PATH": os.path.join(tmp, "bin") + os.pathsep + os.environ["PATH"]}
-            subprocess.run(["bash", os.path.join(HERE, "tags.sh"), "--env", "aura.env"], cwd=tmp, env=env,
-                           capture_output=True, text=True, check=True)
-            args = open(log).read().splitlines()
-            envs = [args[i + 1] for i, a in enumerate(args) if a == "--env"]
-            self.assertEqual(envs, [os.path.join(os.path.realpath(tmp), "aura.env")] * 2)
-
-class Rebuild(unittest.TestCase):
-    """rebuild_inputs.py: the export's graphs map to inputs.py's order, and the two comparisons find a
-    planted difference (rebuild.sh step 3)."""
-
+class RunConfig(unittest.TestCase):
     def setUp(self):
-        import tempfile
-        sys.path.insert(0, HERE)
-        import rebuild_inputs
-        self.ri = rebuild_inputs
-        self.tmp = tempfile.mkdtemp()
+        with open(os.path.join(HERE, "epm-run.json")) as f:
+            self.cfg = json.load(f)
 
-    def write(self, name, text):
-        path = os.path.join(self.tmp, name)
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(text)
-        return path
+    def path(self, value):
+        return os.path.normpath(os.path.join(HERE, value))
 
-    def test_the_export_maps_to_the_inputs_and_whole_graph_shapes_come_from_the_repository(self):
-        head = ("<https://x.org/m> a <http://www.w3.org/2002/07/owl#Ontology> ; "
-                "<http://www.w3.org/2002/07/owl#versionIRI> <https://x.org/m/1.0.0> .\n")
-        data = self.write("releases/m/1.0.0/m.ttl", head)
-        shapes = self.write("releases/m/1.0.0/shapes.ttl", "")
-        extra = self.write("other/shapes.ttl", "")
-        self.write("export/graphs.tsv", "graph-1.ttl\thttps://x.org/m/1.0.0\ngraph-2.ttl\thttps://x.org/m/1.0.0/shapes\n")
-        rows = self.ri.input_list(os.path.join(self.tmp, "export"), [data], [shapes, extra])
-        self.assertEqual(rows, [("data", os.path.join(self.tmp, "export", "graph-1.ttl")),
-                                ("shapes", os.path.join(self.tmp, "export", "graph-2.ttl")),
-                                ("shapes", os.path.abspath(extra), "repository")])
+    def test_it_projects_the_releases_this_folder_lists(self):
+        self.assertEqual(self.cfg["mode"], "releases")
+        self.assertEqual(self.path(self.cfg["inputs_script"]), os.path.join(HERE, "inputs.py"))
+        self.assertEqual(self.path(self.cfg["projection_config"]), os.path.join(HERE, "epm-config.json"))
+        self.assertEqual(self.path(self.cfg["queries"]), os.path.join(HERE, "queries.json"))
+        self.assertEqual(os.path.realpath(self.path(self.cfg["releases"])), listed("releases")[0])
 
-    def test_triples_compare_as_rdf_terms_and_a_changed_value_differs(self):
-        xs = "<http://www.w3.org/2001/XMLSchema#string>"
-        for side, text in (("a", f'<https://x.org/s> <https://x.org/p> "v"^^{xs} .\n'),
-                           ("b", '<https://x.org/s> <https://x.org/p> "v" .\n'),
-                           ("c", '<https://x.org/s> <https://x.org/p> "w" .\n')):
-            self.write(f"{side}/loadable.nt", text)
-            self.write(f"{side}/inferred.nt", "")
-        self.assertEqual(self.ri.compare_triples(os.path.join(self.tmp, "b"), os.path.join(self.tmp, "a")), [])
-        self.assertEqual(len(self.ri.compare_triples(os.path.join(self.tmp, "c"), os.path.join(self.tmp, "a"))), 1)
+    def test_outputs_and_credentials_live_outside_the_repository(self):
+        for key in ("out", "robot_jar", "target_env"):
+            self.assertTrue(self.cfg[key].startswith("~/"), key)
+        self.assertTrue(self.cfg["rebuild"]["out"].startswith("~/"))
+        self.assertTrue(self.cfg["databricks"]["env"].startswith("~/"))
 
-    def test_reports_must_carry_exactly_the_two_equal_hashes(self):
-        import json
-        both = {"determinism_hash_sorted": "h", "determinism_hash_shuffled": "h"}
-        a = self.write("a.json", json.dumps({**both, "nodes": 1}))
-        b = self.write("b.json", json.dumps({**both, "nodes": 2}))
-        changed = self.write("c.json", json.dumps({**both, "determinism_hash_shuffled": "g"}))
-        one = self.write("d.json", json.dumps({"determinism_hash_sorted": "h"}))
-        extra = self.write("e.json", json.dumps({**both, "other_hash": "x"}))
-        empty = self.write("f.json", json.dumps({"determinism_hash_sorted": "", "determinism_hash_shuffled": ""}))
-        self.assertEqual(self.ri.compare_reports(b, a), [])
-        for bad in (changed, one, extra):
-            self.assertEqual(len(self.ri.compare_reports(bad, a)), 1, bad)
-            self.assertEqual(len(self.ri.compare_reports(a, bad)), 1, bad)
-        self.assertEqual(len(self.ri.compare_reports(empty, empty)), 1)
+    def test_every_release_has_the_graphs_the_stores_hold(self):
+        for data in listed("data"):
+            for name in self.cfg["release_graphs"]:
+                self.assertTrue(os.path.isfile(os.path.join(os.path.dirname(data), name + ".ttl")), (data, name))
 
-    def test_a_malformed_input_list_stops_common_sh(self):
-        import tempfile
-        with tempfile.TemporaryDirectory() as tmp:
-            os.makedirs(os.path.join(tmp, "skill", "scripts"))
-            open(os.path.join(tmp, "skill", "scripts", "build.py"), "w").close()
-            good = os.path.join(tmp, "good.tsv")
-            with open(good, "w") as f:
-                f.write("data\t/x/m.ttl\nshapes\t/x/s.ttl\trepository\n")
-            script = '. "$1"; printf "%s\\n" "${#DATA[@]}" "${#SHAPES[@]}"'
-            env = {**os.environ, "ONTOLOGY_TO_LPG": "skill", "LPG_OUT": "out", "INPUT_LIST": good}
-            out = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp, env=env,
-                                 capture_output=True, text=True, check=True).stdout.split()
-            self.assertEqual(out, ["1", "1"])
-            unterminated = os.path.join(tmp, "unterminated.tsv")
-            with open(unterminated, "w") as f:
-                f.write("data\t/x/m.ttl\nshapes\t/x/s.ttl")   # no final newline: the shapes line still counts
-            out = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp,
-                                 env={**env, "INPUT_LIST": unterminated}, capture_output=True, text=True,
-                                 check=True).stdout.split()
-            self.assertEqual(out, ["1", "1"])
-            for bad in ("dat\t/x/m.ttl\n", "data\t\n", "data\t/x/m.ttl\tother\n", "data\t/x/m.ttl\trepository\tz\n",
-                        "data\t/x/m.ttl\ndat\t/x/n.ttl",
-                        "data\t/x/m.ttl\n\n"):   # a trailing blank line is read as an empty record and refused
-                path = os.path.join(tmp, "bad.tsv")
-                with open(path, "w") as f:
-                    f.write(bad)
-                result = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp,
-                                        env={**env, "INPUT_LIST": path}, capture_output=True, text=True)
-                self.assertEqual(result.returncode, 2, repr(bad))
+    def test_every_saved_walk_names_a_start_and_hops(self):
+        with open(os.path.join(HERE, "queries.json")) as f:
+            queries = json.load(f)["queries"]
+        self.assertEqual(len(queries), 14)
+        for q in queries:
+            self.assertTrue(q["name"] and q["iri"].startswith("https://") and int(q["hops"]) >= 1, q)
 
 
 if __name__ == "__main__":

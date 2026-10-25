@@ -1,6 +1,6 @@
 # Store tests, steps 3 to 5, run on 2026-10-25
 
-The record of the store tests on the released ontology: the projection into local Neo4j (step 3), the copy to Aura (step 4), and both rebuilt from the Databricks copy (step 5), each checked for no data loss, with every node tagged by its module and walked across modules in Neo4j and in Jena. Steps 2a and 2b, the round trips through Jena Fuseki and the Databricks Delta table, ran earlier the same night with the `rdf-store` skill (personal-agent-skills #55). The scripts are in this folder (README.md); the skill's add-on F (`module_tags.py`, `explore.py`, `queries/`) is personal-agent-skills #65, merged as `a46d1c4`.
+The record of the store tests on the released ontology: the projection into local Neo4j (step 3), the copy to Aura (step 4), and both rebuilt from the Databricks copy (step 5), each checked for no data loss, with every node tagged by its module and walked across modules in Neo4j and in Jena. Steps 2a and 2b, the round trips through Jena Fuseki and the Databricks Delta table, ran earlier the same night with the `rdf-store` skill (personal-agent-skills #55). The first run used this folder's scripts at the time (`run.sh`, `load.sh`, `aura-copy.sh`, `tags.sh`, `explore.sh`, `rebuild.sh` and their helpers, as of EPM #372); the same day the skill's `run_projection.py` (personal-agent-skills #67) replaced them, and the rerun through it is at the end. The skill's add-on F (`module_tags.py`, `explore.py`, `queries/`) is personal-agent-skills #65, merged as `a46d1c4`.
 
 Inputs: the newest release of each of the 11 modules (`inputs.py data`), 34,058 triples, and the 13 shape files (`inputs.py shapes`). Tools: Neo4j 2025.06.2 with the skill's pinned n10s, ROBOT 1.9.10 (ELK), Jena Fuseki 6.2.0, Aura Free, Databricks Free Edition (one serverless SQL warehouse).
 
@@ -54,8 +54,21 @@ The local Neo4j was removed (`docker compose down -v`) and every node on Aura de
 
 The rebuilt `loadable.nt` is not byte-identical to the repository build's: the Databricks export writes the 1,520 literals typed `xsd:string` as plain literals, which RDF 1.1 defines as the same term, and n10s stores them alike, as the equal graph hashes show. `rebuild.sh` therefore compares triples as RDF 1.1 terms and requires the graph hashes to match. Free Edition limits were not reached.
 
+## The rerun through the skill's driver
+
+The same day, `run_projection.py` ran every step from `epm-run.json`, with `--skip databricks` because the table already held the release. Its code was at personal-agent-skills #67's head `acf42c9`. It reproduced every result above:
+
+- The load gave 598 compiled shape rows, 0 violations in the graph, 1 on the mutant, and a round trip of 0 lost and 0 added. The sorted and shuffled loads both hashed `5929fa67…`, with 3,971 nodes and 20,176 relationships.
+- Tags were correct on all 3,971 nodes and 20,176 relationships. The module graph had 11 modules and 21 requirements. `model_review.py` found 0 errors and 34 warnings.
+- The triple-store counts matched across 12 named graphs, and the Jena round trip's export hashed equal to the files.
+- The copy to Aura hashed `5929fa67…`, and the tags were correct there.
+- The 14 walks and the module map were equal in Neo4j and Jena, locally and on Aura. Every walk gave the edge, node and module counts in the table above.
+- For the rebuild from Databricks, the export hashed equal to the release, `loadable.nt` and `inferred.nt` held the same 34,058 and 2 triples, and both graph hashes were equal. Tags, the copy to Aura and the 14 walks passed again.
+
+All 56 walk comparisons were equal. With `replace_target` on, both copies first deleted what Aura held: the projection and module graph from the runs above. No container was left running.
+
 ## What remains in the stores
 
-- **Aura:** the projection rebuilt from Databricks (3,971 nodes, 20,176 relationships, tagged) and the module graph (11 `:Module`, 21 `REQUIRES`).
+- **Aura:** the projection rebuilt from Databricks by the rerun (3,971 nodes, 20,176 relationships, tagged) and the module graph (11 `:Module`, 21 `REQUIRES`).
 - **Databricks:** the table `workspace.epm_ontology.epm_triples` (36,575 rows), nothing else; every staging table was dropped.
-- **Local:** no container is left running; Fuseki is removed after each `explore.sh`.
+- **Local:** no container is left running; every Fuseki is removed at the end of each run.
