@@ -4,13 +4,14 @@ The published home of the downstream process-map ontology build: the
 playbook (the method), the worklog (the build record), the acceptance
 test (competency questions), and the reproducible build scripts with their outputs.
 
-**Start here.** This README is the single entry point. Two documents, two
+**Start here.** This README is the single entry point. Three documents, three
 roles:
 
 | File | Role | Read it for |
 |------|------|-------------|
 | `ontology-playbook.md` | **Playbook**: a company-neutral method for building an ontology from scratch | Foundations, Steps 0 to 12, policies (§2), promoting provisional data (§3), standards (§4), soundness checks (§5), working agreements (§6), a worked example in a neutral domain (§7). It names no EPM record, company or repo path (*2026-10-23*) |
 | `step4/playbook/ontology-worklog.md` | **Worklog**: the build record | The plan table with current step statuses (§2), the per-step log (§3), the dated decision journal (§4), and the evidence map for the playbook, section by section (§8, *2026-10-23*) |
+| `MODULES.md` | **Module guide**: the released modules and how they connect | What each module holds, the three kinds of content, each link between modules with a real example from the releases, and one walk across modules |
 
 Check the playbook's §2 Policies and this project's decision records
 (`../domain/decisions/`, EPM-DEC-001) before making any modeling choice, and
@@ -25,12 +26,43 @@ For current figures (ledger, gate, taxonomy size, Phase 1 rows) and one row's
 status, run `python3 scripts/epm_facts.py counts` or `row REL-xxxxx` from the repo
 root.
 
+## Modules
+
+The ontology ships as modules, each released and versioned on its own. `core` is the process
+map, and every other module adds one kind of thing and links it to core's processes. `MODULES.md`
+shows each link with an example quoted from the releases.
+
+| Module | What it is for |
+|---|---|
+| `core` | The process map: processes as a hierarchy, the approved relationships between them and their evidence |
+| `organization` | Roles, RACI assignments, and the control relationship between legal entities |
+| `party` | The customer domain: the customer model, customer systems and data flows, and the customer lifecycle |
+| `kpi` | What each measure means, never its value, with the population it counts |
+| `data-product` | The data-product portfolio: segments, product lines and data products |
+| `value-stream` | The value streams, as an overlay of steps that realize core processes |
+| `system` | The systems, office tools and working documents the process map names |
+| `lane` | The office lanes, and the processes the process map places in them |
+| `market-data` | The recipes of market series, such as crack spreads, never their prices |
+| `ref-mpc` | The company-specific facts: MPC and MPLX; the only module that is not company-neutral |
+| `integration` | Rules across modules: which links certify (placement), which source wins (authority), and what consumers may bind and answer (consumer) |
+
+For versions, what each module requires and triple counts, run
+`uv run --with rdflib python scripts/epm_facts.py modules`. It also says what each release was built
+from where its manifest records that ("built from (release manifest)"); for the other releases it
+shows the source folders the builder packages today ("sources (builder today)"), which a later
+change to the builder can move away from what the release was built from. For which processes have a RACI
+assignment, a system, a KPI, a lane, a value-stream step or a data product, run
+`uv run --with rdflib python scripts/epm_facts.py coverage` (see `--help` for other process sets).
+The diagram "EPM ontology: modules and how they connect" draws the modules with an arrow from each to
+each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
+
 ## Contents
 
 | Path | What |
 |------|------|
 | `ontology-playbook.md` | **Playbook** (the method, normative): policies, method, standards, soundness, working agreements, a neutral worked example |
 | `step4/playbook/ontology-worklog.md` | **Worklog** (the build record): plan table and statuses, step log, decision journal, the playbook's evidence map |
+| `MODULES.md` | **Module guide**: each released module, how the modules connect, with examples quoted from the releases (tested by `scripts/test_modules_guide.py`) |
 | `step4/` | Step 4 working area: verb-predicate mapping, evidence gate, canonical facts, correction backlog (see `step4/README.md`) |
 | `step4/evidence-discipline.md` | The approved Step 4 evidence discipline text, moved word for word from the playbook on 2026-10-05 |
 | `lpg-projection/` | The superseded v2.2 copy of the ontology-to-LPG projection guideline, kept as evidence of what Step 12 followed (EPM-DEC-001-0020, 0021). Since 2026-10-23 the method is the `ontology-to-lpg` skill in personal-agent-skills, at `da75164`; the folder's README points to it (EPM-DEC-001-0095) |

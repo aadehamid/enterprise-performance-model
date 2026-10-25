@@ -104,7 +104,7 @@ done
 # The test files run in parallel, each test on whichever worker is free (pytest-xdist): the same tests and
 # assertions as a serial run, in about a third of the time. CHECK_WORKERS overrides the worker count;
 # CHECK_WORKERS=0 runs them serially.
-run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load scripts/test_epm_facts.py scripts/test_published_figures.py scripts/test_check_script.py scripts/test_pre_push_hook.py \
+run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load scripts/test_epm_facts.py scripts/test_modules_guide.py scripts/test_published_figures.py scripts/test_check_script.py scripts/test_pre_push_hook.py \
   "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py \
   business_architecture/ontology/release/test_build_module.py \
   business_architecture/ontology/release/test_build_core_next.py \
@@ -151,6 +151,9 @@ pin="$(cat "$step4/PINNED_SHA.txt")"
 echo "--- Step 4 pin $pin is in HEAD's history"
 git merge-base --is-ancestor "$pin" HEAD || { echo "PINNED_SHA $pin is not an ancestor of HEAD; re-pin Step 4" >&2; exit 1; }
 run with_deps python scripts/epm_facts.py counts >/dev/null
+# The module map and the coverage counts run from the release folders (item C of the store-tests plan).
+run with_deps python scripts/epm_facts.py modules >/dev/null
+run with_deps python scripts/epm_facts.py coverage >/dev/null
 
 after="$(snapshot)"  # a standalone assignment, so a failing snapshot stops the script
 if [ "$before" != "$after" ]; then

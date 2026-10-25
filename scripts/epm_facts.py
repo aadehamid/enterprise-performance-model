@@ -14,6 +14,8 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
     uv run --with rdflib python scripts/epm_facts.py playbook   # the ontology playbook names no EPM record, company or repo path
+    uv run --with rdflib python scripts/epm_facts.py modules    # each released module, its releases, what it requires
+    uv run --with rdflib python scripts/epm_facts.py coverage --processes lifecycle   # which processes lack RACI, systems, KPIs ...
     add --json for machine-readable output
 
 How it gets the numbers:
@@ -32,8 +34,8 @@ How it gets the numbers:
   (remains held)"). Other columns are ignored (see test_review_holds_read_only_the_decision_column).
 
 Standard library only, except taxonomy triple counts, which use rdflib when it
-is installed, the quotes command, which needs markdown-it-py, and the playbook
-command, which needs rdflib (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
+is installed, the quotes command, which needs markdown-it-py, and the playbook,
+modules (for core's triple count) and coverage commands, which need rdflib (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
 """
 import argparse
 import collections
@@ -1327,6 +1329,189 @@ def playbook_problems(path=PLAYBOOK, releases=RELEASES, reference=REFERENCE, roo
     return sorted(set(problems), key=lambda p: int(p.split(":")[1]))
 
 
+# The module map (item C of the store-tests handoff): every figure comes from the release folders on
+# disk, so the README and MODULES.md name the command instead of copying a version or a count.
+MODULE_BUILDER = os.path.join(ROOT, "business_architecture", "ontology", "release", "build_module.py")
+
+
+def _version_key(version):
+    return tuple(int(x) for x in re.findall(r"\d+", version.split("-")[0]))
+
+
+def module_sources(builder=MODULE_BUILDER):
+    """Each non-core module's source folders: the top folder of every part build_module.py packages.
+    Read from the MODULES literal, so the check needs no pyshacl to import the builder."""
+    import ast
+    tree = ast.parse(open(builder, encoding="utf-8").read())
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and getattr(node.targets[0], "id", None) == "MODULES":
+            modules = ast.literal_eval(node.value)
+            return {m: sorted({part.split("/")[0] + "/" for part in spec["parts"]}) for m, spec in modules.items()}
+    return {}
+
+
+def _triples(folder, module, manifest):
+    """The manifest's triple count, or, for core, whose manifest has none, its Turtle parsed."""
+    if "triples" in manifest:
+        return manifest["triples"]
+    import rdflib
+    return len(rdflib.Graph().parse(os.path.join(folder, module + ".ttl"), format="turtle"))
+
+
+def _built_from(manifest):
+    """Core's sources: each built_from entry, named by its key when its value is only a hash."""
+    return [k if re.fullmatch(r"[0-9a-f]{64}", v) else v for k, v in sorted(manifest.get("built_from", {}).items())]
+
+
+def module_releases(releases=None, builder=None):
+    """One entry per released module: its newest release, the earlier ones, what the newest requires,
+    its triple count, what the release's manifest says it was built from (core's built_from), and,
+    for a release whose manifest records none, the source folders build_module.py packages today."""
+    releases, builder = releases or RELEASES, builder or MODULE_BUILDER
+    sources = module_sources(builder)
+    out = []
+    for module in sorted(os.listdir(releases)):
+        folder = os.path.join(releases, module)
+        versions = sorted((v for v in os.listdir(folder) if os.path.isfile(os.path.join(folder, v, "manifest.json")))
+                          if os.path.isdir(folder) else [], key=_version_key)
+        if not versions:
+            continue
+        newest = os.path.join(folder, versions[-1])
+        manifest = json.load(open(os.path.join(newest, "manifest.json"), encoding="utf-8"))
+        out.append({
+            "module": module,
+            "newest": versions[-1],
+            "earlier": versions[:-1],
+            "requires": manifest.get("depends_on", {}),
+            "triples": _triples(newest, module, manifest),
+            # A manifest that records what the release was built from wins; otherwise the folders are
+            # build_module.py's parts today, which a later change to the builder can move away from
+            # what this release was built from, so the output labels them as the builder's.
+            "built_from": _built_from(manifest),
+            "builder_sources": [] if manifest.get("built_from") else sources.get(module, []),
+        })
+    return out
+
+
+def cmd_modules(args):
+    mods = module_releases()
+    if args.json:
+        print(json.dumps({"commit": commit(), "modules": mods}, indent=2))
+        return 0
+    print(f"commit {commit()}: {len(mods)} released modules")
+    for m in mods:
+        earlier = ", ".join(m["earlier"]) or "none"
+        requires = ", ".join(f"{k} {v}" for k, v in m["requires"].items()) or "nothing"
+        where = (f"built from (release manifest): {', '.join(m['built_from'])}" if m["built_from"]
+                 else f"sources (builder today): {', '.join(m['builder_sources']) or 'none listed'}")
+        print(f"  {m['module']} {m['newest']} (earlier: {earlier}); requires {requires}; {m['triples']} triples; {where}")
+    return 0
+
+
+PROCESS = "https://w3id.org/lsc/ontology/process/"
+MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
+# What a process can have, the module that says so, the predicates (each read from that module's
+# released Turtle), the end of the triple the process must be on, and the type the other end must
+# have in that module (2026-10-25: without the type, a process IRI on the wrong end counted).
+# A data product is a dp:DataProduct; a portfolio segment's dp:anchoredIn does not count.
+COVERAGE_LINKS = [
+    ("raci", "a RACI assignment", "organization", ["organization/forProcess"], "object",
+     "organization/ResponsibilityAssignment"),
+    ("system", "a system-module link", "system", ["system/supports"], "object", "system/System"),
+    ("kpi", "a KPI", "kpi", ["kpi/informsProcess"], "object", "kpi/MeasureDefinition"),
+    ("lane", "a lane", "lane", ["lane/officeLane"], "subject", "lane/OfficeLane"),
+    ("value_stream", "a value-stream step", "value-stream", ["value-stream/realizes"], "object",
+     "value-stream/ValueStreamProcess"),
+    ("data_product", "a data product", "data-product", ["data-product/producedBy", "data-product/consumedBy"],
+     "object", "data-product/DataProduct"),
+]
+
+
+def newest_graph(module, releases=None):
+    import rdflib
+    folder = os.path.join(releases or RELEASES, module)
+    versions = sorted((v for v in os.listdir(folder) if os.path.isfile(os.path.join(folder, v, "manifest.json"))),
+                      key=_version_key)
+    return rdflib.Graph().parse(os.path.join(folder, versions[-1], module + ".ttl"), format="turtle")
+
+
+def _linked(g, link):
+    """The nodes on the process end of a COVERAGE_LINKS pattern whose other end has the pattern's type."""
+    import rdflib
+    from rdflib.namespace import RDF
+    _key, _what, _module, preds, end, other_type = link
+    other_type = rdflib.URIRef(MODULES_NS + other_type)
+    have = set()
+    for pred in preds:
+        for subj, obj in g.subject_objects(rdflib.URIRef(MODULES_NS + pred)):
+            proc, other = (subj, obj) if end == "subject" else (obj, subj)
+            if (other, RDF.type, other_type) in g:
+                have.add(proc)
+    return have
+
+
+def coverage(selection="core", releases=None):
+    """For a set of processes, how many have each kind of link, and which have none.
+
+    selection: "core" (every process concept in core), "module:<name>" (the processes that module
+    links through its patterns in COVERAGE_LINKS, or party's stage processes), "lifecycle" (every customer-lifecycle stage's processes) or
+    "stage:<name>" (one stage, by the end of its IRI or its label). Links are direct: a parent's
+    link does not count for its children.
+    """
+    import rdflib
+    from rdflib.namespace import RDF, SKOS
+    releases = releases or RELEASES
+    core = newest_graph("core", releases)
+    all_procs = {s for s in core.subjects(RDF.type, SKOS.Concept) if str(s).startswith(PROCESS)}
+    graphs = {m: newest_graph(m, releases) for m in {link[2] for link in COVERAGE_LINKS}}
+    if selection == "core":
+        procs = all_procs
+    elif selection.startswith("module:") and selection != "module:party":
+        module = selection.split(":", 1)[1]
+        patterns = [link for link in COVERAGE_LINKS if link[2] == module]
+        if not patterns:
+            raise ValueError("no process link is defined for module " + module)
+        procs = all_procs & set().union(*(_linked(graphs[module], link) for link in patterns))
+    elif selection in ("lifecycle", "module:party") or selection.startswith("stage:"):
+        party = newest_graph("party", releases)
+        stage_process = rdflib.URIRef(MODULES_NS + "party/stageProcess")
+        want = selection.split(":", 1)[1].lower() if selection.startswith("stage:") else None
+        procs = set()
+        for stage, proc in party.subject_objects(stage_process):
+            labels = {str(stage).rstrip("/").rsplit("/", 1)[-1].lower()}
+            labels |= {str(o).lower() for o in party.objects(stage, SKOS.prefLabel)}
+            if want is None or want in labels:
+                procs.add(proc)
+    else:
+        raise ValueError("unknown selection: " + selection)
+    label = {p: " ".join(str(x) for x in (core.value(p, SKOS.notation), core.value(p, SKOS.prefLabel) or p) if x)
+             for p in procs}
+    out = {"selection": selection, "processes": len(procs), "links": {}, "with_none": []}
+    linked_any = set()
+    for link in COVERAGE_LINKS:
+        key, what, module = link[:3]
+        have = _linked(graphs[module], link) & procs
+        linked_any |= have
+        out["links"][key] = {"what": what, "module": module, "with": len(have),
+                             "without": sorted(label[p] for p in procs - have)}
+    out["with_none"] = sorted(label[p] for p in procs - linked_any)
+    return out
+
+
+def cmd_coverage(args):
+    c = coverage(args.processes)
+    if args.json:
+        print(json.dumps({"commit": commit(), **c}, indent=2))
+        return 0
+    print(f"commit {commit()}: {c['processes']} processes in '{c['selection']}' (newest releases)")
+    for v in c["links"].values():
+        print(f"  {v['with']} have {v['what']} ({v['module']})")
+    print(f"  {len(c['with_none'])} have none of these:")
+    for name in c["with_none"]:
+        print(f"    {name}")
+    return 0
+
+
 def cmd_playbook(args):
     problems = playbook_problems()
     if args.json:
@@ -1355,9 +1540,13 @@ def main(argv=None):
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
     sub.add_parser("playbook", help="check that the ontology playbook names no EPM record, company or repo path (exit 1 on problems)")
+    sub.add_parser("modules", help="each released module: newest and earlier releases, what it requires, triples, built from (manifest) or sources (builder today)")
+    p = sub.add_parser("coverage", help="how many processes have a RACI assignment, system, KPI, lane, value-stream step, data product")
+    p.add_argument("--processes", default="core", help="core (default), module:<name>, lifecycle or stage:<name>")
     args = parser.parse_args(argv)
     return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
-            "quotes": cmd_quotes, "names": cmd_names, "playbook": cmd_playbook, "sweep": cmd_sweep}[args.cmd](args)
+            "quotes": cmd_quotes, "names": cmd_names, "playbook": cmd_playbook, "sweep": cmd_sweep,
+            "modules": cmd_modules, "coverage": cmd_coverage}[args.cmd](args)
 
 
 if __name__ == "__main__":
