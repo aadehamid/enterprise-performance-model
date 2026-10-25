@@ -1,0 +1,284 @@
+# The ontology's modules and how they connect
+
+This guide explains what each module of the ontology holds and how the modules link to one another, with one real example for each link. Every example is quoted from the newest release of its module, and `scripts/test_modules_guide.py` fails when a quoted triple is no longer there.
+
+The guide gives no version numbers or counts, because they change with each release. For those, run these from the repository root:
+
+- `uv run --with rdflib python scripts/epm_facts.py modules` lists each module's newest and earlier releases, the versions it requires, its triple count and the source folders it packages.
+- `uv run --with rdflib python scripts/epm_facts.py coverage` counts how many processes have a RACI assignment, a system, a KPI, a lane, a value-stream step and a data product, and lists the ones with none. `--processes lifecycle`, `--processes stage:<name>` or `--processes module:<name>` narrows it to other sets of processes.
+
+The diagram "EPM ontology: modules and how they connect" draws the same picture, with an arrow from each module to each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
+
+## The whole picture
+
+`core` is the process map. Every other module adds one kind of thing and links it to core's processes, mostly by using core's process IRIs (`https://w3id.org/lsc/ontology/process/CM-…`) directly. A module names the versions of the modules it was released against. When modules are loaded together, the newest release of each one is loaded.
+
+Some source folders are not packages of their own. `placement/`, `authority/` and `consumer/` ship together as `integration`. `population/` ships in `kpi`. `apqc/` is a reference list that ships in no package.
+
+## Three kinds of content
+
+The ontology holds three kinds of content, and keeps each in a fixed place:
+
+| Kind | Where it lives | Example |
+|---|---|---|
+| Definitions: classes, properties, role types | `organization`, `party` and the other modules | the control relationship; the Payer role |
+| Company-neutral instances | `organization`, `party`, `lane` and the other modules | the role register, RACI assignments, the customer lifecycle stages |
+| Company-specific instances | `ref-mpc` only | MPC, MPLX, and MPC's control of MPLX |
+
+Operational records stay in the business systems and never enter the ontology: actual customers, invoices and KPI values. The playbook's policy 2 calls this "define, don't record".
+
+## Each module and its links
+
+### core: the process map
+
+Each process is a `skos:Concept` with a notation, a definition and a parent (`skos:broader`). An approved relationship between two processes appears twice: as a direct triple, and as a canonical-fact node that carries its evidence row.
+
+<!-- module: core -->
+```turtle
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix fact: <https://w3id.org/lsc/ontology/fact/> .
+
+proc:CM-1-3-7-1-7 a skos:Concept ;
+    skos:prefLabel "Coordinate Customer Onboarding"@en ;
+    skos:notation "CM 1.3.7.1.7" ;
+    skos:broader proc:CM-1-3-7-1 .
+
+fact:CM-1-3-7-1-1--informedBy--CM-1-3-7-4-6 a core:CanonicalFact ;
+    core:factSubject proc:CM-1-3-7-1-1 ;
+    core:factPredicate core:informedBy ;
+    core:factObject proc:CM-1-3-7-4-6 ;
+    core:evidenceRow "REL-00915" .
+```
+
+### organization: who does what
+
+The module holds roles (positions, never people), RACI assignments as nodes of their own, and the definition of a control relationship between legal entities. It links to core through `forProcess`: each assignment names the process it is for.
+
+<!-- module: organization -->
+```turtle
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix role: <https://w3id.org/lsc/ontology/modules/organization/role/> .
+@prefix asg: <https://w3id.org/lsc/ontology/modules/organization/assignment/> .
+@prefix raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/> .
+
+role:it-data-owner a org:Role ;
+    skos:prefLabel "IT Data Owner"@en .
+
+asg:CM-1-1-2-1--accountable--it-data-owner--e842d6dc a orgm:ResponsibilityAssignment ;
+    orgm:forProcess proc:CM-1-1-2-1 ;
+    orgm:assignedRole role:it-data-owner ;
+    orgm:raciLevel raci:accountable .
+```
+
+### ref-mpc: the company facts
+
+This is the only company-specific module. It uses the terms of `organization` and `party` and defines none of its own. Keeping MPC's facts here leaves every other module company-neutral (EPM-DEC-001-0015).
+
+<!-- module: ref-mpc -->
+```turtle
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix refmpc: <https://w3id.org/lsc/ontology/modules/ref-mpc/> .
+
+refmpc:mpc-controls-mplx a orgm:ControlRelationship ;
+    orgm:controllingEntity refmpc:mpc ;
+    orgm:controlledEntity refmpc:mplx ;
+    orgm:asOf "2025-12-31"^^xsd:date .
+```
+
+### party: the customer domain
+
+The module holds the decision owner's conceptual model of the customer, the customer systems with their data flows and attributes, and the customer lifecycle (EPM-DEC-001-0068 to 0070). The lifecycle has a business view and a system view. A business stage links to core through `stageProcess`, and to the system stages it matches through `correspondsTo`.
+
+<!-- module: party -->
+```turtle
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix stage: <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/> .
+@prefix sysstage: <https://w3id.org/lsc/ontology/modules/party/system-stage/> .
+@prefix prole: <https://w3id.org/lsc/ontology/modules/party/party-role/> .
+
+stage:onboarding
+    party:stageProcess proc:CM-1-3-7-1-1, proc:CM-1-3-7-1-7, proc:CM-1-3-7-2-1,
+        proc:CM-1-3-7-4-2, proc:CM-1-3-7-4-6 ;
+    party:correspondsTo sysstage:master, sysstage:record .
+
+prole:payer a skos:Concept ;
+    skos:prefLabel "Payer"@en ;
+    skos:definition "The role of the party that pays the invoices of an account."@en .
+```
+
+### kpi: what each measure means
+
+Each measure is a definition, never a value, classified by its kind (EPM-DEC-001-0042). It links to core through `informsProcess`.
+
+<!-- module: kpi -->
+```turtle
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/> .
+
+measure:crack-spreads
+    skos:prefLabel "Crack Spreads Pricing"@en ;
+    kpi:measureKind kind:market-indicator ;
+    kpi:informsProcess proc:CM-1-1-4-7-4 .
+```
+
+### market-data: the crack-spread recipes
+
+Each series is a recipe: the benchmark legs it is built from and its region. The module holds no prices; its shapes reject them. It links to `kpi`: each series names the measure it publishes through `seriesOf`.
+
+<!-- module: market-data -->
+```turtle
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix series: <https://w3id.org/lsc/ontology/modules/market-data/series/> .
+@prefix leg: <https://w3id.org/lsc/ontology/modules/market-data/leg/> .
+@prefix region: <https://w3id.org/lsc/ontology/modules/market-data/region/> .
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+
+series:crack-gulf-coast-3-2-1
+    skos:prefLabel "Gulf Coast 3-2-1 crack spread"@en ;
+    mkt:seriesOf measure:crack-spreads ;
+    mkt:region region:gulf-coast ;
+    mkt:leg leg:crack-gulf-coast-3-2-1--meh, leg:crack-gulf-coast-3-2-1--usgc-cbob,
+        leg:crack-gulf-coast-3-2-1--usgc-ulsd .
+```
+
+### data-product: the portfolio
+
+The portfolio runs from segments to product lines to data products. A data product links to core directly in a few places, through `producedBy`, `consumedBy` and `anchoredIn`. Most of its links to processes run through value-stream steps (next section).
+
+<!-- module: data-product -->
+```turtle
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix product: <https://w3id.org/lsc/ontology/modules/data-product/product/> .
+@prefix line: <https://w3id.org/lsc/ontology/modules/data-product/line/> .
+
+product:customer-master
+    skos:prefLabel "Customer Master"@en ;
+    skos:broader line:marketing-sales ;
+    dp:producedBy proc:CM-1-3-7-1-1 .
+```
+
+### value-stream: how value flows
+
+The two value streams are an overlay on the process map. A step `realizes` core processes. A capability aligns to a core process group. A step also `produces` and `consumes` data products, and links to the measures it moves through a measure link that names the relationship.
+
+<!-- module: value-stream -->
+```turtle
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix vsprocess: <https://w3id.org/lsc/ontology/modules/value-stream/process/> .
+@prefix capability: <https://w3id.org/lsc/ontology/modules/value-stream/capability/> .
+@prefix mlink: <https://w3id.org/lsc/ontology/modules/value-stream/measure-link/> .
+@prefix rel: <https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/> .
+@prefix product: <https://w3id.org/lsc/ontology/modules/data-product/product/> .
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+
+vsprocess:otc-capture-validate-order
+    vs:realizes proc:CM-1-3-7-3-1 ;
+    vs:usesCapability capability:otc-order-management .
+
+capability:otc-order-management vs:alignsToProcessGroup proc:CM-1-3-7-3 .
+
+vsprocess:market-price-calculation-validation
+    vs:consumes product:external-market-data, product:physical-trading ;
+    vs:produces product:master-pricing ;
+    vs:measureLink mlink:market-price-calculation-validation--crack-spreads .
+
+mlink:market-price-calculation-validation--crack-spreads a vs:MeasureLink ;
+    vs:measure measure:crack-spreads ;
+    vs:relationship rel:benchmarks .
+```
+
+### system: what each process uses
+
+The module holds the applications, office tools and working documents the process map names. It links to core through `supports`, taken from the process map's "systems" fields. The `party` module's customer systems join it through `skos:exactMatch` where they are the same system.
+
+<!-- module: system -->
+```turtle
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
+@prefix syskind: <https://w3id.org/lsc/ontology/modules/system/kind/> .
+
+system:rightangle
+    skos:prefLabel "RightAngle"@en ;
+    sys:systemKind syskind:application ;
+    sys:supports proc:CM-1-1-2-2, proc:CM-1-1-2-2-3 .
+```
+
+### lane: where a trading process sits
+
+The four office lanes are a code list. The module places only the processes the process map places, with at most one lane each, and a child does not inherit its parent's lane (EPM-DEC-001-0056). Here the process is the subject: `officeLane` points from core to the lane.
+
+<!-- module: lane -->
+```turtle
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix lane: <https://w3id.org/lsc/ontology/modules/lane/> .
+@prefix lanev: <https://w3id.org/lsc/ontology/modules/lane/lane/> .
+
+proc:CM-1-2-1 lane:officeLane lanev:front-office .
+proc:CM-1-2-2 lane:officeLane lanev:middle-office .
+proc:CM-1-2-3 lane:officeLane lanev:operations .
+proc:CM-1-2-4 lane:officeLane lanev:back-office .
+```
+
+### integration: rules that apply across modules
+
+`integration` adds no new facts. It packages three sets of rules that apply to the other modules' links, sources and bindings:
+
+- **placement** says which links prove the work and which only give context. Producing a data product certifies; every other placement is context (EPM-DEC-001-0058).
+- **authority** puts each cited source in one evidence tier, and the best tier wins when two sources disagree (EPM-DEC-001-0059).
+- **consumer** sets how a catalog binds a measure to the data product that publishes it, and what an agent may answer from the graph and must refuse (EPM-DEC-001-0061).
+
+<!-- module: integration -->
+```turtle
+@prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
+@prefix pkind: <https://w3id.org/lsc/ontology/modules/placement/kind/> .
+@prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix tier: <https://w3id.org/lsc/ontology/modules/authority/tier/> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix lane: <https://w3id.org/lsc/ontology/modules/lane/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+
+vs:produces plc:placementKind pkind:certification .
+dp:producedBy plc:placementKind pkind:certification .
+vs:consumes plc:placementKind pkind:context .
+sys:supports plc:placementKind pkind:context .
+lane:officeLane plc:placementKind pkind:context .
+kpi:informsProcess plc:placementKind pkind:context .
+
+src:mpc-economics-crack-spread-kpi-definition auth:evidenceTier tier:process-authority .
+src:cme-trading-crack-spreads-2024 auth:evidenceTier tier:industry .
+```
+
+## One walk across modules
+
+This walk starts at a market-data series and ends at a core process, crossing five modules. Each arrow is a link quoted above.
+
+```text
+Gulf Coast 3-2-1 crack spread (market-data)
+  ─seriesOf→ Crack Spreads Pricing (kpi) ─informsProcess→ CM 1.1.4.7.4 (core)
+       ↑ measure link, relationship "benchmarks"
+Market Price Calculation & Validation (value-stream)
+  ─produces→ Master Pricing (data-product)
+  ─consumes→ External Market Data, Physical Trading (data-product)
+```
+
+`integration` then says what each link proves: `produces` certifies the work, and the rest are context. No data product publishes the crack-spread measure yet, because no source says which one does; `consumer` records that gap.
