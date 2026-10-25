@@ -9,7 +9,7 @@
 
 ## Context
 
-The decision owner said they would provide "the replica, silver, and gold tables, metric views, and the genie agents for all pricing Operational metrics/KPI", to close out the data-product side of those measures. On 2026-10-25 they shared one file describing two Databricks metric views with their lineage and two Genie agents. Following the rule for customer inputs (EPM-DEC-001-0067), the file stays outside the repository: "The only thing we dont add to the repo is the file that I shaerd with from which you extract those information. but the infor should go in the repo." This record holds what Claude derived from it, in Claude's words. Internal system, table and view names are allowed here because the repository is private (EPM-DEC-001-0040, item 3).
+The decision owner said they would provide "the replica, silver, and gold tables, metric views, and the genie agents for all pricing Operational metrics/KPI", to close out the data-product side of those measures. On 2026-10-25 they shared one file describing two Databricks metric views with their lineage and two Genie agents. Following the rule for customer inputs (EPM-DEC-001-0067), the file stays outside the repository: "The only thing we dont add to the repo is the file that I shaerd with from which you extract those information. but the infor should go in the repo." This record holds what Claude derived from it, in Claude's words. Internal system, table and view names are allowed here by EPM-DEC-001-0040, item 3; the 2026-10-19 amendment of EPM-DEC-001-0050 says they stay readable while the repository is public.
 
 What the file describes:
 
@@ -60,7 +60,7 @@ The Executive Summary agent groups its prices into nine groups: Benchmark, Crack
 
 Each is a question for the decision owner, not changed here:
 
-1. **Forward periods.** Both views carry forward months (`Relative_Period_Number`, 0 being the prompt month; `Price_Period_Datetime` with forward monthly averages). Every measure's grain in `kpi` 1.1.1 is daily only ("daily, by market hub", "daily, by hub", "daily, by marker").
+1. **Forward periods.** Both views carry forward months (`Relative_Period_Number`, 0 being the prompt month; `Price_Period_Datetime` with forward monthly averages). The five pricing measures' grains in `kpi` 1.1.1 are daily only ("daily, by market hub", "daily, by hub", "daily, by marker").
 2. **Crack Spreads Pricing:** the measure's grain is by market hub; the view's series are by Price Master ID, grouped by region. The view's monthly value is the mean of daily settles, which the measure does not state. The agent's trend is a 20-day moving average; the measure compares against a 30-day trend (the Executive Summary agent also uses 30 days).
 3. **Gasoline and Distillate Market Pricing:** the measures say "spot prices"; the views hold both cash prices and basis (a differential to the futures contract). The measures' basis is "$/gal as published"; the agent reports cents per gallon, multiplying the stored dollars by 100.
 4. **Crude Market Pricing:** the measure covers "Crude oil benchmark prices and differentials, with related futures (natural gas, heating oil, RBOB)". The Executive Summary's Crude group holds differentials only (two of them fuel oil against Brent), and the benchmark futures sit in its Benchmark group. Three crude instruments (30532, 79068 and 79069) shift their pricing period by two months before monthly averages.
