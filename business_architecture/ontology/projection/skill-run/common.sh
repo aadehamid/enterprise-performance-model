@@ -28,7 +28,8 @@ DATA=(); SHAPES=(); SHAPE_ARGS=()
 if [ -n "${INPUT_LIST:-}" ]; then
   # Every line is data or shapes, a non-empty path, and at most the marker "repository": anything else
   # stops the run, so a truncated or mistyped list cannot project part of the inputs.
-  while IFS=$'\t' read -r kind l extra rest; do
+  # "|| [ -n ... ]": a last line without its newline is still read and checked, never dropped.
+  while IFS=$'\t' read -r kind l extra rest || [ -n "$kind$l$extra$rest" ]; do
     { [ -n "$l" ] && [ -z "$rest" ] && { [ -z "$extra" ] || [ "$extra" = repository ]; }; } \
       || { echo "INPUT_LIST has a malformed line" >&2; exit 2; }
     case "$kind" in

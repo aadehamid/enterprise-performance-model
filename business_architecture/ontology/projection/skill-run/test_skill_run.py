@@ -133,7 +133,15 @@ class Rebuild(unittest.TestCase):
             out = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp, env=env,
                                  capture_output=True, text=True, check=True).stdout.split()
             self.assertEqual(out, ["1", "1"])
-            for bad in ("dat\t/x/m.ttl\n", "data\t\n", "data\t/x/m.ttl\tother\n", "data\t/x/m.ttl\trepository\tz\n"):
+            unterminated = os.path.join(tmp, "unterminated.tsv")
+            with open(unterminated, "w") as f:
+                f.write("data\t/x/m.ttl\nshapes\t/x/s.ttl")   # no final newline: the shapes line still counts
+            out = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp,
+                                 env={**env, "INPUT_LIST": unterminated}, capture_output=True, text=True,
+                                 check=True).stdout.split()
+            self.assertEqual(out, ["1", "1"])
+            for bad in ("dat\t/x/m.ttl\n", "data\t\n", "data\t/x/m.ttl\tother\n", "data\t/x/m.ttl\trepository\tz\n",
+                        "data\t/x/m.ttl\ndat\t/x/n.ttl"):
                 path = os.path.join(tmp, "bad.tsv")
                 with open(path, "w") as f:
                     f.write(bad)
