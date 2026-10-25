@@ -141,7 +141,8 @@ class Rebuild(unittest.TestCase):
                                  check=True).stdout.split()
             self.assertEqual(out, ["1", "1"])
             for bad in ("dat\t/x/m.ttl\n", "data\t\n", "data\t/x/m.ttl\tother\n", "data\t/x/m.ttl\trepository\tz\n",
-                        "data\t/x/m.ttl\ndat\t/x/n.ttl"):
+                        "data\t/x/m.ttl\ndat\t/x/n.ttl",
+                        "data\t/x/m.ttl\n\n"):   # a trailing blank line is read as an empty record and refused
                 path = os.path.join(tmp, "bad.tsv")
                 with open(path, "w") as f:
                     f.write(bad)
