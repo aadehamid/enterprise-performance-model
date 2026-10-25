@@ -53,24 +53,30 @@ Run these before you open a pull request, and again before you push a review fix
 4. **A change reaches every place it applies.** Run `python3 scripts/epm_facts.py sweep main` first: for each run of words the branch replaced or deleted on one line (it matches lines first, so a word moved to another line counts as changed), it takes those words with one unchanged word of context on each side, from the next or previous line if need be but not across a blank line (when that makes at least two words and eight characters), lists every place in the tracked text files that still holds them, including text split across two lines, and says which of those lines hold a date, as a dated note would. It cannot see a statement of the same claim in other words, a change too short to make such a phrase, an addition, or a word moved between lines when the change also adds or removes lines there. So then run `python3 scripts/epm_facts.py find "<text>"` for every status, rule, term or figure you change, in each wording it can take; it also finds text split across lines. When you change a rule, walk every section that depends on it. When a change adds a value to a set (a ledger bucket, a status, a route) or replaces an instruction, also search the bare old figure (`686`, not `686 held`), the set's other members (`structured flow`), and the old instruction's words (`#226`, `waits for`). Review rounds on PR #231 found statements of each kind that the change had missed. When you add a dated note to a statement, also search each record ID that statement cites, in its full, short and range forms (`EPM-DEC-001-0040`, `0040`, `0040 to 0043`): on #299 another copy of the sentence, citing the same record, was missed by a by-hand search by wording.
 5. **A different model reviews the diff, and every finding is fixed or answered.**
    Commit first; the review reads committed work only.
-   - **Who reviews:** since 2026-10-22 (EPM-DEC-001-0028, amendment of 2026-10-22),
-     Pi gives the independent review (`pi-review.sh --role independent`) and the
-     Cursor bot gives the PR verdict. When the bot's check has not started 8 minutes
-     after a push, or it has given no verdict by 9 minutes, the Cursor agent CLI on
-     Auto gives the verdict (`herdr-review.sh --kind cursor --model auto`), posted on
-     the PR word for word, and stays the PR reviewer for the rest of that PR. Pi
-     gives the independent review either way, so the merged commit's two reviews
-     come from different tools. For this repo this replaces the `way-of-working`
-     skill's "Who reviews" table, which the amendment of 2026-10-18 adopted and
-     which gives the verdict to Pi and the independent review to the Cursor agent
-     CLI when the bot is not available.
+   - **Who reviews:** since 2026-10-25 (EPM-DEC-001-0028, amendment of 2026-10-25),
+     the independent review is the first available of: Kimi on K3.1 Pro at high
+     effort (`herdr-review.sh --kind kimi`), then Pi (`pi-review.sh --role
+     independent`), then Codex on gpt-6-luna (`herdr-review.sh`). A reviewer is not
+     available as the `way-of-working` skill's "Who reviews" section defines it.
+     Outside Herdr, Kimi is not available, and Codex runs through the Codex plugin
+     (below). When none of the three is available, push nothing and tell the
+     decision owner. The Cursor bot gives the PR verdict. When the bot's check has
+     not started 8 minutes after a push, or it has given no verdict by 9 minutes,
+     the Cursor agent CLI on Auto gives the verdict (`herdr-review.sh --kind cursor
+     --model auto`), posted on the PR word for word, and stays the PR reviewer for
+     the rest of that PR. The PR verdict always comes from Cursor here, so the
+     Cursor agent CLI is never the independent reviewer, and the merged commit's two
+     reviews come from different tools. For this repo this replaces the
+     `way-of-working` skill's "Who reviews" table, which gives the verdict to Pi
+     when the bot is not available.
    - **Rounds:** at most two full rounds per PR (EPM-DEC-001-0028). Round 1 reviews
      the whole branch. Round 2 runs only if round 1 found something, and reviews
-     the fix commit. Each fix after round 2 gets a Pi quick check of that commit,
-     plus item 1 and CI, and the PR body says which checks ran (amendment of
-     2026-10-22). PR verdict rounds are uncapped.
-   - **If the independent reviewer the row names cannot run**, Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`,
-     and Codex CLI runs `codex review --base main` (it rejects a prompt combined with `--base`).
+     the fix commit. Each fix after round 2 gets a quick check of that commit by the
+     first available reviewer in the order, plus item 1 and CI, and the PR body
+     says which checks ran and which reviewer ran each (amendments of 2026-10-22 and
+     2026-10-25). PR verdict rounds are uncapped.
+   - **Codex outside Herdr:** Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main --model gpt-6-luna "<claims to verify>"`,
+     and Codex CLI runs `codex review -c model="gpt-6-luna" --base main` (it rejects a prompt combined with `--base`).
 
    Record any disagreement on a judgement call in the PR body.
 
