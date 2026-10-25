@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided |
 | Date | 2026-10-12 |
-| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage, 2026-10-22 on the review rounds and the PR reviewer, and 2026-10-25 on the order of independent reviewers and, later that day, on reviewers inside Rex |
+| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage, 2026-10-22 on the review rounds and the PR reviewer, and 2026-10-25 on the order of independent reviewers, later that day on reviewers inside Rex, and then on the work queue after the ontology closed |
 | Source | Claude Code session, 2026-10-12; recorded on #207 comment 6137222677 |
 
 ## Context
@@ -13,7 +13,7 @@ Until now every open question went to the decision owner, and nothing was marked
 
 ## Decision
 
-Claude decides, on the decision owner's behalf, the open questions of emitting the ontology and updating its playbook, and, since the 2026-10-13 amendment, the open questions of Steps 5 to 12 of the build. Each delegated decision:
+Claude decides, on the decision owner's behalf, the open questions of emitting the ontology and updating its playbook, and, since the 2026-10-13 amendment, the open questions of Steps 5 to 12 of the build, and, since the amendment of 2026-10-25 (evening), those of the work queue after the ontology closed, releases excepted. Each delegated decision:
 
 - rests on the evidence order in AGENTS.md: Marathon Petroleum (MPC) filings and public materials first, then U.S. refining peers' SEC filings, then downstream-specific industry sources. Generic frameworks are support only;
 - uses light external search only to resolve an ambiguity the repository's evidence leaves open, and cites what it finds;
@@ -25,6 +25,15 @@ Unchanged: every change still goes through a pull request, the checks in AGENTS.
 Scope and review: the work runs until the ontology is emitted and the ontology playbook is updated, and then, under the 2026-10-13 amendment, through Steps 5 to 12, with a log of what was done. Each PR gets at least one independent review before it opens and at most two: a full review of the branch, then, if it found something, a focused review of the fix. A fix after the second round gets `scripts/check.sh` and CI, and the PR body says it had no third review. *2026-10-22:* replaced: a fix after the second round also gets a Pi quick check, and the PR body says which rounds and quick checks ran; see the amendment of 2026-10-22 below. *2026-10-25: the independent reviewer is now the first available in an order; see the amendment of 2026-10-25.* After the PR opens, one PR reviewer reviews it the way the Cursor review bot did: one agent, no subagents, one MERGE or HOLD comment, and a new review after each push until merge. The decision owner named the reviewers in the same session: the Cursor agent on Grok 4.6 for the independent review, and Pi on `glm-5.3-flash:cloud` for the PR review (Kimi K3 first, until its usage ran out). *2026-10-13:* changed by the decision owner; see the amendment of 2026-10-18 below.
 
 Merging: The decision owner asked "how do i remove the merge bock. I am going to bed and wont be around to merge". Claude answered with the steps to add the Claude Code permission rule `Bash(gh pr merge:*)`; the session then shows that rule added, and the decision owner replied "done". Claude merges a PR with a merge commit only when all of these hold for its current head: `scripts/check.sh` passes, every independent-review finding is fixed or answered, CI is green, and the PR reviewer's latest comment is MERGE. Claude records the merge on the PR. A PR that changes approval policy or routing, as this one does, still waits for the decision owner (`APPROVAL_POLICY.md`). *2026-10-20, see the amendment below on merging when the approval agent asks for a human:* the decision owner need not be the one who merges such a pull request once the PR reviewer's MERGE is on its head and `checks` passed; Step 3c definition batches still wait for them.
+
+## Amendment, 2026-10-25 (evening): the work queue after the ontology closed
+
+The ontology closed on 2026-10-24 (EPM-DEC-001-0096), so the original scope and the 2026-10-13 extension no longer cover new work. On 2026-10-25 the decision owner gave Claude a queue: the qSKOS dispositions for the released modules, item G (the systems' definitions from public sources), item F's releases (EPM-DEC-001-0097), item E (the playbooks, and moving the ontology playbook into the `ontology` skill) and item H (the synthetic-data demo in Databricks Free Edition). While Claude worked on it, the decision owner gave the permission quoted below. Claude then asked whether it also covers approving releases, and the decision owner chose "I approve each release (Recommended)".
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+1. **The delegation covers the open questions of that queue.** Each decision uses the decision owner's order: this repository's sources first, then MPC's public information, then U.S. refining peers, then generally available sources. That is AGENTS.md's evidence order with the repository named first. Each is recorded as "delegated under EPM-DEC-001-0028", as the Decision section says.
+2. **Releases stay the decision owner's.** Claude brings each release plan to the decision owner and releases a module only on their recorded approval. Claude may decide what goes into a package; the release itself is approved by the decision owner.
+3. **Two earlier reservations stand.** A new measure from item H's briefings enters `kpi` only on the decision owner's word, one by one (the decision owner's item H decisions of 2026-10-25). Market Data accountability and ownership and stewardship (Q17, EPM-DEC-001-0086) stay parked.
 
 ## Amendment, 2026-10-25 (later): reviewers inside Rex
 
@@ -114,6 +123,8 @@ On the extension, in the Claude Code session on 2026-10-13 (saved in `business_a
 On the order of independent reviewers, in the Claude Code session on 2026-10-25 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-reviewer-order.md`): "can we use kimi K3.1 Pro at medium effort for independent review, if it is not avaliable we use Pi as before and if Pi is also not available we use codex 6.0 luna and if that is not available we use cursor agent as the fall back."; then "set it at high"; then "also amend EPM's AGENTS.md to use the same order."
 
 On reviewers inside Rex, in the Claude Code session of 2026-10-24 local time (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-rex-host.md`): "And I like your recommendations."; "for Rex I want the first review pane to be a horizonta split pane in the current window"; "i agree" (question 1); "it is okay to always trust the folder and continue. especially when you are driving work by yourself."
+
+On the work queue after the ontology closed, in the Claude Code session of 2026-10-25 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`): "continue working through the plan until done."; "you have my permision to run command and make decsision as long as you used all the high quality spurces from this repo to MPC publicly available info to peer info to gaerally available informato to guide you when things are ambigous"; then "I approve each release (Recommended)".
 
 ## Consequences
 
