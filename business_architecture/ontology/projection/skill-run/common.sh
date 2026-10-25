@@ -23,8 +23,24 @@ esac
 py() { uv run -q --no-project --with rdflib --with pyshacl --with neo4j python3 "$@" < /dev/null; }
 
 # DATA, SHAPES and SHAPE_ARGS (repeated --shapes) from inputs.py, one path per line, spaces kept.
+# With INPUT_LIST set (rebuild.sh), from that file instead: lines "data<TAB>path" and "shapes<TAB>path".
 DATA=(); SHAPES=(); SHAPE_ARGS=()
-while IFS= read -r l; do [ -n "$l" ] && DATA+=("$l"); done < <(py "$HERE/inputs.py" data)
-while IFS= read -r l; do [ -n "$l" ] && SHAPES+=("$l") && SHAPE_ARGS+=(--shapes "$l"); done < <(py "$HERE/inputs.py" shapes)
+if [ -n "${INPUT_LIST:-}" ]; then
+  # Every line is data or shapes, a non-empty path, and at most the marker "repository": anything else
+  # stops the run, so a truncated or mistyped list cannot project part of the inputs.
+  # "|| [ -n ... ]": a last line without its newline is still read and checked, never dropped.
+  while IFS=$'\t' read -r kind l extra rest || [ -n "$kind$l$extra$rest" ]; do
+    { [ -n "$l" ] && [ -z "$rest" ] && { [ -z "$extra" ] || [ "$extra" = repository ]; }; } \
+      || { echo "INPUT_LIST has a malformed line" >&2; exit 2; }
+    case "$kind" in
+      data) DATA+=("$l");;
+      shapes) SHAPES+=("$l"); SHAPE_ARGS+=(--shapes "$l");;
+      *) echo "INPUT_LIST has a line that is neither data nor shapes" >&2; exit 2;;
+    esac
+  done < "$INPUT_LIST"
+else
+  while IFS= read -r l; do [ -n "$l" ] && DATA+=("$l"); done < <(py "$HERE/inputs.py" data)
+  while IFS= read -r l; do [ -n "$l" ] && SHAPES+=("$l") && SHAPE_ARGS+=(--shapes "$l"); done < <(py "$HERE/inputs.py" shapes)
+fi
 RELEASES="$(py "$HERE/inputs.py" releases)"
 [ ${#DATA[@]} -gt 0 ] && [ ${#SHAPES[@]} -gt 0 ] || { echo "inputs.py listed no inputs" >&2; exit 1; }
