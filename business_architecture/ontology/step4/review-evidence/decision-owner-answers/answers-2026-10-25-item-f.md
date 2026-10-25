@@ -1,4 +1,4 @@
-<!-- The decision owner's words on item F, verbatim from the Claude Code sessions of 2026-10-24 and 2026-10-25. Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 16 blocks, separated by blank lines.
+<!-- The decision owner's words on item F, verbatim from the Claude Code sessions of 2026-10-24 and 2026-10-25. Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 18 blocks, separated by blank lines.
 Blocks 1 to 5 (2026-10-24, as the store-tests handoff recorded them): the decision owner added item F to the plan (block 1); said the assets go into the ontology while the shared files stay out (block 2); said a Genie agent may be used to give a KPI value, with the ontology adding context (block 3; the handoff kept only these two parts, joined by an ellipsis); said the assets touch the crack spread (block 4); and asked for market-data to grow beyond the crack spread (block 5).
 Block 6 (2026-10-25): the decision owner shared one file with the lineage, metric views and Genie agent descriptions of the pricing measures, and asked Claude to map them to the ontology. The file stays outside the repository.
 Block 7 (2026-10-25): Claude presented the mapping of each agent group to a kpi measure (the table in EPM-DEC-001-0097, item 4) as its finding, not as a question ("Each agent and each of its price groups maps to one of the ontology's existing pricing measures."), then listed six numbered points and asked the first as a question; the decision owner answered 1, 2, 3, 5 and 6 by number. The questions, as asked:
@@ -34,6 +34,18 @@ Q16 Give these sources the lowest tier (generic frameworks), noting no MPC, peer
 Q17 Classify only the new pricing products now (silver facts and dimensions, the two gold tables, the three metric views)? Recommended yes.
 Block 14 answers Claude's closing question, "Have we reached a shared understanding?", asked under a table of 14 decisions: 1 bind ..._metrics_vw, the agent can consume either view; 2 the benchmark view is mips_mpr_benchmark_prices_fact_vw, read from silver; 3 record the layers replica, silver (UDM facts, MDM dimensions), gold, metric view, Genie agent, linked by "derived from"; 4 record both the joins and the derivations as facts; 5 keep idp_sbx silver, leave out the legacy synapse_dev tables; 6 sandbox names, marked as sandbox; 7 table-level lineage for every hop, column-level only for the value columns; 8 KPI-0001 as the identifier, the gold constant beside it, labelling all 127 series alike; 9 an open item for the owner's team on Crack_Spread_Sum; 10 known gaps on the benchmark view (the x100 defect, the 160-day window); 11 each view linked to the systems its lineage reaches; 12 a Data Product Kind code list, Foundational and Derived, with definitions, criteria and sources at the lowest tier, silver foundational, gold and metric views derived, replicas and agents not data products; 13 a classification test and reason on each product, plus shapes; 14 classify only the new pricing products now. The mapping of block 7 was not in that table.
 Blocks 15 and 16 answer the four remaining item F questions, as asked: "which portfolio data product the gold tables sit under (for example External Market Data)" and "the Genie consumer rule: may an agent quote a value from its bound source" (block 15); "who is accountable for Market Data" and "ownership and stewardship (Q17, parked)", Q17 of the build, parked by EPM-DEC-001-0086 (block 16).
+Blocks 17 and 18 (2026-10-25, about 19:17 UTC; one message, split by its blank line) answer Claude's question on the mapping of EPM-DEC-001-0097, item 4. Claude's message, as asked, after describing the bot's two holds:
+**The mapping**
+| From the Databricks files | Maps to |
+|---|---|
+| The crack view and the Executive Summary crack blends | Crack Spreads Pricing |
+| Gasoline basis and cash prices | Gasoline Market Pricing |
+| Distillate basis and cash prices | Distillate Market Pricing |
+| Crude differentials | Crude Market Pricing |
+| Benchmarks, renewables and NGLs | Additional Market Prices |
+Two measures have no source in these files: Price Comparison and the R&M Margin Indicator.
+Do you approve this mapping as shown? I recommend yes, because the mapping then stays your decision instead of mine. If I don't hear back, I'll mark it delegated so #375 can still merge.
+The benchmarks row was wrong: the record keeps the benchmark view's measure open (open question 1). The decision owner's answer approves the mapping and, in the same message, asks about that row; blocks 17 and 18 hold the whole message, with the table row they copied from the chat.
 In blocks 11 and 12 two local file paths, which contain an account name, are replaced by [a file path]; the files themselves stay outside the repository.
 Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
@@ -88,3 +100,8 @@ Yes . the agent will use the Metric view to get the value
 
 we wont make that decision now
 it will remain parked
+
+I agree and align with the mappng. see questin below.
+Is the below not mapped to Benchmark metric view
+
+ Benchmarks, renewables and NGLs                       │ Additional Market Prices
