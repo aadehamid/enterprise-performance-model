@@ -194,6 +194,21 @@ class EarlierReleases(unittest.TestCase):
         finally:
             bm.released_requires = real
 
+    def test_a_choice_justified_only_by_a_losing_release_does_not_settle(self):
+        # The case the Codex review raised: root needs a 1.0.0, which needs b 1.0.0, which needs a 2.0.0,
+        # which needs b 2.0.0. a 2.0.0 is reached only through b 1.0.0, which loses to b 2.0.0, which is
+        # reached only through a 2.0.0. A losing release adds nothing, so no set of choices justifies itself:
+        # the closure fails loudly instead of returning a wrong set.
+        table = {("a", "1.0.0"): {"b": "1.0.0"}, ("b", "1.0.0"): {"a": "2.0.0"},
+                 ("a", "2.0.0"): {"b": "2.0.0"}, ("b", "2.0.0"): {}}
+        real = bm.released_requires
+        bm.released_requires = lambda dep, version: dict(table[(dep, version)])
+        try:
+            with self.assertRaisesRegex(ValueError, "does not settle"):
+                bm.closure({"a": "1.0.0"})
+        finally:
+            bm.released_requires = real
+
     def test_a_closure_that_never_settles_fails(self):
         # a 1.0.0 needs b 1.0.0, which needs a 2.0.0; a 2.0.0 needs nothing, so b drops and a 1.0.0 returns.
         table = {("a", "1.0.0"): {"b": "1.0.0"}, ("b", "1.0.0"): {"a": "2.0.0"}, ("a", "2.0.0"): {}}
