@@ -549,8 +549,8 @@ capabilities, systems, measures and data products.
    them as data with their justification and confidence, in an SSSOM file
    (the Simple Standard for Sharing Ontology Mappings) beside the module,
    and emit the `skos:*Match` triples from the accepted rows only; a
-   rejected candidate stays in the file, marked as rejected, so nobody
-   proposes it again, and yields no triple. A tool's candidate mapping is
+   rejected candidate stays in the file with SSSOM's `predicate_modifier`
+   set to `Not`, so nobody proposes it again, and yields no triple. A tool's candidate mapping is
    not a decision until a person has checked it. The `ontology` skill's
    `external-ontologies.md`, "Record mappings as SSSOM", has the rules and
    a checker.
