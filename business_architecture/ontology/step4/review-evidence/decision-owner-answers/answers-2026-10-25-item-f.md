@@ -19,7 +19,7 @@ Q3 Record exactly the five layers (replica, silver, gold, metric view, Genie age
 Q4 Record table lineage as fact, and joins/derivations marked as inferred pending engineering confirmation? Recommended yes.
 Q5 Leave the legacy Synapse reads out of the lineage and list them as an open question? Recommended yes.
 Q6 Record the sandbox names, each marked sandbox, and replace them with production names later? Recommended yes.
-Q7 Table-level lineage for every hop, column level only for the value columns? Recommended yes.
+Q7 Table-level lineage for every hop, column level only for the value columns? Recommended yes. (The question named the value columns: the crack price, assessment_amount, Previous_amount and ChangeValue.)
 Round 2 (block 12; the paragraph beginning "On the data product" answers Q12):
 Q8 What the crack view exposes: ..._metrics_vw lacks KPI_ID, Crack_Spread_Sum, Effective_End_Datetime; can the owner share its definition; until then record KPI_ID on the gold table and flag Crack_Spread_Sum? Recommended yes.
 Q9 Which silver tables count: keep idp_sbx.silver_udm_core.* and idp_sbx.silver_mdm_core.*, leave out synapse_dev.udm_core.*, mdm_core.*, commercial_core.*? Recommended yes.
