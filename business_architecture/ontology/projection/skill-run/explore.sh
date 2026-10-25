@@ -13,7 +13,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET=()
 if [ "${1:-}" = "--env" ]; then
   [ $# -eq 2 ] || { echo "usage: $0 [--env <target.env>]" >&2; exit 2; }
-  TARGET=(--env "$2")
+  TARGET=(--env "$(abs_path "$2")")   # the scripts may run from another folder
 else
   . "$LPG_OUT/neo4j-run/run.env"
   export NEO4J_PASSWORD="$PASSWORD"

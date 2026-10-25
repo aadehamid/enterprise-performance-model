@@ -64,6 +64,28 @@ class Paths(unittest.TestCase):
                                    os.path.join(real, "cases.json"), os.path.join(real, "skill", "scripts"),
                                    os.path.join(real, "skill", "docker", "compose.yaml")])
 
+    def test_a_relative_env_file_reaches_module_tags_absolute(self):
+        """tags.sh changes into the skill's scripts before running module_tags.py, so a relative --env
+        file must already be absolute; a stand-in uv records the arguments it is given."""
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "skill", "scripts"))
+            os.makedirs(os.path.join(tmp, "bin"))
+            open(os.path.join(tmp, "skill", "scripts", "build.py"), "w").close()
+            uv = os.path.join(tmp, "bin", "uv")
+            with open(uv, "w") as f:
+                f.write('#!/bin/sh\nprintf "%s\\n" "$@" >> "$UV_LOG"\n')
+            os.chmod(uv, 0o755)
+            log, inputs = os.path.join(tmp, "uv.log"), os.path.join(tmp, "inputs.tsv")
+            with open(inputs, "w") as f:
+                f.write("data\t/a.ttl\nshapes\t/s.ttl\n")
+            env = {**os.environ, "ONTOLOGY_TO_LPG": "skill", "LPG_OUT": "out", "UV_LOG": log, "INPUT_LIST": inputs,
+                   "PATH": os.path.join(tmp, "bin") + os.pathsep + os.environ["PATH"]}
+            subprocess.run(["bash", os.path.join(HERE, "tags.sh"), "--env", "aura.env"], cwd=tmp, env=env,
+                           capture_output=True, text=True, check=True)
+            args = open(log).read().splitlines()
+            envs = [args[i + 1] for i, a in enumerate(args) if a == "--env"]
+            self.assertEqual(envs, [os.path.join(os.path.realpath(tmp), "aura.env")] * 2)
 
 class Rebuild(unittest.TestCase):
     """rebuild_inputs.py: the export's graphs map to inputs.py's order, and the two comparisons find a

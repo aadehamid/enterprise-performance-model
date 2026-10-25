@@ -18,6 +18,7 @@ DBX_ENV=$1 TABLE=$2 TARGET_ENV=$3
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 : "${RDF_STORE:?set RDF_STORE to the rdf-store skill folder}" "${BASELINE_OUT:?set BASELINE_OUT}"
 . "$HERE/common.sh"
+DBX_ENV="$(abs_path "$DBX_ENV")" TARGET_ENV="$(abs_path "$TARGET_ENV")"   # rs and copy_graph run elsewhere
 EXPORT="$LPG_OUT/databricks-export"
 rm -rf "$EXPORT"; mkdir -p "$EXPORT"
 RS="$RDF_STORE/scripts"
