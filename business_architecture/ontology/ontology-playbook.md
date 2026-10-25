@@ -325,7 +325,10 @@ collisions) pass, including the SKOS quality issues catalogued by qSKOS that
 an offline build can check, such as invalid language tags, overlapping
 labels, relations stated one way only, and mapping clashes (the `ontology`
 skill's `quality.md`, "The qSKOS issues", which says where the skill differs
-from qSKOS on purpose).
+from qSKOS on purpose). When you adopt a check on modules already released,
+record what it finds in them and give each finding a disposition by
+recorded decision (fix it in the next release, or accept it with a reason);
+a finding in new work blocks the gate.
 
 ### Step 4. The relationship layer
 
@@ -543,16 +546,14 @@ capabilities, systems, measures and data products.
      the first cube is planned (the `ontology` skill's `integration.md`,
      "Measures published as statistical data").
 3. Apply the external mappings you assigned to this step in Step 0. Keep
-   every mapping as a row of an SSSOM file (the Simple Standard for Sharing
-   Ontology Mappings) beside the module it maps from, with its predicate,
-   its justification, who made it, a confidence, and the other
-   vocabulary's version, and emit the `skos:*Match` triples from that file.
-   Use the SKOS mapping relations and `rdfs:seeAlso` only, so no mapping
-   imports the other ontology's logic, and record a rejected candidate as a
-   row so nobody proposes it again. A tool's candidate mapping is not a
-   decision until a person has checked it. The `ontology` skill's
-   `external-ontologies.md`, "Record mappings as SSSOM", has the rules and a
-   checker.
+   them as data with their justification and confidence, in an SSSOM file
+   (the Simple Standard for Sharing Ontology Mappings) beside the module,
+   and emit the `skos:*Match` triples from the accepted rows only; a
+   rejected candidate stays in the file, marked as rejected, so nobody
+   proposes it again, and yields no triple. A tool's candidate mapping is
+   not a decision until a person has checked it. The `ontology` skill's
+   `external-ontologies.md`, "Record mappings as SSSOM", has the rules and
+   a checker.
 4. Resolve the gaps earlier steps exposed, such as empty output sets or
    missing owners, one at a time, each as a recorded decision. Do not invent
    an owner to fill a gap. "Unowned, parked" is better than a guess.
@@ -676,14 +677,13 @@ violations.
    before you adopt the rule stay as released and are listed as exempt
    (the `ontology` skill's `release.md`, rule 18, with
    `check_changelogs.py`).
-6. Build human-readable pages for each released package with Widoco, from
-   the package's own Turtle, and keep them beside the packages, never inside
-   them, because a released package never changes. Record the SHA-256 of
-   the manifest each page set was built from, and fail the check when a
-   released package has no pages or its pages were built from another
-   manifest. Widoco runs locally, so nothing leaves the machine; publishing
-   the pages waits for the hosting decision (the skill's `release.md`,
-   "Documentation pages").
+6. If the project builds human-readable documentation pages, build them
+   from each released package's own Turtle (with Widoco, which runs
+   locally) and keep them beside the packages, never inside them, because a
+   released package never changes. Record which manifest each page set was
+   built from, so a check can tell stale pages from current ones. Publishing
+   them waits for the hosting decision (the skill's `release.md`,
+   "Documentation pages", has the builder and the check).
 
 **Done when:** the catalog resolves; the current release is retrievable as
 versioned distributions; every changelog the rule covers has its "Known
