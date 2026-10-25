@@ -105,16 +105,41 @@ class Rebuild(unittest.TestCase):
         self.assertEqual(self.ri.compare_triples(os.path.join(self.tmp, "b"), os.path.join(self.tmp, "a")), [])
         self.assertEqual(len(self.ri.compare_triples(os.path.join(self.tmp, "c"), os.path.join(self.tmp, "a"))), 1)
 
-    def test_reports_must_carry_equal_hashes(self):
+    def test_reports_must_carry_exactly_the_two_equal_hashes(self):
         import json
-        a = self.write("a.json", json.dumps({"determinism_hash_sorted": "h", "nodes": 1}))
-        b = self.write("b.json", json.dumps({"determinism_hash_sorted": "h", "nodes": 2}))
-        c = self.write("c.json", json.dumps({"determinism_hash_sorted": "g"}))
-        d = self.write("d.json", json.dumps({"nodes": 1}))
+        both = {"determinism_hash_sorted": "h", "determinism_hash_shuffled": "h"}
+        a = self.write("a.json", json.dumps({**both, "nodes": 1}))
+        b = self.write("b.json", json.dumps({**both, "nodes": 2}))
+        changed = self.write("c.json", json.dumps({**both, "determinism_hash_shuffled": "g"}))
+        one = self.write("d.json", json.dumps({"determinism_hash_sorted": "h"}))
+        extra = self.write("e.json", json.dumps({**both, "other_hash": "x"}))
+        empty = self.write("f.json", json.dumps({"determinism_hash_sorted": "", "determinism_hash_shuffled": ""}))
         self.assertEqual(self.ri.compare_reports(b, a), [])
-        self.assertEqual(len(self.ri.compare_reports(c, a)), 1)
-        self.assertEqual(len(self.ri.compare_reports(d, a)), 1)
-        self.assertEqual(len(self.ri.compare_reports(a, d)), 1)
+        for bad in (changed, one, extra):
+            self.assertEqual(len(self.ri.compare_reports(bad, a)), 1, bad)
+            self.assertEqual(len(self.ri.compare_reports(a, bad)), 1, bad)
+        self.assertEqual(len(self.ri.compare_reports(empty, empty)), 1)
+
+    def test_a_malformed_input_list_stops_common_sh(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "skill", "scripts"))
+            open(os.path.join(tmp, "skill", "scripts", "build.py"), "w").close()
+            good = os.path.join(tmp, "good.tsv")
+            with open(good, "w") as f:
+                f.write("data\t/x/m.ttl\nshapes\t/x/s.ttl\trepository\n")
+            script = '. "$1"; printf "%s\\n" "${#DATA[@]}" "${#SHAPES[@]}"'
+            env = {**os.environ, "ONTOLOGY_TO_LPG": "skill", "LPG_OUT": "out", "INPUT_LIST": good}
+            out = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp, env=env,
+                                 capture_output=True, text=True, check=True).stdout.split()
+            self.assertEqual(out, ["1", "1"])
+            for bad in ("dat\t/x/m.ttl\n", "data\t\n", "data\t/x/m.ttl\tother\n", "data\t/x/m.ttl\trepository\tz\n"):
+                path = os.path.join(tmp, "bad.tsv")
+                with open(path, "w") as f:
+                    f.write(bad)
+                result = subprocess.run(["bash", "-c", script, "bash", os.path.join(HERE, "common.sh")], cwd=tmp,
+                                        env={**env, "INPUT_LIST": path}, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 2, repr(bad))
 
 
 if __name__ == "__main__":

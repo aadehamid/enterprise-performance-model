@@ -14,9 +14,9 @@ missing from the export.
 
 compare-triples: loadable.nt and inferred.nt of the rebuild hold the baseline's triples, compared as
 RDF 1.1 terms (the store's export writes a literal typed xsd:string as a plain literal, which RDF 1.1
-says is the same term; rdflib keeps them apart). compare-reports: every report field whose name holds
-"hash" (the graph hashes of the sorted and shuffled loads) is equal, and is present: the proof that
-Neo4j holds the same graph. Each exits 1 on a difference.
+says is the same term; rdflib keeps them apart). compare-reports: both reports hold exactly the two
+graph hashes REPORT_HASHES (sorted and shuffled loads), non-empty and equal: the proof that Neo4j holds
+the same graph. Each exits 1 on a difference.
 """
 import csv
 import os
@@ -60,6 +60,11 @@ def input_list(export_dir, data, shapes):
     return rows
 
 
+# The graph hashes of the sorted and shuffled loads (the skill's load_verify.py report); both reports
+# must hold exactly these hash fields, so a changed report cannot skip one.
+REPORT_HASHES = ("determinism_hash_sorted", "determinism_hash_shuffled")
+
+
 def literal_terms(path):
     from rdflib import Literal
     from rdflib.namespace import XSD
@@ -86,10 +91,12 @@ def compare_reports(rebuild, baseline):
         new = json.load(f)
     with open(baseline) as f:
         old = json.load(f)
-    keys = sorted(k for k in old if "hash" in k)
-    if not keys:
-        return ["the baseline report has no hash field"]
-    diff = [k for k in keys if new.get(k) is None or new.get(k) != old[k]]
+    keys = list(REPORT_HASHES)
+    for name, report in (("the rebuilt report", new), ("the baseline report", old)):
+        found = sorted(k for k in report if "hash" in k)
+        if found != sorted(keys):
+            return [f"{name} has hash fields {found}, not exactly {sorted(keys)}"]
+    diff = [k for k in keys if not new[k] or new[k] != old[k]]
     if diff:
         return [f"the reports differ in {', '.join(diff)}"]
     print(f"the report's graph hashes equal the baseline's: {', '.join(k + '=' + old[k] for k in keys)}")

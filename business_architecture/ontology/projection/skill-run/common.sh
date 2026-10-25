@@ -26,8 +26,16 @@ py() { uv run -q --no-project --with rdflib --with pyshacl --with neo4j python3 
 # With INPUT_LIST set (rebuild.sh), from that file instead: lines "data<TAB>path" and "shapes<TAB>path".
 DATA=(); SHAPES=(); SHAPE_ARGS=()
 if [ -n "${INPUT_LIST:-}" ]; then
-  while IFS=$'\t' read -r kind l _; do
-    case "$kind" in data) DATA+=("$l");; shapes) SHAPES+=("$l"); SHAPE_ARGS+=(--shapes "$l");; esac
+  # Every line is data or shapes, a non-empty path, and at most the marker "repository": anything else
+  # stops the run, so a truncated or mistyped list cannot project part of the inputs.
+  while IFS=$'\t' read -r kind l extra rest; do
+    { [ -n "$l" ] && [ -z "$rest" ] && { [ -z "$extra" ] || [ "$extra" = repository ]; }; } \
+      || { echo "INPUT_LIST has a malformed line" >&2; exit 2; }
+    case "$kind" in
+      data) DATA+=("$l");;
+      shapes) SHAPES+=("$l"); SHAPE_ARGS+=(--shapes "$l");;
+      *) echo "INPUT_LIST has a line that is neither data nor shapes" >&2; exit 2;;
+    esac
   done < "$INPUT_LIST"
 else
   while IFS= read -r l; do [ -n "$l" ] && DATA+=("$l"); done < <(py "$HERE/inputs.py" data)
