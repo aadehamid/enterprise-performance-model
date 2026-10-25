@@ -1,4 +1,4 @@
-<!-- The decision owner's words on item F, verbatim from the Claude Code sessions of 2026-10-24 and 2026-10-25. Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 18 blocks, separated by blank lines.
+<!-- The decision owner's words on item F, verbatim from the Claude Code sessions of 2026-10-24 and 2026-10-25. Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 19 blocks, separated by blank lines.
 Blocks 1 to 5 (2026-10-24, as the store-tests handoff recorded them): the decision owner added item F to the plan (block 1); said the assets go into the ontology while the shared files stay out (block 2); said a Genie agent may be used to give a KPI value, with the ontology adding context (block 3; the handoff kept only these two parts, joined by an ellipsis); said the assets touch the crack spread (block 4); and asked for market-data to grow beyond the crack spread (block 5).
 Block 6 (2026-10-25): the decision owner shared one file with the lineage, metric views and Genie agent descriptions of the pricing measures, and asked Claude to map them to the ontology. The file stays outside the repository.
 Block 7 (2026-10-25): Claude presented the mapping of each agent group to a kpi measure (the table in EPM-DEC-001-0097, item 4) as its finding, not as a question ("Each agent and each of its price groups maps to one of the ontology's existing pricing measures."), then listed six numbered points and asked the first as a question; the decision owner answered 1, 2, 3, 5 and 6 by number. The questions, as asked:
@@ -45,7 +45,16 @@ Blocks 17 and 18 (2026-10-25, about 19:17 UTC; one message, split by its blank l
 | Benchmarks, renewables and NGLs | Additional Market Prices |
 Two measures have no source in these files: Price Comparison and the R&M Margin Indicator.
 Do you approve this mapping as shown? I recommend yes, because the mapping then stays your decision instead of mine. If I don't hear back, I'll mark it delegated so #375 can still merge.
-The benchmarks row was wrong: the record keeps the benchmark view's measure open (open question 1). The decision owner's answer approves the mapping and, in the same message, asks about that row; blocks 17 and 18 hold the whole message, with the table row they copied from the chat.
+The benchmarks row was wrong: the draft record then kept the benchmark view's measure as an open question; block 19 settles it. The decision owner's answer approves the mapping and, in the same message, asks about that row; blocks 17 and 18 hold the whole message, with the table row they copied from the chat.
+Block 19 (2026-10-25, about 19:21 UTC) answers Claude's question on the benchmark view, asked in reply to blocks 17 and 18. Claude's message, as asked:
+You're right to ask. My table in chat was wrong on that row, and your approval will go into the record for every row except that one. The benchmark metric view (mips_mpr_benchmark_prices_fact_vw) is not mapped to any measure yet. The draft record lists it as open question 1. My table wrongly put it under Additional Market Prices along with renewables and NGLs.
+**The choice for the benchmark view**
+The view holds five prices: ICE Brent, NYMEX WTI Cushing, NYMEX Natural Gas, NYMEX Heating Oil and NYMEX RBOB. It could map to either of two measures:
+- **Crude Market Pricing.** Its definition reads "Crude oil benchmark prices and differentials, with related futures (natural gas, heating oil, RBOB)". That describes exactly these five prices.
+- **Additional Market Prices.** Only its label mentions benchmarks: "Additional Market Prices (Benchmark, Crude, Renewables, NGLs)".
+**My recommendation is Crude Market Pricing,** because its definition describes this view's prices, not just its label. Additional Market Prices would then cover only renewables and NGLs.
+I've paused the push to #375 so your answer can go into the same commit.
+Do you agree that the benchmark view maps to Crude Market Pricing, and that Additional Market Prices covers only renewables and NGLs?
 In blocks 11 and 12 two local file paths, which contain an account name, are replaced by [a file path]; the files themselves stay outside the repository.
 Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
@@ -105,3 +114,5 @@ I agree and align with the mappng. see questin below.
 Is the below not mapped to Benchmark metric view
 
  Benchmarks, renewables and NGLs                       │ Additional Market Prices
+
+sounds good. I agree

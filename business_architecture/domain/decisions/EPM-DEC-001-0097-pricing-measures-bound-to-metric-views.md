@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (the decision owner, 2026-10-25, items 1 to 17, except the benchmark view's measure, which is open; delegated under EPM-DEC-001-0028: the benchmark view's value column in item 11; the questions each answer replies to are in `answers-2026-10-25-item-f.md`); open questions listed below |
+| Status | Decided (the decision owner, 2026-10-25, items 1 to 17; delegated under EPM-DEC-001-0028: the benchmark view's value column in item 11; the questions each answer replies to are in `answers-2026-10-25-item-f.md`); open questions listed below |
 | Date | 2026-10-25 |
 | Questions | Which ontology measures do the pricing metric views and Genie agents serve? Are those measures KPIs? Which view is the crack spread's source? How are the views' layers, lineage and systems recorded? How does `market-data` cover every series the views hold? Which pricing tables and views are data products, and of which kind? What may a Genie agent quote? |
 | Source | Claude Code sessions of 2026-10-24 and 2026-10-25; `answers-2026-10-25-item-f.md` |
@@ -33,9 +33,9 @@ The Executive Summary agent groups its prices into nine groups: Benchmark, Crack
 ### The measures and their sources
 
 1. **The crack spread comes from the crack-spread view, `mpr_mips_crack_spread_price_fact_metrics_vw`.** The decision owner: "Crack view wins. Anyting related to crack spread comes from crack spread specific metric view", and on the two views: "the agent can consume both. But we chose for the agent to consume the one without "silver" in the name. The one with silver is another design pattern that gives the same result." The bound view reads the gold table, which takes each crack's value unchanged from the MPR settle price. The Executive Summary agent's six crack-spread blends, built from MIPS assessment values, are a second presentation of the same series, not a source.
-2. **The benchmark view is `mips_mpr_benchmark_prices_fact_vw`,** a metric view of its own: "This is actually another metric view . This one is focused on benchmark prices". It reads silver directly, and its own definition holds the five instruments (572 ICE Brent, 747 NYMEX WTI Cushing, 750 NYMEX Natural Gas, 752 NYMEX Heating Oil, 9471 NYMEX RBOB), a 160-day window and a cap on forward periods. Which measure it serves is open (question 1); until then its coverage and any binding are provisional.
+2. **The benchmark view is `mips_mpr_benchmark_prices_fact_vw`,** a metric view of its own: "This is actually another metric view . This one is focused on benchmark prices". It reads silver directly, and its own definition holds the five instruments (572 ICE Brent, 747 NYMEX WTI Cushing, 750 NYMEX Natural Gas, 752 NYMEX Heating Oil, 9471 NYMEX RBOB), a 160-day window and a cap on forward periods. It serves Crude Market Pricing (item 4).
 3. **The pricing measures stay market indicators, and the crack spread's KPI ID is kept as an identifier.** The decision owner: "let us keep them as market indicator. Not all of these are KPIs so our intepretation here is correct unless you think otherwise." and "It is okay to leave the KPI_ID even though they may not be KPI . We will need the ID to integrate with other data (e.g governance data in Purview or unity catalog)". The classes stand as EPM-DEC-001-0042 set them and EPM-DEC-001-0050 approved them. Crack Spreads Pricing gets `dcterms:identifier` "KPI-0001" (the agent's identifier), with the gold table's constant `KPI_ID` value "KPI Crack Spread 3-2-1" beside it and a note that this constant labels all 127 series and all 1,090,423 rows of the gold table alike, so it names the measure, not a series. The files give no KPI ID for the other measures.
-4. **The mapping of assets to measures.** The decision owner asked for it: "You may need to map to which pricing metric / kpi they map to and let me know." Claude presented the table below on 2026-10-25 as its finding, not as a question, followed by the six numbered questions in the saved answers (block 7). Asked later the same day to approve the mapping as a table (saved answers, blocks 17 and 18), the decision owner: "I agree and align with the mappng." That table put benchmarks with renewables and NGLs under Additional Market Prices; the decision owner asked in the same message whether that row belongs to the benchmark metric view, so the benchmark row is not part of the approval. The benchmark view's row is open (question 1 below):
+4. **The mapping of assets to measures.** The decision owner asked for it: "You may need to map to which pricing metric / kpi they map to and let me know." Claude presented the table below on 2026-10-25 as its finding, not as a question, followed by the six numbered questions in the saved answers (block 7). Asked later the same day to approve the mapping as a table (saved answers, blocks 17 and 18), the decision owner: "I agree and align with the mappng." That table put benchmarks with renewables and NGLs under Additional Market Prices; the decision owner asked in the same message whether that row belongs to the benchmark metric view, so Claude asked that row on its own: whether the benchmark view maps to Crude Market Pricing, whose definition names its instruments, and Additional Market Prices covers only renewables and NGLs (block 19). The decision owner: "sounds good. I agree". The table as recorded:
 
    | Asset or agent group | Measure in `kpi` 1.1.1 | Evidence |
    |---|---|---|
@@ -44,15 +44,15 @@ The Executive Summary agent groups its prices into nine groups: Benchmark, Crack
    | Gasoline Basis and Gasoline Cash | Gasoline Market Pricing (`gasoline-prices`) | named in the Executive Summary notes |
    | Distillate Basis and Distillate Cash | Distillate Market Pricing (`distillate-prices`) | named; jet is in the group, as the measure's definition says |
    | Crude (ten differentials) | Crude Market Pricing (`crude-prices`) | named |
-   | Renewables and NGLs | Additional Market Prices (`additional-market-prices`) | the measure's name lists both |
-   | Benchmark view (five instruments) | open: see question 1 | |
+   | Renewables and NGLs | Additional Market Prices (`additional-market-prices`), narrowed to these two | the measure's name lists both; block 19 |
+   | Benchmark view (five instruments) | Crude Market Pricing (`crude-prices`) | the measure's definition names crude benchmarks and "related futures (natural gas, heating oil, RBOB)"; block 19 |
    | none | Price Comparison; R&M Margin Indicator | not served by either agent |
 
    The identifiers agree where both sides hold them. The six primary regional 3-2-1 series the crack-spread agent names (43870 USGC MEH, 37438 Chicago WTI, 37439 Group/Tulsa WTI, 36855 LA ANS, 37443 PNW ANS, 37471 SLC WTI), the blended cracks (37464, 42023) and the NYMEX crack 39998 are crack-spread series with the same Price Master IDs (`mkt:priceMasterId`) in `market-data` 1.0.0. NYMEX WTI Cushing (747) is there too, as a benchmark (a leg of the WTI cracks), not a series. The other NYMEX cracks the agent names (44934, 44935) are not in `market-data` 1.0.0.
 5. **`market-data` covers every series the views hold, by naming the columns that list them.** The decision owner: "Our sereies should cover all of what I just shared. They are more comprehensive", then "can we just add the table columns that will give us this to show that the full series can be obtained ieven if we just list a few in market data". So:
    - the complete set of crack-spread series is the distinct `Price_Master_ID` values in the crack-spread view, each named by `Price_Master_Name` and grouped by `MIPS_Groups_Text` (127 series in 44 groups on 2026-10-25);
    - the complete set for the other groups is the distinct `MIPSDisplayName` values in the Executive Summary view, filtered as the agent's group filters do (by `Price_Group_Name` or `Price_Sheet_Name`);
-   - the complete set of benchmarks is the benchmark view's five instruments, under whichever measure question 1 settles;
+   - the complete set of benchmarks is the benchmark view's five instruments, under Crude Market Pricing;
    - `market-data` keeps its named series and adds the ones the files name, each with its Price Master ID where one is given, as examples linked to their rows.
 6. **A Genie agent may quote a value from its bound source.** The decision owner: "Yes . the agent will use the Metric view to get the value", building on "The intention is that the genie agent should be able to add context to the KPI value using the ontology." This amends EPM-DEC-001-0061, items 2 and 3, for this case: an agent may quote a measure's value taken through the metric view the graph binds to that measure, naming the view, and add the ontology's context. Computing a value from the graph, building a crack spread from its legs, and quoting a value from a source the graph does not bind to that measure stay refused.
 
@@ -90,16 +90,15 @@ Each is a question for the decision owner, not changed here:
 1. **Forward periods.** All three views carry forward periods (`Relative_Period_Number`, 0 to 5 in the crack-spread data; `Price_Period_Datetime` with forward monthly averages in the Executive Summary). The five pricing measures' grains in `kpi` 1.1.1 are daily only ("daily, by market hub", "daily, by hub", "daily, by marker").
 2. **Crack Spreads Pricing:** the measure's grain is by market hub; the view's series are by Price Master ID, grouped by region. The view's monthly value is the mean of daily settles, which the measure does not state. The agent's trend is a 20-day moving average; the measure compares against a 30-day trend (the Executive Summary agent also uses 30 days).
 3. **Gasoline and Distillate Market Pricing:** the measures say "spot prices"; the views hold both cash prices and basis (a differential to the futures contract). The measures' basis is "$/gal as published"; the agent reports cents per gallon, multiplying the stored dollars by 100.
-4. **Crude Market Pricing:** the measure covers "Crude oil benchmark prices and differentials, with related futures (natural gas, heating oil, RBOB)". The Executive Summary's Crude group holds differentials only (two of them fuel oil against Brent), and the benchmark futures are in the benchmark view. Three crude instruments (30532, 79068 and 79069) shift their pricing period by two months before monthly averages.
+4. **Crude Market Pricing:** the measure covers "Crude oil benchmark prices and differentials, with related futures (natural gas, heating oil, RBOB)". The Executive Summary's Crude group holds differentials only (two of them fuel oil against Brent), and the benchmark futures come from the benchmark view, which item 4 maps to this measure. Three crude instruments (30532, 79068 and 79069) shift their pricing period by two months before monthly averages.
 5. **Additional Market Prices:** the renewables group includes credits and RINs, quoted per credit, and soybean oil in cents per pound; the measure's basis says only "as published".
 
 ## Open questions
 
-1. **Where the benchmark view belongs.** Crude Market Pricing's definition names crude benchmarks and "related futures (natural gas, heating oil, RBOB)", which are the benchmark view's instruments; Additional Market Prices names "Benchmark" in its label. Recommendation: Crude Market Pricing, because its definition names the instruments, and narrow Additional Market Prices to renewables and NGLs in the next `kpi` release.
-2. **The differences above,** each kept, changed in the measure, or noted as the view's own rule.
-3. **For the decision owner's team: the crack-spread agent's instructions** name `MEASURE(Crack_Spread_Sum)` for its day-over-day totals, and the bound view has no `Crack_Spread_Sum` (only the other view does). Once the agent reads the bound view, either the view gains the measure or the instructions change.
-4. **Who is accountable for Market Data.** Not decided: "we wont make that decision now" (`business-closeout.md`, point 2).
-5. **Ownership and stewardship** of the data products: "it will remain parked" (Q17 of the build, EPM-DEC-001-0086).
+1. **The differences above,** each kept, changed in the measure, or noted as the view's own rule.
+2. **For the decision owner's team: the crack-spread agent's instructions** name `MEASURE(Crack_Spread_Sum)` for its day-over-day totals, and the bound view has no `Crack_Spread_Sum` (only the other view does). Once the agent reads the bound view, either the view gains the measure or the instructions change.
+3. **Who is accountable for Market Data.** Not decided: "we wont make that decision now" (`business-closeout.md`, point 2).
+4. **Ownership and stewardship** of the data products: "it will remain parked" (Q17 of the build, EPM-DEC-001-0086).
 
 ## What follows
 
@@ -108,7 +107,7 @@ Each of these needs the decision owner's approval of the release; none is given 
 - **`market-data` 1.1.0,** requiring the current `kpi`: the columns that list each group's series (item 5), the named series the files give with their Price Master IDs, and the link from each series to its measure (`mkt:seriesOf`). Definitions only; the module's shapes reject prices. It also moves `market-data` off `kpi` 1.0.1 (EPM-DEC-001-0077).
 - **A `data-product` release:** the Data Product Kind code list (item 14), the pricing data products as parts of Master Pricing with their kind, classification test and reason (items 13 to 16), their tables and views as DCAT distributions with `prov:wasDerivedFrom` from layer to layer (items 8 to 11), the bindings `con:publishesMeasure` from each data product to its measures (EPM-DEC-001-0061, item 1), and SHACL shapes for the kinds (item 15).
 - **`system` additions:** MIPS, MPR and Databricks (with the workspace, catalogs and schemas the files give), beside KittyHawk, which the module already holds; each view's dependence on its systems (item 12).
-- **`kpi`:** the KPI ID on Crack Spreads Pricing (item 3), and any change the open questions bring.
+- **`kpi`:** the KPI ID on Crack Spreads Pricing (item 3); Additional Market Prices narrowed to renewables and NGLs (item 4), which changes its label (now "Additional Market Prices (Benchmark, Crude, Renewables, NGLs)"), definition and classification reason but keeps its slug, as the playbook says of a renamed concept; and any change the open questions bring. This record changes no module.
 - **`integration`:** the amended consumer rule (item 6) with its tests, the data-product sources registered at tier 5 (item 14), and any pins that move.
 
 ## Known gaps
@@ -155,4 +154,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 
 - EPM-DEC-001-0061 carries a dated note that item 6 amends its items 2 and 3 for an agent that quotes a value through its bound metric view.
 - Item F's releases follow this record, each with the decision owner's approval.
-- The open questions go to the decision owner, or to their team for question 3, one at a time; each answer is recorded as an amendment to this record.
+- The open questions go to the decision owner, or to their team for question 2, one at a time; each answer is recorded as an amendment to this record.
