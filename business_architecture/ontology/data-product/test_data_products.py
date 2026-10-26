@@ -35,7 +35,7 @@ def conforms(data):
 class Vocabulary(unittest.TestCase):
     def test_every_term_is_defined_and_cited(self):
         terms = set(VOCAB.subjects(RDF.type, OWL.Class)) | set(VOCAB.subjects(RDF.type, OWL.ObjectProperty))
-        self.assertEqual(len(terms), 7)
+        self.assertEqual(len(terms), 16)  # 7, then 1.2.0's platform tables, kinds and lineage terms (EPM-DEC-001-0097)
         for t in terms:
             self.assertIsNotNone(VOCAB.value(t, SKOS.definition), t)
             self.assertIsNotNone(VOCAB.value(t, URIRef("http://purl.org/dc/terms/bibliographicCitation")), t)
@@ -165,6 +165,98 @@ class Gates(unittest.TestCase):
     def test_a_spent_waits_for_fails(self):
         rows = "data_product,relation,process,source,waits_for\ndp-commercial-risk,produced-by,CM 1.2.2,test,core 2.9.9\n"
         self.assertIn("is in core now", self.fails(links=rows))
+
+
+PRICING = Graph().parse(os.path.join(HERE, "pricing.ttl"))
+TABLE = Namespace("https://w3id.org/lsc/ontology/modules/data-product/table/")
+KIND = Namespace("https://w3id.org/lsc/ontology/modules/data-product/kind/")
+PROV = Namespace("http://www.w3.org/ns/prov#")
+
+
+class Pricing(unittest.TestCase):
+    # data-product 1.2.0 (EPM-DEC-001-0097, items 7 to 16; EPM-DEC-001-0098, items 4 to 6). Counts by hand from pricing/.
+    def test_the_build_is_current(self):
+        r = subprocess.run([sys.executable, os.path.join(HERE, "build_pricing.py"), "--verify"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
+    def test_kinds_by_layer(self):
+        kinds = {str(t).rsplit("/", 1)[1]: str(k).rsplit("/", 1)[1] for t, k in PRICING.subject_objects(DP.dataProductKind)}
+        self.assertEqual(sum(k == "foundational" for k in kinds.values()), 7)
+        self.assertEqual(sum(k == "derived" for k in kinds.values()), 5)
+        self.assertTrue(all(k == "foundational" for t, k in kinds.items() if t.startswith("silver-")))
+        self.assertTrue(all(k == "derived" for t, k in kinds.items() if t.startswith(("gold-", "view-"))))
+        self.assertFalse([t for t in kinds if t.startswith("replica-")])
+        for t in PRICING.subjects(DP.dataProductKind, None):
+            self.assertIn((t, URIRef("http://purl.org/dc/terms/isPartOf"), PRODUCT["master-pricing"]), PRICING)
+
+    def test_the_crack_view_serves_crack_spreads_and_its_value_comes_from_the_mpr_settle(self):
+        view = TABLE["view-mpr-mips-crack-spread-price-fact-metrics-vw"]
+        self.assertEqual({str(m).rsplit("/", 1)[1] for m in PRICING.objects(view, DP.servesMeasure)}, {"crack-spreads"})
+        gold = URIRef(str(TABLE).replace("/table/", "/column/") + "gold-mpr-mips-crack-spread-price-fact--crack_spread_price_amount")
+        self.assertEqual({str(PRICING.value(c, DP.columnName)) for c in PRICING.objects(gold, PROV.wasDerivedFrom)},
+                         {"Settle_Price_Amount"})
+
+    def test_each_view_depends_on_the_systems_its_lineage_reaches(self):
+        systems = lambda v: {str(s).rsplit("/", 1)[1] for s in PRICING.objects(TABLE[v], DP.dependsOnSystem)}
+        self.assertEqual(systems("view-mips-mpr-benchmark-prices-fact-vw"), {"mpr", "kittyhawk"})
+        self.assertEqual(systems("view-mpr-mips-crack-spread-price-fact-metrics-vw"), {"mpr", "mips", "kittyhawk"})
+        self.assertEqual(systems("view-mips-mpr-executive-summary-fact-vw"), {"mpr", "mips", "kittyhawk"})
+
+    def test_the_genie_agents_use_metric_views_and_are_not_data_products(self):
+        agents = set(PRICING.subjects(RDF.type, PROV.SoftwareAgent))
+        self.assertEqual(len(agents), 2)
+        for a in agents:
+            self.assertNotIn((a, RDF.type, DP.PlatformDataProduct), PRICING)
+
+    def test_every_name_is_marked_sandbox(self):
+        self.assertEqual(set(PRICING.objects(None, DP.sandbox)), {Literal(True)})
+
+    def test_the_four_lines_take_the_qualifier(self):
+        for line, name in (("hr", "HR"), ("it", "IT"), ("sbd", "S&BD"), ("supply-chain", "SC")):
+            iri = URIRef("https://w3id.org/lsc/ontology/modules/data-product/line/" + line)
+            self.assertEqual(PRODUCTS.value(iri, SKOS.prefLabel), Literal(name + " product line", lang="en"))
+            self.assertIn(f"'{name}'", str(PRODUCTS.value(iri, SKOS.historyNote)))
+
+    def test_the_schemes_state_their_top_concepts_both_ways(self):
+        for g, scheme in ((PRODUCTS, DP.DataProducts), (VOCAB, DP.PortfolioStatus), (PRICING, DP.PlatformTables)):
+            self.assertEqual(set(g.objects(scheme, SKOS.hasTopConcept)), set(g.subjects(SKOS.topConceptOf, scheme)), scheme)
+            self.assertTrue(set(g.objects(scheme, SKOS.hasTopConcept)))
+
+
+class PricingShapes(unittest.TestCase):
+    def broken(self, edit):
+        g = Graph()
+        for t in PRODUCTS + PRICING:
+            g.add(t)
+        edit(g)
+        return conforms(g)[0]
+
+    def test_the_pricing_tables_conform(self):
+        self.assertTrue(conforms(PRODUCTS + PRICING)[0])
+
+    def test_rejects_a_foundational_product_built_from_a_data_product(self):
+        silver = TABLE["silver-mpr-price-detail-fact"]
+        self.assertFalse(self.broken(lambda g: g.add((silver, PROV.wasDerivedFrom, TABLE["silver-mpr-price-master-dim"]))))
+
+    def test_rejects_a_derived_product_built_only_from_replicas(self):
+        def edit(g):
+            gold = TABLE["gold-mips-mpr-executive-summary-fact"]
+            g.remove((gold, PROV.wasDerivedFrom, None))
+            g.add((gold, PROV.wasDerivedFrom, TABLE["replica-mips-priceassessment"]))
+        self.assertFalse(self.broken(edit))
+
+    def test_rejects_a_replica_classified_as_a_data_product(self):
+        def edit(g):
+            r = TABLE["replica-mpr-pricedetail"]
+            g.add((r, RDF.type, DP.PlatformDataProduct))
+        self.assertFalse(self.broken(edit))
+
+    def test_rejects_rows_on_a_table(self):
+        self.assertFalse(self.broken(lambda g: g.add((TABLE["silver-mpr-price-detail-fact"], RDF.value, Literal(84.1)))))
+
+    def test_rejects_an_agent_using_a_gold_table(self):
+        agent = URIRef("https://w3id.org/lsc/ontology/modules/data-product/agent/crack-spread-price-analytics")
+        self.assertFalse(self.broken(lambda g: g.add((agent, PROV.used, TABLE["gold-mpr-mips-crack-spread-price-fact"]))))
 
 
 class Shapes(unittest.TestCase):

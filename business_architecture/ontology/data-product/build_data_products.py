@@ -45,6 +45,10 @@ PARKED = ("The portfolio names this {kind} but does not describe it (status defi
 # The portfolio's processDomainRef names a process by path and, where it has one, by ID in
 # parentheses. MS 1's IRI keeps the slug it had before it was given an ID (EPM-DEC-001-0047).
 SLUG_PINS = {"MS 1": "L1-midstream"}
+# A line that shares its portfolio name with one of its data products takes the qualifier "product line", and the
+# portfolio's name moves to a history note, not an alternative label, which would collide again (EPM-DEC-001-0098,
+# item 6).
+LINE_QUALIFIED = ("dpl-hr", "dpl-it", "dpl-sbd", "dpl-supply-chain")
 
 
 def local(prefix, ident):
@@ -100,6 +104,8 @@ def load():
                 if item.get("status") not in STATUSES:
                     problems.append(f"{item['id']}: status {item.get('status')!r} is not on the code list")
     problems += [f"id {i!r} appears {n} times" for i, n in ids.items() if n > 1]
+    problems += [f"LINE_QUALIFIED names {i!r}, which is not a line" for i in LINE_QUALIFIED
+                 if i not in {l["id"] for seg in portfolio["segments"] for l in seg["productLines"]}]
     products = {p["id"] for s in portfolio["segments"] for l in s["productLines"] for p in l.get("portfolios", [])}
     for row in links:
         if row["data_product"] not in products:
@@ -141,7 +147,13 @@ def build(portfolio, links, by_key, by_label):
         g.add((iri, RDF.type, cls))
         g.add((iri, RDF.type, SKOS.Concept))
         g.add((iri, SKOS.inScheme, DP.DataProducts))
-        g.add((iri, SKOS.prefLabel, Literal(item["name"], lang="en")))
+        if item["id"] in LINE_QUALIFIED:
+            g.add((iri, SKOS.prefLabel, Literal(item["name"] + " product line", lang="en")))
+            g.add((iri, SKOS.historyNote, Literal(
+                f"data-product 1.2.0 (2026-10-25): the portfolio names this line '{item['name']}', as it names one of its "
+                "data products; the line takes the qualifier 'product line' (EPM-DEC-001-0098, item 6).", lang="en")))
+        else:
+            g.add((iri, SKOS.prefLabel, Literal(item["name"], lang="en")))
         g.add((iri, SKOS.notation, Literal(item["id"], datatype=XSD.string)))
         if broader is not None:
             g.add((iri, SKOS.broader, broader))
@@ -162,6 +174,7 @@ def build(portfolio, links, by_key, by_label):
         s = SEGMENT[local("seg-", seg["id"])]
         describe(s, DP.PortfolioSegment, seg, None, "segment")
         g.add((s, SKOS.topConceptOf, DP.DataProducts))
+        g.add((DP.DataProducts, SKOS.hasTopConcept, s))  # both ways (EPM-DEC-001-0098, item 4)
         g.add((s, DP.anchoredIn, resolve_domain(seg["processDomainRef"], by_key, by_label)))
         for line in seg["productLines"]:
             l = LINE[local("dpl-", line["id"])]

@@ -7,6 +7,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
 @prefix shp: <https://w3id.org/lsc/ontology/modules/system/shapes/> .
 
 shp:System a sh:NodeShape ;
@@ -28,9 +29,16 @@ shp:System a sh:NodeShape ;
                         sh:hasValue <https://w3id.org/lsc/ontology/source/downstream-process-map> ] ]
         [ sh:property [ sh:path skos:definition ; sh:maxCount 0 ] ;
           sh:property [ sh:path skos:editorialNote ; sh:minCount 1 ] ]
+        # Since 1.2.0: a system the process map does not name is named by another source (sys:namedBy), cites no
+        # process map, and is defined (EPM-DEC-001-0100).
+        [ sh:property [ sh:path sys:namedBy ; sh:minCount 1 ] ;
+          sh:property [ sh:path skos:definition ; sh:minCount 1 ] ;
+          sh:not [ sh:property [ sh:path dcterms:source ;
+                                 sh:hasValue <https://w3id.org/lsc/ontology/source/downstream-process-map> ] ] ]
     ) ;
     sh:message "A system has a definition with its source, or a note saying why it has none." ;
     sh:property [ sh:path sys:systemKind ; sh:minCount 1 ; sh:maxCount 1 ;
                   sh:in ( kind:application kind:office-tool kind:document ) ] ;
     sh:property [ sh:path sys:supports ; sh:minCount 0 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path sys:namedBy ; sh:minCount 0 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ] .

@@ -535,9 +535,10 @@ line:hr a skos:Concept,
     dcterms:source src:data-product-portfolio ;
     skos:broader segment:corporate ;
     skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:historyNote "data-product 1.2.0 (2026-10-25): the portfolio names this line 'HR', as it names one of its data products; the line takes the qualifier 'product line' (EPM-DEC-001-0098, item 6)."@en ;
     skos:inScheme dp:DataProducts ;
     skos:notation "dpl-hr"^^xsd:string ;
-    skos:prefLabel "HR"@en ;
+    skos:prefLabel "HR product line"@en ;
     dp:portfolioStatus status:defined-only .
 
 line:it a skos:Concept,
@@ -545,9 +546,10 @@ line:it a skos:Concept,
     dcterms:source src:data-product-portfolio ;
     skos:broader segment:corporate ;
     skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:historyNote "data-product 1.2.0 (2026-10-25): the portfolio names this line 'IT', as it names one of its data products; the line takes the qualifier 'product line' (EPM-DEC-001-0098, item 6)."@en ;
     skos:inScheme dp:DataProducts ;
     skos:notation "dpl-it"^^xsd:string ;
-    skos:prefLabel "IT"@en ;
+    skos:prefLabel "IT product line"@en ;
     dp:portfolioStatus status:defined-only .
 
 line:sbd a skos:Concept,
@@ -555,9 +557,10 @@ line:sbd a skos:Concept,
     dcterms:source src:data-product-portfolio ;
     skos:broader segment:corporate ;
     skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:historyNote "data-product 1.2.0 (2026-10-25): the portfolio names this line 'S&BD', as it names one of its data products; the line takes the qualifier 'product line' (EPM-DEC-001-0098, item 6)."@en ;
     skos:inScheme dp:DataProducts ;
     skos:notation "dpl-sbd"^^xsd:string ;
-    skos:prefLabel "S&BD"@en ;
+    skos:prefLabel "S&BD product line"@en ;
     dp:portfolioStatus status:defined-only .
 
 line:supply-chain a skos:Concept,
@@ -565,9 +568,10 @@ line:supply-chain a skos:Concept,
     dcterms:source src:data-product-portfolio ;
     skos:broader segment:corporate ;
     skos:editorialNote "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."@en ;
+    skos:historyNote "data-product 1.2.0 (2026-10-25): the portfolio names this line 'SC', as it names one of its data products; the line takes the qualifier 'product line' (EPM-DEC-001-0098, item 6)."@en ;
     skos:inScheme dp:DataProducts ;
     skos:notation "dpl-supply-chain"^^xsd:string ;
-    skos:prefLabel "SC"@en ;
+    skos:prefLabel "SC product line"@en ;
     dp:portfolioStatus status:defined-only .
 
 line:data-platforms a skos:Concept,
@@ -745,4 +749,8 @@ segment:midstream a skos:Concept,
 
 src:data-product-portfolio a dcterms:BibliographicResource ;
     dcterms:title "Data product portfolio, business_architecture/business_process/data_product_portfolio.json, generated 2026-08-05, from: Data Product Lines & Data Portfolio slide (Commercial / Midstream / Corporate); Commercial Business Process Lifecycle slide (Rack Pricing, Loss Control additions); EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (term: Data Product Portfolio)"@en .
+
+dp:DataProducts skos:hasTopConcept segment:commercial,
+        segment:corporate,
+        segment:midstream .
 

@@ -94,6 +94,18 @@ system:cargotracker a skos:Concept,
         proc:CM-1-1-5-1-2-6 ;
     sys:systemKind kind:application .
 
+system:databricks a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25,
+        src:vendor-databricks-introduction ;
+    skos:definition "A data and AI platform. By the vendor's description, it is a unified, open analytics platform for building, deploying, sharing and maintaining data, analytics and AI solutions."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "databricks"^^xsd:string ;
+    skos:prefLabel "Databricks"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-pricing-assets-2026-10-25 ;
+    sys:systemKind kind:application .
+
 system:dpo a skos:Concept,
         sys:System ;
     dcterms:source src:decision-owner-answers-2026-10-24-systems,
@@ -175,10 +187,24 @@ system:market-outlook-and-avails-dashboard a skos:Concept,
         proc:CM-1-1-2-3-1 ;
     sys:systemKind kind:application .
 
+system:mips a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:altLabel "Market Information and Pricing System"@en ;
+    skos:definition "The system that holds market price assessments, organized in price sheets, price groups and price batches. The pricing views read it through its replica, for the sheets and groups that classify each price."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "mips"^^xsd:string ;
+    skos:prefLabel "MIPS"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-pricing-assets-2026-10-25 ;
+    sys:systemKind kind:application .
+
 system:mpr a skos:Concept,
         sys:System ;
-    dcterms:source src:downstream-process-map ;
-    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25,
+        src:downstream-process-map ;
+    skos:definition "The price master system: it holds each priced instrument (the price master) with its reference data, and its daily price details and settlement prices. The pricing views read it through its replica, for the crack spreads' and benchmarks' settlement prices."@en ;
+    skos:editorialNote "The decision owner's files expand MPR as both Master Price Record and Market Price Report (EPM-DEC-001-0100)."@en ;
     skos:inScheme sys:Systems ;
     skos:notation "mpr"^^xsd:string ;
     skos:prefLabel "MPR"@en ;
@@ -659,6 +685,9 @@ src:vendor-aspentech-mpims-course a dcterms:BibliographicResource ;
 src:vendor-aveva-pi-system a dcterms:BibliographicResource ;
     dcterms:title "AVEVA, AVEVA PI System, https://www.aveva.com/en/products/aveva-pi-system/ (published 2026-09-23), retrieved 2026-10-25"@en .
 
+src:vendor-databricks-introduction a dcterms:BibliographicResource ;
+    dcterms:title "Databricks, What is Databricks?, https://docs.databricks.com/aws/en/introduction/ (updated 2026-09-11), retrieved 2026-10-25"@en .
+
 src:vendor-ion-rightangle a dcterms:BibliographicResource ;
     dcterms:title "ION, RightAngle, https://iongroup.com/products/commodities/rightangle/ (page modified 2026-08-10), retrieved 2026-10-25"@en .
 
@@ -692,6 +721,9 @@ src:vendor-aspentech-ppims-course a dcterms:BibliographicResource ;
 src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     dcterms:title "The decision owner's identifications of systems, Claude Code session of 2026-10-24, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-24-systems.md"@en .
 
+src:decision-owner-pricing-assets-2026-10-25 a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's Databricks pricing metric views, their lineage and the Genie agents' instructions (idp_sbx sandbox), shared on 2026-10-25 and held outside the repository (EPM-DEC-001-0097)"@en .
+
 src:decision-owner-answers-2026-10-25-item-g a dcterms:BibliographicResource ;
     dcterms:title "The decision owner's answers to the item G questions, Claude Code session of 2026-10-25, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g.md"@en .
 
@@ -700,10 +732,12 @@ sys:Systems skos:hasTopConcept system:actuals-case-prep-file,
         system:aps-planning-db,
         system:backcasting-dashboard,
         system:cargotracker,
+        system:databricks,
         system:dpo,
         system:hyperion,
         system:kittyhawk,
         system:market-outlook-and-avails-dashboard,
+        system:mips,
         system:mpr,
         system:ms-excel,
         system:ms-outlook,

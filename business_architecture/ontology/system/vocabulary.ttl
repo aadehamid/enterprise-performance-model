@@ -41,3 +41,9 @@ kind:office-tool a skos:Concept ; skos:inScheme sys:SystemKind ; skos:topConcept
     skos:definition "General office software, such as e-mail, chat, slides or spreadsheets."@en .
 kind:document a skos:Concept ; skos:inScheme sys:SystemKind ; skos:topConceptOf sys:SystemKind ; skos:prefLabel "Working document"@en ; skos:notation "document" ;
     skos:definition "A named document or file that the process works from, not an application."@en .
+
+sys:namedBy a owl:ObjectProperty ;
+    rdfs:label "named by"@en ;
+    rdfs:domain sys:System ; rdfs:range dcterms:BibliographicResource ;
+    skos:definition "The source that names a system the process map does not name. A system the map names has no value here."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0100"@en .

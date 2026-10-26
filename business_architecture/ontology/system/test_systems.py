@@ -37,7 +37,7 @@ class Build(unittest.TestCase):
         # register.csv and systems.csv. The link count is the build's; 3 of the 153 processes with a
         # systems field name only Manual, TBD or a plan, so 150 receive a link.
         self.assertEqual(bs.figures(*bs.load()), {
-            "map strings": 37, "systems": 32, "defined": 15, "application": 23, "office-tool": 4, "document": 5,
+            "map strings": 37, "systems": 34, "defined": 18, "application": 25, "office-tool": 4, "document": 5,
             "no-system strings": 4, "processes with a systems field": 153,
             "processes with a link": 150, "links": 285,
             "links waiting for a core release": 0})
@@ -72,7 +72,7 @@ class Build(unittest.TestCase):
         # Item G (EPM-DEC-001-0099), checked by hand against definitions.csv on 2026-10-25: 15 systems are
         # defined; full forms are preferred labels, with the process map's abbreviation as an alternative.
         defined = {s for s in SYSTEMS.subjects(SKOS.definition, None)}
-        self.assertEqual(len(defined), 15)
+        self.assertEqual(len(defined), 18)  # 15, then MIPS, MPR and Databricks in 1.2.0 (EPM-DEC-001-0100)
         for slug, label, alt in (("dpo", "Distribution Planning Optimizer", "DPO"), ("aps", "Aspen Petroleum Scheduler", "APS"),
                                  ("sap", "SAP S/4HANA", "SAP"), ("hyperion", "Oracle Hyperion Planning", "Hyperion"),
                                  ("pi", "AVEVA PI System", "PI")):
@@ -89,6 +89,16 @@ class Build(unittest.TestCase):
             self.assertIsNone(SYSTEMS.value(SYSTEM[slug], SKOS.definition))
             self.assertTrue(str(SYSTEMS.value(SYSTEM[slug], SKOS.editorialNote)).startswith("MPC-built"))
         self.assertEqual(str(SYSTEMS.value(SYSTEM["trr"], SKOS.editorialNote)), bs.UNDEFINED)
+
+    def test_systems_the_map_does_not_name(self):
+        # Item F (EPM-DEC-001-0100): MIPS and Databricks, named by the decision owner's pricing assets.
+        assets = bs.SRC["decision-owner-pricing-assets-2026-10-25"]
+        for slug in ("mips", "databricks"):
+            self.assertIn((SYSTEM[slug], DCTERMS.source, assets), SYSTEMS)
+            self.assertNotIn((SYSTEM[slug], DCTERMS.source, bs.MAP_SOURCE), SYSTEMS)
+            self.assertIsNone(SYSTEMS.value(SYSTEM[slug], SYS.supports))
+        self.assertIn((SYSTEM["mips"], SKOS.altLabel, Literal("Market Information and Pricing System", lang="en")), SYSTEMS)
+        self.assertIn("Master Price Record", str(SYSTEMS.value(SYSTEM["mpr"], SKOS.editorialNote)))
 
     def test_the_map_source_is_not_redeclared(self):
         # roles.ttl declares the process map's source node; this module only references it (Pi round 1).
@@ -127,6 +137,9 @@ class Shapes(unittest.TestCase):
             g.remove((SYSTEM["xpims"], SYS.systemKind, None))
             g.add((SYSTEM["xpims"], SYS.systemKind, KIND["manual"]))
         self.assertFalse(self.broken(edit))
+
+    def test_rejects_an_undefined_system_another_source_names(self):
+        self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["mips"], SKOS.definition, None))))
 
     def test_rejects_a_system_without_its_note(self):
         self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["trr"], SKOS.editorialNote, None))))

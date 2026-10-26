@@ -9,6 +9,12 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/data-product/kind/> .
+@prefix layer: <https://w3id.org/lsc/ontology/modules/data-product/layer/> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 # ---- Classes ----
@@ -63,12 +69,130 @@ dp:consumedBy a owl:ObjectProperty ;
 
 # ---- Code list: portfolio status ----
 
-dp:PortfolioStatus a skos:ConceptScheme ; rdfs:label "portfolio status"@en ;
+dp:PortfolioStatus a skos:ConceptScheme ; skos:hasTopConcept status:active, status:defined-only, status:open-decision ; rdfs:label "portfolio status"@en ;
     skos:definition "The three statuses the portfolio schema allows a data product or line. The portfolio uses two of them."@en ;
     dcterms:bibliographicCitation "business_architecture/schema/data_product_portfolio.schema.json"@en .
-status:active a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:prefLabel "Active"@en ; skos:notation "active" ;
+status:active a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:topConceptOf dp:PortfolioStatus ; skos:prefLabel "Active"@en ; skos:notation "active" ;
     skos:definition "The portfolio describes the data product or line, and it is in use."@en .
-status:defined-only a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:prefLabel "Defined only"@en ; skos:notation "defined_only" ;
+status:defined-only a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:topConceptOf dp:PortfolioStatus ; skos:prefLabel "Defined only"@en ; skos:notation "defined_only" ;
     skos:definition "The portfolio names the data product or line but does not describe it. Its definition waits for its data owners."@en .
-status:open-decision a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:prefLabel "Open decision"@en ; skos:notation "open_decision" ;
+status:open-decision a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:topConceptOf dp:PortfolioStatus ; skos:prefLabel "Open decision"@en ; skos:notation "open_decision" ;
     skos:definition "A decision about the data product or line is open."@en .
+
+# ---- Since 1.2.0: tables and views on a data platform, and the kinds of data product (EPM-DEC-001-0097, items 7 to 16) ----
+
+dp:PlatformTable a owl:Class ;
+    rdfs:label "platform table"@en ;
+    skos:definition "A table or view on a data platform, named by its full name (catalog, schema and name), in one layer of the platform: replica, silver, gold or metric view. A definition of the table, never its rows."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, items 7 and 8"@en .
+
+dp:PlatformDataProduct a owl:Class ;
+    rdfs:label "platform data product"@en ;
+    skos:definition "A platform table or view that is published as a governed data product, as part of a data product of the portfolio, and classified as foundational or derived. A replica table is a platform table but not a platform data product: it copies a system's own records."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, items 13 to 15"@en .
+
+dp:PlatformTables a skos:ConceptScheme ;
+    rdfs:label "platform tables"@en ;
+    skos:definition "The platform tables and views the module names, as a flat list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 8"@en .
+
+dp:fullName a owl:DatatypeProperty ;
+    rdfs:label "full name"@en ;
+    rdfs:domain dp:PlatformTable ; rdfs:range xsd:string ;
+    skos:definition "The table's or view's full name on its platform: catalog, schema and name."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 7"@en .
+
+dp:sandbox a owl:DatatypeProperty ;
+    rdfs:label "sandbox"@en ;
+    rdfs:domain dp:PlatformTable ; rdfs:range xsd:boolean ;
+    skos:definition "True when the table is in a sandbox catalog, not production; its name changes when the production name is recorded."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 7"@en .
+
+dp:layer a owl:ObjectProperty ;
+    rdfs:label "layer"@en ;
+    rdfs:domain dp:PlatformTable ; rdfs:range skos:Concept ;
+    skos:definition "The platform layer the table is in, from the layer code list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 8"@en .
+
+dp:copiesSystem a owl:ObjectProperty ;
+    rdfs:label "copies system"@en ;
+    rdfs:domain dp:PlatformTable ; rdfs:range skos:Concept ;
+    skos:definition "The operational system whose own records a replica table copies."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, items 8 and 12"@en .
+
+dp:dependsOnSystem a owl:ObjectProperty ;
+    rdfs:label "depends on system"@en ;
+    rdfs:domain dp:PlatformTable ; rdfs:range skos:Concept ;
+    skos:definition "A system the view's lineage reaches, through the replicas of that system's records."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 12: \"Lineage is the evidence\""@en .
+
+dp:servesMeasure a owl:ObjectProperty ;
+    rdfs:label "serves measure"@en ;
+    rdfs:domain dp:PlatformTable ; rdfs:range skos:Concept ;
+    skos:definition "A measure of the kpi module whose values the metric view gives: the binding a consumer follows to quote a value (EPM-DEC-001-0061, as amended by EPM-DEC-001-0097, item 6)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, items 1, 2, 4 and 6"@en .
+
+dp:dataProductKind a owl:ObjectProperty ;
+    rdfs:label "data product kind"@en ;
+    rdfs:domain dp:PlatformDataProduct ; rdfs:range skos:Concept ;
+    skos:definition "Whether the data product is foundational or derived, from the data product kind code list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 14"@en .
+
+dp:classificationTest a owl:DatatypeProperty ;
+    rdfs:label "classification test"@en ;
+    rdfs:domain dp:PlatformDataProduct ; rdfs:range xsd:string ;
+    skos:definition "The criterion of the data product kind code list that decided the kind: inputs or logic."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 15"@en .
+
+dp:classificationReason a owl:DatatypeProperty ;
+    rdfs:label "classification reason"@en ;
+    rdfs:domain dp:PlatformDataProduct ; rdfs:range xsd:string ;
+    skos:definition "Why the data product has its kind, in a sentence."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 15"@en .
+
+dp:PlatformColumn a owl:Class ;
+    rdfs:label "platform column"@en ;
+    skos:definition "A value column of a platform table, recorded only where its lineage is recorded: the price columns."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 11"@en .
+
+dp:columnOf a owl:ObjectProperty ;
+    rdfs:label "column of"@en ;
+    rdfs:domain dp:PlatformColumn ; rdfs:range dp:PlatformTable ;
+    skos:definition "The table the column belongs to."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 11"@en .
+
+dp:columnName a owl:DatatypeProperty ;
+    rdfs:label "column name"@en ;
+    rdfs:domain dp:PlatformColumn ; rdfs:range xsd:string ;
+    skos:definition "The column's name, as the table spells it."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 11"@en .
+
+dp:Layer a skos:ConceptScheme ; rdfs:label "platform layer"@en ;
+    skos:hasTopConcept layer:replica, layer:silver, layer:gold, layer:metric-view ;
+    skos:definition "The layers of the decision owner's data platform, in their names, each built from the one before."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 8"@en .
+layer:replica a skos:Concept ; skos:inScheme dp:Layer ; skos:topConceptOf dp:Layer ; skos:prefLabel "Replica"@en ; skos:notation "replica" ;
+    skos:definition "A copy of an operational system's own tables, as the system holds them."@en .
+layer:silver a skos:Concept ; skos:inScheme dp:Layer ; skos:topConceptOf dp:Layer ; skos:prefLabel "Silver"@en ; skos:notation "silver" ;
+    skos:definition "Cleansed and conformed tables of one domain's facts (UDM) and master data dimensions (MDM), built from replicas."@en .
+layer:gold a skos:Concept ; skos:inScheme dp:Layer ; skos:topConceptOf dp:Layer ; skos:prefLabel "Gold"@en ; skos:notation "gold" ;
+    skos:definition "Tables that join and calculate silver data for a known group of consumers."@en .
+layer:metric-view a skos:Concept ; skos:inScheme dp:Layer ; skos:topConceptOf dp:Layer ; skos:prefLabel "Metric view"@en ; skos:notation "metric-view" ;
+    skos:definition "A view that defines measures, once, over a gold or silver table, which consumers such as Genie agents query."@en .
+
+dp:DataProductKind a skos:ConceptScheme ; rdfs:label "data product kind"@en ;
+    skos:hasTopConcept kind:foundational, kind:derived ;
+    skos:definition "The two kinds of data product, told apart by what they are built from and what logic they add."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 14"@en .
+kind:foundational a skos:Concept ; skos:inScheme dp:DataProductKind ; skos:topConceptOf dp:DataProductKind ;
+    skos:prefLabel "Foundational data product"@en ; skos:notation "foundational" ;
+    skos:definition "A governed data product that publishes the facts or master data of one business domain, built only from the operational systems of record, with transformations limited to cleansing, validation, conforming and identity resolution, and not modelled for a particular consumer."@en ;
+    skos:scopeNote "Inputs: operational systems, not other data products. Logic: cleansing and conforming only. Consumers: not fitted to one. Owner: the source or domain team. Rate of change: stable. Silver tables are foundational."@en ;
+    dcterms:source src:dehghani-data-mesh-2019, src:datamesh-architecture-innoq, src:databricks-medallion-architecture,
+        src:purview-data-products, src:odps-4-0, src:w3c-prov-o .
+kind:derived a skos:Concept ; skos:inScheme dp:DataProductKind ; skos:topConceptOf dp:DataProductKind ;
+    skos:prefLabel "Derived data product"@en ; skos:notation "derived" ;
+    skos:definition "A governed data product built from one or more other data products, adding business logic (aggregation, calculation, measures or a model for a use case) for a known group of consumers."@en ;
+    skos:scopeNote "Inputs: other data products. Logic: aggregation, calculation and measures. Consumers: fitted to a group of use cases. Owner: the consuming team. Rate of change: changes more often, and can be rebuilt from its sources. Gold tables and metric views are derived."@en ;
+    dcterms:source src:dehghani-data-mesh-2019, src:datamesh-architecture-innoq, src:databricks-medallion-architecture,
+        src:purview-data-products, src:odps-4-0, src:w3c-prov-o .
