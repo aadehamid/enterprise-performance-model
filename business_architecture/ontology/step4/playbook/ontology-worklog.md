@@ -968,13 +968,16 @@ Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
 ### The playbook becomes the `ontology` skill's guide (2026-10-25)
-- The decision owner asked to move it: "Should we move to he ontology
-  skills itesef since the Playbook is a guide on how to create an ontology."
+- On 2026-10-25 the decision owner asked whether to move it: "Should we
+  move to he ontology skills itesef since the Playbook is a guide on how to
+  create an ontology. what do you think?" Claude recommended the move, and
+  the decision owner's queue carried it: "Item E: the three playbook
+  sections, and move the ontology playbook into the ontology skill."
   The guide is `skills/data/ontology/references/playbook.md` in
   personal-agent-skills (#71, merge `a2b8d1a`); EPM deletes its copy and
   `epm_facts.py playbook`, whose check is now the skill's
-  `scripts/test_playbook_guide.py`. §8, the evidence map, stays and links
-  to the guide (EPM-DEC-001-0101, delegated under EPM-DEC-001-0028).
+  `scripts/test_playbook_guide.py`. §8, the evidence map, stays and names
+  the guide (EPM-DEC-001-0101, delegated under EPM-DEC-001-0028).
 
 ### The playbook's evidence moves here (2026-10-23)
 - The decision owner: "The ontology and projection playbooks should aloso
@@ -985,12 +988,12 @@ without a dated amendment and the decision owner's explicit agreement.
   repository. What it cited is in §8, the evidence map, by playbook section,
   with the playbook's old §7 worked example and Appendix A's two
   worked-example items moved there word for word. `epm_facts.py playbook`,
-  run by `scripts/check.sh`, keeps it that way. *2026-10-25:* that check
-  moved into the `ontology` skill as `scripts/test_playbook_guide.py`, with
-  the guide (EPM-DEC-001-0101; see the entry of that date above). This changes the last
+  run by `scripts/check.sh`, keeps it that way. This changes the last
   sentence of EPM-DEC-001-0024's decision ("Project examples stay in the
   playbook's worked example (§7)"): project examples now stay in this
-  worklog, and the record carries a dated note.
+  worklog, and the record carries a dated note. *2026-10-25:* the check
+  moved into the `ontology` skill as `scripts/test_playbook_guide.py`, with
+  the guide (EPM-DEC-001-0101; see the entry of that date above).
 
 ### The ontology is closed (2026-10-23)
 - Under the delegation, on the goal the decision owner set on 2026-10-23
