@@ -132,14 +132,15 @@ table (`step4/playbook/ontology-worklog.md` §2) is authoritative for step
 status: Steps 0 to 12 are done or stand as recorded, each with its listed
 exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
 
-- **Releases:** 28 packages under `releases/`, listed in
+- **Releases:** 33 packages under `releases/`, listed in
   `releases/catalog.ttl` (EPM-DEC-001-0082). The newest of each module:
-  `core` 2.3.0 (EPM-DEC-001-0089), organization 2.0.0, ref-mpc 1.2.0, kpi 1.1.1 (EPM-DEC-001-0093), party 1.2.0
+  `core` 2.3.0 (EPM-DEC-001-0089), organization 2.0.0, ref-mpc 1.2.0, kpi 1.2.0 (EPM-DEC-001-0100), party 1.2.0
   (EPM-DEC-001-0099),
-  value-stream 1.1.0 (EPM-DEC-001-0090), data-product 1.1.0
-  (EPM-DEC-001-0091), system 1.1.0 (EPM-DEC-001-0099), lane and market-data 1.0.0, and
-  integration 2.1.0 (EPM-DEC-001-0099). *2026-10-25:* system 1.1.0, party 1.2.0 and integration
-  2.1.0 carry the systems' definitions from item G and the qSKOS top-concept fixes (EPM-DEC-001-0098).
+  value-stream 1.1.0 (EPM-DEC-001-0090), data-product 1.2.0
+  (EPM-DEC-001-0100), system 1.2.0 (EPM-DEC-001-0100), lane 1.0.0, market-data 1.1.0 (EPM-DEC-001-0100), and
+  integration 2.2.0 (EPM-DEC-001-0100). *2026-10-25:* system 1.1.0, party 1.2.0 and integration
+  2.1.0 carry the systems' definitions from item G and the qSKOS top-concept fixes (EPM-DEC-001-0098); item F's
+  five releases carry the pricing measures' bindings, prices, platform tables and lineage (EPM-DEC-001-0097, 0100).
 - **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);
   the competency regression has 43 questions answerable, 0 partial,
   0 waiting and 1 parked (Q17, EPM-DEC-001-0086); the Neo4j projection of every released package passes,

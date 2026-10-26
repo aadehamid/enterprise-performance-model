@@ -1016,6 +1016,15 @@ without a dated amendment and the decision owner's explicit agreement.
   as superseded evidence; `projection/pipeline.py` stays on v2.2
   (EPM-DEC-001-0095, amending 0021).
 
+### kpi 1.2.0, market-data 1.1.0, data-product 1.2.0, system 1.2.0 and integration 2.2.0 are released (2026-10-25)
+- Item F (EPM-DEC-001-0097, 0100): KPI-0001 on Crack Spreads Pricing and
+  Additional Market Prices narrowed to renewables and NGLs; the views'
+  prices for each pricing measure and the columns that list every series;
+  the pricing tables and views as platform tables, foundational or derived,
+  with lineage, and the two Genie agents as consumers; MIPS and Databricks;
+  a Genie agent may quote a value through its bound metric view. kpi,
+  market-data and data-product carry their qSKOS fixes (EPM-DEC-001-0098).
+
 ### system 1.1.0, party 1.2.0 and integration 2.1.0 are released (2026-10-25)
 - Item G: 15 system-module systems and 18 customer systems defined, from
   their vendors' own descriptions (marked as such, quoted whole in
