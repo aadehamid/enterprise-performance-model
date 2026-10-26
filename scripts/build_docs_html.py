@@ -43,50 +43,75 @@ MODULE_READMES = ["kpi", "lane", "market-data", "organization", "party", "ref-mp
                   "regression", "apqc"]
 
 
-def single(src, title, lead, scope="EPM ontology"):
-    return {"out": src[:-3] + ".html", "title": title, "scope": scope, "lead": lead, "sources": [src]}
+def single(src, lead, scope="EPM ontology"):
+    """A page for one Markdown source; its title is the source's own H1, word for word."""
+    return {"out": src[:-3] + ".html", "title": source_title(src), "scope": scope, "lead": lead, "sources": [src]}
 
 
-def first_heading(rel, fallback):
+def source_title(rel):
+    """The Markdown text of a source's H1 (outside fenced code); a source without one cannot be a page."""
+    titles = [ln[2:].strip() for ln in outside_fences(read_lines(rel)) if ln.startswith("# ")]
+    if not titles:
+        raise ValueError(f"{rel}: no H1 to title its page")
+    return titles[0]
+
+
+def read_lines(rel):
     with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
-        first = next((ln for ln in f if ln.startswith("# ")), f"# {fallback}")
-    return first[2:].strip().replace("`", "")
+        return f.read().split("\n")
+
+
+def outside_fences(lines):
+    """The lines that are not inside fenced code or an HTML comment block."""
+    out, fenced, comment = [], False, False
+    for line in lines:
+        if not fenced and line.strip().startswith("<!--"):
+            comment = "-->" not in line
+            continue
+        if comment:
+            comment = "-->" not in line
+            continue
+        if re.match(r"^ *```", line):
+            fenced = not fenced
+            continue
+        if not fenced:
+            out.append(line)
+    return out
 
 
 def pages():
     """Every page: its output, its title, one sentence on what it is, and its sources."""
     out = [
-        single(f"{ONT}/README.md", "The ontology build",
+        single(f"{ONT}/README.md",
                "Where the ontology build stands, what each part of this folder holds, and where to start."),
-        single(f"{ONT}/MODULES.md", "Module guide",
+        single(f"{ONT}/MODULES.md",
                "Each module of the ontology: what it holds, how it links to the others, and an example quoted "
                "from its release."),
-        single(f"{ONT}/competency-questions.md", "Competency questions",
+        single(f"{ONT}/competency-questions.md",
                "The questions the ontology must answer, which decide what it holds."),
-        single(f"{ONT}/business-closeout.md", "Business close-out",
+        single(f"{ONT}/business-closeout.md",
                "The points about the ontology that only the business can settle, and the record each answer goes to."),
-        single(f"{ONT}/release/CHANGELOG.md", "core changelog",
+        single(f"{ONT}/release/CHANGELOG.md",
                "What each release of the core module changed, and why."),
-        single(f"{ONT}/projection/README.md", "Property-graph projection",
+        single(f"{ONT}/projection/README.md",
                "How the released packages are projected into a Neo4j property graph and checked."),
-        single(f"{ONT}/projection/LOCAL-STORES.md", "The stores kept for exploration",
+        single(f"{ONT}/projection/LOCAL-STORES.md",
                "Where each store that holds the ontology or the demo data lives, and how to refresh it."),
-        single(f"{ONT}/projection/skill-run/README.md", "Running the projection skill",
+        single(f"{ONT}/projection/skill-run/README.md",
                "How the ontology-to-lpg skill's driver runs on these releases, with every store and check."),
-        single("business_architecture/domain/business-glossary.md", "Business glossary",
+        single("business_architecture/domain/business-glossary.md",
                "The business terms the ontology and its documents use, each defined once."),
     ]
     for m in MODULE_READMES:
         src = f"{ONT}/{m}/README.md"
-        out.append(single(src, first_heading(src, m), f"The {m} folder of the ontology build: what it holds, "
+        out.append(single(src, f"The {m} folder of the ontology build: what it holds, "
                           "how it is built and checked, and its releases.", scope="Module"))
     for path in sorted(glob.glob(os.path.join(ROOT, "business_architecture/business_process/proposals/*.md"))):
         rel = os.path.relpath(path, ROOT)
-        out.append(single(rel, first_heading(rel, os.path.basename(rel)),
-                          "A proposed change to the process map. A proposal is not applied until it is accepted.",
+        out.append(single(rel, "A proposed change to the process map. A proposal is not applied until it is accepted.",
                           scope="Process-map proposal"))
     records = sorted(glob.glob(os.path.join(ROOT, DECISIONS_DIR, "EPM-DEC-001-*.md")))
-    out.append({"out": DECISIONS_PAGE, "title": "Decision records", "scope": "EPM-DEC-001",
+    out.append({"out": DECISIONS_PAGE, "title": source_title(f"{DECISIONS_DIR}/README.md"), "scope": "EPM-DEC-001",
                 "lead": "Every decision behind the ontology and its build: context, decision, alternatives, the "
                         "decision owner's recorded words, evidence, status and date.",
                 "sources": [os.path.relpath(p, ROOT) for p in records], "intro": f"{DECISIONS_DIR}/README.md",
@@ -445,7 +470,8 @@ class Page:
             page = f.read()
         values = {
             "{{GENERATOR}}": "scripts/build_docs_html.py",
-            "{{TITLE}}": html.escape(self.spec["title"]),
+            "{{TITLE}}": self.inline_plain(self.spec["title"]),
+            "{{H1}}": self.inline(self.spec["sources"][0], self.spec["title"]),
             "{{SCOPE}}": html.escape(self.spec["scope"]),
             "{{LEAD}}": html.escape(self.spec["lead"]),
             "{{SOURCES}}": sources,

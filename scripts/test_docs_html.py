@@ -69,6 +69,16 @@ def test_a_thematic_break_and_a_table_rule_are_not_setext_headings():
     assert b.unsupported("doc.md", ["Text.", "", "---", "", "| A |", "|---|", "- item", "---"]) == []
 
 
+@pytest.mark.parametrize("spec", b.pages(), ids=lambda s: s["out"])
+def test_a_page_shows_its_source_h1_word_for_word(spec):
+    # An independent reading of the H1: the first "# " line of the source (the decisions page: its README).
+    src = spec.get("intro", spec["sources"][0])
+    with open(os.path.join(b.ROOT, src), encoding="utf-8") as f:
+        h1 = next(line[2:].strip() for line in f if line.startswith("# "))
+    shown = re.search(r"<h1>(.*?)</h1>", PAGES[spec["out"]], re.S).group(1)
+    assert html.unescape(re.sub(r"<[^>]+>", "", shown)) == h1.replace("`", "")
+
+
 def test_every_source_exists():
     for spec in b.pages():
         for src in spec["sources"] + ([spec["intro"]] if "intro" in spec else []):
