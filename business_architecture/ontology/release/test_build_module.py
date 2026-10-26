@@ -46,6 +46,9 @@ APPROVALS.update({name: ITEM_G for name in ("system", "party", "integration")}) 
 # Item F's releases, approved as one plan (EPM-DEC-001-0100).
 ITEM_F = ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)")
 APPROVALS.update({name: ITEM_F for name in ("kpi", "market-data", "data-product", "system", "integration")})
+# The internal systems' descriptions, approved by Claude under the delegation (EPM-DEC-001-0028, 2026-10-25, evening; 0103).
+DELEGATED = ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)")
+APPROVALS.update({name: DELEGATED for name in ("system", "party", "integration")})  # system 1.3.0, party 1.3.0, integration 2.3.0
 
 
 def approval_holds(name, m):
@@ -166,7 +169,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0"})  # 1.2.0, EPM-DEC-001-0080
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0; 1.2.0 too
-        self.assertEqual(bm.dependencies("party"), {"core": "2.3.0", "system": "1.1.0"})  # since 1.2.0 (EPM-DEC-001-0099)
+        self.assertEqual(bm.dependencies("party"), {"core": "2.3.0", "system": "1.3.0"})  # system 1.1.0 in 1.2.0 (0099); 1.3.0 (0103)
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
         self.assertEqual(bm.dependencies("data-product"), {"core": "2.3.0", "kpi": "1.2.0", "system": "1.2.0"})  # 1.2.0 (0100)
         # value-stream 1.1.0 requires the current releases (EPM-DEC-001-0090).
@@ -177,7 +180,7 @@ class EarlierReleases(unittest.TestCase):
         # EPM-DEC-001-0078: integration names terms of each of these releases; 2.0.0 requires the current ones (0094).
         self.assertEqual(bm.dependencies("integration"), {
             "core": "2.3.0", "organization": "2.0.0", "kpi": "1.2.0", "data-product": "1.2.0",
-            "value-stream": "1.1.0", "system": "1.2.0", "lane": "1.0.0", "market-data": "1.1.0", "party": "1.2.0"})  # 2.2.0
+            "value-stream": "1.1.0", "system": "1.3.0", "lane": "1.0.0", "market-data": "1.1.0", "party": "1.3.0"})  # 2.3.0
 
     def test_a_check_loads_one_release_of_each_module(self):
         # value-stream reaches core twice: directly at 2.3.0 and through kpi 1.1.0 at 2.2.0. Only 2.3.0 loads.
@@ -419,17 +422,16 @@ class EarlierReleases(unittest.TestCase):
                              ("1.0.0", None, "2026-10-22"))
 
 
-    def test_the_item_g_releases_carry_their_approval(self):
-        # EPM-DEC-001-0099: the decision owner approved the three together.
-        for name, version in (("party", "1.2.0"),):
-            self.assertEqual(bm.MODULES[name]["approval"], ITEM_G)
+    def test_the_delegated_releases_carry_the_delegation(self):
+        # EPM-DEC-001-0103: Claude approved the three minor releases under the delegation.
+        for name, version in (("system", "1.3.0"), ("party", "1.3.0"), ("integration", "2.3.0")):
+            self.assertEqual(bm.MODULES[name]["approval"], DELEGATED)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
-                             (version, None, "2026-10-25"))
+                             (version, None, "2026-10-26"))
 
     def test_the_item_f_releases_carry_their_approval(self):
         # EPM-DEC-001-0100: the decision owner approved the plan of the five.
-        for name, version in (("kpi", "1.2.0"), ("market-data", "1.1.0"), ("data-product", "1.2.0"), ("system", "1.2.0"),
-                              ("integration", "2.2.0")):
+        for name, version in (("kpi", "1.2.0"), ("market-data", "1.1.0"), ("data-product", "1.2.0")):
             self.assertEqual(bm.MODULES[name]["approval"], ITEM_F)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-25"))

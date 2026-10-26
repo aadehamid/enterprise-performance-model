@@ -10,6 +10,9 @@
 <https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:industry .
 
+<https://w3id.org/lsc/ontology/source/core-2-3-0-process-definitions> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
+
 <https://w3id.org/lsc/ontology/source/data-product-portfolio> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
 
@@ -23,6 +26,9 @@
     auth:evidenceTier tier:process-authority .
 
 <https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-25-item-g> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/decision-owner-customer-inputs> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
 
 <https://w3id.org/lsc/ontology/source/decision-owner-pricing-assets-2026-10-25> a dcterms:BibliographicResource ;

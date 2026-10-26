@@ -1,0 +1,42 @@
+{
+  "module": "integration",
+  "version": "2.3.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/integration",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/integration/2.3.0",
+  "depends_on": {
+    "core": "2.3.0",
+    "organization": "2.0.0",
+    "kpi": "1.2.0",
+    "data-product": "1.2.0",
+    "value-stream": "1.1.0",
+    "system": "1.3.0",
+    "lane": "1.0.0",
+    "market-data": "1.1.0",
+    "party": "1.3.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0058",
+    "EPM-DEC-001-0059",
+    "EPM-DEC-001-0061",
+    "EPM-DEC-001-0078",
+    "EPM-DEC-001-0088",
+    "EPM-DEC-001-0094",
+    "EPM-DEC-001-0098",
+    "EPM-DEC-001-0099",
+    "EPM-DEC-001-0100",
+    "EPM-DEC-001-0103"
+  ],
+  "triples": 448,
+  "approved_by": {
+    "who": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
+  },
+  "files": {
+    "CHANGELOG.md": "613a7ca93a4c9a6c04b5abfd32f033379b687830ba5d1995f62913a15de6dece",
+    "catalog.ttl": "12b3c8edddf217072c2426af8e2959b469a1677b2b2f3fd1a53bb9c36cdb56c5",
+    "integration.jsonld": "2dc014fb458aa9e8bd04b4e6b40ad6fc5dc7dbfae8652b351ac77f60af9801b0",
+    "integration.ttl": "4e84ac3d2ebc0c8281e14332897d3925023d2495ff3a0969e4746a23c01d1f52",
+    "shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d"
+  }
+}
