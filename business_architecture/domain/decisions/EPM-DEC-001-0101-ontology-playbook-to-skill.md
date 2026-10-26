@@ -17,7 +17,7 @@ The decision owner's words are quoted below.
 
 **What follows (Claude, under EPM-DEC-001-0028, amendment of 2026-10-25, evening):**
 
-1. **The playbook becomes the `ontology` skill's narrative guide,** `skills/data/ontology/references/playbook.md` in personal-agent-skills. Each step names the reference that holds its rules, and the guide points to them instead of restating them; where the two differ, the reference wins.
+1. **The playbook becomes the `ontology` skill's narrative guide,** `skills/data/ontology/references/playbook.md` in personal-agent-skills (#71, merged as `a2b8d1a` on 2026-10-25). Each step names the reference that holds its rules, and the guide points to them instead of restating them; where the two differ, the reference wins.
 2. **The three sections are written in the guide, in the skill's terms,** each pointing to the rule it explains: "Why split an ontology into modules" (§2, beside the module policy), "Deciding between sources" (§2, after source of truth and scope) and "The integration-module pattern" (end of Step 7), with one worked case in the guide's library-lending domain.
 3. **The skill's consumer rule follows EPM-DEC-001-0097, item 6:** an agent may quote a measure's value taken through the source the catalog binds to that measure, naming it; computing a value from the graph and quoting from an unbound source stay refused.
 4. **The neutrality guard moves with the guide** as the skill's `scripts/test_playbook_guide.py`, with its fixed list of terms and a test that each kind is caught. The checks that read EPM's released packages and tracked paths stay behind, because the skill cannot see them; review catches the rest, as REVIEW_STANDARDS.md rule 5 says. `epm_facts.py playbook`, its tests and its `check.sh` line are removed.
@@ -34,7 +34,7 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Evidence
 
-- personal-agent-skills, branch `ontology/playbook-guide`: `references/playbook.md`, `references/integration.md`, `scripts/test_playbook_guide.py`, `SKILL.md`, `README.md`.
+- personal-agent-skills #71 (merge `a2b8d1a`), branch `ontology/playbook-guide`: `references/playbook.md`, `references/integration.md`, `scripts/test_playbook_guide.py`, `SKILL.md`, `README.md`.
 - The skill's rules the new sections explain: `foundations.md`, policies 3 and 8; `integration.md`, rules 25 to 28.
 
 ## Consequences
