@@ -25,6 +25,12 @@ EPM-DEC-001-0097 records the decision owner's decisions on the pricing measures,
 6. **`system` 1.2.0.** MIPS and Databricks come from `other-systems.csv`, named by the decision owner's pricing assets, not by the process map, so they support no process. MIPS's alternative label "Market Information and Pricing System" is the Executive Summary agent's expansion. MPR gains a definition from the same files, with a note that they expand MPR both as Master Price Record and as Market Price Report. Databricks' definition comes from its documentation, marked as the vendor's, and quoted whole in `reference/vendors/`.
 7. **`integration` 2.2.0.** `rule:value-through-bound-view` is a new may-answer rule; `rule:no-values` keeps refusing a computed value and a value from an unbound source, with a change note (0097, item 6). The decision owner's pricing assets are tier 1, as the decision owner's own material; Databricks' documentation is tier 4; the six kind sources are tier 5 (0097, item 14).
 8. **Known gaps** go in the changelogs of market-data and data-product, from 0097's list.
+9. **The series scheme names what it now holds.** Because the 40 new market prices sit in `mkt:Series`, its label becomes "market series and prices" (it was "benchmark series") and its definition names the market prices; the IRI is unchanged and a change note keeps the old label. A minor change, in market-data 1.1.0.
+
+## Known gaps
+
+- **The 40 new market prices have no definition from the decision owner's files.** Each definition is built from the Executive Summary or benchmark agent's filters, which name the price and its group; each price carries an editorial note saying so, and the market-data 1.1.0 changelog lists it as a known gap.
+- The other gaps are 0097's, carried into the changelogs (item 8).
 
 ## Alternatives considered
 
