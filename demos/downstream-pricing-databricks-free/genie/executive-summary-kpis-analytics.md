@@ -2,10 +2,10 @@
 
 Answers questions about the Executive Summary pricing groups: current price, previous price, day-over-day change and forward monthly averages, across benchmark, crack spread, gasoline, distillate, crude, renewable and NGL markets. Pricing only, in USD.
 
-## Sources
-- Benchmark Prices: `${catalog}.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw`.
-- Every other group: `${catalog}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw`.
-- Always use `MEASURE()`; the three measures are `assessment_amount` (current), `Previous_amount` and `ChangeValue`.
+## Sources and their measures
+Always use `MEASURE()`, and use only the measures of the view you query:
+- Benchmark Prices: `${catalog}.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw`. Measures: `Avg_Settle_Price` and `Record_Count`. It has no `assessment_amount`, `Previous_amount` or `ChangeValue`.
+- Every other group: `${catalog}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw`. Measures: `assessment_amount` (current), `Previous_amount`, `ChangeValue` and `Record_Count`. All three value measures are sums.
 
 ## The groups
 1. Benchmark: ICE Brent, NYMEX WTI (Cushing), NYMEX Natural Gas, NYMEX Heating Oil, NYMEX RBOB.
@@ -19,7 +19,8 @@ Answers questions about the Executive Summary pricing groups: current price, pre
 - A blend appears in several groups, and the view sums: always filter `Price_Group_Name` (and the parent group for gasoline or distillate), defaulting to 'Cash', and `SortColumns = 1` for the prompt unless forward months are asked.
 - Units as stored: cracks and crude in $/bbl; gasoline and distillate in $/gal (multiply by 100 for cents per gallon); renewables in $/unit (multiply by 100 for cents) except CBOT SBO, already in cents/lb; NGLs already in cents per gallon.
 - The benchmark view multiplies all five instruments by 100. That is right for NYMEX HO and RBOB (cents per gallon) and wrong for Brent, WTI and Natural Gas: divide those three by 100 (EPM-DEC-001-0097, known gap). The view shows only the last 160 days.
-- For a benchmark's change and previous value, use the front month (`Relative_Period_Number = 1`) on the selected date and on the latest earlier date.
-- Monthly averages group by `Price_Period_Datetime`. Shift Bakken - Patoka, SYN and WCS forward two months first.
+- For a benchmark's change and previous value, use `MEASURE(Avg_Settle_Price)` at the front month (`Relative_Period_Number = 1`) on the selected date and on the latest earlier date, each corrected for the x100 defect.
+- Monthly averages group by the month of `Price_Period_Datetime` and divide the sum by the count: `MEASURE(assessment_amount) / MEASURE(Record_Count)`, with `Price_Group_Name` and `MIPSDisplayName` filtered to one blend. A sum alone is not a price. For Bakken - Patoka, SYN and WCS (Price Master IDs 30532, 79068, 79069), add two months to `Price_Period_Datetime` before grouping.
+- On the benchmark view, a monthly average is `MEASURE(Avg_Settle_Price)` grouped by the month of `Contract_Period_Datetime`.
 - For a date with no value, current uses that date only; change and previous fall back up to three days.
 - Round to two decimals. This is synthetic demo data: every row carries a provenance label in the gold table.

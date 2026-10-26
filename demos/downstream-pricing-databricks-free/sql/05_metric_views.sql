@@ -1,5 +1,6 @@
 -- 05_metric_views.sql: the three pricing metric views under their shared names, with the same fields, measures, joins
 -- and filters as the definitions the decision owner shared (EPM-DEC-001-0097), and one view of refinery operations.
+-- The Executive Summary view passes every gold column through, one to one, and each view defines Record_Count.
 -- The benchmark view keeps its known defect on purpose: it multiplies all five instruments by 100, which is right only
 -- for NYMEX HO and RBOB, and keeps its 160-day window (EPM-DEC-001-0097, Known gaps).
 
@@ -71,6 +72,20 @@ dimensions:
     expr: Price_Period_Datetime
   - name: SortColumns
     expr: SortColumns
+  - name: Price_Master_Cycle_ID
+    expr: Price_Master_Cycle_ID
+  - name: Sheet_displayname
+    expr: Sheet_displayname
+  - name: Status_code
+    expr: Status_code
+  - name: Data_Source_code
+    expr: Data_Source_code
+  - name: CycleNumber
+    expr: CycleNumber
+  - name: IsCycle
+    expr: IsCycle
+  - name: Demo_Provenance_Label
+    expr: Demo_Provenance_Label
 measures:
   - name: assessment_amount
     expr: SUM(assessment_amount)
@@ -155,4 +170,6 @@ measures:
     expr: 100 * SUM(Rm_Margin_Usd_Per_Bbl * Crude_Runs_Mbpd) / SUM(Benchmark_Crack_Usd_Per_Bbl * Crude_Runs_Mbpd)
   - name: Opex_Usd_Per_Bbl
     expr: SUM(Opex_Usd_Per_Bbl * Crude_Runs_Mbpd) / SUM(Crude_Runs_Mbpd)
+  - name: Record_Count
+    expr: COUNT(1)
 $$;

@@ -76,7 +76,7 @@ FROM ${catalog}.replica_prodacct.refinery_daily;
 CREATE OR REPLACE TABLE ${catalog}.silver_udm_core.refinery_plan_target_fact AS
 SELECT RefineryCode AS Refinery_Code, PlanMonth AS Plan_Month, CAST(PlannedCrudeRunsMbpd AS DECIMAL(10,1)) AS Planned_Crude_Runs_Mbpd,
        CAST(PlannedUtilizationPct AS DECIMAL(6,2)) AS Planned_Utilization_Pct, CAST(PlannedGasolineYieldPct AS DECIMAL(6,2)) AS Planned_Gasoline_Yield_Pct,
-       CAST(PlannedDistillateYieldPct AS DECIMAL(6,2)) AS Planned_Distillate_Yield_Pct, 'synthesized' AS Demo_Provenance_Label,
+       CAST(PlannedDistillateYieldPct AS DECIMAL(6,2)) AS Planned_Distillate_Yield_Pct, DemoProvenance AS Demo_Provenance_Label,
        _change_ts AS Record_Update_Datetime
 FROM ${catalog}.replica_planning.plan_target;
 
