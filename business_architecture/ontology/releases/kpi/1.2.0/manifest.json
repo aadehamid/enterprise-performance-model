@@ -1,0 +1,34 @@
+{
+  "module": "kpi",
+  "version": "1.2.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/kpi",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/kpi/1.2.0",
+  "depends_on": {
+    "core": "2.3.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0040",
+    "EPM-DEC-001-0042",
+    "EPM-DEC-001-0043",
+    "EPM-DEC-001-0062",
+    "EPM-DEC-001-0079",
+    "EPM-DEC-001-0088",
+    "EPM-DEC-001-0093",
+    "EPM-DEC-001-0097",
+    "EPM-DEC-001-0098",
+    "EPM-DEC-001-0100"
+  ],
+  "triples": 1157,
+  "approved_by": {
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
+  },
+  "files": {
+    "CHANGELOG.md": "0041493b16e9abe46ede88aca93f3d33178c0c6396bc0d143c335a8ae17a5a5a",
+    "catalog.ttl": "2be2c79b5540e29966075f967aa57256007e0656d8a6441ce67a0e2efacb78f2",
+    "kpi.jsonld": "61878f9af6056eac1414e79ab03b491329b9759354c3b56c1dc8a44749bfd35d",
+    "kpi.ttl": "01cacca965f9aa3f615bf06d6347c57b062efe31a72ebcbcfa3b1d7ff522dc5a",
+    "shapes.ttl": "8e094d7ca37d99b530d924299284e7daf32f427b62d681a1aa0428e6e3ceb52d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "module": "market-data",
+  "version": "1.1.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/market-data",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/market-data/1.1.0",
+  "depends_on": {
+    "kpi": "1.2.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0046",
+    "EPM-DEC-001-0057",
+    "EPM-DEC-001-0066",
+    "EPM-DEC-001-0077",
+    "EPM-DEC-001-0097",
+    "EPM-DEC-001-0098",
+    "EPM-DEC-001-0100"
+  ],
+  "triples": 1403,
+  "approved_by": {
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
+  },
+  "files": {
+    "CHANGELOG.md": "43df0c86754440968b16a4fab426bc344f3d900398ac5ae1547bc71a4ffab316",
+    "catalog.ttl": "92eed54c55e8d05f1c797cfe440cd00f6caa780bba25b5e0540919773db9fbb7",
+    "market-data.jsonld": "ad565b21f8c5ff864256874b9850b2541781eaaf816459fedc0d84f43dd6a2a0",
+    "market-data.ttl": "8920d651d721462d2217d14ce23b680e584e0bebf6c01d03e471c551c502f3fd",
+    "shapes.ttl": "7a9e6962519e0423d49720c99d4e9270ef9540248fd0735cb1f0d0908acd49a1"
+  }
+}

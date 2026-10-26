@@ -83,6 +83,7 @@ done
 (cd business_architecture/ontology/kpi && run with_deps python build_measures.py --verify)
 # Step 7: the data-product module must equal a fresh build from the portfolio (EPM-DEC-001-0053).
 (cd business_architecture/ontology/data-product && run with_deps python build_data_products.py --verify)
+(cd business_architecture/ontology/data-product && run with_deps python build_pricing.py --verify)
 # Step 7: the value-stream module must equal a fresh build from the two value streams (EPM-DEC-001-0054).
 (cd business_architecture/ontology/value-stream && run with_deps python build_value_streams.py --verify)
 # Step 7: the system module must equal a fresh build from the process map's systems fields (EPM-DEC-001-0055).

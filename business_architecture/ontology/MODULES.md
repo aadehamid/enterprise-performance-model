@@ -281,4 +281,4 @@ Market Price Calculation & Validation (value-stream)
   ─consumes→ External Market Data, Physical Trading (data-product)
 ```
 
-`integration` then says what each link proves: `produces` certifies the work, and the rest are context. No data product publishes the crack-spread measure yet, because no source says which one does; `consumer` records that gap.
+`integration` then says what each link proves: `produces` certifies the work, and the rest are context. No data product publishes the crack-spread measure yet, because no source says which one does; `consumer` records that gap. *2026-10-26:* since `data-product` 1.2.0, the crack-spread metric view serves the measure (`dp:servesMeasure`), a binding at the view, not a catalog row's `con:publishesMeasure` (EPM-DEC-001-0100, item 4).

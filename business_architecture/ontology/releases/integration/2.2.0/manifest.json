@@ -1,0 +1,41 @@
+{
+  "module": "integration",
+  "version": "2.2.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/integration",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/integration/2.2.0",
+  "depends_on": {
+    "core": "2.3.0",
+    "organization": "2.0.0",
+    "kpi": "1.2.0",
+    "data-product": "1.2.0",
+    "value-stream": "1.1.0",
+    "system": "1.2.0",
+    "lane": "1.0.0",
+    "market-data": "1.1.0",
+    "party": "1.2.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0058",
+    "EPM-DEC-001-0059",
+    "EPM-DEC-001-0061",
+    "EPM-DEC-001-0078",
+    "EPM-DEC-001-0088",
+    "EPM-DEC-001-0094",
+    "EPM-DEC-001-0098",
+    "EPM-DEC-001-0099",
+    "EPM-DEC-001-0100"
+  ],
+  "triples": 444,
+  "approved_by": {
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
+  },
+  "files": {
+    "CHANGELOG.md": "c11170642f52bf783b88130d36defb06690e2eaa0badde386dc5004bb0d27026",
+    "catalog.ttl": "e91789ef372d0c8c65b867344d127a6a35e19c7038f774e31e7a9851706182d4",
+    "integration.jsonld": "37218f7da3274e5e1cfa1ffb8b77c5fc6eb2bfc91c3bcf365c5c94fd34bf84a5",
+    "integration.ttl": "f02887e1671b23985af41756d1794881b973b4b251bcd03f7bb551722fb02c81",
+    "shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d"
+  }
+}

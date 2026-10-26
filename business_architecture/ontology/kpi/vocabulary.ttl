@@ -106,23 +106,23 @@ kpi:planHorizon a owl:DatatypeProperty ;
 
 # ---- Code list: measure kinds (EPM-DEC-001-0042) ----
 
-kpi:MeasureKind a skos:ConceptScheme ; rdfs:label "measure kind"@en ;
+kpi:MeasureKind a skos:ConceptScheme ; skos:hasTopConcept kind:kpi, kind:operational-metric, kind:plan-variance-diagnostic, kind:market-indicator, kind:decision-support-indicator, kind:tracker-or-report, kind:alert, kind:not-a-measure ; rdfs:label "measure kind"@en ;
     skos:definition "The eight kinds a measure in the kpi module can be, assigned by EPM-DEC-001-0042's five tests."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0042; business_architecture/reference/downstream-peers/kpi-classification-evidence.md"@en .
-kind:kpi a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "KPI"@en ; skos:notation "kpi" ;
+kind:kpi a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:topConceptOf kpi:MeasureKind ; skos:prefLabel "KPI"@en ; skos:notation "kpi" ;
     skos:altLabel "key performance indicator"@en ;
     skos:definition "A measure the business names as one of the few measures of a stated objective, with a target and an accountable owner."@en .
-kind:operational-metric a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Operational metric"@en ; skos:notation "operational-metric" ;
+kind:operational-metric a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:topConceptOf kpi:MeasureKind ; skos:prefLabel "Operational metric"@en ; skos:notation "operational-metric" ;
     skos:definition "A recurring performance measure of a unit, asset or flow, watched by exception."@en .
-kind:plan-variance-diagnostic a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Plan-variance diagnostic"@en ; skos:notation "plan-variance-diagnostic" ;
+kind:plan-variance-diagnostic a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:topConceptOf kpi:MeasureKind ; skos:prefLabel "Plan-variance diagnostic"@en ; skos:notation "plan-variance-diagnostic" ;
     skos:definition "Actual results against a plan, forecast, plan version or history, for one period."@en .
-kind:market-indicator a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Market indicator"@en ; skos:notation "market-indicator" ;
+kind:market-indicator a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:topConceptOf kpi:MeasureKind ; skos:prefLabel "Market indicator"@en ; skos:notation "market-indicator" ;
     skos:definition "An external price, spread or benchmark that the region cannot influence."@en .
-kind:decision-support-indicator a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Decision-support indicator"@en ; skos:notation "decision-support-indicator" ;
+kind:decision-support-indicator a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:topConceptOf kpi:MeasureKind ; skos:prefLabel "Decision-support indicator"@en ; skos:notation "decision-support-indicator" ;
     skos:definition "A value computed from market prices and the planning model to start or rank a decision, with no performance target."@en .
-kind:tracker-or-report a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Tracker or report"@en ; skos:notation "tracker-or-report" ;
+kind:tracker-or-report a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:topConceptOf kpi:MeasureKind ; skos:prefLabel "Tracker or report"@en ; skos:notation "tracker-or-report" ;
     skos:definition "A list, status or schedule of activities and dates, with no formula, unit or time grain."@en .
-kind:alert a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Alert"@en ; skos:notation "alert" ;
+kind:alert a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:topConceptOf kpi:MeasureKind ; skos:prefLabel "Alert"@en ; skos:notation "alert" ;
     skos:definition "An event raised when a condition is met, for someone to notice or act on."@en .
-kind:not-a-measure a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Not a measure"@en ; skos:notation "not-a-measure" ;
+kind:not-a-measure a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:topConceptOf kpi:MeasureKind ; skos:prefLabel "Not a measure"@en ; skos:notation "not-a-measure" ;
     skos:definition "A capability request on the measure list that is not a measure, parked for a later phase."@en .

@@ -32,6 +32,7 @@ REGISTER = os.path.join(HERE, "register.csv")
 SYSTEMS = os.path.join(HERE, "systems.csv")
 DEFINITIONS = os.path.join(HERE, "definitions.csv")
 SOURCES = os.path.join(HERE, "sources.csv")
+OTHER = os.path.join(HERE, "other-systems.csv")
 CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 OUTPUT = os.path.join(HERE, "systems.ttl")
 
@@ -79,6 +80,8 @@ def core_processes():
 
 def load():
     register, systems, uses = read_csv(REGISTER), read_csv(SYSTEMS), map_uses()
+    # Systems the process map does not name, each named by a recorded source instead (item F, EPM-DEC-001-0100).
+    others = read_csv(OTHER)
     problems = []
     counts = Counter(r["source_text"] for r in register)
     problems += [f"register lists {t!r} {n} times" for t, n in counts.items() if n > 1]
@@ -100,6 +103,10 @@ def load():
             if s not in slugs:
                 problems.append(f"{r['source_text']!r}: system {s!r} is not in systems.csv")
     problems += [f"system {s!r} is named by no register row" for s in sorted(set(slugs) - named)]
+    problems += [f"other-systems.csv: {o['slug']!r} is also in systems.csv" for o in others if o["slug"] in slugs]
+    problems += [f"other-systems.csv: {o['slug']}: kind {o['kind']!r} is not one of {KINDS}" for o in others if o["kind"] not in KINDS]
+    for o in others:
+        slugs[o["slug"]] = dict(o, origin=o["named_by"])
     problems += [f"{s['slug']}: kind {s['kind']!r} is not one of {KINDS}" for s in systems if s["kind"] not in KINDS]
     definitions, sources = read_csv(DEFINITIONS), {r["key"]: r for r in read_csv(SOURCES)}
     problems += [f"definitions.csv lists {s!r} twice" for s, n in Counter(d["slug"] for d in definitions).items() if n > 1]
@@ -112,6 +119,12 @@ def load():
             problems.append(f"definitions.csv: {d['slug']!r} cites no source")
         problems += [f"definitions.csv: {d['slug']!r} cites {k!r}, which is not in sources.csv"
                      for k in split(d["sources"]) if k not in sources]
+    if problems:
+        sys.exit("system sources do not reconcile:\n  " + "\n  ".join(problems))
+    problems += [f"other-systems.csv: {o['slug']} is named by {o['named_by']!r}, which is not in sources.csv"
+                 for o in others if o["named_by"] not in sources]
+    problems += [f"other-systems.csv: {o['slug']} has no definition" for o in others
+                 if not any(d["slug"] == o["slug"] and d["definition"] for d in definitions)]
     if problems:
         sys.exit("system sources do not reconcile:\n  " + "\n  ".join(problems))
     for s in slugs.values():
@@ -154,7 +167,9 @@ def build(register, slugs, uses, procs, sources):
         if s["note"]:
             g.add((iri, SKOS.editorialNote, Literal(s["note"], lang="en")))
         g.add((iri, SYS.systemKind, KIND[s["kind"]]))
-        g.add((iri, DCTERMS.source, MAP_SOURCE))
+        g.add((iri, DCTERMS.source, SRC[s["origin"]] if s.get("origin") else MAP_SOURCE))
+        if s.get("origin"):
+            g.add((iri, SYS.namedBy, SRC[s["origin"]]))
         for key in s["sources"]:
             g.add((iri, DCTERMS.source, SRC[key]))
     for key in sorted({k for s in slugs.values() for k in s["sources"]}):

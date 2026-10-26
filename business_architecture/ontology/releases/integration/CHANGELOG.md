@@ -1,5 +1,18 @@
 # integration changelog
 
+## 2.2.0 (2026-10-25)
+
+A minor release: it adds a consumer rule and sources, narrows a refusal's definition and removes no IRI. Approved by the decision owner with item F's release plan ("Approve the plan (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0097, 0100).
+
+- [minor] **A value through the bound metric view.** `rule:value-through-bound-view`: an agent may quote a measure's value taken through the metric view the graph binds to that measure (`dp:servesMeasure`), naming the view, and add the graph's context. `rule:no-values` still refuses a value computed from the graph or quoted from an unbound source (EPM-DEC-001-0061, items 2 and 3, as amended by EPM-DEC-001-0097, item 6).
+- [minor] **Source tiers.** Eight sources join `authority`: the decision owner's pricing assets (tier 1), Databricks' documentation (tier 4) and the six data-product-kind sources (tier 5); 100 sources in all.
+- It requires the current releases, kpi 1.2.0, data-product 1.2.0, system 1.2.0 and market-data 1.1.0 among them.
+
+### Known gaps
+
+- **The bound view's values are not checked by the graph.** The rule names the view to quote; whether its values are right is the view's own matter, and the benchmark view's scaling defect stays a known gap of `data-product` 1.2.0.
+- **The data-product kinds' sources are generic frameworks (tier 5).** No MPC, peer or downstream source defines the kinds (EPM-DEC-001-0097, item 14).
+
 ## 2.1.0 (2026-10-25)
 
 A minor release: it adds sources and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099). The plan they approved did not list the qSKOS top-concept statements; Claude approved those additions under the delegation, which lets it approve the queue's minor releases (EPM-DEC-001-0028, amendment of 2026-10-25, evening).

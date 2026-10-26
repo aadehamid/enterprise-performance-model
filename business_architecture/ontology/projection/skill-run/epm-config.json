@@ -122,14 +122,14 @@
     "core": "2.3.0",
     "organization": "2.0.0",
     "ref-mpc": "1.2.0",
-    "kpi": "1.1.1",
+    "kpi": "1.2.0",
     "party": "1.2.0",
-    "data-product": "1.1.0",
+    "data-product": "1.2.0",
     "value-stream": "1.1.0",
-    "system": "1.1.0",
+    "system": "1.2.0",
     "lane": "1.0.0",
-    "market-data": "1.0.0",
-    "integration": "2.1.0"
+    "market-data": "1.1.0",
+    "integration": "2.2.0"
   },
   "release_exceptions": {},
   "versions": {

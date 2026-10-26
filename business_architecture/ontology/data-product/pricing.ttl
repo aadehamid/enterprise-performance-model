@@ -1,0 +1,620 @@
+# Pricing platform tables of the data-product module (since 1.2.0; EPM-DEC-001-0097).
+# Built by build_pricing.py from the tables in pricing/. Do not edit by hand.
+@prefix agent: <https://w3id.org/lsc/ontology/modules/data-product/agent/> .
+@prefix column: <https://w3id.org/lsc/ontology/modules/data-product/column/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/data-product/kind/> .
+@prefix layer: <https://w3id.org/lsc/ontology/modules/data-product/layer/> .
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix product: <https://w3id.org/lsc/ontology/modules/data-product/product/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
+@prefix table: <https://w3id.org/lsc/ontology/modules/data-product/table/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+agent:crack-spread-price-analytics a prov:SoftwareAgent ;
+    rdfs:label "Crack Spread Price Analytics"@en ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    prov:used table:view-mpr-mips-crack-spread-price-fact-metrics-vw .
+
+agent:executive-summary-kpis-analytics a prov:SoftwareAgent ;
+    rdfs:label "Executive Summary KPIs Analytics"@en ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    prov:used table:view-mips-mpr-benchmark-prices-fact-vw,
+        table:view-mips-mpr-executive-summary-fact-vw .
+
+column:gold-mips-mpr-executive-summary-fact--assessment_amount a dp:PlatformColumn ;
+    prov:wasDerivedFrom column:silver-mips-price-assessment-fact--assessment_amount ;
+    dp:columnName "assessment_amount"^^xsd:string ;
+    dp:columnOf table:gold-mips-mpr-executive-summary-fact .
+
+column:gold-mips-mpr-executive-summary-fact--changevalue a dp:PlatformColumn ;
+    prov:wasDerivedFrom column:silver-mips-price-assessment-fact--assessment_amount,
+        column:silver-mips-price-assessment-fact--previous_amount ;
+    dp:columnName "ChangeValue"^^xsd:string ;
+    dp:columnOf table:gold-mips-mpr-executive-summary-fact .
+
+column:gold-mips-mpr-executive-summary-fact--previous_amount a dp:PlatformColumn ;
+    prov:wasDerivedFrom column:silver-mips-price-assessment-fact--previous_amount ;
+    dp:columnName "Previous_amount"^^xsd:string ;
+    dp:columnOf table:gold-mips-mpr-executive-summary-fact .
+
+column:gold-mpr-mips-crack-spread-price-fact--crack_spread_price_amount a dp:PlatformColumn ;
+    prov:wasDerivedFrom column:silver-mpr-price-detail-fact--settle_price_amount ;
+    dp:columnName "Crack_Spread_Price_Amount"^^xsd:string ;
+    dp:columnOf table:gold-mpr-mips-crack-spread-price-fact .
+
+column:view-mips-mpr-benchmark-prices-fact-vw--settle_price_amount a dp:PlatformColumn ;
+    prov:wasDerivedFrom column:silver-mpr-price-detail-fact--settle_price_amount ;
+    dp:columnName "Settle_Price_Amount"^^xsd:string ;
+    dp:columnOf table:view-mips-mpr-benchmark-prices-fact-vw .
+
+src:databricks-medallion-architecture a dcterms:BibliographicResource ;
+    dcterms:title "Databricks, What is the medallion lakehouse architecture?, updated 2026-09-11, https://docs.databricks.com/aws/en/lakehouse/medallion"@en .
+
+src:datamesh-architecture-innoq a dcterms:BibliographicResource ;
+    dcterms:title "L. Visengeriyeva, J. Christ and S. Harrer (INNOQ), Data Mesh Architecture, https://www.datamesh-architecture.com/, retrieved 2026-10-25"@en .
+
+src:dehghani-data-mesh-2019 a dcterms:BibliographicResource ;
+    dcterms:title "Z. Dehghani, How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh, martinfowler.com, 20 May 2019, https://martinfowler.com/articles/data-monolith-to-mesh.html"@en .
+
+src:odps-4-0 a dcterms:BibliographicResource ;
+    dcterms:title "Linux Foundation, Open Data Product Standard 4.0, released 2025-07-24, https://opendataproducts.org/v4.0/"@en .
+
+src:purview-data-products a dcterms:BibliographicResource ;
+    dcterms:title "Microsoft Purview, Create and manage data products, updated 2026-09-09, https://learn.microsoft.com/en-us/purview/unified-catalog-data-products-create-manage"@en .
+
+src:w3c-prov-o a dcterms:BibliographicResource ;
+    dcterms:title "W3C, PROV-O: The PROV Ontology, W3C Recommendation, 30 April 2013, https://www.w3.org/TR/prov-o/"@en .
+
+column:silver-mips-price-assessment-fact--assessment_amount a dp:PlatformColumn ;
+    dp:columnName "Assessment_Amount"^^xsd:string ;
+    dp:columnOf table:silver-mips-price-assessment-fact .
+
+column:silver-mips-price-assessment-fact--previous_amount a dp:PlatformColumn ;
+    dp:columnName "Previous_Amount"^^xsd:string ;
+    dp:columnOf table:silver-mips-price-assessment-fact .
+
+column:silver-mpr-price-detail-fact--settle_price_amount a dp:PlatformColumn ;
+    dp:columnName "Settle_Price_Amount"^^xsd:string ;
+    dp:columnOf table:silver-mpr-price-detail-fact .
+
+table:replica-kittyhawk-deliveryperiodcategory a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-kittyhawk-deliveryperiodcategory"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_kittyhawk.deliveryperiodcategory"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:kittyhawk ;
+    dp:fullName "synapse_dev.replica_kittyhawk.deliveryperiodcategory"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-kittyhawk-holidaycalendar a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-kittyhawk-holidaycalendar"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_kittyhawk.holidaycalendar"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:kittyhawk ;
+    dp:fullName "synapse_dev.replica_kittyhawk.holidaycalendar"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-kittyhawk-priceservice a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-kittyhawk-priceservice"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_kittyhawk.priceservice"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:kittyhawk ;
+    dp:fullName "synapse_dev.replica_kittyhawk.priceservice"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mips-priceassessment a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mips-priceassessment"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mips.mips_priceassessment"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mips ;
+    dp:fullName "synapse_dev.replica_mips.mips_priceassessment"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mips-priceassessmentgroup a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mips-priceassessmentgroup"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mips.mips_priceassessmentgroup"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mips ;
+    dp:fullName "synapse_dev.replica_mips.mips_priceassessmentgroup"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mips-pricebatch a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mips-pricebatch"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mips.mips_pricebatch"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mips ;
+    dp:fullName "synapse_dev.replica_mips.mips_pricebatch"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mips-pricegroup a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mips-pricegroup"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mips.mips_pricegroup"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mips ;
+    dp:fullName "synapse_dev.replica_mips.mips_pricegroup"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mips-pricesheet a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mips-pricesheet"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mips.mips_pricesheet"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mips ;
+    dp:fullName "synapse_dev.replica_mips.mips_pricesheet"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-areastate a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-areastate"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.areastate"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.areastate"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-attribute a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-attribute"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.attribute"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.attribute"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-attributeref a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-attributeref"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.attributeref"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.attributeref"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-category a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-category"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.category"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.category"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-city a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-city"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.city"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.city"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-country a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-country"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.country"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.country"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-facility a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-facility"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.facility"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.facility"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-frequency a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-frequency"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.frequency"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.frequency"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-pricedetail a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-pricedetail"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.pricedetail"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.pricedetail"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-pricemaster a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-pricemaster"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.pricemaster"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.pricemaster"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mpr-pricetype a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mpr-pricetype"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mpr.pricetype"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mpr ;
+    dp:fullName "synapse_dev.replica_mpr.pricetype"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:view-mips-mpr-executive-summary-fact-vw a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "view-mips-mpr-executive-summary-fact-vw"^^xsd:string ;
+    skos:prefLabel "idp_sbx.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:gold-mips-mpr-executive-summary-fact ;
+    dp:classificationReason "Projects the gold Executive Summary fact, another data product, as a metric view for the Executive Summary Genie agent: a derived data product."^^xsd:string ;
+    dp:classificationTest "logic"^^xsd:string ;
+    dp:dataProductKind kind:derived ;
+    dp:dependsOnSystem system:kittyhawk,
+        system:mips,
+        system:mpr ;
+    dp:fullName "idp_sbx.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw"^^xsd:string ;
+    dp:layer layer:metric-view ;
+    dp:sandbox true ;
+    dp:servesMeasure measure:additional-market-prices,
+        measure:crude-prices,
+        measure:distillate-prices,
+        measure:gasoline-prices .
+
+table:view-mpr-mips-crack-spread-price-fact-metrics-vw a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "view-mpr-mips-crack-spread-price-fact-metrics-vw"^^xsd:string ;
+    skos:prefLabel "idp_sbx.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:gold-mpr-mips-crack-spread-price-fact ;
+    dp:classificationReason "Defines measures (averages, minimum, maximum, range) over the gold crack-spread fact, another data product, for the crack-spread Genie agent: a derived data product."^^xsd:string ;
+    dp:classificationTest "logic"^^xsd:string ;
+    dp:dataProductKind kind:derived ;
+    dp:dependsOnSystem system:kittyhawk,
+        system:mips,
+        system:mpr ;
+    dp:fullName "idp_sbx.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw"^^xsd:string ;
+    dp:layer layer:metric-view ;
+    dp:sandbox true ;
+    dp:servesMeasure measure:crack-spreads .
+
+table:gold-mpr-mips-crack-spread-price-fact a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "gold-mpr-mips-crack-spread-price-fact"^^xsd:string ;
+    skos:prefLabel "idp_sbx.gold_commercial_core.mpr_mips_crack_spread_price_fact"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:silver-mips-price-assessment-fact,
+        table:silver-mips-price-assessment-group-dim,
+        table:silver-mips-price-batch-dim,
+        table:silver-mips-price-group-dim,
+        table:silver-mips-price-sheet-dim,
+        table:silver-mpr-price-detail-fact,
+        table:silver-mpr-price-master-dim ;
+    dp:classificationReason "Built from other data products, the silver price detail fact and the MIPS and MPR dimensions, joining them into one crack-spread fact for the crack-spread consumers: a derived data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:derived ;
+    dp:fullName "idp_sbx.gold_commercial_core.mpr_mips_crack_spread_price_fact"^^xsd:string ;
+    dp:layer layer:gold ;
+    dp:sandbox true .
+
+table:replica-mips-currency a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mips-currency"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mips.mips_currency"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mips ;
+    dp:fullName "synapse_dev.replica_mips.mips_currency"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:replica-mips-unitofmeasure a skos:Concept,
+        dp:PlatformTable ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "replica-mips-unitofmeasure"^^xsd:string ;
+    skos:prefLabel "synapse_dev.replica_mips.mips_unitofmeasure"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    dp:copiesSystem system:mips ;
+    dp:fullName "synapse_dev.replica_mips.mips_unitofmeasure"^^xsd:string ;
+    dp:layer layer:replica ;
+    dp:sandbox true .
+
+table:silver-mips-price-assessment-group-dim a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "silver-mips-price-assessment-group-dim"^^xsd:string ;
+    skos:prefLabel "idp_sbx.silver_mdm_core.mips_price_assessment_group_dim"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:replica-mips-currency,
+        table:replica-mips-priceassessmentgroup,
+        table:replica-mips-unitofmeasure ;
+    dp:classificationReason "Built only from the replicas of MIPS's operational database, with columns renamed and conformed and no business calculation, for any consumer: a foundational data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:foundational ;
+    dp:fullName "idp_sbx.silver_mdm_core.mips_price_assessment_group_dim"^^xsd:string ;
+    dp:layer layer:silver ;
+    dp:sandbox true .
+
+table:silver-mips-price-batch-dim a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "silver-mips-price-batch-dim"^^xsd:string ;
+    skos:prefLabel "idp_sbx.silver_mdm_core.mips_price_batch_dim"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:replica-mips-pricebatch ;
+    dp:classificationReason "Built only from the replicas of MIPS's operational database, with columns renamed and conformed and no business calculation, for any consumer: a foundational data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:foundational ;
+    dp:fullName "idp_sbx.silver_mdm_core.mips_price_batch_dim"^^xsd:string ;
+    dp:layer layer:silver ;
+    dp:sandbox true .
+
+table:silver-mips-price-group-dim a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "silver-mips-price-group-dim"^^xsd:string ;
+    skos:prefLabel "idp_sbx.silver_mdm_core.mips_price_group_dim"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:replica-mips-pricegroup ;
+    dp:classificationReason "Built only from the replicas of MIPS's operational database, with columns renamed and conformed and no business calculation, for any consumer: a foundational data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:foundational ;
+    dp:fullName "idp_sbx.silver_mdm_core.mips_price_group_dim"^^xsd:string ;
+    dp:layer layer:silver ;
+    dp:sandbox true .
+
+table:silver-mips-price-sheet-dim a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "silver-mips-price-sheet-dim"^^xsd:string ;
+    skos:prefLabel "idp_sbx.silver_mdm_core.mips_price_sheet_dim"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:replica-mips-currency,
+        table:replica-mips-pricesheet,
+        table:replica-mips-unitofmeasure ;
+    dp:classificationReason "Built only from the replicas of MIPS's operational database, with columns renamed and conformed and no business calculation, for any consumer: a foundational data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:foundational ;
+    dp:fullName "idp_sbx.silver_mdm_core.mips_price_sheet_dim"^^xsd:string ;
+    dp:layer layer:silver ;
+    dp:sandbox true .
+
+table:view-mips-mpr-benchmark-prices-fact-vw a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "view-mips-mpr-benchmark-prices-fact-vw"^^xsd:string ;
+    skos:prefLabel "idp_sbx.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:silver-mpr-price-detail-fact,
+        table:silver-mpr-price-master-dim ;
+    dp:classificationReason "Defines measures over the silver price detail fact and price master dimension, other data products, filtered to five benchmark instruments and a 160-day window for the Executive Summary agent's benchmark prices: a derived data product."^^xsd:string ;
+    dp:classificationTest "logic"^^xsd:string ;
+    dp:dataProductKind kind:derived ;
+    dp:dependsOnSystem system:kittyhawk,
+        system:mpr ;
+    dp:fullName "idp_sbx.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw"^^xsd:string ;
+    dp:layer layer:metric-view ;
+    dp:sandbox true ;
+    dp:servesMeasure measure:crude-prices .
+
+table:silver-mpr-price-detail-fact a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "silver-mpr-price-detail-fact"^^xsd:string ;
+    skos:prefLabel "idp_sbx.silver_udm_core.mpr_price_detail_fact"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:replica-mpr-pricedetail ;
+    dp:classificationReason "Built only from the replicas of MPR's operational database, with columns renamed and conformed and no business calculation, for any consumer: a foundational data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:foundational ;
+    dp:fullName "idp_sbx.silver_udm_core.mpr_price_detail_fact"^^xsd:string ;
+    dp:layer layer:silver ;
+    dp:sandbox true .
+
+table:silver-mpr-price-master-dim a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "silver-mpr-price-master-dim"^^xsd:string ;
+    skos:prefLabel "idp_sbx.silver_mdm_core.mpr_price_master_dim"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:replica-kittyhawk-deliveryperiodcategory,
+        table:replica-kittyhawk-holidaycalendar,
+        table:replica-kittyhawk-priceservice,
+        table:replica-mpr-areastate,
+        table:replica-mpr-attribute,
+        table:replica-mpr-attributeref,
+        table:replica-mpr-category,
+        table:replica-mpr-city,
+        table:replica-mpr-country,
+        table:replica-mpr-facility,
+        table:replica-mpr-frequency,
+        table:replica-mpr-pricemaster,
+        table:replica-mpr-pricetype ;
+    dp:classificationReason "Built only from the replicas of MPR and KittyHawk's operational database, with columns renamed and conformed and no business calculation, for any consumer: a foundational data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:foundational ;
+    dp:fullName "idp_sbx.silver_mdm_core.mpr_price_master_dim"^^xsd:string ;
+    dp:layer layer:silver ;
+    dp:sandbox true .
+
+table:gold-mips-mpr-executive-summary-fact a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "gold-mips-mpr-executive-summary-fact"^^xsd:string ;
+    skos:prefLabel "idp_sbx.gold_commercial_core.mips_mpr_executive_summary_fact"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:silver-mips-price-assessment-fact,
+        table:silver-mips-price-assessment-group-dim,
+        table:silver-mips-price-batch-dim,
+        table:silver-mips-price-group-dim,
+        table:silver-mips-price-sheet-dim,
+        table:silver-mpr-price-master-dim ;
+    dp:classificationReason "Built from other data products, the silver MIPS assessment fact and the MIPS and MPR dimensions, and adds a calculated change value for the Executive Summary report: a derived data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:derived ;
+    dp:fullName "idp_sbx.gold_commercial_core.mips_mpr_executive_summary_fact"^^xsd:string ;
+    dp:layer layer:gold ;
+    dp:sandbox true .
+
+table:silver-mips-price-assessment-fact a skos:Concept,
+        dp:PlatformDataProduct,
+        dp:PlatformTable ;
+    dcterms:isPartOf product:master-pricing ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:inScheme dp:PlatformTables ;
+    skos:notation "silver-mips-price-assessment-fact"^^xsd:string ;
+    skos:prefLabel "idp_sbx.silver_udm_core.mips_price_assessment_fact"@en ;
+    skos:topConceptOf dp:PlatformTables ;
+    prov:wasDerivedFrom table:replica-mips-priceassessment ;
+    dp:classificationReason "Built only from the replicas of MIPS's operational database, with columns renamed and conformed and no business calculation, for any consumer: a foundational data product."^^xsd:string ;
+    dp:classificationTest "inputs"^^xsd:string ;
+    dp:dataProductKind kind:foundational ;
+    dp:fullName "idp_sbx.silver_udm_core.mips_price_assessment_fact"^^xsd:string ;
+    dp:layer layer:silver ;
+    dp:sandbox true .
+
+src:decision-owner-pricing-assets-2026-10-25 a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's Databricks pricing metric views, their lineage and the Genie agents' instructions (idp_sbx sandbox), shared on 2026-10-25 and held outside the repository (EPM-DEC-001-0097)"@en .
+
+dp:PlatformTables skos:hasTopConcept table:gold-mips-mpr-executive-summary-fact,
+        table:gold-mpr-mips-crack-spread-price-fact,
+        table:replica-kittyhawk-deliveryperiodcategory,
+        table:replica-kittyhawk-holidaycalendar,
+        table:replica-kittyhawk-priceservice,
+        table:replica-mips-currency,
+        table:replica-mips-priceassessment,
+        table:replica-mips-priceassessmentgroup,
+        table:replica-mips-pricebatch,
+        table:replica-mips-pricegroup,
+        table:replica-mips-pricesheet,
+        table:replica-mips-unitofmeasure,
+        table:replica-mpr-areastate,
+        table:replica-mpr-attribute,
+        table:replica-mpr-attributeref,
+        table:replica-mpr-category,
+        table:replica-mpr-city,
+        table:replica-mpr-country,
+        table:replica-mpr-facility,
+        table:replica-mpr-frequency,
+        table:replica-mpr-pricedetail,
+        table:replica-mpr-pricemaster,
+        table:replica-mpr-pricetype,
+        table:silver-mips-price-assessment-fact,
+        table:silver-mips-price-assessment-group-dim,
+        table:silver-mips-price-batch-dim,
+        table:silver-mips-price-group-dim,
+        table:silver-mips-price-sheet-dim,
+        table:silver-mpr-price-detail-fact,
+        table:silver-mpr-price-master-dim,
+        table:view-mips-mpr-benchmark-prices-fact-vw,
+        table:view-mips-mpr-executive-summary-fact-vw,
+        table:view-mpr-mips-crack-spread-price-fact-metrics-vw .
+

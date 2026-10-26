@@ -1,0 +1,832 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/system/kind/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/system> a owl:Ontology ;
+    dcterms:description "The systems, office tools and working documents the process map names, with their kind, definitions and the processes that use them, and the systems the pricing assets name (Step 7)."@en ;
+    dcterms:issued "2026-10-25"^^xsd:date ;
+    dcterms:modified "2026-10-25"^^xsd:date ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.3.0> ;
+    dcterms:title "LSC System Module"@en ;
+    owl:versionIRI sys:1.2.0 ;
+    owl:versionInfo "1.2.0" .
+
+sys:namedBy a owl:ObjectProperty ;
+    rdfs:label "named by"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0100"@en ;
+    rdfs:domain sys:System ;
+    rdfs:range dcterms:BibliographicResource ;
+    skos:definition "The source that names a system the process map does not name. A system the map names has no value here."@en .
+
+sys:supports a owl:ObjectProperty ;
+    rdfs:label "supports"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, systems; competency question 6"@en ;
+    rdfs:domain sys:System ;
+    rdfs:range skos:Concept ;
+    skos:definition "A process the process map says uses the system. Read the other way, the process depends on the system."@en .
+
+sys:systemKind a owl:ObjectProperty ;
+    rdfs:label "system kind"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en ;
+    rdfs:domain sys:System ;
+    rdfs:range skos:Concept ;
+    skos:definition "Whether the system is an application, an office tool or a working document, from the system-kind code list."@en .
+
+system:actuals-case-prep-file a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "actuals-case-prep-file"^^xsd:string ;
+    skos:prefLabel "Actuals Case Prep File"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1 ;
+    sys:systemKind kind:document .
+
+system:aps a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems,
+        src:downstream-process-map,
+        src:vendor-aspentech-aspen-petroleum-scheduler ;
+    skos:altLabel "APS"@en ;
+    skos:definition "AspenTech's software for scheduling refinery operations. By the vendor's description, it schedules all key petroleum refinery activities at the same time, in one multi-user environment."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "aps"^^xsd:string ;
+    skos:prefLabel "Aspen Petroleum Scheduler"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-3-1,
+        proc:CM-1-1-3-1-1,
+        proc:CM-1-1-4-1,
+        proc:CM-1-1-4-1-1,
+        proc:CM-1-1-4-2,
+        proc:CM-1-1-4-2-1,
+        proc:CM-1-1-4-2-2,
+        proc:CM-1-1-4-5 ;
+    sys:systemKind kind:application .
+
+system:aps-planning-db a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "aps-planning-db"^^xsd:string ;
+    skos:prefLabel "APS Planning DB"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-4-4 ;
+    sys:systemKind kind:application .
+
+system:backcasting-dashboard a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "backcasting-dashboard"^^xsd:string ;
+    skos:prefLabel "Backcasting Dashboard"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-3,
+        proc:CM-1-1-5-4,
+        proc:CM-1-1-5-4-2,
+        proc:CM-1-1-5-5-8,
+        proc:CM-1-1-5-6-10,
+        proc:CM-1-1-5-7,
+        proc:CM-1-1-5-7-1,
+        proc:CM-1-1-5-7-2,
+        proc:CM-1-1-5-7-3,
+        proc:CM-1-1-5-7-4,
+        proc:CM-1-1-5-7-5,
+        proc:CM-1-1-5-8,
+        proc:CM-1-1-5-8-1,
+        proc:CM-1-1-5-8-2,
+        proc:CM-1-1-5-8-3,
+        proc:CM-1-1-5-8-4,
+        proc:CM-1-1-5-8-6 ;
+    sys:systemKind kind:application .
+
+system:cargotracker a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems,
+        src:downstream-process-map ;
+    skos:definition "An MPC-built application that supplies actual data, including actual product prices, used as inputs to the regional backcast."@en ;
+    skos:editorialNote "The description says what CargoTracker feeds, not what it is; a fuller one waits for its owners (EPM-DEC-001-0099)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "cargotracker"^^xsd:string ;
+    skos:prefLabel "CargoTracker"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:databricks a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25,
+        src:vendor-databricks-introduction ;
+    skos:definition "A data and AI platform. By the vendor's description, it is a unified, open analytics platform for building, deploying, sharing and maintaining data, analytics and AI solutions."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "databricks"^^xsd:string ;
+    skos:prefLabel "Databricks"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-pricing-assets-2026-10-25 ;
+    sys:systemKind kind:application .
+
+system:dpo a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems,
+        src:downstream-process-map ;
+    skos:altLabel "DPO"@en ;
+    skos:definition "An MPC-built optimization model and application that produces the distribution plan for the prompt month to M+3, across pipelines, marine and inventory. Planners build a base distribution plan in it, reconcile it with the XPIMS refinery plan, update its network constraints, and hand over the final distribution plan. It is also used in the distribution backcast, to evaluate actuals cases and optimization cases."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "dpo"^^xsd:string ;
+    skos:prefLabel "Distribution Planning Optimizer"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-1,
+        proc:CM-1-1-2-1-4,
+        proc:CM-1-1-2-1-5,
+        proc:CM-1-1-2-2,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-4,
+        proc:CM-1-1-2-5-6,
+        proc:CM-1-1-2-5-6-1,
+        proc:CM-1-1-3-2,
+        proc:CM-1-1-3-2-1,
+        proc:CM-1-1-3-2-2,
+        proc:CM-1-1-3-3,
+        proc:CM-1-1-3-3-2,
+        proc:CM-1-1-3-4,
+        proc:CM-1-1-6-1,
+        proc:CM-1-1-6-1-1,
+        proc:CM-1-1-6-2,
+        proc:CM-1-1-6-3 ;
+    sys:systemKind kind:application .
+
+system:hyperion a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-25-item-g,
+        src:downstream-process-map,
+        src:vendor-oracle-hyperion-planning-11-2 ;
+    skos:altLabel "Hyperion"@en ;
+    skos:definition "Oracle's budgeting and planning software. By the vendor's description, users enter, analyze and report on planning data in it and manage the planning process."@en ;
+    skos:editorialNote "That the process map's \"Hyperion\" is Oracle Hyperion Planning rests on the decision owner accepting Claude's recommendation on 2026-10-25, which Claude said was a guess between Planning, Financial Management and Essbase (EPM-DEC-001-0099)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "hyperion"^^xsd:string ;
+    skos:prefLabel "Oracle Hyperion Planning"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-3 ;
+    sys:systemKind kind:application .
+
+system:kittyhawk a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems,
+        src:downstream-process-map ;
+    skos:definition "An MPC in-house application used by the Commercial organization. It gets all of its data from RightAngle and is almost a replica of it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "kittyhawk"^^xsd:string ;
+    skos:prefLabel "KittyHawk"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-2-1,
+        proc:CM-1-1-2-2-3,
+        proc:CM-1-1-2-2-3-1,
+        proc:CM-1-1-2-2-3-2,
+        proc:CM-1-1-2-2-3-3,
+        proc:CM-1-1-3-1,
+        proc:CM-1-1-3-1-1,
+        proc:CM-1-1-4-1,
+        proc:CM-1-1-4-1-1 ;
+    sys:systemKind kind:application .
+
+system:market-outlook-and-avails-dashboard a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "market-outlook-and-avails-dashboard"^^xsd:string ;
+    skos:prefLabel "Market Outlook and Avails Dashboard"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-2-5-1,
+        proc:CM-1-1-2-3,
+        proc:CM-1-1-2-3-1 ;
+    sys:systemKind kind:application .
+
+system:mips a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
+    skos:altLabel "Market Information and Pricing System"@en ;
+    skos:definition "The system that holds market price assessments, organized in price sheets, price groups and price batches. The pricing views read it through its replica, for the sheets and groups that classify each price."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "mips"^^xsd:string ;
+    skos:prefLabel "MIPS"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-pricing-assets-2026-10-25 ;
+    sys:systemKind kind:application .
+
+system:mpr a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-pricing-assets-2026-10-25,
+        src:downstream-process-map ;
+    skos:definition "The price master system: it holds each priced instrument (the price master) with its reference data, and its daily price details and settlement prices. The pricing views read it through its replica, for the crack spreads' and benchmarks' settlement prices."@en ;
+    skos:editorialNote "The decision owner's files expand MPR as both Master Price Record and Market Price Report (EPM-DEC-001-0100)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "mpr"^^xsd:string ;
+    skos:prefLabel "MPR"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-1-7,
+        proc:CM-1-1-2-2-3,
+        proc:CM-1-1-2-2-3-4,
+        proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-1,
+        proc:CM-1-1-5-1-2-5,
+        proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:ms-excel a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-microsoft-excel ;
+    skos:definition "Microsoft's spreadsheet application. By the vendor's description, it is a spreadsheet application and data analysis tool."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ms-excel"^^xsd:string ;
+    skos:prefLabel "MS Excel"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-2-7,
+        proc:CM-1-1-2-3-4,
+        proc:CM-1-1-2-7,
+        proc:CM-1-1-2-7-2,
+        proc:CM-1-1-3-1,
+        proc:CM-1-1-3-1-1,
+        proc:CM-1-1-4-1,
+        proc:CM-1-1-4-1-1 ;
+    sys:systemKind kind:office-tool .
+
+system:ms-outlook a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-microsoft-outlook-business ;
+    skos:definition "Microsoft's email and calendar application. By the vendor's description, it manages email, calendar, tasks and contacts in one place."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ms-outlook"^^xsd:string ;
+    skos:prefLabel "MS Outlook"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-1-1,
+        proc:CM-1-1-2-2-1-2,
+        proc:CM-1-1-2-3,
+        proc:CM-1-1-2-3-2,
+        proc:CM-1-1-2-3-3,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-3,
+        proc:CM-1-1-2-5-5,
+        proc:CM-1-1-2-5-9,
+        proc:CM-1-1-2-8,
+        proc:CM-1-1-2-8-2,
+        proc:CM-1-1-2-8-4,
+        proc:CM-1-1-3-3,
+        proc:CM-1-1-3-3-1,
+        proc:CM-1-1-5-8,
+        proc:CM-1-1-5-8-5,
+        proc:CM-1-1-5-9,
+        proc:CM-1-1-5-9-1,
+        proc:CM-1-1-5-9-2,
+        proc:CM-1-1-5-9-3 ;
+    sys:systemKind kind:office-tool .
+
+system:ms-powerpoint a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-microsoft-powerpoint ;
+    skos:definition "Microsoft's presentation application. By the vendor's description, it creates slideshow presentations."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ms-powerpoint"^^xsd:string ;
+    skos:prefLabel "MS PowerPoint"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-3-2,
+        proc:CM-1-1-2-3-3,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-3,
+        proc:CM-1-1-5-7,
+        proc:CM-1-1-5-7-1,
+        proc:CM-1-1-5-7-2,
+        proc:CM-1-1-5-7-3,
+        proc:CM-1-1-5-7-4,
+        proc:CM-1-1-5-7-5,
+        proc:CM-1-1-5-8,
+        proc:CM-1-1-5-8-1,
+        proc:CM-1-1-5-8-2,
+        proc:CM-1-1-5-8-3,
+        proc:CM-1-1-5-8-4,
+        proc:CM-1-1-5-8-6,
+        proc:CM-1-1-5-9-3 ;
+    sys:systemKind kind:office-tool .
+
+system:ms-teams a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-microsoft-teams ;
+    skos:definition "Microsoft's application for working together. By the vendor's description, it keeps the tools and files a team works with in one place."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ms-teams"^^xsd:string ;
+    skos:prefLabel "MS Teams"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-1-1,
+        proc:CM-1-1-2-2-1-2,
+        proc:CM-1-1-2-3,
+        proc:CM-1-1-2-3-2,
+        proc:CM-1-1-2-3-3,
+        proc:CM-1-1-2-3-4,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-3,
+        proc:CM-1-1-2-5-5,
+        proc:CM-1-1-2-5-9,
+        proc:CM-1-1-2-8,
+        proc:CM-1-1-2-8-2,
+        proc:CM-1-1-2-8-4,
+        proc:CM-1-1-3-1-2,
+        proc:CM-1-1-3-3,
+        proc:CM-1-1-3-3-1,
+        proc:CM-1-1-4-1-2,
+        proc:CM-1-1-5-8,
+        proc:CM-1-1-5-8-4,
+        proc:CM-1-1-5-8-5,
+        proc:CM-1-1-5-9,
+        proc:CM-1-1-5-9-1,
+        proc:CM-1-1-5-9-2 ;
+    sys:systemKind kind:office-tool .
+
+system:network-premise-document a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "network-premise-document"^^xsd:string ;
+    skos:prefLabel "Network Premise Document"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-3-1,
+        proc:CM-1-1-3-1-2,
+        proc:CM-1-1-3-1-3,
+        proc:CM-1-1-3-1-4 ;
+    sys:systemKind kind:document .
+
+system:pi a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-25-item-g,
+        src:downstream-process-map,
+        src:vendor-aveva-pi-system ;
+    skos:altLabel "PI"@en ;
+    skos:definition "AVEVA's software for real-time operations data. By the vendor's description, industrial operations use it to collect, cleanse, store, enrich and visualize real-time operations data."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "pi"^^xsd:string ;
+    skos:prefLabel "AVEVA PI System"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1-2-3 ;
+    sys:systemKind kind:application .
+
+system:planning-and-scheduling-ui a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "planning-and-scheduling-ui"^^xsd:string ;
+    skos:prefLabel "Planning and Scheduling UI"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-1,
+        proc:CM-1-1-2-1-1,
+        proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-1,
+        proc:CM-1-1-2-2-1-1,
+        proc:CM-1-1-2-2-1-2,
+        proc:CM-1-1-2-2-2,
+        proc:CM-1-1-2-2-3-6,
+        proc:CM-1-1-2-2-5,
+        proc:CM-1-1-2-2-5-1,
+        proc:CM-1-1-2-2-5-2,
+        proc:CM-1-1-2-2-6,
+        proc:CM-1-1-2-2-6-1,
+        proc:CM-1-1-2-2-6-2,
+        proc:CM-1-1-2-2-8,
+        proc:CM-1-1-5-1-1 ;
+    sys:systemKind kind:application .
+
+system:planning-db a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "planning-db"^^xsd:string ;
+    skos:prefLabel "Planning DB"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-1,
+        proc:CM-1-1-2-5-3,
+        proc:CM-1-1-2-6,
+        proc:CM-1-1-2-6-5,
+        proc:CM-1-1-2-6-6,
+        proc:CM-1-1-2-7,
+        proc:CM-1-1-2-7-4,
+        proc:CM-1-1-2-7-5,
+        proc:CM-1-1-2-8,
+        proc:CM-1-1-2-8-1,
+        proc:CM-1-1-2-8-3,
+        proc:CM-1-1-2-9,
+        proc:CM-1-1-2-9-1,
+        proc:CM-1-1-2-9-2,
+        proc:CM-1-1-4-2,
+        proc:CM-1-1-4-2-2,
+        proc:CM-1-1-4-4-3 ;
+    sys:systemKind kind:application .
+
+system:ppims a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-25-item-g,
+        src:downstream-process-map,
+        src:vendor-aspentech-aspen-pims-brochure,
+        src:vendor-aspentech-ppims-course ;
+    skos:definition "An Aspen PIMS planning model that optimizes a refinery plan across several periods, carrying inventory from one period to the next. Aspen PIMS is AspenTech's refinery and olefins linear programming (LP) planning software, by the vendor's description."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ppims"^^xsd:string ;
+    skos:prefLabel "PPIMS"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-1-6,
+        proc:CM-1-1-2-4,
+        proc:CM-1-1-2-4-1,
+        proc:CM-1-1-2-5-7,
+        proc:CM-1-1-4-2,
+        proc:CM-1-1-4-2-1,
+        proc:CM-1-1-4-2-2,
+        proc:CM-1-1-4-3,
+        proc:CM-1-1-4-4,
+        proc:CM-1-1-4-4-1,
+        proc:CM-1-1-4-4-2,
+        proc:CM-1-1-4-4-3,
+        proc:CM-1-1-4-5 ;
+    sys:systemKind kind:application .
+
+system:premise-document a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "premise-document"^^xsd:string ;
+    skos:prefLabel "Premise Document"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-2-1-1,
+        proc:CM-1-1-2-2-1-2 ;
+    sys:systemKind kind:document .
+
+system:profisee a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-profisee-platform ;
+    skos:definition "Profisee's master data management (MDM) platform. By the vendor's description, it cleans, unifies and improves the quality of an enterprise's critical data across its systems."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "profisee"^^xsd:string ;
+    skos:prefLabel "Profisee"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-1,
+        proc:CM-1-1-2-1-8,
+        proc:CM-1-1-2-2 ;
+    sys:systemKind kind:application .
+
+system:psr a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "psr"^^xsd:string ;
+    skos:prefLabel "PSR"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-1,
+        proc:CM-1-1-5-1-2-2,
+        proc:CM-1-1-5-1-2-5 ;
+    sys:systemKind kind:application .
+
+system:refinery-premise-document a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "refinery-premise-document"^^xsd:string ;
+    skos:prefLabel "Refinery Premise Document"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-4-1,
+        proc:CM-1-1-4-1-2,
+        proc:CM-1-1-4-1-3,
+        proc:CM-1-1-4-1-4 ;
+    sys:systemKind kind:document .
+
+system:rfc-hindsight-analysis-excel a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "rfc-hindsight-analysis-excel"^^xsd:string ;
+    skos:prefLabel "RFC Hindsight Analysis Excel"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-1 ;
+    sys:systemKind kind:document .
+
+system:rightangle a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-ion-rightangle ;
+    skos:altLabel "Right Angle"@en ;
+    skos:definition "ION's commodities trading and risk management system for liquid hydrocarbon companies, such as refiners and fuel marketers. By the vendor's description, it covers the work from front to back and is strongest in scheduling, logistics and operations."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "rightangle"^^xsd:string ;
+    skos:prefLabel "RightAngle"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-2-1,
+        proc:CM-1-1-2-2-3,
+        proc:CM-1-1-2-2-3-1,
+        proc:CM-1-1-2-2-3-2,
+        proc:CM-1-1-2-2-3-3,
+        proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-2,
+        proc:CM-1-1-5-1-2-5,
+        proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:sap a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-25-item-g,
+        src:downstream-process-map,
+        src:vendor-sap-s4hana-help ;
+    skos:altLabel "SAP"@en ;
+    skos:definition "SAP's business suite. By the vendor's description, it is the next-generation business suite, built on the SAP HANA in-memory platform."@en ;
+    skos:editorialNote "The process map's \"SAP\" is SAP S/4HANA by the decision owner's answer of 2026-10-25. Which edition MPC runs is not stated in the repository, so the definition is at product level (EPM-DEC-001-0099)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "sap"^^xsd:string ;
+    skos:prefLabel "SAP S/4HANA"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-3 ;
+    sys:systemKind kind:application .
+
+system:tmr a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "tmr"^^xsd:string ;
+    skos:prefLabel "TMR"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:topday a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-25-item-g,
+        src:downstream-process-map ;
+    skos:editorialNote "MPC-built, by the decision owner's answer of 2026-10-25. The process map names it but no source in the repository says what it does. Its description waits for its owners (EPM-DEC-001-0099; business-closeout.md, point 12)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "topday"^^xsd:string ;
+    skos:prefLabel "TopDay"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:trr a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "trr"^^xsd:string ;
+    skos:prefLabel "TRR"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-5-1-2-5 ;
+    sys:systemKind kind:application .
+
+system:valt a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-25-item-g,
+        src:downstream-process-map ;
+    skos:editorialNote "MPC-built, by the decision owner's answer of 2026-10-25. The process map names it but no source in the repository says what it does. Its description waits for its owners (EPM-DEC-001-0099; business-closeout.md, point 12)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "valt"^^xsd:string ;
+    skos:prefLabel "VALT"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-6,
+        proc:CM-1-1-2-6-5,
+        proc:CM-1-1-2-6-6 ;
+    sys:systemKind kind:application .
+
+system:xpims a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-25-item-g,
+        src:downstream-process-map,
+        src:vendor-aspentech-aspen-pims-brochure,
+        src:vendor-aspentech-mpims-course,
+        src:vendor-aspentech-ppims-course ;
+    skos:definition "An Aspen PIMS planning model that optimizes refinery plans across several plants and several periods. Aspen PIMS is AspenTech's refinery and olefins linear programming (LP) planning software, by the vendor's description."@en ;
+    skos:editorialNote "Which Aspen PIMS model XPIMS is rests on the decision owner's answer of 2026-10-25 (multi-plant and multi-period). AspenTech's training names XPIMS models, but no AspenTech page read on 2026-10-25 defines them; its courses define multi-period (PPIMS) and multi-plant (MPIMS) models (EPM-DEC-001-0099)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "xpims"^^xsd:string ;
+    skos:prefLabel "XPIMS"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-1,
+        proc:CM-1-1-2-1-2,
+        proc:CM-1-1-2-1-3,
+        proc:CM-1-1-2-2,
+        proc:CM-1-1-2-4,
+        proc:CM-1-1-2-4-2,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-1,
+        proc:CM-1-1-2-5-2,
+        proc:CM-1-1-2-5-4,
+        proc:CM-1-1-2-5-6,
+        proc:CM-1-1-2-5-6-2,
+        proc:CM-1-1-2-5-7,
+        proc:CM-1-1-2-5-8,
+        proc:CM-1-1-2-6,
+        proc:CM-1-1-2-6-1,
+        proc:CM-1-1-2-6-2,
+        proc:CM-1-1-2-6-3,
+        proc:CM-1-1-2-6-4,
+        proc:CM-1-1-2-6-5,
+        proc:CM-1-1-2-6-6,
+        proc:CM-1-1-2-7,
+        proc:CM-1-1-2-7-1,
+        proc:CM-1-1-2-7-3,
+        proc:CM-1-1-2-7-4,
+        proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2-5,
+        proc:CM-1-1-5-2,
+        proc:CM-1-1-5-4,
+        proc:CM-1-1-5-4-1,
+        proc:CM-1-1-5-5,
+        proc:CM-1-1-5-5-1,
+        proc:CM-1-1-5-5-2,
+        proc:CM-1-1-5-5-3,
+        proc:CM-1-1-5-5-4,
+        proc:CM-1-1-5-5-5,
+        proc:CM-1-1-5-5-6,
+        proc:CM-1-1-5-5-7,
+        proc:CM-1-1-5-6,
+        proc:CM-1-1-5-6-1,
+        proc:CM-1-1-5-6-2,
+        proc:CM-1-1-5-6-3,
+        proc:CM-1-1-5-6-4,
+        proc:CM-1-1-5-6-5,
+        proc:CM-1-1-5-6-6,
+        proc:CM-1-1-5-6-7,
+        proc:CM-1-1-5-6-8,
+        proc:CM-1-1-5-6-9 ;
+    sys:systemKind kind:application .
+
+system:xpims-dpo-integration-macro a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "xpims-dpo-integration-macro"^^xsd:string ;
+    skos:prefLabel "XPIMS <> DPO Integration Macro"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-5,
+        proc:CM-1-1-3-2,
+        proc:CM-1-1-3-2-2 ;
+    sys:systemKind kind:application .
+
+src:vendor-aspentech-aspen-petroleum-scheduler a dcterms:BibliographicResource ;
+    dcterms:title "AspenTech, Aspen Petroleum Scheduler, https://www.aspentech.com/en/products/msc/aspen-petroleum-scheduler, retrieved 2026-10-25"@en .
+
+src:vendor-aspentech-mpims-course a dcterms:BibliographicResource ;
+    dcterms:title "AspenTech, course RPA207 on Aspen MPIMS, https://esupport.aspentech.com/UniversityCourse?Id=a3p0B0000004YwmQAE, retrieved 2026-10-25"@en .
+
+src:vendor-aveva-pi-system a dcterms:BibliographicResource ;
+    dcterms:title "AVEVA, AVEVA PI System, https://www.aveva.com/en/products/aveva-pi-system/ (published 2026-09-23), retrieved 2026-10-25"@en .
+
+src:vendor-databricks-introduction a dcterms:BibliographicResource ;
+    dcterms:title "Databricks, What is Databricks?, https://docs.databricks.com/aws/en/introduction/ (updated 2026-09-11), retrieved 2026-10-25"@en .
+
+src:vendor-ion-rightangle a dcterms:BibliographicResource ;
+    dcterms:title "ION, RightAngle, https://iongroup.com/products/commodities/rightangle/ (page modified 2026-08-10), retrieved 2026-10-25"@en .
+
+src:vendor-microsoft-excel a dcterms:BibliographicResource ;
+    dcterms:title "Microsoft, Microsoft Excel, https://www.microsoft.com/en-us/microsoft-365/excel, retrieved 2026-10-25"@en .
+
+src:vendor-microsoft-outlook-business a dcterms:BibliographicResource ;
+    dcterms:title "Microsoft, Outlook for business, https://www.microsoft.com/en-us/microsoft-365/outlook/outlook-for-business, retrieved 2026-10-25"@en .
+
+src:vendor-microsoft-powerpoint a dcterms:BibliographicResource ;
+    dcterms:title "Microsoft, Microsoft PowerPoint, https://www.microsoft.com/en-us/microsoft-365/powerpoint, retrieved 2026-10-25"@en .
+
+src:vendor-microsoft-teams a dcterms:BibliographicResource ;
+    dcterms:title "Microsoft, Microsoft Teams, https://www.microsoft.com/en-us/microsoft-teams/group-chat-software, retrieved 2026-10-25"@en .
+
+src:vendor-oracle-hyperion-planning-11-2 a dcterms:BibliographicResource ;
+    dcterms:title "Oracle, Hyperion Planning User's Guide, Release 11.2.0 (F12986-01, December 2019), chapter 1, https://docs.oracle.com/en/applications/enterprise-performance-management/11.2/pustd/GUID102XD8E9FC8A102XD8E9FC8A-112.pdf, retrieved 2026-10-25"@en .
+
+src:vendor-profisee-platform a dcterms:BibliographicResource ;
+    dcterms:title "Profisee, Platform, https://profisee.com/platform/, retrieved 2026-10-25"@en .
+
+src:vendor-sap-s4hana-help a dcterms:BibliographicResource ;
+    dcterms:title "SAP, Conversion Guide for SAP S/4HANA 2025, document version 3.0 (2026-10-07), https://help.sap.com/doc/2b87656c4eee4284a5eb8976c0fe88fc/2025/en-US/CONV_OP2025.pdf, retrieved 2026-10-26"@en .
+
+src:vendor-aspentech-aspen-pims-brochure a dcterms:BibliographicResource ;
+    dcterms:title "AspenTech, Aspen PIMS brochure (AT-06696, 2021), https://www.aspentech.com/-/media/aspentech/home/resources/brochure/pdfs/fy21/q3/at-03906-bro-aspen-pims.pdf, retrieved 2026-10-25"@en .
+
+src:vendor-aspentech-ppims-course a dcterms:BibliographicResource ;
+    dcterms:title "AspenTech, course RPA206, Multi-Period Refinery Modeling with Aspen PPIMS, https://esupport.aspentech.com/UniversityCourse?Id=a3p0B0000004YnsQAE, retrieved 2026-10-25"@en .
+
+src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's identifications of systems, Claude Code session of 2026-10-24, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-24-systems.md"@en .
+
+kind:office-tool a skos:Concept ;
+    skos:definition "General office software, such as e-mail, chat, slides or spreadsheets."@en ;
+    skos:inScheme sys:SystemKind ;
+    skos:notation "office-tool" ;
+    skos:prefLabel "Office tool"@en ;
+    skos:topConceptOf sys:SystemKind .
+
+src:decision-owner-pricing-assets-2026-10-25 a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's Databricks pricing metric views, their lineage and the Genie agents' instructions (idp_sbx sandbox), shared on 2026-10-25 and held outside the repository (EPM-DEC-001-0097)"@en .
+
+sys:SystemKind a skos:ConceptScheme ;
+    rdfs:label "system kind"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en ;
+    skos:definition "The three kinds of thing the process map's systems field names."@en ;
+    skos:hasTopConcept kind:application,
+        kind:document,
+        kind:office-tool .
+
+kind:document a skos:Concept ;
+    skos:definition "A named document or file that the process works from, not an application."@en ;
+    skos:inScheme sys:SystemKind ;
+    skos:notation "document" ;
+    skos:prefLabel "Working document"@en ;
+    skos:topConceptOf sys:SystemKind .
+
+src:decision-owner-answers-2026-10-25-item-g a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's answers to the item G questions, Claude Code session of 2026-10-25, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g.md"@en .
+
+kind:application a skos:Concept ;
+    skos:definition "A software application, database, dashboard or integration that the business runs."@en ;
+    skos:inScheme sys:SystemKind ;
+    skos:notation "application" ;
+    skos:prefLabel "Application"@en ;
+    skos:topConceptOf sys:SystemKind .
+
+sys:System a owl:Class ;
+    rdfs:label "system"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, systems; competency question 6; EPM-DEC-001-0055"@en ;
+    skos:definition "An application, office tool or working document that the process map names as used by a process."@en .
+
+sys:Systems a skos:ConceptScheme ;
+    rdfs:label "systems"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en ;
+    skos:definition "The systems the process map names, one per distinct name after spelling merges."@en ;
+    skos:hasTopConcept system:actuals-case-prep-file,
+        system:aps,
+        system:aps-planning-db,
+        system:backcasting-dashboard,
+        system:cargotracker,
+        system:databricks,
+        system:dpo,
+        system:hyperion,
+        system:kittyhawk,
+        system:market-outlook-and-avails-dashboard,
+        system:mips,
+        system:mpr,
+        system:ms-excel,
+        system:ms-outlook,
+        system:ms-powerpoint,
+        system:ms-teams,
+        system:network-premise-document,
+        system:pi,
+        system:planning-and-scheduling-ui,
+        system:planning-db,
+        system:ppims,
+        system:premise-document,
+        system:profisee,
+        system:psr,
+        system:refinery-premise-document,
+        system:rfc-hindsight-analysis-excel,
+        system:rightangle,
+        system:sap,
+        system:tmr,
+        system:topday,
+        system:trr,
+        system:valt,
+        system:xpims,
+        system:xpims-dpo-integration-macro .
+

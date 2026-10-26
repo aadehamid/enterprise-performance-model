@@ -7,6 +7,11 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/data-product/kind/> .
+@prefix layer: <https://w3id.org/lsc/ontology/modules/data-product/layer/> .
+@prefix product: <https://w3id.org/lsc/ontology/modules/data-product/product/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix shp: <https://w3id.org/lsc/ontology/modules/data-product/shapes/> .
 
 # What every segment, line and data product has.
@@ -21,6 +26,7 @@ shp:PortfolioItem a sh:NodeShape ;
     sh:property [ sh:path skos:editorialNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:historyNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
                   sh:message "A portfolio item cites its source." ] ;
     # Defined, or parked with the reason: never both, never neither (Step 7, "done when").
@@ -65,3 +71,80 @@ shp:NoValuesOnProducts a sh:NodeShape ;
                            skos:altLabel skos:scopeNote skos:broader dcterms:source
                            dp:portfolioStatus dp:producedBy dp:consumedBy ) ;
     sh:message "A data product carries only its definition and links, never data values (EPM-DEC-001-0005)." .
+
+# ---- Since 1.2.0: platform tables, their kinds and lineage (EPM-DEC-001-0097, items 7 to 16) ----
+
+shp:PlatformTable a sh:NodeShape ;
+    sh:targetClass dp:PlatformTable ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:notation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path skos:inScheme ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue dp:PlatformTables ] ;
+    sh:property [ sh:path skos:topConceptOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue dp:PlatformTables ] ;
+    sh:property [ sh:path dp:fullName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path dp:sandbox ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+    sh:property [ sh:path dp:layer ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( layer:replica layer:silver layer:gold layer:metric-view ) ] ;
+    sh:property [ sh:path dp:copiesSystem ; sh:minCount 0 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path dp:dependsOnSystem ; sh:minCount 0 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path dp:servesMeasure ; sh:minCount 0 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 0 ; sh:class dp:PlatformTable ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
+    # A replica copies one system and is built from nothing the module records; any other table is a data product.
+    sh:or ( [ sh:property [ sh:path dp:layer ; sh:hasValue layer:replica ] ;
+              sh:property [ sh:path dp:copiesSystem ; sh:minCount 1 ] ;
+              sh:property [ sh:path prov:wasDerivedFrom ; sh:maxCount 0 ] ;
+              sh:not [ sh:class dp:PlatformDataProduct ] ]
+            [ sh:not [ sh:property [ sh:path dp:layer ; sh:hasValue layer:replica ] ] ;
+              sh:class dp:PlatformDataProduct ] ) ;
+    sh:message "A replica copies one system and is no data product; every other platform table is a data product." .
+
+# A platform table is a definition, never data (EPM-DEC-001-0005).
+shp:NoRowsOnTables a sh:NodeShape ;
+    sh:targetClass dp:PlatformTable ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:inScheme skos:topConceptOf dp:fullName dp:sandbox
+                           dp:layer dp:copiesSystem dp:dependsOnSystem dp:servesMeasure prov:wasDerivedFrom dcterms:source
+                           dcterms:isPartOf dp:dataProductKind dp:classificationTest dp:classificationReason ) ;
+    sh:message "A platform table carries its definition and lineage, never its rows." .
+
+shp:PlatformDataProduct a sh:NodeShape ;
+    sh:targetClass dp:PlatformDataProduct ;
+    sh:property [ sh:path dcterms:isPartOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue product:master-pricing ] ;
+    sh:property [ sh:path dp:dataProductKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( kind:foundational kind:derived ) ] ;
+    sh:property [ sh:path dp:classificationTest ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "inputs"^^xsd:string "logic"^^xsd:string ) ] ;
+    sh:property [ sh:path dp:classificationReason ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ;
+                  sh:message "A data product is derived from at least one table." ] .
+
+# The kinds' checkable criteria (EPM-DEC-001-0097, item 15): a foundational data product is built only from
+# replicas of systems of record; a derived one from at least one other data product.
+shp:Foundational a sh:NodeShape ;
+    sh:targetClass dp:PlatformDataProduct ;
+    sh:or ( [ sh:not [ sh:property [ sh:path dp:dataProductKind ; sh:hasValue kind:foundational ] ] ]
+            [ sh:property [ sh:path prov:wasDerivedFrom ;
+                            sh:node [ sh:property [ sh:path dp:layer ; sh:hasValue layer:replica ] ] ] ] ) ;
+    sh:message "A foundational data product is derived only from replicas of systems of record." .
+
+shp:Derived a sh:NodeShape ;
+    sh:targetClass dp:PlatformDataProduct ;
+    sh:or ( [ sh:not [ sh:property [ sh:path dp:dataProductKind ; sh:hasValue kind:derived ] ] ]
+            [ sh:property [ sh:path prov:wasDerivedFrom ; sh:qualifiedValueShape [ sh:class dp:PlatformDataProduct ] ;
+                            sh:qualifiedMinCount 1 ] ] ) ;
+    sh:message "A derived data product is derived from at least one other data product." .
+
+shp:PlatformColumn a sh:NodeShape ;
+    sh:targetClass dp:PlatformColumn ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:path dp:columnOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dp:PlatformTable ] ;
+    sh:property [ sh:path dp:columnName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 0 ; sh:class dp:PlatformColumn ] .
+
+# A Genie agent is a consumer, not a data product: it uses metric views (EPM-DEC-001-0097, item 14).
+shp:Agent a sh:NodeShape ;
+    sh:targetClass prov:SoftwareAgent ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path prov:used ; sh:minCount 1 ;
+                  sh:node [ sh:property [ sh:path dp:layer ; sh:hasValue layer:metric-view ] ] ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:not [ sh:class dp:PlatformDataProduct ] .

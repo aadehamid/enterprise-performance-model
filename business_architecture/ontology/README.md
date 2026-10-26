@@ -82,14 +82,14 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 | `apqc/` | The full APQC Downstream Petroleum PCF 7.2.2 element list (2,012 elements), a reference for Q11 (EPM-DEC-001-0060); a reference file, in no package (EPM-DEC-001-0078) |
 | `authority/` | Step 9: the evidence tier of every cited source, so the best-tier source wins when two disagree (EPM-DEC-001-0059); released in `integration` 1.0.0 (EPM-DEC-001-0078) |
 | `placement/` | The placement kinds: which placing properties certify (only producing a data product) and which give context (EPM-DEC-001-0058); released in `integration` 1.0.0 (EPM-DEC-001-0078) |
-| `market-data/` | The Step 7 market-data module: 13 series of the crack-spreads measure, from MPC Economics' definition first (six regional ex-RIN series, the NYMEX 3-2-1, two MPC-weighted blends), then MPC's FY2025 Form 10-K, Item 7, and CME Group, with their benchmarks and regions (EPM-DEC-001-0057, 0066); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
+| `market-data/` | The Step 7 market-data module (*2026-10-26:* 1.1.0 adds 2 series, 40 market prices and the views' series enumerations, EPM-DEC-001-0100): 13 series of the crack-spreads measure, from MPC Economics' definition first (six regional ex-RIN series, the NYMEX 3-2-1, two MPC-weighted blends), then MPC's FY2025 Form 10-K, Item 7, and CME Group, with their benchmarks and regions (EPM-DEC-001-0057, 0066); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
 | `lane/` | The Step 7 lane module: the four office lanes and the seven processes the process map places in them (EPM-DEC-001-0056); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
-| `system/` | The Step 7 system module: 32 systems from the process map's system strings, merged on spelling through a register, with their kind and the processes they support (EPM-DEC-001-0055); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
+| `system/` | The Step 7 system module (*2026-10-26:* 34 systems since 1.2.0, with MIPS and Databricks; 1.1.0 and 1.2.0 define 18, EPM-DEC-001-0099, 0100): 32 systems from the process map's system strings, merged on spelling through a register, with their kind and the processes they support (EPM-DEC-001-0055); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
 | `value-stream/` | The Step 7 value-stream module: the Commercial Hydrocarbon Lifecycle and Order to Cash, their stages, capabilities and 58 value-stream processes, which realize core processes, produce and consume data products and carry the MPC-P09 measure links (EPM-DEC-001-0054); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
 | `data-product/` | The Step 7 data-product module: the portfolio's 3 segments, 19 lines and 48 data products as definitions (49 since Customer Master, 2026-10-23, EPM-DEC-001-0091), 33 of them parked for lack of a description, mapped to DCAT, not imported (EPM-DEC-001-0053); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
 | `organization/` | The Step 5 organization module: the RACI assignment and control vocabulary, its SHACL shapes and tests (EPM-DEC-001-0030), the role register with the roles built from it (EPM-DEC-001-0031), and the RACI assignments with their ledger (EPM-DEC-001-0032) |
 | `regression/` | The Step 11 SPARQL regression: one query per tested part of a question, each question's status, and the runner `check.sh` calls |
-| `release/`, `releases/` | Release builders and packages: `core` 1.0.0 (EPM-DEC-001-0029), organization 1.0.0 and ref-mpc 1.0.0 (EPM-DEC-001-0037), core 2.0.0 (EPM-DEC-001-0038), core 2.1.0 (EPM-DEC-001-0044), core 2.2.0 (EPM-DEC-001-0076), organization 2.0.0 and ref-mpc 1.1.0 (EPM-DEC-001-0045), and kpi 1.0.0 and 1.0.1 (EPM-DEC-001-0043), and party 1.0.0 (EPM-DEC-001-0074), and data-product, value-stream, system, lane and market-data 1.0.0 (EPM-DEC-001-0077), and integration 1.0.0 (EPM-DEC-001-0078), and kpi 1.1.0 (EPM-DEC-001-0079), and ref-mpc 1.2.0 (EPM-DEC-001-0080), and core 2.3.0 (EPM-DEC-001-0089), and value-stream 1.1.0 (EPM-DEC-001-0090), and data-product 1.1.0 (EPM-DEC-001-0091), and party 1.1.0 (EPM-DEC-001-0092), and kpi 1.1.1 (EPM-DEC-001-0093), and integration 2.0.0 (EPM-DEC-001-0094); system 1.1.0, party 1.2.0 and integration 2.1.0 (EPM-DEC-001-0099, in the item G pull request); `releases/catalog.ttl`, one DCAT catalog of every release, built by `release/build_catalog.py` (EPM-DEC-001-0082) |
+| `release/`, `releases/` | Release builders and packages: `core` 1.0.0 (EPM-DEC-001-0029), organization 1.0.0 and ref-mpc 1.0.0 (EPM-DEC-001-0037), core 2.0.0 (EPM-DEC-001-0038), core 2.1.0 (EPM-DEC-001-0044), core 2.2.0 (EPM-DEC-001-0076), organization 2.0.0 and ref-mpc 1.1.0 (EPM-DEC-001-0045), and kpi 1.0.0 and 1.0.1 (EPM-DEC-001-0043), and party 1.0.0 (EPM-DEC-001-0074), and data-product, value-stream, system, lane and market-data 1.0.0 (EPM-DEC-001-0077), and integration 1.0.0 (EPM-DEC-001-0078), and kpi 1.1.0 (EPM-DEC-001-0079), and ref-mpc 1.2.0 (EPM-DEC-001-0080), and core 2.3.0 (EPM-DEC-001-0089), and value-stream 1.1.0 (EPM-DEC-001-0090), and data-product 1.1.0 (EPM-DEC-001-0091), and party 1.1.0 (EPM-DEC-001-0092), and kpi 1.1.1 (EPM-DEC-001-0093), and integration 2.0.0 (EPM-DEC-001-0094); system 1.1.0, party 1.2.0 and integration 2.1.0 (EPM-DEC-001-0099, in the item G pull request); kpi 1.2.0, market-data 1.1.0, data-product 1.2.0, system 1.2.0 and integration 2.2.0 (EPM-DEC-001-0100, in the item F pull request); `releases/catalog.ttl`, one DCAT catalog of every release, built by `release/build_catalog.py` (EPM-DEC-001-0082) |
 | `apqc-scope-decisions.md` | One-at-a-time in/out-of-scope calls for the seven APQC gap candidates |
 | `apqc-crosscheck-report.md` | Repo process map vs APQC Downstream PCF v7.2.2 consistency check (2026-09-17) |
 | `build/step2-identity-map.py` | Reproducible script: URI slug for every one of the 680 nodes |
@@ -132,14 +132,15 @@ table (`step4/playbook/ontology-worklog.md` §2) is authoritative for step
 status: Steps 0 to 12 are done or stand as recorded, each with its listed
 exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
 
-- **Releases:** 28 packages under `releases/`, listed in
+- **Releases:** 33 packages under `releases/`, listed in
   `releases/catalog.ttl` (EPM-DEC-001-0082). The newest of each module:
-  `core` 2.3.0 (EPM-DEC-001-0089), organization 2.0.0, ref-mpc 1.2.0, kpi 1.1.1 (EPM-DEC-001-0093), party 1.2.0
+  `core` 2.3.0 (EPM-DEC-001-0089), organization 2.0.0, ref-mpc 1.2.0, kpi 1.2.0 (EPM-DEC-001-0100), party 1.2.0
   (EPM-DEC-001-0099),
-  value-stream 1.1.0 (EPM-DEC-001-0090), data-product 1.1.0
-  (EPM-DEC-001-0091), system 1.1.0 (EPM-DEC-001-0099), lane and market-data 1.0.0, and
-  integration 2.1.0 (EPM-DEC-001-0099). *2026-10-25:* system 1.1.0, party 1.2.0 and integration
-  2.1.0 carry the systems' definitions from item G and the qSKOS top-concept fixes (EPM-DEC-001-0098).
+  value-stream 1.1.0 (EPM-DEC-001-0090), data-product 1.2.0
+  (EPM-DEC-001-0100), system 1.2.0 (EPM-DEC-001-0100), lane 1.0.0, market-data 1.1.0 (EPM-DEC-001-0100), and
+  integration 2.2.0 (EPM-DEC-001-0100). *2026-10-25:* system 1.1.0, party 1.2.0 and integration
+  2.1.0 carry the systems' definitions from item G and the qSKOS top-concept fixes (EPM-DEC-001-0098); item F's
+  five releases carry the pricing measures' bindings, prices, platform tables and lineage (EPM-DEC-001-0097, 0100).
 - **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);
   the competency regression has 43 questions answerable, 0 partial,
   0 waiting and 1 parked (Q17, EPM-DEC-001-0086); the Neo4j projection of every released package passes,

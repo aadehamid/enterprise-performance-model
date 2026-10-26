@@ -35,9 +35,10 @@ def conforms(extra=None):
 
 class Rules(unittest.TestCase):
     def test_counts(self):
-        # EPM-DEC-001-0061: six things an agent may answer, five it must refuse; EPM-DEC-001-0062 adds a seventh.
+        # EPM-DEC-001-0061: six things an agent may answer, five it must refuse; EPM-DEC-001-0062 adds a seventh;
+        # EPM-DEC-001-0097, item 6, an eighth: a value quoted through the bound metric view (integration 2.2.0).
         rules = set(VOCAB.subjects(RDF.type, CON.Rule))
-        self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["may-answer"]) in VOCAB]), 7)
+        self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["may-answer"]) in VOCAB]), 8)
         self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["must-refuse"]) in VOCAB]), 5)
 
     def test_each_rule_relies_on_its_decided_terms(self):
@@ -66,6 +67,7 @@ class Rules(unittest.TestCase):
             "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/modules/party/roleType")},
             "no-context-as-ownership": {PLC.placementKind},
             "what-a-measure-counts": {POP.includes, POP.excludes, POP.populationEvidence},  # EPM-DEC-001-0062
+            "value-through-bound-view": {URIRef("https://w3id.org/lsc/ontology/modules/data-product/servesMeasure")},  # 0097
         }
         rules = set(VOCAB.subjects(RDF.type, CON.Rule))
         self.assertEqual(rules, {R[k] for k in expected})
@@ -83,6 +85,13 @@ class Rules(unittest.TestCase):
         for term in set(VOCAB.objects(None, CON.reliesOn)):
             if str(term).startswith("https://w3id.org/lsc/"):
                 self.assertTrue(list(GRAPH.triples((term, None, None))), term)
+
+    def test_no_values_still_refuses_computing_and_unbound_sources(self):
+        # EPM-DEC-001-0097, item 6: the amendment allows the bound view only.
+        rule = URIRef("https://w3id.org/lsc/ontology/modules/consumer/rule/no-values")
+        text = str(VOCAB.value(rule, URIRef("http://www.w3.org/2004/02/skos/core#definition")))
+        self.assertIn("Calculate a measure's value from the graph", text)
+        self.assertIn("a source the graph does not bind", text)
 
     def test_rules_conform(self):
         self.assertTrue(conforms())

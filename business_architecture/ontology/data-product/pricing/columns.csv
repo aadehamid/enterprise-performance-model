@@ -1,0 +1,7 @@
+table,column,from_table,from_column
+gold-mpr-mips-crack-spread-price-fact,Crack_Spread_Price_Amount,silver-mpr-price-detail-fact,Settle_Price_Amount
+gold-mips-mpr-executive-summary-fact,assessment_amount,silver-mips-price-assessment-fact,Assessment_Amount
+gold-mips-mpr-executive-summary-fact,Previous_amount,silver-mips-price-assessment-fact,Previous_Amount
+gold-mips-mpr-executive-summary-fact,ChangeValue,silver-mips-price-assessment-fact,Assessment_Amount
+gold-mips-mpr-executive-summary-fact,ChangeValue,silver-mips-price-assessment-fact,Previous_Amount
+view-mips-mpr-benchmark-prices-fact-vw,Settle_Price_Amount,silver-mpr-price-detail-fact,Settle_Price_Amount

@@ -11,7 +11,7 @@ import unittest
 
 from pyshacl import validate
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import SKOS
+from rdflib.namespace import RDF, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -39,9 +39,36 @@ class Build(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
     def test_figures(self):
-        # Counted by hand from the three tables.
+        # Counted by hand from the tables. 1.1.0 adds two NYMEX crack series, 44 prices (40 new, 4 that reuse a
+        # benchmark: LA CARBOB, USGC CBOB, USGC ULSD and NYMEX WTI 747) and 6 enumerations (EPM-DEC-001-0097).
         self.assertEqual(bm.figures(*bm.load()), {"regions": 9, "market regions": 6, "benchmarks": 24, "crude markers": 7,
-                                                  "price master ids": 21, "series": 13, "legs": 28})
+                                                  "price master ids": 23, "series": 15, "legs": 28, "market prices": 40,
+                                                  "benchmarks that are also market prices": 4, "enumerations": 6})
+
+    def test_each_pricing_measure_has_its_prices_and_its_enumeration(self):
+        # EPM-DEC-001-0097, items 4 and 5, counted by hand from the agents' filters.
+        measure = "https://w3id.org/lsc/ontology/modules/kpi/measure/"
+        count = lambda m: len(set(DATA.subjects(MKT.priceOf, URIRef(measure + m))))
+        self.assertEqual([count(m) for m in ("gasoline-prices", "distillate-prices", "crude-prices", "additional-market-prices")],
+                         [8, 9, 15, 12])
+        enumerated = {str(o).rsplit("/", 1)[1] for o in DATA.objects(None, MKT.enumerates)}
+        self.assertEqual(enumerated, {"crack-spreads", "gasoline-prices", "distillate-prices", "crude-prices",
+                                      "additional-market-prices"})
+        crack = URIRef("https://w3id.org/lsc/ontology/modules/market-data/enumeration/crack-spreads")
+        self.assertEqual((str(DATA.value(crack, MKT.idColumn)), str(DATA.value(crack, MKT.nameColumn)),
+                          str(DATA.value(crack, MKT.groupColumn))), ("Price_Master_ID", "Price_Master_Name", "MIPS_Groups_Text"))
+
+    def test_the_benchmark_views_five_instruments_serve_crude_prices(self):
+        ids = {str(DATA.value(s, MKT.priceMasterId)) for s in
+               DATA.subjects(MKT.priceOf, URIRef("https://w3id.org/lsc/ontology/modules/kpi/measure/crude-prices"))}
+        self.assertTrue({"572", "747", "750", "752", "9471"} <= ids)
+
+    def test_every_scheme_states_its_top_concepts_both_ways(self):
+        for g, scheme in ((DATA, MKT.Series), (DATA, MKT.RefiningRegions), (DATA, MKT.MarketRegions), (VOCAB, MKT.BenchmarkKind)):
+            members = set(g.subjects(SKOS.inScheme, scheme))
+            self.assertTrue(members)
+            self.assertEqual(set(g.objects(scheme, SKOS.hasTopConcept)), members, scheme)
+            self.assertEqual(set(g.subjects(SKOS.topConceptOf, scheme)), members, scheme)
 
     def test_recipes(self):
         # MPC FY2025 Form 10-K, Item 7: "three barrels of MEH crude producing two barrels of USGC CBOB gasoline
@@ -87,7 +114,7 @@ class Build(unittest.TestCase):
 
     def test_same_measure_different_series(self):
         series = set(DATA.subjects(MKT.seriesOf, MEASURE["crack-spreads"]))
-        self.assertEqual(len(series), 13)
+        self.assertEqual(len(series), 15)  # 13, then the two NYMEX cracks of 1.1.0 (EPM-DEC-001-0097, item 5)
         # MPC's 10-K cracks do not reflect RIN costs; MPC Economics' ex-RIN cracks deduct them (EPM-DEC-001-0066);
         # the exchange spread states nothing about RINs.
         self.assertEqual(DATA.value(SERIES["crack-gulf-coast-3-2-1"], MKT.excludesRINCost), Literal(True))
@@ -121,6 +148,18 @@ class Shapes(unittest.TestCase):
 
     def test_rejects_legs_and_blend(self):
         self.assertFalse(self.broken(lambda g: g.add((SERIES["crack-blended-3-2-1"], MKT.leg, LEG["crack-gulf-coast-3-2-1--meh"]))))
+
+    def test_rejects_a_market_price_with_no_measure(self):
+        p = URIRef("https://w3id.org/lsc/ontology/modules/market-data/price/nyh-cbob")
+        self.assertFalse(self.broken(lambda g: g.remove((p, MKT.priceOf, None))))
+
+    def test_rejects_a_value_on_an_enumeration(self):
+        e = URIRef("https://w3id.org/lsc/ontology/modules/market-data/enumeration/crack-spreads")
+        self.assertFalse(self.broken(lambda g: g.add((e, RDF.value, Literal(127)))))
+
+    def test_rejects_a_price_on_a_market_price(self):
+        p = URIRef("https://w3id.org/lsc/ontology/modules/market-data/price/nyh-cbob")
+        self.assertFalse(self.broken(lambda g: g.add((p, RDF.value, Literal(2.31)))))
 
     def test_rejects_a_price(self):
         self.assertFalse(self.broken(lambda g: g.add((BENCH["wti"], MKT.price, Literal(65.5)))))

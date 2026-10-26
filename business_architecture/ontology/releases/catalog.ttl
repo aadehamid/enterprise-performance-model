@@ -13,15 +13,19 @@
         <https://w3id.org/lsc/ontology/modules/core/2.3.0>,
         <https://w3id.org/lsc/ontology/modules/data-product/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/data-product/1.1.0>,
+        <https://w3id.org/lsc/ontology/modules/data-product/1.2.0>,
         <https://w3id.org/lsc/ontology/modules/integration/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/integration/2.0.0>,
         <https://w3id.org/lsc/ontology/modules/integration/2.1.0>,
+        <https://w3id.org/lsc/ontology/modules/integration/2.2.0>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.0.1>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/kpi/1.1.1>,
+        <https://w3id.org/lsc/ontology/modules/kpi/1.2.0>,
         <https://w3id.org/lsc/ontology/modules/lane/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/market-data/1.0.0>,
+        <https://w3id.org/lsc/ontology/modules/market-data/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/organization/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/organization/2.0.0>,
         <https://w3id.org/lsc/ontology/modules/party/1.0.0>,
@@ -32,6 +36,7 @@
         <https://w3id.org/lsc/ontology/modules/ref-mpc/1.2.0>,
         <https://w3id.org/lsc/ontology/modules/system/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/system/1.1.0>,
+        <https://w3id.org/lsc/ontology/modules/system/1.2.0>,
         <https://w3id.org/lsc/ontology/modules/value-stream/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/value-stream/1.1.0> .
 
@@ -105,6 +110,15 @@
         <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/data-product.ttl>,
         <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/shapes.ttl> .
 
+<https://w3id.org/lsc/ontology/modules/data-product/1.2.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/data-product> ;
+    dcterms:issued "2026-10-25"^^xsd:date ;
+    dcterms:title "LSC Data Product Module 1.2.0"@en ;
+    owl:versionInfo "1.2.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/data-product.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/data-product.ttl>,
+        <https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/shapes.ttl> .
+
 <https://w3id.org/lsc/ontology/modules/integration/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/integration> ;
     dcterms:issued "2026-10-22"^^xsd:date ;
@@ -131,6 +145,15 @@
     dcat:distribution <https://w3id.org/lsc/ontology/modules/integration/releases/2.1.0/integration.jsonld>,
         <https://w3id.org/lsc/ontology/modules/integration/releases/2.1.0/integration.ttl>,
         <https://w3id.org/lsc/ontology/modules/integration/releases/2.1.0/shapes.ttl> .
+
+<https://w3id.org/lsc/ontology/modules/integration/2.2.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/integration> ;
+    dcterms:issued "2026-10-25"^^xsd:date ;
+    dcterms:title "LSC Integration Vocabularies 2.2.0"@en ;
+    owl:versionInfo "2.2.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/integration.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/integration.ttl>,
+        <https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/shapes.ttl> .
 
 <https://w3id.org/lsc/ontology/modules/kpi/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/kpi> ;
@@ -168,6 +191,15 @@
         <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/kpi.ttl>,
         <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/shapes.ttl> .
 
+<https://w3id.org/lsc/ontology/modules/kpi/1.2.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/kpi> ;
+    dcterms:issued "2026-10-25"^^xsd:date ;
+    dcterms:title "LSC KPI Module 1.2.0"@en ;
+    owl:versionInfo "1.2.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/kpi.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/kpi.ttl>,
+        <https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/shapes.ttl> .
+
 <https://w3id.org/lsc/ontology/modules/lane/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/lane> ;
     dcterms:issued "2026-10-22"^^xsd:date ;
@@ -185,6 +217,15 @@
     dcat:distribution <https://w3id.org/lsc/ontology/modules/market-data/releases/1.0.0/market-data.jsonld>,
         <https://w3id.org/lsc/ontology/modules/market-data/releases/1.0.0/market-data.ttl>,
         <https://w3id.org/lsc/ontology/modules/market-data/releases/1.0.0/shapes.ttl> .
+
+<https://w3id.org/lsc/ontology/modules/market-data/1.1.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/market-data> ;
+    dcterms:issued "2026-10-25"^^xsd:date ;
+    dcterms:title "LSC Market Data Module 1.1.0"@en ;
+    owl:versionInfo "1.1.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/market-data.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/market-data.ttl>,
+        <https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/shapes.ttl> .
 
 <https://w3id.org/lsc/ontology/modules/organization/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/organization> ;
@@ -275,6 +316,15 @@
     dcat:distribution <https://w3id.org/lsc/ontology/modules/system/releases/1.1.0/shapes.ttl>,
         <https://w3id.org/lsc/ontology/modules/system/releases/1.1.0/system.jsonld>,
         <https://w3id.org/lsc/ontology/modules/system/releases/1.1.0/system.ttl> .
+
+<https://w3id.org/lsc/ontology/modules/system/1.2.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/system> ;
+    dcterms:issued "2026-10-25"^^xsd:date ;
+    dcterms:title "LSC System Module 1.2.0"@en ;
+    owl:versionInfo "1.2.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/shapes.ttl>,
+        <https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/system.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/system.ttl> .
 
 <https://w3id.org/lsc/ontology/modules/value-stream/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/value-stream> ;
@@ -394,6 +444,18 @@
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/data-product/releases/1.1.0/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
+<https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/data-product.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/data-product.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/data-product.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/data-product.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/data-product/releases/1.2.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
 <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.0/integration.jsonld> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/1.0.0/integration.jsonld> ;
     dcat:mediaType "application/ld+json" .
@@ -428,6 +490,18 @@
 
 <https://w3id.org/lsc/ontology/modules/integration/releases/2.1.0/shapes.ttl> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/2.1.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/integration.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/integration.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/integration.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/integration.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/integration/releases/2.2.0/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
 <https://w3id.org/lsc/ontology/modules/kpi/releases/1.0.0/kpi.jsonld> a dcat:Distribution ;
@@ -478,6 +552,18 @@
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/kpi/releases/1.1.1/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
+<https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/kpi.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/kpi.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/kpi.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/kpi.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/kpi/releases/1.2.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
 <https://w3id.org/lsc/ontology/modules/lane/releases/1.0.0/lane.jsonld> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/lane/releases/1.0.0/lane.jsonld> ;
     dcat:mediaType "application/ld+json" .
@@ -500,6 +586,18 @@
 
 <https://w3id.org/lsc/ontology/modules/market-data/releases/1.0.0/shapes.ttl> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/market-data/releases/1.0.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/market-data.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/market-data.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/market-data.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/market-data.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/market-data/releases/1.1.0/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
 <https://w3id.org/lsc/ontology/modules/organization/releases/1.0.0/organization.jsonld> a dcat:Distribution ;
@@ -620,6 +718,18 @@
 
 <https://w3id.org/lsc/ontology/modules/system/releases/1.1.0/system.ttl> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.1.0/system.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/system.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/system.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/system.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.2.0/system.ttl> ;
     dcat:mediaType "text/turtle" .
 
 <https://w3id.org/lsc/ontology/modules/value-stream/releases/1.0.0/shapes.ttl> a dcat:Distribution ;

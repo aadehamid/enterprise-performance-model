@@ -7,6 +7,7 @@
 @prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -37,8 +38,9 @@ mkt:MarketRegions a skos:ConceptScheme ;
     dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4.1; EPM-DEC-001-0066"@en .
 
 mkt:Series a skos:ConceptScheme ;
-    rdfs:label "benchmark series"@en ;
-    skos:definition "The benchmark series and benchmark prices the market-data module defines."@en ;
+    rdfs:label "market series and prices"@en ;
+    skos:definition "The benchmark series, benchmark prices and market prices the market-data module defines."@en ;
+    skos:changeNote "market-data 1.1.0 (2026-10-26): the definition names the market prices the pricing views add; the label was \"benchmark series\" (EPM-DEC-001-0100)."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0057"@en .
 
 mkt:seriesOf a owl:ObjectProperty ;
@@ -102,13 +104,73 @@ mkt:benchmarkKind a owl:ObjectProperty ;
     skos:definition "Whether the benchmark is a crude marker, a refined-product benchmark or a compliance cost."@en ;
     dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"@en .
 
-mkt:BenchmarkKind a skos:ConceptScheme ; rdfs:label "benchmark kind"@en ;
+mkt:BenchmarkKind a skos:ConceptScheme ; skos:hasTopConcept bkind:crude-marker, bkind:product-benchmark, bkind:compliance-cost ; rdfs:label "benchmark kind"@en ;
     skos:definition "The kinds of benchmark price a series is built from."@en ;
     dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"@en .
-bkind:crude-marker a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Crude marker"@en ; skos:notation "crude-marker" ;
+bkind:crude-marker a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:topConceptOf mkt:BenchmarkKind ; skos:prefLabel "Crude marker"@en ; skos:notation "crude-marker" ;
     skos:definition "A published crude oil price that a crack spread uses for its crude leg."@en .
-bkind:product-benchmark a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Product benchmark"@en ; skos:notation "product-benchmark" ;
+bkind:product-benchmark a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:topConceptOf mkt:BenchmarkKind ; skos:prefLabel "Product benchmark"@en ; skos:notation "product-benchmark" ;
     skos:definition "A published refined-product price at a named market, used for a crack spread's product legs."@en .
-bkind:compliance-cost a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Compliance cost"@en ; skos:notation "compliance-cost" ;
+bkind:compliance-cost a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:topConceptOf mkt:BenchmarkKind ; skos:prefLabel "Compliance cost"@en ; skos:notation "compliance-cost" ;
     skos:definition "A published per-gallon compliance cost, such as the RVO, that an Ex-RVO crack deducts from each product barrel."@en ;
     dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 3.2; EPM-DEC-001-0066"@en .
+
+# Since 1.1.0: the other pricing measures' prices, and where the full list of each measure's series is
+# (EPM-DEC-001-0097, items 4 and 5). Definitions only, never prices.
+mkt:MarketPrice a owl:Class ;
+    rdfs:label "market price"@en ;
+    skos:definition "A named market price that a pricing measure of the kpi module presents, as the decision owner's pricing views report it: a product price at a market, a crude differential, a futures settlement, or a renewables or NGL price. A definition, never a price."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, items 4 and 5"@en .
+
+mkt:priceOf a owl:ObjectProperty ;
+    rdfs:label "price of"@en ;
+    rdfs:range kpi:MeasureDefinition ;
+    skos:definition "The pricing measure of the kpi module that presents this price. A benchmark that a pricing view also reports carries it too."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 4"@en .
+
+mkt:reportedAs a owl:DatatypeProperty ;
+    rdfs:label "reported as"@en ;
+    rdfs:range xsd:string ;
+    skos:definition "How the pricing view reports the price: basis (a differential to the futures contract), cash, differential, settlement or assessment."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 4"@en .
+
+mkt:SeriesEnumeration a owl:Class ;
+    rdfs:label "series enumeration"@en ;
+    skos:definition "Where the complete list of a measure's series is: a view and the columns that identify, name and group each series, with the rows' filter. The module names only examples; the view lists them all."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 5"@en .
+
+mkt:enumerates a owl:ObjectProperty ;
+    rdfs:label "enumerates"@en ;
+    rdfs:domain mkt:SeriesEnumeration ; rdfs:range kpi:MeasureDefinition ;
+    skos:definition "The measure whose series the enumeration lists."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 5"@en .
+
+mkt:sourceView a owl:DatatypeProperty ;
+    rdfs:label "source view"@en ;
+    rdfs:domain mkt:SeriesEnumeration ; rdfs:range xsd:string ;
+    skos:definition "The full name of the view that lists the series, catalog, schema and view."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 5"@en .
+
+mkt:idColumn a owl:DatatypeProperty ;
+    rdfs:label "identifier column"@en ;
+    rdfs:domain mkt:SeriesEnumeration ; rdfs:range xsd:string ;
+    skos:definition "The view's column whose distinct values are the series."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 5"@en .
+
+mkt:nameColumn a owl:DatatypeProperty ;
+    rdfs:label "name column"@en ;
+    rdfs:domain mkt:SeriesEnumeration ; rdfs:range xsd:string ;
+    skos:definition "The view's column that names each series."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 5"@en .
+
+mkt:groupColumn a owl:DatatypeProperty ;
+    rdfs:label "group column"@en ;
+    rdfs:domain mkt:SeriesEnumeration ; rdfs:range xsd:string ;
+    skos:definition "The view's column that groups the series."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 5"@en .
+
+mkt:rowFilter a owl:DatatypeProperty ;
+    rdfs:label "row filter"@en ;
+    rdfs:domain mkt:SeriesEnumeration ; rdfs:range rdf:langString ;
+    skos:definition "Which of the view's rows belong to the measure, in words, as the agent's filters state it."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0097, item 5"@en .

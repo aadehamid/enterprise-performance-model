@@ -66,14 +66,17 @@ MODULES = {
         # the measure shape is closed, and it requires core 2.2.0 (EPM-DEC-001-0079).
         # 1.1.1 is a patch approved with the close-out releases: pop:populationEvidence gains rdfs:range xsd:string,
         # closing its projection gap; it requires core 2.3.0, the current release (EPM-DEC-001-0088, 0093).
-        "version": "1.1.1", "stage": None, "issued": "2026-10-23",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
+        # 1.2.0 is a minor of item F's release plan, which the decision owner approved: KPI-0001 on Crack Spreads
+        # Pricing, Additional Market Prices narrowed to renewables and NGLs, the duplicate alias dropped, top
+        # concepts both ways; it requires core 2.3.0 (EPM-DEC-001-0097, 0098, 0100).
+        "version": "1.2.0", "stage": None, "issued": "2026-10-25",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)"),
         "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl", "population/vocabulary.ttl", "population/population.ttl"],
         "shapes": ["kpi/shapes.ttl"],
         "depends_on": ["core"],
         "pins": {"core": "2.3.0"},
         "decisions": ["EPM-DEC-001-0040", "EPM-DEC-001-0042", "EPM-DEC-001-0043", "EPM-DEC-001-0062", "EPM-DEC-001-0079",
-                      "EPM-DEC-001-0088", "EPM-DEC-001-0093"],
+                      "EPM-DEC-001-0088", "EPM-DEC-001-0093", "EPM-DEC-001-0097", "EPM-DEC-001-0098", "EPM-DEC-001-0100"],
     },
     "party": {
         "title": "LSC Party Module",
@@ -104,17 +107,21 @@ MODULES = {
     # (EPM-DEC-001-0077). Each requires core 2.2.0, the release that holds every process they link.
     "data-product": {
         "title": "LSC Data Product Module",
-        "description": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them (Step 7). Definitions only, never data values; mapped to DCAT, not imported.",
+        "description": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them; and the pricing tables and views on the data platform, foundational or derived, with their lineage and the Genie agents that use them (Step 7). Definitions only, never data values; mapped to DCAT, not imported.",
         # 1.1.0 is a minor approved with the close-out releases: the Customer Master data product, produced by
         # CM 1.3.7.1.1 (MPC-P10.3); it requires core 2.3.0 (EPM-DEC-001-0087, 0088, 0091).
-        "version": "1.1.0", "stage": None, "issued": "2026-10-23",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
-        "parts": ["data-product/vocabulary.ttl", "data-product/data-products.ttl"],
+        # 1.2.0 is a minor of item F's release plan, which the decision owner approved: the pricing platform tables,
+        # the data product kinds, their lineage and the Genie agents; the four line labels and top concepts both ways.
+        # It requires core 2.3.0, and kpi 1.2.0 and system 1.2.0, whose measures and systems it links (EPM-DEC-001-0097,
+        # 0098, 0100).
+        "version": "1.2.0", "stage": None, "issued": "2026-10-25",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)"),
+        "parts": ["data-product/vocabulary.ttl", "data-product/data-products.ttl", "data-product/pricing.ttl"],
         "shapes": ["data-product/shapes.ttl"],
-        "depends_on": ["core"],
-        "pins": {"core": "2.3.0"},
+        "depends_on": ["core", "kpi", "system"],
+        "pins": {"core": "2.3.0", "kpi": "1.2.0", "system": "1.2.0"},
         "decisions": ["EPM-DEC-001-0005", "EPM-DEC-001-0048", "EPM-DEC-001-0053", "EPM-DEC-001-0077", "EPM-DEC-001-0087",
-                      "EPM-DEC-001-0088", "EPM-DEC-001-0091"],
+                      "EPM-DEC-001-0088", "EPM-DEC-001-0091", "EPM-DEC-001-0097", "EPM-DEC-001-0098", "EPM-DEC-001-0100"],
     },
     "value-stream": {
         "title": "LSC Value Stream Module",
@@ -133,17 +140,19 @@ MODULES = {
     },
     "system": {
         "title": "LSC System Module",
-        "description": "The systems, office tools and working documents the process map names, with their kind and the processes that use them (Step 7).",
+        "description": "The systems, office tools and working documents the process map names, with their kind, definitions and the processes that use them, and the systems the pricing assets name (Step 7).",
         # 1.1.0 is a minor the decision owner approved: 15 systems defined from their vendors' own descriptions
         # or the decision owner's, full names as preferred labels, both code lists' members as top concepts both
         # ways; it requires core 2.3.0 (EPM-DEC-001-0098, 0099).
-        "version": "1.1.0", "stage": None, "issued": "2026-10-25",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md", "Approve all three (Recommended)"),
+        # 1.2.0 is a minor of item F's release plan, which the decision owner approved: MIPS and Databricks, which the
+        # process map does not name, and MPR's definition, from the decision owner's pricing assets (EPM-DEC-001-0100).
+        "version": "1.2.0", "stage": None, "issued": "2026-10-25",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)"),
         "parts": ["system/vocabulary.ttl", "system/systems.ttl"],
         "shapes": ["system/shapes.ttl"],
         "depends_on": ["core"],
         "pins": {"core": "2.3.0"},
-        "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077", "EPM-DEC-001-0098", "EPM-DEC-001-0099"],
+        "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100"],
     },
     "lane": {
         "title": "LSC Lane Module",
@@ -158,14 +167,18 @@ MODULES = {
     },
     "market-data": {
         "title": "LSC Market Data Module",
-        "description": "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment (Step 7). Definitions only, never prices.",
-        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        "description": "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment; the prices the decision owner's pricing views report for the other pricing measures; and where each measure's complete list of series is (Step 7). Definitions only, never prices.",
+        # 1.1.0 is a minor of item F's release plan, which the decision owner approved: the pricing views' prices for
+        # each pricing measure, the columns that list every series, two NYMEX cracks, top concepts both ways; it
+        # requires kpi 1.2.0 (EPM-DEC-001-0097, 0098, 0100).
+        "version": "1.1.0", "stage": None, "issued": "2026-10-25",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)"),
         "parts": ["market-data/vocabulary.ttl", "market-data/market-data.ttl"],
         "shapes": ["market-data/shapes.ttl"],
         "depends_on": ["kpi"],
-        "pins": {"kpi": "1.0.1"},
-        "decisions": ["EPM-DEC-001-0046", "EPM-DEC-001-0057", "EPM-DEC-001-0066", "EPM-DEC-001-0077"],
+        "pins": {"kpi": "1.2.0"},
+        "decisions": ["EPM-DEC-001-0046", "EPM-DEC-001-0057", "EPM-DEC-001-0066", "EPM-DEC-001-0077", "EPM-DEC-001-0097",
+                      "EPM-DEC-001-0098", "EPM-DEC-001-0100"],
     },
     # The integration package's first release, a major the decision owner approved with the release plan
     # (EPM-DEC-001-0078). It packages three small vocabularies, each keeping its own namespace; the package
@@ -181,18 +194,21 @@ MODULES = {
         # 2.1.0 is a minor the decision owner approved: the 27 sources of the systems' definitions in their tiers,
         # the three code lists' members as top concepts both ways; it requires the new system and party releases
         # (EPM-DEC-001-0098, 0099).
-        "version": "2.1.0", "stage": None, "issued": "2026-10-25",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md", "Approve all three (Recommended)"),
+        # 2.2.0 is a minor of item F's release plan, which the decision owner approved: the consumer rule for a value
+        # quoted through the bound metric view, eight more sources tiered; it requires the new releases (EPM-DEC-001-0097,
+        # 0100).
+        "version": "2.2.0", "stage": None, "issued": "2026-10-25",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)"),
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
         "shapes": ["consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl"],
         "own_shapes": 3,  # all three shape files are the package's own; the package's shapes.ttl holds them merged
         "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data",
                        "party"],
-        "pins": {"core": "2.3.0", "organization": "2.0.0", "kpi": "1.1.1", "data-product": "1.1.0", "value-stream": "1.1.0",
-                 "system": "1.1.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.2.0"},
+        "pins": {"core": "2.3.0", "organization": "2.0.0", "kpi": "1.2.0", "data-product": "1.2.0", "value-stream": "1.1.0",
+                 "system": "1.2.0", "lane": "1.0.0", "market-data": "1.1.0", "party": "1.2.0"},
         "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078", "EPM-DEC-001-0088",
-                      "EPM-DEC-001-0094", "EPM-DEC-001-0098", "EPM-DEC-001-0099"],
+                      "EPM-DEC-001-0094", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100"],
     },
 }
 

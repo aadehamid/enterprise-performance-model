@@ -22,7 +22,7 @@ RELEASE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 # The module graphs loaded with the release (Step 5: roles and RACI assignments; Step 7: the kpi, data-product, value-stream, system, lane and market-data modules; Steps 5 to 7: the `party` module).
 MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl", "roles.ttl", "assignments.ttl")] \
     + [os.path.join(HERE, "..", "kpi", n) for n in ("vocabulary.ttl", "measures.ttl")] \
-    + [os.path.join(HERE, "..", "data-product", n) for n in ("vocabulary.ttl", "data-products.ttl")] \
+    + [os.path.join(HERE, "..", "data-product", n) for n in ("vocabulary.ttl", "data-products.ttl", "pricing.ttl")] \
     + [os.path.join(HERE, "..", "value-stream", n) for n in ("vocabulary.ttl", "value-streams.ttl")] \
     + [os.path.join(HERE, "..", "system", n) for n in ("vocabulary.ttl", "systems.ttl")] \
     + [os.path.join(HERE, "..", "lane", n) for n in ("vocabulary.ttl", "lanes.ttl")] \

@@ -131,6 +131,32 @@ class Build(unittest.TestCase):
             self.assertIn((p, RDF.type, SKOS.Concept), CORE, p)
 
 
+class Release120(unittest.TestCase):
+    # kpi 1.2.0 (EPM-DEC-001-0097, items 3 and 4; EPM-DEC-001-0098, items 3 and 5). Values written out by hand.
+    DCT = Namespace("http://purl.org/dc/terms/")
+
+    def test_crack_spreads_carries_kpi_0001(self):
+        self.assertEqual(str(MEASURES.value(MEASURE["crack-spreads"], self.DCT.identifier)), "KPI-0001")
+        self.assertIn("KPI Crack Spread 3-2-1", str(MEASURES.value(MEASURE["crack-spreads"], SKOS.note)))
+        self.assertEqual(len(set(MEASURES.subjects(self.DCT.identifier, None))), 1)
+
+    def test_additional_market_prices_is_narrowed_to_renewables_and_ngls(self):
+        m = MEASURE["additional-market-prices"]
+        self.assertEqual(MEASURES.value(m, SKOS.prefLabel), Literal("Additional Market Prices (Renewables, NGLs)", lang="en"))
+        self.assertNotIn("benchmark", str(MEASURES.value(m, SKOS.definition)).lower())
+        self.assertIn("Benchmark, Crude, Renewables, NGLs", str(MEASURES.value(m, SKOS.changeNote)))
+
+    def test_no_alias_repeats_its_measures_name(self):
+        for m in MEASURES.subjects(RDF.type, KPI.MeasureDefinition):
+            self.assertNotIn(MEASURES.value(m, SKOS.prefLabel), set(MEASURES.objects(m, SKOS.altLabel)), m)
+
+    def test_both_schemes_state_their_top_concepts_both_ways(self):
+        for g, scheme, n in ((MEASURES, KPI.Measures, 41), (VOCAB, KPI.MeasureKind, 8)):
+            tops = set(g.objects(scheme, SKOS.hasTopConcept))
+            self.assertEqual(len(tops), n)
+            self.assertEqual(tops, set(g.subjects(SKOS.topConceptOf, scheme)))
+
+
 class Shapes(unittest.TestCase):
     def test_the_module_conforms(self):
         self.assertTrue(conforms(module_graph()))

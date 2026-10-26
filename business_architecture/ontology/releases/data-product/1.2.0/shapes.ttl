@@ -1,0 +1,250 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/data-product/kind/> .
+@prefix layer: <https://w3id.org/lsc/ontology/modules/data-product/layer/> .
+@prefix product: <https://w3id.org/lsc/ontology/modules/data-product/product/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/data-product/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix status: <https://w3id.org/lsc/ontology/modules/data-product/status/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:ActiveIsDefined a sh:NodeShape ;
+    sh:message "An active data product or line has a definition." ;
+    sh:or ( [ sh:not [ sh:hasValue status:active ;
+                        sh:path dp:portfolioStatus ] ] [ sh:minCount 1 ;
+                sh:path skos:definition ] ) ;
+    sh:targetClass dp:DataProduct,
+        dp:DataProductLine .
+
+shp:Agent a sh:NodeShape ;
+    sh:not [ sh:class dp:PlatformDataProduct ] ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path rdfs:label ],
+        [ sh:minCount 1 ;
+            sh:node [ sh:property [ sh:hasValue layer:metric-view ;
+                            sh:path dp:layer ] ] ;
+            sh:path prov:used ],
+        [ sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ] ;
+    sh:targetClass prov:SoftwareAgent .
+
+shp:Derived a sh:NodeShape ;
+    sh:message "A derived data product is derived from at least one other data product." ;
+    sh:or ( [ sh:not [ sh:property [ sh:hasValue kind:derived ;
+                                sh:path dp:dataProductKind ] ] ] [ sh:property [ sh:path prov:wasDerivedFrom ;
+                        sh:qualifiedMinCount 1 ;
+                        sh:qualifiedValueShape [ sh:class dp:PlatformDataProduct ] ] ] ) ;
+    sh:targetClass dp:PlatformDataProduct .
+
+shp:Foundational a sh:NodeShape ;
+    sh:message "A foundational data product is derived only from replicas of systems of record." ;
+    sh:or ( [ sh:not [ sh:property [ sh:hasValue kind:foundational ;
+                                sh:path dp:dataProductKind ] ] ] [ sh:property [ sh:node [ sh:property [ sh:hasValue layer:replica ;
+                                        sh:path dp:layer ] ] ;
+                        sh:path prov:wasDerivedFrom ] ] ) ;
+    sh:targetClass dp:PlatformDataProduct .
+
+shp:Line a sh:NodeShape ;
+    sh:property [ sh:class dp:PortfolioSegment ;
+            sh:maxCount 1 ;
+            sh:message "A data product line sits in exactly one segment." ;
+            sh:minCount 1 ;
+            sh:path skos:broader ],
+        [ sh:in ( status:active status:defined-only status:open-decision ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:portfolioStatus ] ;
+    sh:targetClass dp:DataProductLine .
+
+shp:NoRowsOnTables a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:inScheme skos:topConceptOf dp:fullName dp:sandbox dp:layer dp:copiesSystem dp:dependsOnSystem dp:servesMeasure prov:wasDerivedFrom dcterms:source dcterms:isPartOf dp:dataProductKind dp:classificationTest dp:classificationReason ) ;
+    sh:message "A platform table carries its definition and lineage, never its rows." ;
+    sh:targetClass dp:PlatformTable .
+
+shp:NoValuesOnProducts a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:inScheme skos:definition skos:editorialNote skos:altLabel skos:scopeNote skos:broader dcterms:source dp:portfolioStatus dp:producedBy dp:consumedBy ) ;
+    sh:message "A data product carries only its definition and links, never data values (EPM-DEC-001-0005)." ;
+    sh:targetClass dp:DataProduct .
+
+shp:PlatformColumn a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class dp:PlatformTable ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:columnOf ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:columnName ],
+        [ sh:class dp:PlatformColumn ;
+            sh:minCount 0 ;
+            sh:path prov:wasDerivedFrom ] ;
+    sh:targetClass dp:PlatformColumn .
+
+shp:PlatformDataProduct a sh:NodeShape ;
+    sh:property [ sh:hasValue product:master-pricing ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dcterms:isPartOf ],
+        [ sh:in ( kind:foundational kind:derived ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:dataProductKind ],
+        [ sh:in ( "inputs"^^xsd:string "logic"^^xsd:string ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:classificationTest ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:classificationReason ],
+        [ sh:message "A data product is derived from at least one table." ;
+            sh:minCount 1 ;
+            sh:path prov:wasDerivedFrom ] ;
+    sh:targetClass dp:PlatformDataProduct .
+
+shp:PlatformTable a sh:NodeShape ;
+    sh:message "A replica copies one system and is no data product; every other platform table is a data product." ;
+    sh:or ( [ sh:not [ sh:class dp:PlatformDataProduct ] ;
+                sh:property [ sh:hasValue layer:replica ;
+                        sh:path dp:layer ],
+                    [ sh:minCount 1 ;
+                        sh:path dp:copiesSystem ],
+                    [ sh:maxCount 0 ;
+                        sh:path prov:wasDerivedFrom ] ] [ sh:class dp:PlatformDataProduct ;
+                sh:not [ sh:property [ sh:hasValue layer:replica ;
+                                sh:path dp:layer ] ] ] ) ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:notation ],
+        [ sh:hasValue dp:PlatformTables ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:inScheme ],
+        [ sh:hasValue dp:PlatformTables ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:topConceptOf ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:fullName ],
+        [ sh:datatype xsd:boolean ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:sandbox ],
+        [ sh:in ( layer:replica layer:silver layer:gold layer:metric-view ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:layer ],
+        [ sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:copiesSystem ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:dependsOnSystem ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:servesMeasure ],
+        [ sh:class dp:PlatformTable ;
+            sh:minCount 0 ;
+            sh:path prov:wasDerivedFrom ],
+        [ sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ] ;
+    sh:targetClass dp:PlatformTable .
+
+shp:PortfolioItem a sh:NodeShape ;
+    sh:message "A portfolio item has a definition or a note saying why it is parked, not both." ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:languageIn ( "en" ) ;
+            sh:maxCount 1 ;
+            sh:message "A portfolio item has exactly one English name." ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:message "A portfolio item cites its source." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "A portfolio item keeps its portfolio id as its notation." ;
+            sh:minCount 1 ;
+            sh:path skos:notation ],
+        [ sh:hasValue dp:DataProducts ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:inScheme ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:definition ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:editorialNote ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:altLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:scopeNote ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:historyNote ] ;
+    sh:targetClass dp:DataProduct,
+        dp:DataProductLine,
+        dp:PortfolioSegment ;
+    sh:xone ( [ sh:minCount 1 ;
+                sh:path skos:definition ] [ sh:minCount 1 ;
+                sh:path skos:editorialNote ] ) .
+
+shp:Product a sh:NodeShape ;
+    sh:property [ sh:class dp:DataProductLine ;
+            sh:maxCount 1 ;
+            sh:message "A data product sits in exactly one data product line." ;
+            sh:minCount 1 ;
+            sh:path skos:broader ],
+        [ sh:in ( status:active status:defined-only status:open-decision ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dp:portfolioStatus ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:producedBy ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:consumedBy ] ;
+    sh:targetClass dp:DataProduct .
+
+shp:Segment a sh:NodeShape ;
+    sh:property [ sh:hasValue dp:DataProducts ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:topConceptOf ],
+        [ sh:maxCount 0 ;
+            sh:path skos:broader ],
+        [ sh:maxCount 1 ;
+            sh:message "A segment is anchored in exactly one part of the process map." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dp:anchoredIn ] ;
+    sh:targetClass dp:PortfolioSegment .
+

@@ -11,6 +11,11 @@ mark that its source does not list its legs. The build fails unless every region
 and blended series a row names exists, each leg-built series has one crude leg, at least one
 product leg and at most one compliance-cost leg, a blended series has no legs, a series with
 neither legs nor a blend is marked legs_unstated, and every source is in the source list.
+
+Since 1.1.0 (EPM-DEC-001-0097, items 4 and 5): market-prices.csv names the prices the decision owner's pricing
+views report for the other pricing measures, each linked to its measure, reusing a benchmark of the same name;
+enumerations.csv names, for each measure, the view and columns that list all of its series, since the module
+names only examples. Every scheme states its top concepts both ways (EPM-DEC-001-0098, item 5).
 """
 import argparse
 import csv
@@ -43,6 +48,9 @@ SOURCES = {
     "MPC-ECON": (SRC["mpc-economics-crack-spread-kpi-definition"],
                  "MPC Economics, 3-2-1 Crack Spread KPI Definition, provided by the decision owner on 2026-10-20, "
                  "business_architecture/reference/internal/crack-spread-kpi-definition.md"),
+    "OWNER-ASSETS": (SRC["decision-owner-pricing-assets-2026-10-25"],
+                     "The decision owner's Databricks pricing metric views, their lineage and the Genie agents' instructions "
+                     "(idp_sbx sandbox), shared on 2026-10-25 and held outside the repository (EPM-DEC-001-0097)"),
     "CME-FRESH": (SRC["cme-fresh-from-the-trading-room-2026-07-14"],
                   "CME Group, Fresh from the Trading Room: Papering over the cracks (2026-07-14), "
                   "https://www.cmegroup.com/newsletters/fresh-from-the-trading-room/2026-07-14.html, retrieved 2026-10-19"),
@@ -64,6 +72,10 @@ EX_RVO_NOTE = ("Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2
                "the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels "
                "this treatment ex-RIN.")
 SCHEMES = {"refining": MKT.RefiningRegions, "market": MKT.MarketRegions}
+PRICE = Namespace("https://w3id.org/lsc/ontology/modules/market-data/price/")
+ENUM = Namespace("https://w3id.org/lsc/ontology/modules/market-data/enumeration/")
+REPORTED_AS = ("basis", "cash", "differential", "settlement", "assessment")
+TEMPLATE_NOTE = ("The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps).")
 KINDS = ("crude-marker", "product-benchmark", "compliance-cost")
 
 
@@ -78,6 +90,7 @@ def legs(text):
 
 def load():
     regions, benchmarks, series = read_csv("regions.csv"), read_csv("benchmarks.csv"), read_csv("series.csv")
+    prices, enums = read_csv("market-prices.csv"), read_csv("enumerations.csv")
     region_ids = {r["slug"] for r in regions}
     bench = {b["slug"]: b for b in benchmarks}
     series_ids = {s["slug"] for s in series}
@@ -111,15 +124,30 @@ def load():
                 problems.append(f"series {s['slug']}: needs one crude leg, at least one product leg and at most one compliance-cost leg")
             if ("compliance-cost" in kinds) != (s["excludes_rin_cost"] == "false"):
                 problems.append(f"series {s['slug']}: a series deducts the RVO cost (an RVO leg) exactly when excludes_rin_cost is false")
+    labels = {b["label"] for b in benchmarks} | {s["label"] for s in series}
+    for p in prices:
+        problems += [f"price {p['slug']}: measure {p['measure']!r} is not a measure of the kpi module"] if p["measure"] not in measures else []
+        problems += [f"price {p['slug']}: reported as {x!r}" for x in p["reported_as"].split(";") if x not in REPORTED_AS]
+        if p["reuses"]:
+            if p["reuses"] not in bench:
+                problems.append(f"price {p['slug']}: reuses unknown benchmark {p['reuses']!r}")
+            elif p["mpr"] and bench[p["reuses"]]["mpr"] != p["mpr"]:
+                problems.append(f"price {p['slug']}: its Price Master ID differs from the benchmark it reuses")
+        elif not p["definition"]:
+            problems.append(f"price {p['slug']}: a new price needs a definition")
+        elif p["label"] in labels:
+            problems.append(f"price {p['slug']}: label {p['label']!r} is another series' or benchmark's; reuse it instead")
+    problems += [f"enumeration {e['slug']}: measure {e['measure']!r} is not a measure" for e in enums if e["measure"] not in measures]
     if problems:
         sys.exit("market-data tables do not reconcile:\n  " + "\n  ".join(problems))
-    return regions, benchmarks, series
+    return regions, benchmarks, series, prices, enums
 
 
-def build(regions, benchmarks, series):
+def build(regions, benchmarks, series, prices=(), enums=()):
     g = Graph()
     for prefix, ns in (("mkt", MKT), ("bkind", BKIND), ("region", REGION), ("benchmark", BENCH), ("series", SERIES),
-                       ("leg", LEG), ("measure", MEASURE), ("src", SRC), ("skos", SKOS), ("dcterms", DCTERMS)):
+                       ("leg", LEG), ("measure", MEASURE), ("src", SRC), ("skos", SKOS), ("dcterms", DCTERMS),
+                       ("price", PRICE), ("enumeration", ENUM)):
         g.bind(prefix, ns)
     for iri, title in SOURCES.values():
         g.add((iri, RDF.type, DCTERMS.BibliographicResource))
@@ -128,6 +156,8 @@ def build(regions, benchmarks, series):
     def concept(iri, scheme, row, source):
         g.add((iri, RDF.type, SKOS.Concept))
         g.add((iri, SKOS.inScheme, scheme))
+        g.add((iri, SKOS.topConceptOf, scheme))  # flat schemes, stated both ways (EPM-DEC-001-0098, item 5)
+        g.add((scheme, SKOS.hasTopConcept, iri))
         g.add((iri, SKOS.prefLabel, Literal(row["label"], lang="en")))
         g.add((iri, SKOS.notation, Literal(row["slug"], datatype=XSD.string)))
         g.add((iri, SKOS.definition, Literal(row["definition"], lang="en")))
@@ -172,10 +202,39 @@ def build(regions, benchmarks, series):
                 else EX_RVO_NOTE if s["excludes_rin_cost"] == "false" else None)
         if note:
             g.add((iri, SKOS.scopeNote, Literal(note, lang="en")))
+    for p in prices:
+        if p["reuses"]:
+            iri = BENCH[p["reuses"]]
+        else:
+            iri = PRICE[p["slug"].removeprefix("price-")]
+            concept(iri, MKT.Series, p, "OWNER-ASSETS")
+            g.add((iri, RDF.type, MKT.MarketPrice))
+            g.add((iri, SKOS.editorialNote, Literal(TEMPLATE_NOTE, lang="en")))
+            if p["mpr"]:
+                g.add((iri, MKT.priceMasterId, Literal(p["mpr"], datatype=XSD.string)))
+        g.add((iri, MKT.priceOf, MEASURE[p["measure"]]))
+        for x in p["reported_as"].split(";"):
+            g.add((iri, MKT.reportedAs, Literal(x, datatype=XSD.string)))
+    if prices:
+        g.add((SOURCES["OWNER-ASSETS"][0], RDF.type, DCTERMS.BibliographicResource))
+    for e in enums:
+        iri = ENUM[e["slug"]]
+        g.add((iri, RDF.type, MKT.SeriesEnumeration))
+        g.add((iri, MKT.enumerates, MEASURE[e["measure"]]))
+        g.add((iri, MKT.sourceView, Literal(e["view"], datatype=XSD.string)))
+        g.add((iri, MKT.idColumn, Literal(e["id_column"], datatype=XSD.string)))
+        g.add((iri, MKT.nameColumn, Literal(e["name_column"], datatype=XSD.string)))
+        if e["group_column"]:
+            g.add((iri, MKT.groupColumn, Literal(e["group_column"], datatype=XSD.string)))
+        if e["filter"]:
+            g.add((iri, MKT.rowFilter, Literal(e["filter"], lang="en")))
+        if e["count"]:
+            g.add((iri, SKOS.note, Literal(e["count"], lang="en")))
+        g.add((iri, DCTERMS.source, SOURCES["OWNER-ASSETS"][0]))
     return g
 
 
-def figures(regions, benchmarks, series):
+def figures(regions, benchmarks, series, prices=(), enums=()):
     return {
         "regions": len(regions),
         "market regions": sum(r["scheme"] == "market" for r in regions),
@@ -184,6 +243,9 @@ def figures(regions, benchmarks, series):
         "price master ids": sum(bool(b["mpr"]) for b in benchmarks) + sum(bool(s["mpr"]) for s in series),
         "series": len(series),
         "legs": sum(len(legs(s["legs"])) for s in series),
+        "market prices": sum(not p["reuses"] for p in prices),
+        "benchmarks that are also market prices": sum(bool(p["reuses"]) for p in prices),
+        "enumerations": len(enums),
     }
 
 
@@ -192,11 +254,12 @@ def main():
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--verify", action="store_true")
     args = ap.parse_args()
-    regions, benchmarks, series = load()
+    regions, benchmarks, series, prices, enums = load()
     text = ("# Benchmark series of the market-data module (Step 7; EPM-DEC-001-0057, EPM-DEC-001-0066).\n"
-            "# Built by build_market_data.py from regions.csv, benchmarks.csv and series.csv. Do not edit by hand.\n"
-            + build(regions, benchmarks, series).serialize(format="turtle"))
-    print("; ".join(f"{k} {v}" for k, v in figures(regions, benchmarks, series).items()))
+            "# Built by build_market_data.py from regions.csv, benchmarks.csv, series.csv, market-prices.csv and\n"
+            "# enumerations.csv. Do not edit by hand.\n"
+            + build(regions, benchmarks, series, prices, enums).serialize(format="turtle"))
+    print("; ".join(f"{k} {v}" for k, v in figures(regions, benchmarks, series, prices, enums).items()))
     if args.verify:
         if not (os.path.exists(OUTPUT) and open(OUTPUT).read() == text):
             sys.exit("market-data.ttl is not current: run build_market_data.py --write")
