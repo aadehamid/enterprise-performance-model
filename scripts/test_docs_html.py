@@ -40,57 +40,180 @@ def test_the_check_command_fails_on_a_stale_or_missing_page(monkeypatch, capsys)
     assert b.main(["--check"]) == 1
 
 
-class Loads(html_parser.HTMLParser):
-    """Every resource a page would fetch: a URL in any attribute that loads (not an <a> link), an embedding
-    tag, and CSS @import or url() in a style block or style attribute. A data: URI is embedded, not fetched."""
-    LOADING = {"src", "href", "srcset", "poster", "data", "action", "formaction", "background", "manifest"}
+# The network checks, the visible-text reader and the credential scan come from personal-agent-skills'
+# scripts/test_playbook_html.py (round 2 of its review), so both builders' pages are held to one standard.
+REMOTE_CSS = re.compile(r"url\s*\(|@import", re.I)
+REMOTE_JS = re.compile(r"\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|\bimport\s*\(|importScripts"
+                       r"|new\s+(?:Image|Worker|SharedWorker)\b|\.src\s*=|\.href\s*=|location\s*=|window\.open", re.I)
+LOADING_RELS = {"stylesheet", "preload", "prefetch", "preconnect", "dns-prefetch", "icon", "modulepreload",
+                "manifest", "apple-touch-icon", "prerender"}
+
+
+class Resources(html_parser.HTMLParser):
+    """What a page would fetch: any src, srcset, data, poster or background attribute other than an embedded
+    PNG; a link whose rel holds a loading token; a frame or media element; a style attribute or <style> block
+    with url() or @import (any case); and inline script that opens a request."""
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.found, self.style = [], False
+        self.fetched, self.images, self._in = [], [], None
+        self._script, self._style = [], []
 
     def handle_starttag(self, tag, attrs):
-        if tag in ("img", "iframe", "object", "embed", "video", "audio", "source", "track"):
-            self.found.append(f"<{tag}>")
-        for name, value in attrs:
-            value = (value or "").strip()
-            if tag != "a" and name in self.LOADING and value and not value.startswith(("data:", "#")):
-                self.found.append(f"<{tag} {name}={value}>")
-            if name == "style" and re.search(r"url\(|@import", value, re.I):
-                self.found.append(f"<{tag} style>")
-        self.style = tag == "style"
+        a = {k.lower(): (v or "") for k, v in attrs}
+        if tag == "img":
+            self.images.append(a.get("src", ""))
+        for key in ("src", "srcset", "data", "poster", "background", "lowsrc", "dynsrc"):
+            if key in a and not (tag == "img" and key == "src" and a[key].startswith("data:image/png;base64,")):
+                self.fetched.append(f"{tag} {key}={a[key][:60]}")
+        if tag == "link" and set(a.get("rel", "").lower().split()) & LOADING_RELS:
+            self.fetched.append(f"link rel={a.get('rel')} href={a.get('href')}")
+        if tag in ("iframe", "frame", "embed", "object", "video", "audio", "source", "track", "base"):
+            self.fetched.append(tag)
+        if REMOTE_CSS.search(a.get("style", "")):
+            self.fetched.append(f"{tag} style={a['style'][:60]}")
+        if tag in ("script", "style"):
+            self._in = tag
 
     def handle_endtag(self, tag):
-        self.style = False
+        if tag == self._in:
+            self._in = None
 
     def handle_data(self, data):
-        if self.style and re.search(r"@import|url\(\s*['\"]?(?!data:)", data, re.I):
-            self.found.append("CSS that loads a file")
+        if self._in == "script":
+            self._script.append(data)
+        elif self._in == "style":
+            self._style.append(data)
+
+    def close(self):
+        super().close()
+        if REMOTE_CSS.search("".join(self._style)):
+            self.fetched.append("style block with url() or @import")
+        for m in REMOTE_JS.finditer("".join(self._script)):
+            self.fetched.append(f"script {m.group(0)}")
 
 
-def loads(page):
-    p = Loads()
-    p.feed(page)
+def network_loads(text):
+    p = Resources()
+    p.feed(text)
     p.close()
-    return p.found
+    return p.fetched
 
 
 @pytest.mark.parametrize("out", sorted(PAGES))
 def test_a_page_loads_nothing_from_the_network_or_another_file(out):
-    assert loads(PAGES[out]) == [], out
+    assert network_loads(PAGES[out]) == [], out
 
 
-@pytest.mark.parametrize("markup", [
-    '<script src="https://cdn.x/a.js"></script>', "<script src='https://cdn.x/a.js'></script>",
-    "<script src=https://cdn.x/a.js></script>", '<link rel="stylesheet" href="x.css">', '<img src="d.png">',
-    "<style>@import url(x.css);</style>", '<div style="background:url(x.png)"></div>',
+@pytest.mark.parametrize("canary", [
+    '<img src="data:image/png;base64,AA" srcset="https://example.invalid/a.png 2x">',
+    '<link rel="alternate stylesheet" href="https://example.invalid/a.css">',
+    '<link rel="StyleSheet" href="a.css">',
+    '<style>body { background: URL(https://example.invalid/a.png) }</style>',
+    '<style>@IMPORT "https://example.invalid/a.css";</style>',
+    '<p style="background-image:url(https://example.invalid/a.png)">x</p>',
+    '<script>fetch("https://example.invalid/data")</script>',
+    '<script>new XMLHttpRequest()</script>',
+    '<script>navigator.sendBeacon("https://example.invalid")</script>',
+    '<script>var i = new Image(); i.src = "https://example.invalid/p.png"</script>',
+    '<script src="https://example.invalid/a.js"></script>',
+    "<script src='https://example.invalid/a.js'></script>",
+    "<script src=https://example.invalid/a.js></script>",
+    '<video poster="https://example.invalid/p.png"></video>',
 ])
-def test_the_resource_check_catches_each_way_of_loading(markup):
-    assert loads(markup)
+def test_each_kind_of_network_load_is_caught(canary):
+    assert network_loads(f"<html><body>{canary}</body></html>") != []
 
 
-def test_the_resource_check_allows_links_and_embedded_data():
-    assert loads('<a href="https://x.test/">x</a><a href="#top">t</a><style>a { color: red; }</style>') == []
+def test_an_embedded_png_and_a_plain_link_are_not_loads():
+    assert network_loads('<img src="data:image/png;base64,AA"><a href="https://example.org">x</a>') == []
+
+
+INLINE = {"a", "abbr", "b", "code", "em", "i", "kbd", "mark", "q", "s", "small", "span", "strong", "sub", "sup",
+          "u", "del"}
+
+
+class Visible(html_parser.HTMLParser):
+    """The text a reader sees: no script or style, inline tags joined without a gap (so Mar<b>athon</b> reads
+    Marathon), block tags separated by a line break."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.parts, self._skip = [], 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self._skip += 1
+        elif tag not in INLINE:
+            self.parts.append("\n")
+
+    def handle_endtag(self, tag):
+        if tag in ("script", "style"):
+            self._skip -= 1
+        elif tag not in INLINE:
+            self.parts.append("\n")
+
+    def handle_data(self, data):
+        if not self._skip:
+            self.parts.append(data)
+
+
+def visible_text(text):
+    p = Visible()
+    p.feed(text)
+    p.close()
+    return "".join(p.parts)
+
+
+CREDENTIALS = [
+    ("a Databricks token", r"\bdapi[0-9a-f]{20,}"),
+    ("an OpenAI-style key", r"\bsk-(?:proj-|ant-)?[A-Za-z0-9_-]{20,}"),
+    ("a GitHub token", r"\bgh[pousr]_[A-Za-z0-9]{20,}|\bgithub_pat_[A-Za-z0-9_]{22,}"),
+    ("a Slack token", r"\bxox[abprs]-[A-Za-z0-9-]{10,}"),
+    ("an AWS access key ID", r"\b(?:AKIA|ASIA)[0-9A-Z]{16}\b"),
+    ("an AWS secret access key", r"(?i)aws_secret_access_key\s*[=:]\s*['\"]?[A-Za-z0-9/+=]{40}"),
+    ("a private key", r"-----BEGIN (?:[A-Z]+ )*PRIVATE KEY-----"),
+    ("a Google API key", r"\bAIza[0-9A-Za-z_-]{35}\b"),
+    ("a credential assignment", r"(?i)\b(?:password|passwd|pwd|secret|api[_-]?key|access[_-]?key|auth[_-]?token|token)"
+                                r"\b\s*[=:]\s*['\"]?(?=[^\s'\"<>]*[0-9])[^\s'\"<>{}$%]{12,}"),
+]
+
+
+def credentials(text):
+    """(kind, matched text) for each credential-shaped string in text."""
+    return [(kind, m.group(0)) for kind, pattern in CREDENTIALS for m in re.finditer(pattern, text)]
+
+
+@pytest.mark.parametrize("spec", b.pages(), ids=lambda s: s["out"])
+def test_no_page_or_source_holds_a_credential(spec):
+    page = PAGES[spec["out"]]
+    texts = {spec["out"]: page, spec["out"] + " (visible)": visible_text(page)}
+    for src in spec["sources"] + ([spec["intro"]] if "intro" in spec else []):
+        with open(os.path.join(b.ROOT, src), encoding="utf-8") as f:
+            texts[src] = f.read()
+    assert {name: credentials(text) for name, text in texts.items() if credentials(text)} == {}
+
+
+@pytest.mark.parametrize("canary", [
+    "dapi" + "0123456789abcdef0123456789abcdef", "sk-" + "A1b2C3d4E5f6G7h8I9j0K1l2",
+    "ghp_" + "A1b2C3d4E5f6G7h8I9j0K1l2", "github_pat_" + "11ABCDEFG0123456789_abcdefghijklmnop",
+    "xoxb-" + "1234567890-abcdefghij", "AKIA" + "ABCDEFGHIJKLMNOP",
+    "aws_secret_access_key = " + "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+    "-----BEGIN RSA " + "PRIVATE KEY-----", "AIza" + "SyA1234567890abcdefghijklmnopqrstuv",
+    "password=" + "Hunter2!Hunter2!9", "api_key: " + "'x9.y8-z7_w6@v5u4'",
+])
+def test_each_credential_shape_is_caught(canary):
+    assert credentials(canary) != []
+
+
+@pytest.mark.parametrize("text", ["the password is in ~/epm-lpg/run.env", "--password <password>",
+                                  "NEO4J_PASSWORD=%s", "token: see the env file", "a skill-version"])
+def test_prose_and_placeholders_are_not_credentials(text):
+    assert credentials(text) == []
+
+
+def test_visible_text_joins_inline_tags_and_drops_scripts():
+    assert visible_text("<p>Mar<b>athon</b></p><script>x()</script><p>next</p>").split() == ["Marathon", "next"]
 
 
 def test_unsupported_markdown_stops_the_build_with_its_line():
