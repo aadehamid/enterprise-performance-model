@@ -1,0 +1,7 @@
+slug,measure,view,id_column,name_column,group_column,filter,count
+crack-spreads,crack-spreads,idp_sbx.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw,Price_Master_ID,Price_Master_Name,MIPS_Groups_Text,,127 series in 44 groups on 2026-10-25.
+gasoline-prices,gasoline-prices,idp_sbx.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw,MIPSDisplayName,MIPSDisplayName,Price_Group_Name,"Price_Group_Name is 'Basis' or 'Cash', and MIPSDisplayName is one of the agent's eight gasoline blends.",
+distillate-prices,distillate-prices,idp_sbx.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw,MIPSDisplayName,MIPSDisplayName,Price_Group_Name,"Price_Group_Name is 'Basis' or 'Cash', and MIPSDisplayName is one of the agent's nine distillate blends.",
+crude-prices-differentials,crude-prices,idp_sbx.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw,MIPSDisplayName,MIPSDisplayName,Price_Sheet_Name,"Price_Sheet_Name is 'Crude Reporting Sheet - Domestic Roll' or 'Crude Reporting Sheet Calendar Month Roll', and MIPSDisplayName is one of the agent's ten crude differentials.",
+crude-prices-benchmarks,crude-prices,idp_sbx.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw,Price_Master_ID,Price_Master_Name,,"The view's own definition keeps Price Master IDs 572, 747, 750, 752 and 9471.",Five instruments.
+additional-market-prices,additional-market-prices,idp_sbx.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw,MIPSDisplayName,MIPSDisplayName,,MIPSDisplayName is one of the agent's ten renewables prices or two NGL prices.,

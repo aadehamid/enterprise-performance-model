@@ -11,7 +11,7 @@
 @prefix shp: <https://w3id.org/lsc/ontology/modules/market-data/shapes/> .
 
 shp:Defined a sh:NodeShape ;
-    sh:targetClass mkt:BenchmarkSeries, mkt:Benchmark ;
+    sh:targetClass mkt:BenchmarkSeries, mkt:Benchmark, mkt:MarketPrice ;
     sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:notation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
     sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
@@ -20,7 +20,32 @@ shp:Defined a sh:NodeShape ;
     sh:property [ sh:path mkt:region ; sh:minCount 0 ; sh:maxCount 1 ;
                   sh:node [ sh:or ( [ sh:property [ sh:path skos:inScheme ; sh:hasValue mkt:RefiningRegions ] ]
                                     [ sh:property [ sh:path skos:inScheme ; sh:hasValue mkt:MarketRegions ] ] ) ] ] ;
-    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path skos:topConceptOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue mkt:Series ] ;
+    sh:property [ sh:path mkt:priceOf ; sh:minCount 0 ; sh:maxCount 1 ; sh:class kpi:MeasureDefinition ] ;
+    sh:property [ sh:path mkt:reportedAs ; sh:minCount 0 ; sh:datatype xsd:string ;
+                  sh:in ( "basis"^^xsd:string "cash"^^xsd:string "differential"^^xsd:string "settlement"^^xsd:string "assessment"^^xsd:string ) ] .
+
+# Since 1.1.0: a market price is presented by exactly one measure (EPM-DEC-001-0097, item 4).
+shp:MarketPrice a sh:NodeShape ;
+    sh:targetClass mkt:MarketPrice ;
+    sh:property [ sh:path mkt:priceOf ; sh:minCount 1 ] ;
+    sh:property [ sh:path mkt:reportedAs ; sh:minCount 1 ] ;
+    sh:property [ sh:path mkt:priceMasterId ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+shp:SeriesEnumeration a sh:NodeShape ;
+    sh:targetClass mkt:SeriesEnumeration ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:path mkt:enumerates ; sh:minCount 1 ; sh:maxCount 1 ; sh:class kpi:MeasureDefinition ] ;
+    sh:property [ sh:path mkt:sourceView ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path mkt:idColumn ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path mkt:nameColumn ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path mkt:groupColumn ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path mkt:rowFilter ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:note ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:message "An enumeration names its measure, its view and the columns that list the series, never a value." .
 
 shp:Series a sh:NodeShape ;
     sh:targetClass mkt:BenchmarkSeries ;
@@ -50,11 +75,11 @@ shp:Benchmark a sh:NodeShape ;
 
 # A benchmark or series is a definition: no price or value hangs off it (EPM-DEC-001-0005).
 shp:NoPrices a sh:NodeShape ;
-    sh:targetClass mkt:BenchmarkSeries, mkt:Benchmark ;
+    sh:targetClass mkt:BenchmarkSeries, mkt:Benchmark, mkt:MarketPrice ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:altLabel skos:scopeNote skos:inScheme
-                           dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf mkt:benchmarkKind
-                           mkt:priceMasterId mkt:legsUnstated ) ;
+                           skos:topConceptOf dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf
+                           mkt:benchmarkKind mkt:priceMasterId mkt:legsUnstated mkt:priceOf mkt:reportedAs ) ;
     sh:message "A series or benchmark carries its definition, never a price." .
 
 # A refining region is a definition too: no value hangs off it (Pi round 2).
@@ -63,5 +88,6 @@ shp:Region a sh:NodeShape ;
     sh:or ( [ sh:not [ sh:or ( [ sh:path skos:inScheme ; sh:hasValue mkt:RefiningRegions ]
                                [ sh:path skos:inScheme ; sh:hasValue mkt:MarketRegions ] ) ] ]
             [ sh:closed true ;
-              sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:inScheme dcterms:source ) ] ) ;
+              sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:inScheme skos:topConceptOf
+                                     dcterms:source ) ] ) ;
     sh:message "A refining or market region carries its definition, never a value." .
