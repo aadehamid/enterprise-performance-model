@@ -5,7 +5,8 @@
   "ontology_iri": "https://w3id.org/lsc/ontology/modules/party",
   "version_iri": "https://w3id.org/lsc/ontology/modules/party/1.2.0",
   "depends_on": {
-    "core": "2.3.0"
+    "core": "2.3.0",
+    "system": "1.1.0"
   },
   "decisions": [
     "EPM-DEC-001-0067",
@@ -21,16 +22,16 @@
     "EPM-DEC-001-0098",
     "EPM-DEC-001-0099"
   ],
-  "triples": 3957,
+  "triples": 3958,
   "approved_by": {
     "who": "The decision owner",
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md"
   },
   "files": {
-    "CHANGELOG.md": "d26bb255fbb78fc4d98be5ee9483f2cb242cd183dcd46887518f4e14c67aa221",
+    "CHANGELOG.md": "4558c27686e5b8f74905810bd84d91b27a5e8ca1dcf3f7c2035ce4f269464ea9",
     "catalog.ttl": "3d3fb76dcaf1f49e96c0ba3fd9102e4ebfad83292a6f9e84d399b1443a1b41cd",
-    "party.jsonld": "301b1413e8e3d689353888605e7a2983debe3dd419cc7e117875e363e9eda751",
-    "party.ttl": "5be7521e0d439a5c15654fd3cbe9199192ee450463816635eed8f9c06e4f9ed6",
+    "party.jsonld": "bdbd9130747f0bfb2292435eafefc79f73429a60ddde79474cf6e2e14da2891d",
+    "party.ttl": "ee927a9c388a26eb6551a794cf2ac630ce7d991f9bbb1155d11788a70ca82977",
     "shapes.ttl": "6466673d25a40ec215f977129ef7bb7c5abae84ed3fe78411c66c4d6a66e37b3"
   }
 }

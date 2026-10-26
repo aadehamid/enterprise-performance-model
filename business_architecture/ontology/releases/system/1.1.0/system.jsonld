@@ -1400,7 +1400,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "Microsoft's application for chat, meetings and shared files. By the vendor's description, it keeps the tools and files a team works with in one place."
+    "@value": "Microsoft's application for working together. By the vendor's description, it keeps the tools and files a team works with in one place."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -2309,7 +2309,7 @@
     "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
    },
    {
-    "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana"
+    "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana-help"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#altLabel": [
@@ -2321,7 +2321,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "SAP's enterprise resource planning (ERP) system. By the vendor's description, it is a modular ERP for an enterprise's core business processes."
+    "@value": "SAP's business suite, by the vendor's description its next-generation business suite, built on the SAP HANA in-memory platform."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
@@ -3058,14 +3058,14 @@
   ]
  },
  {
-  "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana",
+  "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana-help",
   "@type": [
    "http://purl.org/dc/terms/BibliographicResource"
   ],
   "http://purl.org/dc/terms/title": [
    {
     "@language": "en",
-    "@value": "SAP, SAP S/4HANA, https://www.sap.com/products/erp/s4hana.html, retrieved 2026-10-25"
+    "@value": "SAP Help Portal, SAP Readiness Check, Feature Scope Description, https://help.sap.com/docs/PRODUCT_ID/a281af437b3e4ef4a187c7f35a9093e9, retrieved 2026-10-25"
    }
   ]
  }

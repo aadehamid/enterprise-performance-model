@@ -16,14 +16,14 @@
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **A new module, `system`,** with its own namespace, vocabulary, shapes, build and tests, referring to `core` processes by IRI. The systems are their own things, used by many processes, so they are not attributes of a process.
 2. **A register, as for roles.** `register.csv` maps each string to the systems it names. Strings merge on spelling only, as the role register did (EPM-DEC-001-0031): "Right Angle" becomes an alternative label of RightAngle. A string joined by "/" splits into the systems it names. "APS Planning DB" has no "/", so it stays one system, apart from APS and Planning DB. The four strings that name no system create no node and no link.
-3. **Named, not defined.** No source says what each system does, so none gets a definition. Each carries a note that its definition waits for its owners, and a shape rejects a definition.
+3. **Named, not defined.** No source says what each system does, so none gets a definition. Each carries a note that its definition waits for its owners, and a shape rejects a definition. *2026-10-25:* 15 systems gain a definition from their vendors' own descriptions, marked as such, or the decision owner's; 17 keep the note; the shape now accepts a definition with its source beside the process map, or a note (EPM-DEC-001-0099).
 4. **Three kinds.** Application (software, databases, dashboards, integrations), office tool and working document, so a question about systems can leave out e-mail and slides.
 5. **A link per system and process.** `sys:supports` links a system to each process whose `systems` field names it; read the other way, the process depends on the system. Competency question 6 is answerable.
 
 ## Alternatives considered
 
 - **Split "APS Planning DB" into APS and Planning DB.** Not chosen: the string has no separator, and the map uses "Planning DB" and "APS" separately elsewhere, so it may be a third thing.
-- **Define each system from vendor material.** Not chosen: the map names the systems as the business uses them, and a vendor's description says nothing about that use.
+- **Define each system from vendor material.** Not chosen: the map names the systems as the business uses them, and a vendor's description says nothing about that use. *2026-10-25:* the decision owner asked for it (item G); a vendor's description now defines what a product is, marked as the vendor's, and how the business uses it still comes from the process map (EPM-DEC-001-0099).
 - **Leave office tools and documents out.** Not chosen: the map names them as what the work uses; the kind lets a query leave them out.
 
 ## The decision owner's recorded words

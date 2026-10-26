@@ -25,16 +25,16 @@
     "EPM-DEC-001-0098",
     "EPM-DEC-001-0099"
   ],
-  "triples": 328,
+  "triples": 420,
   "approved_by": {
     "who": "The decision owner",
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md"
   },
   "files": {
-    "CHANGELOG.md": "687059c02d3a0621cfa40a22bac196a96295c82a3e22e4a3dc6cc59c7834a4a8",
+    "CHANGELOG.md": "ffdc7ca737b0ed7d267b5e690e57284fa8a4061101fef060c9db86e6591755ba",
     "catalog.ttl": "322aee6e161d5dd24a633dbb2871bb7bf3d1b796e0b1f43e954816befce8b13b",
-    "integration.jsonld": "b6fc373eb7c1dc2def68746dc91e0a112d69a9e69ebd4851d2698673554f5b60",
-    "integration.ttl": "d52b2012ae1d5319097a4db51555fb7214da12183ae1aa76692b2276e2472e9e",
+    "integration.jsonld": "d6e250a6505b179a5d7818e48f4cbac93055cef8e78e6a57ad6c28d4c3c310df",
+    "integration.ttl": "020cdf35b2dab565e8b0404e27fab0678c6fff4fb1bb80e683142e84a124e2ac",
     "shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d"
   }
 }

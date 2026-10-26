@@ -15,6 +15,7 @@ import sys
 from collections import Counter
 
 from rdflib import Graph, Namespace, URIRef
+from rdflib.namespace import DCTERMS, RDF
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TABLE = os.path.join(HERE, "source-tiers.csv")
@@ -40,6 +41,8 @@ def build(rows):
     g.bind("tier", TIER)
     for r in rows:
         g.add((URIRef(r["source"]), AUTH.evidenceTier, TIER[TIERS[int(r["tier"])]]))
+        # Every source is typed, so the ontology skill's untyped check passes (EPM-DEC-001-0099).
+        g.add((URIRef(r["source"]), RDF.type, DCTERMS.BibliographicResource))
     return g
 
 

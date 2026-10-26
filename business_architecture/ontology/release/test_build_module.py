@@ -163,7 +163,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0"})  # 1.2.0, EPM-DEC-001-0080
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0
-        self.assertEqual(bm.dependencies("party"), {"core": "2.3.0"})  # since 1.1.0 (EPM-DEC-001-0092)
+        self.assertEqual(bm.dependencies("party"), {"core": "2.3.0", "system": "1.1.0"})  # since 1.2.0 (EPM-DEC-001-0099)
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
         self.assertEqual(bm.dependencies("data-product"), {"core": "2.3.0"})  # since 1.1.0 (EPM-DEC-001-0091)
         # value-stream 1.1.0 requires the current releases (EPM-DEC-001-0090).

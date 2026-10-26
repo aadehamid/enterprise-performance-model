@@ -92,8 +92,10 @@ MODULES = {
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md", "Approve all three (Recommended)"),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],
         "shapes": ["party/shapes.ttl"],
-        "depends_on": ["core"],
-        "pins": {"core": "2.3.0"},
+        # Since 1.2.0 it also requires system 1.1.0, whose systems its five skos:exactMatch links name
+        # (EPM-DEC-001-0099; the earlier packages name four of them without requiring system).
+        "depends_on": ["core", "system"],
+        "pins": {"core": "2.3.0", "system": "1.1.0"},
         "decisions": ["EPM-DEC-001-0067", "EPM-DEC-001-0068", "EPM-DEC-001-0069", "EPM-DEC-001-0070",
                       "EPM-DEC-001-0071", "EPM-DEC-001-0072", "EPM-DEC-001-0074", "EPM-DEC-001-0087", "EPM-DEC-001-0088",
                       "EPM-DEC-001-0092", "EPM-DEC-001-0098", "EPM-DEC-001-0099"],

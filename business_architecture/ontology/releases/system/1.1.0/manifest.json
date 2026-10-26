@@ -19,10 +19,10 @@
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md"
   },
   "files": {
-    "CHANGELOG.md": "834df31c7ecf2dffa46d55d7b9610be34eceab803c4a91c8f1e04a6dc1d0d2b3",
+    "CHANGELOG.md": "e12e7576c2895ef489889a9340fc0733d2c8bfd82733bf105428ce0d1e671974",
     "catalog.ttl": "725c41b00315bf583bfafe21c9036d0d3f7ab7d84c100118985301d9ff36b89a",
-    "shapes.ttl": "3e5937470152538989f6f1e23f504cd16fa1d6a0cef3ffde52a0804d4c3c6f52",
-    "system.jsonld": "8f3f14fa8033e02abd5177fa6bc6f18fd6ed567e94ab16bcc8e163e3fe517086",
-    "system.ttl": "5727740de5d1ab6c557c2a440f3ad939faa03e2b103050fdba974664734630f7"
+    "shapes.ttl": "bb36083cb9a84aec8485d9850873b7ed5ef3a2a5baf4f76045ed6ead20849b75",
+    "system.jsonld": "7f92b729ead7072a46dbd578c30340f789f7e1b13dc38cf467f7666e7cc57d62",
+    "system.ttl": "9a74640bd3c285cc4bd4986405f576439cee405ac7c29d11bb3b803fab5d451a"
   }
 }

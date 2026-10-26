@@ -1284,6 +1284,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1292,6 +1295,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1300,6 +1306,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1308,6 +1317,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-24-systems",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1316,6 +1328,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-25-item-g",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1324,6 +1339,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1332,6 +1350,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/gleif-lei",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1340,6 +1361,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/peers"
@@ -1348,6 +1372,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1356,6 +1383,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/mpc"
@@ -1364,6 +1394,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/mpc-s01",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/mpc"
@@ -1372,6 +1405,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/mplx-s01",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/mpc"
@@ -1380,6 +1416,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/office-lanes",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1388,6 +1427,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/phmsa-marathon-pipeline-noa-2024-09-26",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1396,6 +1438,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1404,6 +1449,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-api-653-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1412,6 +1460,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-api-mpms-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1420,6 +1471,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-apqc-pcf-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
@@ -1428,6 +1482,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ascm-cscp-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
@@ -1436,6 +1493,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-bimco-ld-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1444,6 +1504,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-bjce-refps-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
@@ -1452,6 +1515,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ccro-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1460,6 +1526,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ccro-002a",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1468,6 +1537,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ccro-002b",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1476,6 +1548,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-cftc-gloss-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1484,6 +1559,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-cftc-p180-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1492,6 +1570,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-cftc-p45-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1500,6 +1581,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-cmu-refplan-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
@@ -1508,6 +1592,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-doe-rppl-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1516,6 +1603,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-doe-sprassay-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1524,6 +1614,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ei-hm31-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1532,6 +1625,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ei-hm32-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1540,6 +1636,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-eia-gloss-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1548,6 +1647,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-eia-lfmm-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1556,6 +1658,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-eia-pmm-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1564,6 +1669,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-eia-steo-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1572,6 +1680,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-epa-emtr-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1580,6 +1691,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-epa-emts-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1588,6 +1702,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-epa-er-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1596,6 +1713,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-epa-ff-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1604,6 +1724,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-epa-rec-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1612,6 +1735,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-epa-rfs-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1620,6 +1746,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-fasb-asc326-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1628,6 +1757,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-fasb-asc606-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1636,6 +1768,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-fasb-asc815-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1644,6 +1779,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ferc-rto-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1652,6 +1790,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-fmcsa-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1660,6 +1801,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ftc-adm-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1668,6 +1812,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ftc-rp-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1676,6 +1823,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-iea-omr-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1684,6 +1834,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-irs-p510-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1692,6 +1845,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-isda-ma-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1700,6 +1856,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-lnl-t2s-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
@@ -1708,6 +1867,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-naesb-wgq-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1716,6 +1878,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-ofac-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1724,6 +1889,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-orp-dpsc-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
@@ -1732,6 +1900,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-osha-psm-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1740,6 +1911,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-pci-dss-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1748,6 +1922,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-pmpa-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1756,6 +1933,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-reg-b-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1764,6 +1944,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-snf-refps-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
@@ -1772,6 +1955,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-uspto-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1780,6 +1966,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/src-w3c-skos-001",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/framework"
@@ -1788,6 +1977,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/step3c-definition-workbook",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1796,6 +1988,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1804,6 +1999,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/value-stream-order-to-cash",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -1812,6 +2010,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-aspentech-aspen-petroleum-scheduler",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1820,6 +2021,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-aspentech-aspen-pims-brochure",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1828,6 +2032,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-aspentech-mpims-course",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1836,6 +2043,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-aspentech-ppims-course",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1844,6 +2054,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-aveva-pi-system",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1852,6 +2065,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-emk3-senergy",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1860,6 +2076,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-gravitate",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1868,6 +2087,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-ion-rightangle",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1876,6 +2098,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-lenels2-onguard",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1884,6 +2109,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-lexisnexis-bridger-insight-xg",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1892,6 +2120,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-microsoft-excel",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1900,6 +2131,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-microsoft-outlook-business",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1908,6 +2142,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-microsoft-powerpoint",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1916,6 +2153,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-microsoft-teams",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1924,6 +2164,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-oracle-hyperion-planning-11-2",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1932,6 +2175,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-profisee-platform",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1940,6 +2186,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-quorum-flowcal",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1948,6 +2197,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-quorum-software",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1956,6 +2208,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-salesforce",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1964,6 +2219,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-information-steward",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1972,6 +2230,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-mdg",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1979,7 +2240,10 @@
   ]
  },
  {
-  "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana",
+  "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana-help",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1988,6 +2252,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-sirion",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -1996,6 +2263,9 @@
  },
  {
   "@id": "https://w3id.org/lsc/ontology/source/vendor-thomson-reuters-onesource-determination",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/industry"
@@ -2004,6 +2274,9 @@
  },
  {
   "@id": "urn:epm:issue:205:comment:6115309253",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"
@@ -2012,6 +2285,9 @@
  },
  {
   "@id": "urn:epm:issue:205:comment:6116668059",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
   "https://w3id.org/lsc/ontology/modules/authority/evidenceTier": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/authority/tier/process-authority"

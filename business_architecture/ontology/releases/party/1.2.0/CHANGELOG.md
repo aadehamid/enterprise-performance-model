@@ -2,13 +2,20 @@
 
 ## 1.2.0 (2026-10-25)
 
-A minor release: it adds definitions, sources, a match and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099).
+A minor release: it adds definitions, sources, a match and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099). The plan they approved did not list the qSKOS top-concept statements; Claude approved those additions under the delegation, which lets it approve the queue's minor releases (EPM-DEC-001-0028, amendment of 2026-10-25, evening).
 
 - [minor] **Definitions.** 18 of the 42 customer systems gain a `skos:definition` in Claude's words, each citing its source: 14 from their vendors' own descriptions, marked as such, Polaris from PHMSA's notice of amendment of 2024-09-26, and KittyHawk, MAGIC and Allocation Manager from the decision owner's descriptions.
 - [minor] **Match.** SAP S/4HANA is the system module's SAP (`skos:exactMatch`), the decision owner's answer, so five customer systems now match a system-module system.
 - [minor] **Top concepts** (EPM-DEC-001-0098): each code list states its top concepts both ways, and every customer system is a top concept of `party:customer-systems`.
 - [minor] **Shapes.** A customer system's definition cites a source.
 - It requires core 2.3.0, the current release.
+
+
+### Known gaps
+
+- 24 customer systems have no definition: Drop Tank, Gas Buddy, DTN File Server and Federal Health wait for the customer-data owner (`business-closeout.md`, point 11), and the other 20 have only their customer role (EPM-DEC-001-0099, item 10).
+- Quorum is defined at vendor level; which Quorum product it is stays open (`business-closeout.md`, point 14).
+- Polaris: built or bought is not known (`business-closeout.md`, point 15).
 
 ## 1.1.0 (2026-10-23)
 

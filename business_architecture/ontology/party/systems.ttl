@@ -2184,8 +2184,8 @@ src:vendor-sap-information-steward a dcterms:BibliographicResource ;
 src:vendor-sap-mdg a dcterms:BibliographicResource ;
     dcterms:title "SAP, SAP Master Data Governance, https://www.sap.com/products/data-cloud/master-data-governance.html, retrieved 2026-10-25"@en .
 
-src:vendor-sap-s4hana a dcterms:BibliographicResource ;
-    dcterms:title "SAP, SAP S/4HANA, https://www.sap.com/products/erp/s4hana.html, retrieved 2026-10-25"@en .
+src:vendor-sap-s4hana-help a dcterms:BibliographicResource ;
+    dcterms:title "SAP Help Portal, SAP Readiness Check, Feature Scope Description, https://help.sap.com/docs/PRODUCT_ID/a281af437b3e4ef4a187c7f35a9093e9, retrieved 2026-10-25"@en .
 
 src:vendor-sirion a dcterms:BibliographicResource ;
     dcterms:title "Sirion, https://www.sirion.ai/, retrieved 2026-10-25"@en .
@@ -2401,7 +2401,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
 <https://w3id.org/lsc/ontology/modules/party/system/sirion> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:vendor-sirion ;
-    skos:definition "Sirion's contract lifecycle management software. By the vendor's description, it uses AI to manage an enterprise's contracts and get the most value from its relationships."@en ;
+    skos:definition "Sirion's contract management software. By the vendor's description, it uses AI to manage an enterprise's contracts and get the most value from its relationships."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "sirion" ;
     skos:prefLabel "Sirion"@en ;
@@ -2509,11 +2509,11 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
 
 <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> a skos:Concept,
         party:CustomerSystem ;
-    dcterms:source src:vendor-sap-s4hana ;
+    dcterms:source src:vendor-sap-s4hana-help ;
     skos:altLabel "S/4"@en,
         "S4"@en,
         "SAP S/4"@en ;
-    skos:definition "SAP's enterprise resource planning (ERP) system. By the vendor's description, it is a modular ERP for an enterprise's core business processes."@en ;
+    skos:definition "SAP's business suite, by the vendor's description its next-generation business suite, built on the SAP HANA in-memory platform."@en ;
     skos:exactMatch system:sap ;
     skos:inScheme party:customer-systems ;
     skos:notation "sap-s4hana" ;

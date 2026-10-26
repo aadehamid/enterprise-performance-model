@@ -24,7 +24,8 @@ shp:System a sh:NodeShape ;
     # why it has none (EPM-DEC-001-0055; item G, EPM-DEC-001-0099).
     sh:xone (
         [ sh:property [ sh:path skos:definition ; sh:minCount 1 ] ;
-          sh:property [ sh:path dcterms:source ; sh:minCount 2 ] ]
+          sh:property [ sh:path dcterms:source ; sh:minCount 2 ;
+                        sh:hasValue <https://w3id.org/lsc/ontology/source/downstream-process-map> ] ]
         [ sh:property [ sh:path skos:definition ; sh:maxCount 0 ] ;
           sh:property [ sh:path skos:editorialNote ; sh:minCount 1 ] ]
     ) ;

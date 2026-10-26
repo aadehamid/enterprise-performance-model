@@ -2,11 +2,16 @@
 
 ## 2.1.0 (2026-10-25)
 
-A minor release: it adds sources and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099).
+A minor release: it adds sources and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099). The plan they approved did not list the qSKOS top-concept statements; Claude approved those additions under the delegation, which lets it approve the queue's minor releases (EPM-DEC-001-0028, amendment of 2026-10-25, evening).
 
 - [minor] **Source tiers.** 27 sources join `authority`: the decision owner's two answers files on the systems in tier 1, and 25 vendor and regulator pages in tier 4, industry and regulatory sources (92 sources in all).
 - [minor] **Top concepts** (EPM-DEC-001-0098): the members of `auth:EvidenceTier`, `con:RuleKind` and `plc:PlacementKind` are top concepts, stated both ways.
 - It requires the current releases, system 1.1.0 and party 1.2.0 among them.
+
+
+### Known gaps
+
+None.
 
 ## 2.0.0 (2026-10-23)
 

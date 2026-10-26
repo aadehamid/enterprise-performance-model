@@ -276,7 +276,7 @@ system:ms-teams a skos:Concept,
         sys:System ;
     dcterms:source src:downstream-process-map,
         src:vendor-microsoft-teams ;
-    skos:definition "Microsoft's application for chat, meetings and shared files. By the vendor's description, it keeps the tools and files a team works with in one place."@en ;
+    skos:definition "Microsoft's application for working together. By the vendor's description, it keeps the tools and files a team works with in one place."@en ;
     skos:inScheme sys:Systems ;
     skos:notation "ms-teams"^^xsd:string ;
     skos:prefLabel "MS Teams"@en ;
@@ -510,9 +510,9 @@ system:sap a skos:Concept,
         sys:System ;
     dcterms:source src:decision-owner-answers-2026-10-25-item-g,
         src:downstream-process-map,
-        src:vendor-sap-s4hana ;
+        src:vendor-sap-s4hana-help ;
     skos:altLabel "SAP"@en ;
-    skos:definition "SAP's enterprise resource planning (ERP) system. By the vendor's description, it is a modular ERP for an enterprise's core business processes."@en ;
+    skos:definition "SAP's business suite, by the vendor's description its next-generation business suite, built on the SAP HANA in-memory platform."@en ;
     skos:editorialNote "The process map's \"SAP\" is SAP S/4HANA by the decision owner's answer of 2026-10-25. Which edition MPC runs is not stated in the repository, so the definition is at product level (EPM-DEC-001-0099)."@en ;
     skos:inScheme sys:Systems ;
     skos:notation "sap"^^xsd:string ;
@@ -680,8 +680,8 @@ src:vendor-oracle-hyperion-planning-11-2 a dcterms:BibliographicResource ;
 src:vendor-profisee-platform a dcterms:BibliographicResource ;
     dcterms:title "Profisee, Platform, https://profisee.com/platform/, retrieved 2026-10-25"@en .
 
-src:vendor-sap-s4hana a dcterms:BibliographicResource ;
-    dcterms:title "SAP, SAP S/4HANA, https://www.sap.com/products/erp/s4hana.html, retrieved 2026-10-25"@en .
+src:vendor-sap-s4hana-help a dcterms:BibliographicResource ;
+    dcterms:title "SAP Help Portal, SAP Readiness Check, Feature Scope Description, https://help.sap.com/docs/PRODUCT_ID/a281af437b3e4ef4a187c7f35a9093e9, retrieved 2026-10-25"@en .
 
 src:vendor-aspentech-aspen-pims-brochure a dcterms:BibliographicResource ;
     dcterms:title "AspenTech, Aspen PIMS brochure (AT-06696, 2021), https://www.aspentech.com/-/media/aspentech/home/resources/brochure/pdfs/fy21/q3/at-03906-bro-aspen-pims.pdf, retrieved 2026-10-25"@en .

@@ -49,7 +49,8 @@ shp:System a sh:NodeShape ;
     sh:targetClass sys:System ;
     sh:xone ( [ sh:property [ sh:minCount 1 ;
                         sh:path skos:definition ],
-                    [ sh:minCount 2 ;
+                    [ sh:hasValue <https://w3id.org/lsc/ontology/source/downstream-process-map> ;
+                        sh:minCount 2 ;
                         sh:path dcterms:source ] ] [ sh:property [ sh:maxCount 0 ;
                         sh:path skos:definition ],
                     [ sh:minCount 1 ;

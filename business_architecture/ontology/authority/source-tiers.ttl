@@ -1,189 +1,282 @@
 # Evidence tiers of the cited sources (Step 9; EPM-DEC-001-0059).
 # Built by build_source_tiers.py from source-tiers.csv. Do not edit by hand.
 @prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix tier: <https://w3id.org/lsc/ontology/modules/authority/tier/> .
 
-<https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/data-product-portfolio> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/data-product-portfolio> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-24-systems> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-24-systems> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-25-item-g> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-25-item-g> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/downstream-process-map> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/downstream-process-map> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/gleif-lei> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/gleif-lei> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/kpi-classification-evidence> auth:evidenceTier tier:peers .
+<https://w3id.org/lsc/ontology/source/kpi-classification-evidence> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:peers .
 
-<https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence> auth:evidenceTier tier:mpc .
+<https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:mpc .
 
-<https://w3id.org/lsc/ontology/source/mpc-s01> auth:evidenceTier tier:mpc .
+<https://w3id.org/lsc/ontology/source/mpc-s01> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:mpc .
 
-<https://w3id.org/lsc/ontology/source/mplx-s01> auth:evidenceTier tier:mpc .
+<https://w3id.org/lsc/ontology/source/mplx-s01> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:mpc .
 
-<https://w3id.org/lsc/ontology/source/office-lanes> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/office-lanes> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/phmsa-marathon-pipeline-noa-2024-09-26> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/phmsa-marathon-pipeline-noa-2024-09-26> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/src-api-653-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-api-653-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-api-mpms-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-api-mpms-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-apqc-pcf-001> auth:evidenceTier tier:framework .
+<https://w3id.org/lsc/ontology/source/src-apqc-pcf-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
-<https://w3id.org/lsc/ontology/source/src-ascm-cscp-001> auth:evidenceTier tier:framework .
+<https://w3id.org/lsc/ontology/source/src-ascm-cscp-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
-<https://w3id.org/lsc/ontology/source/src-bimco-ld-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-bimco-ld-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-bjce-refps-001> auth:evidenceTier tier:framework .
+<https://w3id.org/lsc/ontology/source/src-bjce-refps-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
-<https://w3id.org/lsc/ontology/source/src-ccro-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ccro-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-ccro-002a> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ccro-002a> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-ccro-002b> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ccro-002b> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-cftc-gloss-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-cftc-gloss-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-cftc-p180-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-cftc-p180-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-cftc-p45-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-cftc-p45-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-cmu-refplan-001> auth:evidenceTier tier:framework .
+<https://w3id.org/lsc/ontology/source/src-cmu-refplan-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
-<https://w3id.org/lsc/ontology/source/src-doe-rppl-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-doe-rppl-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-doe-sprassay-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-doe-sprassay-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-ei-hm31-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ei-hm31-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-ei-hm32-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ei-hm32-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-eia-gloss-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-eia-gloss-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-eia-lfmm-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-eia-lfmm-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-eia-pmm-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-eia-pmm-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-eia-steo-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-eia-steo-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-epa-emtr-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-epa-emtr-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-epa-emts-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-epa-emts-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-epa-er-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-epa-er-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-epa-ff-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-epa-ff-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-epa-rec-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-epa-rec-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-epa-rfs-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-epa-rfs-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-fasb-asc326-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-fasb-asc326-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-fasb-asc606-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-fasb-asc606-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-fasb-asc815-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-fasb-asc815-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-ferc-rto-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ferc-rto-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-fmcsa-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-fmcsa-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-ftc-adm-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ftc-adm-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-ftc-rp-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ftc-rp-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-iea-omr-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-iea-omr-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-irs-p510-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-irs-p510-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-isda-ma-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-isda-ma-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-lnl-t2s-001> auth:evidenceTier tier:framework .
+<https://w3id.org/lsc/ontology/source/src-lnl-t2s-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
-<https://w3id.org/lsc/ontology/source/src-naesb-wgq-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-naesb-wgq-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-ofac-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-ofac-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-orp-dpsc-001> auth:evidenceTier tier:framework .
+<https://w3id.org/lsc/ontology/source/src-orp-dpsc-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
-<https://w3id.org/lsc/ontology/source/src-osha-psm-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-osha-psm-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-pci-dss-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-pci-dss-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-pmpa-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-pmpa-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-reg-b-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-reg-b-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-snf-refps-001> auth:evidenceTier tier:framework .
+<https://w3id.org/lsc/ontology/source/src-snf-refps-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
-<https://w3id.org/lsc/ontology/source/src-uspto-001> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/src-uspto-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/src-w3c-skos-001> auth:evidenceTier tier:framework .
+<https://w3id.org/lsc/ontology/source/src-w3c-skos-001> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
-<https://w3id.org/lsc/ontology/source/step3c-definition-workbook> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/step3c-definition-workbook> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/value-stream-order-to-cash> auth:evidenceTier tier:process-authority .
+<https://w3id.org/lsc/ontology/source/value-stream-order-to-cash> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<https://w3id.org/lsc/ontology/source/vendor-aspentech-aspen-petroleum-scheduler> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-aspentech-aspen-petroleum-scheduler> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-aspentech-aspen-pims-brochure> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-aspentech-aspen-pims-brochure> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-aspentech-mpims-course> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-aspentech-mpims-course> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-aspentech-ppims-course> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-aspentech-ppims-course> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-aveva-pi-system> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-aveva-pi-system> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-emk3-senergy> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-emk3-senergy> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-gravitate> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-gravitate> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-ion-rightangle> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-ion-rightangle> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-lenels2-onguard> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-lenels2-onguard> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-lexisnexis-bridger-insight-xg> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-lexisnexis-bridger-insight-xg> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-microsoft-excel> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-microsoft-excel> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-microsoft-outlook-business> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-microsoft-outlook-business> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-microsoft-powerpoint> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-microsoft-powerpoint> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-microsoft-teams> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-microsoft-teams> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-oracle-hyperion-planning-11-2> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-oracle-hyperion-planning-11-2> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-profisee-platform> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-profisee-platform> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-quorum-flowcal> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-quorum-flowcal> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-quorum-software> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-quorum-software> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-salesforce> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-salesforce> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-sap-information-steward> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-sap-information-steward> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-sap-mdg> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-sap-mdg> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-sap-s4hana> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-sap-s4hana-help> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-sirion> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-sirion> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<https://w3id.org/lsc/ontology/source/vendor-thomson-reuters-onesource-determination> auth:evidenceTier tier:industry .
+<https://w3id.org/lsc/ontology/source/vendor-thomson-reuters-onesource-determination> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
 
-<urn:epm:issue:205:comment:6115309253> auth:evidenceTier tier:process-authority .
+<urn:epm:issue:205:comment:6115309253> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 
-<urn:epm:issue:205:comment:6116668059> auth:evidenceTier tier:process-authority .
+<urn:epm:issue:205:comment:6116668059> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
 

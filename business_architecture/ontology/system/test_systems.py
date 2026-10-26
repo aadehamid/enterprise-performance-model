@@ -110,6 +110,12 @@ class Shapes(unittest.TestCase):
         # TRR cites only the process map, which names systems but does not define them.
         self.assertFalse(self.broken(lambda g: g.add((SYSTEM["trr"], SKOS.definition, Literal("A planning tool.", lang="en")))))
 
+    def test_rejects_a_defined_system_that_loses_the_process_map_source(self):
+        # Kimi round 1, finding 20: two other sources must not stand in for the process map.
+        def edit(g):
+            g.remove((SYSTEM["xpims"], DCTERMS.source, bs.MAP_SOURCE))
+        self.assertFalse(self.broken(edit))
+
     def test_rejects_a_defined_system_that_loses_its_source(self):
         self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["ms-excel"], DCTERMS.source, bs.SRC["vendor-microsoft-excel"]))))
 

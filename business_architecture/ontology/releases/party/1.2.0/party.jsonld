@@ -25,6 +25,9 @@
   "http://purl.org/dc/terms/requires": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/core/2.3.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/1.1.0"
    }
   ],
   "http://purl.org/dc/terms/title": [
@@ -19535,7 +19538,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana"
+    "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana-help"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#altLabel": [
@@ -19555,7 +19558,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "SAP's enterprise resource planning (ERP) system. By the vendor's description, it is a modular ERP for an enterprise's core business processes."
+    "@value": "SAP's business suite, by the vendor's description its next-generation business suite, built on the SAP HANA in-memory platform."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#exactMatch": [
@@ -19621,7 +19624,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "Sirion's contract lifecycle management software. By the vendor's description, it uses AI to manage an enterprise's contracts and get the most value from its relationships."
+    "@value": "Sirion's contract management software. By the vendor's description, it uses AI to manage an enterprise's contracts and get the most value from its relationships."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -20849,14 +20852,14 @@
   ]
  },
  {
-  "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana",
+  "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana-help",
   "@type": [
    "http://purl.org/dc/terms/BibliographicResource"
   ],
   "http://purl.org/dc/terms/title": [
    {
     "@language": "en",
-    "@value": "SAP, SAP S/4HANA, https://www.sap.com/products/erp/s4hana.html, retrieved 2026-10-25"
+    "@value": "SAP Help Portal, SAP Readiness Check, Feature Scope Description, https://help.sap.com/docs/PRODUCT_ID/a281af437b3e4ef4a187c7f35a9093e9, retrieved 2026-10-25"
    }
   ]
  },
