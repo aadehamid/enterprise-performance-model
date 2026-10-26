@@ -79,6 +79,31 @@ def outside_fences(lines):
     return out
 
 
+def drop_title(lines):
+    """The lines without the H1 that titles the page (the first "# " line outside fenced code); a "# "
+    line inside a fence, such as a shell comment, stays."""
+    fenced = False
+    for i, line in enumerate(lines):
+        if re.match(r"^ *```", line):
+            fenced = not fenced
+        elif not fenced and line.startswith("# "):
+            return lines[:i] + lines[i + 1:]
+    return lines
+
+
+def record_meta(rel, lines):
+    """A decision record's displayed H1, Status and Date, read outside fenced code and comments. A record
+    must have exactly one of each, so an example in a fence can never stand in for the record."""
+    shown = outside_fences(lines)
+    h1 = [ln[2:].strip() for ln in shown if ln.startswith("# ")]
+    rows = {name: [m.group(1).strip() for ln in shown for m in [re.match(rf"^\|\s*{name}\s*\|(.*)\|\s*$", ln)] if m]
+            for name in ("Status", "Date")}
+    problems = [f"{rel}: {len(v)} {k} rows, not one" for k, v in (("H1", h1), *rows.items()) if len(v) != 1]
+    if problems:
+        raise ValueError("; ".join(problems))
+    return h1[0], rows["Status"][0], rows["Date"][0]
+
+
 def pages():
     """Every page: its output, its title, one sentence on what it is, and its sources."""
     out = [
@@ -111,6 +136,10 @@ def pages():
         out.append(single(rel, "A proposed change to the process map. A proposal is not applied until it is accepted.",
                           scope="Process-map proposal"))
     records = sorted(glob.glob(os.path.join(ROOT, DECISIONS_DIR, "EPM-DEC-001-*.md")))
+    numbers = [record_id(p) for p in records]
+    twice = sorted({n for n in numbers if numbers.count(n) > 1})
+    if twice:
+        raise ValueError(f"two records share a number: {', '.join(twice)}")
     out.append({"out": DECISIONS_PAGE, "title": source_title(f"{DECISIONS_DIR}/README.md"), "scope": "EPM-DEC-001",
                 "lead": "Every decision behind the ontology and its build: context, decision, alternatives, the "
                         "decision owner's recorded words, evidence, status and date.",
@@ -166,10 +195,6 @@ def slug(text):
 def record_id(path):
     m = DEC_FILE.search(path)
     return f"EPM-DEC-001-{m.group(1)}" if m else None
-
-
-def is_title(line):
-    return line.startswith("# ")
 
 
 class Page:
@@ -412,35 +437,24 @@ class Page:
         with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
             return f.read().split("\n")
 
-    @staticmethod
-    def field(lines, name):
-        """A record's value from its Field | Value table."""
-        for ln in lines:
-            m = re.match(rf"^\|\s*{name}\s*\|(.*)\|\s*$", ln)
-            if m:
-                return m.group(1).strip()
-        return ""
-
     def render_decisions(self):
         intro = self.spec["intro"]
         src_intro = os.path.normpath(os.path.join(ROOT, intro))
         # The intro is the folder README without its title and its table: the index below replaces the table.
-        lines = [x for x in self.read(intro) if not x.lstrip().startswith("|") and not is_title(x)]
+        lines = [x for x in drop_title(self.read(intro)) if not x.lstrip().startswith("|")]
         parts = [self.blocks(src_intro, lines)]
         rows, sections = [], []
         for rel in self.spec["sources"]:
             src = os.path.normpath(os.path.join(ROOT, rel))
             rid = record_id(rel)
             lines = self.read(rel)
-            h1 = next((HEADING.match(x).group(2) for x in lines if is_title(x)), rid)
+            h1, status, date = record_meta(rel, lines)
             title = h1.split(":", 1)[1].strip() if ":" in h1 else h1
-            status, date = self.field(lines, "Status"), self.field(lines, "Date")
-            short = re.split(r"\s*[(;]", status, maxsplit=1)[0].strip() or status
             self.used.add(rid)
-            body = [x for x in lines if not is_title(x)]
+            body = drop_title(lines)
             num = rid[-4:]
             rows.append(f'<tr><td class="num"><a href="#{rid}">{num}</a></td><td>{self.inline(src, title)}</td>'
-                        f'<td>{self.inline(src, short)}</td><td class="num">{html.escape(date)}</td></tr>')
+                        f'<td>{self.inline(src, status)}</td><td class="num">{self.inline(src, date)}</td></tr>')
             self.toc.append((3, rid, f"{num} {title}"))
             sections.append(f'<section class="rec" id="{rid}"><h2>{html.escape(rid)}: {self.inline(src, title)}'
                             f'<a class="hl" href="#{rid}" aria-label="Link to this record">#</a></h2>\n'
@@ -462,7 +476,7 @@ class Page:
         else:
             rel = self.spec["sources"][0]
             src = os.path.normpath(os.path.join(ROOT, rel))
-            body = self.blocks(src, [x for x in self.read(rel) if not is_title(x)])
+            body = self.blocks(src, drop_title(self.read(rel)))
             sources = f"<code>{html.escape(os.path.basename(rel))}</code>"
         toc = "\n".join(f'<li class="l{lvl}"><a href="#{aid}">{self.inline_plain(text)}</a></li>'
                         for lvl, aid, text in self.toc)

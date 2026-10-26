@@ -79,6 +79,53 @@ def test_a_page_shows_its_source_h1_word_for_word(spec):
     assert html.unescape(re.sub(r"<[^>]+>", "", shown)) == h1.replace("`", "")
 
 
+def _shown_lines(path):
+    """A record's lines outside fenced code, read independently of the builder."""
+    out, fenced = [], False
+    with open(path, encoding="utf-8") as f:
+        for line in f.read().split("\n"):
+            if line.lstrip().startswith("```"):
+                fenced = not fenced
+            elif not fenced:
+                out.append(line)
+    return out
+
+
+def _text(cell):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", cell))).strip()
+
+
+def test_every_index_row_shows_its_record_title_full_status_and_date():
+    page = PAGES[b.DECISIONS_PAGE]
+    rows = dict(re.findall(r'<tr><td class="num"><a href="#(EPM-DEC-001-\d{4})">\d{4}</a></td>(.*?)</tr>', page))
+    folder = os.path.join(b.ROOT, b.DECISIONS_DIR)
+    records = sorted(f for f in os.listdir(folder) if b.DEC_FILE.search(f))
+    assert len(rows) == len(records)
+    for f in records:
+        lines = _shown_lines(os.path.join(folder, f))
+        h1 = next(x[2:] for x in lines if x.startswith("# ")).split(":", 1)[1].strip()
+        status = next(re.match(r"^\|\s*Status\s*\|(.*)\|\s*$", x).group(1) for x in lines if x.startswith("| Status |"))
+        date = next(re.match(r"^\|\s*Date\s*\|(.*)\|\s*$", x).group(1) for x in lines if x.startswith("| Date |"))
+        cells = [_text(c) for c in re.findall(r"<td[^>]*>(.*?)</td>", rows[b.record_id(f)], re.S)]
+        # The displayed text: the Markdown without its code and emphasis marks.
+        expect = [re.sub(r"\s+", " ", re.sub(r"[`*]|~~", "", v)).strip() for v in (h1, status, date)]
+        assert cells == expect, f
+
+
+def test_a_fenced_example_cannot_stand_in_for_a_record():
+    lines = ["# EPM-DEC-001-9999: The real title", "", "```", "# EPM-DEC-001-9999: An example",
+             "| Status | Proposed |", "| Date | 1900-01-01 |", "```", "", "| Field | Value |", "|---|---|",
+             "| Status | Decided |", "| Date | 2026-10-26 |"]
+    assert b.record_meta("x.md", lines) == ("EPM-DEC-001-9999: The real title", "Decided", "2026-10-26")
+    with pytest.raises(ValueError, match="2 Status rows"):
+        b.record_meta("x.md", lines + ["| Status | Proposed |"])
+
+
+def test_a_shell_comment_in_a_fence_is_not_taken_for_the_title():
+    lines = ["```sh", "# a comment", "```", "# Title", "text"]
+    assert b.drop_title(lines) == ["```sh", "# a comment", "```", "text"]
+
+
 def test_every_source_exists():
     for spec in b.pages():
         for src in spec["sources"] + ([spec["intro"]] if "intro" in spec else []):
