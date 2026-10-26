@@ -1055,7 +1055,8 @@ mints no new identities. Map every value in its final form, language tag and
 datatype included, and pin the engine's version. The `ontology` skill's
 `promotion.md`, "From a spreadsheet to triples", works one example through
 two engines (an RML mapping run by Morph-KGC, and maplib's templates over a
-dataframe) and leaves the choice of engine to the owner.
+dataframe) and names Morph-KGC as the engine to use, keeping maplib for a
+source that is already a dataframe.
 
 ### The eleven rules
 
