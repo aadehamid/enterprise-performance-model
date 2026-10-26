@@ -2,7 +2,8 @@
 
 > **Renamed 2026-09-30** from `ontology-playbook.md` to `ontology-worklog.md`,
 > so the name says what this file is: the running log of this build. The
-> method keeps the playbook name (`business_architecture/ontology/ontology-playbook.md`).
+> method keeps the playbook name (`business_architecture/ontology/ontology-playbook.md`; since
+> 2026-10-25 the `ontology` skill's guide, `skills/data/ontology/references/playbook.md` in personal-agent-skills, EPM-DEC-001-0101).
 > Earlier entries and PR bodies refer to this file by its old name.
 
 **Status:** Living document. Updated as each plan step completes.
@@ -2742,6 +2743,13 @@ them written plainly, wrapped across lines, as relative, absolute or GitHub
 paths, and percent- or entity-encoded. It is a backstop for reviewed
 Markdown, not a detector of deliberate obfuscation such as zero-width
 characters or look-alike letters, which review catches.
+
+*2026-10-25:* the playbook moved into the `ontology` skill's guide, `skills/data/ontology/references/playbook.md` in personal-agent-skills (EPM-DEC-001-0101). This
+evidence map stays here and now illustrates that guide, section by section;
+its headings and numbering carried over. The guard moved with the guide as
+the skill's `scripts/test_playbook_guide.py`, with the fixed list of terms;
+the checks that read this repository's released packages and tracked paths
+stay out of the skill, which cannot see them.
 
 Section headings and numbering in the playbook are unchanged, except §7
 ("Worked example: the downstream process-map ontology" is now "Worked

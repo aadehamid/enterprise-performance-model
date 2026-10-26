@@ -6,7 +6,7 @@
 
 ## 1. About this document
 
-The [ontology playbook](ontology-playbook.md) records how the downstream process map becomes an ontology — the standards chosen and the build decisions. This playbook is its sibling: it records how the **process definitions themselves** were decided — the method that authored 477+ definitions across 39+ review batches, the durable architecture rules those batches locked, the ownership boundaries between functions, and the external sources that inform each part of the business process. Together the two playbooks make the whole business process architecture reproducible: the ontology playbook answers *how the structure was built*, this one answers *how the content was decided and why it can be trusted*.
+The ontology playbook (since 2026-10-25 the `ontology` skill's guide, `skills/data/ontology/references/playbook.md` in personal-agent-skills, EPM-DEC-001-0101) records how the downstream process map becomes an ontology — the standards chosen and the build decisions. This playbook is its sibling: it records how the **process definitions themselves** were decided — the method that authored 477+ definitions across 39+ review batches, the durable architecture rules those batches locked, the ownership boundaries between functions, and the external sources that inform each part of the business process. Together the two playbooks make the whole business process architecture reproducible: the ontology playbook answers *how the structure was built*, this one answers *how the content was decided and why it can be trusted*.
 
 **How to maintain it:** when a review batch merges, append its entry to §5 (Batch log) and move any new durable rule into §6 (Decision log). After the final batch, regenerate the traceability appendix (§8) and record completion here. Never rewrite history — correct with dated amendments.
 
@@ -15,7 +15,7 @@ The [ontology playbook](ontology-playbook.md) records how the downstream process
 - `step3c-reviewer-instructions.md` — the locked reviewer gate rules
 - `build/output/step3c-definition-authoring-workbook.xlsx` — the artifact all of this governs
 - `build/scripts/step3c-source-traceability.py` → `build/output/source-to-process-traceability.md` — the generated source-to-process appendix (§8)
-- `ontology-playbook.md`, `competency-questions.md`, `apqc-scope-decisions.md`
+- the ontology playbook (the `ontology` skill's guide since 2026-10-25), `competency-questions.md`, `apqc-scope-decisions.md`
 
 ---
 

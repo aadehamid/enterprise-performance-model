@@ -9,7 +9,7 @@ roles:
 
 | File | Role | Read it for |
 |------|------|-------------|
-| `ontology-playbook.md` | **Playbook**: a company-neutral method for building an ontology from scratch | Foundations, Steps 0 to 12, policies (§2), promoting provisional data (§3), standards (§4), soundness checks (§5), working agreements (§6), a worked example in a neutral domain (§7). It names no EPM record, company or repo path (*2026-10-23*) |
+| The `ontology` skill's guide (`skills/data/ontology/references/playbook.md`, personal-agent-skills) | **Playbook**: a company-neutral method for building an ontology from scratch | Foundations, Steps 0 to 12, policies (§2), promoting provisional data (§3), standards (§4), soundness checks (§5), working agreements (§6), a worked example in a neutral domain (§7). *2026-10-25:* moved from this folder into the skill, which tests that it names no project's records, companies or paths (EPM-DEC-001-0101) |
 | `step4/playbook/ontology-worklog.md` | **Worklog**: the build record | The plan table with current step statuses (§2), the per-step log (§3), the dated decision journal (§4), and the evidence map for the playbook, section by section (§8, *2026-10-23*) |
 | `MODULES.md` | **Module guide**: the released modules and how they connect | What each module holds, the three kinds of content, each link between modules with a real example from the releases, and one walk across modules |
 
@@ -63,7 +63,7 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 
 | Path | What |
 |------|------|
-| `ontology-playbook.md` | **Playbook** (the method, normative): policies, method, standards, soundness, working agreements, a neutral worked example |
+| The `ontology` skill's guide | **Playbook** (the method, normative): policies, method, standards, soundness, working agreements, a neutral worked example; in personal-agent-skills since 2026-10-25 (EPM-DEC-001-0101) |
 | `step4/playbook/ontology-worklog.md` | **Worklog** (the build record): plan table and statuses, step log, decision journal, the playbook's evidence map |
 | `MODULES.md` | **Module guide**: each released module, how the modules connect, with examples quoted from the releases (tested by `scripts/test_modules_guide.py`) |
 | `step4/` | Step 4 working area: verb-predicate mapping, evidence gate, canonical facts, correction backlog (see `step4/README.md`) |

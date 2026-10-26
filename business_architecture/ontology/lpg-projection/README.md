@@ -33,7 +33,7 @@ commit below (EPM-DEC-001-0021).
 
 ## How this build uses it
 
-The ontology playbook (`../ontology-playbook.md`, Step 12 and §2) is the
+The ontology playbook (Step 12 and §2; since 2026-10-25 the `ontology` skill's guide, EPM-DEC-001-0101) is the
 authority for how this build applies the guideline. In short
 (EPM-DEC-001-0020):
 

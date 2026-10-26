@@ -14,7 +14,7 @@ rather than the skills' default `CONTEXT.md` + `docs/adr/`.
 - **Existing decision logs** keep authority for their own scope. Read the one
   that touches your area:
   - `EPM-FOUND-000.md`: master index, decisions table (D-xx), conflicts and open issues
-  - The ontology playbook, reached via `business_architecture/ontology/README.md`:
+  - The ontology playbook (the `ontology` skill's guide since 2026-10-25), reached via `business_architecture/ontology/README.md`:
     locked policies in the playbook's §2 (the method), and the dated journal in the worklog
   - `business_architecture/ontology/step4/step4-decisions.md`: Step 4 design decisions (Q1–Q12)
   - `business_architecture/domain/data-domain-register.md`: data domains and boundary rules

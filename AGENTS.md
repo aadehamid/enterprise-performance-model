@@ -41,7 +41,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 - **Reviewing a pull request?** Apply `REVIEW_STANDARDS.md` (what blocks a merge) and
   `APPROVAL_POLICY.md` (when a human must review). Authors can read it before pushing.
 - Before modeling the ontology, start at `business_architecture/ontology/README.md`.
-  It points to the playbook (the method) and the worklog (the build record).
+  It points to the playbook (the method, now the `ontology` skill's guide) and the worklog (the build record).
 
 ## Before every push
 
