@@ -1,20 +1,20 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "f26c9ef8c9ab54790d1bf0442c4af24a9c80edba5d0adb235c1358b2a45dbfcb",
+  "input_fingerprint": "84eda2c578d041d0061500848a644a5262c27480651f730ed8e9dcd72fc70e39",
   "inputs": {
     "releases/core/2.3.0/core.ttl": "ebf7be2b6e65df2fc16e6af79af55f4d6a6b36ae652cf3823153b6082625c01e",
     "releases/data-product/1.2.0/data-product.ttl": "91072ca004bebacd5c6f70bd8d4fe5c69f3525a465d3769f49959299c4f484a4",
     "releases/integration/2.2.0/integration.ttl": "f02887e1671b23985af41756d1794881b973b4b251bcd03f7bb551722fb02c81",
     "releases/kpi/1.2.0/kpi.ttl": "01cacca965f9aa3f615bf06d6347c57b062efe31a72ebcbcfa3b1d7ff522dc5a",
     "releases/lane/1.0.0/lane.ttl": "fbd5fb5f14cb7fa700bcc1c517af55fdf1b18cc46e6a959ff8d28c72b6395e7e",
-    "releases/market-data/1.1.0/market-data.ttl": "d9a27de4c015d8dcd4d580ae622cc51f332ff6b67b243c1959904e8c78af062c",
+    "releases/market-data/1.1.0/market-data.ttl": "8920d651d721462d2217d14ce23b680e584e0bebf6c01d03e471c551c502f3fd",
     "releases/organization/2.0.0/organization.ttl": "3b951fbe287d42f4c52e6c85cf498b1113d6a5b9280b45c010fde17fc7e52439",
     "releases/party/1.2.0/party.ttl": "2e6d2ed332f8f12157f3a5e04c0603063089eef6098d08d20f95eb1b52c68d7e",
     "releases/ref-mpc/1.2.0/ref-mpc.ttl": "75078639bfc5d5284bb204dc9c202a27acb8767f4097700d97878b0be5fd9867",
     "releases/system/1.2.0/system.ttl": "1eb1912409f577ce000c289fcaa94d58178396f90e05703b680918756d6561a8",
     "releases/value-stream/1.1.0/value-stream.ttl": "89c952bf76b12d916b7ca583e78354d197b6bb8596b6519f00917804a3f0a5db"
   },
-  "loadable_triples": 36089,
+  "loadable_triples": 36090,
   "release_exceptions": {},
   "rule4": "4a: qualified-relation nodes (EPM-DEC-001-0020)",
   "shapes": {
