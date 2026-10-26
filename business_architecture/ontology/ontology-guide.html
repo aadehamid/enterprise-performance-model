@@ -6,7 +6,7 @@
 <title>EPM ontology guide</title>
 <style>
 /* Style: framed-sheet (tasteskill app sheet, seed 1033140616), screen "report", the same as
-   projection/stores-runbook.html so the two read as one set. System fonts only: this file is
+   the stores runbook's (branch docs/stores-runbook) so the two read as one set. System fonts only: this file is
    standalone and loads nothing. */
 :root {
   --ground: #f1f4f6;  --surface: #ffffff;  --raised: #f4f6f8;  --active: #ebedee;
@@ -196,6 +196,13 @@ table.stack td { overflow-wrap: anywhere; }
   table.stack { table-layout: fixed; }
   table.stack tr, table.stack td { max-width: 100%; }
 }
+
+.cite { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; }
+.cite a { color: var(--muted); }
+svg .e.int { stroke: var(--faint); stroke-dasharray: 4 4; stroke-width: 1.25; opacity: .8; }
+
+table td.n, table th.n { text-align: right; padding-right: 24px; white-space: nowrap; }
+@media (max-width: 640px) { table.stack td.n { text-align: left; padding-right: 0; } }
 </style>
 </head>
 <body>
@@ -203,7 +210,7 @@ table.stack td { overflow-wrap: anywhere; }
   <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
   <span class="name">EPM</span><span class="scope">Ontology guide</span>
   <nav aria-label="Sections">
-    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#stores">Stores</a><a href="#open">Open</a>
+    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#stores">Stores</a><a href="#copy">Copy</a><a href="#open">Open</a>
   </nav>
 </header>
 
@@ -228,6 +235,7 @@ table.stack td { overflow-wrap: anywhere; }
   <a class="sub-a" href="#m-lane">lane</a>
   <a class="sub-a" href="#m-integration">integration</a>
   <a href="#stores">How it reaches the stores</a>
+  <a href="#copy">Copy the ontology</a>
   <a href="#open">What is still open</a>
   <a href="#sources">Sources</a>
 </aside>
@@ -239,7 +247,7 @@ table.stack td { overflow-wrap: anywhere; }
     <h1>The EPM ontology</h1>
     <p class="sub">A guide to the ontology of Marathon Petroleum's downstream business: what it is for, why it is split into eleven modules, what each module holds and how the modules connect. One pricing measure, the crack spread, runs through every section to show the modules working together.</p>
   </div>
-  <a class="btn" href="projection/stores-runbook.html">Open the stores runbook</a>
+  <a class="btn" href="#copy">Copy the ontology</a>
 </div>
 
 <p class="notice">A snapshot: every figure is from the newest release of each module on <code>main</code> at commit <code>bae7013</code>, the releases of 2026-10-26. Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
@@ -271,13 +279,13 @@ table.stack td { overflow-wrap: anywhere; }
 <div class="card">
     <h3>The W3C standards it is built on</h3>
     <table class="kv">
-      <tr><td>RDF</td><td>Every fact is a triple: subject, property, object. Each module ships as Turtle and JSON-LD.</td></tr>
-      <tr><td>SKOS</td><td>Taxonomies and code lists: the process hierarchy (<code>skos:broader</code>), measure kinds, office lanes, and the labels and definitions on every concept.</td></tr>
-      <tr><td>OWL</td><td>The classes and properties each module defines, such as <code>kpi:MeasureDefinition</code> and <code>dp:servesMeasure</code>.</td></tr>
-      <tr><td>SHACL</td><td>Shapes in every release (<code>shapes.ttl</code>) that say what valid data looks like. All modules' shapes run together over the whole graph, with zero violations (EPM-DEC-001-0065).</td></tr>
-      <tr><td>W3C ORG</td><td>Roles (<code>org:Role</code>), sites and organizations, in <code>organization</code> and <code>ref-mpc</code>.</td></tr>
-      <tr><td>PROV-O</td><td>Lineage: a metric view <code>prov:wasDerivedFrom</code> its gold table, and a Genie agent <code>prov:used</code> the view.</td></tr>
-      <tr><td>DCAT</td><td>The catalog of every released package, <code>releases/catalog.ttl</code>.</td></tr>
+      <tr><td>RDF</td><td>Every fact is a triple: subject, property, object. Each module ships as Turtle and JSON-LD.<span class="cite"><a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1 Concepts and Abstract Syntax</a>, W3C Recommendation, 25 February 2014; <a href="https://www.w3.org/TR/turtle/">RDF 1.1 Turtle</a>, W3C Recommendation, 25 February 2014; <a href="https://www.w3.org/TR/json-ld11/">JSON-LD 1.1</a>, W3C Recommendation, 16 July 2020.</span></td></tr>
+      <tr><td>SKOS</td><td>Taxonomies and code lists: the process hierarchy (<code>skos:broader</code>), measure kinds, office lanes, and the labels and definitions on every concept.<span class="cite"><a href="https://www.w3.org/TR/skos-reference/">SKOS Simple Knowledge Organization System Reference</a>, W3C Recommendation, 18 August 2009.</span></td></tr>
+      <tr><td>OWL</td><td>The classes and properties each module defines, such as <code>kpi:MeasureDefinition</code> and <code>dp:servesMeasure</code>.<span class="cite"><a href="https://www.w3.org/TR/owl2-overview/">OWL 2 Web Ontology Language Document Overview (Second Edition)</a>, W3C Recommendation, 11 December 2012.</span></td></tr>
+      <tr><td>SHACL</td><td>Shapes in every release (<code>shapes.ttl</code>) that say what valid data looks like. All modules' shapes run together over the whole graph, with zero violations (EPM-DEC-001-0065).<span class="cite"><a href="https://www.w3.org/TR/shacl/">Shapes Constraint Language (SHACL)</a>, W3C Recommendation, 20 July 2017.</span></td></tr>
+      <tr><td>W3C ORG</td><td>Roles (<code>org:Role</code>), sites and organizations, in <code>organization</code> and <code>ref-mpc</code>.<span class="cite"><a href="https://www.w3.org/TR/vocab-org/">The Organization Ontology</a>, W3C Recommendation, 16 January 2014.</span></td></tr>
+      <tr><td>PROV-O</td><td>Lineage: a metric view <code>prov:wasDerivedFrom</code> its gold table, and a Genie agent <code>prov:used</code> the view.<span class="cite"><a href="https://www.w3.org/TR/prov-o/">PROV-O: The PROV Ontology</a>, W3C Recommendation, 30 April 2013.</span></td></tr>
+      <tr><td>DCAT</td><td>The catalog of every released package, <code>releases/catalog.ttl</code>.<span class="cite"><a href="https://www.w3.org/TR/vocab-dcat-3/">Data Catalog Vocabulary (DCAT) Version 3</a>, W3C Recommendation, 22 August 2024.</span></td></tr>
     </table>
   </div>
 
@@ -289,7 +297,7 @@ table.stack td { overflow-wrap: anywhere; }
     <p>The <code>ontology</code> skill's playbook, "Why split an ontology into modules", gives the reasons, and the build followed each one:</p>
     <ol class="steps">
       <li><strong>Each module releases on its own schedule.</strong> When item F changed the pricing measures, <code>kpi</code> went to 1.2.0 and <code>core</code> stayed at 2.3.0. Each module pins the versions it requires.</li>
-      <li><strong>Reviews and approvals stay small.</strong> A pull request touches one module, and its owner approves it.</li>
+      <li><strong>Reviews and approvals stay small.</strong> A pull request changes one module or a few related ones: item F bundled five releases and item G three. The decision owner, or Claude under their recorded delegation (EPM-DEC-001-0028), approves each release plan (EPM-DEC-001-0100, 0103). Who owns the meaning of each module is still open (competency question 17, EPM-DEC-001-0086).</li>
       <li><strong>Company facts sit apart from neutral ones.</strong> MPC's refineries and MPLX live in <code>ref-mpc</code>, so every other module could serve another refiner (EPM-DEC-001-0015).</li>
       <li><strong>Each module carries its own shapes and tests,</strong> and a whole-graph gate catches what breaks between them (EPM-DEC-001-0065).</li>
       <li><strong>Consumers load only what they need.</strong> A package's dependencies are read from the released manifests.</li>
@@ -304,17 +312,26 @@ table.stack td { overflow-wrap: anywhere; }
 </div>
 
 <h2 id="map">The module map</h2>
-<p class="lead"><code>core</code>, the process map, is at the bottom. Most modules add one kind of thing and link it to core's processes. An arrow points from a module to a module it requires, as each release's manifest records. <code>integration</code> requires all the others.</p>
+<p class="lead"><code>core</code>, the process map, is at the bottom. Most modules add one kind of thing and link it to core's processes. An arrow points from a module to a module it requires, as each release's manifest records. <code>integration</code> requires nine modules, every one except <code>ref-mpc</code>; its arrows are dashed.</p>
 <figure>
-<div class="diagram wide" role="img" aria-label="Module map: integration on top requires every module; value-stream requires data-product, kpi and core; ref-mpc requires party and organization; market-data requires kpi; data-product requires kpi, system and core; party requires system and core; lane, kpi, system and organization require core.">
+<div class="diagram wide" role="img" aria-label="Module map: integration on top requires core, organization, kpi, data-product, value-stream, system, lane, market-data and party, not ref-mpc; value-stream requires data-product, kpi and core; ref-mpc requires party and organization; market-data requires kpi; data-product requires kpi, system and core; party requires system and core; lane, kpi, system and organization require core.">
 <svg viewBox="0 0 1040 530" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head" d="M0 0 10 5 0 10z"/></marker>
     <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head key" d="M0 0 10 5 0 10z"/></marker>
   </defs>
   <rect class="lane" x="20" y="14" width="1000" height="66" rx="8"/>
-  <text class="t" x="40" y="42">integration 2.3.0</text><text class="m" x="40" y="62">plc: auth: con:  · placement, authority and consumer rules over every module below</text>
+  <text class="t" x="40" y="42">integration 2.3.0</text><text class="m" x="40" y="62">plc: auth: con:  · placement, authority and consumer rules; requires nine modules, not ref-mpc</text>
   <!-- edges -->
+  <path class="e int" d="M145 80 V238" marker-end="url(#a1)"/>
+  <path class="e int" d="M385 80 V128" marker-end="url(#a1)"/>
+  <path class="e int" d="M515 80 V238" marker-end="url(#a1)"/>
+  <path class="e int" d="M775 80 V238" marker-end="url(#a1)"/>
+  <path class="e int" d="M50 80 V348" marker-end="url(#a1)"/>
+  <path class="e int" d="M290 80 V365 H298" marker-end="url(#a1)"/>
+  <path class="e int" d="M645 80 V348" marker-end="url(#a1)"/>
+  <path class="e int" d="M1005 80 V377 H992" marker-end="url(#a1)"/>
+  <path class="e int" d="M1022 80 V492 H662" marker-end="url(#a1)"/>
   <path class="e" d="M385 184 V348" marker-end="url(#a1)"/>
   <path class="e" d="M450 184 L500 238" marker-end="url(#a1)"/>
   <path class="e" d="M330 184 C 280 205 272 225 272 250 V455 H378" marker-end="url(#a1)"/>
@@ -345,7 +362,7 @@ table.stack td { overflow-wrap: anywhere; }
 </div>
 <div class="diagram tall" role="img" aria-label="Module map as a list, top to bottom.">
 <svg viewBox="0 0 360 700" xmlns="http://www.w3.org/2000/svg">
-  <rect class="lane" x="10" y="10" width="340" height="56" rx="8"/><text class="t" x="24" y="34">integration 2.3.0</text><text class="s" x="24" y="53">requires every module below</text>
+  <rect class="lane" x="10" y="10" width="340" height="56" rx="8"/><text class="t" x="24" y="34">integration 2.3.0</text><text class="s" x="24" y="53">requires every module below except ref-mpc</text>
   <g>
   <rect class="node" x="10" y="80" width="340" height="50" rx="6"/><text class="t" x="24" y="101">value-stream 1.1.0</text><text class="s" x="24" y="119">requires data-product, kpi, core</text>
   <rect class="node" x="10" y="140" width="340" height="50" rx="6"/><text class="t" x="24" y="161">ref-mpc 1.2.0</text><text class="s" x="24" y="179">requires organization, party</text>
@@ -379,24 +396,24 @@ table.stack td { overflow-wrap: anywhere; }
   <path class="e key" d="M250 280 H428" marker-end="url(#b2)"/><text class="el" x="282" y="270">mkt:seriesOf</text>
   <path class="e key" d="M800 280 H632" marker-end="url(#b2)"/><text class="el" x="660" y="270">dp:servesMeasure</text>
   <path class="e" d="M890 250 V142" marker-end="url(#b1)"/><text class="el" x="900" y="200">dcterms:isPartOf</text>
-  <path class="e" d="M890 310 V388" marker-end="url(#b1)"/><text class="el" x="900" y="355">dp:dependsOnSystem</text>
-  <path class="e" d="M800 430 H632" marker-end="url(#b1)"/><text class="el" x="690" y="420">sys:supports</text>
+  <path class="e" d="M860 310 L785 383" marker-end="url(#b1)"/><path class="e" d="M900 310 V383" marker-end="url(#b1)"/><path class="e" d="M940 310 L1000 383" marker-end="url(#b1)"/><text class="el" x="908" y="350">dp:dependsOnSystem</text>
+  <path class="e" d="M740 410 L662 425" marker-end="url(#b1)"/><text class="el" x="672" y="448">sys:supports</text>
   <path class="e" d="M530 528 V462" marker-end="url(#b1)"/><text class="el" x="540" y="500">orgm:forProcess</text>
   <path class="e key" d="M170 400 C 300 400 380 330 428 300" marker-end="url(#b2)"/><text class="el" x="262" y="378">vs:measureLink → vs:measure</text>
   <path class="e" d="M150 460 V510" marker-end="url(#b1)"/><text class="el" x="160" y="492">vs:realizes</text>
-  <path class="e" d="M940 520 V452" marker-end="url(#b1)"/><text class="el" x="932" y="492" text-anchor="end">skos:exactMatch</text>
+  <path class="e" d="M1000 520 V437" marker-end="url(#b1)"/><text class="el" x="992" y="480" text-anchor="end">skos:exactMatch</text>
   <!-- nodes -->
   <rect class="node store" x="430" y="250" width="200" height="60" rx="6"/><text class="t" x="446" y="274">Crack Spreads Pricing</text><text class="m" x="446" y="294">kpi · market indicator</text>
   <rect class="node" x="400" y="60" width="260" height="60" rx="6"/><text class="t" x="416" y="84">CM 1.1.4.7.4</text><text class="s" x="416" y="104">Capture Product/Crude/Feedstock Price · core</text>
   <rect class="node key" x="30" y="250" width="220" height="60" rx="6"/><text class="t" x="46" y="274">Gulf Coast 3-2-1 crack</text><text class="s" x="46" y="294">3 MEH → 2 CBOB + 1 ULSD · market-data</text>
   <rect class="node key" x="800" y="250" width="200" height="60" rx="6"/><text class="t" x="816" y="274">Crack-spread metric view</text><text class="s" x="816" y="294">derived · metric-view · data-product</text>
   <rect class="node" x="800" y="80" width="200" height="60" rx="6"/><text class="t" x="816" y="104">Master Pricing</text><text class="s" x="816" y="124">data product · data-product</text>
-  <rect class="node key" x="800" y="390" width="200" height="60" rx="6"/><text class="t" x="816" y="414">MPR, MIPS, KittyHawk</text><text class="s" x="816" y="434">the view's systems · system</text>
+  <rect class="node key" x="740" y="385" width="90" height="50" rx="6"/><text class="t" x="752" y="406">MPR</text><text class="s" x="752" y="424">system</text><rect class="node key" x="850" y="385" width="90" height="50" rx="6"/><text class="t" x="862" y="406">MIPS</text><text class="s" x="862" y="424">system</text><rect class="node key" x="955" y="385" width="95" height="50" rx="6"/><text class="t" x="965" y="406">KittyHawk</text><text class="s" x="965" y="424">system</text>
   <rect class="node" x="400" y="400" width="260" height="60" rx="6"/><text class="t" x="416" y="424">CM 1.1.5.1.2.6</text><text class="s" x="416" y="444">Receive actual data product prices · core</text>
   <rect class="node" x="400" y="530" width="260" height="60" rx="6"/><text class="t" x="416" y="554">RACI on CM 1.1.5.1.2.6</text><text class="s" x="416" y="574">a Business Analyst is responsible · organization</text>
   <rect class="node" x="30" y="400" width="240" height="60" rx="6"/><text class="t" x="46" y="424">Market Price Calculation</text><text class="s" x="46" y="444">and Validation · value-stream</text>
   <rect class="node" x="30" y="512" width="240" height="60" rx="6"/><text class="t" x="46" y="536">CM 1.3.6.3 and two more</text><text class="s" x="46" y="556">pricing processes · core</text>
-  <rect class="node" x="800" y="520" width="180" height="50" rx="6"/><text class="t" x="816" y="542">KittyHawk</text><text class="s" x="816" y="560">customer system · party</text>
+  <rect class="node" x="870" y="522" width="180" height="50" rx="6"/><text class="t" x="886" y="544">KittyHawk</text><text class="s" x="886" y="562">customer system · party</text>
   <rect class="lane" x="20" y="14" width="360" height="40" rx="6"/><text class="s" x="34" y="39">integration: what each link proves; which source wins</text>
 </svg>
 </div>
@@ -411,12 +428,12 @@ table.stack td { overflow-wrap: anywhere; }
   <li><strong>party:</strong> KittyHawk is also a customer system, matched by <code>skos:exactMatch</code>.</li>
   <li><strong>integration:</strong> says which of these links prove the work and how an agent may quote a value.</li>
 </ol>
-<figcaption>Every box and arrow is a triple in the releases. Teal is the measure and its three direct links; grey arrows are one step further out.</figcaption>
+<figcaption>Every arrow is a triple in the releases, from the one box to the other. Two boxes stand for a few processes: "CM 1.3.6.3 and two more" (the step realizes three), and the RACI box, which stands for the four assignments the query lists. Only MPR supports CM 1.1.5.1.2.6; MIPS and KittyHawk are on the view-dependency path only. Teal is the measure and its three direct links; grey arrows are one step further out.</figcaption>
 <p class="swipe note">Swipe the diagram sideways to see all of it.</p>
 </figure>
 
 <h3>The walk, as one query</h3>
-<p>This SPARQL query walks the measure's neighbourhood across eight modules. It runs over the eleven newest releases loaded together; the output below is what it returned on 2026-10-26.</p>
+<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the eleven newest releases loaded together; the output below is what it returned on 2026-10-26.</p>
 <pre><code>PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
 PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
 PREFIX kpi: &lt;https://w3id.org/lsc/ontology/modules/kpi/&gt;
@@ -498,7 +515,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>The measure informs <code>proc:CM-1-1-4-7-4</code>, <em>Capture Product/Crude/Feedstock Price</em>, a monthly step of Refinery Optimization (CM 1.1.4.7), under Refining. Its definition: "Establish the price and economic assumption set used to value crude, feedstock, and finished-product streams in the optimization case". Six other price measures inform the same process.</p>
 </div>
 </div>
-<p class="note">Links: the other modules point at core's process IRIs (<code>https://w3id.org/lsc/ontology/process/CM-…</code>); core itself requires nothing. Open: 462 relationship mentions held for review, and the seven preferred labels shared inside the process scheme (EPM-DEC-001-0098, item 8).</p>
+<p class="note">Links: the other modules point at core's process IRIs (<code>https://w3id.org/lsc/ontology/process/CM-…</code>); core itself requires nothing. Open: 462 relationship mentions held for review, each re-judged only if its source is corrected (EPM-DEC-001-0025, 0083); the seven preferred labels shared inside the process scheme (EPM-DEC-001-0098, item 8); and proposal MPC-P11, which links the customer-lifecycle processes to their systems and waits for the decision owner (EPM-DEC-001-0103).</p>
 </section>
 
 <section class="mod" id="m-kpi">
@@ -513,7 +530,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>The definition lives here: <code>measure:crack-spreads</code>, "Crack Spreads Pricing", identifier KPI-0001, kind market indicator, grain "daily, by market hub", compared against a 30-day trend and 5-year history. It names three measures it is not to be confused with, such as margin capture. Its population excludes "the market cost of RINs, in MPC's 10-K regional and blended crack spreads".</p>
 </div>
 </div>
-<p class="note">Links: <code>kpi:informsProcess</code> to core. Requires core 2.3.0. Open: who owns each measure's meaning (competency question 17, business close-out point 1), and the populations of the other 33 measures (point 10).</p>
+<p class="note">Links: <code>kpi:informsProcess</code> to core. Requires core 2.3.0. Open: who owns each measure's meaning (competency question 17, business close-out point 1); the populations of the other 33 measures (point 10); Additional Market Prices names its renewables and NGL prices only as examples; and the crack spread's KPI ID has no silver source, being a constant from a legacy table (<code>kpi</code> 1.2.0 changelog, Known gaps).</p>
 </section>
 
 <section class="mod" id="m-market-data">
@@ -528,14 +545,14 @@ ORDER BY ?hop ?label</code></pre>
 <p>Fifteen series name the measure through <code>mkt:seriesOf</code>. The Gulf Coast 3-2-1 is three barrels of MEH crude producing two of USGC CBOB gasoline and one of USGC ULSD, in the Gulf Coast region. The region is MPC's Galveston Bay and Garyville refineries. A series enumeration records 127 series in 44 groups in the crack-spread view on 2026-10-25.</p>
 </div>
 </div>
-<p class="note">Links: <code>mkt:seriesOf</code> to kpi's measures. Requires kpi 1.2.0. Open: Market Data accountability. The Risk Group holds it provisionally, until its mandate is confirmed (EPM-DEC-001-0046; close-out point 2).</p>
+<p class="note">Links: <code>mkt:seriesOf</code> to kpi's measures. Requires kpi 1.2.0. Open: Market Data accountability, which the Risk Group holds provisionally until its mandate is confirmed (EPM-DEC-001-0046; close-out point 2). Only the named series carry definitions; the rest are known only through the views' columns. The 40 market prices' definitions are built from the agents' filters, not a source's own words. Four series have unstated legs: PNW and SLC ex-RIN (37443, 37471) and two NYMEX cracks (44934, 44935) (<code>market-data</code> 1.1.0 changelog, Known gaps).</p>
 </section>
 
 <section class="mod" id="m-data-product">
 <h3>data-product <span class="pill">1.2.0</span> <span class="pill">1,442 triples</span></h3>
 <div class="two">
 <div>
-<p><strong>Holds</strong> the data-product portfolio: segments, 19 product lines and 49 data products (16 defined so far). Since 1.2.0 it also holds the pricing platform's 33 tables and views, by layer: replica, silver, gold and metric view. Each carries its kind, foundational or derived, its lineage (<code>prov:wasDerivedFrom</code>), its systems and the measures a view serves.</p>
+<p><strong>Holds</strong> the data-product portfolio: segments, 19 product lines and 49 data products (16 defined so far). Since 1.2.0 it also holds the pricing platform's 33 tables and views, by layer: replica, silver, gold and metric view. The 21 replicas are copies of a system's tables and carry no data-product kind; the other 12 are platform data products: 7 silver tables are foundational, and 2 gold tables and 3 metric views are derived. Tables carry their lineage (<code>prov:wasDerivedFrom</code>), replicas the system they copy, and the metric views the systems they depend on and the measures they serve.</p>
 <p><strong>Why:</strong> a measure means something only if a consumer can find the data that gives its value. This module connects the business's data products to the platform objects that implement them (EPM-DEC-001-0053, 0100).</p>
 </div>
 <div class="card story">
@@ -543,14 +560,14 @@ ORDER BY ?hop ?label</code></pre>
 <p>The metric view <code>mpr_mips_crack_spread_price_fact_metrics_vw</code> <code>dp:servesMeasure</code> the crack spread. It is a derived data product in the metric-view layer and part of <em>Master Pricing</em>, in the Market Structure &amp; Logistics Management line. It derives from the gold crack-spread fact, whose <code>Crack_Spread_Price_Amount</code> column derives from MPR's settle price. The <em>Crack Spread Price Analytics</em> Genie agent uses it.</p>
 </div>
 </div>
-<p class="note">Links: <code>dp:servesMeasure</code> to kpi, <code>dp:dependsOnSystem</code> and <code>dp:copiesSystem</code> to system, <code>dp:producedBy</code> and <code>dp:consumedBy</code> to core. Requires core 2.3.0, kpi 1.2.0 and system 1.2.0. Open: 33 data products have no definition yet.</p>
+<p class="note">Links: <code>dp:servesMeasure</code> to kpi, <code>dp:dependsOnSystem</code> and <code>dp:copiesSystem</code> to system, <code>dp:producedBy</code> and <code>dp:consumedBy</code> to core. Requires core 2.3.0, kpi 1.2.0 and system 1.2.0. Open: 33 data products have no definition yet. The 1.2.0 changelog's known gaps, about the pricing platform: the benchmark view multiplies all five instruments by 100, wrong for ICE Brent, NYMEX WTI Cushing and NYMEX Natural Gas; its 160-day window; the KPI ID's lineage; gold joins validated from the data and column lineage, not pipeline code; reads with no column flowing; lineage reaching back only 180 days; sandbox names (<code>idp_sbx</code>); and freshness (on 2026-10-25 the newest crack-spread price in the gold table was from 2026-10-08).</p>
 </section>
 
 <section class="mod" id="m-system">
 <h3>system <span class="pill">1.3.0</span> <span class="pill">793 triples</span></h3>
 <div class="two">
 <div>
-<p><strong>Holds</strong> 34 systems, office tools and working documents: the 32 the process map names, plus MIPS and Databricks. 32 have a definition. Each says which processes it supports, taken from the process map's "systems" fields (EPM-DEC-001-0055, 0099, 0103).</p>
+<p><strong>Holds</strong> 34 systems, office tools and working documents: the 32 the process map names, plus MIPS and Databricks. 32 have a definition. The 32 the process map names say which processes they support (<code>sys:supports</code>), taken from its "systems" fields (EPM-DEC-001-0055, 0099, 0103). MIPS and Databricks come from the pricing assets and support no process in this release (EPM-DEC-001-0100).</p>
 <p><strong>Why:</strong> to answer which tool a process runs on, and which system a data product reads. Names were merged on spelling, so one system has one IRI.</p>
 </div>
 <div class="card story">
@@ -558,7 +575,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>The crack-spread view depends on MPR, MIPS and KittyHawk. MPR is the price master. It holds each priced instrument and its daily price details and settlement prices, and supports eight processes, such as <em>CM 1.1.5.1.2.6 Receive actual data product prices</em>. MIPS holds market price assessments in sheets, groups and batches.</p>
 </div>
 </div>
-<p class="note">Links: <code>sys:supports</code> to core. Requires core 2.3.0. Open: TopDay and VALT wait for their owners' descriptions (close-out point 12); CargoTracker, Allocation Manager, Hyperion, Quorum and Polaris need fuller answers (points 13 to 15).</p>
+<p class="note">Links: <code>sys:supports</code> to core. Requires core 2.3.0. Open: TopDay and VALT wait for their owners' descriptions (close-out point 12); CargoTracker, Allocation Manager, Hyperion, Quorum and Polaris need fuller answers (points 13 to 15); the 14 drafted descriptions wait for each system's owner (point 16); MIPS and MPR are described only as the pricing views see them, and MPR's expansion (Master Price Record or Market Price Report) is not settled; XPIMS's meaning rests on the decision owner's answer; and MPC-P11 proposes the customer-lifecycle processes' systems (<code>system</code> 1.3.0 and 1.2.0 changelogs).</p>
 </section>
 
 <section class="mod" id="m-organization">
@@ -603,7 +620,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>KittyHawk, one of the view's three systems, is also a customer system. <code>party:system/kittyhawk skos:exactMatch system:kittyhawk</code> says they are the same system. The customer view adds that it "records physical product movements" and receives customers from RightAngle.</p>
 </div>
 </div>
-<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.3.0 and system 1.3.0. Open: four customer systems and four codes wait for their owners (close-out points 3, 4 and 11), and the product list awaits confirmation (point 5).</p>
+<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.3.0 and system 1.3.0. Open: four customer systems and four codes wait for their owners (close-out points 3, 4 and 11); the 20 drafted customer-system descriptions wait for each owner (point 16); and the product list awaits confirmation (point 5).</p>
 </section>
 
 <section class="mod" id="m-ref-mpc">
@@ -652,7 +669,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>The rule <em>Quote a value through its bound metric view</em> lets an agent give the crack spread's value only through the view that <code>dp:servesMeasure</code> it, naming the view and adding the measure's definition, kind and what it is not. The measure's sources have tiers: the planner measure list is process authority, the MPC performance-measures evidence is MPC, and the KPI classification evidence is peers.</p>
 </div>
 </div>
-<p class="note">Requires every other module. No catalog row publishes the crack-spread measure yet; the binding is the view's <code>dp:servesMeasure</code> (EPM-DEC-001-0100, item 4).</p>
+<p class="note">Requires core, organization, kpi, data-product, value-stream, system, lane, market-data and party; not ref-mpc, though its authority tiers cover ref-mpc's sources. No catalog row publishes the crack-spread measure yet; the binding is the view's <code>dp:servesMeasure</code> (EPM-DEC-001-0100, item 4).</p>
 </section>
 
 <h2 id="stores">How it reaches the stores</h2>
@@ -664,13 +681,162 @@ ORDER BY ?hop ?label</code></pre>
 <div class="card">
 <h3>Where to read more</h3>
 <ul>
-<li><a href="projection/stores-runbook.html">Stores runbook</a>: every store, and how to check, stop, start, purge and reload it.</li>
+<li><a href="projection/stores-runbook.html">Stores runbook</a>: every store, and how to check, stop, start, purge and reload it. The page arrives with its own pull request (branch <code>docs/stores-runbook</code>); until that merges, <code>projection/LOCAL-STORES.md</code> lists the same stores, their refresh commands and logins.</li>
 <li><a href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">EPM integration</a>, the architecture diagram in Eraser.</li>
 <li><code>MODULES.md</code>: each link between modules, with a triple quoted from the releases.</li>
 <li><code>business-closeout.md</code>: the points only the business can settle.</li>
 </ul>
 </div>
 </div>
+
+<h2 id="copy">Copy the ontology</h2>
+<p class="lead">To give a teammate 100% of the ontology and everything they need to understand and use it, copy the three groups below, keeping each repository path as it is. Every group is required. No scripts are needed: the ontology is the release files, and every document to read is an HTML page. In all: 282 files and two links. That is 242 release files, 33 pages and data files to understand it, and 7 files for using it.</p>
+
+<figure>
+<div class="diagram wide" role="img" aria-label="The package to share has three groups: the releases folder with eleven modules, the HTML documents, and the files for using it in a graph and the method.">
+<svg viewBox="0 0 1040 380" xmlns="http://www.w3.org/2000/svg">
+  <rect class="lane" x="20" y="14" width="1000" height="50" rx="8"/><text class="t" x="40" y="44">What you send: three groups, each at its repository path</text>
+  <rect class="lane" x="20" y="80" width="320" height="286" rx="8"/><text class="lane-l" x="36" y="104">1. The ontology itself</text>
+  <rect class="node store" x="36" y="118" width="288" height="44" rx="6"/><text class="t" x="50" y="137">releases/</text><text class="m" x="50" y="154">11 modules · 36 versions · 242 files</text>
+  <rect class="node" x="56" y="172" width="268" height="44" rx="6"/><text class="t" x="70" y="191">&lt;module&gt;/&lt;version&gt;/</text><text class="m" x="70" y="208">.ttl .jsonld shapes manifest …</text>
+  <rect class="node" x="56" y="226" width="268" height="40" rx="6"/><text class="t" x="70" y="250">&lt;module&gt;/CHANGELOG.md</text>
+  <rect class="node" x="56" y="276" width="268" height="40" rx="6"/><text class="t" x="70" y="300">releases/catalog.ttl</text>
+  <text class="s" x="36" y="346">Check the copy with shasum -a 256</text>
+  <rect class="lane" x="360" y="80" width="320" height="286" rx="8"/><text class="lane-l" x="376" y="104">2. The documents to understand it</text>
+  <rect class="node key" x="376" y="118" width="288" height="44" rx="6"/><text class="t" x="390" y="137">ontology-guide.html</text><text class="s" x="390" y="154">this page: start here</text>
+  <rect class="node" x="376" y="172" width="288" height="40" rx="6"/><text class="t" x="390" y="196">README, MODULES, close-out .html</text>
+  <rect class="node" x="376" y="222" width="288" height="40" rx="6"/><text class="t" x="390" y="246">13 module READMEs .html</text>
+  <rect class="node" x="376" y="272" width="288" height="40" rx="6"/><text class="t" x="390" y="296">decisions, glossary, proposals .html</text>
+  <text class="s" x="376" y="346">Plus the process-map .json it is built from</text>
+  <rect class="lane" x="700" y="80" width="320" height="286" rx="8"/><text class="lane-l" x="716" y="104">3. Using it, and the method</text>
+  <rect class="node" x="716" y="118" width="288" height="44" rx="6"/><text class="t" x="730" y="137">projection/ pages</text><text class="s" x="730" y="154">stores runbook, README, LOCAL-STORES</text>
+  <rect class="node" x="716" y="172" width="288" height="40" rx="6"/><text class="t" x="730" y="196">skill-run/queries.json</text>
+  <rect class="node" x="716" y="222" width="288" height="40" rx="6"/><text class="t" x="730" y="246">two playbook.html (skills repo)</text>
+  <rect class="node" x="716" y="272" width="288" height="40" rx="6"/><text class="t" x="730" y="296">Eraser diagram links</text>
+  <text class="s" x="716" y="346">So the teammate can load and query it</text>
+</svg>
+</div>
+<div class="diagram tall" role="img" aria-label="The three groups to copy, as a list.">
+<svg viewBox="0 0 360 470" xmlns="http://www.w3.org/2000/svg">
+  <rect class="lane" x="10" y="10" width="340" height="140" rx="8"/><text class="lane-l" x="24" y="34">1. The ontology itself</text>
+  <rect class="node store" x="24" y="46" width="312" height="44" rx="6"/><text class="t" x="38" y="65">releases/</text><text class="m" x="38" y="82">11 modules · 36 versions · 242 files</text>
+  <text class="s" x="24" y="112">version folders, module changelogs,</text><text class="s" x="24" y="130">catalog.ttl; check with shasum</text>
+  <rect class="lane" x="10" y="162" width="340" height="140" rx="8"/><text class="lane-l" x="24" y="186">2. The documents to understand it</text>
+  <rect class="node key" x="24" y="198" width="312" height="44" rx="6"/><text class="t" x="38" y="217">ontology-guide.html</text><text class="s" x="38" y="234">this page: start here</text>
+  <text class="s" x="24" y="264">README, MODULES, module READMEs,</text><text class="s" x="24" y="282">decisions, glossary, proposals; process map</text>
+  <rect class="lane" x="10" y="314" width="340" height="146" rx="8"/><text class="lane-l" x="24" y="338">3. Using it, and the method</text>
+  <text class="s" x="24" y="364">stores runbook and projection pages</text>
+  <text class="s" x="24" y="384">skill-run/queries.json</text>
+  <text class="s" x="24" y="404">ontology and projection playbook.html</text>
+  <text class="s" x="24" y="424">Eraser diagram links</text>
+</svg>
+</div>
+<figcaption>Copy each group with its folders as they are, so every link between the pages still works.</figcaption>
+<p class="swipe note">Swipe the diagram sideways to see all of it.</p>
+</figure>
+
+<h3>1. The ontology itself</h3>
+<p>Copy the whole folder <code>business_architecture/ontology/releases/</code>: 11 modules, 36 version folders and 242 files, about 38 MB. Copy every version, not only the newest: a module requires named versions of others (lane 1.0.0 requires core 2.2.0, for example), and each manifest points at them.</p>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Path</th><th>What it is, and why it is needed</th></tr></thead>
+<tbody>
+<tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/&lt;module&gt;.ttl</code></td><td data-k="Why">The module's content in Turtle: every class, property, concept and instance. This is the ontology.</td></tr>
+<tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/&lt;module&gt;.jsonld</code></td><td data-k="Why">The same content in JSON-LD, for tools that read JSON.</td></tr>
+<tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/shapes.ttl</code></td><td data-k="Why">The SHACL shapes: what valid data in the module looks like. Run them to check the content after any change.</td></tr>
+<tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/catalog.ttl</code></td><td data-k="Why">The release's DCAT record: its title, version, issue date, and its files as distributions with their media types.</td></tr>
+<tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/manifest.json</code></td><td data-k="Why">The release's facts in one file: <code>version</code>, <code>depends_on</code> (the versions it requires), <code>decisions</code> (the records behind it), <code>approved_by</code>, the triple count and a SHA-256 hash for each file in the folder.</td></tr>
+<tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/CHANGELOG.md</code></td><td data-k="Why">What this version changed, who approved it, and its known gaps.</td></tr>
+<tr><td><code>releases/core/&lt;version&gt;/canonical-facts.csv</code>, <code>counts.json</code></td><td data-k="Why">Core's extras: the evidence row behind each approved process relationship, and the release's counts. Core 1.0.0 also holds <code>conservation.csv</code> and <code>label-dispositions.csv</code>, the ledger of how every source row was handled.</td></tr>
+<tr><td><code>releases/&lt;module&gt;/CHANGELOG.md</code></td><td data-k="Why">Each module's whole history in one file (ten modules; core's is <code>business_architecture/ontology/release/CHANGELOG.md</code>, listed in group 2 as HTML).</td></tr>
+<tr><td><code>releases/catalog.ttl</code></td><td data-k="Why">The DCAT catalog of all 36 released packages: the one file that lists what exists.</td></tr>
+</tbody></table></div>
+
+<p>The newest version of each module, from its manifest. Load these together for the whole ontology (36,185 triples):</p>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Module</th><th class="n">Newest</th><th>Requires</th></tr></thead>
+<tbody>
+<tr><td>core</td><td class="n" data-k="Newest">2.3.0</td><td data-k="Requires">nothing</td></tr>
+<tr><td>organization</td><td class="n" data-k="Newest">2.0.0</td><td data-k="Requires">core 2.1.0</td></tr>
+<tr><td>ref-mpc</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">organization 2.0.0, party 1.0.0</td></tr>
+<tr><td>kpi</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">core 2.3.0</td></tr>
+<tr><td>party</td><td class="n" data-k="Newest">1.3.0</td><td data-k="Requires">core 2.3.0, system 1.3.0</td></tr>
+<tr><td>data-product</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">core 2.3.0, kpi 1.2.0, system 1.2.0</td></tr>
+<tr><td>value-stream</td><td class="n" data-k="Newest">1.1.0</td><td data-k="Requires">core 2.3.0, data-product 1.0.0, kpi 1.1.0</td></tr>
+<tr><td>system</td><td class="n" data-k="Newest">1.3.0</td><td data-k="Requires">core 2.3.0</td></tr>
+<tr><td>lane</td><td class="n" data-k="Newest">1.0.0</td><td data-k="Requires">core 2.2.0</td></tr>
+<tr><td>market-data</td><td class="n" data-k="Newest">1.1.0</td><td data-k="Requires">kpi 1.2.0</td></tr>
+<tr><td>integration</td><td class="n" data-k="Newest">2.3.0</td><td data-k="Requires">core 2.3.0, organization 2.0.0, kpi 1.2.0, data-product 1.2.0, value-stream 1.1.0, system 1.3.0, lane 1.0.0, market-data 1.1.0, party 1.3.0</td></tr>
+</tbody></table></div>
+<p>To check that a copied version folder is complete and unchanged, the teammate hashes its files and compares each hash with the <code>files</code> entry in that folder's <code>manifest.json</code>. For kpi 1.2.0, for example:</p>
+<pre><code>cd business_architecture/ontology/releases/kpi/1.2.0 &amp;&amp; shasum -a 256 kpi.ttl kpi.jsonld shapes.ttl catalog.ttl CHANGELOG.md</code></pre>
+<p class="note">On 2026-10-26 this printed <code>01cacca9…</code> for <code>kpi.ttl</code> and <code>0041493b…</code> for <code>CHANGELOG.md</code>, the hashes kpi 1.2.0's manifest records.</p>
+
+<h3>2. The documents to understand it</h3>
+<p>Every document is an HTML page, so it opens in any browser. Start with this guide.</p>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Path</th><th>Why it is needed</th></tr></thead>
+<tbody>
+<tr><td><code>business_architecture/ontology/ontology-guide.html</code></td><td data-k="Why">This page: what the ontology is for, why modules, each module, and the crack spread traced through all of them. The place to start.</td></tr>
+<tr><td><code>business_architecture/ontology/README.html</code></td><td data-k="Why">The entry point to the build: what each document is for, the modules table, and where the method and the build record live.</td></tr>
+<tr><td><code>business_architecture/ontology/MODULES.html</code></td><td data-k="Why">Each link between modules, with a triple quoted from the releases; a test keeps the quotes true.</td></tr>
+<tr><td><code>business_architecture/ontology/competency-questions.html</code></td><td data-k="Why">The questions the ontology must answer: its acceptance test, which the SPARQL regression runs.</td></tr>
+<tr><td><code>business_architecture/ontology/business-closeout.html</code></td><td data-k="Why">The points only the business can settle, each with the record that will hold the answer.</td></tr>
+<tr><td><code>business_architecture/ontology/release/CHANGELOG.html</code></td><td data-k="Why">Core's changelog: every core release, its approval and its known gaps.</td></tr>
+<tr><td><code>business_architecture/ontology/organization/README.html</code></td><td data-k="Why">How roles and RACI assignments are built, and the decisions behind them.</td></tr>
+<tr><td><code>business_architecture/ontology/ref-mpc/README.html</code></td><td data-k="Why">The company facts and their 10-K sources.</td></tr>
+<tr><td><code>business_architecture/ontology/kpi/README.html</code></td><td data-k="Why">How measures are defined and classified, and the measure list they come from.</td></tr>
+<tr><td><code>business_architecture/ontology/population/README.html</code></td><td data-k="Why">The eight measure populations that ship in <code>kpi</code>.</td></tr>
+<tr><td><code>business_architecture/ontology/party/README.html</code></td><td data-k="Why">The customer model, customer systems, data flows and lifecycle.</td></tr>
+<tr><td><code>business_architecture/ontology/data-product/README.html</code></td><td data-k="Why">The portfolio and the pricing platform's tables, views and lineage.</td></tr>
+<tr><td><code>business_architecture/ontology/value-stream/README.html</code></td><td data-k="Why">The two value streams and how their steps link to processes, data products and measures.</td></tr>
+<tr><td><code>business_architecture/ontology/system/README.html</code></td><td data-k="Why">The systems, how names were merged, and where each definition comes from.</td></tr>
+<tr><td><code>business_architecture/ontology/lane/README.html</code></td><td data-k="Why">The four office lanes and the seven placed processes.</td></tr>
+<tr><td><code>business_architecture/ontology/market-data/README.html</code></td><td data-k="Why">The series recipes, benchmarks, regions and market prices.</td></tr>
+<tr><td><code>business_architecture/ontology/placement/README.html</code></td><td data-k="Why">Integration's placement rules: which links certify the work.</td></tr>
+<tr><td><code>business_architecture/ontology/authority/README.html</code></td><td data-k="Why">Integration's evidence tiers: which source wins.</td></tr>
+<tr><td><code>business_architecture/ontology/consumer/README.html</code></td><td data-k="Why">Integration's consumer rules: what an agent may answer and must refuse.</td></tr>
+<tr><td><code>business_architecture/domain/business-glossary.html</code></td><td data-k="Why">The business terms, one meaning each, that the labels and definitions use.</td></tr>
+<tr><td><code>business_architecture/domain/decisions/decisions.html</code></td><td data-k="Why">Every decision record: the "why" behind each modelling choice, with the decision owner's recorded words.</td></tr>
+<tr><td><code>business_architecture/business_process/proposals/MPC-P02-refining-ids.html</code>, <code>MPC-P03-transfer-coverage-gaps.html</code>, <code>MPC-P04-renewables-traceability.html</code>, <code>MPC-P10-customer-lifecycle.html</code>, <code>MPC-P11-customer-process-systems.html</code></td><td data-k="Why">The process-map proposals: changes to the map suggested by the build, each with its status.</td></tr>
+</tbody></table></div>
+<p>The modules are built from the process-map authority files. They are data, so they stay as files:</p>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Path</th><th>Why it is needed</th></tr></thead>
+<tbody>
+<tr><td><code>business_architecture/business_process/downstream_process_map.json</code></td><td data-k="Why">The process map, the authority <code>core</code>, <code>organization</code>, <code>system</code> and <code>lane</code> are built from.</td></tr>
+<tr><td><code>business_architecture/business_process/value_stream_commercial_lifecycle.json</code>, <code>value_stream_order_to_cash.json</code></td><td data-k="Why">The two value streams <code>value-stream</code> is built from.</td></tr>
+<tr><td><code>business_architecture/business_process/data_product_portfolio.json</code></td><td data-k="Why">The data-product portfolio <code>data-product</code> is built from.</td></tr>
+<tr><td><code>business_architecture/business_process/office_lanes.json</code></td><td data-k="Why">The office lanes <code>lane</code> is built from.</td></tr>
+<tr><td><code>business_architecture/schema/value_stream.schema.json</code>, <code>data_product_portfolio.schema.json</code></td><td data-k="Why">The JSON Schemas that say what those files must hold.</td></tr>
+</tbody></table></div>
+
+<h3>3. Using it in a graph, and the method</h3>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Path</th><th>Why it is needed</th></tr></thead>
+<tbody>
+<tr><td><code>business_architecture/ontology/projection/stores-runbook.html</code></td><td data-k="Why">How the ontology reaches Neo4j, AuraDB and Databricks, and how to check, stop, start, purge and reload each store.</td></tr>
+<tr><td><code>business_architecture/ontology/projection/README.html</code></td><td data-k="Why">The projection into a property graph: its rules, inputs and last run.</td></tr>
+<tr><td><code>business_architecture/ontology/projection/LOCAL-STORES.html</code></td><td data-k="Why">The short index of the kept stores and where each login lives.</td></tr>
+<tr><td><code>business_architecture/ontology/projection/skill-run/README.html</code></td><td data-k="Why">How to run the <code>ontology-to-lpg</code> skill's driver on these releases.</td></tr>
+<tr><td><code>business_architecture/ontology/projection/skill-run/queries.json</code></td><td data-k="Why">The 14 saved walks across the graph, the starting points for exploring it.</td></tr>
+<tr><td><code>skills/data/ontology/references/playbook.html</code> (personal-agent-skills)</td><td data-k="Why">The ontology method: why and how each step is done.</td></tr>
+<tr><td><code>skills/data/ontology-to-lpg/references/playbook.html</code> (personal-agent-skills)</td><td data-k="Why">The projection method: how the ontology becomes a property graph.</td></tr>
+<tr><td><a href="https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj">EPM ontology: modules and how they connect</a>, <a href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">EPM integration</a></td><td data-k="Why">The two architecture diagrams, in Eraser. Send the links; the teammate needs access to the folder.</td></tr>
+</tbody></table></div>
+
+<p class="notice">Where each path is today. On <code>main</code>: the releases, the process-map JSON files and <code>skill-run/queries.json</code>. With this guide's pull request (branch <code>docs/ontology-guide</code>): <code>ontology-guide.html</code>. With the HTML-documents pull request (branch <code>docs/html-docs</code>): every other <code>.html</code> page in this repository except the runbook. With the runbook's pull request (branch <code>docs/stores-runbook</code>): <code>stores-runbook.html</code>. With the playbook pull request in personal-agent-skills (branch <code>docs/playbook-html</code>): the two <code>playbook.html</code> pages.</p>
+
+<h3>What you do not need</h3>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Leave out</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Builders and tests (<code>.py</code>)</td><td data-k="Why">They make and check the releases; a teammate who reads or loads the ontology does not run them.</td></tr>
+<tr><td>The source CSVs and working <code>.ttl</code> files in the module folders</td><td data-k="Why">The releases hold their content, built, checked and hashed.</td></tr>
+<tr><td><code>business_architecture/ontology/step4/review-evidence/</code></td><td data-k="Why">The review evidence behind past decisions; <code>decisions.html</code> carries what each decided.</td></tr>
+<tr><td>The <code>step3c-*</code> work files in <code>business_architecture/ontology/</code></td><td data-k="Why">Working notes of the naming pass, finished long before the releases.</td></tr>
+<tr><td><code>business_architecture/ontology/trials/</code></td><td data-k="Why">Trial runs, not part of any release.</td></tr>
+<tr><td><code>business_architecture/ontology/lpg-projection/</code></td><td data-k="Why">The superseded v2.2 copy of the projection guideline; the projection playbook page is the current method.</td></tr>
+</tbody></table></div>
 
 <h2 id="open">What is still open</h2>
 <div class="tblwrap"><table class="stack">
@@ -681,8 +847,13 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td>Customer codes, systems and products</td><td data-k="Needs">Meanings from the system owners and the customer-data owner.</td><td data-k="Record">Points 3, 4, 5 and 11</td></tr>
 <tr><td>Role readings and working definitions</td><td data-k="Needs">Forecaster, Crude RFC, PSM, and four definitions confirmed.</td><td data-k="Record">Points 6 to 9</td></tr>
 <tr><td>Measure populations</td><td data-k="Needs">What is in and out for 33 measures.</td><td data-k="Record">EPM-DEC-001-0062; point 10</td></tr>
-<tr><td>System descriptions</td><td data-k="Needs">TopDay, VALT, CargoTracker, Allocation Manager, Hyperion, Quorum and Polaris.</td><td data-k="Record">Points 12 to 15</td></tr>
-<tr><td>Process map</td><td data-k="Needs">The decision on proposal MPC-P11, and a proposal for the seven shared process labels.</td><td data-k="Record">EPM-DEC-001-0098, 0103</td></tr>
+<tr><td>System descriptions</td><td data-k="Needs">TopDay, VALT, CargoTracker, Allocation Manager, Hyperion, Quorum and Polaris; fuller MIPS and MPR descriptions; MPR's expansion; XPIMS's meaning.</td><td data-k="Record">Points 12 to 15; <code>system</code> changelogs</td></tr>
+<tr><td>Drafted descriptions</td><td data-k="Needs">Each owner confirms or corrects the 14 system and 20 customer-system descriptions Claude drafted.</td><td data-k="Record">EPM-DEC-001-0103; point 16</td></tr>
+<tr><td>Pricing measures</td><td data-k="Needs">The full list of Additional Market Prices; a silver source for the crack spread's KPI ID.</td><td data-k="Record"><code>kpi</code> 1.2.0 changelog</td></tr>
+<tr><td>Market series</td><td data-k="Needs">Definitions for the unnamed series; source wording for the 40 market prices; the legs of four series.</td><td data-k="Record"><code>market-data</code> 1.1.0 changelog</td></tr>
+<tr><td>Pricing platform</td><td data-k="Needs">The benchmark view's scaling and 160-day window, KPI ID lineage, joins read from code, lineage reach, production names, and fresh data.</td><td data-k="Record"><code>data-product</code> 1.2.0 changelog</td></tr>
+<tr><td>Undefined data products</td><td data-k="Needs">Definitions for 33 portfolio data products.</td><td data-k="Record"><code>data-product</code> 1.1.0 changelog</td></tr>
+<tr><td>Process map</td><td data-k="Needs">The decision on proposal MPC-P11; a proposal for the seven shared process labels; and the held process-map rows, each re-judged only if its source is corrected.</td><td data-k="Record">EPM-DEC-001-0025, 0083, 0098, 0103</td></tr>
 </tbody></table></div>
 
 <div class="src" id="sources">
