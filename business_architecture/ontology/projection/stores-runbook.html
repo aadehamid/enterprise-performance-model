@@ -345,8 +345,8 @@ td:first-child { font-weight: 600; }
 <thead><tr><th>Store</th><th>What it holds</th><th>Where</th><th>Login</th></tr></thead>
 <tbody>
 <tr><td>Local Neo4j, pipeline</td><td data-k="Holds">The projection that <code>pipeline.py</code> builds: 4,137 nodes, 21,295 relationships</td><td data-k="Where">Container <code>epm-lpg</code>, Bolt <code>localhost:17687</code>, browser <code>http://localhost:17474</code></td><td data-k="Login"><code>~/epm-lpg/run.env</code></td></tr>
-<tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step: 4,137 nodes, 21,666 relationships</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
-<tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the driver's graph, checked by an equal RDFC-1.0 hash</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
+<tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step: 4,137 nodes, 21,666 relationships</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> after a full run, <code>~/lpg-out/epm/neo4j-run/run.env</code> after <code>--skip rebuild</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
+<tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the driver's graph: the driver's copy step checks that both give the same graph hash</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
 <tr><td>Databricks, <code>epm_triples</code></td><td data-k="Holds">The release triples as a Delta table</td><td data-k="Where"><code>workspace.epm_ontology.epm_triples</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code></td></tr>
 <tr><td>Databricks, <code>idp_sbx</code></td><td data-k="Holds">The demo's replica, silver and gold tables, four metric views and two Genie agents</td><td data-k="Where">Catalog <code>idp_sbx</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code> or the demo's <code>.env</code></td></tr>
 <tr><td>Local Postgres</td><td data-k="Holds">The demo's six synthetic source databases: mips, mpr, kittyhawk, ctrm, planning, prodacct</td><td data-k="Where">Container <code>pricing-demo-sources</code>, <code>127.0.0.1:55432</code>, volume <code>pricing-demo-pgdata</code></td><td data-k="Login">The local demo login in the demo's <code>docker/docker-compose.yml</code></td></tr>
@@ -378,20 +378,22 @@ DEMO="$EPM/demos/downstream-pricing-databricks-free"</code></pre>
 <p>Pipeline Neo4j. The password is read from its file and never printed:</p>
 <pre><code>set -a; . ~/epm-lpg/run.env; set +a
 docker exec epm-lpg cypher-shell -u neo4j -p "$NEO4J_PASSWORD" \
-  "MATCH (n) RETURN count(n) AS nodes; MATCH ()-[r]->() RETURN count(r) AS relationships;"</code></pre>
-<p>Driver Neo4j:</p>
+  "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships;"</code></pre>
+<p>Driver Neo4j. After a full driver run its login is in the <code>epm-rebuild</code> file; after a run with <code>--skip rebuild</code>, change <code>epm-rebuild</code> to <code>epm</code> in the first line:</p>
 <pre><code>pw=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
 docker exec lpg-local-neo4j-1 cypher-shell -u neo4j -p "$pw" \
-  "MATCH (n) RETURN count(n) AS nodes; MATCH ()-[r]->() RETURN count(r) AS relationships;"</code></pre>
-<p>Postgres, one line per database:</p>
+  "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships;"</code></pre>
+<p>Postgres, the exact row count of every table in each database:</p>
 <pre><code>for db in mips mpr kittyhawk ctrm planning prodacct; do
-  printf '%s: ' "$db"
-  docker exec pricing-demo-sources psql -U demo -d "$db" -Atc \
-    "select count(*) || ' tables, ' || coalesce(sum(n_live_tup), 0) || ' rows' from pg_stat_user_tables"
+  for t in $(docker exec pricing-demo-sources psql -U demo -d "$db" -Atc \
+      "select tablename from pg_tables where schemaname = 'public'"); do
+    printf '%s.%s: ' "$db" "$t"
+    docker exec pricing-demo-sources psql -U demo -d "$db" -Atc "select count(*) from \"$t\""
+  done
 done</code></pre>
 <p>The demo in Databricks, every table and metric view with its row count:</p>
 <pre><code>cd "$DEMO" && uv run python -m pricing_demo.databricks counts</code></pre>
-<p>AuraDB: open the instance in the <a href="https://console.neo4j.io/">Aura console</a> and run <code>MATCH (n) RETURN count(n)</code>. Its count is a little higher than the local graph's, because the copy also holds a few nodes of its own (namespace and configuration nodes). The driver's copy step is what proves the two graphs equal.</p>
+<p>AuraDB: open the instance in the <a href="https://console.neo4j.io/">Aura console</a> and run the same two queries as for the driver's Neo4j. On 2026-10-26 they gave the same figures: 4,137 nodes and 21,666 relationships. The queries count only <code>:Resource</code> nodes, the projection itself; each store also holds a few nodes of its own (module tags and, locally, n10s settings), so a count of every node is a little higher.</p>
 
 <h2 id="stop">Stop, start and reboot</h2>
 <p class="lead">Stopping keeps the data; purging removes it. A reload brings a purged store back from the repository.</p>
@@ -421,10 +423,10 @@ done</code></pre>
   <text class="el" x="196" y="214">purge</text>
   <path class="e key" d="M330 228C240 252 120 226 116 170" marker-end="url(#bk)"/>
   <text class="el" x="150" y="258">reload, steps 1 to 4</text>
-  <path class="e" d="M520 54C560 54 600 80 640 96" marker-end="url(#b)"/>
-  <text class="el" x="560" y="46">Postgres returns by itself,</text><text class="el" x="560" y="60">unless you stopped it</text>
-  <path class="e key" d="M600 140C470 150 320 146 224 138" marker-end="url(#bk)"/>
-  <text class="el" x="420" y="132">the two Neo4j: docker start</text>
+  <path class="e" d="M220 108C330 100 520 100 596 114" marker-end="url(#b)"/>
+  <text class="el" x="560" y="96">reboot</text>
+  <path class="e key" d="M600 150C470 160 320 156 224 146" marker-end="url(#bk)"/>
+  <text class="el" x="400" y="174">docker start, all three</text>
 </svg>
 </div>
 <p class="note swipe">Swipe the diagram sideways to see all of it.</p>
@@ -436,18 +438,27 @@ done</code></pre>
 <pre><code>docker stop epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre>
     <h3>Start them again</h3>
 <pre><code>docker start epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre>
-    <p>Neo4j needs about a minute after a start. It is ready when <code>docker logs epm-lpg 2>&amp;1 | grep Started.</code> prints a line, and the same holds for <code>lpg-local-neo4j-1</code>.</p>
+    <p>Neo4j needs about a minute after a start. Old log lines survive a restart, so test the login instead of the log. This waits up to two minutes for the pipeline's Neo4j, and prints <code>ready</code> or <code>not ready</code>; for the driver's, use its container and password as in <a href="#check">Check what is running</a>:</p>
+<pre><code>set -a; . ~/epm-lpg/run.env; set +a
+state="not ready"
+for i in $(seq 1 24); do
+  if docker exec epm-lpg cypher-shell -u neo4j -p "$NEO4J_PASSWORD" "RETURN 1" >/dev/null 2>&amp;1; then
+    state=ready; break
+  fi
+  sleep 5
+done
+echo "$state"</code></pre>
   </div>
   <div class="card">
     <h3>After a reboot</h3>
     <ol class="steps">
       <li>Start Docker Desktop, if it does not start at login.</li>
-      <li>Postgres comes back by itself: its container has <code>restart: unless-stopped</code>. That policy brings back a container that was running when Docker stopped, but not one you stopped by hand. Start that one with <code>docker start pricing-demo-sources</code>.</li>
-      <li>The two Neo4j containers have no restart policy, so start them with <code>docker start epm-lpg lpg-local-neo4j-1</code>.</li>
+      <li>Start all three containers. Starting one that is already running does nothing, so this is safe whichever came back by itself (Postgres has <code>restart: unless-stopped</code>; the two Neo4j have no restart policy):
+<pre><code>docker start epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre></li>
       <li>Run the checks in <a href="#check">Check what is running</a>.</li>
     </ol>
     <h3>The cloud stores</h3>
-    <p>AuraDB and Databricks need no shutdown from this Mac. Nothing here keeps them running. The Databricks SQL warehouse stops by itself when idle, and the next query starts it again. Manage the Aura instance from the Aura console.</p>
+    <p>AuraDB and Databricks need no shutdown from this Mac. Nothing here keeps them running. A Databricks SQL warehouse stops after it has been idle for the minutes its Auto Stop setting gives (<a href="https://docs.databricks.com/aws/en/compute/sql-warehouse/create">Databricks, "Create a SQL warehouse"</a>, read 2026-10-26). If a query reports it stopped, start it on the SQL Warehouses page. Manage the Aura instance from the Aura console.</p>
   </div>
 </div>
 
@@ -532,7 +543,7 @@ uv run --no-project --with rdflib python3 run_projection.py \
 <div class="ok"><strong>When it is done</strong>Every store holds the newest releases again. Run the counts in <a href="#check">Check what is running</a>.</div>
 
 <h2 id="purge">Purge</h2>
-<div class="warn"><strong>Read this first.</strong>A purge cannot be undone. The data comes back only by <a href="#reload">reloading</a>, and nothing here is lost that the reload does not rebuild. On 2026-10-26 the decision owner asked to keep these stores loaded. Purge only when you mean to.</div>
+<div class="warn"><strong>Read this first.</strong>A purge cannot be undone. The data comes back only by <a href="#reload">reloading</a>, which rebuilds what these commands remove from the repository. Each command below removes only what the demo or the projection created. On 2026-10-26 the decision owner asked to keep these stores loaded. Purge only when you mean to.</div>
 
 <div class="two">
   <div class="card">
@@ -552,7 +563,7 @@ docker compose -f docker/docker-compose.yml down -v</code></pre>
 </div>
 
 <h3>AuraDB</h3>
-<p>In the Aura console's query tool, run this as one statement. In Neo4j Browser, put <code>:auto</code> in front of it, because <code>IN TRANSACTIONS</code> needs an auto-commit transaction:</p>
+<p>In the Aura console's query tool, run this as one statement. In Neo4j Browser, put <code>:auto</code> in front of it, because <code>CALL { … } IN TRANSACTIONS</code> "is only allowed in implicit transactions" (<a href="https://neo4j.com/docs/cypher-manual/25/subqueries/subqueries-in-transactions/">Neo4j Cypher Manual 25, "CALL subqueries in transactions"</a>, read 2026-10-26):</p>
 <pre><code>MATCH (n) CALL (n) { DETACH DELETE n } IN TRANSACTIONS OF 10000 ROWS</code></pre>
 <p>This empties the database and keeps the instance. The next driver run fills it again.</p>
 
@@ -561,9 +572,20 @@ docker compose -f docker/docker-compose.yml down -v</code></pre>
 <pre><code>-- the ontology triples
 DROP TABLE IF EXISTS workspace.epm_ontology.epm_triples;
 
--- the demo: every schema, table, metric view and the volume in the catalog
-DROP CATALOG IF EXISTS idp_sbx CASCADE;</code></pre>
-<p>The Genie agents are not in the catalog. Delete <em>Crack Spread Price Analytics</em> and <em>Executive Summary KPIs Analytics</em> in Genie, or leave them: the next <code>genie</code> step updates them in place. If <code>setup</code> fell back to <code>DEMO_CATALOG</code>, because <code>idp_sbx</code> could not be created, drop the demo's schemas in that catalog instead.</p>
+-- the demo: its eleven schemas, with their tables, metric views and the volume
+DROP SCHEMA IF EXISTS idp_sbx.replica_landing CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.replica_mips CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.replica_mpr CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.replica_kittyhawk CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.replica_ctrm CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.replica_planning CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.replica_prodacct CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.silver_udm_core CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.silver_mdm_core CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.gold_commercial_core CASCADE;
+DROP SCHEMA IF EXISTS idp_sbx.semantic_sem_commercial CASCADE;</code></pre>
+<p>This drops only the schemas the demo creates (<code>SCHEMAS</code> in <code>pricing_demo/databricks.py</code>), so anything else in the catalog stays. Before you run it, check which catalog the demo used: <code>setup</code> prints it (<code>catalog idp_sbx: …</code>). If it printed another catalog, put that name in place of <code>idp_sbx</code>.</p>
+<p>The Genie agents are not in the catalog. Delete <em>Crack Spread Price Analytics</em> and <em>Executive Summary KPIs Analytics</em> in Genie, or leave them: the next <code>genie</code> step updates them in place.</p>
 
 <h2 id="trouble">When something fails</h2>
 <div class="tblwrap"><table class="stack">
@@ -572,7 +594,7 @@ DROP CATALOG IF EXISTS idp_sbx CASCADE;</code></pre>
 <tr><td>Neo4j does not print <code>Started.</code></td><td data-k="Why">The Docker disk is usually full.</td><td data-k="Do">Check it with <code>docker system df</code>. Then free space: run <code>docker builder prune</code> and <code>docker image prune</code>, or remove volumes you know you do not need. Do not remove <code>pricing-demo-pgdata</code>.</td></tr>
 <tr><td><code>docker compose up (Neo4j) exited 1</code> from the driver</td><td data-k="Why">A container from an earlier run still holds the <code>lpg-local</code> name.</td><td data-k="Do">Remove it with the driver's purge command above, then run again.</td></tr>
 <tr><td><code>the run stopped on a driver or file error (ClientError)</code></td><td data-k="Why">A query failed inside the load. On 2026-10-26 the cause was an apostrophe in an <code>sh:message</code>, which n10s writes into its Cypher unescaped. Since personal-agent-skills #72, the driver leaves such a message out.</td><td data-k="Do">Update the skills checkout. If the error comes back, the n10s query text is in the Neo4j logs.</td></tr>
-<tr><td>A login is refused</td><td data-k="Why">Each run writes a new password, and an old env file holds the old one.</td><td data-k="Do">Use the file the table names for that store. After a driver run, the <code>epm-rebuild</code> file is the current one.</td></tr>
+<tr><td>A login is refused</td><td data-k="Why">Each run writes a new password, and an old env file holds the old one.</td><td data-k="Do">Use the file the table names for that store. After a full driver run, the <code>epm-rebuild</code> file is the current one; after a run with <code>--skip rebuild</code>, the <code>epm</code> file is.</td></tr>
 <tr><td>The demo's scripts cannot reach Databricks</td><td data-k="Why">The token in the env file has expired.</td><td data-k="Do">Make a new personal access token in Databricks, and put it in <code>~/.config/databricks/epm.env</code>.</td></tr>
 </tbody></table></div>
 
