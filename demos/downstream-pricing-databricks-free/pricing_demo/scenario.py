@@ -8,8 +8,8 @@ import sys
 from .config import ROOT
 
 HEADER = """<!-- The demo's scenario: the decision owner's executive briefing collection for October 2026, kept as written except that
-the line naming where it was produced is removed and "FACT" reads "Scenario" (the decision owner's item H decisions,
-2026-10-25). Its figures calibrate the synthesized data only; they are never ontology facts. Where a figure differs
+the line naming where it was produced is removed (the decision owner: "Remove any mention of ChatGPT", 2026-10-25) and
+"FACT" reads "Scenario" (Claude's choice, delegated under EPM-DEC-001-0028; EPM-DEC-001-0102, item 4). Its figures calibrate the synthesized data only; they are never ontology facts. Where a figure differs
 from published EIA data, EIA wins: README.md, "The scenario against EIA", lists each difference. -->
 """
 PRODUCED_LINE = "> **Note:** This file consolidates"
