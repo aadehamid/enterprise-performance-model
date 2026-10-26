@@ -18,6 +18,13 @@
     owl:versionIRI sys:1.2.0 ;
     owl:versionInfo "1.2.0" .
 
+sys:namedBy a owl:ObjectProperty ;
+    rdfs:label "named by"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0100"@en ;
+    rdfs:domain sys:System ;
+    rdfs:range dcterms:BibliographicResource ;
+    skos:definition "The source that names a system the process map does not name. A system the map names has no value here."@en .
+
 sys:supports a owl:ObjectProperty ;
     rdfs:label "supports"@en ;
     dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, systems; competency question 6"@en ;
@@ -126,6 +133,7 @@ system:databricks a skos:Concept,
     skos:notation "databricks"^^xsd:string ;
     skos:prefLabel "Databricks"@en ;
     skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-pricing-assets-2026-10-25 ;
     sys:systemKind kind:application .
 
 system:dpo a skos:Concept,
@@ -218,6 +226,7 @@ system:mips a skos:Concept,
     skos:notation "mips"^^xsd:string ;
     skos:prefLabel "MIPS"@en ;
     skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-pricing-assets-2026-10-25 ;
     sys:systemKind kind:application .
 
 system:mpr a skos:Concept,
@@ -323,7 +332,7 @@ system:ms-teams a skos:Concept,
         sys:System ;
     dcterms:source src:downstream-process-map,
         src:vendor-microsoft-teams ;
-    skos:definition "Microsoft's application for chat, meetings and shared files. By the vendor's description, it keeps the tools and files a team works with in one place."@en ;
+    skos:definition "Microsoft's application for working together. By the vendor's description, it keeps the tools and files a team works with in one place."@en ;
     skos:inScheme sys:Systems ;
     skos:notation "ms-teams"^^xsd:string ;
     skos:prefLabel "MS Teams"@en ;
@@ -557,9 +566,9 @@ system:sap a skos:Concept,
         sys:System ;
     dcterms:source src:decision-owner-answers-2026-10-25-item-g,
         src:downstream-process-map,
-        src:vendor-sap-s4hana ;
+        src:vendor-sap-s4hana-help ;
     skos:altLabel "SAP"@en ;
-    skos:definition "SAP's enterprise resource planning (ERP) system. By the vendor's description, it is a modular ERP for an enterprise's core business processes."@en ;
+    skos:definition "SAP's business suite. By the vendor's description, it is the next-generation business suite, built on the SAP HANA in-memory platform."@en ;
     skos:editorialNote "The process map's \"SAP\" is SAP S/4HANA by the decision owner's answer of 2026-10-25. Which edition MPC runs is not stated in the repository, so the definition is at product level (EPM-DEC-001-0099)."@en ;
     skos:inScheme sys:Systems ;
     skos:notation "sap"^^xsd:string ;
@@ -730,17 +739,14 @@ src:vendor-oracle-hyperion-planning-11-2 a dcterms:BibliographicResource ;
 src:vendor-profisee-platform a dcterms:BibliographicResource ;
     dcterms:title "Profisee, Platform, https://profisee.com/platform/, retrieved 2026-10-25"@en .
 
-src:vendor-sap-s4hana a dcterms:BibliographicResource ;
-    dcterms:title "SAP, SAP S/4HANA, https://www.sap.com/products/erp/s4hana.html, retrieved 2026-10-25"@en .
+src:vendor-sap-s4hana-help a dcterms:BibliographicResource ;
+    dcterms:title "SAP, Conversion Guide for SAP S/4HANA 2025, document version 3.0 (2026-10-07), https://help.sap.com/doc/2b87656c4eee4284a5eb8976c0fe88fc/2025/en-US/CONV_OP2025.pdf, retrieved 2026-10-26"@en .
 
 src:vendor-aspentech-aspen-pims-brochure a dcterms:BibliographicResource ;
     dcterms:title "AspenTech, Aspen PIMS brochure (AT-06696, 2021), https://www.aspentech.com/-/media/aspentech/home/resources/brochure/pdfs/fy21/q3/at-03906-bro-aspen-pims.pdf, retrieved 2026-10-25"@en .
 
 src:vendor-aspentech-ppims-course a dcterms:BibliographicResource ;
     dcterms:title "AspenTech, course RPA206, Multi-Period Refinery Modeling with Aspen PPIMS, https://esupport.aspentech.com/UniversityCourse?Id=a3p0B0000004YnsQAE, retrieved 2026-10-25"@en .
-
-src:decision-owner-pricing-assets-2026-10-25 a dcterms:BibliographicResource ;
-    dcterms:title "The decision owner's Databricks pricing metric views, their lineage and the Genie agents' instructions (idp_sbx sandbox), shared on 2026-10-25 and held outside the repository (EPM-DEC-001-0097)"@en .
 
 src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     dcterms:title "The decision owner's identifications of systems, Claude Code session of 2026-10-24, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-24-systems.md"@en .
@@ -751,6 +757,9 @@ kind:office-tool a skos:Concept ;
     skos:notation "office-tool" ;
     skos:prefLabel "Office tool"@en ;
     skos:topConceptOf sys:SystemKind .
+
+src:decision-owner-pricing-assets-2026-10-25 a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's Databricks pricing metric views, their lineage and the Genie agents' instructions (idp_sbx sandbox), shared on 2026-10-25 and held outside the repository (EPM-DEC-001-0097)"@en .
 
 sys:SystemKind a skos:ConceptScheme ;
     rdfs:label "system kind"@en ;

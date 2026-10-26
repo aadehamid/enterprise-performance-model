@@ -184,6 +184,7 @@ price:alaska-north-slope-ans-vs-ice-brent a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Alaska North Slope (ANS) vs. ICE Brent differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-alaska-north-slope-ans-vs-ice-brent"^^xsd:string ;
     skos:prefLabel "Alaska North Slope (ANS) vs. ICE Brent"@en ;
@@ -195,6 +196,7 @@ price:bakken-patoka-vs-wti-cma a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Bakken - Patoka vs. WTI CMA differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-bakken-patoka-vs-wti-cma"^^xsd:string ;
     skos:prefLabel "Bakken - Patoka vs. WTI CMA"@en ;
@@ -206,6 +208,7 @@ price:biodiesel-d4-rin a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Biodiesel (D4) RIN price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-biodiesel-d4-rin"^^xsd:string ;
     skos:prefLabel "Biodiesel (D4) RIN"@en ;
@@ -217,6 +220,7 @@ price:butane-mt-belvieu-non-tet a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Butane Mt. Belvieu (Non-Tet) natural gas liquid price, one of the two NGL prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-butane-mt-belvieu-non-tet"^^xsd:string ;
     skos:prefLabel "Butane Mt. Belvieu (Non-Tet)"@en ;
@@ -228,6 +232,7 @@ price:cbot-sbo a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The CBOT SBO price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-cbot-sbo"^^xsd:string ;
     skos:prefLabel "CBOT SBO"@en ;
@@ -239,6 +244,7 @@ price:chi-biodiesel a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The CHI Biodiesel price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-chi-biodiesel"^^xsd:string ;
     skos:prefLabel "CHI Biodiesel"@en ;
@@ -250,6 +256,7 @@ price:chi-cbob-wolvy a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The CHI CBOB (Wolvy) gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-chi-cbob-wolvy"^^xsd:string ;
     skos:prefLabel "CHI CBOB (Wolvy)"@en ;
@@ -262,6 +269,7 @@ price:chi-ethanol a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The CHI Ethanol price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-chi-ethanol"^^xsd:string ;
     skos:prefLabel "CHI Ethanol"@en ;
@@ -273,6 +281,7 @@ price:chi-ulsd-wolvy a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The CHI ULSD (Wolvy) distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-chi-ulsd-wolvy"^^xsd:string ;
     skos:prefLabel "CHI ULSD (Wolvy)"@en ;
@@ -285,6 +294,7 @@ price:ethanol-d6-rin a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Ethanol (D6) RIN price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-ethanol-d6-rin"^^xsd:string ;
     skos:prefLabel "Ethanol (D6) RIN"@en ;
@@ -296,6 +306,7 @@ price:group-cbob a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Group CBOB gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-group-cbob"^^xsd:string ;
     skos:prefLabel "Group CBOB"@en ;
@@ -308,6 +319,7 @@ price:group-ulsd a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Group ULSD distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-group-ulsd"^^xsd:string ;
     skos:prefLabel "Group ULSD"@en ;
@@ -320,6 +332,7 @@ price:hobo a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The HOBO price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-hobo"^^xsd:string ;
     skos:prefLabel "HOBO"@en ;
@@ -331,6 +344,7 @@ price:la-carb-no-2 a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The LA CARB No. 2 distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-la-carb-no-2"^^xsd:string ;
     skos:prefLabel "LA CARB No. 2"@en ;
@@ -343,6 +357,7 @@ price:light-louisiana-sweet-lls-vs-wti-cushing a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Light Louisiana Sweet (LLS) vs. WTI Cushing differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-light-louisiana-sweet-lls-vs-wti-cushing"^^xsd:string ;
     skos:prefLabel "Light Louisiana Sweet (LLS) vs. WTI Cushing"@en ;
@@ -354,6 +369,7 @@ price:mars-vs-wti-cushing a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Mars vs. WTI Cushing differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-mars-vs-wti-cushing"^^xsd:string ;
     skos:prefLabel "Mars vs. WTI Cushing"@en ;
@@ -365,6 +381,7 @@ price:mpr-572 a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The ICE BRENT futures settlement price (Price Master 572), one of the five instruments of the benchmark view, which serves Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-mpr-572"^^xsd:string ;
     skos:prefLabel "ICE BRENT (MPR 572)"@en ;
@@ -377,6 +394,7 @@ price:mpr-750 a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The NYMEX Natural Gas futures settlement price (Price Master 750), one of the five instruments of the benchmark view, which serves Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-mpr-750"^^xsd:string ;
     skos:prefLabel "NYMEX Natural Gas (MPR 750)"@en ;
@@ -389,6 +407,7 @@ price:mpr-752 a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The NYMEX HO futures settlement price (Price Master 752), one of the five instruments of the benchmark view, which serves Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-mpr-752"^^xsd:string ;
     skos:prefLabel "NYMEX HO (MPR 752)"@en ;
@@ -401,6 +420,7 @@ price:mpr-9471 a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The NYMEX RBOB futures settlement price (Price Master 9471), one of the five instruments of the benchmark view, which serves Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-mpr-9471"^^xsd:string ;
     skos:prefLabel "NYMEX RBOB (MPR 9471)"@en ;
@@ -413,6 +433,7 @@ price:nyh-cbob a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The NYH CBOB gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-nyh-cbob"^^xsd:string ;
     skos:prefLabel "NYH CBOB"@en ;
@@ -425,6 +446,7 @@ price:nyh-ulsd a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The NYH ULSD distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-nyh-ulsd"^^xsd:string ;
     skos:prefLabel "NYH ULSD"@en ;
@@ -437,6 +459,7 @@ price:opis-lcfs a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The OPIS, LCFS price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-opis-lcfs"^^xsd:string ;
     skos:prefLabel "OPIS, LCFS"@en ;
@@ -448,6 +471,7 @@ price:opis-oregon-cfs a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The OPIS, Oregon CFS price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-opis-oregon-cfs"^^xsd:string ;
     skos:prefLabel "OPIS, Oregon CFS"@en ;
@@ -459,6 +483,7 @@ price:platts-usgc-hsfo-vs-ice-brent a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Platts USGC HSFO vs. ICE Brent differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-platts-usgc-hsfo-vs-ice-brent"^^xsd:string ;
     skos:prefLabel "Platts USGC HSFO vs. ICE Brent"@en ;
@@ -470,6 +495,7 @@ price:platts-usgc-lsfo-vs-ice-brent a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Platts USGC LSFO vs. ICE Brent differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-platts-usgc-lsfo-vs-ice-brent"^^xsd:string ;
     skos:prefLabel "Platts USGC LSFO vs. ICE Brent"@en ;
@@ -481,6 +507,7 @@ price:pnw-suboctane a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The PNW SUBOCTANE gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-pnw-suboctane"^^xsd:string ;
     skos:prefLabel "PNW SUBOCTANE"@en ;
@@ -493,6 +520,7 @@ price:pnw-ulsd a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The PNW ULSD distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-pnw-ulsd"^^xsd:string ;
     skos:prefLabel "PNW ULSD"@en ;
@@ -505,6 +533,7 @@ price:propane-mt-belvieu-non-tet a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The Propane Mt. Belvieu (Non-Tet) natural gas liquid price, one of the two NGL prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-propane-mt-belvieu-non-tet"^^xsd:string ;
     skos:prefLabel "Propane Mt. Belvieu (Non-Tet)"@en ;
@@ -516,6 +545,7 @@ price:rvo a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The RVO price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-rvo"^^xsd:string ;
     skos:prefLabel "RVO"@en ;
@@ -527,6 +557,7 @@ price:sbo-pretreatment-margin a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The SBO Pretreatment Margin price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-sbo-pretreatment-margin"^^xsd:string ;
     skos:prefLabel "SBO Pretreatment Margin"@en ;
@@ -538,6 +569,7 @@ price:sf-carb-no-2 a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The SF CARB No. 2 distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-sf-carb-no-2"^^xsd:string ;
     skos:prefLabel "SF CARB No. 2"@en ;
@@ -550,6 +582,7 @@ price:sf-carbob a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The SF CARBOB gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-sf-carbob"^^xsd:string ;
     skos:prefLabel "SF CARBOB"@en ;
@@ -562,6 +595,7 @@ price:slc-cbob a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The SLC CBOB gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-slc-cbob"^^xsd:string ;
     skos:prefLabel "SLC CBOB"@en ;
@@ -574,6 +608,7 @@ price:slc-ulsd a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The SLC ULSD distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-slc-ulsd"^^xsd:string ;
     skos:prefLabel "SLC ULSD"@en ;
@@ -586,6 +621,7 @@ price:syn-vs-wti-cma a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The SYN vs. WTI CMA differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-syn-vs-wti-cma"^^xsd:string ;
     skos:prefLabel "SYN vs. WTI CMA"@en ;
@@ -597,6 +633,7 @@ price:usgc-jet a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The USGC JET jet fuel price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-usgc-jet"^^xsd:string ;
     skos:prefLabel "USGC JET"@en ;
@@ -609,6 +646,7 @@ price:wcs-vs-wti-cma a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The WCS vs. WTI CMA differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-wcs-vs-wti-cma"^^xsd:string ;
     skos:prefLabel "WCS vs. WTI CMA"@en ;
@@ -620,6 +658,7 @@ price:wti-magellan-e-houston-meh-vs-wti-cushing a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The WTI - Magellan E Houston (MEH) vs. WTI Cushing differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-wti-magellan-e-houston-meh-vs-wti-cushing"^^xsd:string ;
     skos:prefLabel "WTI - Magellan E Houston (MEH) vs. WTI Cushing"@en ;
@@ -631,6 +670,7 @@ price:wti-midland-vs-wti-cushing a skos:Concept,
         mkt:MarketPrice ;
     dcterms:source src:decision-owner-pricing-assets-2026-10-25 ;
     skos:definition "The WTI - Midland vs. WTI Cushing differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."@en ;
+    skos:editorialNote "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "price-wti-midland-vs-wti-cushing"^^xsd:string ;
     skos:prefLabel "WTI - Midland vs. WTI Cushing"@en ;

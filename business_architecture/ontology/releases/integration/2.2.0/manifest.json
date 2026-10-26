@@ -26,16 +26,16 @@
     "EPM-DEC-001-0099",
     "EPM-DEC-001-0100"
   ],
-  "triples": 344,
+  "triples": 444,
   "approved_by": {
     "who": "The decision owner",
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
   },
   "files": {
-    "CHANGELOG.md": "3beb596a65cd6df654f5e0c1937d0316119cbb7fd8e0882b32e73e485fdb8499",
+    "CHANGELOG.md": "c11170642f52bf783b88130d36defb06690e2eaa0badde386dc5004bb0d27026",
     "catalog.ttl": "e91789ef372d0c8c65b867344d127a6a35e19c7038f774e31e7a9851706182d4",
-    "integration.jsonld": "49fe98cafb010011cfb9fc708b74397362f01657f0368f4f2d45085019a28aac",
-    "integration.ttl": "305edbc5511d951e5cfe7561da022cd506a1866d637c6a43c234a3a04a6f9cb3",
+    "integration.jsonld": "37218f7da3274e5e1cfa1ffb8b77c5fc6eb2bfc91c3bcf365c5c94fd34bf84a5",
+    "integration.ttl": "f02887e1671b23985af41756d1794881b973b4b251bcd03f7bb551722fb02c81",
     "shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d"
   }
 }

@@ -10,6 +10,11 @@ A minor release: it adds an identifier, notes and top-concept statements, narrow
 - [minor] **Top concepts** (EPM-DEC-001-0098, item 5): every measure of `kpi:Measures` and every kind of `kpi:MeasureKind`, stated both ways.
 - It requires core 2.3.0, the current release.
 
+### Known gaps
+
+- **Additional Market Prices' prices are named only as examples.** The full list of renewables and NGL prices is in the Executive Summary view, which `market-data` 1.1.0's enumeration names (EPM-DEC-001-0097, Known gaps).
+- **Crack Spreads Pricing's KPI ID has no silver source.** The gold table's `KPI_ID` is a constant that comes only from a legacy table left out of the record (EPM-DEC-001-0097, Known gaps).
+
 ## 1.1.1 (2026-10-23)
 
 A patch: one range, and no IRI changes. Approved by the decision owner with the close-out releases ("Approve all six (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`; EPM-DEC-001-0088, 0093).

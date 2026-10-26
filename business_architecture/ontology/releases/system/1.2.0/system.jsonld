@@ -331,6 +331,40 @@
   ]
  },
  {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/namedBy",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0100"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/System"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "named by"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://purl.org/dc/terms/BibliographicResource"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The source that names a system the process map does not name. A system the map names has no value here."
+   }
+  ]
+ },
+ {
   "@id": "https://w3id.org/lsc/ontology/modules/system/supports",
   "@type": [
    "http://www.w3.org/2002/07/owl#ObjectProperty"
@@ -752,6 +786,11 @@
     "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
    }
   ],
+  "https://w3id.org/lsc/ontology/modules/system/namedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/decision-owner-pricing-assets-2026-10-25"
+   }
+  ],
   "https://w3id.org/lsc/ontology/modules/system/systemKind": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
@@ -1121,6 +1160,11 @@
   "http://www.w3.org/2004/02/skos/core#topConceptOf": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/namedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/decision-owner-pricing-assets-2026-10-25"
    }
   ],
   "https://w3id.org/lsc/ontology/modules/system/systemKind": [
@@ -1514,7 +1558,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "Microsoft's application for chat, meetings and shared files. By the vendor's description, it keeps the tools and files a team works with in one place."
+    "@value": "Microsoft's application for working together. By the vendor's description, it keeps the tools and files a team works with in one place."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -2423,7 +2467,7 @@
     "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
    },
    {
-    "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana"
+    "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana-help"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#altLabel": [
@@ -2435,7 +2479,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "SAP's enterprise resource planning (ERP) system. By the vendor's description, it is a modular ERP for an enterprise's core business processes."
+    "@value": "SAP's business suite. By the vendor's description, it is the next-generation business suite, built on the SAP HANA in-memory platform."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
@@ -3196,14 +3240,14 @@
   ]
  },
  {
-  "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana",
+  "@id": "https://w3id.org/lsc/ontology/source/vendor-sap-s4hana-help",
   "@type": [
    "http://purl.org/dc/terms/BibliographicResource"
   ],
   "http://purl.org/dc/terms/title": [
    {
     "@language": "en",
-    "@value": "SAP, SAP S/4HANA, https://www.sap.com/products/erp/s4hana.html, retrieved 2026-10-25"
+    "@value": "SAP, Conversion Guide for SAP S/4HANA 2025, document version 3.0 (2026-10-07), https://help.sap.com/doc/2b87656c4eee4284a5eb8976c0fe88fc/2025/en-US/CONV_OP2025.pdf, retrieved 2026-10-26"
    }
   ]
  }

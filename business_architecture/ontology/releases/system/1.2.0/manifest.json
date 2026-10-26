@@ -14,16 +14,16 @@
     "EPM-DEC-001-0099",
     "EPM-DEC-001-0100"
   ],
-  "triples": 752,
+  "triples": 760,
   "approved_by": {
     "who": "The decision owner",
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
   },
   "files": {
-    "CHANGELOG.md": "d28b435e7db667690dbb153ae3b8b09be8de01ca92877cb112a5b8e0a9431890",
+    "CHANGELOG.md": "659644c2a974b5660d75d989613f525877b0773c06eb0815ccc77bbddb5828ff",
     "catalog.ttl": "b09f88cf9950aa0672d041fd4b7a2a3f029598a811e6ce0ed810a742a1fcf32a",
-    "shapes.ttl": "54a26c17197b7bda3ef872b354c68dabbbc97a65a9e8cb8684b7336aa23f1449",
-    "system.jsonld": "cbb17ce7fc17add3cfa242d7536ade670d2dcd8b81a3d3d4b2379ac74575c810",
-    "system.ttl": "7eab2524bf3fb17b21dad81b2227c3434590a25843c51dbd207d56b07b6db134"
+    "shapes.ttl": "77849dd2e514e984775e0b9d1a26c2ffaf15925b70127f2859248869c863d10c",
+    "system.jsonld": "a29a4ef048e4fba9a5e18ec5ad71412df0f0abb217fd1d44de36b37e8a97c3d1",
+    "system.ttl": "00c02d9819f85934a3e065693152f26f8a4a8ac074373c5362a952dd5aedf626"
   }
 }

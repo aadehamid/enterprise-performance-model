@@ -75,6 +75,7 @@ SCHEMES = {"refining": MKT.RefiningRegions, "market": MKT.MarketRegions}
 PRICE = Namespace("https://w3id.org/lsc/ontology/modules/market-data/price/")
 ENUM = Namespace("https://w3id.org/lsc/ontology/modules/market-data/enumeration/")
 REPORTED_AS = ("basis", "cash", "differential", "settlement", "assessment")
+TEMPLATE_NOTE = ("The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps).")
 KINDS = ("crude-marker", "product-benchmark", "compliance-cost")
 
 
@@ -208,6 +209,7 @@ def build(regions, benchmarks, series, prices=(), enums=()):
             iri = PRICE[p["slug"].removeprefix("price-")]
             concept(iri, MKT.Series, p, "OWNER-ASSETS")
             g.add((iri, RDF.type, MKT.MarketPrice))
+            g.add((iri, SKOS.editorialNote, Literal(TEMPLATE_NOTE, lang="en")))
             if p["mpr"]:
                 g.add((iri, MKT.priceMasterId, Literal(p["mpr"], datatype=XSD.string)))
         g.add((iri, MKT.priceOf, MEASURE[p["measure"]]))

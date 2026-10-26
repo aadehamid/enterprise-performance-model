@@ -23,13 +23,17 @@ shp:System a sh:NodeShape ;
         [ sh:minCount 0 ;
             sh:nodeKind sh:IRI ;
             sh:path sys:supports ],
-        [ sh:minCount 1 ;
+        [ sh:maxCount 1 ;
+            sh:minCount 0 ;
             sh:nodeKind sh:IRI ;
-            sh:path dcterms:source ],
+            sh:path sys:namedBy ],
         [ sh:datatype xsd:string ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:path skos:notation ],
+        [ sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ],
         [ sh:hasValue sys:Systems ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
@@ -48,12 +52,17 @@ shp:System a sh:NodeShape ;
             sh:minCount 0 ;
             sh:path skos:definition ] ;
     sh:targetClass sys:System ;
-    sh:xone ( [ sh:or ( [ sh:property [ sh:minCount 2 ;
-                                    sh:path dcterms:source ] ] [ sh:not [ sh:property [ sh:hasValue src:downstream-process-map ;
-                                            sh:path dcterms:source ] ] ] ) ;
-                sh:property [ sh:minCount 1 ;
-                        sh:path skos:definition ] ] [ sh:property [ sh:maxCount 0 ;
+    sh:xone ( [ sh:property [ sh:minCount 1 ;
+                        sh:path skos:definition ],
+                    [ sh:hasValue src:downstream-process-map ;
+                        sh:minCount 2 ;
+                        sh:path dcterms:source ] ] [ sh:property [ sh:maxCount 0 ;
                         sh:path skos:definition ],
                     [ sh:minCount 1 ;
-                        sh:path skos:editorialNote ] ] ) .
+                        sh:path skos:editorialNote ] ] [ sh:not [ sh:property [ sh:hasValue src:downstream-process-map ;
+                                sh:path dcterms:source ] ] ;
+                sh:property [ sh:minCount 1 ;
+                        sh:path sys:namedBy ],
+                    [ sh:minCount 1 ;
+                        sh:path skos:definition ] ] ) .
 

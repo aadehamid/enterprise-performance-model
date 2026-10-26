@@ -8,13 +8,23 @@ A minor release: it adds a consumer rule and sources, narrows a refusal's defini
 - [minor] **Source tiers.** Eight sources join `authority`: the decision owner's pricing assets (tier 1), Databricks' documentation (tier 4) and the six data-product-kind sources (tier 5); 100 sources in all.
 - It requires the current releases, kpi 1.2.0, data-product 1.2.0, system 1.2.0 and market-data 1.1.0 among them.
 
+### Known gaps
+
+- **The bound view's values are not checked by the graph.** The rule names the view to quote; whether its values are right is the view's own matter, and the benchmark view's scaling defect stays a known gap of `data-product` 1.2.0.
+- **The data-product kinds' sources are generic frameworks (tier 5).** No MPC, peer or downstream source defines the kinds (EPM-DEC-001-0097, item 14).
+
 ## 2.1.0 (2026-10-25)
 
-A minor release: it adds sources and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099).
+A minor release: it adds sources and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099). The plan they approved did not list the qSKOS top-concept statements; Claude approved those additions under the delegation, which lets it approve the queue's minor releases (EPM-DEC-001-0028, amendment of 2026-10-25, evening).
 
 - [minor] **Source tiers.** 27 sources join `authority`: the decision owner's two answers files on the systems in tier 1, and 25 vendor and regulator pages in tier 4, industry and regulatory sources (92 sources in all).
 - [minor] **Top concepts** (EPM-DEC-001-0098): the members of `auth:EvidenceTier`, `con:RuleKind` and `plc:PlacementKind` are top concepts, stated both ways.
 - It requires the current releases, system 1.1.0 and party 1.2.0 among them.
+
+
+### Known gaps
+
+None.
 
 ## 2.0.0 (2026-10-23)
 

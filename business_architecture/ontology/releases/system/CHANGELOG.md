@@ -9,6 +9,12 @@ A minor release: it adds two systems and a definition, and removes no IRI. Appro
 - [minor] **Shapes.** A system another source names may be defined by that source alone; a system the process map names still cites a source beside it.
 - It requires core 2.3.0, the current release.
 
+### Known gaps
+
+- **MIPS and MPR are defined from the decision owner's pricing files,** which describe them only as the pricing views see them; a fuller description waits for their owners.
+- **MPR's expansion is not settled:** the files call it both Master Price Record and Market Price Report.
+- **Catalogs and schemas are not systems here.** The pricing tables' catalogs and schemas are parts of each table's full name in `data-product` (EPM-DEC-001-0100, item 5).
+
 ## 1.1.0 (2026-10-25)
 
 A minor release: it adds definitions, sources, alternative labels and top-concept statements, changes five preferred labels and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099). The plan they approved did not list the qSKOS top-concept statements; Claude approved those additions under the delegation, which lets it approve the queue's minor releases (EPM-DEC-001-0028, amendment of 2026-10-25, evening).

@@ -3097,6 +3097,12 @@
     "@value": "The Alaska North Slope (ANS) vs. ICE Brent differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3146,6 +3152,12 @@
    {
     "@language": "en",
     "@value": "The Bakken - Patoka vs. WTI CMA differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -3199,6 +3211,12 @@
     "@value": "The Biodiesel (D4) RIN price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3248,6 +3266,12 @@
    {
     "@language": "en",
     "@value": "The Butane Mt. Belvieu (Non-Tet) natural gas liquid price, one of the two NGL prices the Executive Summary view reports, which Additional Market Prices covers."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -3301,6 +3325,12 @@
     "@value": "The CBOT SBO price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3352,6 +3382,12 @@
     "@value": "The CHI Biodiesel price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3401,6 +3437,12 @@
    {
     "@language": "en",
     "@value": "The CHI CBOB (Wolvy) gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -3458,6 +3500,12 @@
     "@value": "The CHI Ethanol price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3507,6 +3555,12 @@
    {
     "@language": "en",
     "@value": "The CHI ULSD (Wolvy) distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -3564,6 +3618,12 @@
     "@value": "The Ethanol (D6) RIN price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3613,6 +3673,12 @@
    {
     "@language": "en",
     "@value": "The Group CBOB gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -3670,6 +3736,12 @@
     "@value": "The Group ULSD distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3725,6 +3797,12 @@
     "@value": "The HOBO price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3774,6 +3852,12 @@
    {
     "@language": "en",
     "@value": "The LA CARB No. 2 distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -3831,6 +3915,12 @@
     "@value": "The Light Louisiana Sweet (LLS) vs. WTI Cushing differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3882,6 +3972,12 @@
     "@value": "The Mars vs. WTI Cushing differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -3931,6 +4027,12 @@
    {
     "@language": "en",
     "@value": "The ICE BRENT futures settlement price (Price Master 572), one of the five instruments of the benchmark view, which serves Crude Market Pricing."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -3990,6 +4092,12 @@
     "@value": "The NYMEX Natural Gas futures settlement price (Price Master 750), one of the five instruments of the benchmark view, which serves Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4045,6 +4153,12 @@
    {
     "@language": "en",
     "@value": "The NYMEX HO futures settlement price (Price Master 752), one of the five instruments of the benchmark view, which serves Crude Market Pricing."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -4104,6 +4218,12 @@
     "@value": "The NYMEX RBOB futures settlement price (Price Master 9471), one of the five instruments of the benchmark view, which serves Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4161,6 +4281,12 @@
     "@value": "The NYH CBOB gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4214,6 +4340,12 @@
    {
     "@language": "en",
     "@value": "The NYH ULSD distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -4271,6 +4403,12 @@
     "@value": "The OPIS, LCFS price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4320,6 +4458,12 @@
    {
     "@language": "en",
     "@value": "The OPIS, Oregon CFS price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -4373,6 +4517,12 @@
     "@value": "The Platts USGC HSFO vs. ICE Brent differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4424,6 +4574,12 @@
     "@value": "The Platts USGC LSFO vs. ICE Brent differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4473,6 +4629,12 @@
    {
     "@language": "en",
     "@value": "The PNW SUBOCTANE gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -4530,6 +4692,12 @@
     "@value": "The PNW ULSD distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4585,6 +4753,12 @@
     "@value": "The Propane Mt. Belvieu (Non-Tet) natural gas liquid price, one of the two NGL prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4634,6 +4808,12 @@
    {
     "@language": "en",
     "@value": "The RVO price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -4687,6 +4867,12 @@
     "@value": "The SBO Pretreatment Margin price, one of the ten renewables prices the Executive Summary view reports, which Additional Market Prices covers."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4736,6 +4922,12 @@
    {
     "@language": "en",
     "@value": "The SF CARB No. 2 distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -4793,6 +4985,12 @@
     "@value": "The SF CARBOB gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4846,6 +5044,12 @@
    {
     "@language": "en",
     "@value": "The SLC CBOB gasoline price, one of the blends the Executive Summary view reports for Gasoline Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -4903,6 +5107,12 @@
     "@value": "The SLC ULSD distillate price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -4958,6 +5168,12 @@
     "@value": "The SYN vs. WTI CMA differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -5007,6 +5223,12 @@
    {
     "@language": "en",
     "@value": "The USGC JET jet fuel price, one of the blends the Executive Summary view reports for Distillate Market Pricing, as a cash price and as a basis (a differential to the futures contract)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -5064,6 +5286,12 @@
     "@value": "The WCS vs. WTI CMA differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -5115,6 +5343,12 @@
     "@value": "The WTI - Magellan E Houston (MEH) vs. WTI Cushing differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
@@ -5164,6 +5398,12 @@
    {
     "@language": "en",
     "@value": "The WTI - Midland vs. WTI Cushing differential, one of the ten crude differentials the Executive Summary view reports for Crude Market Pricing."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The definition is built from the Executive Summary or benchmark agent's filters, which name this price and its group; the decision owner's files give no definition of their own (EPM-DEC-001-0100, Known gaps)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [

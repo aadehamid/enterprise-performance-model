@@ -31,7 +31,9 @@ shp:MarketPrice a sh:NodeShape ;
     sh:targetClass mkt:MarketPrice ;
     sh:property [ sh:path mkt:priceOf ; sh:minCount 1 ] ;
     sh:property [ sh:path mkt:reportedAs ; sh:minCount 1 ] ;
-    sh:property [ sh:path mkt:priceMasterId ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+    sh:property [ sh:path mkt:priceMasterId ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path skos:editorialNote ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:message "A market price says its definition is built from the agents' filters." ] .
 
 shp:SeriesEnumeration a sh:NodeShape ;
     sh:targetClass mkt:SeriesEnumeration ;
@@ -78,7 +80,7 @@ shp:NoPrices a sh:NodeShape ;
     sh:targetClass mkt:BenchmarkSeries, mkt:Benchmark, mkt:MarketPrice ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:altLabel skos:scopeNote skos:inScheme
-                           skos:topConceptOf dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf
+                           skos:topConceptOf skos:editorialNote dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf
                            mkt:benchmarkKind mkt:priceMasterId mkt:legsUnstated mkt:priceOf mkt:reportedAs ) ;
     sh:message "A series or benchmark carries its definition, never a price." .
 

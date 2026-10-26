@@ -16,16 +16,16 @@
     "EPM-DEC-001-0098",
     "EPM-DEC-001-0100"
   ],
-  "triples": 1362,
+  "triples": 1402,
   "approved_by": {
     "who": "The decision owner",
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
   },
   "files": {
-    "CHANGELOG.md": "4c9859e54d96d08f53724035352c7ac9cbdbc170b966e80b2be1842b284e8694",
+    "CHANGELOG.md": "a5f17388f3b61b0168140f765df99ef8155ff047c006eceb9a8ad41267077583",
     "catalog.ttl": "92eed54c55e8d05f1c797cfe440cd00f6caa780bba25b5e0540919773db9fbb7",
-    "market-data.jsonld": "7357fdbc2357f5df61df651ab307c708bbb191f5b25c703f4c8adad9d7bab68a",
-    "market-data.ttl": "67fba71a7ff957d245f48b2db5edf5652354e493b101bd17559dea78440e475f",
-    "shapes.ttl": "24383d97f114247a690243857e71a00d570bfc0dbc245aaf024c4ad7a726cf3a"
+    "market-data.jsonld": "0ecbc05e36ed770c46cc71259b75446304a159eafb20c4eaa921639736a810f3",
+    "market-data.ttl": "d9a27de4c015d8dcd4d580ae622cc51f332ff6b67b243c1959904e8c78af062c",
+    "shapes.ttl": "7a9e6962519e0423d49720c99d4e9270ef9540248fd0735cb1f0d0908acd49a1"
   }
 }

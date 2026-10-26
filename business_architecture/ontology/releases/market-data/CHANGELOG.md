@@ -13,6 +13,7 @@ A minor release: it adds classes, properties, prices, series and enumerations, a
 ### Known gaps
 
 - **Completeness of series.** Only the named series carry definitions; the rest are known only through the views' columns, which the enumerations name (EPM-DEC-001-0097, Known gaps).
+- **The 40 new market prices' definitions are built from the agents' filters,** which name each price and its group, not from a source's own words; each says so in an editorial note.
 
 ## 1.0.0 (2026-10-22)
 
