@@ -16,6 +16,7 @@ system:actuals-case-prep-file a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "actuals-case-prep-file"^^xsd:string ;
     skos:prefLabel "Actuals Case Prep File"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1 ;
     sys:systemKind kind:document .
 
@@ -29,6 +30,7 @@ system:aps a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "aps"^^xsd:string ;
     skos:prefLabel "Aspen Petroleum Scheduler"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-3-1,
         proc:CM-1-1-3-1-1,
         proc:CM-1-1-4-1,
@@ -46,6 +48,7 @@ system:aps-planning-db a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "aps-planning-db"^^xsd:string ;
     skos:prefLabel "APS Planning DB"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-4-4 ;
     sys:systemKind kind:application .
 
@@ -56,6 +59,7 @@ system:backcasting-dashboard a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "backcasting-dashboard"^^xsd:string ;
     skos:prefLabel "Backcasting Dashboard"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-3,
         proc:CM-1-1-5-4,
         proc:CM-1-1-5-4-2,
@@ -84,6 +88,7 @@ system:cargotracker a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "cargotracker"^^xsd:string ;
     skos:prefLabel "CargoTracker"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-6 ;
@@ -98,6 +103,7 @@ system:dpo a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "dpo"^^xsd:string ;
     skos:prefLabel "Distribution Planning Optimizer"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-1,
         proc:CM-1-1-2-1-4,
         proc:CM-1-1-2-1-5,
@@ -129,6 +135,7 @@ system:hyperion a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "hyperion"^^xsd:string ;
     skos:prefLabel "Oracle Hyperion Planning"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-3 ;
@@ -142,6 +149,7 @@ system:kittyhawk a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "kittyhawk"^^xsd:string ;
     skos:prefLabel "KittyHawk"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-2,
         proc:CM-1-1-2-2-2-1,
         proc:CM-1-1-2-2-3,
@@ -161,6 +169,7 @@ system:market-outlook-and-avails-dashboard a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "market-outlook-and-avails-dashboard"^^xsd:string ;
     skos:prefLabel "Market Outlook and Avails Dashboard"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-2-5-1,
         proc:CM-1-1-2-3,
         proc:CM-1-1-2-3-1 ;
@@ -173,6 +182,7 @@ system:mpr a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "mpr"^^xsd:string ;
     skos:prefLabel "MPR"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-1-7,
         proc:CM-1-1-2-2-3,
         proc:CM-1-1-2-2-3-4,
@@ -191,6 +201,7 @@ system:ms-excel a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "ms-excel"^^xsd:string ;
     skos:prefLabel "MS Excel"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-2-7,
         proc:CM-1-1-2-3-4,
         proc:CM-1-1-2-7,
@@ -209,6 +220,7 @@ system:ms-outlook a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "ms-outlook"^^xsd:string ;
     skos:prefLabel "MS Outlook"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-2,
         proc:CM-1-1-2-2-1-1,
         proc:CM-1-1-2-2-1-2,
@@ -240,6 +252,7 @@ system:ms-powerpoint a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "ms-powerpoint"^^xsd:string ;
     skos:prefLabel "MS PowerPoint"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-3-2,
         proc:CM-1-1-2-3-3,
         proc:CM-1-1-2-5,
@@ -267,6 +280,7 @@ system:ms-teams a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "ms-teams"^^xsd:string ;
     skos:prefLabel "MS Teams"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-2,
         proc:CM-1-1-2-2-1-1,
         proc:CM-1-1-2-2-1-2,
@@ -300,6 +314,7 @@ system:network-premise-document a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "network-premise-document"^^xsd:string ;
     skos:prefLabel "Network Premise Document"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-3-1,
         proc:CM-1-1-3-1-2,
         proc:CM-1-1-3-1-3,
@@ -316,6 +331,7 @@ system:pi a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "pi"^^xsd:string ;
     skos:prefLabel "AVEVA PI System"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1-2-3 ;
     sys:systemKind kind:application .
 
@@ -326,6 +342,7 @@ system:planning-and-scheduling-ui a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "planning-and-scheduling-ui"^^xsd:string ;
     skos:prefLabel "Planning and Scheduling UI"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-1,
         proc:CM-1-1-2-1-1,
         proc:CM-1-1-2-2,
@@ -351,6 +368,7 @@ system:planning-db a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "planning-db"^^xsd:string ;
     skos:prefLabel "Planning DB"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-5,
         proc:CM-1-1-2-5-1,
         proc:CM-1-1-2-5-3,
@@ -381,6 +399,7 @@ system:ppims a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "ppims"^^xsd:string ;
     skos:prefLabel "PPIMS"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-1-6,
         proc:CM-1-1-2-4,
         proc:CM-1-1-2-4-1,
@@ -403,6 +422,7 @@ system:premise-document a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "premise-document"^^xsd:string ;
     skos:prefLabel "Premise Document"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-2-1-1,
         proc:CM-1-1-2-2-1-2 ;
     sys:systemKind kind:document .
@@ -415,6 +435,7 @@ system:profisee a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "profisee"^^xsd:string ;
     skos:prefLabel "Profisee"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-1,
         proc:CM-1-1-2-1-8,
         proc:CM-1-1-2-2 ;
@@ -427,6 +448,7 @@ system:psr a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "psr"^^xsd:string ;
     skos:prefLabel "PSR"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-1,
@@ -441,6 +463,7 @@ system:refinery-premise-document a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "refinery-premise-document"^^xsd:string ;
     skos:prefLabel "Refinery Premise Document"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-4-1,
         proc:CM-1-1-4-1-2,
         proc:CM-1-1-4-1-3,
@@ -454,6 +477,7 @@ system:rfc-hindsight-analysis-excel a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "rfc-hindsight-analysis-excel"^^xsd:string ;
     skos:prefLabel "RFC Hindsight Analysis Excel"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-1 ;
@@ -468,6 +492,7 @@ system:rightangle a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "rightangle"^^xsd:string ;
     skos:prefLabel "RightAngle"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-2,
         proc:CM-1-1-2-2-2-1,
         proc:CM-1-1-2-2-3,
@@ -492,6 +517,7 @@ system:sap a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "sap"^^xsd:string ;
     skos:prefLabel "SAP S/4HANA"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-3 ;
@@ -504,6 +530,7 @@ system:tmr a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "tmr"^^xsd:string ;
     skos:prefLabel "TMR"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1-2-6 ;
     sys:systemKind kind:application .
 
@@ -515,6 +542,7 @@ system:topday a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "topday"^^xsd:string ;
     skos:prefLabel "TopDay"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-6 ;
@@ -527,6 +555,7 @@ system:trr a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "trr"^^xsd:string ;
     skos:prefLabel "TRR"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1-2-5 ;
     sys:systemKind kind:application .
 
@@ -538,6 +567,7 @@ system:valt a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "valt"^^xsd:string ;
     skos:prefLabel "VALT"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-6,
         proc:CM-1-1-2-6-5,
         proc:CM-1-1-2-6-6 ;
@@ -555,6 +585,7 @@ system:xpims a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "xpims"^^xsd:string ;
     skos:prefLabel "XPIMS"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-1,
         proc:CM-1-1-2-1-2,
         proc:CM-1-1-2-1-3,
@@ -612,6 +643,7 @@ system:xpims-dpo-integration-macro a skos:Concept,
     skos:inScheme sys:Systems ;
     skos:notation "xpims-dpo-integration-macro"^^xsd:string ;
     skos:prefLabel "XPIMS <> DPO Integration Macro"@en ;
+    skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-5,
         proc:CM-1-1-2-5-5,
         proc:CM-1-1-3-2,
@@ -662,4 +694,37 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
 
 src:decision-owner-answers-2026-10-25-item-g a dcterms:BibliographicResource ;
     dcterms:title "The decision owner's answers to the item G questions, Claude Code session of 2026-10-25, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g.md"@en .
+
+sys:Systems skos:hasTopConcept system:actuals-case-prep-file,
+        system:aps,
+        system:aps-planning-db,
+        system:backcasting-dashboard,
+        system:cargotracker,
+        system:dpo,
+        system:hyperion,
+        system:kittyhawk,
+        system:market-outlook-and-avails-dashboard,
+        system:mpr,
+        system:ms-excel,
+        system:ms-outlook,
+        system:ms-powerpoint,
+        system:ms-teams,
+        system:network-premise-document,
+        system:pi,
+        system:planning-and-scheduling-ui,
+        system:planning-db,
+        system:ppims,
+        system:premise-document,
+        system:profisee,
+        system:psr,
+        system:refinery-premise-document,
+        system:rfc-hindsight-analysis-excel,
+        system:rightangle,
+        system:sap,
+        system:tmr,
+        system:topday,
+        system:trr,
+        system:valt,
+        system:xpims,
+        system:xpims-dpo-integration-macro .
 

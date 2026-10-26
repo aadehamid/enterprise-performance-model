@@ -2091,6 +2091,7 @@
     skos:inScheme party:customer-systems ;
     skos:notation "bridger-insight" ;
     skos:prefLabel "Bridger Insight"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The compliance check of a customer against government watchlists."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2101,6 +2102,7 @@
     skos:inScheme party:customer-systems ;
     skos:notation "information-steward" ;
     skos:prefLabel "Information Steward"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Monitors customer data quality."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
 
@@ -2112,6 +2114,7 @@
     skos:inScheme party:customer-systems ;
     skos:notation "onesource" ;
     skos:prefLabel "OneSource"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Calculates tax and supports tax compliance and reporting, for RightAngle and SAP S/4HANA invoices."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2121,6 +2124,7 @@
     skos:inScheme party:customer-systems ;
     skos:notation "rcms" ;
     skos:prefLabel "RCMS"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The renewable compliance system: a reference ID tied to a fuel movement or a RIN trade."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2130,6 +2134,7 @@
     skos:inScheme party:customer-systems ;
     skos:notation "tasdm" ;
     skos:prefLabel "TASDM"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Creates the customers and destinations of MPLX's third-party suppliers in the terminal automation system."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2139,155 +2144,9 @@
     skos:inScheme party:customer-systems ;
     skos:notation "xref" ;
     skos:prefLabel "XREF"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The cross-reference on the Salesforce to RightAngle interface that excludes specific customers."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/asphalt-marketing-system> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "asphalt-marketing-system" ;
-    skos:prefLabel "Asphalt Marketing System"@en ;
-    party:customerRole "A source of asphalt and bitumen customers."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/brand-credit-card-system> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "brand-credit-card-system" ;
-    skos:prefLabel "Brand Credit Card System"@en ;
-    party:customerRole "A source of dealers."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/customer-portal> a skos:Concept,
-        party:CustomerSystem ;
-    skos:altLabel "MyMPC Customer Portal"@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "customer-portal" ;
-    skos:prefLabel "Customer Portal"@en ;
-    party:customerRole "The customer portal; it sends customer data to Profisee."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/drop-tank> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "drop-tank" ;
-    skos:prefLabel "Drop Tank"@en ;
-    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/dtn-file-server> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "dtn-file-server" ;
-    skos:prefLabel "DTN File Server"@en ;
-    party:customerRole "A file server downstream of MAGIC that sends customer data to Profisee."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/eis> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "eis" ;
-    skos:prefLabel "EIS"@en ;
-    party:customerRole "A source of forecast-driven customers."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/emk3> a skos:Concept,
-        party:CustomerSystem ;
-    dcterms:source src:vendor-emk3-senergy ;
-    skos:definition "EMK3's software for energy companies, EMK3 Senergy. By the vendor's description, it covers marketing, transportation and midstream work for companies that produce, gather, transport, process and market oil, natural gas and natural gas liquids."@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "emk3" ;
-    skos:prefLabel "EMK3"@en ;
-    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/federal-health> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "federal-health" ;
-    skos:prefLabel "Federal Health"@en ;
-    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/flowcal> a skos:Concept,
-        party:CustomerSystem ;
-    dcterms:source src:vendor-quorum-flowcal ;
-    skos:definition "Quorum Software's hydrocarbon measurement software, FLOWCAL. By the vendor's description, it manages gas and liquid hydrocarbon measurement data across upstream, midstream and distribution operations."@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "flowcal" ;
-    skos:prefLabel "FlowCal"@en ;
-    party:customerRole "A source of pipeline customers for midstream supply."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/gas-buddy> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "gas-buddy" ;
-    skos:prefLabel "Gas Buddy"@en ;
-    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/lenel-onguard> a skos:Concept,
-        party:CustomerSystem ;
-    dcterms:source src:vendor-lenels2-onguard ;
-    skos:definition "LenelS2's physical access control system, OnGuard, a Honeywell brand. By the vendor's description, it is an integrated and customizable security management system."@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "lenel-onguard" ;
-    skos:prefLabel "Lenel Onguard"@en ;
-    party:customerRole "A source of employee parties."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/tax-image-silo> a skos:Concept,
-        party:CustomerSystem ;
-    skos:altLabel "Tax"@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "tax-image-silo" ;
-    skos:prefLabel "Tax Image Silo"@en ;
-    party:customerRole "Holds the customer's state sales tax exemption certificates."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/terminal-audit-system> a skos:Concept,
-        party:CustomerSystem ;
-    skos:altLabel "TAS"@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "terminal-audit-system" ;
-    skos:prefLabel "Terminal Audit System"@en ;
-    party:customerRole "A source of terminal customers."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/terminal-upload> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "terminal-upload" ;
-    skos:prefLabel "Terminal Upload"@en ;
-    party:customerRole "Enriches the customer through cross-reference customer ID mapping."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/tfr> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "tfr" ;
-    skos:prefLabel "TFR"@en ;
-    party:customerRole "Calculates and processes freight."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/tmis> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/tmt> a skos:Concept,
-        party:CustomerSystem ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "tmt" ;
-    skos:prefLabel "TMT"@en ;
-    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
 src:phmsa-marathon-pipeline-noa-2024-09-26 a dcterms:BibliographicResource ;
     dcterms:title "PHMSA, Notice of Amendment to Marathon Pipeline LLC, 2024-09-26, https://primis.phmsa.dot.gov/enforcement-documents/32024055NOA/32024055NOA_Notice%20of%20Amendment_09262024_(23-264547)_text.pdf, retrieved 2026-10-25"@en .
@@ -2334,6 +2193,169 @@ src:vendor-sirion a dcterms:BibliographicResource ;
 src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResource ;
     dcterms:title "Thomson Reuters, ONESOURCE Determination, https://tax.thomsonreuters.com/en/products/onesource-determination (published 2026-01-12), retrieved 2026-10-25"@en .
 
+<https://w3id.org/lsc/ontology/modules/party/system/asphalt-marketing-system> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "asphalt-marketing-system" ;
+    skos:prefLabel "Asphalt Marketing System"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A source of asphalt and bitumen customers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/brand-credit-card-system> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "brand-credit-card-system" ;
+    skos:prefLabel "Brand Credit Card System"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A source of dealers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/customer-portal> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "MyMPC Customer Portal"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "customer-portal" ;
+    skos:prefLabel "Customer Portal"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "The customer portal; it sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/drop-tank> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "drop-tank" ;
+    skos:prefLabel "Drop Tank"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/dtn-file-server> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "dtn-file-server" ;
+    skos:prefLabel "DTN File Server"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A file server downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/eis> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "eis" ;
+    skos:prefLabel "EIS"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A source of forecast-driven customers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/emk3> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:vendor-emk3-senergy ;
+    skos:definition "EMK3's software for energy companies, EMK3 Senergy. By the vendor's description, it covers marketing, transportation and midstream work for companies that produce, gather, transport, process and market oil, natural gas and natural gas liquids."@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "emk3" ;
+    skos:prefLabel "EMK3"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/federal-health> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "federal-health" ;
+    skos:prefLabel "Federal Health"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/flowcal> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:vendor-quorum-flowcal ;
+    skos:definition "Quorum Software's hydrocarbon measurement software, FLOWCAL. By the vendor's description, it manages gas and liquid hydrocarbon measurement data across upstream, midstream and distribution operations."@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "flowcal" ;
+    skos:prefLabel "FlowCal"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A source of pipeline customers for midstream supply."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/gas-buddy> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "gas-buddy" ;
+    skos:prefLabel "Gas Buddy"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/lenel-onguard> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:vendor-lenels2-onguard ;
+    skos:definition "LenelS2's physical access control system, OnGuard, a Honeywell brand. By the vendor's description, it is an integrated and customizable security management system."@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "lenel-onguard" ;
+    skos:prefLabel "Lenel Onguard"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A source of employee parties."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tax-image-silo> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Tax"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tax-image-silo" ;
+    skos:prefLabel "Tax Image Silo"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "Holds the customer's state sales tax exemption certificates."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/terminal-audit-system> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "TAS"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "terminal-audit-system" ;
+    skos:prefLabel "Terminal Audit System"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A source of terminal customers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/terminal-upload> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "terminal-upload" ;
+    skos:prefLabel "Terminal Upload"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "Enriches the customer through cross-reference customer ID mapping."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tfr> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tfr" ;
+    skos:prefLabel "TFR"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "Calculates and processes freight."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/tmis> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tmt> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tmt" ;
+    skos:prefLabel "TMT"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
 <https://w3id.org/lsc/ontology/modules/party/system/allocation-manager> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-answers-2026-10-24-systems ;
@@ -2342,6 +2364,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "allocation-manager" ;
     skos:prefLabel "Allocation Manager"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Derives operational decisions for a customer, such as locks and limits."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2350,6 +2373,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "corp-vetting" ;
     skos:prefLabel "Corp_Vetting"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "A source of partner roles: vendor, surety and customer."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
 
@@ -2359,6 +2383,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "data-products-idp" ;
     skos:prefLabel "Data Products IDP"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Data products on the customer master, sales, credit exposure and delinquency."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2369,6 +2394,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "gravitate" ;
     skos:prefLabel "Gravitate"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The gathering and processing customer portal."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2379,6 +2405,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "sirion" ;
     skos:prefLabel "Sirion"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Enriches the customer before the customer is assigned to a contract."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
 
@@ -2387,6 +2414,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "star" ;
     skos:prefLabel "Star"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Records crude movement tickets."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2397,6 +2425,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "terminal-margin-ranking-system" ;
     skos:prefLabel "Terminal Margin Ranking System"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "A source of brand and wholesale customers."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
 
@@ -2405,6 +2434,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "tmis" ;
     skos:prefLabel "TMIS"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The master data repository of carrier contracts and rates."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2414,6 +2444,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "fuelfacs" ;
     skos:prefLabel "FuelFacs"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The enterprise-wide terminal integration and business-information system (EPM-DEC-001-0072): it holds terminal data on suppliers, products and carriers, and receives customer data from Terminal download."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
@@ -2426,6 +2457,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "quorum" ;
     skos:prefLabel "Quorum"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Records gathering and processing movements and settlements; it receives customers from SAP MDG and enriches them through the contract or relationship."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
@@ -2436,9 +2468,13 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "terminal-download" ;
     skos:prefLabel "Terminal download"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Sends customer data to terminals so the customer can load there."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's identifications of systems, Claude Code session of 2026-10-24, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-24-systems.md"@en .
 
 <https://w3id.org/lsc/ontology/modules/party/system/magic> a skos:Concept,
         party:CustomerSystem ;
@@ -2448,12 +2484,10 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:inScheme party:customer-systems ;
     skos:notation "magic" ;
     skos:prefLabel "MAGIC"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The new customer account integration: it assigns the SAP MDG customer number and the Kittyhawk territory manager to Salesforce, converts the prospect into a customer account, and syncs the customer number, name, address, FEIN, status, credit monitor and territory manager every day."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/integration> .
-
-src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
-    dcterms:title "The decision owner's identifications of systems, Claude Code session of 2026-10-24, business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-24-systems.md"@en .
 
 <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> a skos:Concept,
         party:CustomerSystem ;
@@ -2466,6 +2500,7 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     skos:inScheme party:customer-systems ;
     skos:notation "kittyhawk" ;
     skos:prefLabel "KittyHawk"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Records physical product movements. It receives customers from RightAngle, holds the territory manager, and feeds Gravitate and MAGIC."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/gravitate>,
         <https://w3id.org/lsc/ontology/modules/party/system/magic>,
@@ -2483,6 +2518,7 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     skos:inScheme party:customer-systems ;
     skos:notation "sap-s4hana" ;
     skos:prefLabel "SAP S/4HANA"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The financial system of record. It receives the business partner from SAP MDG, with company codes, sales areas and partner roles, adds credit and collection data, and takes transaction postings and invoices from the execution systems."@en ;
     party:implements party:CustomerAccount,
         party:Party,
@@ -2498,6 +2534,7 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     skos:inScheme party:customer-systems ;
     skos:notation "profisee" ;
     skos:prefLabel "Profisee"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Customer data storage and mastering used by IDP, for customer ID mapping, customer roll-ups and cross-references."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/data-products-idp> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
@@ -2507,6 +2544,7 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     skos:inScheme party:customer-systems ;
     skos:notation "dealer-master" ;
     skos:prefLabel "Dealer Master"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The system of record for the branded dealer network: brand customers and their stations and ship-tos. It is built on Salesforce and aggregates station point-of-sale transactions executed in other systems. Jobbers start here and go to SAP MDG; direct dealers start in SAP MDG and come here. It sends bank and payment details to SAP S/4HANA."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/salesforce>,
         <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg>,
@@ -2524,16 +2562,13 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     skos:inScheme party:customer-systems ;
     skos:notation "polaris" ;
     skos:prefLabel "Polaris"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The pipeline operations and invoicing system. It takes the SAP customer number and basic attributes from SAP MDG, adds operational data, records pipeline movements and revenue, and sends the transport invoices it generates to SAP S/4HANA."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
     party:implements party:CustomerAccount,
         party:PartyTransactionAssociation,
         party:Site ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
-
-party:customer-systems a skos:ConceptScheme ;
-    rdfs:label "customer systems"@en ;
-    skos:definition "The systems the customer passes through, from the decision owner's customer inputs (EPM-DEC-001-0069)."@en .
 
 <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> a skos:Concept,
         party:CustomerSystem ;
@@ -2543,6 +2578,7 @@ party:customer-systems a skos:ConceptScheme ;
     skos:inScheme party:customer-systems ;
     skos:notation "sap-mdg" ;
     skos:prefLabel "SAP MDG"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The point of control for customer creation and governance: every commercial customer is created here. It runs duplicate checks on identifiers, validates addresses, applies authorization groups by line of business and generates the canonical SAP customer number. It is the system of record for the customer and holds the tax ID and bank data."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
         <https://w3id.org/lsc/ontology/modules/party/system/magic>,
@@ -2566,6 +2602,7 @@ party:customer-systems a skos:ConceptScheme ;
     skos:inScheme party:customer-systems ;
     skos:notation "salesforce" ;
     skos:prefLabel "Salesforce"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "Where a prospect is first captured and a new customer setup and credit check start, on two tracks: Trade (the commodity trading desk) and CRM/Basic (goods and products). It triggers creation in SAP MDG, receives the SAP customer number back, and serves the customer portal."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
         <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
@@ -2573,6 +2610,52 @@ party:customer-systems a skos:ConceptScheme ;
         party:ContactPoint,
         party:Party ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
+
+party:customer-systems a skos:ConceptScheme ;
+    rdfs:label "customer systems"@en ;
+    skos:definition "The systems the customer passes through, from the decision owner's customer inputs (EPM-DEC-001-0069)."@en ;
+    skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/system/allocation-manager>,
+        <https://w3id.org/lsc/ontology/modules/party/system/asphalt-marketing-system>,
+        <https://w3id.org/lsc/ontology/modules/party/system/brand-credit-card-system>,
+        <https://w3id.org/lsc/ontology/modules/party/system/bridger-insight>,
+        <https://w3id.org/lsc/ontology/modules/party/system/corp-vetting>,
+        <https://w3id.org/lsc/ontology/modules/party/system/customer-portal>,
+        <https://w3id.org/lsc/ontology/modules/party/system/data-products-idp>,
+        <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
+        <https://w3id.org/lsc/ontology/modules/party/system/drop-tank>,
+        <https://w3id.org/lsc/ontology/modules/party/system/dtn-file-server>,
+        <https://w3id.org/lsc/ontology/modules/party/system/eis>,
+        <https://w3id.org/lsc/ontology/modules/party/system/emk3>,
+        <https://w3id.org/lsc/ontology/modules/party/system/federal-health>,
+        <https://w3id.org/lsc/ontology/modules/party/system/flowcal>,
+        <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs>,
+        <https://w3id.org/lsc/ontology/modules/party/system/gas-buddy>,
+        <https://w3id.org/lsc/ontology/modules/party/system/gravitate>,
+        <https://w3id.org/lsc/ontology/modules/party/system/information-steward>,
+        <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk>,
+        <https://w3id.org/lsc/ontology/modules/party/system/lenel-onguard>,
+        <https://w3id.org/lsc/ontology/modules/party/system/magic>,
+        <https://w3id.org/lsc/ontology/modules/party/system/onesource>,
+        <https://w3id.org/lsc/ontology/modules/party/system/polaris>,
+        <https://w3id.org/lsc/ontology/modules/party/system/profisee>,
+        <https://w3id.org/lsc/ontology/modules/party/system/quorum>,
+        <https://w3id.org/lsc/ontology/modules/party/system/rcms>,
+        <https://w3id.org/lsc/ontology/modules/party/system/rightangle>,
+        <https://w3id.org/lsc/ontology/modules/party/system/salesforce>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sirion>,
+        <https://w3id.org/lsc/ontology/modules/party/system/star>,
+        <https://w3id.org/lsc/ontology/modules/party/system/tasdm>,
+        <https://w3id.org/lsc/ontology/modules/party/system/tax-image-silo>,
+        <https://w3id.org/lsc/ontology/modules/party/system/terminal-audit-system>,
+        <https://w3id.org/lsc/ontology/modules/party/system/terminal-download>,
+        <https://w3id.org/lsc/ontology/modules/party/system/terminal-margin-ranking-system>,
+        <https://w3id.org/lsc/ontology/modules/party/system/terminal-upload>,
+        <https://w3id.org/lsc/ontology/modules/party/system/tfr>,
+        <https://w3id.org/lsc/ontology/modules/party/system/tmis>,
+        <https://w3id.org/lsc/ontology/modules/party/system/tmt>,
+        <https://w3id.org/lsc/ontology/modules/party/system/xref> .
 
 <https://w3id.org/lsc/ontology/modules/party/system/rightangle> a skos:Concept,
         party:CustomerSystem ;
@@ -2584,6 +2667,7 @@ party:customer-systems a skos:ConceptScheme ;
     skos:inScheme party:customer-systems ;
     skos:notation "rightangle" ;
     skos:prefLabel "RightAngle"@en ;
+    skos:topConceptOf party:customer-systems ;
     party:customerRole "The commercial and logistics system for trading, deals, scheduling and financial exposure. It takes basic customer data from SAP MDG, creates the business associate and its locations, sends the business associate ID and locale back to SAP MDG, and shares data with Kittyhawk and the trading desks."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/allocation-manager>,
         <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk>,

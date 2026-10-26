@@ -1,5 +1,15 @@
 # party changelog
 
+## 1.2.0 (2026-10-25)
+
+A minor release: it adds definitions, sources, a match and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099).
+
+- [minor] **Definitions.** 18 of the 42 customer systems gain a `skos:definition` in Claude's words, each citing its source: 14 from their vendors' own descriptions, marked as such, Polaris from PHMSA's notice of amendment of 2024-09-26, and KittyHawk, MAGIC and Allocation Manager from the decision owner's descriptions.
+- [minor] **Match.** SAP S/4HANA is the system module's SAP (`skos:exactMatch`), the decision owner's answer, so five customer systems now match a system-module system.
+- [minor] **Top concepts** (EPM-DEC-001-0098): each code list states its top concepts both ways, and every customer system is a top concept of `party:customer-systems`.
+- [minor] **Shapes.** A customer system's definition cites a source.
+- It requires core 2.3.0, the current release.
+
 ## 1.1.0 (2026-10-23)
 
 A minor release: it adds values, a property, links, ranges and shapes, and removes no IRI. Approved by the decision owner with the close-out releases ("Approve all six (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`; EPM-DEC-001-0088, 0092).

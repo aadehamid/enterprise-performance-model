@@ -143,6 +143,8 @@ def build(register, slugs, uses, procs, sources):
         g.add((iri, RDF.type, SYS.System))
         g.add((iri, RDF.type, SKOS.Concept))
         g.add((iri, SKOS.inScheme, SYS.Systems))
+        g.add((iri, SKOS.topConceptOf, SYS.Systems))  # a flat scheme: every system is a top concept (EPM-DEC-001-0098, item 5)
+        g.add((SYS.Systems, SKOS.hasTopConcept, iri))
         g.add((iri, SKOS.prefLabel, Literal(s["label"], lang="en")))
         g.add((iri, SKOS.notation, Literal(slug, datatype=XSD.string)))
         for alt in split(s["alt_labels"]):

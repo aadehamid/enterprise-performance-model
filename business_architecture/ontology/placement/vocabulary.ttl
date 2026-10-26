@@ -20,12 +20,12 @@ plc:placementKind a owl:AnnotationProperty ;
     skos:definition "What a placing property claims: certification (the link names the owning process of a data product) or context (the link says only where one thing is used or placed with another)."@en ;
     dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en .
 
-plc:PlacementKind a skos:ConceptScheme ; rdfs:label "placement kind"@en ;
+plc:PlacementKind a skos:ConceptScheme ; skos:hasTopConcept kind:certification, kind:context ; rdfs:label "placement kind"@en ;
     skos:definition "The two things a placement can claim."@en ;
     dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en .
-kind:certification a skos:Concept ; skos:inScheme plc:PlacementKind ; skos:prefLabel "Certification"@en ; skos:notation "certification" ;
+kind:certification a skos:Concept ; skos:inScheme plc:PlacementKind ; skos:topConceptOf plc:PlacementKind ; skos:prefLabel "Certification"@en ; skos:notation "certification" ;
     skos:definition "The link names a data product's owning process: the producing process, which is the subject of vs:produces and the target of dp:producedBy."@en .
-kind:context a skos:Concept ; skos:inScheme plc:PlacementKind ; skos:prefLabel "Context"@en ; skos:notation "context" ;
+kind:context a skos:Concept ; skos:inScheme plc:PlacementKind ; skos:topConceptOf plc:PlacementKind ; skos:prefLabel "Context"@en ; skos:notation "context" ;
     skos:definition "The link says only where one thing is used or placed with another. It does not say either end owns, computes or approves the other."@en .
 
 kpi:informsProcess plc:placementKind kind:context .

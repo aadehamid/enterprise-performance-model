@@ -1,5 +1,13 @@
 # integration changelog
 
+## 2.1.0 (2026-10-25)
+
+A minor release: it adds sources and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099).
+
+- [minor] **Source tiers.** 27 sources join `authority`: the decision owner's two answers files on the systems in tier 1, and 25 vendor and regulator pages in tier 4, industry and regulatory sources (92 sources in all).
+- [minor] **Top concepts** (EPM-DEC-001-0098): the members of `auth:EvidenceTier`, `con:RuleKind` and `plc:PlacementKind` are top concepts, stated both ways.
+- It requires the current releases, system 1.1.0 and party 1.2.0 among them.
+
 ## 2.0.0 (2026-10-23)
 
 A major: the five projection fixes, and no IRI changes. `con:reliesOn`'s definition narrows from property or class to property, which makes it a major. Approved by the decision owner: "Major: integration 2.0.0 (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md` (EPM-DEC-001-0088, 0094).

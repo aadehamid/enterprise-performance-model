@@ -136,6 +136,7 @@ def build(rows, mappings=None, pidx=None):
             g.add((v, SKOS.broader, value_iri(r["scheme"], r["broader"])))
         else:
             g.add((v, SKOS.topConceptOf, scheme_iri(r["scheme"])))
+            g.add((scheme_iri(r["scheme"]), SKOS.hasTopConcept, v))  # both ways (EPM-DEC-001-0098, item 4)
         if r["mpc_class"]:
             g.add((v, CUST.mpcClassification, Literal(r["mpc_class"])))
         if r["scheme"] == "product":
@@ -345,6 +346,8 @@ def build_systems(systems, flows, sources, attrs, existing):
         g.add((s, SKOS.prefLabel, Literal(r["label"], lang="en")))
         g.add((s, SKOS.notation, Literal(r["slug"])))
         g.add((s, SKOS.inScheme, scheme))
+        g.add((s, SKOS.topConceptOf, scheme))  # a flat scheme: every system is a top concept (EPM-DEC-001-0098, item 5)
+        g.add((scheme, SKOS.hasTopConcept, s))
         match = r["slug"] if r["slug"] in existing else SAME_SYSTEM.get(r["slug"])
         if match:  # the same system as the system module's, which the process map names
             g.add((s, SKOS.exactMatch, SYSTEM[match]))
