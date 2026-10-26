@@ -41,15 +41,16 @@ class Tiers(unittest.TestCase):
 
     def test_every_source_is_typed_and_the_census_holds(self):
         # Kimi round 1, findings 8 and 9 (EPM-DEC-001-0099): every source is a dcterms:BibliographicResource,
-        # and the census is 92 sources, 12 / 3 / 1 / 68 / 8 by tier, counted by hand from source-tiers.csv.
+        # and the census is 92 sources, 12 / 3 / 1 / 68 / 8 by tier, counted by hand from source-tiers.csv; item F adds 8
+        # (1 in tier 1, 1 in tier 4, 6 in tier 5; EPM-DEC-001-0100): 100, 13 / 3 / 1 / 69 / 14.
         from collections import Counter
         from rdflib.namespace import DCTERMS, RDF
         sources = {s for s, p, o in TIERS if str(p).endswith("evidenceTier")}
-        self.assertEqual(len(sources), 92)
+        self.assertEqual(len(sources), 100)
         for s in sources:
             self.assertIn((s, RDF.type, DCTERMS.BibliographicResource), TIERS, s)
         tiers = Counter(str(o).rsplit("/", 1)[1] for s, p, o in TIERS if str(p).endswith("evidenceTier"))
-        self.assertEqual(sorted(tiers.values()), sorted([12, 3, 1, 68, 8]))
+        self.assertEqual(sorted(tiers.values()), sorted([13, 3, 1, 69, 14]))
 
     def test_decided_tiers(self):
         # EPM-DEC-001-0059, items 2 to 6, one example per tier.
