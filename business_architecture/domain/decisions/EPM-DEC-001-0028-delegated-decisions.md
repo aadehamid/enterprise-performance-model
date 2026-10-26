@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided |
 | Date | 2026-10-12 |
-| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage, 2026-10-22 on the review rounds and the PR reviewer, and 2026-10-25 on the order of independent reviewers, later that day on reviewers inside Rex, and then on the work queue after the ontology closed, except major releases, Market Data accountability and Q17 (an item H measure needs an MPC or peer definition) |
+| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage, 2026-10-22 on the review rounds and the PR reviewer, and 2026-10-25 on the order of independent reviewers, later that day on reviewers inside Rex, and then on the work queue after the ontology closed, except major releases, Market Data accountability and Q17 (Claude approves the queue's other minor and patch releases; an item H measure needs an MPC or peer definition) |
 | Source | Claude Code session, 2026-10-12; recorded on #207 comment 6137222677 |
 
 ## Context
