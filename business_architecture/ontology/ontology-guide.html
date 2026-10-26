@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPM ontology guide</title>
+<style>
+/* Style: framed-sheet (tasteskill app sheet, seed 1033140616), screen "report", the same as
+   projection/stores-runbook.html so the two read as one set. System fonts only: this file is
+   standalone and loads nothing. */
+:root {
+  --ground: #f1f4f6;  --surface: #ffffff;  --raised: #f4f6f8;  --active: #ebedee;
+  --border: #e3e6e9;  --rule: #eef0f2;     --control: #cdced1;
+  --text: #131416;    --muted: #5d5f60;    --faint: #66686a;
+  --accent: #1b6c80;  --accent-soft: #e5f0f3;
+  --positive: #1e7b4f; --negative: #c4242a;
+  --pill-positive-bg: #dcfae5; --pill-positive-ink: #04250e;
+  --pill-negative-bg: #ffedea; --pill-negative-ink: #831c1e;
+  --notice-bg: #fffbeb; --notice-line: #fde68a; --notice-ink: #92400e;
+  --warn-line: #f6cfc9; --ok-line: #bde8cb;
+  --code-bg: #f4f6f8;
+  --node: #ffffff; --node-line: #c9ced3; --lane: #f6f8f9;
+  --radius-card: 8px; --radius-control: 6px; --radius-sheet: 16px;
+  --gap: 24px; --pad: 24px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fs-title: 24px; --fs-section: 18px; --fs-body: 15px; --fs-small: 12.5px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0b0c0d; --surface: #141516; --raised: #1b1c1e; --active: #242628;
+    --border: #2a2c2f; --rule: #222426; --control: #44474b;
+    --text: #f2f3f3; --muted: #b4b6b8; --faint: #9a9c9e;
+    --accent: #5fb3c7; --accent-soft: #15292e;
+    --positive: #3fc07a; --negative: #e5566f;
+    --pill-positive-bg: #172a1d; --pill-positive-ink: #3fc07a;
+    --pill-negative-bg: #2c1a20; --pill-negative-ink: #f08a9c;
+    --notice-bg: #261d0c; --notice-line: #3b2e14; --notice-ink: #f2cf94;
+    --warn-line: #3d252b; --ok-line: #213a28;
+    --code-bg: #1b1c1e;
+    --node: #1b1c1e; --node-line: #3a3d41; --lane: #101112;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--text); font: var(--fs-body)/1.6 var(--font); }
+
+/* the viewer bar: the frame's only chrome on a report */
+.bar { height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 20px; border-bottom: 1px solid var(--border); background: var(--ground); position: sticky; top: 0; z-index: 2; }
+.bar .name { font-weight: 600; font-size: 14px; }
+.bar .scope { color: var(--muted); font-size: 14px; }
+.bar nav { margin-left: auto; display: flex; gap: 18px; font-size: 13.5px; }
+.bar nav a { color: var(--muted); text-decoration: none; padding: 13px 0; border-bottom: 2px solid transparent; }
+.bar nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+/* the sheet: 1088 column (4 x 263 + 3 x 12 = 1088 for the stat row) */
+.sheet { max-width: 1136px; margin: 24px auto 40px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sheet); padding: 32px var(--pad) 48px; }
+.col { max-width: 1088px; margin: 0 auto; }
+.title-row { display: flex; align-items: flex-start; gap: 16px; }
+h1 { font-size: var(--fs-title); font-weight: 600; margin: 0; line-height: 1.25; letter-spacing: -.01em; }
+.sub { color: var(--muted); font-size: 14px; margin: 6px 0 0; max-width: 72ch; }
+.btn { margin-left: auto; flex: none; display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border: 1px solid var(--control); border-radius: var(--radius-control); color: var(--text); text-decoration: none; font-size: 13.5px; white-space: nowrap; }
+.btn:hover { background: var(--raised); }
+.notice { margin: 20px 0 0; background: var(--notice-bg); border: 1px solid var(--notice-line); color: var(--notice-ink); border-radius: var(--radius-control); padding: 8px 12px; font-size: 13px; }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0 0; }
+.stat { border: 1px solid var(--border); border-radius: var(--radius-card); padding: 14px 16px; }
+.stat .k { color: var(--muted); font-size: 12.5px; }
+.stat .v { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.stat .d { color: var(--muted); font-size: 12.5px; }
+
+h2 { font-size: var(--fs-section); font-weight: 600; margin: 48px 0 6px; scroll-margin-top: 64px; }
+h3 { font-size: 15px; font-weight: 600; margin: 26px 0 6px; }
+p, li { max-width: 74ch; }
+.lead { color: var(--muted); margin: 0 0 16px; }
+a { color: var(--accent); }
+code { font: 13.5px var(--mono); background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { position: relative; background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 14px 16px; overflow-x: auto; margin: 10px 0 16px; }
+pre code { background: none; padding: 0; font-size: 13px; line-height: 1.6; white-space: pre; overflow-wrap: normal; }
+.copy { position: absolute; top: 8px; right: 8px; font: 12px var(--font); background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-control); padding: 3px 8px; cursor: pointer; }
+.copy:hover { color: var(--text); }
+
+/* cards and the two-column rows */
+.card { border: 1px solid var(--border); border-radius: var(--radius-card); padding: 20px; }
+.card h3 { margin-top: 0; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); align-items: start; margin: 16px 0; }
+.steps { padding-left: 22px; margin: 8px 0; }
+.steps li { margin: 6px 0; }
+.steps li::marker { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* diagrams: drawn at 1:1; below their width they scroll inside their own frame, never the page */
+figure { margin: 16px 0 8px; }
+.diagram { border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); overflow-x: auto; }
+.diagram svg { display: block; width: 100%; height: auto; }
+.diagram.wide svg { min-width: 980px; }
+.diagram.mid svg { min-width: 700px; }
+figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; max-width: 80ch; }
+.swipe { display: none; }
+.diagram.tall { display: none; }
+svg text { font-family: var(--font); fill: var(--text); }
+svg .t { font-size: 13px; font-weight: 600; }
+svg .s { font-size: 11.5px; fill: var(--muted); }
+svg .m { font-size: 11.5px; font-family: var(--mono); fill: var(--muted); }
+svg .lane-l { font-size: 12px; fill: var(--muted); font-weight: 600; }
+svg .node { fill: var(--node); stroke: var(--node-line); stroke-width: 1; }
+svg .node.key { stroke: var(--accent); stroke-width: 1.5; }
+svg .node.store { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.25; }
+svg .node.gone { fill: var(--pill-negative-bg); stroke: var(--negative); stroke-width: 1.25; }
+svg .lane { fill: var(--lane); stroke: var(--border); }
+svg .e { fill: none; stroke: var(--faint); stroke-width: 1.5; }
+svg .e.key { stroke: var(--accent); stroke-width: 2; }
+svg .e.plan { stroke: var(--faint); stroke-dasharray: 5 4; }
+svg .e.bad { stroke: var(--negative); }
+svg .el { font-size: 11.5px; fill: var(--muted); }
+svg .head { fill: var(--faint); }
+svg .head.key { fill: var(--accent); }
+svg .head.bad { fill: var(--negative); }
+svg .num-c { fill: var(--text); }
+svg .num-t { font-size: 12px; font-weight: 600; fill: var(--surface); }
+
+/* tables: rules and alignment; two-line rows on a phone */
+.tblwrap { margin: 12px 0 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-weight: 600; font-size: 12.5px; color: var(--muted); padding: 8px 12px 8px 0; border-bottom: 1px solid var(--border); }
+td { padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; }
+.pill { display: inline-block; flex: none; white-space: nowrap; font-size: 12px; font-weight: 500; padding: 1px 8px; border-radius: 999px; background: var(--active); color: var(--muted); margin-left: 6px; vertical-align: 1px; }
+
+.warn, .ok { border: 1px solid; border-radius: var(--radius-card); padding: 12px 16px; margin: 14px 0; max-width: 80ch; font-size: 14px; }
+.warn { background: var(--pill-negative-bg); border-color: var(--warn-line); color: var(--pill-negative-ink); }
+.ok { background: var(--pill-positive-bg); border-color: var(--ok-line); color: var(--pill-positive-ink); }
+.warn strong, .ok strong { display: block; margin-bottom: 2px; }
+.warn code, .ok code { background: transparent; color: inherit; }
+.note { color: var(--muted); font-size: 13.5px; }
+.src { color: var(--muted); font-size: 12.5px; margin-top: 40px; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+@media (max-width: 900px) {
+  .bar nav { display: none; }
+  .sheet { margin: 0; border-radius: 0; border-width: 0; padding: 20px 16px 40px; }
+  .stats { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .two { grid-template-columns: minmax(0, 1fr); }
+  .swipe { display: block; }
+}
+@media (max-width: 640px) {
+  .diagram.wide { display: none; }
+  .diagram.tall { display: block; }
+  pre { padding-top: 40px; }
+  .title-row { flex-direction: column; gap: 10px; }
+  .btn { margin-left: 0; }
+  table.stack thead { display: none; }
+  table.stack tr { display: block; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  table.stack td { display: block; border: 0; padding: 2px 0; }
+  table.stack td:not(:first-child) { color: var(--muted); font-size: 13.5px; }
+  table.stack td[data-k]::before { content: attr(data-k) ": "; color: var(--faint); }
+}
+
+
+/* the guide: a contents column beside the reading column */
+.sheet { max-width: 1240px; }
+.col.layout { max-width: 1192px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 40px; }
+.toc { position: sticky; top: 72px; align-self: start; font-size: 13.5px; max-height: calc(100vh - 96px); overflow-y: auto; }
+.toc-h { color: var(--muted); font-size: 12.5px; font-weight: 600; margin: 4px 0 8px; }
+.toc a { display: block; color: var(--muted); text-decoration: none; padding: 3px 0 3px 10px; border-left: 2px solid var(--rule); }
+.toc a:hover { color: var(--text); border-left-color: var(--accent); }
+.toc a.sub-a { padding-left: 22px; font-size: 13px; }
+.content { min-width: 0; }
+.mod { margin-top: 36px; scroll-margin-top: 64px; }
+.mod h3 { font-size: 16.5px; margin: 0 0 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.mod h3 .pill:first-of-type { margin-left: 8px; }
+.mod .two { margin: 8px 0 4px; }
+.mod .note { margin: 4px 0 0; max-width: 100%; }
+.story { background: var(--accent-soft); border-color: transparent; }
+.story-h { font-weight: 600; font-size: 13.5px; color: var(--accent); margin: 0 0 6px; }
+.story p:last-child { margin-bottom: 0; }
+table.kv td { padding: 7px 10px 7px 0; font-size: 14px; }
+table.kv td:first-child { white-space: nowrap; width: 1%; padding-right: 16px; }
+.card table.kv tr:last-child td { border-bottom: 0; }
+.hoplist { padding: 16px 16px 16px 36px; margin: 0; }
+.hoplist li { margin: 6px 0; }
+table.out td { font-size: 13.5px; }
+@media (max-width: 1100px) {
+  .col.layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .toc { display: none; }
+}
+@media (max-width: 640px) {
+  .diagram.tall.hoplist { display: block; }
+  table.kv td:first-child { white-space: normal; }
+}
+@media (min-width: 641px) { .diagram.tall.hoplist { display: none; } }
+
+table, .stat .v, .pill, .notice, .note, .hoplist { font-variant-numeric: tabular-nums; }
+body { font-variant-numeric: tabular-nums; }
+table.stack td { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  table.stack { table-layout: fixed; }
+  table.stack tr, table.stack td { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
+  <span class="name">EPM</span><span class="scope">Ontology guide</span>
+  <nav aria-label="Sections">
+    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#stores">Stores</a><a href="#open">Open</a>
+  </nav>
+</header>
+
+<main class="sheet"><div class="col layout">
+
+<aside class="toc" aria-label="Contents">
+  <p class="toc-h">Contents</p>
+  <a href="#purpose">What it is for</a>
+  <a href="#why-modules">Why modules</a>
+  <a href="#map">The module map</a>
+  <a href="#thread">One measure, every module</a>
+  <a href="#modules">Each module</a>
+  <a class="sub-a" href="#m-core">core</a>
+  <a class="sub-a" href="#m-kpi">kpi</a>
+  <a class="sub-a" href="#m-market-data">market-data</a>
+  <a class="sub-a" href="#m-data-product">data-product</a>
+  <a class="sub-a" href="#m-system">system</a>
+  <a class="sub-a" href="#m-organization">organization</a>
+  <a class="sub-a" href="#m-value-stream">value-stream</a>
+  <a class="sub-a" href="#m-party">party</a>
+  <a class="sub-a" href="#m-ref-mpc">ref-mpc</a>
+  <a class="sub-a" href="#m-lane">lane</a>
+  <a class="sub-a" href="#m-integration">integration</a>
+  <a href="#stores">How it reaches the stores</a>
+  <a href="#open">What is still open</a>
+  <a href="#sources">Sources</a>
+</aside>
+
+<div class="content">
+
+<div class="title-row">
+  <div>
+    <h1>The EPM ontology</h1>
+    <p class="sub">A guide to the ontology of Marathon Petroleum's downstream business: what it is for, why it is split into eleven modules, what each module holds and how the modules connect. One pricing measure, the crack spread, runs through every section to show the modules working together.</p>
+  </div>
+  <a class="btn" href="projection/stores-runbook.html">Open the stores runbook</a>
+</div>
+
+<p class="notice">A snapshot: every figure is from the newest release of each module on <code>main</code> at commit <code>bae7013</code>, the releases of 2026-10-26. Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
+
+<div class="stats">
+  <div class="stat"><div class="k">Modules</div><div class="v">11</div><div class="d">each released and versioned on its own</div></div>
+  <div class="stat"><div class="k">Triples</div><div class="v">36,185</div><div class="d">in the eleven newest releases together</div></div>
+  <div class="stat"><div class="k">Processes</div><div class="v">463</div><div class="d">in <code>core</code>, with 640 evidenced relationships</div></div>
+  <div class="stat"><div class="k">Measures</div><div class="v">41</div><div class="d">defined in <code>kpi</code>; values stay in the systems</div></div>
+</div>
+
+<h2 id="purpose">What it is for</h2>
+<div class="two">
+<div>
+<p>The ontology is one shared, checked vocabulary for how the downstream business works. It names the processes and how they relate, the roles that do them, what each measure means, which market series and data products carry the numbers, and which systems hold the data. A person, a report or an AI agent can then ask one question across all of it, such as "what does the crack spread mean, which view gives its value, and who works on the processes it informs?", and get an answer that cites its sources.</p>
+<p>It holds definitions, never records. Actual customers, invoices and measure values stay in the business systems. The playbook's policy 2 calls this "define, don't record" (<code>MODULES.md</code>, "Three kinds of content").</p>
+
+</div>
+<div class="card">
+    <h3>Three kinds of content, each in a fixed place</h3>
+    <table class="kv">
+      <tr><td>Definitions</td><td>Classes, properties, role types. In <code>organization</code>, <code>party</code> and the other modules.</td></tr>
+      <tr><td>Company-neutral instances</td><td>The role register, RACI assignments, customer lifecycle stages, the process map itself.</td></tr>
+      <tr><td>Company-specific instances</td><td>MPC, MPLX, MPC's control of MPLX, the 13 refineries. In <code>ref-mpc</code> only.</td></tr>
+    </table>
+    <p class="note">Source: <code>MODULES.md</code>, "Three kinds of content"; EPM-DEC-001-0015.</p>
+  </div>
+</div>
+<div class="card">
+    <h3>The W3C standards it is built on</h3>
+    <table class="kv">
+      <tr><td>RDF</td><td>Every fact is a triple: subject, property, object. Each module ships as Turtle and JSON-LD.</td></tr>
+      <tr><td>SKOS</td><td>Taxonomies and code lists: the process hierarchy (<code>skos:broader</code>), measure kinds, office lanes, and the labels and definitions on every concept.</td></tr>
+      <tr><td>OWL</td><td>The classes and properties each module defines, such as <code>kpi:MeasureDefinition</code> and <code>dp:servesMeasure</code>.</td></tr>
+      <tr><td>SHACL</td><td>Shapes in every release (<code>shapes.ttl</code>) that say what valid data looks like. All modules' shapes run together over the whole graph, with zero violations (EPM-DEC-001-0065).</td></tr>
+      <tr><td>W3C ORG</td><td>Roles (<code>org:Role</code>), sites and organizations, in <code>organization</code> and <code>ref-mpc</code>.</td></tr>
+      <tr><td>PROV-O</td><td>Lineage: a metric view <code>prov:wasDerivedFrom</code> its gold table, and a Genie agent <code>prov:used</code> the view.</td></tr>
+      <tr><td>DCAT</td><td>The catalog of every released package, <code>releases/catalog.ttl</code>.</td></tr>
+    </table>
+  </div>
+
+
+<h2 id="why-modules">Why modules</h2>
+<p class="lead">The ontology could have been one large file. It is eleven modules because each part has its own owner, its own sources and its own pace of change.</p>
+<div class="two">
+  <div>
+    <p>The <code>ontology</code> skill's playbook, "Why split an ontology into modules", gives the reasons, and the build followed each one:</p>
+    <ol class="steps">
+      <li><strong>Each module releases on its own schedule.</strong> When item F changed the pricing measures, <code>kpi</code> went to 1.2.0 and <code>core</code> stayed at 2.3.0. Each module pins the versions it requires.</li>
+      <li><strong>Reviews and approvals stay small.</strong> A pull request touches one module, and its owner approves it.</li>
+      <li><strong>Company facts sit apart from neutral ones.</strong> MPC's refineries and MPLX live in <code>ref-mpc</code>, so every other module could serve another refiner (EPM-DEC-001-0015).</li>
+      <li><strong>Each module carries its own shapes and tests,</strong> and a whole-graph gate catches what breaks between them (EPM-DEC-001-0065).</li>
+      <li><strong>Consumers load only what they need.</strong> A package's dependencies are read from the released manifests.</li>
+      <li><strong>A projection can tag every node with its module,</strong> so a walk across the graph shows where each fact came from.</li>
+    </ol>
+  </div>
+  <div>
+    <p>Two rules keep the split sound. The module policy (the skill's <code>foundations.md</code>, policy 8) says modules depend one way, with no cycles, and use each other's terms by IRI, never by redefining them. A cycle would make a module impossible to release on its own.</p>
+    <p>Some splits follow the business's own lines. Market Data is a domain separate from commercial pricing, so its benchmark recipes have their own module (EPM-DEC-001-0006). The cross-module rules (what certifies, which source wins, what an agent may answer) sit in one <code>integration</code> package above the rest.</p>
+    <p>The split has a cost. A module's pin can lag: <code>organization</code> 2.0.0 was released against <code>core</code> 2.1.0, and <code>lane</code> 1.0.0 against <code>core</code> 2.2.0, though <code>core</code> is now 2.3.0. That is why the closure rule, the whole-graph gate and each changelog's list of required versions exist.</p>
+  </div>
+</div>
+
+<h2 id="map">The module map</h2>
+<p class="lead"><code>core</code>, the process map, is at the bottom. Most modules add one kind of thing and link it to core's processes. An arrow points from a module to a module it requires, as each release's manifest records. <code>integration</code> requires all the others.</p>
+<figure>
+<div class="diagram wide" role="img" aria-label="Module map: integration on top requires every module; value-stream requires data-product, kpi and core; ref-mpc requires party and organization; market-data requires kpi; data-product requires kpi, system and core; party requires system and core; lane, kpi, system and organization require core.">
+<svg viewBox="0 0 1040 530" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head" d="M0 0 10 5 0 10z"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head key" d="M0 0 10 5 0 10z"/></marker>
+  </defs>
+  <rect class="lane" x="20" y="14" width="1000" height="66" rx="8"/>
+  <text class="t" x="40" y="42">integration 2.3.0</text><text class="m" x="40" y="62">plc: auth: con:  · placement, authority and consumer rules over every module below</text>
+  <!-- edges -->
+  <path class="e" d="M385 184 V348" marker-end="url(#a1)"/>
+  <path class="e" d="M450 184 L500 238" marker-end="url(#a1)"/>
+  <path class="e" d="M330 184 C 280 205 272 225 272 250 V455 H378" marker-end="url(#a1)"/>
+  <path class="e" d="M905 184 V348" marker-end="url(#a1)"/>
+  <path class="e" d="M860 168 C 820 180 800 200 790 238" marker-end="url(#a1)"/>
+  <path class="e key" d="M200 294 L320 348" marker-end="url(#a2)"/>
+  <path class="e" d="M490 294 L430 348" marker-end="url(#a1)"/>
+  <path class="e" d="M560 294 L620 348" marker-end="url(#a1)"/>
+  <path class="e" d="M515 294 V438" marker-end="url(#a1)"/>
+  <path class="e" d="M740 294 L690 348" marker-end="url(#a1)"/>
+  <path class="e" d="M790 294 V420 Q790 438 662 450" marker-end="url(#a1)"/>
+  <path class="e" d="M125 404 V475 H378" marker-end="url(#a1)"/>
+  <path class="e" d="M400 404 L430 438" marker-end="url(#a1)"/>
+  <path class="e" d="M630 404 L600 438" marker-end="url(#a1)"/>
+  <path class="e" d="M905 404 V478 H662" marker-end="url(#a1)"/>
+  <!-- nodes -->
+  <rect class="node" x="300" y="130" width="170" height="54" rx="6"/><text class="t" x="314" y="153">value-stream 1.1.0</text><text class="m" x="314" y="172">vs:</text>
+  <rect class="node" x="820" y="130" width="170" height="54" rx="6"/><text class="t" x="834" y="153">ref-mpc 1.2.0</text><text class="m" x="834" y="172">refmpc:</text>
+  <rect class="node key" x="60" y="240" width="170" height="54" rx="6"/><text class="t" x="74" y="263">market-data 1.1.0</text><text class="m" x="74" y="282">mkt:</text>
+  <rect class="node key" x="430" y="240" width="170" height="54" rx="6"/><text class="t" x="444" y="263">data-product 1.2.0</text><text class="m" x="444" y="282">dp:</text>
+  <rect class="node" x="690" y="240" width="170" height="54" rx="6"/><text class="t" x="704" y="263">party 1.3.0</text><text class="m" x="704" y="282">party:</text>
+  <rect class="node" x="40" y="350" width="170" height="54" rx="6"/><text class="t" x="54" y="373">lane 1.0.0</text><text class="m" x="54" y="392">lane:</text>
+  <rect class="node store" x="300" y="350" width="170" height="54" rx="6"/><text class="t" x="314" y="373">kpi 1.2.0</text><text class="m" x="314" y="392">kpi: measure:</text>
+  <rect class="node key" x="560" y="350" width="170" height="54" rx="6"/><text class="t" x="574" y="373">system 1.3.0</text><text class="m" x="574" y="392">sys: system:</text>
+  <rect class="node" x="820" y="350" width="170" height="54" rx="6"/><text class="t" x="834" y="373">organization 2.0.0</text><text class="m" x="834" y="392">orgm: role:</text>
+  <rect class="node key" x="380" y="440" width="280" height="60" rx="6"/><text class="t" x="396" y="465">core 2.3.0</text><text class="m" x="396" y="486">proc: core:  · the process map</text>
+</svg>
+</div>
+<div class="diagram tall" role="img" aria-label="Module map as a list, top to bottom.">
+<svg viewBox="0 0 360 700" xmlns="http://www.w3.org/2000/svg">
+  <rect class="lane" x="10" y="10" width="340" height="56" rx="8"/><text class="t" x="24" y="34">integration 2.3.0</text><text class="s" x="24" y="53">requires every module below</text>
+  <g>
+  <rect class="node" x="10" y="80" width="340" height="50" rx="6"/><text class="t" x="24" y="101">value-stream 1.1.0</text><text class="s" x="24" y="119">requires data-product, kpi, core</text>
+  <rect class="node" x="10" y="140" width="340" height="50" rx="6"/><text class="t" x="24" y="161">ref-mpc 1.2.0</text><text class="s" x="24" y="179">requires organization, party</text>
+  <rect class="node key" x="10" y="200" width="340" height="50" rx="6"/><text class="t" x="24" y="221">market-data 1.1.0</text><text class="s" x="24" y="239">requires kpi</text>
+  <rect class="node key" x="10" y="260" width="340" height="50" rx="6"/><text class="t" x="24" y="281">data-product 1.2.0</text><text class="s" x="24" y="299">requires core, kpi, system</text>
+  <rect class="node" x="10" y="320" width="340" height="50" rx="6"/><text class="t" x="24" y="341">party 1.3.0</text><text class="s" x="24" y="359">requires core, system</text>
+  <rect class="node store" x="10" y="380" width="340" height="50" rx="6"/><text class="t" x="24" y="401">kpi 1.2.0</text><text class="s" x="24" y="419">requires core</text>
+  <rect class="node key" x="10" y="440" width="340" height="50" rx="6"/><text class="t" x="24" y="461">system 1.3.0</text><text class="s" x="24" y="479">requires core</text>
+  <rect class="node" x="10" y="500" width="340" height="50" rx="6"/><text class="t" x="24" y="521">organization 2.0.0</text><text class="s" x="24" y="539">requires core</text>
+  <rect class="node" x="10" y="560" width="340" height="50" rx="6"/><text class="t" x="24" y="581">lane 1.0.0</text><text class="s" x="24" y="599">requires core</text>
+  <rect class="node key" x="10" y="620" width="340" height="66" rx="6"/><text class="t" x="24" y="644">core 2.3.0</text><text class="s" x="24" y="664">the process map; requires nothing</text>
+  </g>
+</svg>
+</div>
+<figcaption>Teal marks <code>kpi</code>, where the crack-spread measure is defined; a teal outline marks the modules on the path to its value: market-data, data-product, system and core. The same picture, with every requirement as an arrow, is in Eraser: <a href="https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj">EPM ontology: modules and how they connect</a>.</figcaption>
+<p class="swipe note">Swipe the diagram sideways to see all of it.</p>
+</figure>
+
+<h2 id="thread">One measure, every module</h2>
+<p class="lead">Take one measure, <strong>Crack Spreads Pricing</strong> (<code>measure:crack-spreads</code>, identifier KPI-0001), and follow its links. Each module adds one piece of context, and together they answer what the number means, where it comes from, who works with it and what may be said about it.</p>
+
+<figure>
+<div class="diagram wide" role="img" aria-label="The crack-spread measure at the centre, with its links to core, market-data, data-product, system, organization, value-stream, party and integration.">
+<svg viewBox="0 0 1060 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head" d="M0 0 10 5 0 10z"/></marker>
+    <marker id="b2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head key" d="M0 0 10 5 0 10z"/></marker>
+  </defs>
+  <!-- edges -->
+  <path class="e key" d="M530 250 V122" marker-end="url(#b2)"/><text class="el" x="540" y="190">kpi:informsProcess</text>
+  <path class="e key" d="M250 280 H428" marker-end="url(#b2)"/><text class="el" x="282" y="270">mkt:seriesOf</text>
+  <path class="e key" d="M800 280 H632" marker-end="url(#b2)"/><text class="el" x="660" y="270">dp:servesMeasure</text>
+  <path class="e" d="M890 250 V142" marker-end="url(#b1)"/><text class="el" x="900" y="200">dcterms:isPartOf</text>
+  <path class="e" d="M890 310 V388" marker-end="url(#b1)"/><text class="el" x="900" y="355">dp:dependsOnSystem</text>
+  <path class="e" d="M800 430 H632" marker-end="url(#b1)"/><text class="el" x="690" y="420">sys:supports</text>
+  <path class="e" d="M530 528 V462" marker-end="url(#b1)"/><text class="el" x="540" y="500">orgm:forProcess</text>
+  <path class="e key" d="M170 400 C 300 400 380 330 428 300" marker-end="url(#b2)"/><text class="el" x="262" y="378">vs:measureLink → vs:measure</text>
+  <path class="e" d="M150 460 V510" marker-end="url(#b1)"/><text class="el" x="160" y="492">vs:realizes</text>
+  <path class="e" d="M940 520 V452" marker-end="url(#b1)"/><text class="el" x="932" y="492" text-anchor="end">skos:exactMatch</text>
+  <!-- nodes -->
+  <rect class="node store" x="430" y="250" width="200" height="60" rx="6"/><text class="t" x="446" y="274">Crack Spreads Pricing</text><text class="m" x="446" y="294">kpi · market indicator</text>
+  <rect class="node" x="400" y="60" width="260" height="60" rx="6"/><text class="t" x="416" y="84">CM 1.1.4.7.4</text><text class="s" x="416" y="104">Capture Product/Crude/Feedstock Price · core</text>
+  <rect class="node key" x="30" y="250" width="220" height="60" rx="6"/><text class="t" x="46" y="274">Gulf Coast 3-2-1 crack</text><text class="s" x="46" y="294">3 MEH → 2 CBOB + 1 ULSD · market-data</text>
+  <rect class="node key" x="800" y="250" width="200" height="60" rx="6"/><text class="t" x="816" y="274">Crack-spread metric view</text><text class="s" x="816" y="294">derived · metric-view · data-product</text>
+  <rect class="node" x="800" y="80" width="200" height="60" rx="6"/><text class="t" x="816" y="104">Master Pricing</text><text class="s" x="816" y="124">data product · data-product</text>
+  <rect class="node key" x="800" y="390" width="200" height="60" rx="6"/><text class="t" x="816" y="414">MPR, MIPS, KittyHawk</text><text class="s" x="816" y="434">the view's systems · system</text>
+  <rect class="node" x="400" y="400" width="260" height="60" rx="6"/><text class="t" x="416" y="424">CM 1.1.5.1.2.6</text><text class="s" x="416" y="444">Receive actual data product prices · core</text>
+  <rect class="node" x="400" y="530" width="260" height="60" rx="6"/><text class="t" x="416" y="554">RACI on CM 1.1.5.1.2.6</text><text class="s" x="416" y="574">a Business Analyst is responsible · organization</text>
+  <rect class="node" x="30" y="400" width="240" height="60" rx="6"/><text class="t" x="46" y="424">Market Price Calculation</text><text class="s" x="46" y="444">and Validation · value-stream</text>
+  <rect class="node" x="30" y="512" width="240" height="60" rx="6"/><text class="t" x="46" y="536">CM 1.3.6.3 and two more</text><text class="s" x="46" y="556">pricing processes · core</text>
+  <rect class="node" x="800" y="520" width="180" height="50" rx="6"/><text class="t" x="816" y="542">KittyHawk</text><text class="s" x="816" y="560">customer system · party</text>
+  <rect class="lane" x="20" y="14" width="360" height="40" rx="6"/><text class="s" x="34" y="39">integration: what each link proves; which source wins</text>
+</svg>
+</div>
+<ol class="diagram tall hoplist">
+  <li><strong>kpi</strong> defines <em>Crack Spreads Pricing</em>, a market indicator.</li>
+  <li><strong>core:</strong> it informs <em>CM 1.1.4.7.4 Capture Product/Crude/Feedstock Price</em>.</li>
+  <li><strong>market-data:</strong> 15 series publish it, such as the <em>Gulf Coast 3-2-1 crack spread</em> (3 MEH, 2 USGC CBOB, 1 USGC ULSD).</li>
+  <li><strong>data-product:</strong> the crack-spread metric view serves it; the view is part of <em>Master Pricing</em>.</li>
+  <li><strong>system:</strong> the view depends on MPR, MIPS and KittyHawk.</li>
+  <li><strong>core and organization:</strong> MPR supports <em>CM 1.1.5.1.2.6 Receive actual data product prices</em>, where a Business Analyst is responsible.</li>
+  <li><strong>value-stream:</strong> two steps link to it as a benchmark, such as <em>Market Price Calculation &amp; Validation</em>.</li>
+  <li><strong>party:</strong> KittyHawk is also a customer system, matched by <code>skos:exactMatch</code>.</li>
+  <li><strong>integration:</strong> says which of these links prove the work and how an agent may quote a value.</li>
+</ol>
+<figcaption>Every box and arrow is a triple in the releases. Teal is the measure and its three direct links; grey arrows are one step further out.</figcaption>
+<p class="swipe note">Swipe the diagram sideways to see all of it.</p>
+</figure>
+
+<h3>The walk, as one query</h3>
+<p>This SPARQL query walks the measure's neighbourhood across eight modules. It runs over the eleven newest releases loaded together; the output below is what it returned on 2026-10-26.</p>
+<pre><code>PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
+PREFIX kpi: &lt;https://w3id.org/lsc/ontology/modules/kpi/&gt;
+PREFIX mkt: &lt;https://w3id.org/lsc/ontology/modules/market-data/&gt;
+PREFIX dp: &lt;https://w3id.org/lsc/ontology/modules/data-product/&gt;
+PREFIX sys: &lt;https://w3id.org/lsc/ontology/modules/system/&gt;
+PREFIX vs: &lt;https://w3id.org/lsc/ontology/modules/value-stream/&gt;
+PREFIX orgm: &lt;https://w3id.org/lsc/ontology/modules/organization/&gt;
+PREFIX measure: &lt;https://w3id.org/lsc/ontology/modules/kpi/measure/&gt;
+SELECT ?hop ?label WHERE {
+  { measure:crack-spreads kpi:measureKind/skos:prefLabel ?label . BIND("kind (kpi)" AS ?hop) }
+  UNION { measure:crack-spreads kpi:informsProcess ?p . ?p skos:notation ?n ; skos:prefLabel ?l .
+          BIND("informs process (core)" AS ?hop) BIND(CONCAT(?n, " ", ?l) AS ?label) }
+  UNION { ?s mkt:seriesOf measure:crack-spreads ; mkt:region/skos:prefLabel ?r ; skos:prefLabel ?l .
+          FILTER(?s = &lt;https://w3id.org/lsc/ontology/modules/market-data/series/crack-gulf-coast-3-2-1&gt;)
+          BIND("series (market-data)" AS ?hop) BIND(CONCAT(?l, ", ", ?r) AS ?label) }
+  UNION { ?v dp:servesMeasure measure:crack-spreads ; skos:prefLabel ?label .
+          BIND("served by view (data-product)" AS ?hop) }
+  UNION { ?v dp:servesMeasure measure:crack-spreads ; dp:dependsOnSystem/skos:prefLabel ?label .
+          BIND("view reads system (system)" AS ?hop) }
+  UNION { ?v dp:servesMeasure measure:crack-spreads ; dcterms:isPartOf/skos:prefLabel ?label .
+          BIND("part of data product (data-product)" AS ?hop) }
+  UNION { ?step vs:measureLink [ vs:measure measure:crack-spreads ; vs:relationship/skos:prefLabel ?rel ] ;
+                skos:prefLabel ?l .
+          ?stage vs:hasProcess ?step . ?stream vs:hasStage ?stage . ?stream skos:prefLabel ?sl .
+          BIND("value-stream step (value-stream)" AS ?hop) BIND(CONCAT(?l, " [", ?rel, "] in ", ?sl) AS ?label) }
+  UNION { ?v dp:servesMeasure measure:crack-spreads ; dp:dependsOnSystem ?sy . ?sy sys:supports ?p .
+          ?p skos:notation "CM 1.1.5.1.2.6" ; skos:prefLabel ?pl .
+          ?a orgm:forProcess ?p ; orgm:assignedRole/skos:prefLabel ?role ; orgm:raciLevel/skos:prefLabel ?lvl .
+          BIND("RACI on a process MPR supports (organization)" AS ?hop) BIND(CONCAT(?pl, ": ", ?lvl, " ", ?role) AS ?label) }
+}
+ORDER BY ?hop ?label</code></pre>
+<div class="tblwrap"><table class="stack out">
+<thead><tr><th>hop</th><th>label</th></tr></thead>
+<tbody>
+<tr><td>RACI on a process MPR supports (organization)</td><td data-k="label">Receive actual data product prices: Accountable Continual Commercial Improvement Director</td></tr>
+<tr><td>RACI on a process MPR supports (organization)</td><td data-k="label">Receive actual data product prices: Consulted Pricing Representative</td></tr>
+<tr><td>RACI on a process MPR supports (organization)</td><td data-k="label">Receive actual data product prices: Informed Continual Commercial Improvement Director</td></tr>
+<tr><td>RACI on a process MPR supports (organization)</td><td data-k="label">Receive actual data product prices: Responsible Business Analyst</td></tr>
+<tr><td>informs process (core)</td><td data-k="label">CM 1.1.4.7.4 Capture Product/Crude/Feedstock Price</td></tr>
+<tr><td>kind (kpi)</td><td data-k="label">Market indicator</td></tr>
+<tr><td>part of data product (data-product)</td><td data-k="label">Master Pricing</td></tr>
+<tr><td>series (market-data)</td><td data-k="label">Gulf Coast 3-2-1 crack spread, Gulf Coast</td></tr>
+<tr><td>served by view (data-product)</td><td data-k="label">idp_sbx.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw</td></tr>
+<tr><td>value-stream step (value-stream)</td><td data-k="label">Market Price Calculation &amp; Validation [Benchmarks] in Commercial Hydrocarbon Lifecycle</td></tr>
+<tr><td>value-stream step (value-stream)</td><td data-k="label">Performance Tracking &amp; Analysis [Benchmarks] in Commercial Hydrocarbon Lifecycle</td></tr>
+<tr><td>view reads system (system)</td><td data-k="label">KittyHawk</td></tr>
+<tr><td>view reads system (system)</td><td data-k="label">MIPS</td></tr>
+<tr><td>view reads system (system)</td><td data-k="label">MPR</td></tr>
+</tbody></table></div>
+<p class="note">14 rows. The Gulf Coast filter and the one process are there to keep the output short: the measure has 15 series, and MPR supports eight processes.</p>
+
+<h3>What the walk answers</h3>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Question</th><th>Answer from the graph</th><th>Module</th></tr></thead>
+<tbody>
+<tr><td>What does it mean?</td><td data-k="Answer">"Benchmark crack spreads: the market value of products made from a set ratio of crude, less the crude's price." Not realized refinery margin, not margin capture, and not MPC's R&amp;M Margin Indicator.</td><td data-k="Module">kpi</td></tr>
+<tr><td>Is it a KPI?</td><td data-k="Answer">No. It is a market indicator, "an external price, spread or benchmark that the region cannot influence", and <code>kpi:kpiCandidate</code> is false. A KPI is a designation with a target and an owner (EPM-DEC-001-0042).</td><td data-k="Module">kpi</td></tr>
+<tr><td>How is it built?</td><td data-k="Answer">As recipes. The Gulf Coast 3-2-1 takes three barrels of MEH crude to two of USGC CBOB gasoline and one of USGC ULSD, in MPC's Gulf Coast region.</td><td data-k="Module">market-data</td></tr>
+<tr><td>Where is its value?</td><td data-k="Answer">In the metric view <code>idp_sbx.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw</code>, which serves it. The ontology never holds the value.</td><td data-k="Module">data-product</td></tr>
+<tr><td>Which systems hold the data?</td><td data-k="Answer">MPR (the price master), MIPS (market price assessments) and KittyHawk.</td><td data-k="Module">system</td></tr>
+<tr><td>Who works with it?</td><td data-k="Answer">Three planning personas use it: Distribution, Prompt and Short-Term Planner. On a process MPR supports, a Business Analyst is responsible and the Continual Commercial Improvement Director is accountable.</td><td data-k="Module">kpi, organization</td></tr>
+<tr><td>Where does it matter in the business?</td><td data-k="Answer">It informs price capture for refinery optimization (CM 1.1.4.7.4). In the Commercial Hydrocarbon Lifecycle value stream, two steps use it as a benchmark.</td><td data-k="Module">core, value-stream</td></tr>
+<tr><td>What may an agent say?</td><td data-k="Answer">Quote a value only through the bound metric view, name the view, and add the measure's definition, kind and what it is not.</td><td data-k="Module">integration</td></tr>
+</tbody></table></div>
+
+<h2 id="modules">Each module</h2>
+<p class="lead">Each module below says what it holds, why it exists, what it links to, and its part in the crack spread's story. The counts are from its newest release.</p>
+
+<section class="mod" id="m-core">
+<h3>core <span class="pill">2.3.0</span> <span class="pill">19,819 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> the process map: 463 processes, 23 capabilities and 2 structural anchors as a SKOS hierarchy under <em>Downstream Operations</em> and <em>Enabling Functions</em>. Each process has a notation (<code>CM 1.1.4.7.4</code>), a definition, a parent, and fields such as cadence, operating mode and business domain. It also holds 640 approved relationships between processes, such as <code>core:informedBy</code> and <code>core:precedes</code>, each as a direct triple and as a canonical-fact node that carries its evidence row.</p>
+<p><strong>Why:</strong> the process map is the authority every other module hangs on. It is built from <code>business_architecture/business_process/downstream_process_map.json</code>, and changes to the map go through proposals, never direct edits (AGENTS.md).</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>The measure informs <code>proc:CM-1-1-4-7-4</code>, <em>Capture Product/Crude/Feedstock Price</em>, a monthly step of Refinery Optimization (CM 1.1.4.7), under Refining. Its definition: "Establish the price and economic assumption set used to value crude, feedstock, and finished-product streams in the optimization case". Six other price measures inform the same process.</p>
+</div>
+</div>
+<p class="note">Links: the other modules point at core's process IRIs (<code>https://w3id.org/lsc/ontology/process/CM-…</code>); core itself requires nothing. Open: 462 relationship mentions held for review, and the seven preferred labels shared inside the process scheme (EPM-DEC-001-0098, item 8).</p>
+</section>
+
+<section class="mod" id="m-kpi">
+<h3>kpi <span class="pill">1.2.0</span> <span class="pill">1,157 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> 41 measure definitions, each classified by its kind: 15 operational metrics, 7 market indicators, 6 trackers or reports, 6 plan-variance diagnostics, 2 KPIs, 2 alerts, 1 decision-support indicator and 2 "not a measure". It also holds the four planning personas who use them. Eight measures carry their population, what they include and exclude, in MPC's own wording.</p>
+<p><strong>Why:</strong> one meaning per measure, kept apart from any value, so that every report and agent uses the same definition (EPM-DEC-001-0040, 0042, 0043). It is seeded from the planning team's measure list; filings are evidence for a definition, not a source of values (EPM-DEC-001-0017).</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>The definition lives here: <code>measure:crack-spreads</code>, "Crack Spreads Pricing", identifier KPI-0001, kind market indicator, grain "daily, by market hub", compared against a 30-day trend and 5-year history. It names three measures it is not to be confused with, such as margin capture. Its population excludes "the market cost of RINs, in MPC's 10-K regional and blended crack spreads".</p>
+</div>
+</div>
+<p class="note">Links: <code>kpi:informsProcess</code> to core. Requires core 2.3.0. Open: who owns each measure's meaning (competency question 17, business close-out point 1), and the populations of the other 33 measures (point 10).</p>
+</section>
+
+<section class="mod" id="m-market-data">
+<h3>market-data <span class="pill">1.1.0</span> <span class="pill">1,403 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> the recipes of market series, never their prices: 15 benchmark series, their 28 legs over 24 benchmarks, refining and market regions, and 40 named market prices (<code>mkt:MarketPrice</code>) that the pricing measures present. Its shapes reject a price value.</p>
+<p><strong>Why:</strong> Market Data is a domain of its own, separate from commercial pricing, and owns benchmarks and their methodology (EPM-DEC-001-0006). For the crack spread, MPC Economics' definition is the primary source, then MPC's filings, then peers, then exchanges (EPM-DEC-001-0066).</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>Fifteen series name the measure through <code>mkt:seriesOf</code>. The Gulf Coast 3-2-1 is three barrels of MEH crude producing two of USGC CBOB gasoline and one of USGC ULSD, in the Gulf Coast region. The region is MPC's Galveston Bay and Garyville refineries. A series enumeration records 127 series in 44 groups in the crack-spread view on 2026-10-25.</p>
+</div>
+</div>
+<p class="note">Links: <code>mkt:seriesOf</code> to kpi's measures. Requires kpi 1.2.0. Open: Market Data accountability. The Risk Group holds it provisionally, until its mandate is confirmed (EPM-DEC-001-0046; close-out point 2).</p>
+</section>
+
+<section class="mod" id="m-data-product">
+<h3>data-product <span class="pill">1.2.0</span> <span class="pill">1,442 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> the data-product portfolio: segments, 19 product lines and 49 data products (16 defined so far). Since 1.2.0 it also holds the pricing platform's 33 tables and views, by layer: replica, silver, gold and metric view. Each carries its kind, foundational or derived, its lineage (<code>prov:wasDerivedFrom</code>), its systems and the measures a view serves.</p>
+<p><strong>Why:</strong> a measure means something only if a consumer can find the data that gives its value. This module connects the business's data products to the platform objects that implement them (EPM-DEC-001-0053, 0100).</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>The metric view <code>mpr_mips_crack_spread_price_fact_metrics_vw</code> <code>dp:servesMeasure</code> the crack spread. It is a derived data product in the metric-view layer and part of <em>Master Pricing</em>, in the Market Structure &amp; Logistics Management line. It derives from the gold crack-spread fact, whose <code>Crack_Spread_Price_Amount</code> column derives from MPR's settle price. The <em>Crack Spread Price Analytics</em> Genie agent uses it.</p>
+</div>
+</div>
+<p class="note">Links: <code>dp:servesMeasure</code> to kpi, <code>dp:dependsOnSystem</code> and <code>dp:copiesSystem</code> to system, <code>dp:producedBy</code> and <code>dp:consumedBy</code> to core. Requires core 2.3.0, kpi 1.2.0 and system 1.2.0. Open: 33 data products have no definition yet.</p>
+</section>
+
+<section class="mod" id="m-system">
+<h3>system <span class="pill">1.3.0</span> <span class="pill">793 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> 34 systems, office tools and working documents: the 32 the process map names, plus MIPS and Databricks. 32 have a definition. Each says which processes it supports, taken from the process map's "systems" fields (EPM-DEC-001-0055, 0099, 0103).</p>
+<p><strong>Why:</strong> to answer which tool a process runs on, and which system a data product reads. Names were merged on spelling, so one system has one IRI.</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>The crack-spread view depends on MPR, MIPS and KittyHawk. MPR is the price master. It holds each priced instrument and its daily price details and settlement prices, and supports eight processes, such as <em>CM 1.1.5.1.2.6 Receive actual data product prices</em>. MIPS holds market price assessments in sheets, groups and batches.</p>
+</div>
+</div>
+<p class="note">Links: <code>sys:supports</code> to core. Requires core 2.3.0. Open: TopDay and VALT wait for their owners' descriptions (close-out point 12); CargoTracker, Allocation Manager, Hyperion, Quorum and Polaris need fuller answers (points 13 to 15).</p>
+</section>
+
+<section class="mod" id="m-organization">
+<h3>organization <span class="pill">2.0.0</span> <span class="pill">5,987 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> 60 roles (positions, never people) and 940 RACI assignments, each a node of its own that names its process, role and level. It also defines the control relationship between legal entities (EPM-DEC-001-0030, 0045).</p>
+<p><strong>Why:</strong> to say who does what on each process, by role. A RACI assignment is a node, so it can carry its own level and source, as the playbook's qualified-relation pattern requires.</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>On <em>Receive actual data product prices</em>, which MPR supports, the Continual Commercial Improvement Director is accountable, a Business Analyst responsible, and a Pricing Representative consulted. That is the team that receives the prices the crack spread is built from.</p>
+</div>
+</div>
+<p class="note">Links: <code>orgm:forProcess</code> to core. Requires core 2.1.0, a pin that lags core's 2.3.0. Open: the Forecaster, Crude RFC and PSM readings and four working definitions (close-out points 6 to 9).</p>
+</section>
+
+<section class="mod" id="m-value-stream">
+<h3>value-stream <span class="pill">1.1.0</span> <span class="pill">995 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> two value streams, <em>Commercial Hydrocarbon Lifecycle</em> and <em>Order to Cash</em>, with 12 stages, 58 steps and 21 capabilities. A step <code>vs:realizes</code> core processes, <code>vs:produces</code> and <code>vs:consumes</code> data products, and links to the measures it moves through a measure link that names the relationship (EPM-DEC-001-0054).</p>
+<p><strong>Why:</strong> the process map says what the business does. The value streams say how value flows end to end, as an overlay that references the map and never changes it.</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p><em>Market Price Calculation &amp; Validation</em>, in the Market &amp; Strategy Formation stage, uses the crack spread as a benchmark. It "transform[s] raw market data and internal price assessment into official, validated system of record for all product prices". It produces Master Pricing, the data product its view belongs to, and realizes three pricing processes, such as CM 1.3.6.3 Sales Pricing Management.</p>
+</div>
+</div>
+<p class="note">Links: <code>vs:realizes</code> to core; <code>vs:produces</code> and <code>vs:consumes</code> to data-product; <code>vs:measure</code> to kpi. Requires core 2.3.0, data-product 1.0.0 and kpi 1.1.0.</p>
+</section>
+
+<section class="mod" id="m-party">
+<h3>party <span class="pill">1.3.0</span> <span class="pill">4,020 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> the customer domain: the customer model with 20 concept schemes, 42 customer systems with 35 data flows and 275 attributes, 27 products, and the customer lifecycle in a business view and a system view (EPM-DEC-001-0068 to 0070).</p>
+<p><strong>Why:</strong> the customer domain has its own owner and its own sources, the customer systems' data flows, and changes on its own schedule.</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>KittyHawk, one of the view's three systems, is also a customer system. <code>party:system/kittyhawk skos:exactMatch system:kittyhawk</code> says they are the same system. The customer view adds that it "records physical product movements" and receives customers from RightAngle.</p>
+</div>
+</div>
+<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.3.0 and system 1.3.0. Open: four customer systems and four codes wait for their owners (close-out points 3, 4 and 11), and the product list awaits confirmation (point 5).</p>
+</section>
+
+<section class="mod" id="m-ref-mpc">
+<h3>ref-mpc <span class="pill">1.2.0</span> <span class="pill">180 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> the company facts: MPC and MPLX, MPC's control of MPLX, its three reportable segments and its 13 refineries, each dated to 31 December 2025 from MPC's FY2025 Form 10-K. It defines no terms of its own; it uses those of <code>organization</code> and <code>party</code>.</p>
+<p><strong>Why:</strong> it is the only company-specific module, so every other module stays company-neutral and reusable (EPM-DEC-001-0015, 0033).</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>The measure's public counterpart is MPC's own Gulf Coast, Mid-Continent, West Coast and blended 3-2-1 cracks. Its value-stream link cites MPC's FY2025 10-K, Item 7. The Garyville refinery here sits "in MPC's Gulf Coast refining region", the region of the Gulf Coast series. That tie is a note today, not a triple.</p>
+</div>
+</div>
+<p class="note">Links: uses organization's and party's classes and properties. Requires organization 2.0.0 and party 1.0.0.</p>
+</section>
+
+<section class="mod" id="m-lane">
+<h3>lane <span class="pill">1.0.0</span> <span class="pill">59 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> the four office lanes, Front Office, Middle Office, Operations and Back Office, and the seven processes the process map places in them. Each is a child of Supply And Trading (CM 1.2), such as Trading Management in the front office and Settlements &amp; Accounting in the back office. A child does not inherit its parent's lane (EPM-DEC-001-0056).</p>
+<p><strong>Why:</strong> a trading organization divides its work by lane, and the map states the lane for these processes only.</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>The crack spread does not touch a lane. Its processes sit in refinery planning (under Refining), regional backcasting and marketing, and the map places none of them in an office lane. That is an honest gap, not an error: the ontology states only what its sources state.</p>
+</div>
+</div>
+<p class="note">Links: <code>lane:officeLane</code> from core's processes to a lane. Requires core 2.2.0, a pin that lags core's 2.3.0.</p>
+</section>
+
+<section class="mod" id="m-integration">
+<h3>integration <span class="pill">2.3.0</span> <span class="pill">448 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> no new facts, only rules about the other modules' links. It ships three source folders as one package:</p>
+<ul>
+<li><strong>placement:</strong> which links prove the work. <code>vs:produces</code> and <code>dp:producedBy</code> certify; every other placement, <code>kpi:informsProcess</code> among them, is context (EPM-DEC-001-0058).</li>
+<li><strong>authority:</strong> five evidence tiers for the 102 cited sources: process authority, MPC, U.S. refining peers, industry and regulatory sources, and generic frameworks. The best tier wins (EPM-DEC-001-0059).</li>
+<li><strong>consumer:</strong> 13 rules for what a catalog binds and an agent may answer or must refuse (EPM-DEC-001-0061).</li>
+</ul>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>The rule <em>Quote a value through its bound metric view</em> lets an agent give the crack spread's value only through the view that <code>dp:servesMeasure</code> it, naming the view and adding the measure's definition, kind and what it is not. The measure's sources have tiers: the planner measure list is process authority, the MPC performance-measures evidence is MPC, and the KPI classification evidence is peers.</p>
+</div>
+</div>
+<p class="note">Requires every other module. No catalog row publishes the crack-spread measure yet; the binding is the view's <code>dp:servesMeasure</code> (EPM-DEC-001-0100, item 4).</p>
+</section>
+
+<h2 id="stores">How it reaches the stores</h2>
+<div class="two">
+<div>
+<p>The eleven releases are the master copy, as Turtle. From them, two projections build a Neo4j property graph. The repository's <code>pipeline.py</code> loads a local Neo4j. The <code>ontology-to-lpg</code> skill's driver loads a second local Neo4j, copies it to AuraDB, writes the triples to the Databricks table <code>workspace.epm_ontology.epm_triples</code>, and rebuilds the graph from that table to prove it holds the whole ontology.</p>
+<p>The planned next step links the metric views in Unity Catalog to the ontology's measures by KPI identifier, so that an agent working in Databricks can reach a measure's full context.</p>
+</div>
+<div class="card">
+<h3>Where to read more</h3>
+<ul>
+<li><a href="projection/stores-runbook.html">Stores runbook</a>: every store, and how to check, stop, start, purge and reload it.</li>
+<li><a href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">EPM integration</a>, the architecture diagram in Eraser.</li>
+<li><code>MODULES.md</code>: each link between modules, with a triple quoted from the releases.</li>
+<li><code>business-closeout.md</code>: the points only the business can settle.</li>
+</ul>
+</div>
+</div>
+
+<h2 id="open">What is still open</h2>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Item</th><th>What it needs</th><th>Record</th></tr></thead>
+<tbody>
+<tr><td>Who owns each concept's meaning</td><td data-k="Needs">An owner for each module or scheme, from the business (competency question 17).</td><td data-k="Record">EPM-DEC-001-0086; close-out point 1</td></tr>
+<tr><td>Market Data accountability</td><td data-k="Needs">Confirm the Risk Group's mandate, or name the accountable group.</td><td data-k="Record">EPM-DEC-001-0046; point 2</td></tr>
+<tr><td>Customer codes, systems and products</td><td data-k="Needs">Meanings from the system owners and the customer-data owner.</td><td data-k="Record">Points 3, 4, 5 and 11</td></tr>
+<tr><td>Role readings and working definitions</td><td data-k="Needs">Forecaster, Crude RFC, PSM, and four definitions confirmed.</td><td data-k="Record">Points 6 to 9</td></tr>
+<tr><td>Measure populations</td><td data-k="Needs">What is in and out for 33 measures.</td><td data-k="Record">EPM-DEC-001-0062; point 10</td></tr>
+<tr><td>System descriptions</td><td data-k="Needs">TopDay, VALT, CargoTracker, Allocation Manager, Hyperion, Quorum and Polaris.</td><td data-k="Record">Points 12 to 15</td></tr>
+<tr><td>Process map</td><td data-k="Needs">The decision on proposal MPC-P11, and a proposal for the seven shared process labels.</td><td data-k="Record">EPM-DEC-001-0098, 0103</td></tr>
+</tbody></table></div>
+
+<div class="src" id="sources">
+<p><strong>Sources.</strong> The newest release of each module under <code>business_architecture/ontology/releases/</code> (its <code>.ttl</code>, <code>manifest.json</code> and <code>CHANGELOG.md</code>); <code>scripts/epm_facts.py modules</code> and <code>counts</code> at commit <code>bae7013</code>; <code>MODULES.md</code>; <code>business-closeout.md</code>; the decision records EPM-DEC-001-0006, 0015, 0017, 0030, 0033, 0040, 0042, 0043, 0045, 0046, 0053 to 0056, 0058, 0059, 0061, 0062, 0065, 0066, 0068 to 0070, 0086, 0098 to 0100 and 0103 in <code>business_architecture/domain/decisions/</code>; and the <code>ontology</code> skill's <code>references/playbook.md</code>, "Why split an ontology into modules", and <code>references/foundations.md</code>, policy 8. Counts of classes and concepts were taken by loading each release with rdflib.</p>
+</div>
+
+</div>
+</div></main>
+
+<script>
+document.querySelectorAll("pre").forEach(function (pre) {
+  if (!navigator.clipboard) return;
+  var b = document.createElement("button");
+  b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(pre.querySelector("code").innerText).then(function () {
+      b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500);
+    });
+  });
+  pre.appendChild(b);
+});
+</script>
+</body>
+</html>
