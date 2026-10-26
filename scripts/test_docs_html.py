@@ -165,8 +165,7 @@ def test_every_decision_record_has_its_anchor_and_index_row():
 
 
 def test_every_link_on_every_page_resolves():
-    """A relative link names a file that exists, and an anchor on a generated page exists there. The
-    ontology guide is the one target allowed to be absent: it lands in its own pull request."""
+    """A relative link names a file that exists, and an anchor on a linked HTML page exists there."""
     ids = {os.path.normpath(os.path.join(b.ROOT, out)): set(re.findall(r'id="([^"]+)"', page))
            for out, page in PAGES.items()}
     problems = []
@@ -178,11 +177,14 @@ def test_every_link_on_every_page_resolves():
                 continue
             path, _, frag = href.partition("#")
             target = os.path.normpath(os.path.join(os.path.dirname(here), path)) if path else here
-            if path.endswith(os.path.basename(b.GUIDE)):
-                continue
             if not os.path.exists(target):
                 problems.append(f"{out}: {href}: no such file")
-            elif frag and frag != "top" and target in ids and frag not in ids[target]:
+                continue
+            if target.endswith(".html") and target not in ids:
+                # A hand-written page (the guide, the runbook): its anchors are its id and name attributes.
+                with open(target, encoding="utf-8") as f:
+                    ids[target] = set(re.findall(r'\b(?:id|name)="([^"]+)"', f.read()))
+            if frag and frag != "top" and target in ids and frag not in ids[target]:
                 problems.append(f"{out}: {href}: no such anchor")
     assert not problems, "\n".join(problems[:20])
 
