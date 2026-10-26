@@ -1016,6 +1016,13 @@ without a dated amendment and the decision owner's explicit agreement.
   as superseded evidence; `projection/pipeline.py` stays on v2.2
   (EPM-DEC-001-0095, amending 0021).
 
+### system 1.1.0, party 1.2.0 and integration 2.1.0 are released (2026-10-25)
+- Item G: 15 system-module systems and 18 customer systems defined, from
+  their vendors' own descriptions (marked as such, quoted whole in
+  `reference/vendors/`) or the decision owner's; SAP S/4HANA matched to the
+  process map's SAP; 27 sources tiered (EPM-DEC-001-0099). The three
+  modules' code lists state their top concepts both ways (EPM-DEC-001-0098).
+
 ### integration 2.0.0 is released (2026-10-23)
 - The last five projection gaps close: ranges for `plc:placementKind` and
   `con:reliesOn`, cardinality shapes for placement and authority. The

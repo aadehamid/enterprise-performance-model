@@ -59,7 +59,8 @@ class Release(unittest.TestCase):
         party, system = "https://w3id.org/lsc/ontology/modules/party/system/", "https://w3id.org/lsc/ontology/modules/system/system/"
         self.assertEqual({(str(r.a), str(r.b)) for r in rows},
                          {(party + "rightangle", system + "rightangle"), (party + "kittyhawk", system + "kittyhawk"),
-                          (party + "profisee", system + "profisee"), (party + "terminal-margin-ranking-system", system + "tmr")})
+                          (party + "profisee", system + "profisee"), (party + "terminal-margin-ranking-system", system + "tmr"),
+                          (party + "sap-s4hana", system + "sap")})  # EPM-DEC-001-0099
         self.assertEqual({str(r.word) for r in rows if str(r.a) == party + "terminal-margin-ranking-system"}, {"TMR"})
 
     def test_an_orphan_fails_q2(self):
