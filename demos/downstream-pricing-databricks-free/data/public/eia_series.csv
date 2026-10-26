@@ -1,0 +1,16 @@
+key,series_id,description,units,demo_role,pulled_on
+wti,PET.RWTC.D,"Cushing, OK WTI Spot Price FOB (Dollars per Barrel)",$/BBL,NYMEX WTI (Cushing) front month: the WTI Cushing spot,2026-10-25
+brent,PET.RBRTE.D,Europe Brent Spot Price FOB (Dollars per Barrel),$/BBL,ICE Brent front month: the Europe Brent spot,2026-10-25
+henry_hub,NG.RNGWHHD.D,Henry Hub Natural Gas Spot Price (Dollars per Million Btu),$/MMBTU,NYMEX Natural Gas front month: the Henry Hub spot,2026-10-25
+nyh_ulsd,PET.EER_EPD2DXL0_PF4_Y35NY_DPG.D,New York Harbor Ultra-Low Sulfur No 2 Diesel Spot Price (Dollars per Gallon),$/GAL,NYMEX Heating Oil front month and NYH ULSD cash,2026-10-25
+usgc_ulsd,PET.EER_EPD2DXL0_PF4_RGC_DPG.D,U.S. Gulf Coast Ultra-Low Sulfur No 2 Diesel Spot Price (Dollars per Gallon),$/GAL,USGC ULSD cash,2026-10-25
+usgc_gasoline,PET.EER_EPMRU_PF4_RGC_DPG.D,U.S. Gulf Coast Conventional Gasoline Regular Spot Price FOB (Dollars per Gallon),$/GAL,USGC CBOB cash: Gulf Coast conventional regular,2026-10-25
+nyh_gasoline,PET.EER_EPMRU_PF4_Y35NY_DPG.D,New York Harbor Conventional Gasoline Regular Spot Price FOB (Dollars per Gallon),$/GAL,NYMEX RBOB front month and NYH CBOB cash: NY Harbor conventional regular (EIA publishes no NYH RBOB spot),2026-10-25
+usgc_jet,PET.EER_EPJK_PF4_RGC_DPG.D,U.S. Gulf Coast Kerosene-Type Jet Fuel Spot Price FOB (Dollars per Gallon),$/GAL,USGC Jet cash,2026-10-25
+mb_propane,PET.EER_EPLLPA_PF4_Y44MB_DPG.D,"Mont Belvieu, TX Propane Spot Price FOB (Dollars per Gallon)",$/GAL,Propane Mt. Belvieu,2026-10-25
+la_carbob,PET.EER_EPMRR_PF4_Y05LA_DPG.D,Los Angeles Reformulated RBOB Regular Gasoline Spot Price (Dollars per Gallon),$/GAL,LA CARBOB cash: Los Angeles reformulated RBOB regular,2026-10-25
+la_carb_diesel,PET.EER_EPD2DC_PF4_Y05LA_DPG.D,"Los Angeles, CA Ultra-Low Sulfur CARB Diesel Spot Price (Dollars per Gallon)",$/GAL,LA CARB No. 2 cash: Los Angeles ULSD CARB diesel,2026-10-25
+us_utilization,PET.WPULEUS3.W,U.S. Percent Utilization of Refinery Operable Capacity,%,"U.S. refinery utilization, weekly (Weekly Petroleum Status Report)",2026-10-25
+us_crude_runs,PET.WCRRIUS2.W,U.S. Refiner Net Input of Crude Oil (Thousand Barrels per Day),MBBL/D,"U.S. refiner net input of crude oil, weekly",2026-10-25
+us_gasoline_stocks,PET.WGTSTUS1.W,U.S. Ending Stocks of Total Gasoline (Thousand Barrels),MBBL,"U.S. total gasoline stocks, weekly",2026-10-25
+us_distillate_stocks,PET.WDISTUS1.W,U.S. Ending Stocks of Distillate Fuel Oil (Thousand Barrels),MBBL,"U.S. distillate stocks, weekly",2026-10-25

@@ -128,6 +128,7 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
   business_architecture/ontology/consumer/test_consumer_rules.py \
   business_architecture/ontology/population/test_population.py \
   business_architecture/ontology/party/test_party.py \
+  demos/downstream-pricing-databricks-free/tests/test_demo.py \
   business_architecture/ontology/party/test_party_systems.py \
   business_architecture/ontology/party/test_party_lifecycle.py \
   business_architecture/business_process/test_business_process.py \

@@ -1,0 +1,25 @@
+[project]
+name = "downstream-pricing-databricks-free"
+version = "0.1.0"
+description = "Synthetic downstream pricing demo for Databricks Free Edition: Postgres sources, DuckDB replication, replica, silver star schema, gold, metric views and two Genie agents."
+requires-python = ">=3.12"
+dependencies = [
+    "duckdb==1.4.1",
+    "psycopg[binary]==3.3.4",
+    "pyarrow==21.0.0",
+    "databricks-sdk==0.128.0",
+    "databricks-sql-connector==4.4.0",
+]
+
+[dependency-groups]
+dev = ["pytest==8.4.2"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pricing_demo"]
+
+[tool.uv]
+package = true
