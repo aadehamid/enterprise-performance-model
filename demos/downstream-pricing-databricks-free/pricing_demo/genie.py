@@ -9,8 +9,6 @@ import hashlib
 import json
 import os
 
-from databricks.sdk import WorkspaceClient
-
 from .config import ROOT, databricks_env
 from .databricks import connect, current_catalog
 
@@ -27,7 +25,7 @@ AGENTS = {
                       "SELECT Price_Master_ID, Price_Master_Name, Relative_Period_Number, MEASURE(Avg_Crack_Spread) AS crack_usd_per_bbl "
                       "FROM {c}.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw "
                       "WHERE Price_Master_ID = '37438' AND Relative_Period_Number = 0 AND Effective_Start_Datetime = "
-                      "(SELECT MAX(Effective_Start_Datetime) FROM {c}.gold_commercial_core.mpr_mips_crack_spread_price_fact) GROUP BY ALL")],
+                      "(SELECT MAX(Effective_Start_Datetime) FROM {c}.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw) GROUP BY ALL")],
     },
     "Executive Summary KPIs Analytics": {
         "file": "executive-summary-kpis-analytics.md",
@@ -41,7 +39,18 @@ AGENTS = {
                       "SELECT MIPSDisplayName, MEASURE(assessment_amount) AS price_usd_per_gal, MEASURE(ChangeValue) AS change_usd_per_gal "
                       "FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw WHERE Price_Group_Name = 'Cash' "
                       "AND Parent_Price_group_name = 'Diesel' AND MIPSDisplayName = 'NYH ULSD' AND SortColumns = 1 AND effective_date = "
-                      "(SELECT MAX(effective_date) FROM {c}.gold_commercial_core.mips_mpr_executive_summary_fact) GROUP BY ALL")],
+                      "(SELECT MAX(effective_date) FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw) GROUP BY ALL"),
+                     ("What is the ICE Brent front-month settle on the latest date, in $/bbl?",
+                      "SELECT Price_Master_ID, Blend, MEASURE(Avg_Settle_Price) / 100 AS settle_usd_per_bbl "
+                      "FROM {c}.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw WHERE Price_Master_ID = '572' "
+                      "AND Relative_Period_Number = 1 AND Effective_Date = "
+                      "(SELECT MAX(Effective_Date) FROM {c}.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw) GROUP BY ALL"),
+                     ("What is the monthly average NYH ULSD cash price for each forward month on the latest date?",
+                      "SELECT DATE_TRUNC('MONTH', Price_Period_Datetime) AS price_month, "
+                      "MEASURE(assessment_amount) / MEASURE(Record_Count) AS avg_price_usd_per_gal "
+                      "FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw WHERE Price_Group_Name = 'Cash' "
+                      "AND Parent_Price_group_name = 'Diesel' AND MIPSDisplayName = 'NYH ULSD' AND effective_date = "
+                      "(SELECT MAX(effective_date) FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw) GROUP BY ALL ORDER BY 1")],
     },
 }
 
@@ -67,6 +76,7 @@ def serialized(title, spec, catalog):
 
 
 def main():
+    from databricks.sdk import WorkspaceClient
     e = databricks_env()
     conn, _ = connect()
     with conn, conn.cursor() as cur:

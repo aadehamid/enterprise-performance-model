@@ -3,9 +3,9 @@ scenario's event timeline.
 
     uv run python -m pricing_demo.generate          # print the table sizes
 
-build() returns {system: {table: Table}}. Each price row carries DemoProvenance: "real" (an EIA value as published,
-or converted only in unit), "spot-anchored" (a formula of EIA values only) or "synthesized" (anything with a
-generated part). The same seed always gives the same rows: no clock, no network.
+build() returns {system: {table: Table}}. Each price row carries DemoProvenance: "real" (an EIA value as published
+on that date, or converted only in unit), "spot-anchored" (a formula of EIA values only, or an EIA value carried
+from an earlier date) or "synthesized" (anything with a generated part). The same seed always gives the same rows: no clock, no network.
 """
 import csv
 import datetime as dt
@@ -15,7 +15,11 @@ import random
 from dataclasses import dataclass
 
 from . import catalog, public_data, timeline
-from .config import DATA, SEED, WINDOW_END, WINDOW_START
+from .config import DATA, SEED, SYSTEMS, WINDOW_END, WINDOW_START
+
+
+# The units of measure, by the code an assessment group is quoted in (Kimi round 1, finding 15).
+UNIT_IDS = {"$/Bbl": 1, "$/gal": 2, "$/MMbtu": 3, "cents/gal": 4, "$/unit": 5, "cents/lb": 6}
 
 
 @dataclass
@@ -56,8 +60,10 @@ class Market:
         drift = {k: 0.0 for k in self.DERIVED}
         for day in self.days:
             for k in self.REAL:
-                v = self._last(k, day)
-                self.values[(k, day)], self.provenance[(k, day)] = v, "real"
+                v, observed = self._last(k, day)
+                # An EIA value counts as real only on its own date; one carried from an earlier date is spot-anchored
+                # (Kimi round 1, finding 6).
+                self.values[(k, day)], self.provenance[(k, day)] = v, ("real" if observed == day else "spot-anchored")
             scarcity = timeline.intensity("diesel_scarcity", day)
             storm = timeline.intensity("hurricane_isaias", day)
             for k, (base, mean, noise) in self.DERIVED.items():
@@ -72,11 +78,16 @@ class Market:
             rvo = 0.118 + 0.02 * math.sin(self.days.index(day) / 15) + rng.gauss(0, 0.002)
             self.values[("rvo", day)], self.provenance[("rvo", day)] = rvo, "synthesized"
 
+    MAX_CARRY_DAYS = 7  # a long weekend and a holiday; a longer gap means the cache is incomplete
+
     def _last(self, key, day):
+        """The latest EIA observation on or before `day`, and its date (Kimi round 1, finding 16: bounded)."""
         s = self.series[key]
-        while day not in s:
-            day -= dt.timedelta(days=1)
-        return s[day]
+        for back in range(self.MAX_CARRY_DAYS + 1):
+            d = day - dt.timedelta(days=back)
+            if d in s:
+                return s[d], d
+        raise ValueError(f"EIA series {key} has no observation in the {self.MAX_CARRY_DAYS} days before {day}")
 
     def leg(self, key, day):
         return self.values[(key, day)], self.provenance[(key, day)]
@@ -124,7 +135,7 @@ def build():
     rng = random.Random(SEED)
     market = Market(rng)
     days = market.days
-    out = {s: {} for s in ("mips", "mpr", "kittyhawk", "ctrm", "planning", "prodacct")}
+    out = {s: {} for s in SYSTEMS}
 
     # ---- Commercial Reference Data Hub (KittyHawk): price services, holiday calendar, delivery periods ----
     out["kittyhawk"]["priceservice"] = Table(["Id", "Name", "PublisherId", "updated_at"], [
@@ -155,9 +166,11 @@ def build():
             slope = 0.004 + (0.010 * scarcity if m.id in ("752", "572", "747") else 0.0)
             for period in range(0, m.extra["max_period"] + 1):
                 if period == 0:
-                    value, prov = spot, "real"
+                    value, prov = spot, label  # real on an EIA date, spot-anchored when carried from an earlier one
                 elif period == 1:
-                    value, prov = spot, "spot-anchored"  # EIA's NYMEX futures end in 2024: the spot is the front month
+                    # EIA: "Futures prices after April 5, 2024, are not available" (pet_pri_fut_s1_d, release 2026-10-21),
+                    # so the spot is the front month.
+                    value, prov = spot, "spot-anchored"
                 else:
                     value, prov = forward(spot, period - 1, slope, rng), "synthesized"
                 detail.append(_detail(pid, m, day, period, value, prov))
@@ -177,9 +190,8 @@ def build():
 
     # ---- Market Price Assessment System (MIPS): batches, sheets, groups, assessment groups, assessments ----
     out["mips"]["mips_currency"] = Table(["ID", "Code", "updated_at"], [(1, "USD", ts(WINDOW_START))])
-    out["mips"]["mips_unitofmeasure"] = Table(["ID", "Code", "updated_at"], [
-        (1, "$/Bbl", ts(WINDOW_START)), (2, "$/gal", ts(WINDOW_START)), (3, "$/MMbtu", ts(WINDOW_START)),
-        (4, "cents/gal", ts(WINDOW_START)), (5, "$/unit", ts(WINDOW_START)), (6, "cents/lb", ts(WINDOW_START))])
+    out["mips"]["mips_unitofmeasure"] = Table(["ID", "Code", "updated_at"],
+                                              [(i, code, ts(WINDOW_START)) for code, i in UNIT_IDS.items()])
     batches = [(i + 1, ts(day, 17), "Published", "MIPS", ts(day, 17)) for i, day in enumerate(days)]
     out["mips"]["mips_pricebatch"] = Table(["ID", "EffectiveDate", "Status", "DataSource", "updated_at"], batches)
     batch_of = {day: i + 1 for i, day in enumerate(days)}
@@ -226,7 +238,7 @@ def build():
         series.append((aid, sheets[sheet], value_fn, periods, name))
 
     for m in benchmarks:
-        agroup(m.mips_display, g["Benchmark"], "Benchmark", m.id, 1, "MPR",
+        agroup(m.mips_display, g["Benchmark"], "Benchmark", m.id, UNIT_IDS[m.unit], "MPR",
                lambda day, m=m: market.leg(m.extra["eia"], day), periods=1)
     crack_by_id = {m.id: m for m in cracks}
     crack_today = {}
@@ -265,9 +277,9 @@ def build():
         def walk(day, state=state, vol=vol):
             state["v"] *= math.exp(rng.gauss(0, vol))
             return state["v"], "synthesized"
-        agroup(blend, g["Renewables"], "Executive Summary", None, 5, "MIPS", walk)
+        agroup(blend, g["Renewables"], "Executive Summary", None, UNIT_IDS.get(unit, UNIT_IDS["$/unit"]), "MIPS", walk)
     agroup("Propane Mt. Belvieu (Non-Tet)", g["NGL's"], "Executive Summary", None, 4, "MIPS",
-           lambda day: (market.leg("mb_propane", day)[0] * 100, "real"))  # cents per gallon, as the agent expects: a unit conversion
+           lambda day: (market.leg("mb_propane", day)[0] * 100, market.leg("mb_propane", day)[1]))  # cents per gallon, as the agent expects: a unit conversion
     agroup("Butane Mt. Belvieu (Non-Tet)", g["NGL's"], "Executive Summary", None, 4, "MIPS",
            lambda day: (market.leg("mb_propane", day)[0] * 100 * 1.18 + rng.gauss(0, 0.8), "synthesized"))
     out["mips"]["mips_priceassessmentgroup"] = Table(
@@ -301,7 +313,7 @@ def build():
     for r in refineries:
         cap = int(r["crude_capacity_mbpcd"])
         for month in sorted({month_start(d) for d in days}):
-            plans.append((r["refinery_code"], month, round(cap * 0.93, 1), 93.0, 47.0, 34.5, 18.5, ts(month)))
+            plans.append((r["refinery_code"], month, round(cap * 0.93, 1), 93.0, 47.0, 34.5, 18.5, ts(month), "synthesized"))
         for day in days:
             week = max(d for d in util if d <= day + dt.timedelta(days=6))
             u = util[week] / 100 + rng.gauss(0, 0.012)
@@ -333,7 +345,7 @@ def build():
          "OtherYieldPct", "OpexUsdPerBbl", "updated_at", "DemoProvenance"], production)
     out["planning"]["plan_target"] = Table(
         ["RefineryCode", "PlanMonth", "PlannedCrudeRunsMbpd", "PlannedUtilizationPct", "PlannedGasolineYieldPct",
-         "PlannedDistillateYieldPct", "PlannedOtherYieldPct", "updated_at"], plans)
+         "PlannedDistillateYieldPct", "PlannedOtherYieldPct", "updated_at", "DemoProvenance"], plans)
     out["ctrm"]["deal"] = Table(["DealId", "TradeDate", "Direction", "Product", "Origin", "Destination", "VolumeBbl",
                                  "FreightUsdPerBbl", "updated_at", "DemoProvenance"], deals)
     out["ctrm"]["movement"] = Table(["MovementId", "DealId", "Mode", "Origin", "Destination", "LoadDate", "VolumeBbl",
@@ -344,7 +356,7 @@ def build():
 def _detail(pid, m, day, period, value, provenance):
     contract = month_start(day, period)
     return (pid, int(m.id), ts(day), ts(day, 23), period, contract.strftime("%b%y").upper(), contract, None, 0,
-            round(value, 6), round(value * 1.004, 6), round(value * 0.996, 6), "MPR", "N", ts(day, 18), provenance)
+            round(value, 6), None, None, "MPR", "N", ts(day, 18), provenance)
 
 
 def sizes(tables):

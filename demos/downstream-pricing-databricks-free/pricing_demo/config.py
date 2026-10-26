@@ -14,7 +14,7 @@ WINDOW_END = dt.date(2026, 10, 20)
 SEED = 20261025
 
 # The generic names the demo uses for the source systems (the decision owner: "they work").
-# The real names stay in the ontology; README.md maps each.
+# The real names stay in the ontology; README.md maps each. Every module takes the systems from here.
 SYSTEMS = {
     "mips": "Market Price Assessment System",
     "mpr": "Price Reference Master",
@@ -24,7 +24,7 @@ SYSTEMS = {
     "prodacct": "Refinery Production Accounting",
 }
 
-# Every price row carries one of these (the decision owner: every row labelled).
+# Every price and operations row carries one of these: Claude's design under EPM-DEC-001-0028 (EPM-DEC-001-0102, item 2).
 PROVENANCE = ("real", "spot-anchored", "synthesized")
 
 

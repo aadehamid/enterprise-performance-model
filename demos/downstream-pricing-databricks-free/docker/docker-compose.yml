@@ -9,6 +9,6 @@ services:
       POSTGRES_PASSWORD: demo  # a local, synthetic-only database; change it when the host is not your Mac
       POSTGRES_DB: postgres
     ports:
-      - "55432:5432"
+      - "127.0.0.1:55432:5432"  # this machine only (Kimi round 1, finding 10)
     volumes:
       - ./init:/docker-entrypoint-initdb.d:ro

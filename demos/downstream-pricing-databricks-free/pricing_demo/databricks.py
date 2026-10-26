@@ -6,7 +6,10 @@
     uv run python -m pricing_demo.databricks counts    # row counts of every table and view
 
 The catalog is idp_sbx when the workspace lets you create it, otherwise DEMO_CATALOG (Free Edition: workspace), and
-every schema keeps the name it has in idp_sbx, so the objects read like the shared ones. Secrets stay in variables.
+every schema keeps the name it has in idp_sbx, so the objects read like the shared ones. One rule picks the catalog
+for every step: idp_sbx only if it holds this demo's landing schema, which setup creates (Kimi round 1, finding 11).
+Upload refuses an incomplete replica, and build checks each replica table against the replica's manifest (finding 5).
+Secrets stay in variables.
 """
 import argparse
 import glob
@@ -14,16 +17,26 @@ import io
 import os
 import re
 
-from databricks import sql as dbsql
+from . import replicate
+from .config import OUT, SQL, SYSTEMS, databricks_env
 
-from .config import OUT, SQL, databricks_env
-
-SCHEMAS = ("replica_landing", "replica_mips", "replica_mpr", "replica_kittyhawk", "replica_ctrm", "replica_planning",
-           "replica_prodacct", "silver_udm_core", "silver_mdm_core", "gold_commercial_core", "semantic_sem_commercial")
+SCHEMAS = (("replica_landing",) + tuple(f"replica_{s}" for s in SYSTEMS)
+           + ("silver_udm_core", "silver_mdm_core", "gold_commercial_core", "semantic_sem_commercial"))
+# What a complete build holds outside the replica layer: every silver and gold table and metric view.
+BUILT = {
+    "silver_mdm_core": {"mpr_price_master_dim", "mips_price_batch_dim", "mips_price_sheet_dim", "mips_price_group_dim",
+                        "mips_price_assessment_group_dim", "refinery_dim"},
+    "silver_udm_core": {"mpr_price_detail_fact", "mips_price_assessment_fact", "refinery_production_daily_fact",
+                        "refinery_plan_target_fact", "ctrm_deal_fact"},
+    "gold_commercial_core": {"mpr_mips_crack_spread_price_fact", "mips_mpr_executive_summary_fact", "refinery_operations_daily_fact"},
+    "semantic_sem_commercial": {"mpr_mips_crack_spread_price_fact_metrics_vw", "mips_mpr_executive_summary_fact_vw",
+                                "mips_mpr_benchmark_prices_fact_vw", "refinery_operations_metrics_vw"},
+}
 VOLUME = "replica_landing.raw"
 
 
 def connect():
+    from databricks import sql as dbsql
     e = databricks_env()
     return dbsql.connect(server_hostname=e["DATABRICKS_HOST"].replace("https://", ""), http_path=e["DATABRICKS_HTTP_PATH"],
                          access_token=e["DATABRICKS_TOKEN"]), e
@@ -50,6 +63,12 @@ def setup():
     conn, e = connect()
     with conn, conn.cursor() as cur:
         cat = catalog(cur, e)
+        if cat == "idp_sbx":
+            try:
+                run(cur, "CREATE SCHEMA IF NOT EXISTS idp_sbx.replica_landing")
+            except Exception as err:  # a catalog the token cannot write to is not usable
+                print(f"idp_sbx not usable ({type(err).__name__}); using {e['DEMO_CATALOG']}")
+                cat = e["DEMO_CATALOG"]
         for s in SCHEMAS:
             run(cur, f"CREATE SCHEMA IF NOT EXISTS {cat}.{s}")
         run(cur, f"CREATE VOLUME IF NOT EXISTS {cat}.{VOLUME}")
@@ -58,8 +77,12 @@ def setup():
 
 
 def current_catalog(cur, e):
+    """idp_sbx only when it holds this demo's landing schema, which setup creates there; otherwise DEMO_CATALOG.
+    A visible idp_sbx that setup could not use does not count."""
     cats = {r[0] for r in run(cur, "SHOW CATALOGS")}
-    return "idp_sbx" if "idp_sbx" in cats else e["DEMO_CATALOG"]
+    if "idp_sbx" in cats and "replica_landing" in {r[0] for r in run(cur, "SHOW SCHEMAS IN idp_sbx")}:
+        return "idp_sbx"
+    return e["DEMO_CATALOG"]
 
 
 def upload():
@@ -67,8 +90,9 @@ def upload():
     conn, e = connect()
     with conn, conn.cursor() as cur:
         cat = current_catalog(cur, e)
+    manifest = replicate.check_replica()  # refuses an empty or partial replica before anything is sent
     w = WorkspaceClient(host=e["DATABRICKS_HOST"], token=e["DATABRICKS_TOKEN"])
-    files = sorted(glob.glob(os.path.join(OUT, "replica", "*", "*.parquet")))
+    files = [os.path.join(OUT, "replica", f"{key}.parquet") for key in sorted(manifest)]
     for path in files:
         system, name = path.split(os.sep)[-2:]
         target = f"/Volumes/{cat}/replica_landing/raw/{system}/{name}"
@@ -92,6 +116,27 @@ def build(files=None):
             for st in statements(path, cat):
                 run(cur, st)
             print(f"ran {os.path.basename(path)}")
+            if os.path.basename(path).startswith("02_"):
+                check_replica_tables(cur, cat)
+        check_built(cur, cat)
+
+
+def check_replica_tables(cur, cat, manifest=None):
+    """Each replica table holds exactly the rows the uploaded replica's manifest names (finding 5)."""
+    manifest = manifest or replicate.check_replica()
+    for key, rows in sorted(manifest.items()):
+        system, table = key.split("/")
+        n = run(cur, f"SELECT COUNT(*) FROM {cat}.replica_{system}.{table}")[0][0]
+        if n != rows:
+            raise SystemExit(f"{cat}.replica_{system}.{table} has {n} rows; the replica manifest says {rows}")
+
+
+def check_built(cur, cat):
+    """Every silver and gold table and metric view of a complete build exists (finding 5)."""
+    for schema, names in BUILT.items():
+        found = {r[1] for r in run(cur, f"SHOW TABLES IN {cat}.{schema}")}
+        if names - found:
+            raise SystemExit(f"{cat}.{schema} lacks {sorted(names - found)}")
 
 
 def counts():
@@ -102,13 +147,16 @@ def counts():
         for s in SCHEMAS[1:]:
             for row in run(cur, f"SHOW TABLES IN {cat}.{s}"):
                 name = row[1]
-                try:
-                    n = run(cur, f"SELECT COUNT(*) FROM {cat}.{s}.{name}")[0][0]
-                except Exception:
-                    n = run(cur, f"SELECT MEASURE(Record_Count) FROM {cat}.{s}.{name}")[0][0]
+                n = count(cur, f"{cat}.{s}.{name}", metric_view=s == "semantic_sem_commercial")
                 found[f"{s}.{name}"] = n
                 print(f"{cat}.{s}.{name}: {n}")
     return found
+
+
+def count(cur, name, metric_view):
+    """Rows of a table, or of a metric view through its Record_Count measure, which every view defines (finding 4)."""
+    query = f"SELECT MEASURE(Record_Count) FROM {name}" if metric_view else f"SELECT COUNT(*) FROM {name}"
+    return run(cur, query)[0][0]
 
 
 if __name__ == "__main__":

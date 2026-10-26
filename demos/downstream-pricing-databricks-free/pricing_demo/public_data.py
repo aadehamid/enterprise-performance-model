@@ -23,7 +23,7 @@ EIA_SERIES = {
     "usgc_ulsd": ("PET.EER_EPD2DXL0_PF4_RGC_DPG.D", "USGC ULSD cash"),
     "usgc_gasoline": ("PET.EER_EPMRU_PF4_RGC_DPG.D", "USGC CBOB cash: Gulf Coast conventional regular"),
     "nyh_gasoline": ("PET.EER_EPMRU_PF4_Y35NY_DPG.D",
-                     "NYMEX RBOB front month and NYH CBOB cash: NY Harbor conventional regular (EIA publishes no NYH RBOB spot)"),
+                     "NYMEX RBOB front month and NYH CBOB cash: NY Harbor conventional regular (EIA spot table, release 2026-10-21: no NYH RBOB spot)"),
     "usgc_jet": ("PET.EER_EPJK_PF4_RGC_DPG.D", "USGC Jet cash"),
     "mb_propane": ("PET.EER_EPLLPA_PF4_Y44MB_DPG.D", "Propane Mt. Belvieu"),
     "la_carbob": ("PET.EER_EPMRR_PF4_Y05LA_DPG.D", "LA CARBOB cash: Los Angeles reformulated RBOB regular"),
@@ -47,27 +47,44 @@ def eia_key():
     return key
 
 
-def refresh():
-    key, today = eia_key(), dt.date.today().isoformat()
-    meta = []
+def refresh(fetch=None, folder=None):
+    """Pull every series, check each, and only then replace the cache, all files at once (Kimi round 1, finding 21).
+    A failed or empty response leaves the cache exactly as it was."""
+    folder = folder or os.path.join(DATA, "public")
+    today = dt.date.today().isoformat()
+    if fetch is None:
+        key = eia_key()
+
+        def fetch(series):
+            url = f"https://api.eia.gov/v2/seriesid/{series}?api_key={key}"
+            try:
+                return json.load(urllib.request.urlopen(url, timeout=60))["response"]["data"]
+            except Exception as e:  # never echo the URL, which holds the key
+                raise SystemExit(f"EIA request for {series} failed: {type(e).__name__}") from None
+    pulled, meta = {}, []
     for name, (series, role) in EIA_SERIES.items():
-        url = f"https://api.eia.gov/v2/seriesid/{series}?api_key={key}"
-        try:
-            rows = json.load(urllib.request.urlopen(url, timeout=60))["response"]["data"]
-        except Exception as e:  # never echo the URL, which holds the key
-            raise SystemExit(f"EIA request for {series} failed: {type(e).__name__}") from None
-        rows = sorted((r for r in rows if WINDOW_START - dt.timedelta(days=14) <= dt.date.fromisoformat(r["period"]) <= WINDOW_END),
+        rows = sorted((r for r in fetch(series) if WINDOW_START - dt.timedelta(days=14) <= dt.date.fromisoformat(r["period"]) <= WINDOW_END),
                       key=lambda r: r["period"])
-        with open(os.path.join(DATA, "public", f"eia_{name}.csv"), "w", newline="") as f:
+        if not rows or any(r.get("value") in (None, "") for r in rows):
+            raise SystemExit(f"EIA series {series} returned no usable rows in the window; the cache is unchanged")
+        pulled[name] = rows
+        meta.append((name, series, rows[0].get("series-description", ""), rows[0].get("units", ""), role, today))
+    staging = folder + ".staging"
+    os.makedirs(staging, exist_ok=True)
+    for name, rows in pulled.items():
+        with open(os.path.join(staging, f"eia_{name}.csv"), "w", newline="") as f:
             w = csv.writer(f)
             w.writerow(["period", "value"])
             w.writerows((r["period"], r["value"]) for r in rows)
-        meta.append((name, series, rows[0].get("series-description", ""), rows[0].get("units", ""), role, today))
-        print(f"{name}: {series}, {len(rows)} rows")
-    with open(os.path.join(DATA, "public", "eia_series.csv"), "w", newline="") as f:
+    with open(os.path.join(staging, "eia_series.csv"), "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["key", "series_id", "description", "units", "demo_role", "pulled_on"])
         w.writerows(meta)
+    for file in sorted(os.listdir(staging)):  # every file is complete before any is replaced
+        os.replace(os.path.join(staging, file), os.path.join(folder, file))
+    os.rmdir(staging)
+    for name, rows in pulled.items():
+        print(f"{name}: {EIA_SERIES[name][0]}, {len(rows)} rows")
 
 
 def load(name):
