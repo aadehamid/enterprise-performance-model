@@ -9,7 +9,8 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py counts            # ledger, scoped sequences, gate, facts, Phase 1, reviews, taxonomy
     python3 scripts/epm_facts.py row REL-00436     # where one row stands
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
-    python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines
+    python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines;
+                                                   # skips a generated HTML page that matches its Markdown
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
@@ -440,12 +441,46 @@ def cmd_section(args):
     return 0 if ids else 1
 
 
+_BUILT = {}
+
+
+def built_pages(root=ROOT):
+    """The pages scripts/build_docs_html.py makes from Markdown, path -> HTML, for this repository only
+    (an empty dict for another root, or when the builder refuses its sources). Built once per process:
+    sweep searches many phrases."""
+    if os.path.normpath(root) != os.path.normpath(ROOT):
+        return {}
+    if root not in _BUILT:
+        import build_docs_html
+        try:
+            _BUILT[root] = build_docs_html.build_all()
+        except ValueError:
+            _BUILT[root] = {}
+    return _BUILT[root]
+
+
+def generated_copies(root=ROOT):
+    """The tracked pages that equal the builder's fresh output for their source: their Markdown is the master
+    copy, so searches skip them. A page that is stale, hand-written, or no longer built is searched as it is."""
+    copies = set()
+    for name, page in built_pages(root).items():
+        try:
+            with open(os.path.join(root, name), encoding="utf-8") as f:
+                if f.read() == page:
+                    copies.add(name)
+        except OSError:
+            continue
+    return copies
+
+
 def find_hits(needle, root=ROOT):
     """Hits for needle in every tracked text file under root: (file, line, kind, text), kind "line" or
     "split" (the text runs across two lines). A file is text when it is UTF-8 with no NUL byte,
-    whatever its extension (.sql, .jsonld and .page files included)."""
+    whatever its extension (.sql, .jsonld and .page files included). The HTML pages generated from
+    Markdown that equal a fresh build (generated_copies) are skipped: their Markdown is searched instead."""
     # -z: git quotes paths with non-ASCII characters otherwise, and a quoted path cannot be opened.
     files = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], text=True).split("\0")
+    copies = generated_copies(root)
     flat_needle = re.sub(r"\s+", " ", needle).strip().lower()
     hits = []
     for name in files:
@@ -459,6 +494,8 @@ def find_hits(needle, root=ROOT):
                 continue
             text = data.decode("utf-8")
         except (OSError, UnicodeDecodeError):
+            continue
+        if name in copies:
             continue
         lines = text.split("\n")
         for i, line in enumerate(lines, 1):
@@ -553,7 +590,8 @@ def changed_phrases(diff):
 
 def sweep(base, root=ROOT):
     """For each phrase the branch replaced or deleted since base, every place in the tracked text files that
-    still holds it, each marked "dated" when its line holds a date (DATED) and "live" otherwise."""
+    still holds it (generated HTML pages skipped, as in find_hits), each marked "dated" when its line holds
+    a date (DATED) and "live" otherwise."""
     try:
         diff = subprocess.check_output(["git", "-C", root, "diff", "-U1", "--no-color", f"{base}...HEAD"],
                                        text=True, stderr=subprocess.PIPE)
@@ -1048,8 +1086,44 @@ def _office_texts(where, data):
     return out
 
 
+def browser_text(markup):
+    """The text a browser shows for an HTML document: inline elements joined with nothing between them (so
+    h<strong>a</strong>mid reads as one word), block elements on their own lines, scripts and styles left out."""
+    from html.parser import HTMLParser
+    blocks = {"p", "div", "li", "td", "th", "tr", "br", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "section",
+              "article", "header", "footer", "nav", "table", "ul", "ol", "blockquote", "title", "figcaption"}
+
+    class Shown(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.parts, self.skip = [], 0
+
+        def handle_starttag(self, tag, attrs):
+            if tag in ("script", "style"):
+                self.skip += 1
+            elif tag in blocks:
+                self.parts.append("\n")
+
+        def handle_endtag(self, tag):
+            if tag in ("script", "style"):
+                self.skip = max(0, self.skip - 1)
+            elif tag in blocks:
+                self.parts.append("\n")
+
+        def handle_data(self, data):
+            if not self.skip:
+                self.parts.append(data)
+
+    p = Shown()
+    p.feed(markup)
+    p.close()
+    return "\n".join(line.strip() for line in "".join(p.parts).split("\n") if line.strip())
+
+
 def _name_texts(path, name):
-    """(label, text) to scan in one file: the file itself, or each part of an Office file."""
+    """(label, text) to scan in one file: the file itself, or each part of an Office file. A Markdown or HTML
+    file is also scanned as displayed, so a name split by formatting (**Ha**mid, h<em>a</em>mid) is found.
+    Markdown is rendered with markdown-it-py, which check.sh supplies."""
     with open(path, "rb") as f:
         data = f.read()
     if name.lower().endswith((".xlsx", ".docx", ".pptx")):
@@ -1059,7 +1133,15 @@ def _name_texts(path, name):
             for n in z.namelist():
                 texts += _office_texts(f"{name}!{n}", z.read(n))
         return texts
-    return [(name, data.decode("utf-8", "replace"))]
+    text = data.decode("utf-8", "replace")
+    texts = [(name, text)]
+    if name.lower().endswith(".md"):
+        from markdown_it import MarkdownIt
+        texts.append((f"{name} (displayed text)",
+                      browser_text(MarkdownIt("commonmark").enable(["table", "strikethrough"]).render(text))))
+    elif name.lower().endswith((".html", ".htm")):
+        texts.append((f"{name} (displayed text)", browser_text(text)))
+    return texts
 
 
 def name_problems(root=ROOT):
@@ -1289,9 +1371,9 @@ def main(argv=None):
     p.add_argument("row_id")
     p = sub.add_parser("section", help="row IDs for one Phase 1 issue")
     p.add_argument("issue", type=int)
-    p = sub.add_parser("find", help="repo-wide search, including text split across lines")
+    p = sub.add_parser("find", help="repo-wide search, including text split across lines; skips the generated HTML pages")
     p.add_argument("text")
-    p = sub.add_parser("sweep", help="where wording the branch replaced or deleted since BASE still stands, in every tracked text file")
+    p = sub.add_parser("sweep", help="where wording the branch replaced or deleted since BASE still stands, in every tracked text file but the generated HTML pages")
     p.add_argument("base")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")

@@ -105,7 +105,7 @@ done
 # The test files run in parallel, each test on whichever worker is free (pytest-xdist): the same tests and
 # assertions as a serial run, in about a third of the time. CHECK_WORKERS overrides the worker count;
 # CHECK_WORKERS=0 runs them serially.
-run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load scripts/test_epm_facts.py scripts/test_modules_guide.py scripts/test_published_figures.py scripts/test_check_script.py scripts/test_pre_push_hook.py \
+run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load scripts/test_epm_facts.py scripts/test_modules_guide.py scripts/test_docs_html.py scripts/test_published_figures.py scripts/test_check_script.py scripts/test_pre_push_hook.py \
   "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py \
   business_architecture/ontology/release/test_build_module.py \
   business_architecture/ontology/release/test_build_core_next.py \
@@ -142,7 +142,7 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # EPM-DEC-001-0049: the repo names the decision owner by role, never by name or account.
-run python3 scripts/epm_facts.py names
+run with_deps python scripts/epm_facts.py names
 # The ontology playbook moved into the ontology skill as its guide, with its neutrality test
 # (personal-agent-skills, skills/data/ontology/scripts/test_playbook_guide.py; EPM-DEC-001-0101).
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase
