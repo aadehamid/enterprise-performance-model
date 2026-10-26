@@ -3382,4 +3382,4 @@ When APQC publishes v7.3 or v8:
 ### Who approves a release
 Minor and patch: the module owner. Major (including any deprecation):
 The decision owner. No exceptions — majors change the meaning of published truth.
-*2026-10-25 (evening):* for the work queue after the ontology closed, the decision owner approves every release, minor and patch included (EPM-DEC-001-0028, amendment of 2026-10-25, evening).
+*2026-10-25 (evening):* for the work queue after the ontology closed, a minor or patch release is approved by the decision owner or, under the delegation, by Claude; a major is deferred to the decision owner (EPM-DEC-001-0028, amendment of 2026-10-25, evening).

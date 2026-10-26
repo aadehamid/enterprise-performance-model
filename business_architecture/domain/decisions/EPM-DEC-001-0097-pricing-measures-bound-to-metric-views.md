@@ -85,7 +85,7 @@ Items 13 to 16 are the design of the next `data-product` release; nothing is rel
 
 ## Differences between the views and the measures' definitions
 
-Each is a question for the decision owner, not changed here. *2026-10-25 (evening):* Claude now decides each under EPM-DEC-001-0028 (amendment of 2026-10-25, evening) and records the decision here; a change to a released measure ships only in a release the decision owner approves:
+Each is a question for the decision owner, not changed here. *2026-10-25 (evening):* Claude now decides each under EPM-DEC-001-0028 (amendment of 2026-10-25, evening) and records the decision here; a change to a released measure ships only in a release approved under that amendment:
 
 1. **Forward periods.** All three views carry forward periods (`Relative_Period_Number`, 0 to 5 in the crack-spread data; `Price_Period_Datetime` with forward monthly averages in the Executive Summary). The five pricing measures' grains in `kpi` 1.1.1 are daily only ("daily, by market hub", "daily, by hub", "daily, by marker").
 2. **Crack Spreads Pricing:** the measure's grain is by market hub; the view's series are by Price Master ID, grouped by region. The view's monthly value is the mean of daily settles, which the measure does not state. The agent's trend is a 20-day moving average; the measure compares against a 30-day trend (the Executive Summary agent also uses 30 days).
