@@ -383,14 +383,14 @@ docker exec epm-lpg cypher-shell -u neo4j -p "$NEO4J_PASSWORD" \
 <pre><code>pw=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
 docker exec lpg-local-neo4j-1 cypher-shell -u neo4j -p "$pw" \
   "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships;"</code></pre>
-<p>Postgres, the exact row count of every table in each database:</p>
-<pre><code>for db in mips mpr kittyhawk ctrm planning prodacct; do
-  for t in $(docker exec pricing-demo-sources psql -U demo -d "$db" -Atc \
-      "select tablename from pg_tables where schemaname = 'public'"); do
-    printf '%s.%s: ' "$db" "$t"
-    docker exec pricing-demo-sources psql -U demo -d "$db" -Atc "select count(*) from \"$t\""
-  done
-done</code></pre>
+<p>Postgres, the exact row count of every table in each database. Postgres quotes each table name itself (<code>format</code> with <code>%I</code>), so no name is pasted into the SQL. The block prints <code>count failed</code> for any database it could not count, and ends with a non-zero status if one failed:</p>
+<pre><code>rc=0
+for db in mips mpr kittyhawk ctrm planning prodacct; do
+  printf '%s\n' "select format('select %L, count(*) from %I.%I', '$db.' || tablename, schemaname, tablename) from pg_tables where schemaname = 'public' order by tablename \gexec" \
+    | docker exec -i pricing-demo-sources psql -U demo -d "$db" -At -F ': ' -v ON_ERROR_STOP=1 \
+    || { echo "count failed: $db"; rc=1; }
+done
+[ "$rc" -eq 0 ]</code></pre>
 <p>The demo in Databricks, every table and metric view with its row count:</p>
 <pre><code>cd "$DEMO" && uv run python -m pricing_demo.databricks counts</code></pre>
 <p>AuraDB: open the instance in the <a href="https://console.neo4j.io/">Aura console</a> and run the same two queries as for the driver's Neo4j. On 2026-10-26 they gave the same figures: 4,137 nodes and 21,666 relationships. The queries count only <code>:Resource</code> nodes, the projection itself; each store also holds a few nodes of its own (module tags and, locally, n10s settings), so a count of every node is a little higher.</p>
@@ -438,7 +438,8 @@ done</code></pre>
 <pre><code>docker stop epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre>
     <h3>Start them again</h3>
 <pre><code>docker start epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre>
-    <p>Neo4j needs about a minute after a start. Old log lines survive a restart, so test the login instead of the log. This waits up to two minutes for the pipeline's Neo4j, and prints <code>ready</code> or <code>not ready</code>; for the driver's, use its container and password as in <a href="#check">Check what is running</a>:</p>
+    <p id="ready">Neo4j needs about a minute after a start. Wait for each one to accept a login before you count anything. Each block below tries for up to two minutes, prints <code>ready</code> or <code>not ready</code>, and ends with a non-zero status when it is not ready.</p>
+<p>The pipeline's Neo4j:</p>
 <pre><code>set -a; . ~/epm-lpg/run.env; set +a
 state="not ready"
 for i in $(seq 1 24); do
@@ -447,15 +448,26 @@ for i in $(seq 1 24); do
   fi
   sleep 5
 done
-echo "$state"</code></pre>
+echo "$state"; [ "$state" = ready ]</code></pre>
+<p>The driver's Neo4j (after a run with <code>--skip rebuild</code>, change <code>epm-rebuild</code> to <code>epm</code>):</p>
+<pre><code>pw=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
+state="not ready"
+for i in $(seq 1 24); do
+  if docker exec lpg-local-neo4j-1 cypher-shell -u neo4j -p "$pw" "RETURN 1" >/dev/null 2>&amp;1; then
+    state=ready; break
+  fi
+  sleep 5
+done
+echo "$state"; [ "$state" = ready ]</code></pre>
   </div>
   <div class="card">
     <h3>After a reboot</h3>
     <ol class="steps">
       <li>Start Docker Desktop, if it does not start at login.</li>
-      <li>Start all three containers. Starting one that is already running does nothing, so this is safe whichever came back by itself (Postgres has <code>restart: unless-stopped</code>; the two Neo4j have no restart policy):
+      <li>Start all three containers, whichever came back by itself (Postgres has <code>restart: unless-stopped</code> in the demo's compose file; the two Neo4j have no restart policy). On 2026-10-26, <code>docker start</code> on a container that was already running exited 0 and left it running, with the same start time:
 <pre><code>docker start epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre></li>
-      <li>Run the checks in <a href="#check">Check what is running</a>.</li>
+      <li>Wait for both Neo4j with the two blocks in <a href="#ready">Start them again</a>.</li>
+      <li>Then run the counts in <a href="#check">Check what is running</a>.</li>
     </ol>
     <h3>The cloud stores</h3>
     <p>AuraDB and Databricks need no shutdown from this Mac. Nothing here keeps them running. A Databricks SQL warehouse stops after it has been idle for the minutes its Auto Stop setting gives (<a href="https://docs.databricks.com/aws/en/compute/sql-warehouse/create">Databricks, "Create a SQL warehouse"</a>, read 2026-10-26). If a query reports it stopped, start it on the SQL Warehouses page. Manage the Aura instance from the Aura console.</p>
@@ -568,7 +580,14 @@ docker compose -f docker/docker-compose.yml down -v</code></pre>
 <p>This empties the database and keeps the instance. The next driver run fills it again.</p>
 
 <h3>Databricks</h3>
-<p>Run these in the Databricks SQL editor.</p>
+<p>Run these in the Databricks SQL editor. First check that the demo's schemas hold only the demo's objects: this lists everything in them, and every name should appear in the output of the demo's <code>counts</code> step (the volume <code>raw</code> sits in <code>replica_landing</code>). If anything else is listed, move it out or drop those schemas' demo tables one by one instead.</p>
+<pre><code>SELECT table_schema, table_name, table_type
+FROM idp_sbx.information_schema.tables
+WHERE table_schema IN ('replica_landing', 'replica_mips', 'replica_mpr', 'replica_kittyhawk',
+  'replica_ctrm', 'replica_planning', 'replica_prodacct', 'silver_udm_core', 'silver_mdm_core',
+  'gold_commercial_core', 'semantic_sem_commercial')
+ORDER BY 1, 2;</code></pre>
+<p>Then drop:</p>
 <pre><code>-- the ontology triples
 DROP TABLE IF EXISTS workspace.epm_ontology.epm_triples;
 
@@ -584,7 +603,7 @@ DROP SCHEMA IF EXISTS idp_sbx.silver_udm_core CASCADE;
 DROP SCHEMA IF EXISTS idp_sbx.silver_mdm_core CASCADE;
 DROP SCHEMA IF EXISTS idp_sbx.gold_commercial_core CASCADE;
 DROP SCHEMA IF EXISTS idp_sbx.semantic_sem_commercial CASCADE;</code></pre>
-<p>This drops only the schemas the demo creates (<code>SCHEMAS</code> in <code>pricing_demo/databricks.py</code>), so anything else in the catalog stays. Before you run it, check which catalog the demo used: <code>setup</code> prints it (<code>catalog idp_sbx: …</code>). If it printed another catalog, put that name in place of <code>idp_sbx</code>.</p>
+<p>This drops only the schemas the demo creates (<code>SCHEMAS</code> in <code>pricing_demo/databricks.py</code>), and everything in them, so anything else in the catalog stays. Before you run it, check which catalog the demo used: <code>setup</code> prints it (<code>catalog idp_sbx: …</code>). If it printed another catalog, put that name in place of <code>idp_sbx</code>.</p>
 <p>The Genie agents are not in the catalog. Delete <em>Crack Spread Price Analytics</em> and <em>Executive Summary KPIs Analytics</em> in Genie, or leave them: the next <code>genie</code> step updates them in place.</p>
 
 <h2 id="trouble">When something fails</h2>
