@@ -6,7 +6,7 @@
 <title>EPM ontology guide</title>
 <style>
 /* Style: framed-sheet (tasteskill app sheet, seed 1033140616), screen "report", the same as
-   the stores runbook's (branch docs/stores-runbook) so the two read as one set. System fonts only: this file is
+   the stores runbook's (projection/stores-runbook.html) so the two read as one set. System fonts only: this file is
    standalone and loads nothing. */
 :root {
   --ground: #f1f4f6;  --surface: #ffffff;  --raised: #f4f6f8;  --active: #ebedee;
@@ -545,7 +545,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>Fifteen series name the measure through <code>mkt:seriesOf</code>. The Gulf Coast 3-2-1 is three barrels of MEH crude producing two of USGC CBOB gasoline and one of USGC ULSD, in the Gulf Coast region. The region is MPC's Galveston Bay and Garyville refineries. A series enumeration records 127 series in 44 groups in the crack-spread view on 2026-10-25.</p>
 </div>
 </div>
-<p class="note">Links: <code>mkt:seriesOf</code> to kpi's measures. Requires kpi 1.2.0. Open: Market Data accountability, which the Risk Group holds provisionally until its mandate is confirmed (EPM-DEC-001-0046; close-out point 2). Only the named series carry definitions; the rest are known only through the views' columns. The 40 market prices' definitions are built from the agents' filters, not a source's own words. Four series have unstated legs: PNW and SLC ex-RIN (37443, 37471) and two NYMEX cracks (44934, 44935) (<code>market-data</code> 1.1.0 changelog, Known gaps).</p>
+<p class="note">Links: <code>mkt:seriesOf</code> to kpi's measures. Requires kpi 1.2.0. Open: Market Data accountability, which the Risk Group holds provisionally until its mandate is confirmed (EPM-DEC-001-0046; close-out point 2). Only the named series carry definitions; the rest are known only through the views' columns. The 40 market prices' definitions are built from the agents' filters, not a source's own words. Four series have unstated legs: PNW and SLC ex-RIN (37443, 37471) and two NYMEX cracks (44934, 44935) (the <code>market-data</code> changelogs and the graph).</p>
 </section>
 
 <section class="mod" id="m-data-product">
@@ -681,7 +681,7 @@ ORDER BY ?hop ?label</code></pre>
 <div class="card">
 <h3>Where to read more</h3>
 <ul>
-<li><a href="projection/stores-runbook.html">Stores runbook</a>: every store, and how to check, stop, start, purge and reload it. The page arrives with its own pull request (branch <code>docs/stores-runbook</code>); until that merges, <code>projection/LOCAL-STORES.md</code> lists the same stores, their refresh commands and logins.</li>
+<li><a href="projection/stores-runbook.html">Stores runbook</a>: every store, and how to check, stop, start, purge and reload it. <code>projection/LOCAL-STORES.md</code> is its short index.</li>
 <li><a href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">EPM integration</a>, the architecture diagram in Eraser.</li>
 <li><code>MODULES.md</code>: each link between modules, with a triple quoted from the releases.</li>
 <li><code>business-closeout.md</code>: the points only the business can settle.</li>
@@ -705,7 +705,7 @@ ORDER BY ?hop ?label</code></pre>
   <rect class="lane" x="360" y="80" width="320" height="286" rx="8"/><text class="lane-l" x="376" y="104">2. The documents to understand it</text>
   <rect class="node key" x="376" y="118" width="288" height="44" rx="6"/><text class="t" x="390" y="137">ontology-guide.html</text><text class="s" x="390" y="154">this page: start here</text>
   <rect class="node" x="376" y="172" width="288" height="40" rx="6"/><text class="t" x="390" y="196">README, MODULES, close-out .html</text>
-  <rect class="node" x="376" y="222" width="288" height="40" rx="6"/><text class="t" x="390" y="246">13 module READMEs .html</text>
+  <rect class="node" x="376" y="222" width="288" height="40" rx="6"/><text class="t" x="390" y="246">13 ontology READMEs .html</text>
   <rect class="node" x="376" y="272" width="288" height="40" rx="6"/><text class="t" x="390" y="296">decisions, glossary, proposals .html</text>
   <text class="s" x="376" y="346">Plus the process-map .json it is built from</text>
   <rect class="lane" x="700" y="80" width="320" height="286" rx="8"/><text class="lane-l" x="716" y="104">3. Using it, and the method</text>
@@ -744,7 +744,7 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/&lt;module&gt;.jsonld</code></td><td data-k="Why">The same content in JSON-LD, for tools that read JSON.</td></tr>
 <tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/shapes.ttl</code></td><td data-k="Why">The SHACL shapes: what valid data in the module looks like. Run them to check the content after any change.</td></tr>
 <tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/catalog.ttl</code></td><td data-k="Why">The release's DCAT record: its title, version, issue date, and its files as distributions with their media types.</td></tr>
-<tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/manifest.json</code></td><td data-k="Why">The release's facts in one file: <code>version</code>, <code>depends_on</code> (the versions it requires), <code>decisions</code> (the records behind it), <code>approved_by</code>, the triple count and a SHA-256 hash for each file in the folder.</td></tr>
+<tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/manifest.json</code></td><td data-k="Why">The release's facts in one file: <code>version</code>, <code>depends_on</code> (the versions it requires), <code>decisions</code> (the records behind it), who approved it (<code>approved_by</code>; core's manifests call it <code>approval</code>), the triple count (core keeps its counts in <code>counts.json</code>), and a SHA-256 hash for every other file in the folder.</td></tr>
 <tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/CHANGELOG.md</code></td><td data-k="Why">What this version changed, who approved it, and its known gaps.</td></tr>
 <tr><td><code>releases/core/&lt;version&gt;/canonical-facts.csv</code>, <code>counts.json</code></td><td data-k="Why">Core's extras: the evidence row behind each approved process relationship, and the release's counts. Core 1.0.0 also holds <code>conservation.csv</code> and <code>label-dispositions.csv</code>, the ledger of how every source row was handled.</td></tr>
 <tr><td><code>releases/&lt;module&gt;/CHANGELOG.md</code></td><td data-k="Why">Each module's whole history in one file (ten modules; core's is <code>business_architecture/ontology/release/CHANGELOG.md</code>, listed in group 2 as HTML).</td></tr>
@@ -824,7 +824,7 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td><a href="https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj">EPM ontology: modules and how they connect</a>, <a href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">EPM integration</a></td><td data-k="Why">The two architecture diagrams, in Eraser. Send the links; the teammate needs access to the folder.</td></tr>
 </tbody></table></div>
 
-<p class="notice">Where each path is today. On <code>main</code>: the releases, the process-map JSON files and <code>skill-run/queries.json</code>. With this guide's pull request (branch <code>docs/ontology-guide</code>): <code>ontology-guide.html</code>. With the HTML-documents pull request (branch <code>docs/html-docs</code>): every other <code>.html</code> page in this repository except the runbook. With the runbook's pull request (branch <code>docs/stores-runbook</code>): <code>stores-runbook.html</code>. With the playbook pull request in personal-agent-skills (branch <code>docs/playbook-html</code>): the two <code>playbook.html</code> pages.</p>
+<p class="notice">Every path above is in this repository, except the two <code>playbook.html</code> pages, which are in the personal-agent-skills repository. The <code>.html</code> pages beside a Markdown file are generated from it by <code>scripts/build_docs_html.py</code>; copy the <code>.html</code>, and keep the Markdown if your teammate will edit the documents.</p>
 
 <h3>What you do not need</h3>
 <div class="tblwrap"><table class="stack">
