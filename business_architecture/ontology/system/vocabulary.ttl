@@ -1,7 +1,8 @@
 # The system module's vocabulary (Step 7; EPM-DEC-001-0055): the systems, tools and documents
 # the process map names, their kind, and the processes they support. Processes are concepts of
-# the core process scheme, by IRI. A system here is a name and a kind; what it does is not
-# defined, because no source in the repository defines it.
+# the core process scheme, by IRI. A system here is a name and a kind; since 2026-10-25 a system
+# may also carry a definition, from its vendor's own description or the decision owner's, and the
+# others say why they have none (EPM-DEC-001-0099).
 @prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
 @prefix kind: <https://w3id.org/lsc/ontology/modules/system/kind/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -31,12 +32,12 @@ sys:supports a owl:ObjectProperty ;
     skos:definition "A process the process map says uses the system. Read the other way, the process depends on the system."@en ;
     dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, systems; competency question 6"@en .
 
-sys:SystemKind a skos:ConceptScheme ; rdfs:label "system kind"@en ;
+sys:SystemKind a skos:ConceptScheme ; skos:hasTopConcept kind:application, kind:office-tool, kind:document ; rdfs:label "system kind"@en ;
     skos:definition "The three kinds of thing the process map's systems field names."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0055"@en .
-kind:application a skos:Concept ; skos:inScheme sys:SystemKind ; skos:prefLabel "Application"@en ; skos:notation "application" ;
+kind:application a skos:Concept ; skos:inScheme sys:SystemKind ; skos:topConceptOf sys:SystemKind ; skos:prefLabel "Application"@en ; skos:notation "application" ;
     skos:definition "A software application, database, dashboard or integration that the business runs."@en .
-kind:office-tool a skos:Concept ; skos:inScheme sys:SystemKind ; skos:prefLabel "Office tool"@en ; skos:notation "office-tool" ;
+kind:office-tool a skos:Concept ; skos:inScheme sys:SystemKind ; skos:topConceptOf sys:SystemKind ; skos:prefLabel "Office tool"@en ; skos:notation "office-tool" ;
     skos:definition "General office software, such as e-mail, chat, slides or spreadsheets."@en .
-kind:document a skos:Concept ; skos:inScheme sys:SystemKind ; skos:prefLabel "Working document"@en ; skos:notation "document" ;
+kind:document a skos:Concept ; skos:inScheme sys:SystemKind ; skos:topConceptOf sys:SystemKind ; skos:prefLabel "Working document"@en ; skos:notation "document" ;
     skos:definition "A named document or file that the process works from, not an application."@en .

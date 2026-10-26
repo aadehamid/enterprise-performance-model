@@ -1,0 +1,5 @@
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-25. Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 1 block.
+Block 1: Claude asked: "Item G's release plan: system 1.1.0 (15 systems defined from vendor pages or your descriptions, full names as preferred labels, e.g. "Distribution Planning Optimizer" with "DPO" as alternative; IRIs unchanged), party 1.2.0 (18 customer systems defined; SAP S/4HANA matched to the process map's "SAP"), and integration 2.1.0 (27 new sources: your two answer files in tier 1, 25 vendor and regulator pages in tier 4). All three are minor releases requiring the current core 2.3.0; released packages stay as they are. Approve these three releases?" The options were "Approve all three (Recommended)", which releases them in the item G pull request after its reviews, and "Wait for item F". The decision owner chose the first.
+Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+
+Approve all three (Recommended)

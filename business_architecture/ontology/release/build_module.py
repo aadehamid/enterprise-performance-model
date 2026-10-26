@@ -85,15 +85,20 @@ MODULES = {
         # 1.1.0 is a minor approved with the close-out releases: the products from MPC's FY2025 Form 10-K with their
         # OEO mappings and PIDX families, the onboarding stage's link to CM 1.3.7.1.7, and the eight projection
         # fixes; it requires core 2.3.0 (EPM-DEC-001-0087, 0088, 0092).
-        "version": "1.1.0", "stage": None, "issued": "2026-10-23",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
+        # 1.2.0 is a minor the decision owner approved: 18 customer systems defined, each citing its source;
+        # SAP S/4HANA matched to the system module's SAP; every code list's top concepts stated both ways
+        # (EPM-DEC-001-0098, 0099).
+        "version": "1.2.0", "stage": None, "issued": "2026-10-25",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md", "Approve all three (Recommended)"),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],
         "shapes": ["party/shapes.ttl"],
-        "depends_on": ["core"],
-        "pins": {"core": "2.3.0"},
+        # Since 1.2.0 it also requires system 1.1.0, whose systems its five skos:exactMatch links name
+        # (EPM-DEC-001-0099; the earlier packages name four of them without requiring system).
+        "depends_on": ["core", "system"],
+        "pins": {"core": "2.3.0", "system": "1.1.0"},
         "decisions": ["EPM-DEC-001-0067", "EPM-DEC-001-0068", "EPM-DEC-001-0069", "EPM-DEC-001-0070",
                       "EPM-DEC-001-0071", "EPM-DEC-001-0072", "EPM-DEC-001-0074", "EPM-DEC-001-0087", "EPM-DEC-001-0088",
-                      "EPM-DEC-001-0092"],
+                      "EPM-DEC-001-0092", "EPM-DEC-001-0098", "EPM-DEC-001-0099"],
     },
     # The Step 7 modules' first releases, majors the decision owner approved with the release plan
     # (EPM-DEC-001-0077). Each requires core 2.2.0, the release that holds every process they link.
@@ -129,13 +134,16 @@ MODULES = {
     "system": {
         "title": "LSC System Module",
         "description": "The systems, office tools and working documents the process map names, with their kind and the processes that use them (Step 7).",
-        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        # 1.1.0 is a minor the decision owner approved: 15 systems defined from their vendors' own descriptions
+        # or the decision owner's, full names as preferred labels, both code lists' members as top concepts both
+        # ways; it requires core 2.3.0 (EPM-DEC-001-0098, 0099).
+        "version": "1.1.0", "stage": None, "issued": "2026-10-25",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md", "Approve all three (Recommended)"),
         "parts": ["system/vocabulary.ttl", "system/systems.ttl"],
         "shapes": ["system/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.2.0"},
-        "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077"],
+        "pins": {"core": "2.3.0"},
+        "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077", "EPM-DEC-001-0098", "EPM-DEC-001-0099"],
     },
     "lane": {
         "title": "LSC Lane Module",
@@ -170,8 +178,11 @@ MODULES = {
         # con:reliesOn, whose definition narrows from property or class to property, which makes it a major;
         # cardinality for plc:placementKind, auth:rank and auth:evidenceTier, in two new shape files packaged with
         # consumer's), and it requires the current releases (EPM-DEC-001-0088, 0094).
-        "version": "2.0.0", "stage": None, "issued": "2026-10-23",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Major: integration 2.0.0 (Recommended)"),
+        # 2.1.0 is a minor the decision owner approved: the 27 sources of the systems' definitions in their tiers,
+        # the three code lists' members as top concepts both ways; it requires the new system and party releases
+        # (EPM-DEC-001-0098, 0099).
+        "version": "2.1.0", "stage": None, "issued": "2026-10-25",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md", "Approve all three (Recommended)"),
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
         "shapes": ["consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl"],
@@ -179,9 +190,9 @@ MODULES = {
         "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data",
                        "party"],
         "pins": {"core": "2.3.0", "organization": "2.0.0", "kpi": "1.1.1", "data-product": "1.1.0", "value-stream": "1.1.0",
-                 "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.1.0"},
+                 "system": "1.1.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.2.0"},
         "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078", "EPM-DEC-001-0088",
-                      "EPM-DEC-001-0094"],
+                      "EPM-DEC-001-0094", "EPM-DEC-001-0098", "EPM-DEC-001-0099"],
     },
 }
 

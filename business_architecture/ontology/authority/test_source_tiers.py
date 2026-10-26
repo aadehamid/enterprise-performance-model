@@ -39,6 +39,18 @@ class Tiers(unittest.TestCase):
         missing = {s for s in cited if TIERS.value(s, bt.AUTH.evidenceTier) is None}
         self.assertEqual(missing, set())
 
+    def test_every_source_is_typed_and_the_census_holds(self):
+        # Kimi round 1, findings 8 and 9 (EPM-DEC-001-0099): every source is a dcterms:BibliographicResource,
+        # and the census is 92 sources, 12 / 3 / 1 / 68 / 8 by tier, counted by hand from source-tiers.csv.
+        from collections import Counter
+        from rdflib.namespace import DCTERMS, RDF
+        sources = {s for s, p, o in TIERS if str(p).endswith("evidenceTier")}
+        self.assertEqual(len(sources), 92)
+        for s in sources:
+            self.assertIn((s, RDF.type, DCTERMS.BibliographicResource), TIERS, s)
+        tiers = Counter(str(o).rsplit("/", 1)[1] for s, p, o in TIERS if str(p).endswith("evidenceTier"))
+        self.assertEqual(sorted(tiers.values()), sorted([12, 3, 1, 68, 8]))
+
     def test_decided_tiers(self):
         # EPM-DEC-001-0059, items 2 to 6, one example per tier.
         self.assertEqual(tier("downstream-process-map"), "process-authority")

@@ -24,7 +24,7 @@ EPM-DEC-001-0069 built the customer's systems, data flow and attributes in the `
 
 - The CBS sourcing of terminal customers stays on FuelFacs. Its note no longer calls the identity open; it says the decision owner assumes, for this model, that input 6's CBS is FuelFacs.
 - FuelFacs' role says it is the enterprise-wide terminal integration and business-information system, from the decision owner's words, beside what the inputs show it doing.
-- The Terminal Margin Ranking System carries TMR as an alternative label and `skos:exactMatch` to the system module's TMR node, so four customer systems now match the system module. The build holds this match by hand (`SAME_SYSTEM` in `build_party.py`), because the two nodes have different slugs.
+- The Terminal Margin Ranking System carries TMR as an alternative label and `skos:exactMatch` to the system module's TMR node, so four customer systems now match the system module. *2026-10-25:* five, with SAP S/4HANA (EPM-DEC-001-0099). The build holds this match by hand (`SAME_SYSTEM` in `build_party.py`), because the two nodes have different slugs.
 - Question 15's `q15b` compares a node's alternative labels as well as its preferred label, so the TMR pair is reported as one system in two modules. The only rows this adds are `skos:exactMatch` rows: the TMR pair, and the RightAngle and KittyHawk pairs under their alternative spellings.
 - EPM-DEC-001-0069 keeps its text, with dated notes pointing here.
 
@@ -69,5 +69,5 @@ For the amendment of 2026-10-22, from `business_architecture/ontology/step4/revi
 
 ## Consequences
 
-- `party/systems.csv`, `customer-sources.csv` and `build_party.py` carry the answers; `systems.ttl` is rebuilt. `test_party_systems.py` pins the four matches, the build's rejection of a hand-held match that does not hold, and the CBS sourcing's note, and `regression/test_run.py` pins q15b's four cross-module pairs.
+- `party/systems.csv`, `customer-sources.csv` and `build_party.py` carry the answers; `systems.ttl` is rebuilt. `test_party_systems.py` pins the four matches (*2026-10-25:* five, EPM-DEC-001-0099), the build's rejection of a hand-held match that does not hold, and the CBS sourcing's note, and `regression/test_run.py` pins q15b's four cross-module pairs (*2026-10-25:* five, with SAP S/4HANA, EPM-DEC-001-0099).
 - Still open for the decision owner: the meaning of HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag, which they will define later; whether TABS Seller ID is read rightly; whether TID Nbr is a terminal identifier. *2026-10-22:* TABS Seller ID's reading is confirmed; the four codes and TID Nbr wait until the ontology is shared for consumption, when the business confirms them (amendment of 2026-10-22 above).

@@ -48,12 +48,12 @@ con:reliesOn a owl:ObjectProperty ;
     skos:changeNote "integration 2.0.0 (2026-10-23): the range is rdf:Property, and the definition says property, not property or class; every value was a property except one rule's process concept, which moved to rdfs:seeAlso (EPM-DEC-001-0094)."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0061"@en .
 
-con:RuleKind a skos:ConceptScheme ; rdfs:label "rule kind"@en ;
+con:RuleKind a skos:ConceptScheme ; skos:hasTopConcept rk:may-answer, rk:must-refuse ; rdfs:label "rule kind"@en ;
     skos:definition "The two kinds of consumer rule."@en ;
     dcterms:bibliographicCitation "competency questions 41 and 42"@en .
-rk:may-answer a skos:Concept ; skos:inScheme con:RuleKind ; skos:prefLabel "May answer"@en ; skos:notation "may-answer" ;
+rk:may-answer a skos:Concept ; skos:inScheme con:RuleKind ; skos:topConceptOf con:RuleKind ; skos:prefLabel "May answer"@en ; skos:notation "may-answer" ;
     skos:definition "The agent may answer from the graph alone."@en .
-rk:must-refuse a skos:Concept ; skos:inScheme con:RuleKind ; skos:prefLabel "Must refuse"@en ; skos:notation "must-refuse" ;
+rk:must-refuse a skos:Concept ; skos:inScheme con:RuleKind ; skos:topConceptOf con:RuleKind ; skos:prefLabel "Must refuse"@en ; skos:notation "must-refuse" ;
     skos:definition "The agent must refuse, and say where the answer lives instead."@en .
 
 rule:definitions a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a thing is"@en ;
