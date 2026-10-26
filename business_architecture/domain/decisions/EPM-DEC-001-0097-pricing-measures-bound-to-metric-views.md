@@ -102,7 +102,7 @@ Each is a question for the decision owner, not changed here. *2026-10-25 (evenin
 
 ## What follows
 
-Each of these needs the decision owner's approval of the release; none is given yet. *2026-10-25 (evening):* the decision owner approved the plan of all five ("Approve the plan (Recommended)", EPM-DEC-001-0028, amendment of 2026-10-25, evening).
+Each of these needs the decision owner's approval of the release; none is given yet. *2026-10-25 (evening):* the decision owner approved the plan of all five ("Approve the plan (Recommended)", EPM-DEC-001-0028, amendment of 2026-10-25, evening). They are released as EPM-DEC-001-0100 records.
 
 - **`market-data` 1.1.0,** requiring the current `kpi`: the columns that list each group's series (item 5), the named series the files give with their Price Master IDs, and the link from each series to its measure (`mkt:seriesOf`). Definitions only; the module's shapes reject prices. It also moves `market-data` off `kpi` 1.0.1 (EPM-DEC-001-0077).
 - **A `data-product` release:** the Data Product Kind code list (item 14), the pricing data products as parts of Master Pricing with their kind, classification test and reason (items 13 to 16), their tables and views as DCAT distributions with `prov:wasDerivedFrom` from layer to layer (items 8 to 11), the bindings `con:publishesMeasure` from each data product to its measures (EPM-DEC-001-0061, item 1), and SHACL shapes for the kinds (item 15).
