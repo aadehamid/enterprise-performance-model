@@ -121,6 +121,10 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 - **License:** this folder's contents are proprietary, all rights reserved.
   APQC-sourced material is used under the APQC/IBM license terms —
   attribution travels with every distribution (see `../reference/README.md`).
+- **HTML pages:** each reading document here (this README, `MODULES.md`, the module READMEs and the others
+  `scripts/build_docs_html.py` lists) has an `.html` page beside it, generated from the Markdown, and the
+  decision records are one page, `../domain/decisions/decisions.html`. Edit the Markdown, then run
+  `python3 scripts/build_docs_html.py` from the repo root; `scripts/check.sh` fails while a page is stale.
 
 ## Status
 
