@@ -69,5 +69,5 @@ For the amendment of 2026-10-22, from `business_architecture/ontology/step4/revi
 
 ## Consequences
 
-- `party/systems.csv`, `customer-sources.csv` and `build_party.py` carry the answers; `systems.ttl` is rebuilt. `test_party_systems.py` pins the four matches (*2026-10-25:* five, EPM-DEC-001-0099), the build's rejection of a hand-held match that does not hold, and the CBS sourcing's note, and `regression/test_run.py` pins q15b's four cross-module pairs.
+- `party/systems.csv`, `customer-sources.csv` and `build_party.py` carry the answers; `systems.ttl` is rebuilt. `test_party_systems.py` pins the four matches (*2026-10-25:* five, EPM-DEC-001-0099), the build's rejection of a hand-held match that does not hold, and the CBS sourcing's note, and `regression/test_run.py` pins q15b's four cross-module pairs (*2026-10-25:* five, with SAP S/4HANA, EPM-DEC-001-0099).
 - Still open for the decision owner: the meaning of HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag, which they will define later; whether TABS Seller ID is read rightly; whether TID Nbr is a terminal identifier. *2026-10-22:* TABS Seller ID's reading is confirmed; the four codes and TID Nbr wait until the ontology is shared for consumption, when the business confirms them (amendment of 2026-10-22 above).

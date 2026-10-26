@@ -2436,7 +2436,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "MPC-built, by the decision owner's answer of 2026-10-25. The process map names it but no source in the repository says what it does. Its description waits for one approval round with the decision owner (EPM-DEC-001-0099)."
+    "@value": "MPC-built, by the decision owner's answer of 2026-10-25. The process map names it but no source in the repository says what it does. Its description waits for its owners (EPM-DEC-001-0099; business-closeout.md, point 12)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -2545,7 +2545,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "MPC-built, by the decision owner's answer of 2026-10-25. The process map names it but no source in the repository says what it does. Its description waits for one approval round with the decision owner (EPM-DEC-001-0099)."
+    "@value": "MPC-built, by the decision owner's answer of 2026-10-25. The process map names it but no source in the repository says what it does. Its description waits for its owners (EPM-DEC-001-0099; business-closeout.md, point 12)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
