@@ -164,6 +164,38 @@ def counts():
     return found
 
 
+CREATED = re.compile(r"CREATE OR REPLACE (TABLE|VIEW) \$\{catalog\}\.(\w+)\.(\w+)")
+
+
+def created_objects():
+    """Every table and view the build's SQL creates, as (kind, schema, name): the purge drops exactly these."""
+    found = []
+    for path in sorted(glob.glob(os.path.join(SQL, "0[2-9]_*.sql"))):
+        found += CREATED.findall(open(path).read())
+    return found
+
+
+def purge_statements(cat):
+    """The demo's objects, dropped one by one, then its volume and schemas without CASCADE: a schema that still
+    holds anything the demo did not create is not dropped, and the statement fails instead."""
+    drops = [f"DROP {kind} IF EXISTS {cat}.{schema}.{name}" for kind, schema, name in reversed(created_objects())]
+    drops.append(f"DROP VOLUME IF EXISTS {cat}.{VOLUME}")
+    drops += [f"DROP SCHEMA IF EXISTS {cat}.{s}" for s in reversed(SCHEMAS)]
+    return drops
+
+
+def purge(execute=False):
+    """Prints the drop statements; runs them only with --yes. Stops at the first statement that fails."""
+    conn, e = connect()
+    with conn, conn.cursor() as cur:
+        cat = current_catalog(cur, e)
+        for st in purge_statements(cat):
+            print(st)
+            if execute:
+                run(cur, st)
+    print("purged" if execute else "dry run: nothing dropped; add --yes to drop")
+
+
 def count(cur, name, metric_view):
     """Rows of a table, or of a metric view through its Record_Count measure, which every view defines (finding 4)."""
     query = f"SELECT MEASURE(Record_Count) FROM {name}" if metric_view else f"SELECT COUNT(*) FROM {name}"
@@ -172,5 +204,10 @@ def count(cur, name, metric_view):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("step", choices=("setup", "upload", "build", "counts"))
-    {"setup": setup, "upload": upload, "build": build, "counts": counts}[ap.parse_args().step]()
+    ap.add_argument("step", choices=("setup", "upload", "build", "counts", "purge"))
+    ap.add_argument("--yes", action="store_true", help="purge: drop the objects instead of listing them")
+    args = ap.parse_args()
+    if args.step == "purge":
+        purge(execute=args.yes)
+    else:
+        {"setup": setup, "upload": upload, "build": build, "counts": counts}[args.step]()

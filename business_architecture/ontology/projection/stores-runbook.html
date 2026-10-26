@@ -580,30 +580,12 @@ docker compose -f docker/docker-compose.yml down -v</code></pre>
 <p>This empties the database and keeps the instance. The next driver run fills it again.</p>
 
 <h3>Databricks</h3>
-<p>Run these in the Databricks SQL editor. First check that the demo's schemas hold only the demo's objects: this lists everything in them, and every name should appear in the output of the demo's <code>counts</code> step (the volume <code>raw</code> sits in <code>replica_landing</code>). If anything else is listed, move it out or drop those schemas' demo tables one by one instead.</p>
-<pre><code>SELECT table_schema, table_name, table_type
-FROM idp_sbx.information_schema.tables
-WHERE table_schema IN ('replica_landing', 'replica_mips', 'replica_mpr', 'replica_kittyhawk',
-  'replica_ctrm', 'replica_planning', 'replica_prodacct', 'silver_udm_core', 'silver_mdm_core',
-  'gold_commercial_core', 'semantic_sem_commercial')
-ORDER BY 1, 2;</code></pre>
-<p>Then drop:</p>
-<pre><code>-- the ontology triples
-DROP TABLE IF EXISTS workspace.epm_ontology.epm_triples;
-
--- the demo: its eleven schemas, with their tables, metric views and the volume
-DROP SCHEMA IF EXISTS idp_sbx.replica_landing CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.replica_mips CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.replica_mpr CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.replica_kittyhawk CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.replica_ctrm CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.replica_planning CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.replica_prodacct CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.silver_udm_core CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.silver_mdm_core CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.gold_commercial_core CASCADE;
-DROP SCHEMA IF EXISTS idp_sbx.semantic_sem_commercial CASCADE;</code></pre>
-<p>This drops only the schemas the demo creates (<code>SCHEMAS</code> in <code>pricing_demo/databricks.py</code>), and everything in them, so anything else in the catalog stays. Before you run it, check which catalog the demo used: <code>setup</code> prints it (<code>catalog idp_sbx: …</code>). If it printed another catalog, put that name in place of <code>idp_sbx</code>.</p>
+<p>The ontology triples: run this in the Databricks SQL editor.</p>
+<pre><code>DROP TABLE IF EXISTS workspace.epm_ontology.epm_triples;</code></pre>
+<p>The demo: its own <code>purge</code> step drops exactly the tables and metric views its SQL files create, then its volume, then its eleven schemas without <code>CASCADE</code>. A schema that still holds anything the demo did not create is not dropped: that statement fails and the step stops. Run it once without <code>--yes</code> to see the statements and the catalog it will use, then with <code>--yes</code> to drop:</p>
+<pre><code>cd "$DEMO"
+uv run python -m pricing_demo.databricks purge         # lists the statements; drops nothing
+uv run python -m pricing_demo.databricks purge --yes   # drops them</code></pre>
 <p>The Genie agents are not in the catalog. Delete <em>Crack Spread Price Analytics</em> and <em>Executive Summary KPIs Analytics</em> in Genie, or leave them: the next <code>genie</code> step updates them in place.</p>
 
 <h2 id="trouble">When something fails</h2>

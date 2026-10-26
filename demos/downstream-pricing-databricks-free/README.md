@@ -32,6 +32,7 @@ uv run python -m pricing_demo.databricks upload            # Parquet -> the volu
 uv run python -m pricing_demo.databricks build             # replica, silver, gold, metric views
 uv run python -m pricing_demo.genie                        # the two Genie agents
 uv run python -m pricing_demo.databricks counts            # row counts
+uv run python -m pricing_demo.databricks purge             # list what a purge drops; --yes drops it
 uv run --with pytest python -m pytest -q tests             # offline tests
 ```
 

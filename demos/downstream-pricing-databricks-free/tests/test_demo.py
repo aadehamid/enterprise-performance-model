@@ -436,3 +436,16 @@ def test_bugbot_380_every_example_reads_its_view_only_with_measure():
                 assert "MEASURE(" in sql[select:at], sql[select:at]
             for sub in re.findall(r"MEASURE\(Record_Count\) AS n FROM [^)]*", sql):
                 assert "GROUP BY" in sub, sub
+
+
+def test_purge_drops_only_what_the_build_creates_and_no_schema_by_cascade():
+    from pricing_demo import databricks as dbx
+    drops = dbx.purge_statements("cat")
+    assert not any("CASCADE" in d for d in drops)
+    made = {(s, n) for _, s, n in dbx.created_objects()}
+    for schema, names in dbx.BUILT.items():
+        assert {(schema, n) for n in names} <= made
+    assert {s for s, _ in made} == set(dbx.SCHEMAS[1:])
+    assert f"DROP VOLUME IF EXISTS cat.{dbx.VOLUME}" in drops
+    assert drops[-len(dbx.SCHEMAS):] == [f"DROP SCHEMA IF EXISTS cat.{s}" for s in reversed(dbx.SCHEMAS)]
+    assert sum(d.startswith(("DROP TABLE", "DROP VIEW")) for d in drops) == len(made)
