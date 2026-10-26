@@ -268,13 +268,19 @@
   "http://www.w3.org/2000/01/rdf-schema#label": [
    {
     "@language": "en",
-    "@value": "benchmark series"
+    "@value": "market series and prices"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#changeNote": [
+   {
+    "@language": "en",
+    "@value": "market-data 1.1.0 (2026-10-26): the definition names the market prices the pricing views add; the label was \"benchmark series\" (EPM-DEC-001-0100)."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "The benchmark series and benchmark prices the market-data module defines."
+    "@value": "The benchmark series, benchmark prices and market prices the market-data module defines."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#hasTopConcept": [

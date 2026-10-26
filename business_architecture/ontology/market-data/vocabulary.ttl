@@ -38,8 +38,9 @@ mkt:MarketRegions a skos:ConceptScheme ;
     dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4.1; EPM-DEC-001-0066"@en .
 
 mkt:Series a skos:ConceptScheme ;
-    rdfs:label "benchmark series"@en ;
-    skos:definition "The benchmark series and benchmark prices the market-data module defines."@en ;
+    rdfs:label "market series and prices"@en ;
+    skos:definition "The benchmark series, benchmark prices and market prices the market-data module defines."@en ;
+    skos:changeNote "market-data 1.1.0 (2026-10-26): the definition names the market prices the pricing views add; the label was \"benchmark series\" (EPM-DEC-001-0100)."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0057"@en .
 
 mkt:seriesOf a owl:ObjectProperty ;

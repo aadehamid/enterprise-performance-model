@@ -1493,9 +1493,10 @@ src:decision-owner-pricing-assets-2026-10-25 a dcterms:BibliographicResource ;
     dcterms:title "The decision owner's Databricks pricing metric views, their lineage and the Genie agents' instructions (idp_sbx sandbox), shared on 2026-10-25 and held outside the repository (EPM-DEC-001-0097)"@en .
 
 mkt:Series a skos:ConceptScheme ;
-    rdfs:label "benchmark series"@en ;
+    rdfs:label "market series and prices"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0057"@en ;
-    skos:definition "The benchmark series and benchmark prices the market-data module defines."@en ;
+    skos:changeNote "market-data 1.1.0 (2026-10-26): the definition names the market prices the pricing views add; the label was \"benchmark series\" (EPM-DEC-001-0100)."@en ;
+    skos:definition "The benchmark series, benchmark prices and market prices the market-data module defines."@en ;
     skos:hasTopConcept benchmark:ans,
         benchmark:chicago-cbob,
         benchmark:chicago-ulsd,
