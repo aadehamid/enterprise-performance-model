@@ -34,7 +34,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 - **Don't mark anything Decided or Approved without the decision owner's recorded
   decision.** A merge alone doesn't decide or approve it. Since 2026-10-12,
   EPM-DEC-001-0028 delegates the open questions of emitting the ontology and
-  updating its playbook to Claude, and since 2026-10-13 those of Steps 5 to 12: a decision in that scope made from the
+  updating its playbook to Claude, since 2026-10-13 those of Steps 5 to 12, and since 2026-10-25 those of the work queue after the ontology closed (except major releases, Market Data accountability and Q17; Claude approves the queue's other minor and patch releases, and an item H measure needs an MPC or peer definition): a decision in that scope made from the
   evidence order above and recorded as "delegated under EPM-DEC-001-0028"
   counts as Decided. It also sets the independent review at one or two full rounds
   per PR, then a quick check of each later fix, and names the reviewers.
