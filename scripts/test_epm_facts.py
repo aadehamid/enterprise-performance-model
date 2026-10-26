@@ -312,14 +312,14 @@ def test_decisions_check_requires_a_quote_for_decided(tmp_path):
 
 def test_decisions_check_catches_unindexed_record_and_bad_amendment(tmp_path):
     folder = _decisions_copy(tmp_path)
-    (folder / "EPM-DEC-001-0099-new.md").write_text("# EPM-DEC-001-0099: new\n\n| Status | Decided; amended by EPM-DEC-001-0098 |\n")
+    (folder / "EPM-DEC-001-9999-new.md").write_text("# EPM-DEC-001-9999: new\n\n| Status | Decided; amended by EPM-DEC-001-9998 |\n")
     problems = epm_facts.decision_problems(str(folder))
-    assert "0099: record not listed in the index" in problems
-    assert "0099: amended by 0098, which does not exist" in problems
+    assert "9999: record not listed in the index" in problems
+    assert "9999: amended by 9998, which does not exist" in problems
 
 
 def test_status_parts_reads_every_amendment():
-    assert epm_facts._status_parts("Decided; amended by 0024, 0098") == ("Decided", {"0024", "0098"})
+    assert epm_facts._status_parts("Decided; amended by 0024, 9998") == ("Decided", {"0024", "9998"})
     assert epm_facts._status_parts("Decided; amended by EPM-DEC-001-0024 and EPM-DEC-001-0025 (2026-10-06)") == ("Decided", {"0024", "0025"})
     # A date in parentheses neither ends the list nor counts as a record number.
     assert epm_facts._status_parts(
@@ -329,9 +329,9 @@ def test_status_parts_reads_every_amendment():
 def test_decisions_check_catches_a_second_amendment_target(tmp_path):
     folder = _decisions_copy(tmp_path)
     rec = next(folder.glob("EPM-DEC-001-0013-*.md"))
-    rec.write_text(rec.read_text().replace("amended by EPM-DEC-001-0025", "amended by EPM-DEC-001-0025, EPM-DEC-001-0098", 1))
+    rec.write_text(rec.read_text().replace("amended by EPM-DEC-001-0025", "amended by EPM-DEC-001-0025, EPM-DEC-001-9998", 1))
     problems = epm_facts.decision_problems(str(folder))
-    assert "0013: amended by 0098, which does not exist" in problems
+    assert "0013: amended by 9998, which does not exist" in problems
     assert any(p.startswith("0013: index status") for p in problems)
 
 
