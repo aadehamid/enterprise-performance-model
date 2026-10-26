@@ -426,5 +426,13 @@ def test_bugbot_380_every_example_reads_its_view_only_with_measure():
     for spec in genie.AGENTS.values():
         for _, sql in spec["examples"]:
             assert "MAX(" not in sql and "gold_commercial_core" not in sql
-            for sub in re.findall(r"\(SELECT [^()]*FROM \{c\}[^()]*\)", sql):
-                assert "MEASURE(" in sub, sub
+            # Every read of a metric view (each "FROM {c}.semantic_sem_commercial.<view>") belongs to a SELECT that
+            # names a MEASURE() and, when it groups, groups by dimensions: split the statement at each view read and
+            # check the text between the nearest SELECT and that read (Pi on a1fd341: the old regex matched nothing).
+            reads = [m.start() for m in re.finditer(r"FROM \{c\}\.semantic_sem_commercial\.", sql)]
+            assert reads, sql
+            for at in reads:
+                select = sql.rfind("SELECT", 0, at)
+                assert "MEASURE(" in sql[select:at], sql[select:at]
+            for sub in re.findall(r"MEASURE\(Record_Count\) AS n FROM [^)]*", sql):
+                assert "GROUP BY" in sub, sub

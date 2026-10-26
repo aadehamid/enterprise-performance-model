@@ -3,7 +3,7 @@
     uv run python -m pricing_demo.public_data --refresh   # re-pull from the EIA Open Data API (needs EIA_API_KEY)
 
 Every series is cited by its EIA series ID; eia_series.csv records the description, unit and the date pulled.
-The key is read from the environment or from ~/.config/eia/api.env and is never printed.
+The key is read from the environment, then the demo's .env, then ~/.config/eia/api.env, and is never printed.
 """
 import argparse
 import csv
