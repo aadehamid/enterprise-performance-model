@@ -9,7 +9,8 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py counts            # ledger, scoped sequences, gate, facts, Phase 1, reviews, taxonomy
     python3 scripts/epm_facts.py row REL-00436     # where one row stands
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
-    python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines
+    python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines;
+                                                   # skips the HTML pages generated from Markdown
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
@@ -440,10 +441,21 @@ def cmd_section(args):
     return 0 if ids else 1
 
 
+# The mark scripts/build_docs_html.py puts in the head of each page it generates from Markdown.
+GENERATED_PAGE = '<meta name="generator" content="scripts/build_docs_html.py">'
+
+
+def generated_page(name, text):
+    """An HTML page generated from Markdown: its Markdown is the master copy, so searches skip the page.
+    Counting it would double every hit and invite an edit the next build would overwrite."""
+    return name.endswith(".html") and GENERATED_PAGE in text[:2048]
+
+
 def find_hits(needle, root=ROOT):
     """Hits for needle in every tracked text file under root: (file, line, kind, text), kind "line" or
     "split" (the text runs across two lines). A file is text when it is UTF-8 with no NUL byte,
-    whatever its extension (.sql, .jsonld and .page files included)."""
+    whatever its extension (.sql, .jsonld and .page files included). The HTML pages generated from
+    Markdown (generated_page) are skipped: their Markdown source is searched instead."""
     # -z: git quotes paths with non-ASCII characters otherwise, and a quoted path cannot be opened.
     files = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], text=True).split("\0")
     flat_needle = re.sub(r"\s+", " ", needle).strip().lower()
@@ -459,6 +471,8 @@ def find_hits(needle, root=ROOT):
                 continue
             text = data.decode("utf-8")
         except (OSError, UnicodeDecodeError):
+            continue
+        if generated_page(name, text):
             continue
         lines = text.split("\n")
         for i, line in enumerate(lines, 1):
@@ -553,7 +567,8 @@ def changed_phrases(diff):
 
 def sweep(base, root=ROOT):
     """For each phrase the branch replaced or deleted since base, every place in the tracked text files that
-    still holds it, each marked "dated" when its line holds a date (DATED) and "live" otherwise."""
+    still holds it (generated HTML pages skipped, as in find_hits), each marked "dated" when its line holds
+    a date (DATED) and "live" otherwise."""
     try:
         diff = subprocess.check_output(["git", "-C", root, "diff", "-U1", "--no-color", f"{base}...HEAD"],
                                        text=True, stderr=subprocess.PIPE)
@@ -1289,9 +1304,9 @@ def main(argv=None):
     p.add_argument("row_id")
     p = sub.add_parser("section", help="row IDs for one Phase 1 issue")
     p.add_argument("issue", type=int)
-    p = sub.add_parser("find", help="repo-wide search, including text split across lines")
+    p = sub.add_parser("find", help="repo-wide search, including text split across lines; skips the generated HTML pages")
     p.add_argument("text")
-    p = sub.add_parser("sweep", help="where wording the branch replaced or deleted since BASE still stands, in every tracked text file")
+    p = sub.add_parser("sweep", help="where wording the branch replaced or deleted since BASE still stands, in every tracked text file but the generated HTML pages")
     p.add_argument("base")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")

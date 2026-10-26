@@ -126,6 +126,20 @@ def test_find_catches_text_split_across_lines(tmp_path):
     assert [(name, line, kind) for name, line, kind, _ in hits] == [("doc.md", 1, "split")]
 
 
+def test_find_skips_a_generated_page_but_not_other_html(tmp_path):
+    # A page scripts/build_docs_html.py generates is a copy of its Markdown, so a search counts the
+    # Markdown only; a hand-written page, such as the stores runbook, is searched like any other file.
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True, env=env)
+    (tmp_path / "README.md").write_text("The crack spread is a margin.\n")
+    (tmp_path / "README.html").write_text(f"<html><head>{epm_facts.GENERATED_PAGE}</head>\n"
+                                          "<p>The crack spread is a margin.</p></html>\n")
+    (tmp_path / "stores-runbook.html").write_text("<html><head></head>\n<p>The crack spread is a margin.</p></html>\n")
+    subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
+    hits = epm_facts.find_hits("crack spread", str(tmp_path))
+    assert sorted(name for name, _, _, _ in hits) == ["README.md", "stores-runbook.html"]
+
+
 def test_sweep_takes_the_changed_words_with_their_context():
     diff = ("@@ -1 +1 @@\n-The regression stands at 34 answerable and 9 waiting.\n"
             "+The regression stands at 42 answerable and 1 waiting.\n")

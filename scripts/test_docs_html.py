@@ -1,11 +1,13 @@
-"""The generated HTML pages match a fresh build of their Markdown, every link on them resolves, and the
-renderer handles what the documents use.
+"""The generated HTML pages match a fresh build of their Markdown, the --check command says so, every link
+on them resolves, they load nothing from the network, and the renderer handles what the documents use and
+refuses what it does not.
 
 Run: uv run --with pytest python -m pytest -q scripts/test_docs_html.py
 """
 import html
 import os
 import re
+import subprocess
 import sys
 
 import pytest
@@ -20,6 +22,51 @@ PAGES = b.build_all()
 def test_every_committed_page_matches_a_fresh_build(out):
     with open(os.path.join(b.ROOT, out), encoding="utf-8") as f:
         assert f.read() == PAGES[out], f"{out} is stale: run python3 scripts/build_docs_html.py"
+
+
+def test_the_check_command_passes_on_the_committed_pages():
+    r = subprocess.run([sys.executable, os.path.join(b.ROOT, "scripts", "build_docs_html.py"), "--check"],
+                       cwd=b.ROOT, capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_the_check_command_fails_on_a_stale_or_missing_page(monkeypatch, capsys):
+    out = sorted(PAGES)[0]
+    monkeypatch.setattr(b, "build_all", lambda: {out: PAGES[out] + "<!-- changed -->"})
+    assert b.main(["--check"]) == 1
+    assert f"FAIL {out} differs" in capsys.readouterr().out
+    monkeypatch.setattr(b, "build_all", lambda: {"business_architecture/no-such-page.html": "x"})
+    assert b.main(["--check"]) == 1
+
+
+# A page loads a resource when a tag other than <a> names a URL, or its CSS does; a data: URI is embedded.
+LOADS = re.compile(r"<(?!a\b)[a-z]+\b[^>]*\b(?:src|href|srcset|poster|data)\s*=\s*\"(?!data:|#)([^\"]+)\"", re.I)
+CSS_LOADS = re.compile(r"@import|url\(\s*['\"]?(?!data:)", re.I)
+
+
+@pytest.mark.parametrize("out", sorted(PAGES))
+def test_a_page_loads_nothing_from_the_network_or_another_file(out):
+    page = PAGES[out]
+    assert LOADS.findall(page) == [], out
+    styles = " ".join(re.findall(r"<style[^>]*>(.*?)</style>", page, re.S))
+    assert not CSS_LOADS.search(styles), out
+    assert "<iframe" not in page and "<img" not in page, out
+
+
+def test_unsupported_markdown_stops_the_build_with_its_line():
+    lines = ["Title", "=====", "", "![a picture](x.png)", "<div>raw</div>", "+ item", "1) item", "[ref]: https://x.test/",
+             "```", "<kept> in code ![x](y)", "```", "`<kept>` in a code span"]
+    problems = b.unsupported("doc.md", lines)
+    assert problems == ["doc.md:2: a Setext heading (use # headings)",
+                        "doc.md:4: an image (embed pictures in the page instead)",
+                        "doc.md:5: inline HTML (the page would show it as text)",
+                        "doc.md:6: a list item marked with +",
+                        "doc.md:7: a list item numbered with a parenthesis",
+                        "doc.md:8: a reference-style link definition"]
+
+
+def test_a_thematic_break_and_a_table_rule_are_not_setext_headings():
+    assert b.unsupported("doc.md", ["Text.", "", "---", "", "| A |", "|---|", "- item", "---"]) == []
 
 
 def test_every_source_exists():
