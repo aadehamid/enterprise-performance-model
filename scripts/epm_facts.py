@@ -1086,7 +1086,7 @@ def _office_texts(where, data):
     return out
 
 
-def displayed_text(markup):
+def browser_text(markup):
     """The text a browser shows for an HTML document: inline elements joined with nothing between them (so
     h<strong>a</strong>mid reads as one word), block elements on their own lines, scripts and styles left out."""
     from html.parser import HTMLParser
@@ -1138,9 +1138,9 @@ def _name_texts(path, name):
     if name.lower().endswith(".md"):
         from markdown_it import MarkdownIt
         texts.append((f"{name} (displayed text)",
-                      displayed_text(MarkdownIt("commonmark").enable(["table", "strikethrough"]).render(text))))
+                      browser_text(MarkdownIt("commonmark").enable(["table", "strikethrough"]).render(text))))
     elif name.lower().endswith((".html", ".htm")):
-        texts.append((f"{name} (displayed text)", displayed_text(text)))
+        texts.append((f"{name} (displayed text)", browser_text(text)))
     return texts
 
 
