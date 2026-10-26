@@ -4,7 +4,7 @@ services:
   sources:
     image: postgres:16.10
     container_name: pricing-demo-sources
-    restart: unless-stopped  # kept running for exploration (the decision owner, 2026-10-26)
+    restart: unless-stopped  # kept running for exploration (answers-2026-10-26-keep-stores.md)
     environment:
       POSTGRES_USER: demo
       POSTGRES_PASSWORD: demo  # a local, synthetic-only database; change it when the host is not your Mac

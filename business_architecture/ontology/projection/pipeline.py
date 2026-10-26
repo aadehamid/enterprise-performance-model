@@ -405,8 +405,11 @@ def load_verify(bolt, password, import_dir):
         # The in-graph check must be able to fail: remove one role's name, which every role must
         # have exactly once (the organization package's shapes.ttl), and count the violations n10s reports.
         shapes_loaded = s.run("CALL n10s.validation.shacl.listShapes() YIELD target RETURN count(*) AS n").single()["n"]
-        s.run("MATCH (r:org__Role) WITH r ORDER BY r.uri LIMIT 1 REMOVE r.skos__prefLabel").consume()
+        probe = s.run("MATCH (r:org__Role) WITH r ORDER BY r.uri LIMIT 1 WITH r, r.skos__prefLabel AS label "
+                      "REMOVE r.skos__prefLabel RETURN r.uri AS uri, label").single()
         caught = len(s.run("CALL n10s.validation.shacl.validate() YIELD focusNode RETURN focusNode").data())
+        # Put the name back, so a graph kept after the run (run_local.sh --keep) is the projection itself.
+        s.run("MATCH (r:org__Role {uri: $uri}) SET r.skos__prefLabel = $label", uri=probe["uri"], label=probe["label"]).consume()
     driver.close()
     src = Graph().parse(data=loadable + inferred, format="nt")
     inexact = [o for o in src.objects() if isinstance(o, Literal) and o.datatype == XSD.decimal
