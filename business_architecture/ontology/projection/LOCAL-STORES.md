@@ -13,6 +13,6 @@ Since 2026-10-26 the stores below stay loaded after a run, so the decision owner
 
 The Postgres data sits in the named Docker volume `pricing-demo-pgdata`, and the container restarts with Docker, so a reboot keeps it. `replace_target` is on in `skill-run/epm-run.json`, so each driver run replaces what Aura holds.
 
-To stop a local store without losing its data, run `docker stop <container>`. To remove it, run `docker rm -f <container>`; for Postgres, the data is gone only when the volume is removed as well.
+`stores-runbook.html`, beside this page, explains the end-to-end workflow with diagrams, and gives the commands to check, stop, start, restart after a reboot, purge and reload each store. Open it in a browser.
 
 The scripts that build and check these stores are in the repository: `pipeline.py`, `run_local.sh` and `skill-run/` here, and `pricing_demo/` and `tests/` in the demo.

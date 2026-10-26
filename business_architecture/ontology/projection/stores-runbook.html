@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stores runbook</title>
+<style>
+/* Style: framed-sheet (tasteskill app sheet, seed 1033140616), screen "report".
+   Face: the frame tinted a blue-grey from the graph-and-data world, and the accent teal on the
+   flow diagram's main path. System fonts only: this file is standalone and loads nothing. */
+:root {
+  --ground: #f1f4f6;  --surface: #ffffff;  --raised: #f4f6f8;  --active: #ebedee;
+  --border: #e3e6e9;  --rule: #eef0f2;     --control: #cdced1;
+  --text: #131416;    --muted: #5d5f60;    --faint: #66686a;
+  --accent: #1b6c80;  --accent-soft: #e5f0f3;
+  --positive: #1e7b4f; --negative: #c4242a;
+  --pill-positive-bg: #dcfae5; --pill-positive-ink: #04250e;
+  --pill-negative-bg: #ffedea; --pill-negative-ink: #831c1e;
+  --notice-bg: #fffbeb; --notice-line: #fde68a; --notice-ink: #92400e;
+  --warn-line: #f6cfc9; --ok-line: #bde8cb;
+  --code-bg: #f4f6f8;
+  --node: #ffffff; --node-line: #c9ced3; --lane: #f6f8f9;
+  --radius-card: 8px; --radius-control: 6px; --radius-sheet: 16px;
+  --gap: 24px; --pad: 24px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fs-title: 24px; --fs-section: 18px; --fs-body: 15px; --fs-small: 12.5px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0b0c0d; --surface: #141516; --raised: #1b1c1e; --active: #242628;
+    --border: #2a2c2f; --rule: #222426; --control: #44474b;
+    --text: #f2f3f3; --muted: #b4b6b8; --faint: #9a9c9e;
+    --accent: #5fb3c7; --accent-soft: #15292e;
+    --positive: #3fc07a; --negative: #e5566f;
+    --pill-positive-bg: #172a1d; --pill-positive-ink: #3fc07a;
+    --pill-negative-bg: #2c1a20; --pill-negative-ink: #f08a9c;
+    --notice-bg: #261d0c; --notice-line: #3b2e14; --notice-ink: #f2cf94;
+    --warn-line: #3d252b; --ok-line: #213a28;
+    --code-bg: #1b1c1e;
+    --node: #1b1c1e; --node-line: #3a3d41; --lane: #101112;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--text); font: var(--fs-body)/1.6 var(--font); }
+
+/* the viewer bar: the frame's only chrome on a report */
+.bar { height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 20px; border-bottom: 1px solid var(--border); background: var(--ground); position: sticky; top: 0; z-index: 2; }
+.bar .name { font-weight: 600; font-size: 14px; }
+.bar .scope { color: var(--muted); font-size: 14px; }
+.bar nav { margin-left: auto; display: flex; gap: 18px; font-size: 13.5px; }
+.bar nav a { color: var(--muted); text-decoration: none; padding: 13px 0; border-bottom: 2px solid transparent; }
+.bar nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+/* the sheet: 1088 column (4 x 263 + 3 x 12 = 1088 for the stat row) */
+.sheet { max-width: 1136px; margin: 24px auto 40px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sheet); padding: 32px var(--pad) 48px; }
+.col { max-width: 1088px; margin: 0 auto; }
+.title-row { display: flex; align-items: flex-start; gap: 16px; }
+h1 { font-size: var(--fs-title); font-weight: 600; margin: 0; line-height: 1.25; letter-spacing: -.01em; }
+.sub { color: var(--muted); font-size: 14px; margin: 6px 0 0; max-width: 72ch; }
+.btn { margin-left: auto; flex: none; display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border: 1px solid var(--control); border-radius: var(--radius-control); color: var(--text); text-decoration: none; font-size: 13.5px; white-space: nowrap; }
+.btn:hover { background: var(--raised); }
+.notice { margin: 20px 0 0; background: var(--notice-bg); border: 1px solid var(--notice-line); color: var(--notice-ink); border-radius: var(--radius-control); padding: 8px 12px; font-size: 13px; }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0 0; }
+.stat { border: 1px solid var(--border); border-radius: var(--radius-card); padding: 14px 16px; }
+.stat .k { color: var(--muted); font-size: 12.5px; }
+.stat .v { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.stat .d { color: var(--muted); font-size: 12.5px; }
+
+h2 { font-size: var(--fs-section); font-weight: 600; margin: 48px 0 6px; scroll-margin-top: 64px; }
+h3 { font-size: 15px; font-weight: 600; margin: 26px 0 6px; }
+p, li { max-width: 74ch; }
+.lead { color: var(--muted); margin: 0 0 16px; }
+a { color: var(--accent); }
+code { font: 13.5px var(--mono); background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { position: relative; background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 14px 16px; overflow-x: auto; margin: 10px 0 16px; }
+pre code { background: none; padding: 0; font-size: 13px; line-height: 1.6; white-space: pre; overflow-wrap: normal; }
+.copy { position: absolute; top: 8px; right: 8px; font: 12px var(--font); background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-control); padding: 3px 8px; cursor: pointer; }
+.copy:hover { color: var(--text); }
+
+/* cards and the two-column rows */
+.card { border: 1px solid var(--border); border-radius: var(--radius-card); padding: 20px; }
+.card h3 { margin-top: 0; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); align-items: start; margin: 16px 0; }
+.steps { padding-left: 22px; margin: 8px 0; }
+.steps li { margin: 6px 0; }
+.steps li::marker { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* diagrams: drawn at 1:1; below their width they scroll inside their own frame, never the page */
+figure { margin: 16px 0 8px; }
+.diagram { border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); overflow-x: auto; }
+.diagram svg { display: block; width: 100%; height: auto; }
+.diagram.wide svg { min-width: 980px; }
+.diagram.mid svg { min-width: 700px; }
+figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; max-width: 80ch; }
+.swipe { display: none; }
+.diagram.tall { display: none; }
+svg text { font-family: var(--font); fill: var(--text); }
+svg .t { font-size: 13px; font-weight: 600; }
+svg .s { font-size: 11.5px; fill: var(--muted); }
+svg .m { font-size: 11.5px; font-family: var(--mono); fill: var(--muted); }
+svg .lane-l { font-size: 12px; fill: var(--muted); font-weight: 600; }
+svg .node { fill: var(--node); stroke: var(--node-line); stroke-width: 1; }
+svg .node.key { stroke: var(--accent); stroke-width: 1.5; }
+svg .node.store { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.25; }
+svg .node.gone { fill: var(--pill-negative-bg); stroke: var(--negative); stroke-width: 1.25; }
+svg .lane { fill: var(--lane); stroke: var(--border); }
+svg .e { fill: none; stroke: var(--faint); stroke-width: 1.5; }
+svg .e.key { stroke: var(--accent); stroke-width: 2; }
+svg .e.plan { stroke: var(--faint); stroke-dasharray: 5 4; }
+svg .e.bad { stroke: var(--negative); }
+svg .el { font-size: 11.5px; fill: var(--muted); }
+svg .head { fill: var(--faint); }
+svg .head.key { fill: var(--accent); }
+svg .head.bad { fill: var(--negative); }
+svg .num-c { fill: var(--text); }
+svg .num-t { font-size: 12px; font-weight: 600; fill: var(--surface); }
+
+/* tables: rules and alignment; two-line rows on a phone */
+.tblwrap { margin: 12px 0 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-weight: 600; font-size: 12.5px; color: var(--muted); padding: 8px 12px 8px 0; border-bottom: 1px solid var(--border); }
+td { padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; }
+.pill { display: inline-block; flex: none; white-space: nowrap; font-size: 12px; font-weight: 500; padding: 1px 8px; border-radius: 999px; background: var(--active); color: var(--muted); margin-left: 6px; vertical-align: 1px; }
+
+.warn, .ok { border: 1px solid; border-radius: var(--radius-card); padding: 12px 16px; margin: 14px 0; max-width: 80ch; font-size: 14px; }
+.warn { background: var(--pill-negative-bg); border-color: var(--warn-line); color: var(--pill-negative-ink); }
+.ok { background: var(--pill-positive-bg); border-color: var(--ok-line); color: var(--pill-positive-ink); }
+.warn strong, .ok strong { display: block; margin-bottom: 2px; }
+.warn code, .ok code { background: transparent; color: inherit; }
+.note { color: var(--muted); font-size: 13.5px; }
+.src { color: var(--muted); font-size: 12.5px; margin-top: 40px; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+@media (max-width: 900px) {
+  .bar nav { display: none; }
+  .sheet { margin: 0; border-radius: 0; border-width: 0; padding: 20px 16px 40px; }
+  .stats { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .two { grid-template-columns: minmax(0, 1fr); }
+  .swipe { display: block; }
+}
+@media (max-width: 640px) {
+  .diagram.wide { display: none; }
+  .diagram.tall { display: block; }
+  pre { padding-top: 40px; }
+  .title-row { flex-direction: column; gap: 10px; }
+  .btn { margin-left: 0; }
+  table.stack thead { display: none; }
+  table.stack tr { display: block; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  table.stack td { display: block; border: 0; padding: 2px 0; }
+  table.stack td:not(:first-child) { color: var(--muted); font-size: 13.5px; }
+  table.stack td[data-k]::before { content: attr(data-k) ": "; color: var(--faint); }
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
+  <span class="name">EPM</span><span class="scope">Stores runbook</span>
+  <nav aria-label="Sections">
+    <a href="#flow">How it fits</a><a href="#stores">Stores</a><a href="#check">Check</a><a href="#stop">Stop and start</a><a href="#reload">Reload</a><a href="#purge">Purge</a><a href="#trouble">Fixes</a>
+  </nav>
+</header>
+
+<main class="sheet"><div class="col">
+<div class="title-row">
+  <div>
+    <h1>Stores runbook</h1>
+    <p class="sub">How the EPM ontology and the pricing demo's synthetic data reach six stores, and how to check, stop, start, purge and reload each one. Every command runs on this Mac. No password appears on this page: each login stays in its env file.</p>
+  </div>
+  <a class="btn" href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">Open the Eraser diagram</a>
+</div>
+<p class="notice">A snapshot: the figures are from the runs of 2026-10-26, on the releases of that day. Each new release changes them.</p>
+
+<div class="stats">
+  <div class="stat"><div class="k">Stores</div><div class="v">6</div><div class="d">3 on this Mac, 3 in the cloud</div></div>
+  <div class="stat"><div class="k">Released packages</div><div class="v">36</div><div class="d">each one tagged in git</div></div>
+  <div class="stat"><div class="k">Graph in each Neo4j</div><div class="v">4,137 nodes</div><div class="d">0 SHACL violations</div></div>
+  <div class="stat"><div class="k">Reload</div><div class="v">4 steps</div><div class="d">the driver takes about 10 min</div></div>
+</div>
+
+<h2 id="flow">How it fits together</h2>
+<p class="lead">Two flows feed the stores. The ontology flow starts at the process map and ends in the graph stores and a Databricks table. The demo flow starts at public market data and ends in Databricks metric views and Genie agents. The dashed link is planned, not built.</p>
+<figure>
+<div class="diagram wide" role="img" aria-labelledby="f1t">
+<svg viewBox="0 0 1040 560" xmlns="http://www.w3.org/2000/svg">
+  <title id="f1t">The end-to-end flow from the ontology sources and the public market data to the six stores</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="head"/></marker>
+    <marker id="ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="head key"/></marker>
+  </defs>
+  <rect class="lane" x="8" y="8" width="1024" height="372" rx="10"/>
+  <text class="lane-l" x="24" y="30">The ontology</text>
+  <rect class="lane" x="8" y="392" width="1024" height="160" rx="10"/>
+  <text class="lane-l" x="24" y="414">The pricing demo's synthetic data</text>
+
+  <!-- ontology lane: columns at x 24, 190, 356, 532, 708, 874 (width 146) -->
+  <rect class="node" x="24" y="134" width="146" height="64" rx="8"/>
+  <text class="t" x="36" y="158">Sources</text><text class="s" x="36" y="176">process map and the</text><text class="s" x="36" y="190">module sources</text>
+  <rect class="node" x="190" y="134" width="146" height="64" rx="8"/>
+  <text class="t" x="202" y="158">Builders</text><text class="s" x="202" y="176">build each module;</text><text class="m" x="202" y="190">check.sh gates it</text>
+  <rect class="node key" x="356" y="134" width="150" height="64" rx="8"/>
+  <text class="t" x="368" y="158">Released packages</text><text class="s" x="368" y="176">36 in Turtle and</text><text class="s" x="368" y="190">JSON-LD, each tagged</text>
+
+  <rect class="node" x="540" y="50" width="150" height="64" rx="8"/>
+  <text class="t" x="552" y="74">Pipeline</text><text class="m" x="552" y="92">pipeline.py,</text><text class="m" x="552" y="106">run_local.sh</text>
+  <rect class="node store" x="716" y="50" width="146" height="64" rx="8"/>
+  <text class="t" x="728" y="74">Local Neo4j</text><text class="m" x="728" y="92">epm-lpg</text><text class="m" x="728" y="106">Bolt 17687</text>
+
+  <rect class="node" x="540" y="196" width="150" height="64" rx="8"/>
+  <text class="t" x="552" y="220">Driver</text><text class="m" x="552" y="238">run_projection.py</text><text class="s" x="552" y="252">ontology-to-lpg skill</text>
+  <rect class="node store" x="716" y="196" width="146" height="64" rx="8"/>
+  <text class="t" x="728" y="220">Local Neo4j</text><text class="m" x="728" y="238">lpg-local-neo4j-1</text><text class="m" x="728" y="252">Bolt 17711</text>
+  <rect class="node store" x="886" y="196" width="134" height="64" rx="8"/>
+  <text class="t" x="898" y="220">AuraDB</text><text class="s" x="898" y="238">a copy of the</text><text class="s" x="898" y="252">driver's graph</text>
+
+  <rect class="node store" x="716" y="306" width="146" height="64" rx="8"/>
+  <text class="t" x="728" y="330">Databricks</text><text class="m" x="728" y="348">epm_ontology.</text><text class="m" x="728" y="362">epm_triples</text>
+
+  <path class="e" d="M170 166H186" marker-end="url(#a)"/>
+  <path class="e key" d="M336 166H352" marker-end="url(#ak)"/>
+  <path class="e key" d="M506 156C520 156 520 82 536 82" marker-end="url(#ak)"/>
+  <path class="e key" d="M506 176C520 176 520 228 536 228" marker-end="url(#ak)"/>
+  <path class="e key" d="M690 82H712" marker-end="url(#ak)"/>
+  <path class="e key" d="M690 222H712" marker-end="url(#ak)"/>
+  <path class="e" d="M862 228H882" marker-end="url(#a)"/>
+  <path class="e" d="M615 260V338H712" marker-end="url(#a)"/>
+  <text class="el" x="624" y="330">load the triples</text>
+  <path class="e" d="M790 306V264" marker-end="url(#a)"/>
+  <text class="el" x="798" y="290">rebuild</text>
+
+  <!-- demo lane -->
+  <rect class="node" x="24" y="440" width="146" height="64" rx="8"/>
+  <text class="t" x="36" y="464">Public data</text><text class="s" x="36" y="482">EIA spot prices,</text><text class="s" x="36" y="496">MPC 10-K capacities</text>
+  <rect class="node" x="190" y="440" width="146" height="64" rx="8"/>
+  <text class="t" x="202" y="464">Generator</text><text class="s" x="202" y="482">seeded, with a</text><text class="s" x="202" y="496">scenario timeline</text>
+  <rect class="node store" x="356" y="440" width="150" height="64" rx="8"/>
+  <text class="t" x="368" y="464">Local Postgres</text><text class="s" x="368" y="482">six source databases</text><text class="m" x="368" y="496">pricing-demo-sources</text>
+  <rect class="node" x="540" y="440" width="150" height="64" rx="8"/>
+  <text class="t" x="552" y="464">DuckDB</text><text class="s" x="552" y="482">to Parquet, then the</text><text class="s" x="552" y="496">idp_sbx volume</text>
+  <rect class="node store" x="716" y="440" width="146" height="64" rx="8"/>
+  <text class="t" x="728" y="464">Databricks idp_sbx</text><text class="s" x="728" y="482">replica, silver,</text><text class="s" x="728" y="496">gold tables</text>
+  <rect class="node" x="886" y="440" width="134" height="64" rx="8"/>
+  <text class="t" x="898" y="464">Metric views</text><text class="s" x="898" y="482">four, read by two</text><text class="s" x="898" y="496">Genie agents</text>
+
+  <path class="e" d="M170 472H186" marker-end="url(#a)"/>
+  <path class="e" d="M336 472H352" marker-end="url(#a)"/>
+  <path class="e" d="M506 472H536" marker-end="url(#a)"/>
+  <path class="e" d="M690 472H712" marker-end="url(#a)"/>
+  <path class="e" d="M862 472H882" marker-end="url(#a)"/>
+
+  <!-- planned: Unity Catalog KPI IDs tie the metric views to the ontology's measures -->
+  <path class="e plan" d="M953 440V338H866" marker-end="url(#a)"/>
+  <text class="el" text-anchor="end" x="944" y="292">planned:</text><text class="el" text-anchor="end" x="944" y="306">Unity Catalog</text><text class="el" text-anchor="end" x="944" y="320">KPI IDs to the</text><text class="el" text-anchor="end" x="944" y="334">measures</text>
+</svg>
+</div>
+<div class="diagram tall" role="img" aria-labelledby="f1p">
+<svg viewBox="0 0 360 966" xmlns="http://www.w3.org/2000/svg">
+  <title id="f1p">The end-to-end flow, drawn for a phone</title>
+  <defs><marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="head"/></marker><marker id="pk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="head key"/></marker></defs>
+  <rect class="lane" x="6" y="8" width="348" height="520" rx="10"/><text class="lane-l" x="18" y="30">The ontology</text>
+  <rect class="node" x="24" y="44" width="312" height="52" rx="8"/><text class="t" x="34" y="64">Sources</text><text class="s" x="34" y="80">process map and the module sources</text>
+  
+  <rect class="node" x="24" y="114" width="312" height="52" rx="8"/><text class="t" x="34" y="134">Builders</text><text class="s" x="34" y="150">build each module; check.sh gates it</text>
+  
+  <rect class="node key" x="24" y="184" width="312" height="52" rx="8"/><text class="t" x="34" y="204">Released packages</text><text class="s" x="34" y="220">36 in Turtle and JSON-LD, each tagged</text>
+  
+  <rect class="node" x="24" y="270" width="150" height="66" rx="8"/><text class="t" x="34" y="290">Pipeline</text><text class="m" x="34" y="306">pipeline.py,</text><text class="m" x="34" y="320">run_local.sh</text>
+  
+  <rect class="node store" x="186" y="270" width="150" height="66" rx="8"/><text class="t" x="196" y="290">Local Neo4j</text><text class="m" x="196" y="306">epm-lpg</text><text class="m" x="196" y="320">Bolt 17687</text>
+  
+  <rect class="node" x="24" y="364" width="150" height="66" rx="8"/><text class="t" x="34" y="384">Driver</text><text class="m" x="34" y="400">run_projection.py</text><text class="s" x="34" y="414">ontology-to-lpg</text>
+  
+  <rect class="node store" x="186" y="364" width="150" height="66" rx="8"/><text class="t" x="196" y="384">Local Neo4j</text><text class="m" x="196" y="400">lpg-local-neo4j-1</text><text class="m" x="196" y="414">Bolt 17711</text>
+  
+  <rect class="node store" x="24" y="452" width="150" height="66" rx="8"/><text class="t" x="34" y="472">Databricks</text><text class="m" x="34" y="488">epm_ontology.</text><text class="m" x="34" y="502">epm_triples</text>
+  
+  <rect class="node store" x="186" y="452" width="150" height="66" rx="8"/><text class="t" x="196" y="472">AuraDB</text><text class="s" x="196" y="488">a copy of the</text><text class="s" x="196" y="502">driver's graph</text>
+  
+  <path class="e" d="M180 96V110" marker-end="url(#p)"/>
+  <path class="e key" d="M180 166V180" marker-end="url(#pk)"/>
+  <path class="e key" d="M99 236V266" marker-end="url(#pk)"/>
+  <path class="e key" d="M174 303H182" marker-end="url(#pk)"/>
+  <path class="e key" d="M60 236C60 250 15 250 15 300V397H20" marker-end="url(#pk)"/>
+  <path class="e key" d="M174 397H182" marker-end="url(#pk)"/>
+  <path class="e" d="M99 430V448" marker-end="url(#p)"/>
+  <path class="e" d="M261 430V448" marker-end="url(#p)"/>
+  <path class="e" d="M174 470L196 434" marker-end="url(#p)"/>
+  <text class="el" x="104" y="444">load</text><text class="el" x="266" y="444">copy</text><text class="el" text-anchor="middle" x="180" y="446">rebuild</text>
+  
+  <rect class="lane" x="6" y="540" width="348" height="420" rx="10"/><text class="lane-l" x="18" y="562">The demo data</text>
+  <rect class="node" x="36" y="576" width="300" height="46" rx="8"/><text class="t" x="46" y="596">Public data</text><text class="s" x="46" y="610">EIA spot prices, MPC 10-K capacities</text>
+  
+  <path class="e" d="M186 622V634" marker-end="url(#p)"/>
+  <rect class="node" x="36" y="638" width="300" height="46" rx="8"/><text class="t" x="46" y="658">Generator</text><text class="s" x="46" y="672">seeded, with a scenario timeline</text>
+  
+  <path class="e" d="M186 684V696" marker-end="url(#p)"/>
+  <rect class="node store" x="36" y="700" width="300" height="46" rx="8"/><text class="t" x="46" y="720">Local Postgres</text><text class="s" x="46" y="734">six databases, pricing-demo-sources</text>
+  
+  <path class="e" d="M186 746V758" marker-end="url(#p)"/>
+  <rect class="node" x="36" y="762" width="300" height="46" rx="8"/><text class="t" x="46" y="782">DuckDB</text><text class="s" x="46" y="796">to Parquet, then the idp_sbx volume</text>
+  
+  <path class="e" d="M186 808V820" marker-end="url(#p)"/>
+  <rect class="node store" x="36" y="824" width="300" height="46" rx="8"/><text class="t" x="46" y="844">Databricks idp_sbx</text><text class="s" x="46" y="858">replica, silver and gold tables</text>
+  
+  <path class="e" d="M186 870V882" marker-end="url(#p)"/>
+  <rect class="node" x="36" y="886" width="300" height="46" rx="8"/><text class="t" x="46" y="906">Metric views</text><text class="s" x="46" y="920">four, read by two Genie agents</text>
+  
+  <path class="e plan" d="M36 918H14V486H20" marker-end="url(#p)"/>
+  <text class="el" x="36" y="950">dashed: planned Unity Catalog KPI IDs</text>
+</svg>
+</div>
+<figcaption>Teal marks the ontology's main path and the stores. Grey arrows are the other built steps; the dashed arrow is planned, not built.</figcaption>
+</figure>
+
+<div class="two">
+  <div class="card">
+    <h3>The ontology, in five steps</h3>
+    <ol class="steps">
+      <li>The process map and each module's source files are the master copy.</li>
+      <li>Each module's builder turns its sources into Turtle, and <code>check.sh</code> gates every change.</li>
+      <li>A release freezes a module as a tagged package under <code>business_architecture/ontology/releases/</code>.</li>
+      <li>Two projections turn the packages into a property graph. <code>pipeline.py</code> (run by <code>run_local.sh</code>) is the repository's own; the <code>ontology-to-lpg</code> skill's driver is the other, and it also copies the graph to AuraDB and writes the triples to Databricks.</li>
+      <li>The driver then rebuilds its graph from the Databricks table, which proves the table holds the whole ontology.</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>The demo data, in five steps</h3>
+    <ol class="steps">
+      <li>Real EIA spot prices and MPC's 10-K capacities anchor the numbers.</li>
+      <li>A seeded generator writes the six source systems' rows into local Postgres.</li>
+      <li>DuckDB copies them to Parquet, and the Parquet files go to the <code>idp_sbx</code> volume.</li>
+      <li>Databricks builds the replica, silver and gold tables, then four metric views.</li>
+      <li>Two Genie agents answer questions from the metric views.</li>
+    </ol>
+  </div>
+</div>
+
+<h2 id="stores">The stores</h2>
+<p class="lead">Where each store lives and where its login is. <code>LOCAL-STORES.md</code>, beside this page, is the short index of the same stores.</p>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Store</th><th>What it holds</th><th>Where</th><th>Login</th></tr></thead>
+<tbody>
+<tr><td>Local Neo4j, pipeline</td><td data-k="Holds">The projection that <code>pipeline.py</code> builds: 4,137 nodes, 21,295 relationships</td><td data-k="Where">Container <code>epm-lpg</code>, Bolt <code>localhost:17687</code>, browser <code>http://localhost:17474</code></td><td data-k="Login"><code>~/epm-lpg/run.env</code></td></tr>
+<tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step: 4,137 nodes, 21,666 relationships</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
+<tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the driver's graph, checked by an equal RDFC-1.0 hash</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
+<tr><td>Databricks, <code>epm_triples</code></td><td data-k="Holds">The release triples as a Delta table</td><td data-k="Where"><code>workspace.epm_ontology.epm_triples</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code></td></tr>
+<tr><td>Databricks, <code>idp_sbx</code></td><td data-k="Holds">The demo's replica, silver and gold tables, four metric views and two Genie agents</td><td data-k="Where">Catalog <code>idp_sbx</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code> or the demo's <code>.env</code></td></tr>
+<tr><td>Local Postgres</td><td data-k="Holds">The demo's six synthetic source databases: mips, mpr, kittyhawk, ctrm, planning, prodacct</td><td data-k="Where">Container <code>pricing-demo-sources</code>, <code>127.0.0.1:55432</code>, volume <code>pricing-demo-pgdata</code></td><td data-k="Login">The local demo login in the demo's <code>docker/docker-compose.yml</code></td></tr>
+</tbody></table></div>
+<p class="note">The two local graphs hold the same nodes but count relationships differently, because they follow different versions of the projection guideline: the pipeline v2.2, the driver the skill's v2.3. Each passes its own checks.</p>
+
+<h2 id="before">Before you start</h2>
+<div class="two">
+  <div>
+    <p>You need these on the Mac:</p>
+    <ul>
+      <li>Docker Desktop, running.</li>
+      <li><a href="https://docs.astral.sh/uv/">uv</a>, and Java 11 or later for ROBOT.</li>
+      <li>ROBOT 1.9.10 at <code>~/epm-lpg/robot.jar</code>, and the n10s jar in <code>~/epm-lpg/plugins/</code>. The projection README's "Rerun the whole pipeline", steps 1 to 3, downloads both and gives their checksums.</li>
+      <li>The env files named in the table. Create the Aura and Databricks files yourself, then run <code>chmod 600</code> on each.</li>
+    </ul>
+  </div>
+  <div>
+    <p>The commands use two folders. Set them once per terminal:</p>
+<pre><code>EPM="$HOME/Dropbox/1_PROJECTS/Enterprise Performance Model"
+DEMO="$EPM/demos/downstream-pricing-databricks-free"</code></pre>
+  </div>
+</div>
+
+<h2 id="check">Check what is running</h2>
+<pre><code>docker ps --format '{{.Names}}  {{.Status}}'</code></pre>
+<p>All three local stores are up when the list shows <code>epm-lpg</code>, <code>lpg-local-neo4j-1</code> and <code>pricing-demo-sources</code>.</p>
+<h3>Count what each store holds</h3>
+<p>Pipeline Neo4j. The password is read from its file and never printed:</p>
+<pre><code>set -a; . ~/epm-lpg/run.env; set +a
+docker exec epm-lpg cypher-shell -u neo4j -p "$NEO4J_PASSWORD" \
+  "MATCH (n) RETURN count(n) AS nodes; MATCH ()-[r]->() RETURN count(r) AS relationships;"</code></pre>
+<p>Driver Neo4j:</p>
+<pre><code>pw=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
+docker exec lpg-local-neo4j-1 cypher-shell -u neo4j -p "$pw" \
+  "MATCH (n) RETURN count(n) AS nodes; MATCH ()-[r]->() RETURN count(r) AS relationships;"</code></pre>
+<p>Postgres, one line per database:</p>
+<pre><code>for db in mips mpr kittyhawk ctrm planning prodacct; do
+  printf '%s: ' "$db"
+  docker exec pricing-demo-sources psql -U demo -d "$db" -Atc \
+    "select count(*) || ' tables, ' || coalesce(sum(n_live_tup), 0) || ' rows' from pg_stat_user_tables"
+done</code></pre>
+<p>The demo in Databricks, every table and metric view with its row count:</p>
+<pre><code>cd "$DEMO" && uv run python -m pricing_demo.databricks counts</code></pre>
+<p>AuraDB: open the instance in the <a href="https://console.neo4j.io/">Aura console</a> and run <code>MATCH (n) RETURN count(n)</code>. Its count is a little higher than the local graph's, because the copy also holds a few nodes of its own (namespace and configuration nodes). The driver's copy step is what proves the two graphs equal.</p>
+
+<h2 id="stop">Stop, start and reboot</h2>
+<p class="lead">Stopping keeps the data; purging removes it. A reload brings a purged store back from the repository.</p>
+<figure>
+<div class="diagram mid" role="img" aria-labelledby="f2t">
+<svg viewBox="0 0 760 270" xmlns="http://www.w3.org/2000/svg">
+  <title id="f2t">The life of a store: running, stopped, purged, and how to move between them</title>
+  <defs>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="head"/></marker>
+    <marker id="bk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="head key"/></marker>
+    <marker id="bb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="head bad"/></marker>
+  </defs>
+  <rect class="node store" x="40" y="96" width="180" height="70" rx="10"/>
+  <text class="t" x="56" y="124">Running</text><text class="s" x="56" y="144">data loaded, login works</text>
+  <rect class="node" x="330" y="20" width="190" height="70" rx="10"/>
+  <text class="t" x="346" y="48">Stopped</text><text class="s" x="346" y="68">data kept, same login</text>
+  <rect class="node gone" x="330" y="176" width="190" height="70" rx="10"/>
+  <text class="t" x="346" y="204">Purged</text><text class="s" x="346" y="224">data gone</text>
+  <rect class="node" x="600" y="96" width="140" height="70" rx="10"/>
+  <text class="t" x="616" y="124">Mac reboot</text><text class="s" x="616" y="144">Docker restarts</text>
+
+  <path class="e" d="M220 112C270 96 290 62 326 58" marker-end="url(#b)"/>
+  <text class="el" x="232" y="56">docker stop</text>
+  <path class="e key" d="M330 76C290 84 268 112 224 122" marker-end="url(#bk)"/>
+  <text class="el" x="262" y="122">docker start</text>
+  <path class="e bad" d="M200 166C230 196 290 210 326 210" marker-end="url(#bb)"/>
+  <text class="el" x="196" y="214">purge</text>
+  <path class="e key" d="M330 228C240 252 120 226 116 170" marker-end="url(#bk)"/>
+  <text class="el" x="150" y="258">reload, steps 1 to 4</text>
+  <path class="e" d="M520 54C560 54 600 80 640 96" marker-end="url(#b)"/>
+  <text class="el" x="560" y="46">Postgres returns by itself,</text><text class="el" x="560" y="60">unless you stopped it</text>
+  <path class="e key" d="M600 140C470 150 320 146 224 138" marker-end="url(#bk)"/>
+  <text class="el" x="420" y="132">the two Neo4j: docker start</text>
+</svg>
+</div>
+<p class="note swipe">Swipe the diagram sideways to see all of it.</p>
+</figure>
+
+<div class="two">
+  <div class="card">
+    <h3>Stop the local stores</h3>
+<pre><code>docker stop epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre>
+    <h3>Start them again</h3>
+<pre><code>docker start epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre>
+    <p>Neo4j needs about a minute after a start. It is ready when <code>docker logs epm-lpg 2>&amp;1 | grep Started.</code> prints a line, and the same holds for <code>lpg-local-neo4j-1</code>.</p>
+  </div>
+  <div class="card">
+    <h3>After a reboot</h3>
+    <ol class="steps">
+      <li>Start Docker Desktop, if it does not start at login.</li>
+      <li>Postgres comes back by itself: its container has <code>restart: unless-stopped</code>. That policy brings back a container that was running when Docker stopped, but not one you stopped by hand. Start that one with <code>docker start pricing-demo-sources</code>.</li>
+      <li>The two Neo4j containers have no restart policy, so start them with <code>docker start epm-lpg lpg-local-neo4j-1</code>.</li>
+      <li>Run the checks in <a href="#check">Check what is running</a>.</li>
+    </ol>
+    <h3>The cloud stores</h3>
+    <p>AuraDB and Databricks need no shutdown from this Mac. Nothing here keeps them running. The Databricks SQL warehouse stops by itself when idle, and the next query starts it again. Manage the Aura instance from the Aura console.</p>
+  </div>
+</div>
+
+<h2 id="reload">Reload from scratch</h2>
+<p class="lead">Reload in this order. Every reload replaces what its store held, so you need not purge first. The commands rebuild everything from the repository; nothing is lost that the repository does not hold.</p>
+<figure>
+<div class="diagram mid" role="img" aria-labelledby="f3t">
+<svg viewBox="0 0 760 214" xmlns="http://www.w3.org/2000/svg">
+  <title id="f3t">The reload order and what each step reads</title>
+  <defs>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="head"/></marker>
+  </defs>
+  <rect class="lane" x="8" y="8" width="744" height="44" rx="8"/>
+  <text class="s" x="24" y="28">The demo's files</text><text class="s" x="24" y="44">in the repository</text>
+  <text class="s" x="404" y="28">The released packages</text><text class="s" x="404" y="44">in the repository</text>
+
+  <g><circle class="num-c" cx="34" cy="98" r="12"/><text class="num-t" x="30" y="102">1</text>
+  <rect class="node store" x="54" y="70" width="150" height="62" rx="8"/>
+  <text class="t" x="66" y="94">Postgres</text><text class="s" x="66" y="112">six databases</text></g>
+  <g><circle class="num-c" cx="226" cy="98" r="12"/><text class="num-t" x="222" y="102">2</text>
+  <rect class="node store" x="246" y="70" width="150" height="62" rx="8"/>
+  <text class="t" x="258" y="94">Databricks demo</text><text class="s" x="258" y="112">idp_sbx, Genie</text></g>
+  <g><circle class="num-c" cx="418" cy="98" r="12"/><text class="num-t" x="414" y="102">3</text>
+  <rect class="node store" x="438" y="70" width="140" height="62" rx="8"/>
+  <text class="t" x="450" y="94">Pipeline Neo4j</text><text class="m" x="450" y="112">epm-lpg</text></g>
+  <g><circle class="num-c" cx="600" cy="98" r="12"/><text class="num-t" x="596" y="102">4</text>
+  <rect class="node store" x="620" y="70" width="132" height="62" rx="8"/>
+  <text class="t" x="632" y="94">Driver</text><text class="s" x="632" y="112">Neo4j, Aura, table</text></g>
+
+  <path class="e" d="M128 52V66" marker-end="url(#c)"/>
+  <path class="e" d="M204 120H242" marker-end="url(#c)"/>
+  <path class="e" d="M508 52V66" marker-end="url(#c)"/>
+  <path class="e" d="M686 52V66" marker-end="url(#c)"/>
+  <path class="e" d="M720 132C720 170 650 170 650 136" marker-end="url(#c)"/>
+  <text class="el" x="54" y="162">1 writes the rows that</text><text class="el" x="54" y="176">step 2 copies to Parquet</text>
+  <text class="el" x="438" y="162">3 and 4 each read the releases;</text><text class="el" x="438" y="176">4's rebuild reads the table it wrote</text>
+</svg>
+</div>
+<p class="note swipe">Swipe the diagram sideways to see all of it.</p>
+<figcaption>Step 2 needs step 1's data. Steps 3 and 4 need only the releases, so either can run alone; this order is the one that ends with every store fresh.</figcaption>
+</figure>
+
+<h3>1. Postgres: the six source databases</h3>
+<pre><code>cd "$DEMO"
+docker compose -f docker/docker-compose.yml up -d
+uv run python -m pricing_demo.load_postgres</code></pre>
+<p><code>load_postgres</code> drops, recreates and fills each table in one transaction per database, then checks the row counts.</p>
+
+<h3>2. Databricks: the demo catalog</h3>
+<pre><code>cd "$DEMO"
+uv run python -m pricing_demo.replicate          # Postgres to Parquet, with DuckDB
+uv run python -m pricing_demo.databricks setup   # catalog idp_sbx (or DEMO_CATALOG), schemas, volume
+uv run python -m pricing_demo.databricks upload  # Parquet to the volume
+uv run python -m pricing_demo.databricks build   # replica, silver, gold, metric views
+uv run python -m pricing_demo.genie              # the two Genie agents
+uv run python -m pricing_demo.databricks counts  # check the row counts</code></pre>
+<p>The Genie step updates an agent that already exists by its title, so running it again makes no duplicates.</p>
+
+<h3>3. The pipeline's Neo4j</h3>
+<pre><code>cd "$EPM/business_architecture/ontology/projection"
+./run_local.sh --keep</code></pre>
+<p>It builds, reasons with ROBOT, loads and checks the graph, and leaves <code>epm-lpg</code> running with a new password in <code>~/epm-lpg/run.env</code>. It ends with <code>projection done</code>. Then check that git shows no changed file. A changed <code>projection-report.json</code> or manifest means the inputs changed and belongs in a pull request.</p>
+
+<h3>4. The driver: its Neo4j, AuraDB and Databricks <code>epm_triples</code></h3>
+<pre><code>cd ~/.agents/skills/ontology-to-lpg/scripts
+uv run --no-project --with rdflib python3 run_projection.py \
+  --config "$EPM/business_architecture/ontology/projection/skill-run/epm-run.json"</code></pre>
+<p>One run does all of it, in this order:</p>
+<ol class="steps">
+  <li>It projects the releases.</li>
+  <li>It loads and checks its local Neo4j.</li>
+  <li>It replaces what AuraDB holds with a copy.</li>
+  <li>It writes <code>epm_triples</code> in one <code>CREATE OR REPLACE</code>.</li>
+  <li>It rebuilds the graph from that table into a fresh local Neo4j, which it keeps.</li>
+</ol>
+<p>It ends with <code>every step passed</code>. It takes about ten minutes.</p>
+<ul>
+  <li>Add <code>--plan</code> to list the steps without running them.</li>
+  <li>Add <code>--skip databricks</code> to leave the table as it is.</li>
+  <li>After <code>--skip rebuild</code>, the kept graph's login is in <code>~/lpg-out/epm/neo4j-run/run.env</code> instead of the <code>epm-rebuild</code> one.</li>
+</ul>
+<div class="ok"><strong>When it is done</strong>Every store holds the newest releases again. Run the counts in <a href="#check">Check what is running</a>.</div>
+
+<h2 id="purge">Purge</h2>
+<div class="warn"><strong>Read this first.</strong>A purge cannot be undone. The data comes back only by <a href="#reload">reloading</a>, and nothing here is lost that the reload does not rebuild. On 2026-10-26 the decision owner asked to keep these stores loaded. Purge only when you mean to.</div>
+
+<div class="two">
+  <div class="card">
+    <h3>The two local Neo4j containers</h3>
+<pre><code>docker rm -f -v epm-lpg
+cd ~/.agents/skills/ontology-to-lpg/docker
+docker compose -p lpg-local --profile neo4j --profile fuseki down -v</code></pre>
+    <p><code>-v</code> also removes each container's data volume. The next <code>run_local.sh --keep</code> or driver run creates a new container with a new password.</p>
+  </div>
+  <div class="card">
+    <h3>Local Postgres</h3>
+    <div class="warn"><strong>This deletes the volume <code>pricing-demo-pgdata</code>.</strong><code>down -v</code> removes the named volume that the compose file declares, and the six databases go with it.</div>
+<pre><code>cd "$DEMO"
+docker compose -f docker/docker-compose.yml down -v</code></pre>
+    <p>To remove the container but keep the data, run the same command without <code>-v</code>.</p>
+  </div>
+</div>
+
+<h3>AuraDB</h3>
+<p>In the Aura console's query tool, run this as one statement. In Neo4j Browser, put <code>:auto</code> in front of it, because <code>IN TRANSACTIONS</code> needs an auto-commit transaction:</p>
+<pre><code>MATCH (n) CALL (n) { DETACH DELETE n } IN TRANSACTIONS OF 10000 ROWS</code></pre>
+<p>This empties the database and keeps the instance. The next driver run fills it again.</p>
+
+<h3>Databricks</h3>
+<p>Run these in the Databricks SQL editor.</p>
+<pre><code>-- the ontology triples
+DROP TABLE IF EXISTS workspace.epm_ontology.epm_triples;
+
+-- the demo: every schema, table, metric view and the volume in the catalog
+DROP CATALOG IF EXISTS idp_sbx CASCADE;</code></pre>
+<p>The Genie agents are not in the catalog. Delete <em>Crack Spread Price Analytics</em> and <em>Executive Summary KPIs Analytics</em> in Genie, or leave them: the next <code>genie</code> step updates them in place. If <code>setup</code> fell back to <code>DEMO_CATALOG</code>, because <code>idp_sbx</code> could not be created, drop the demo's schemas in that catalog instead.</p>
+
+<h2 id="trouble">When something fails</h2>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>What you see</th><th>Why</th><th>What to do</th></tr></thead>
+<tbody>
+<tr><td>Neo4j does not print <code>Started.</code></td><td data-k="Why">The Docker disk is usually full.</td><td data-k="Do">Check it with <code>docker system df</code>. Then free space: run <code>docker builder prune</code> and <code>docker image prune</code>, or remove volumes you know you do not need. Do not remove <code>pricing-demo-pgdata</code>.</td></tr>
+<tr><td><code>docker compose up (Neo4j) exited 1</code> from the driver</td><td data-k="Why">A container from an earlier run still holds the <code>lpg-local</code> name.</td><td data-k="Do">Remove it with the driver's purge command above, then run again.</td></tr>
+<tr><td><code>the run stopped on a driver or file error (ClientError)</code></td><td data-k="Why">A query failed inside the load. On 2026-10-26 the cause was an apostrophe in an <code>sh:message</code>, which n10s writes into its Cypher unescaped. Since personal-agent-skills #72, the driver leaves such a message out.</td><td data-k="Do">Update the skills checkout. If the error comes back, the n10s query text is in the Neo4j logs.</td></tr>
+<tr><td>A login is refused</td><td data-k="Why">Each run writes a new password, and an old env file holds the old one.</td><td data-k="Do">Use the file the table names for that store. After a driver run, the <code>epm-rebuild</code> file is the current one.</td></tr>
+<tr><td>The demo's scripts cannot reach Databricks</td><td data-k="Why">The token in the env file has expired.</td><td data-k="Do">Make a new personal access token in Databricks, and put it in <code>~/.config/databricks/epm.env</code>.</td></tr>
+</tbody></table></div>
+
+<p class="src">Sources: <code>projection/README.md</code>, <code>run_local.sh</code>, <code>skill-run/README.md</code> and <code>LOCAL-STORES.md</code> in this folder; the demo's <code>README.md</code>, <code>docker/docker-compose.yml</code> and <code>pricing_demo/</code>; and the <code>ontology-to-lpg</code> skill's <code>run_projection.py</code> and <code>docker/compose.yaml</code>.</p>
+</div></main>
+<script>
+document.querySelectorAll("pre").forEach(function (pre) {
+  if (!navigator.clipboard) return;
+  var b = document.createElement("button");
+  b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(pre.querySelector("code").innerText).then(function () {
+      b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500);
+    });
+  });
+  pre.appendChild(b);
+});
+</script>
+</body>
+</html>
