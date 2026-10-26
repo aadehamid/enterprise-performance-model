@@ -1,6 +1,6 @@
 # Enterprise Performance Model
 
-Documentation-and-architecture repository for a governed Downstream Oil & Gas performance model, plus a personal learning sandbox and two runnable Order-to-Cash demos.
+Documentation-and-architecture repository for a governed Downstream Oil & Gas performance model, plus a personal learning sandbox, two runnable Order-to-Cash demos and a downstream pricing demo.
 
 The conceptual chain is the same in every track:
 
@@ -19,7 +19,7 @@ A widely used calculation is not automatically a KPI. Appearance in a register m
 | MEANING vs COMPUTE target picture | [architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg) |
 | Foundation architecture set (FOUND-001–006) | [EPM Foundation v2](EPM_Foundation_v2_Markdown_HTML/README.md) |
 | Personal ontology / RDF / Neo4j / agents sandbox | [EPM_Homelab/00-Homelab-Charter-and-Roadmap.md](EPM_Homelab/00-Homelab-Charter-and-Roadmap.md) |
-| Runnable unbilled-exposure demos | [demos/README.md](demos/README.md) |
+| Runnable demos: unbilled exposure and downstream pricing | [demos/README.md](demos/README.md) |
 
 ## Three tracks
 
@@ -44,9 +44,9 @@ Reading copy of the visual handbook: [EPM_Integrated_Architecture_Handbook_Compl
 
 Intentionally mirrors EPM patterns. **Not a governed EPM artifact set.** Charter, ADRs, stack decisions, and a ten-phase (0–9) roadmap live under [`EPM_Homelab/`](EPM_Homelab/).
 
-### 3. Demos — runnable O2C unbilled exposure
+### 3. Demos — runnable O2C unbilled exposure and downstream pricing
 
-Three packs: full Databricks/Metric Views, a learner variant with an empty ontology stub, and a dbt/DuckDB/MetricFlow pack. See [`demos/README.md`](demos/README.md).
+Three packs: full Databricks/Metric Views, a learner variant with an empty ontology stub, and a dbt/DuckDB/MetricFlow pack. See [`demos/README.md`](demos/README.md). *2026-10-25:* a fourth pack rebuilds the pricing metric views and Genie agents in Databricks Free Edition from real EIA and MPC data where public ([`demos/downstream-pricing-databricks-free/`](demos/downstream-pricing-databricks-free/), EPM-DEC-001-0102).
 
 ## Canonical sources
 

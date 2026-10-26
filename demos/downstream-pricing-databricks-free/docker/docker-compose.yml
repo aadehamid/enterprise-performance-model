@@ -1,0 +1,14 @@
+# One Postgres server with one database per source system. The pipeline reads SOURCE_PG_DSN, so the databases
+# can move to another host (for example an exe.dev VM) without code changes.
+services:
+  sources:
+    image: postgres:16.10
+    container_name: pricing-demo-sources
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo  # a local, synthetic-only database; change it when the host is not your Mac
+      POSTGRES_DB: postgres
+    ports:
+      - "127.0.0.1:55432:5432"  # this machine only (Kimi round 1, finding 10)
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d:ro
