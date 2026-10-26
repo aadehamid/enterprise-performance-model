@@ -29,8 +29,8 @@
   "files": {
     "CHANGELOG.md": "058f6c6c632678e0a71f2a0ed18ffa10a7926574b0f1ce505fb5c9fe5c8973d8",
     "catalog.ttl": "b17566a4119426227a52c2212a781fb69939e4c46b340776fa18382dc563eb0a",
-    "data-product.jsonld": "5459ecf2ab1778c0b3d51cf20954674f364c4202cc15264b5fb00f304349e6a9",
-    "data-product.ttl": "9214625d0f2cd0b60e4be1633ae8903d9abe8c22537db0545ab53aa89aceea4c",
+    "data-product.jsonld": "ac2c5a25d4c6c143ceb6e843de336a7304303bfdc2d05eb6bdf1c1a9080dda93",
+    "data-product.ttl": "fcd5dd159a9ffd2857914fd76157ca17d818cf1d71d82ebd7fd0508c57b46fcc",
     "shapes.ttl": "dde4da25e9c9124a29ebf0349777dbbc79ae030517817411e43b4af980c3c9f8"
   }
 }

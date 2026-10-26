@@ -21,7 +21,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://w3id.org/lsc/ontology/modules/data-product> a owl:Ontology ;
-    dcterms:description "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them (Step 7). Definitions only, never data values; mapped to DCAT, not imported."@en ;
+    dcterms:description "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them; and the pricing tables and views on the data platform, foundational or derived, with their lineage and the Genie agents that use them (Step 7). Definitions only, never data values; mapped to DCAT, not imported."@en ;
     dcterms:issued "2026-10-25"^^xsd:date ;
     dcterms:modified "2026-10-25"^^xsd:date ;
     dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.3.0>,

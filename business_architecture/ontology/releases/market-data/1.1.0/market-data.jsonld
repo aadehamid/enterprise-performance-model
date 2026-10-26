@@ -7,7 +7,7 @@
   "http://purl.org/dc/terms/description": [
    {
     "@language": "en",
-    "@value": "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment (Step 7). Definitions only, never prices."
+    "@value": "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment; the prices the decision owner's pricing views report for the other pricing measures; and where each measure's complete list of series is (Step 7). Definitions only, never prices."
    }
   ],
   "http://purl.org/dc/terms/issued": [

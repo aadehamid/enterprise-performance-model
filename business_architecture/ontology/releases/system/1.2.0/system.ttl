@@ -10,7 +10,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://w3id.org/lsc/ontology/modules/system> a owl:Ontology ;
-    dcterms:description "The systems, office tools and working documents the process map names, with their kind and the processes that use them (Step 7)."@en ;
+    dcterms:description "The systems, office tools and working documents the process map names, with their kind, definitions and the processes that use them, and the systems the pricing assets name (Step 7)."@en ;
     dcterms:issued "2026-10-25"^^xsd:date ;
     dcterms:modified "2026-10-25"^^xsd:date ;
     dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.3.0> ;

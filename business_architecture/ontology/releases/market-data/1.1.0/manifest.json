@@ -24,8 +24,8 @@
   "files": {
     "CHANGELOG.md": "4c9859e54d96d08f53724035352c7ac9cbdbc170b966e80b2be1842b284e8694",
     "catalog.ttl": "92eed54c55e8d05f1c797cfe440cd00f6caa780bba25b5e0540919773db9fbb7",
-    "market-data.jsonld": "4c6c25173a4c84210101994ce7e5bbd7ab2a5329ad73883d81f680ed397c989d",
-    "market-data.ttl": "601ee74f3c38362393f28033be7bebe8a55d1b106bc0b2671b20add8b4b89745",
+    "market-data.jsonld": "7357fdbc2357f5df61df651ab307c708bbb191f5b25c703f4c8adad9d7bab68a",
+    "market-data.ttl": "67fba71a7ff957d245f48b2db5edf5652354e493b101bd17559dea78440e475f",
     "shapes.ttl": "24383d97f114247a690243857e71a00d570bfc0dbc245aaf024c4ad7a726cf3a"
   }
 }

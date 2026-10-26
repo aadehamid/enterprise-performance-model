@@ -107,7 +107,7 @@ MODULES = {
     # (EPM-DEC-001-0077). Each requires core 2.2.0, the release that holds every process they link.
     "data-product": {
         "title": "LSC Data Product Module",
-        "description": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them (Step 7). Definitions only, never data values; mapped to DCAT, not imported.",
+        "description": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them; and the pricing tables and views on the data platform, foundational or derived, with their lineage and the Genie agents that use them (Step 7). Definitions only, never data values; mapped to DCAT, not imported.",
         # 1.1.0 is a minor approved with the close-out releases: the Customer Master data product, produced by
         # CM 1.3.7.1.1 (MPC-P10.3); it requires core 2.3.0 (EPM-DEC-001-0087, 0088, 0091).
         # 1.2.0 is a minor of item F's release plan, which the decision owner approved: the pricing platform tables,
@@ -140,7 +140,7 @@ MODULES = {
     },
     "system": {
         "title": "LSC System Module",
-        "description": "The systems, office tools and working documents the process map names, with their kind and the processes that use them (Step 7).",
+        "description": "The systems, office tools and working documents the process map names, with their kind, definitions and the processes that use them, and the systems the pricing assets name (Step 7).",
         # 1.1.0 is a minor the decision owner approved: 15 systems defined from their vendors' own descriptions
         # or the decision owner's, full names as preferred labels, both code lists' members as top concepts both
         # ways; it requires core 2.3.0 (EPM-DEC-001-0098, 0099).
@@ -167,7 +167,7 @@ MODULES = {
     },
     "market-data": {
         "title": "LSC Market Data Module",
-        "description": "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment (Step 7). Definitions only, never prices.",
+        "description": "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment; the prices the decision owner's pricing views report for the other pricing measures; and where each measure's complete list of series is (Step 7). Definitions only, never prices.",
         # 1.1.0 is a minor of item F's release plan, which the decision owner approved: the pricing views' prices for
         # each pricing measure, the columns that list every series, two NYMEX cracks, top concepts both ways; it
         # requires kpi 1.2.0 (EPM-DEC-001-0097, 0098, 0100).

@@ -7,7 +7,7 @@
   "http://purl.org/dc/terms/description": [
    {
     "@language": "en",
-    "@value": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them (Step 7). Definitions only, never data values; mapped to DCAT, not imported."
+    "@value": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them; and the pricing tables and views on the data platform, foundational or derived, with their lineage and the Genie agents that use them (Step 7). Definitions only, never data values; mapped to DCAT, not imported."
    }
   ],
   "http://purl.org/dc/terms/issued": [

@@ -7,7 +7,7 @@
   "http://purl.org/dc/terms/description": [
    {
     "@language": "en",
-    "@value": "The systems, office tools and working documents the process map names, with their kind and the processes that use them (Step 7)."
+    "@value": "The systems, office tools and working documents the process map names, with their kind, definitions and the processes that use them, and the systems the pricing assets name (Step 7)."
    }
   ],
   "http://purl.org/dc/terms/issued": [
