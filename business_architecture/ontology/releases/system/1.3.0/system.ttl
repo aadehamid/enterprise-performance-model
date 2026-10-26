@@ -44,7 +44,7 @@ system:actuals-case-prep-file a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "A file used to prepare the inputs for the regional backcast."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "actuals-case-prep-file"^^xsd:string ;
     skos:prefLabel "Actuals Case Prep File"@en ;
@@ -78,7 +78,7 @@ system:aps-planning-db a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "A planning database used in the prompt-month evaluation of the aligned scenarios. Its name ties it to Aspen Petroleum Scheduler (APS); no source in the repository says more."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "aps-planning-db"^^xsd:string ;
     skos:prefLabel "APS Planning DB"@en ;
@@ -91,7 +91,7 @@ system:backcasting-dashboard a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "The dashboard where the regional backcast is evaluated: it compares the price-adjusted and LP case results with the original forecast, shows margin shifts, volume differences and the GRM waterfall, and supports the root-cause reports for the backcasting meetings."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "backcasting-dashboard"^^xsd:string ;
     skos:prefLabel "Backcasting Dashboard"@en ;
@@ -215,7 +215,7 @@ system:market-outlook-and-avails-dashboard a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "The dashboard used in the Market Outlook and Avails meeting to analyze forecast and historical market data and to check data for gaps, before the standard scenarios for evaluation are agreed."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "market-outlook-and-avails-dashboard"^^xsd:string ;
     skos:prefLabel "Market Outlook and Avails Dashboard"@en ;
@@ -376,7 +376,7 @@ system:network-premise-document a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "The working document that holds the network premise for the prompt and out months, an input to the regional optimization plan. Stakeholders agree overrides, with their rationale, and record them in it, including changes out of cycle."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "network-premise-document"^^xsd:string ;
     skos:prefLabel "Network Premise Document"@en ;
@@ -406,7 +406,7 @@ system:planning-and-scheduling-ui a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "The user interface where planners prepare the inputs for the regional optimization plan: they set the planning periods for XPIMS and DPO, gather committed deals and spot and export opportunities, update opening inventory, check the data for gaps and inconsistencies, apply overrides, and publish the model input spreadsheets for XPIMS and DPO."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "planning-and-scheduling-ui"^^xsd:string ;
     skos:prefLabel "Planning and Scheduling UI"@en ;
@@ -434,7 +434,7 @@ system:planning-db a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "The database that holds the regional planning cases: the standard scenarios run in XPIMS for the regional plan, the crude oil and product evaluations, the step cases for the out and prompt months, and the backcasting case results. Planners publish results to it, and the regional plan is handed over from it."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "planning-db"^^xsd:string ;
     skos:prefLabel "Planning DB"@en ;
@@ -490,7 +490,7 @@ system:premise-document a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "The working document in which the breakdown of the planning horizon into time periods for XPIMS and DPO is decided."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "premise-document"^^xsd:string ;
     skos:prefLabel "Premise Document"@en ;
@@ -518,7 +518,7 @@ system:psr a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "A source of actual data for the regional backcast: feedstock purchases and costs, intermediate transfers, product sales and purchases, and inventory and transfers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "psr"^^xsd:string ;
     skos:prefLabel "PSR"@en ;
@@ -535,7 +535,7 @@ system:refinery-premise-document a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "The working document that holds the refinery premise for the prompt and out months, an input to the regional optimization plan. Stakeholders agree overrides, with their rationale, and record them in it, including changes out of cycle."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "refinery-premise-document"^^xsd:string ;
     skos:prefLabel "Refinery Premise Document"@en ;
@@ -551,7 +551,7 @@ system:rfc-hindsight-analysis-excel a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "A spreadsheet that supplies actual data for the regional backcast, including feedstock purchases and costs and intermediate transfers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "rfc-hindsight-analysis-excel"^^xsd:string ;
     skos:prefLabel "RFC Hindsight Analysis Excel"@en ;
@@ -607,7 +607,7 @@ system:tmr a skos:Concept,
         src:decision-owner-customer-inputs,
         src:downstream-process-map ;
     skos:definition "A source of actual product prices for the regional backcast. The decision owner's customer inputs name it the Terminal Margin Ranking System, a source of brand and wholesale customers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "tmr"^^xsd:string ;
     skos:prefLabel "TMR"@en ;
@@ -634,7 +634,7 @@ system:trr a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "A source of actual inventory and transfer data for the regional backcast."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "trr"^^xsd:string ;
     skos:prefLabel "TRR"@en ;
@@ -724,7 +724,7 @@ system:xpims-dpo-integration-macro a skos:Concept,
     dcterms:source src:core-2-3-0-process-definitions,
         src:downstream-process-map ;
     skos:definition "The macro used in the XPIMS and DPO reconciliation, where the regional plan from XPIMS and the base distribution plan from DPO are compared and their model constraints reconciled."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md"@en ;
     skos:inScheme sys:Systems ;
     skos:notation "xpims-dpo-integration-macro"^^xsd:string ;
     skos:prefLabel "XPIMS <> DPO Integration Macro"@en ;

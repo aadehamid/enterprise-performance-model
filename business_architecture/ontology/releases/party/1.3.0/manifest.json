@@ -25,14 +25,14 @@
   ],
   "triples": 4020,
   "approved_by": {
-    "who": "The decision owner",
+    "who": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)",
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
   },
   "files": {
     "CHANGELOG.md": "74c9a6627731e8fe3442dd7e865c3d65674bac58461143e9d676f0fc823e3d34",
     "catalog.ttl": "7d3bd1cf96bcbb7539752e17736433269c07c4c074a8a67b8ef3fcd53f4b9ad4",
-    "party.jsonld": "4987d89cb018bf1a12a4f3b831c449ff128bf048057155fdcee4eab28b80e0e4",
-    "party.ttl": "20f16fef9b4806a621a6e5de98eef5a42c725bb0b54fd295c6472ae4014aa440",
+    "party.jsonld": "4165bd61788e399a467168c0ea492b171c839cd9c4095ea3c66c7c97fe4da243",
+    "party.ttl": "40a80efed717d646b5b4063fd6ef44fe643f42a6824bf23900901d0387c7a088",
     "shapes.ttl": "6466673d25a40ec215f977129ef7bb7c5abae84ed3fe78411c66c4d6a66e37b3"
   }
 }

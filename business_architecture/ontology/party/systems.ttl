@@ -2123,7 +2123,7 @@
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "Renewable Compliance Management System"@en ;
     skos:definition "The Renewable Compliance Management System: it holds a reference ID tied to a fuel movement or a RIN trade."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "rcms" ;
     skos:prefLabel "RCMS"@en ;
@@ -2136,7 +2136,7 @@
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "Terminal Automation System Data Manager"@en ;
     skos:definition "The Terminal Automation System Data Manager: it creates the customers and destinations of MPLX's third-party suppliers in the terminal automation system."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "tasdm" ;
     skos:prefLabel "TASDM"@en ;
@@ -2149,7 +2149,7 @@
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "Cross Reference System"@en ;
     skos:definition "The Cross Reference System on the Salesforce to RightAngle interface, which excludes specific customers from that interface."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "xref" ;
     skos:prefLabel "XREF"@en ;
@@ -2206,7 +2206,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "A system in the customer landscape that is a source of asphalt and bitumen customers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "asphalt-marketing-system" ;
     skos:prefLabel "Asphalt Marketing System"@en ;
@@ -2218,7 +2218,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "A system in the customer landscape that is a source of dealers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "brand-credit-card-system" ;
     skos:prefLabel "Brand Credit Card System"@en ;
@@ -2231,7 +2231,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "MyMPC Customer Portal"@en ;
     skos:definition "The MyMPC customer portal; it sends customer data to Profisee."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "customer-portal" ;
     skos:prefLabel "Customer Portal"@en ;
@@ -2264,7 +2264,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "A system in the customer landscape that is a source of forecast-driven customers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "eis" ;
     skos:prefLabel "EIS"@en ;
@@ -2331,7 +2331,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "Tax"@en ;
     skos:definition "A store of customers' state sales tax exemption certificates, which it sends to RightAngle."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "tax-image-silo" ;
     skos:prefLabel "Tax Image Silo"@en ;
@@ -2345,7 +2345,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "TAS"@en ;
     skos:definition "A system in the customer landscape that is a source of terminal customers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "terminal-audit-system" ;
     skos:prefLabel "Terminal Audit System"@en ;
@@ -2357,7 +2357,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "A system that sends cross-reference customer ID mappings to KittyHawk."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "terminal-upload" ;
     skos:prefLabel "Terminal Upload"@en ;
@@ -2370,7 +2370,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "A system that calculates and processes freight and sends freight data to TMIS."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "tfr" ;
     skos:prefLabel "TFR"@en ;
@@ -2383,7 +2383,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "A system downstream of MAGIC that sends customer data to Profisee."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "tmt" ;
     skos:prefLabel "TMT"@en ;
@@ -2408,7 +2408,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "A system in the customer landscape that is a source of partner roles: vendor, surety and customer."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "corp-vetting" ;
     skos:prefLabel "Corp_Vetting"@en ;
@@ -2421,7 +2421,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "IDP"@en ;
     skos:definition "The data products platform for customer data: the customer master, sales, credit exposure and delinquency, fed with customer ID mappings, roll-ups and cross-references from Profisee."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "data-products-idp" ;
     skos:prefLabel "Data Products IDP"@en ;
@@ -2455,7 +2455,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "A system that records crude movement tickets; it receives the customer from SAP MDG."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "star" ;
     skos:prefLabel "Star"@en ;
@@ -2468,7 +2468,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "TMR"@en ;
     skos:definition "A system in the customer landscape that is a source of brand and wholesale customers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:exactMatch system:tmr ;
     skos:inScheme party:customer-systems ;
     skos:notation "terminal-margin-ranking-system" ;
@@ -2481,7 +2481,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "The master data repository of carrier contracts and rates, fed with freight data by TFR."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "tmis" ;
     skos:prefLabel "TMIS"@en ;
@@ -2494,7 +2494,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "CBS"@en ;
     skos:definition "The enterprise-wide terminal integration and business-information system: it holds terminal data on suppliers, products and carriers, and receives customer data from Terminal download."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "fuelfacs" ;
     skos:prefLabel "FuelFacs"@en ;
@@ -2521,7 +2521,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "Terminal Download"@en ;
     skos:definition "A system that sends customer data from SAP MDG to the terminals, through FuelFacs, so that the customer can load there."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "terminal-download" ;
     skos:prefLabel "Terminal download"@en ;
@@ -2603,7 +2603,7 @@ src:decision-owner-customer-inputs a dcterms:BibliographicResource ;
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:definition "The system of record for the branded dealer network, built on Salesforce: brand customers with their stations and ship-tos. It aggregates the stations' point-of-sale transactions, exchanges dealers with SAP MDG, and sends bank and payment details to SAP S/4HANA."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "dealer-master" ;
     skos:prefLabel "Dealer Master"@en ;

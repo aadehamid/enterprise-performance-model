@@ -93,7 +93,7 @@ MODULES = {
         # (EPM-DEC-001-0098, 0099).
         # 1.3.0 is a minor Claude approved under the delegation: the 20 internal customer systems' descriptions,
         # drafted from the repository; it requires system 1.3.0 (EPM-DEC-001-0103).
-        "version": "1.3.0", "stage": None, "issued": "2026-10-26",
+        "version": "1.3.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],
         "shapes": ["party/shapes.ttl"],
@@ -150,7 +150,7 @@ MODULES = {
         # process map does not name, and MPR's definition, from the decision owner's pricing assets (EPM-DEC-001-0100).
         # 1.3.0 is a minor Claude approved under the delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening):
         # the 14 internal systems' descriptions, drafted from the repository (EPM-DEC-001-0103).
-        "version": "1.3.0", "stage": None, "issued": "2026-10-26",
+        "version": "1.3.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["system/vocabulary.ttl", "system/systems.ttl"],
         "shapes": ["system/shapes.ttl"],
@@ -204,7 +204,7 @@ MODULES = {
         # 0100).
         # 2.3.0 is a minor Claude approved under the delegation: two more sources in tier 1, the sources of the
         # internal systems' descriptions; it requires the new system and party releases (EPM-DEC-001-0103).
-        "version": "2.3.0", "stage": None, "issued": "2026-10-26",
+        "version": "2.3.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
@@ -368,7 +368,7 @@ def package(name, g):
         "module": name, "version": lab, "release_candidate": m["stage"] is not None,
         "ontology_iri": MODULES_NS + name, "version_iri": f"{MODULES_NS}{name}/{lab}",
         "depends_on": dependencies(name), "decisions": m["decisions"], "triples": len(g),
-        "approved_by": None if m["stage"] else {"who": "The decision owner", "recorded_in": m["approval"][0]},
+        "approved_by": None if m["stage"] else {"who": m.get("approver", "The decision owner"), "recorded_in": m["approval"][0]},
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
 
