@@ -25,10 +25,15 @@ import glob
 import html
 import os
 import re
+import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE = os.path.join(ROOT, "scripts", "docs_template.html")
+# Every generated page carries this mark; the template takes it from here, and scripts/epm_facts.py reads it.
+GENERATOR = "scripts/build_docs_html.py"
+MARK = f'<meta name="generator" content="{GENERATOR}">'
+
 GUIDE = "business_architecture/ontology/ontology-guide.html"
 ONT = "business_architecture/ontology"
 DECISIONS_DIR = "business_architecture/domain/decisions"
@@ -483,7 +488,7 @@ class Page:
         with open(TEMPLATE, encoding="utf-8") as f:
             page = f.read()
         values = {
-            "{{GENERATOR}}": "scripts/build_docs_html.py",
+            "{{GENERATOR}}": GENERATOR,
             "{{TITLE}}": self.inline_plain(self.spec["title"]),
             "{{H1}}": self.inline(self.spec["sources"][0], self.spec["title"]),
             "{{SCOPE}}": html.escape(self.spec["scope"]),
@@ -523,11 +528,34 @@ def build_all():
     return {s["out"]: Page(s, gen).render() for s in specs}
 
 
-def main(argv):
+def marked_pages(root=ROOT):
+    """Every tracked .html file that carries the generator's mark, as a path from the repository root."""
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    names = subprocess.check_output(["git", "-C", root, "ls-files", "-z", "*.html"], env=env).decode().split("\0")
+    marked = []
+    for name in filter(None, names):
+        try:
+            with open(os.path.join(root, name), encoding="utf-8") as f:
+                head = f.read(4096)
+        except (OSError, UnicodeDecodeError):
+            continue
+        if MARK in head:
+            marked.append(name)
+    return sorted(marked)
+
+
+def orphans(built, marked):
+    """Marked pages the builder no longer makes: no source keeps them fresh, so they must be removed by hand."""
+    return sorted(set(marked) - set(built))
+
+
+def main(argv, out_root=ROOT):
+    """Write every page under out_root, or with --check compare them; --check also fails on an orphan page."""
     check = "--check" in argv
     stale = []
-    for out, page in build_all().items():
-        path = os.path.join(ROOT, out)
+    built = build_all()
+    for out, page in built.items():
+        path = os.path.join(out_root, out)
         if check:
             try:
                 with open(path, encoding="utf-8") as f:
@@ -537,12 +565,16 @@ def main(argv):
             if current != page:
                 stale.append(out)
         else:
+            os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, "w", encoding="utf-8") as f:
                 f.write(page)
             print(f"wrote {out}")
-    if stale:
-        for s in stale:
-            print(f"FAIL {s} differs from a fresh build of its Markdown: run python3 scripts/build_docs_html.py")
+    lost = orphans(built, marked_pages(out_root)) if check else []
+    for s in stale:
+        print(f"FAIL {s} differs from a fresh build of its Markdown: run python3 scripts/build_docs_html.py")
+    for s in lost:
+        print(f"FAIL {s} carries the generator's mark but no source builds it: remove it, or add its source")
+    if stale or lost:
         return 1
     if check:
         print("ok  every generated page matches its Markdown")

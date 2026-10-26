@@ -126,6 +126,28 @@ def test_a_shell_comment_in_a_fence_is_not_taken_for_the_title():
     assert b.drop_title(lines) == ["```sh", "# a comment", "```", "text"]
 
 
+def test_every_marked_page_in_the_repository_is_one_the_builder_makes():
+    assert b.marked_pages() == sorted(PAGES), "an orphan page, or a built page not yet committed"
+
+
+def test_the_check_command_fails_on_an_orphan_page(monkeypatch, capsys):
+    monkeypatch.setattr(b, "marked_pages", lambda root=b.ROOT: sorted(PAGES) + ["business_architecture/old.html"])
+    assert b.main(["--check"]) == 1
+    assert "FAIL business_architecture/old.html carries the generator's mark" in capsys.readouterr().out
+
+
+def test_every_page_carries_the_mark_and_the_template_takes_it_from_the_builder():
+    assert all(b.MARK in page for page in PAGES.values())
+    with open(b.TEMPLATE, encoding="utf-8") as f:
+        assert b.MARK not in f.read(), "the template must take the mark from the builder, so it stays searchable"
+
+
+def test_the_builder_writes_every_page_under_another_root(tmp_path):
+    assert b.main([], out_root=str(tmp_path)) == 0
+    for out, page in PAGES.items():
+        assert (tmp_path / out).read_text(encoding="utf-8") == page
+
+
 def test_every_source_exists():
     for spec in b.pages():
         for src in spec["sources"] + ([spec["intro"]] if "intro" in spec else []):

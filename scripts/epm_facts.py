@@ -10,7 +10,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py row REL-00436     # where one row stands
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
     python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines;
-                                                   # skips the HTML pages generated from Markdown
+                                                   # skips a generated HTML page that matches its Markdown
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
@@ -441,23 +441,46 @@ def cmd_section(args):
     return 0 if ids else 1
 
 
-# The mark scripts/build_docs_html.py puts in the head of each page it generates from Markdown.
-GENERATED_PAGE = '<meta name="generator" content="scripts/build_docs_html.py">'
+_BUILT = {}
 
 
-def generated_page(name, text):
-    """An HTML page generated from Markdown: its Markdown is the master copy, so searches skip the page.
-    Counting it would double every hit and invite an edit the next build would overwrite."""
-    return name.endswith(".html") and GENERATED_PAGE in text[:2048]
+def built_pages(root=ROOT):
+    """The pages scripts/build_docs_html.py makes from Markdown, path -> HTML, for this repository only
+    (an empty dict for another root, or when the builder refuses its sources). Built once per process:
+    sweep searches many phrases."""
+    if os.path.normpath(root) != os.path.normpath(ROOT):
+        return {}
+    if root not in _BUILT:
+        import build_docs_html
+        try:
+            _BUILT[root] = build_docs_html.build_all()
+        except ValueError:
+            _BUILT[root] = {}
+    return _BUILT[root]
+
+
+def generated_copies(root=ROOT):
+    """The tracked pages that equal the builder's fresh output for their source: their Markdown is the master
+    copy, so searches skip them. A page that is stale, hand-written, or no longer built is searched as it is."""
+    copies = set()
+    for name, page in built_pages(root).items():
+        try:
+            with open(os.path.join(root, name), encoding="utf-8") as f:
+                if f.read() == page:
+                    copies.add(name)
+        except OSError:
+            continue
+    return copies
 
 
 def find_hits(needle, root=ROOT):
     """Hits for needle in every tracked text file under root: (file, line, kind, text), kind "line" or
     "split" (the text runs across two lines). A file is text when it is UTF-8 with no NUL byte,
     whatever its extension (.sql, .jsonld and .page files included). The HTML pages generated from
-    Markdown (generated_page) are skipped: their Markdown source is searched instead."""
+    Markdown that equal a fresh build (generated_copies) are skipped: their Markdown is searched instead."""
     # -z: git quotes paths with non-ASCII characters otherwise, and a quoted path cannot be opened.
     files = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], text=True).split("\0")
+    copies = generated_copies(root)
     flat_needle = re.sub(r"\s+", " ", needle).strip().lower()
     hits = []
     for name in files:
@@ -472,7 +495,7 @@ def find_hits(needle, root=ROOT):
             text = data.decode("utf-8")
         except (OSError, UnicodeDecodeError):
             continue
-        if generated_page(name, text):
+        if name in copies:
             continue
         lines = text.split("\n")
         for i, line in enumerate(lines, 1):

@@ -126,18 +126,29 @@ def test_find_catches_text_split_across_lines(tmp_path):
     assert [(name, line, kind) for name, line, kind, _ in hits] == [("doc.md", 1, "split")]
 
 
-def test_find_skips_a_generated_page_but_not_other_html(tmp_path):
-    # A page scripts/build_docs_html.py generates is a copy of its Markdown, so a search counts the
-    # Markdown only; a hand-written page, such as the stores runbook, is searched like any other file.
+def test_find_skips_only_a_fresh_generated_copy(tmp_path, monkeypatch):
+    # A page the builder makes is a copy of its Markdown, so a search counts the Markdown only. A page that
+    # carries the generator's mark but is hand-written, stale, or no longer built is searched like any file.
+    import build_docs_html
     env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
     subprocess.run(["git", "init", "-q", str(tmp_path)], check=True, env=env)
+    head = f"<html><head>{build_docs_html.MARK}</head>\n"
+    fresh = head + "<p>The crack spread is a margin.</p></html>\n"
     (tmp_path / "README.md").write_text("The crack spread is a margin.\n")
-    (tmp_path / "README.html").write_text(f"<html><head>{epm_facts.GENERATED_PAGE}</head>\n"
-                                          "<p>The crack spread is a margin.</p></html>\n")
+    (tmp_path / "README.html").write_text(fresh)
+    (tmp_path / "stale.html").write_text(head + "<p>The crack spread was edited by hand.</p></html>\n")
+    (tmp_path / "orphan.html").write_text(head + "<p>A crack spread page no source builds.</p></html>\n")
     (tmp_path / "stores-runbook.html").write_text("<html><head></head>\n<p>The crack spread is a margin.</p></html>\n")
     subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
+    monkeypatch.setattr(epm_facts, "built_pages", lambda root: {"README.html": fresh, "stale.html": fresh})
     hits = epm_facts.find_hits("crack spread", str(tmp_path))
-    assert sorted(name for name, _, _, _ in hits) == ["README.md", "stores-runbook.html"]
+    assert sorted(name for name, _, _, _ in hits) == ["README.md", "orphan.html", "stale.html", "stores-runbook.html"]
+
+
+def test_the_repository_pages_are_skipped_when_fresh():
+    copies = epm_facts.generated_copies()
+    assert "business_architecture/ontology/README.html" in copies
+    assert "business_architecture/domain/decisions/decisions.html" in copies
 
 
 def test_sweep_takes_the_changed_words_with_their_context():
