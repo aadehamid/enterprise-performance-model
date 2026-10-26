@@ -5,6 +5,7 @@ refuses what it does not.
 Run: uv run --with pytest python -m pytest -q scripts/test_docs_html.py
 """
 import html
+import html.parser as html_parser
 import os
 import re
 import subprocess
@@ -39,18 +40,57 @@ def test_the_check_command_fails_on_a_stale_or_missing_page(monkeypatch, capsys)
     assert b.main(["--check"]) == 1
 
 
-# A page loads a resource when a tag other than <a> names a URL, or its CSS does; a data: URI is embedded.
-LOADS = re.compile(r"<(?!a\b)[a-z]+\b[^>]*\b(?:src|href|srcset|poster|data)\s*=\s*\"(?!data:|#)([^\"]+)\"", re.I)
-CSS_LOADS = re.compile(r"@import|url\(\s*['\"]?(?!data:)", re.I)
+class Loads(html_parser.HTMLParser):
+    """Every resource a page would fetch: a URL in any attribute that loads (not an <a> link), an embedding
+    tag, and CSS @import or url() in a style block or style attribute. A data: URI is embedded, not fetched."""
+    LOADING = {"src", "href", "srcset", "poster", "data", "action", "formaction", "background", "manifest"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.found, self.style = [], False
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("img", "iframe", "object", "embed", "video", "audio", "source", "track"):
+            self.found.append(f"<{tag}>")
+        for name, value in attrs:
+            value = (value or "").strip()
+            if tag != "a" and name in self.LOADING and value and not value.startswith(("data:", "#")):
+                self.found.append(f"<{tag} {name}={value}>")
+            if name == "style" and re.search(r"url\(|@import", value, re.I):
+                self.found.append(f"<{tag} style>")
+        self.style = tag == "style"
+
+    def handle_endtag(self, tag):
+        self.style = False
+
+    def handle_data(self, data):
+        if self.style and re.search(r"@import|url\(\s*['\"]?(?!data:)", data, re.I):
+            self.found.append("CSS that loads a file")
+
+
+def loads(page):
+    p = Loads()
+    p.feed(page)
+    p.close()
+    return p.found
 
 
 @pytest.mark.parametrize("out", sorted(PAGES))
 def test_a_page_loads_nothing_from_the_network_or_another_file(out):
-    page = PAGES[out]
-    assert LOADS.findall(page) == [], out
-    styles = " ".join(re.findall(r"<style[^>]*>(.*?)</style>", page, re.S))
-    assert not CSS_LOADS.search(styles), out
-    assert "<iframe" not in page and "<img" not in page, out
+    assert loads(PAGES[out]) == [], out
+
+
+@pytest.mark.parametrize("markup", [
+    '<script src="https://cdn.x/a.js"></script>', "<script src='https://cdn.x/a.js'></script>",
+    "<script src=https://cdn.x/a.js></script>", '<link rel="stylesheet" href="x.css">', '<img src="d.png">',
+    "<style>@import url(x.css);</style>", '<div style="background:url(x.png)"></div>',
+])
+def test_the_resource_check_catches_each_way_of_loading(markup):
+    assert loads(markup)
+
+
+def test_the_resource_check_allows_links_and_embedded_data():
+    assert loads('<a href="https://x.test/">x</a><a href="#top">t</a><style>a { color: red; }</style>') == []
 
 
 def test_unsupported_markdown_stops_the_build_with_its_line():
