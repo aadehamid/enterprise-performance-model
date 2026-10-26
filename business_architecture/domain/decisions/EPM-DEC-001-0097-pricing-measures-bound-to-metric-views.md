@@ -85,7 +85,7 @@ Items 13 to 16 are the design of the next `data-product` release; nothing is rel
 
 ## Differences between the views and the measures' definitions
 
-Each is a question for the decision owner, not changed here:
+Each is a question for the decision owner, not changed here. *2026-10-25 (evening):* Claude now decides each under EPM-DEC-001-0028 (amendment of 2026-10-25, evening) and records the decision here; a change to a released measure ships only in a release the decision owner approves:
 
 1. **Forward periods.** All three views carry forward periods (`Relative_Period_Number`, 0 to 5 in the crack-spread data; `Price_Period_Datetime` with forward monthly averages in the Executive Summary). The five pricing measures' grains in `kpi` 1.1.1 are daily only ("daily, by market hub", "daily, by hub", "daily, by marker").
 2. **Crack Spreads Pricing:** the measure's grain is by market hub; the view's series are by Price Master ID, grouped by region. The view's monthly value is the mean of daily settles, which the measure does not state. The agent's trend is a 20-day moving average; the measure compares against a 30-day trend (the Executive Summary agent also uses 30 days).
@@ -154,4 +154,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 
 - EPM-DEC-001-0061 carries a dated note that item 6 amends its items 2 and 3 for an agent that quotes a value through its bound metric view.
 - Item F's releases follow this record, each with the decision owner's approval.
-- The open questions go to the decision owner, or to their team for question 2, one at a time; each answer is recorded as an amendment to this record.
+- The open questions go to the decision owner, or to their team for question 2, one at a time; each answer is recorded as an amendment to this record. *2026-10-25 (evening):* Claude decides question 1 under EPM-DEC-001-0028 (amendment of 2026-10-25, evening); question 2 stays with the decision owner's team, and questions 3 and 4 with the decision owner.
