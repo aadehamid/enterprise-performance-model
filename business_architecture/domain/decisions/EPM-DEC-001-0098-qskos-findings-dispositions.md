@@ -1,8 +1,8 @@
-# EPM-DEC-001-0098: Dispositions for the qSKOS findings on the released modules: preferred labels shared across schemes are accepted, and every other finding is fixed in its module's next release
+# EPM-DEC-001-0098: Dispositions for the qSKOS findings on the released modules: preferred labels shared across schemes are accepted, seven process labels shared inside core's scheme are accepted until a process-map proposal, and every other finding is fixed in its module's next release
 
 | Field | Value |
 |---|---|
-| Status | Decided (the decision owner, 2026-10-25, for accepting preferred labels shared across schemes; the other dispositions delegated under EPM-DEC-001-0028); one question open, listed below |
+| Status | Decided (the decision owner, 2026-10-25, for accepting preferred labels shared across schemes; the other dispositions delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-25 |
 | Questions | Step 3's rule for checks adopted after release: what happens to each finding the `ontology` skill's qSKOS checks make on the newest release of each module? Should EPM rename the seven preferred labels it shares across schemes, or should the skill exempt them? |
 | Source | Claude Code session of 2026-10-25; `answers-2026-10-25-qskos.md` |
@@ -58,19 +58,16 @@ The worklog recorded 28 `scheme` findings. Both versions of the checker find 27 
 
 Each release that carries one of these fixes runs the skill's `check_taxonomy.py` on its own module, and the fixed findings must be gone. None of these fixes changes an IRI or a definition.
 
-## Open
-
-- **Seven preferred labels shared inside core's process scheme.** The same run reports 11 preferred labels shared inside one scheme, found by the per-scheme collision check that predates #53, so the trial did not count them as new. Seven are in core's process scheme, where the process map gives processes under different parents the same name (Actualizations, Analyze Data, Define Analysis Objectives & Scope, Determine Taxability, Document Findings, Obtain latest XPIMS MOP model, Source & Collect Information). They have no disposition here: renaming a process's label means a process-map proposal (`business_architecture/business_process/` is the authority), so they go in the night's report as a candidate proposal.
-
 ## Decided after the first draft (Claude, under EPM-DEC-001-0028, amendment of 2026-10-25, evening)
 
 6. **Four preferred labels shared inside `dp:DataProducts`: fixed in data-product's next release.** The portfolio gives a data-product line and a data product the same short name: HR, IT, S&BD and SC (supply chain). The line takes its short name followed by "product line" (for example "HR product line"), and the product keeps the portfolio's short name. The line's old label goes to a history annotation, not an alternative label, which would collide again. Identity is the IRI, and the line is the broader thing, so it takes the qualifier (Z39.19, §6.2.1 b, as `quality.md` quotes it).
 7. **Item F's releases carry their modules' fixes.** `kpi` 1.2.0: items 3 and 5 (the disjoint label, `kpi:MeasureKind` and `kpi:Measures`). `market-data` 1.1.0: item 5 (its four schemes). `data-product` 1.2.0: items 4 to 6 (the segments' `skos:hasTopConcept`, `dp:PortfolioStatus`, the four labels). `system` and `integration` carry theirs in the item G releases (system 1.1.0, integration 2.1.0, with party 1.2.0). Core, lane, organization and value-stream carry theirs in their next releases, which no queue item plans yet.
+8. **Seven preferred labels shared inside core's process scheme: accepted, with a reason, until a process-map proposal settles them.** The same run reports 11 preferred labels shared inside one scheme, found by the per-scheme collision check that predates #53. Seven are in core's process scheme, where the process map gives processes under different parents the same name (Actualizations, Analyze Data, Define Analysis Objectives & Scope, Determine Taxability, Document Findings, Obtain latest XPIMS MOP model, Source & Collect Information); the other four are item 6. Core takes process names from the process map, which is the authority (AGENTS.md), so renaming them needs a process-map proposal, not a core release. Each process has its own IRI and a single parent, so the shared name is ambiguous only in a search by label. The night's report lists them as a candidate proposal. Once a proposal is accepted, the next core release applies it.
 
 ## Alternatives considered
 
 - **Rename the seven shared preferred labels in EPM.** Not chosen by the decision owner. Each is the right term in its own scheme, and a qualifier would make a business term read like a technical one.
-- **Accept the other findings with a reason instead of fixing them.** Not chosen: each fix adds or moves a statement without changing any meaning, and each finding is one the skill's checks fail in new work.
+- **Accept the findings of items 2 to 6 with a reason instead of fixing them.** Not chosen: each fix adds or moves a statement without changing any meaning, and each finding is one the skill's checks fail in new work.
 
 ## The decision owner's recorded words
 
