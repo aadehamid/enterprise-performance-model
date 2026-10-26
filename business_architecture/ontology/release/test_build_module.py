@@ -182,7 +182,7 @@ class EarlierReleases(unittest.TestCase):
     def test_a_check_loads_one_release_of_each_module(self):
         # value-stream reaches core twice: directly at 2.3.0 and through kpi 1.1.0 at 2.2.0. Only 2.3.0 loads.
         self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.0.0", "kpi": "1.1.0"})
-        self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.0.1", "core": "2.1.0"})
+        self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.2.0", "core": "2.3.0"})  # 1.1.0 (EPM-DEC-001-0100)
         self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0", "core": "2.1.0"})
 
     def test_a_release_that_loses_to_a_higher_one_adds_no_requirements(self):
@@ -229,7 +229,7 @@ class EarlierReleases(unittest.TestCase):
     def test_the_validated_graph_holds_one_core_release(self):
         # Codex round 1 on EPM-DEC-001-0077, item 3: the graph the shapes see, not only the version table.
         core = URIRef(bm.MODULES_NS + "core")
-        expected = {"value-stream": "2.3.0", "market-data": "2.1.0", "ref-mpc": "2.1.0"}
+        expected = {"value-stream": "2.3.0", "market-data": "2.3.0", "ref-mpc": "2.1.0"}  # market-data 1.1.0 (0100)
         for name, version in expected.items():
             with self.subTest(module=name):
                 data = bm.validation_graph(name, bm.build(name))
@@ -253,7 +253,7 @@ class EarlierReleases(unittest.TestCase):
             return real(data, **kwargs)
         bm.validate = capture
         try:
-            expected = {"value-stream": "2.3.0", "market-data": "2.1.0", "ref-mpc": "2.1.0"}
+            expected = {"value-stream": "2.3.0", "market-data": "2.3.0", "ref-mpc": "2.1.0"}  # market-data 1.1.0 (0100)
             for name, version in expected.items():
                 with self.subTest(module=name):
                     seen.clear()
@@ -274,7 +274,9 @@ class EarlierReleases(unittest.TestCase):
             bm.MODULES["kpi"].update(version="1.1.0", pins={"core": "2.2.0"})
             bm.MODULES["data-product"].update(version="1.1.0")
             self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.0.0", "kpi": "1.1.0"})
-            self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.0.1", "core": "2.1.0"})
+            # market-data 1.1.0 requires kpi 1.2.0 (EPM-DEC-001-0100); its 1.0.0 manifest still names kpi 1.0.1.
+            self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.2.0", "core": "2.3.0"})
+            self.assertEqual(bm.released_requires("market-data", "1.0.0"), {"kpi": "1.0.1"})
             for name in ("value-stream", "market-data"):
                 with self.subTest(module=name):
                     for fname, text in bm.package(name, bm.build(name)).items():
@@ -288,15 +290,16 @@ class EarlierReleases(unittest.TestCase):
     def test_each_step7_package_holds_its_two_source_files(self):
         # EPM-DEC-001-0077: each package is its module's vocabulary and instance file, nothing else. The newest
         # release of each is compared with the sources (value-stream 1.1.0 since EPM-DEC-001-0090).
-        files = {"data-product": "data-products.ttl", "value-stream": "value-streams.ttl", "system": "systems.ttl",
-                 "lane": "lanes.ttl", "market-data": "market-data.ttl"}
+        # data-product 1.2.0 adds pricing.ttl, its third source file (EPM-DEC-001-0100).
+        files = {"data-product": ("data-products.ttl", "pricing.ttl"), "value-stream": ("value-streams.ttl",),
+                 "system": ("systems.ttl",), "lane": ("lanes.ttl",), "market-data": ("market-data.ttl",)}
         for name, instances in files.items():
             with self.subTest(module=name):
                 released = Graph().parse(os.path.join(bm.release_dir(name), f"{name}.ttl"))
                 header = URIRef(bm.MODULES_NS + name)
                 released.remove((header, None, None))
                 sources = Graph()
-                for part in ("vocabulary.ttl", instances):
+                for part in ("vocabulary.ttl",) + instances:
                     sources.parse(os.path.join(bm.ONTOLOGY, name, part))
                 sources.remove((header, None, None))
                 self.assertEqual(set(released), set(sources))
@@ -363,7 +366,7 @@ class EarlierReleases(unittest.TestCase):
         # value-stream 1.0.0, market-data and integration were released against kpi 1.0.1 and keep naming it;
         # value-stream 1.1.0 requires kpi 1.1.0 (EPM-DEC-001-0090), and its 1.0.0 manifest is unchanged.
         # integration 2.0.0 requires kpi 1.1.1 (EPM-DEC-001-0094); its 1.0.0 manifest still names 1.0.1.
-        self.assertEqual(bm.dependencies("market-data")["kpi"], "1.0.1")
+        self.assertEqual(bm.released_requires("market-data", "1.0.0")["kpi"], "1.0.1")  # 1.1.0 requires kpi 1.2.0 (0100)
         self.assertEqual(bm.released_requires("integration", "1.0.0")["kpi"], "1.0.1")
         self.assertEqual(bm.released_requires("value-stream", "1.0.0")["kpi"], "1.0.1")
 
