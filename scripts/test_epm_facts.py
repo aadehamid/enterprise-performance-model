@@ -894,8 +894,24 @@ def test_names_check_finds_the_owner_in_any_case_path_and_office_file(tmp_path):
         f"{first}-link.md: the path names the decision owner",
         f"{first.lower()}-notes.txt: the path names the decision owner",
         "link.md:1: names the decision owner",
+        "link.md (displayed text):1: names the decision owner",
         "prose.md:2: names the decision owner",
+        "prose.md (displayed text):2: names the decision owner",
     ])
+
+
+def test_names_check_finds_a_name_split_by_markdown_or_html_formatting(tmp_path):
+    # A browser shows these as the name in one piece; a scan of the raw lines does not see it.
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True, env=env)
+    (tmp_path / "emphasis.md").write_text("Approved by H**a**" + "mid on 2026-10-26.\n")
+    (tmp_path / "page.html").write_text("<p>Approved by h<strong>a</strong>" + "mid.</p>\n")
+    (tmp_path / "plain.html").write_text("<p>Approved by the decision owner.</p>\n")
+    subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
+    assert sorted(epm_facts.name_problems(str(tmp_path))) == [
+        "emphasis.md (displayed text):1: names the decision owner",
+        "page.html (displayed text):1: names the decision owner",
+    ]
 
 
 # The module map and coverage (item C of the store-tests handoff).

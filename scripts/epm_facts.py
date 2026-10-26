@@ -1086,8 +1086,44 @@ def _office_texts(where, data):
     return out
 
 
+def displayed_text(markup):
+    """The text a browser shows for an HTML document: inline elements joined with nothing between them (so
+    h<strong>a</strong>mid reads as one word), block elements on their own lines, scripts and styles left out."""
+    from html.parser import HTMLParser
+    blocks = {"p", "div", "li", "td", "th", "tr", "br", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "section",
+              "article", "header", "footer", "nav", "table", "ul", "ol", "blockquote", "title", "figcaption"}
+
+    class Shown(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.parts, self.skip = [], 0
+
+        def handle_starttag(self, tag, attrs):
+            if tag in ("script", "style"):
+                self.skip += 1
+            elif tag in blocks:
+                self.parts.append("\n")
+
+        def handle_endtag(self, tag):
+            if tag in ("script", "style"):
+                self.skip = max(0, self.skip - 1)
+            elif tag in blocks:
+                self.parts.append("\n")
+
+        def handle_data(self, data):
+            if not self.skip:
+                self.parts.append(data)
+
+    p = Shown()
+    p.feed(markup)
+    p.close()
+    return "\n".join(line.strip() for line in "".join(p.parts).split("\n") if line.strip())
+
+
 def _name_texts(path, name):
-    """(label, text) to scan in one file: the file itself, or each part of an Office file."""
+    """(label, text) to scan in one file: the file itself, or each part of an Office file. A Markdown or HTML
+    file is also scanned as displayed, so a name split by formatting (**Ha**mid, h<em>a</em>mid) is found.
+    Markdown is rendered with markdown-it-py, which check.sh supplies."""
     with open(path, "rb") as f:
         data = f.read()
     if name.lower().endswith((".xlsx", ".docx", ".pptx")):
@@ -1097,7 +1133,15 @@ def _name_texts(path, name):
             for n in z.namelist():
                 texts += _office_texts(f"{name}!{n}", z.read(n))
         return texts
-    return [(name, data.decode("utf-8", "replace"))]
+    text = data.decode("utf-8", "replace")
+    texts = [(name, text)]
+    if name.lower().endswith(".md"):
+        from markdown_it import MarkdownIt
+        texts.append((f"{name} (displayed text)",
+                      displayed_text(MarkdownIt("commonmark").enable(["table", "strikethrough"]).render(text))))
+    elif name.lower().endswith((".html", ".htm")):
+        texts.append((f"{name} (displayed text)", displayed_text(text)))
+    return texts
 
 
 def name_problems(root=ROOT):
