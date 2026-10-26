@@ -37,7 +37,7 @@ class Build(unittest.TestCase):
         # register.csv and systems.csv. The link count is the build's; 3 of the 153 processes with a
         # systems field name only Manual, TBD or a plan, so 150 receive a link.
         self.assertEqual(bs.figures(*bs.load()), {
-            "map strings": 37, "systems": 34, "defined": 18, "application": 25, "office-tool": 4, "document": 5,
+            "map strings": 37, "systems": 34, "defined": 32, "application": 25, "office-tool": 4, "document": 5,
             "no-system strings": 4, "processes with a systems field": 153,
             "processes with a link": 150, "links": 285,
             "links waiting for a core release": 0})
@@ -72,7 +72,7 @@ class Build(unittest.TestCase):
         # Item G (EPM-DEC-001-0099), checked by hand against definitions.csv on 2026-10-25: 15 systems are
         # defined; full forms are preferred labels, with the process map's abbreviation as an alternative.
         defined = {s for s in SYSTEMS.subjects(SKOS.definition, None)}
-        self.assertEqual(len(defined), 18)  # 15, then MIPS, MPR and Databricks in 1.2.0 (EPM-DEC-001-0100)
+        self.assertEqual(len(defined), 32)  # 15, then MIPS, MPR and Databricks in 1.2.0 (EPM-DEC-001-0100), then 14 in 1.3.0 (EPM-DEC-001-0103)
         for slug, label, alt in (("dpo", "Distribution Planning Optimizer", "DPO"), ("aps", "Aspen Petroleum Scheduler", "APS"),
                                  ("sap", "SAP S/4HANA", "SAP"), ("hyperion", "Oracle Hyperion Planning", "Hyperion"),
                                  ("pi", "AVEVA PI System", "PI")):
@@ -88,7 +88,15 @@ class Build(unittest.TestCase):
         for slug in ("topday", "valt"):
             self.assertIsNone(SYSTEMS.value(SYSTEM[slug], SKOS.definition))
             self.assertTrue(str(SYSTEMS.value(SYSTEM[slug], SKOS.editorialNote)).startswith("MPC-built"))
-        self.assertEqual(str(SYSTEMS.value(SYSTEM["trr"], SKOS.editorialNote)), bs.UNDEFINED)
+        # EPM-DEC-001-0103: the 14 internal systems are defined from the repository, each citing core 2.3.0 beside the
+        # process map, with a note saying so; no system keeps the standard note.
+        core = bs.SRC["core-2-3-0-process-definitions"]
+        for slug in ("planning-db", "trr", "premise-document", "actuals-case-prep-file", "tmr"):
+            self.assertIn((SYSTEM[slug], DCTERMS.source, core), SYSTEMS, slug)
+            self.assertIn((SYSTEM[slug], DCTERMS.source, bs.MAP_SOURCE), SYSTEMS, slug)
+            self.assertTrue(str(SYSTEMS.value(SYSTEM[slug], SKOS.editorialNote)).startswith("Drafted by Claude from the repository"))
+        self.assertIn((SYSTEM["tmr"], DCTERMS.source, bs.SRC["decision-owner-customer-inputs"]), SYSTEMS)
+        self.assertFalse(any(str(o) == bs.UNDEFINED for o in SYSTEMS.objects(None, SKOS.editorialNote)))
 
     def test_systems_the_map_does_not_name(self):
         # Item F (EPM-DEC-001-0100): MIPS and Databricks, named by the decision owner's pricing assets.
@@ -117,8 +125,8 @@ class Shapes(unittest.TestCase):
         return conforms(g)
 
     def test_rejects_a_definition_without_its_source(self):
-        # TRR cites only the process map, which names systems but does not define them.
-        self.assertFalse(self.broken(lambda g: g.add((SYSTEM["trr"], SKOS.definition, Literal("A planning tool.", lang="en")))))
+        # A definition cited only to the process map, which names systems but does not define them (TRR without core).
+        self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["trr"], DCTERMS.source, bs.SRC["core-2-3-0-process-definitions"]))))
 
     def test_rejects_a_defined_system_that_loses_the_process_map_source(self):
         # Kimi round 1, finding 20: two other sources must not stand in for the process map.
@@ -142,7 +150,7 @@ class Shapes(unittest.TestCase):
         self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["mips"], SKOS.definition, None))))
 
     def test_rejects_a_system_without_its_note(self):
-        self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["trr"], SKOS.editorialNote, None))))
+        self.assertFalse(self.broken(lambda g: g.remove((SYSTEM["topday"], SKOS.editorialNote, None))))
 
 
 if __name__ == "__main__":

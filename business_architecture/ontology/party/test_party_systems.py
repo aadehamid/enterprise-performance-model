@@ -96,9 +96,10 @@ class Systems(unittest.TestCase):
         # defined, each citing its source; the four the decision owner's customer-data owner is asked about are not.
         systems = set(G.subjects(RDF.type, CUST.CustomerSystem))
         defined = slugs(s for s in G.subjects(SKOS.definition, None) if s in systems)
-        self.assertEqual(defined, {"sap-mdg", "sap-s4hana", "salesforce", "rightangle", "profisee", "bridger-insight", "emk3",
-                                   "flowcal", "gravitate", "information-steward", "lenel-onguard", "sirion", "onesource",
-                                   "quorum", "kittyhawk", "magic", "allocation-manager", "polaris"})
+        # 18 in 1.2.0 (EPM-DEC-001-0099), then the 20 internal systems drafted from the repository in 1.3.0
+        # (EPM-DEC-001-0103): every customer system but the four the customer-data owner is asked about.
+        self.assertEqual(len(defined), 38)
+        self.assertEqual(slugs(systems) - defined, {"drop-tank", "gas-buddy", "dtn-file-server", "federal-health"})
         for slug in ("drop-tank", "gas-buddy", "dtn-file-server", "federal-health"):
             self.assertIsNone(G.value(S[slug], SKOS.definition))
         src = Namespace("https://w3id.org/lsc/ontology/source/")
@@ -257,7 +258,7 @@ class Shapes(unittest.TestCase):
         self.assertIn("names a party role, a customer class", text)
 
     def test_a_definition_without_its_source(self):
-        ok, text = self.conforms('s:star <http://www.w3.org/2004/02/skos/core#definition> "A system."@en .')
+        ok, text = self.conforms('s:drop-tank <http://www.w3.org/2004/02/skos/core#definition> "A system."@en .')
         self.assertFalse(ok)
         self.assertIn("cites its source", text)
 
