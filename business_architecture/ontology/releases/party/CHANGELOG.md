@@ -1,5 +1,17 @@
 # party changelog
 
+## 1.3.0 (2026-10-26)
+
+A minor release: it adds definitions and a source, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0103).
+
+- [minor] **Definitions.** The 20 internal customer systems gain a `skos:definition` Claude drafted from their customer roles, data flows and attributes, each citing the decision owner's customer inputs and carrying a note saying it was drafted from the repository. 38 of the 42 customer systems are now defined.
+- It requires core 2.3.0 and system 1.3.0.
+
+### Known gaps
+
+- Drop Tank, Gas Buddy, DTN File Server and Federal Health have no definition; they wait for the customer-data owner (`business-closeout.md`, point 11).
+- The 20 drafted descriptions wait for each system's owner to confirm or correct them (`business-closeout.md`, point 16).
+
 ## 1.2.0 (2026-10-25)
 
 A minor release: it adds definitions, sources, a match and top-concept statements, and removes no IRI. Approved by the decision owner ("Approve all three (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md`; EPM-DEC-001-0099). The plan they approved did not list the qSKOS top-concept statements; Claude approved those additions under the delegation, which lets it approve the queue's minor releases (EPM-DEC-001-0028, amendment of 2026-10-25, evening).

@@ -1,5 +1,16 @@
 # integration changelog
 
+## 2.3.0 (2026-10-26)
+
+A minor release: it adds two sources, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0103).
+
+- [minor] **Source tiers.** Core 2.3.0's process definitions and the decision owner's customer inputs join `authority` in tier 1 (102 sources in all).
+- It requires the current releases, system 1.3.0 and party 1.3.0 among them.
+
+### Known gaps
+
+None.
+
 ## 2.2.0 (2026-10-25)
 
 A minor release: it adds a consumer rule and sources, narrows a refusal's definition and removes no IRI. Approved by the decision owner with item F's release plan ("Approve the plan (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0097, 0100).

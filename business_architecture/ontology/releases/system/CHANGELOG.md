@@ -1,5 +1,18 @@
 # system changelog
 
+## 1.3.0 (2026-10-26)
+
+A minor release: it adds definitions and sources, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0103).
+
+- [minor] **Definitions.** The 14 internal systems gain a `skos:definition` Claude drafted from the repository: what the processes that use them, as core 2.3.0 defines them, show each does. Each cites core 2.3.0's process definitions beside the process map (TMR also the decision owner's customer inputs) and carries a note saying it was drafted from the repository. 32 of the 34 systems are now defined.
+- It requires core 2.3.0.
+
+### Known gaps
+
+- TopDay and VALT have no definition; they wait for their owners (`ontology/business-closeout.md`, point 12).
+- The 14 drafted descriptions wait for each system's owner to confirm or correct them (`business-closeout.md`, point 16).
+- The systems the customer-lifecycle processes use are proposed in MPC-P11, which waits for the decision owner (EPM-DEC-001-0103).
+
 ## 1.2.0 (2026-10-25)
 
 A minor release: it adds two systems and a definition, and removes no IRI. Approved by the decision owner with item F's release plan ("Approve the plan (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0097, 0100).

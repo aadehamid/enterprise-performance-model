@@ -91,17 +91,19 @@ MODULES = {
         # 1.2.0 is a minor the decision owner approved: 18 customer systems defined, each citing its source;
         # SAP S/4HANA matched to the system module's SAP; every code list's top concepts stated both ways
         # (EPM-DEC-001-0098, 0099).
-        "version": "1.2.0", "stage": None, "issued": "2026-10-25",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-item-g-releases.md", "Approve all three (Recommended)"),
+        # 1.3.0 is a minor Claude approved under the delegation: the 20 internal customer systems' descriptions,
+        # drafted from the repository; it requires system 1.3.0 (EPM-DEC-001-0103).
+        "version": "1.3.0", "stage": None, "issued": "2026-10-26",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],
         "shapes": ["party/shapes.ttl"],
         # Since 1.2.0 it also requires system 1.1.0, whose systems its five skos:exactMatch links name
         # (EPM-DEC-001-0099; the earlier packages name four of them without requiring system).
         "depends_on": ["core", "system"],
-        "pins": {"core": "2.3.0", "system": "1.1.0"},
+        "pins": {"core": "2.3.0", "system": "1.3.0"},
         "decisions": ["EPM-DEC-001-0067", "EPM-DEC-001-0068", "EPM-DEC-001-0069", "EPM-DEC-001-0070",
                       "EPM-DEC-001-0071", "EPM-DEC-001-0072", "EPM-DEC-001-0074", "EPM-DEC-001-0087", "EPM-DEC-001-0088",
-                      "EPM-DEC-001-0092", "EPM-DEC-001-0098", "EPM-DEC-001-0099"],
+                      "EPM-DEC-001-0092", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0103"],
     },
     # The Step 7 modules' first releases, majors the decision owner approved with the release plan
     # (EPM-DEC-001-0077). Each requires core 2.2.0, the release that holds every process they link.
@@ -146,13 +148,16 @@ MODULES = {
         # ways; it requires core 2.3.0 (EPM-DEC-001-0098, 0099).
         # 1.2.0 is a minor of item F's release plan, which the decision owner approved: MIPS and Databricks, which the
         # process map does not name, and MPR's definition, from the decision owner's pricing assets (EPM-DEC-001-0100).
-        "version": "1.2.0", "stage": None, "issued": "2026-10-25",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)"),
+        # 1.3.0 is a minor Claude approved under the delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening):
+        # the 14 internal systems' descriptions, drafted from the repository (EPM-DEC-001-0103).
+        "version": "1.3.0", "stage": None, "issued": "2026-10-26",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["system/vocabulary.ttl", "system/systems.ttl"],
         "shapes": ["system/shapes.ttl"],
         "depends_on": ["core"],
         "pins": {"core": "2.3.0"},
-        "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100"],
+        "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100",
+                      "EPM-DEC-001-0103"],
     },
     "lane": {
         "title": "LSC Lane Module",
@@ -197,8 +202,10 @@ MODULES = {
         # 2.2.0 is a minor of item F's release plan, which the decision owner approved: the consumer rule for a value
         # quoted through the bound metric view, eight more sources tiered; it requires the new releases (EPM-DEC-001-0097,
         # 0100).
-        "version": "2.2.0", "stage": None, "issued": "2026-10-25",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)"),
+        # 2.3.0 is a minor Claude approved under the delegation: two more sources in tier 1, the sources of the
+        # internal systems' descriptions; it requires the new system and party releases (EPM-DEC-001-0103).
+        "version": "2.3.0", "stage": None, "issued": "2026-10-26",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
         "shapes": ["consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl"],
@@ -206,9 +213,9 @@ MODULES = {
         "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data",
                        "party"],
         "pins": {"core": "2.3.0", "organization": "2.0.0", "kpi": "1.2.0", "data-product": "1.2.0", "value-stream": "1.1.0",
-                 "system": "1.2.0", "lane": "1.0.0", "market-data": "1.1.0", "party": "1.2.0"},
+                 "system": "1.3.0", "lane": "1.0.0", "market-data": "1.1.0", "party": "1.3.0"},
         "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078", "EPM-DEC-001-0088",
-                      "EPM-DEC-001-0094", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100"],
+                      "EPM-DEC-001-0094", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100", "EPM-DEC-001-0103"],
     },
 }
 
