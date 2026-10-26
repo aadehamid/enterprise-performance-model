@@ -48,6 +48,19 @@ SOURCE_TITLES = {
 }
 # Every measure also cites the classification evidence, which holds the rule it was sorted by.
 CLASSIFIED_BY = SOURCES["industry"]
+# Identifiers the decision owner's assets give a measure (EPM-DEC-001-0097, item 3), with the note that goes with each.
+IDENTIFIERS = {
+    "crack-spreads": ("KPI-0001", "KPI-0001 is the crack-spread Genie agent's identifier for this measure. The gold table "
+                                  "behind its metric view holds the constant KPI_ID value 'KPI Crack Spread 3-2-1' on every "
+                                  "one of its 127 series alike, so the identifier names the measure, not a series "
+                                  "(EPM-DEC-001-0097, item 3)."),
+}
+# What changed in a measure since an earlier release, kept on the measure (kpi 1.2.0).
+CHANGES = {
+    "additional-market-prices": "kpi 1.2.0 (2026-10-25): narrowed to renewables and NGLs; the planner list's name was "
+                                "'Additional Market Prices (Benchmark, Crude, Renewables, NGLs)'. Benchmark and crude "
+                                "prices are Crude Market Pricing's (EPM-DEC-001-0097, item 4).",
+}
 
 
 def read_csv(path):
@@ -73,6 +86,7 @@ def load():
     problems += [f"{m!r} has no details row" for m in ids if m not in detail_ids]
     problems += [f"details row {m!r} has no classification" for m in detail_ids if m not in ids]
     labels = {p["label"]: p["slug"] for p in personas}
+    by_detail = {d["measure_id"]: d for d in details}
     procs = process_index()
     for r in rows:
         m = r["measure_id"]
@@ -82,6 +96,8 @@ def load():
             problems.append(f"{m}: kpi_candidate must be yes or no")
         if r["kpi_candidate"] == "yes" and r["class"] != "operational-metric":
             problems.append(f"{m}: only an operational metric can be a KPI candidate")
+        if r["name"] in split(by_detail.get(m, {}).get("aliases", "")):
+            problems.append(f"{m}: an alias repeats the measure's name, which SKOS forbids (S13; EPM-DEC-001-0098)")
         if r["source"] not in SOURCES:
             problems.append(f"{m}: unknown source {r['source']!r}")
         if not r["rule_test"].isdigit() or not 1 <= int(r["rule_test"]) <= 5:
@@ -129,6 +145,8 @@ def build(rows, details, personas, labels, procs):
         g.add((iri, RDF.type, KPI.MeasureDefinition))
         g.add((iri, RDF.type, SKOS.Concept))
         g.add((iri, SKOS.inScheme, KPI.Measures))
+        g.add((iri, SKOS.topConceptOf, KPI.Measures))  # a flat scheme, stated both ways (EPM-DEC-001-0098, item 5)
+        g.add((KPI.Measures, SKOS.hasTopConcept, iri))
         g.add((iri, SKOS.prefLabel, Literal(r["name"], lang="en")))
         g.add((iri, SKOS.notation, Literal(m, datatype=XSD.string)))
         g.add((iri, SKOS.definition, Literal(d["definition"], lang="en")))
@@ -150,6 +168,12 @@ def build(rows, details, personas, labels, procs):
                             (KPI.basis, d["basis"]), (KPI.publicCounterpart, r["mpc_counterpart"])):
             if value:
                 g.add((iri, prop, Literal(value, datatype=XSD.string)))
+        if m in IDENTIFIERS:
+            ident, note = IDENTIFIERS[m]
+            g.add((iri, DCTERMS.identifier, Literal(ident, datatype=XSD.string)))
+            g.add((iri, SKOS.note, Literal(note, lang="en")))
+        if m in CHANGES:
+            g.add((iri, SKOS.changeNote, Literal(CHANGES[m], lang="en")))
         g.add((iri, DCTERMS.source, SOURCES[r["source"]]))
         g.add((iri, DCTERMS.source, CLASSIFIED_BY))
         if r["evidence"]:

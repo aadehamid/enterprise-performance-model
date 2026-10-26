@@ -39,6 +39,12 @@ shp:Measure a sh:NodeShape ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
                   sh:message "A measure cites its source." ] ;
     sh:property [ sh:path dcterms:bibliographicCitation ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    # kpi 1.2.0: an identifier an asset gives the measure, with its note; a change note; the scheme's top concept
+    # (EPM-DEC-001-0097, item 3; EPM-DEC-001-0098).
+    sh:property [ sh:path dcterms:identifier ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path skos:note ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:changeNote ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:topConceptOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue kpi:Measures ] ;
     # What a measure counts, where its source states it (EPM-DEC-001-0062; in the kpi package since 1.1.0, EPM-DEC-001-0079).
     sh:property [ sh:path pop:includes ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path pop:excludes ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
@@ -54,6 +60,7 @@ shp:NoValuesOnMeasures a sh:NodeShape ;
                            kpi:measureKind kpi:kpiCandidate kpi:classificationTest kpi:classificationReason kpi:usedBy
                            kpi:informsProcess kpi:comparedAgainst kpi:grain kpi:basis kpi:publicCounterpart
                            kpi:notToBeConfusedWith dcterms:source dcterms:bibliographicCitation
+                           dcterms:identifier skos:note skos:changeNote skos:topConceptOf
                            pop:includes pop:excludes pop:populationEvidence ) ;
     sh:message "A measure carries its definition, classification, links and population, never a value (EPM-DEC-001-0005)." .
 
