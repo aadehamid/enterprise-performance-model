@@ -13,11 +13,23 @@
 <https://w3id.org/lsc/ontology/source/data-product-portfolio> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
 
+<https://w3id.org/lsc/ontology/source/databricks-medallion-architecture> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/datamesh-architecture-innoq> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
+
 <https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-24-systems> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
 
 <https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-25-item-g> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/decision-owner-pricing-assets-2026-10-25> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/dehghani-data-mesh-2019> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
 <https://w3id.org/lsc/ontology/source/downstream-process-map> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
@@ -40,6 +52,9 @@
 <https://w3id.org/lsc/ontology/source/mplx-s01> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:mpc .
 
+<https://w3id.org/lsc/ontology/source/odps-4-0> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
+
 <https://w3id.org/lsc/ontology/source/office-lanes> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
 
@@ -48,6 +63,9 @@
 
 <https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/purview-data-products> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
 <https://w3id.org/lsc/ontology/source/src-api-653-001> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:industry .
@@ -217,6 +235,9 @@
 <https://w3id.org/lsc/ontology/source/vendor-aveva-pi-system> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:industry .
 
+<https://w3id.org/lsc/ontology/source/vendor-databricks-introduction> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
+
 <https://w3id.org/lsc/ontology/source/vendor-emk3-senergy> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:industry .
 
@@ -273,6 +294,9 @@
 
 <https://w3id.org/lsc/ontology/source/vendor-thomson-reuters-onesource-determination> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/w3c-prov-o> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:framework .
 
 <urn:epm:issue:205:comment:6115309253> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .

@@ -86,8 +86,15 @@ rule:what-a-measure-counts a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLa
     con:reliesOn pop:includes, pop:excludes, pop:populationEvidence ;
     dcterms:bibliographicCitation "competency question 28; EPM-DEC-001-0062"@en .
 
-rule:no-values a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Compute or quote a value"@en ;
-    skos:definition "Calculate a measure's value, or quote one, from the graph. The graph holds definitions; the values are in the systems that compute them. A basis is a description, not a formula."@en ;
+rule:value-through-bound-view a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Quote a value through its bound metric view"@en ;
+    skos:definition "Quote a measure's value taken through the metric view the graph binds to that measure, naming the view, and add the graph's context to it, such as the measure's definition, kind and what it is not."@en ;
+    skos:scopeNote "The binding is the view's dp:servesMeasure link. Added by integration 2.2.0 (2026-10-25), amending EPM-DEC-001-0061, items 2 and 3, as EPM-DEC-001-0097, item 6, records: the decision owner, \"Yes . the agent will use the Metric view to get the value\"."@en ;
+    con:reliesOn <https://w3id.org/lsc/ontology/modules/data-product/servesMeasure> ;
+    dcterms:bibliographicCitation "competency questions 41 and 42; EPM-DEC-001-0061; EPM-DEC-001-0097, item 6"@en .
+
+rule:no-values a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Compute a value, or quote one from an unbound source"@en ;
+    skos:definition "Calculate a measure's value from the graph, or quote a value from a source the graph does not bind to that measure. The graph holds definitions; the values are in the systems that compute them, and an agent quotes one only through the bound metric view (rule:value-through-bound-view). A basis is a description, not a formula."@en ;
+    skos:changeNote "integration 2.2.0 (2026-10-25): quoting a value through the metric view the graph binds to the measure is allowed by rule:value-through-bound-view; computing a value from the graph and quoting from an unbound source stay refused (EPM-DEC-001-0097, item 6)."@en ;
     con:reliesOn kpi:basis ;
     dcterms:bibliographicCitation "competency question 42; EPM-DEC-001-0005"@en .
 rule:no-crack-from-legs a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Build a crack from its legs"@en ;
