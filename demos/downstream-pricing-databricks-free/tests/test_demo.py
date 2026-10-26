@@ -409,3 +409,22 @@ def test_finding_10_postgres_listens_on_this_machine_only():
     compose = open(os.path.join(ROOT, "docker", "docker-compose.yml")).read()
     ports = re.findall(r'- "([^"]+)"', compose)
     assert ports == ["127.0.0.1:55432:5432"]
+
+
+def test_bugbot_380_the_eia_key_is_read_from_the_demos_env(tmp_path, monkeypatch):
+    monkeypatch.delenv("EIA_API_KEY", raising=False)
+    monkeypatch.setenv("HOME", str(tmp_path))  # no ~/.config/eia/api.env
+    monkeypatch.setattr(config, "ROOT", str(tmp_path))
+    (tmp_path / ".env").write_text("SOURCE_PG_DSN=x\nEIA_API_KEY=from-dotenv\n")
+    assert public_data.eia_key() == "from-dotenv"
+    (tmp_path / ".env").write_text("EIA_API_KEY=\n")
+    with pytest.raises(SystemExit):
+        public_data.eia_key()
+
+
+def test_bugbot_380_every_example_reads_its_view_only_with_measure():
+    for spec in genie.AGENTS.values():
+        for _, sql in spec["examples"]:
+            assert "MAX(" not in sql and "gold_commercial_core" not in sql
+            for sub in re.findall(r"\(SELECT [^()]*FROM \{c\}[^()]*\)", sql):
+                assert "MEASURE(" in sub, sub

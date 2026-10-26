@@ -12,6 +12,13 @@ import os
 from .config import ROOT, databricks_env
 from .databricks import connect, current_catalog
 
+def latest(view, date_dimension):
+    """The latest date a metric view holds, read with MEASURE() and GROUP BY: a metric view refuses a query without a
+    measure, and refuses a join (Cursor Bugbot on #380; both forms were run against the workspace on 2026-10-26)."""
+    return (f"(SELECT {date_dimension} FROM (SELECT {date_dimension}, MEASURE(Record_Count) AS n "
+            f"FROM {{c}}.semantic_sem_commercial.{view} GROUP BY {date_dimension} ORDER BY {date_dimension} DESC LIMIT 1))")
+
+
 AGENTS = {
     "Crack Spread Price Analytics": {
         "file": "crack-spread-price-analytics.md",
@@ -25,7 +32,7 @@ AGENTS = {
                       "SELECT Price_Master_ID, Price_Master_Name, Relative_Period_Number, MEASURE(Avg_Crack_Spread) AS crack_usd_per_bbl "
                       "FROM {c}.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw "
                       "WHERE Price_Master_ID = '37438' AND Relative_Period_Number = 0 AND Effective_Start_Datetime = "
-                      "(SELECT MAX(Effective_Start_Datetime) FROM {c}.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw) GROUP BY ALL")],
+                      + latest("mpr_mips_crack_spread_price_fact_metrics_vw", "Effective_Start_Datetime") + " GROUP BY ALL")],
     },
     "Executive Summary KPIs Analytics": {
         "file": "executive-summary-kpis-analytics.md",
@@ -39,18 +46,18 @@ AGENTS = {
                       "SELECT MIPSDisplayName, MEASURE(assessment_amount) AS price_usd_per_gal, MEASURE(ChangeValue) AS change_usd_per_gal "
                       "FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw WHERE Price_Group_Name = 'Cash' "
                       "AND Parent_Price_group_name = 'Diesel' AND MIPSDisplayName = 'NYH ULSD' AND SortColumns = 1 AND effective_date = "
-                      "(SELECT MAX(effective_date) FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw) GROUP BY ALL"),
+                      + latest("mips_mpr_executive_summary_fact_vw", "effective_date") + " GROUP BY ALL"),
                      ("What is the ICE Brent front-month settle on the latest date, in $/bbl?",
                       "SELECT Price_Master_ID, Blend, MEASURE(Avg_Settle_Price) / 100 AS settle_usd_per_bbl "
                       "FROM {c}.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw WHERE Price_Master_ID = '572' "
                       "AND Relative_Period_Number = 1 AND Effective_Date = "
-                      "(SELECT MAX(Effective_Date) FROM {c}.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw) GROUP BY ALL"),
+                      + latest("mips_mpr_benchmark_prices_fact_vw", "Effective_Date") + " GROUP BY ALL"),
                      ("What is the monthly average NYH ULSD cash price for each forward month on the latest date?",
                       "SELECT DATE_TRUNC('MONTH', Price_Period_Datetime) AS price_month, "
                       "MEASURE(assessment_amount) / MEASURE(Record_Count) AS avg_price_usd_per_gal "
                       "FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw WHERE Price_Group_Name = 'Cash' "
                       "AND Parent_Price_group_name = 'Diesel' AND MIPSDisplayName = 'NYH ULSD' AND effective_date = "
-                      "(SELECT MAX(effective_date) FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw) GROUP BY ALL ORDER BY 1")],
+                      + latest("mips_mpr_executive_summary_fact_vw", "effective_date") + " GROUP BY ALL ORDER BY 1")],
     },
 }
 

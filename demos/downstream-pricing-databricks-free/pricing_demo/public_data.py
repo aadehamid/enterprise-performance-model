@@ -12,6 +12,7 @@ import json
 import os
 import urllib.request
 
+from . import config
 from .config import DATA, WINDOW_END, WINDOW_START
 
 EIA_SERIES = {
@@ -36,14 +37,16 @@ EIA_SERIES = {
 
 
 def eia_key():
-    key = os.environ.get("EIA_API_KEY", "").strip()
+    """The EIA key from the environment, then the demo's .env (as .env.example and the README name it), then
+    ~/.config/eia/api.env. Never printed (Cursor Bugbot on #380)."""
+    key = config.env("EIA_API_KEY", "").strip()
     path = os.path.expanduser("~/.config/eia/api.env")
     if not key and os.path.exists(path):
         for line in open(path):
             if line.strip().startswith("EIA_API_KEY"):
                 key = line.split("=", 1)[1].strip().strip('"').strip("'")
     if not key:
-        raise SystemExit("EIA_API_KEY is not set (environment or ~/.config/eia/api.env)")
+        raise SystemExit("EIA_API_KEY is not set (environment, the demo's .env, or ~/.config/eia/api.env)")
     return key
 
 
