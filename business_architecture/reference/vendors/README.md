@@ -4,7 +4,7 @@ Each passage below is a vendor's own description of its product, quoted whole fr
 
 A vendor's page says what its product is in general. It says nothing about how MPC uses the product: that comes from the process map's `systems` fields and the decision owner's customer inputs. A vendor page is also marketing, so it never outranks MPC's own sources or the process map.
 
-All pages were read on 2026-10-25.
+All pages were read on 2026-10-25, except SAP's conversion guide for SAP S/4HANA, read on 2026-10-26, as its row says.
 
 | Product | Module systems | Passage, quoted whole | Source |
 |---|---|---|---|
