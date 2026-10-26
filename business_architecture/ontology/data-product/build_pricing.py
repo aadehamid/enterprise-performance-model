@@ -50,7 +50,7 @@ SOURCES = {
     # the kinds (EPM-DEC-001-0097, item 14; data-product-kinds research of 2026-10-25).
     SRC["dehghani-data-mesh-2019"]: "Z. Dehghani, How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh, "
                                     "martinfowler.com, 20 May 2019, https://martinfowler.com/articles/data-monolith-to-mesh.html",
-    SRC["datamesh-architecture-innoq"]: "J. Christ and S. Harrer (INNOQ), Data Mesh Architecture, https://www.datamesh-architecture.com/, "
+    SRC["datamesh-architecture-innoq"]: "L. Visengeriyeva, J. Christ and S. Harrer (INNOQ), Data Mesh Architecture, https://www.datamesh-architecture.com/, "
                                         "retrieved 2026-10-25",
     SRC["databricks-medallion-architecture"]: "Databricks, What is the medallion lakehouse architecture?, updated 2026-09-11, "
                                               "https://docs.databricks.com/aws/en/lakehouse/medallion",

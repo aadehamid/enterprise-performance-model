@@ -21,6 +21,7 @@ A minor release: it adds classes, properties, two code lists, the pricing platfo
 - **Reads with no column flowing** in the crack-spread gold build, from `mips_price_batch_dim` and `mips_price_assessment_fact`.
 - **The lineage's reach:** 180 days of Unity Catalog lineage; the replicas are the top it records.
 - **Sandbox names.** Every name is the `idp_sbx` sandbox's (or `synapse_dev`'s, for replicas) until production names are recorded.
+- **Freshness.** On 2026-10-25 the newest crack-spread price in the gold table was from 2026-10-08, and the build job last wrote to the table on 2026-10-12 (EPM-DEC-001-0097, Known gaps).
 
 ## 1.1.0 (2026-10-23)
 

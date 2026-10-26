@@ -4,7 +4,7 @@
 
 A minor release: it adds two systems and a definition, and removes no IRI. Approved by the decision owner with item F's release plan ("Approve the plan (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0097, 0100).
 
-- [minor] **MIPS and Databricks,** which the process map does not name, from the decision owner's pricing assets, each defined; MIPS carries "Market Information and Pricing System" as an alternative label. Databricks' definition is marked as the vendor's description (EPM-DEC-001-0097, item 12; EPM-DEC-001-0100).
+- [minor] **MIPS and Databricks,** which the process map does not name, from the decision owner's pricing assets, each defined; MIPS carries "Market Information and Pricing System" as an alternative label. Databricks' definition is marked as the vendor's description (EPM-DEC-001-0100, item 6).
 - [minor] **MPR** gains a definition from the decision owner's files, with a note that they expand it two ways.
 - [minor] **Shapes.** A system another source names may be defined by that source alone; a system the process map names still cites a source beside it.
 - It requires core 2.3.0, the current release.

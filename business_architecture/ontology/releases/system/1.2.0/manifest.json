@@ -20,10 +20,10 @@
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
   },
   "files": {
-    "CHANGELOG.md": "659644c2a974b5660d75d989613f525877b0773c06eb0815ccc77bbddb5828ff",
+    "CHANGELOG.md": "bc23a159a0fbca08e05a3492cdf1a37749d013eef370d4396c9e86333c34672d",
     "catalog.ttl": "b09f88cf9950aa0672d041fd4b7a2a3f029598a811e6ce0ed810a742a1fcf32a",
     "shapes.ttl": "77849dd2e514e984775e0b9d1a26c2ffaf15925b70127f2859248869c863d10c",
-    "system.jsonld": "a29a4ef048e4fba9a5e18ec5ad71412df0f0abb217fd1d44de36b37e8a97c3d1",
-    "system.ttl": "00c02d9819f85934a3e065693152f26f8a4a8ac074373c5362a952dd5aedf626"
+    "system.jsonld": "c67abc2694c8dfe0dab981bc0255ea04bfb200a8965da65e68b43463131a199f",
+    "system.ttl": "1eb1912409f577ce000c289fcaa94d58178396f90e05703b680918756d6561a8"
   }
 }

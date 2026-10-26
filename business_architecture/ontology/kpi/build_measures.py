@@ -52,7 +52,8 @@ CLASSIFIED_BY = SOURCES["industry"]
 IDENTIFIERS = {
     "crack-spreads": ("KPI-0001", "KPI-0001 is the crack-spread Genie agent's identifier for this measure. The gold table "
                                   "behind its metric view holds the constant KPI_ID value 'KPI Crack Spread 3-2-1' on every "
-                                  "one of its 127 series alike, so the identifier names the measure, not a series "
+                                  "one of its 127 series and all 1,090,423 rows of the gold table alike, so the identifier names the measure, "
+                                  "not a series "
                                   "(EPM-DEC-001-0097, item 3)."),
 }
 # What changed in a measure since an earlier release, kept on the measure (kpi 1.2.0).

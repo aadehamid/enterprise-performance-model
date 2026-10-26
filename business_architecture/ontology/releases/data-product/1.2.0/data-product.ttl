@@ -1071,7 +1071,7 @@ src:databricks-medallion-architecture a dcterms:BibliographicResource ;
     dcterms:title "Databricks, What is the medallion lakehouse architecture?, updated 2026-09-11, https://docs.databricks.com/aws/en/lakehouse/medallion"@en .
 
 src:datamesh-architecture-innoq a dcterms:BibliographicResource ;
-    dcterms:title "J. Christ and S. Harrer (INNOQ), Data Mesh Architecture, https://www.datamesh-architecture.com/, retrieved 2026-10-25"@en .
+    dcterms:title "L. Visengeriyeva, J. Christ and S. Harrer (INNOQ), Data Mesh Architecture, https://www.datamesh-architecture.com/, retrieved 2026-10-25"@en .
 
 src:dehghani-data-mesh-2019 a dcterms:BibliographicResource ;
     dcterms:title "Z. Dehghani, How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh, martinfowler.com, 20 May 2019, https://martinfowler.com/articles/data-monolith-to-mesh.html"@en .
