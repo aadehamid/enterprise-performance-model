@@ -250,17 +250,64 @@ def test_finding_5_an_empty_partial_or_mismatched_replica_is_refused(tmp_path):
     assert replicate.check_replica(str(tmp_path / "ok"), rows_of=rows3) == expected
 
 
+class BuiltCursor:
+    """Answers SHOW TABLES with every expected object (less `missing`) and each count with `rows`."""
+
+    def __init__(self, missing=None, rows=5, empty=None):
+        self.missing, self.rows, self.empty = missing, rows, empty
+
+    def execute(self, q):
+        self.q = q
+
+    def fetchall(self):
+        if self.q.startswith("SHOW TABLES"):
+            schema = self.q.rsplit(".", 1)[1]
+            return [("c", n, False) for n in sorted(databricks.BUILT[schema]) if n != self.missing]
+        return [(0 if self.empty and self.q.endswith(self.empty) else self.rows,)]
+
+
 def test_finding_5_build_checks_every_silver_gold_and_view_object():
+    with pytest.raises(SystemExit):
+        databricks.check_built(BuiltCursor(missing="refinery_operations_daily_fact"), "c")
+    databricks.check_built(BuiltCursor(), "c")
+
+
+def test_pi_round_2_finding_2_an_empty_built_table_or_view_fails():
+    with pytest.raises(SystemExit):
+        databricks.check_built(BuiltCursor(empty="gold_commercial_core.mips_mpr_executive_summary_fact"), "c")
+    with pytest.raises(SystemExit):
+        databricks.check_built(BuiltCursor(empty="semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw"), "c")
+
+
+def test_pi_round_2_finding_2_a_same_count_replica_from_another_run_fails():
+    manifest = {"mpr/pricedetail": 10, "mpr/pricemaster": 2}
+    taken = "2026-10-26T01:00:00"
+
     class Cursor:
+        def __init__(self, stamp):
+            self.stamp = stamp
+
         def execute(self, q):
             self.q = q
 
         def fetchall(self):
-            schema = self.q.rsplit(".", 1)[1]
-            names = sorted(databricks.BUILT[schema])
-            return [("c", n, False) for n in names[:-1]] if schema == "gold_commercial_core" else [("c", n, False) for n in names]
-    with pytest.raises(SystemExit):
-        databricks.check_built(Cursor(), "c")
+            n = 10 if "pricedetail" in self.q else 2
+            return [(n, dt.datetime.fromisoformat(self.stamp), dt.datetime.fromisoformat(self.stamp))]
+    with pytest.raises(SystemExit):  # the volume still holds the run before: same counts, older stamp
+        databricks.check_replica_tables(Cursor("2026-10-25T22:00:00"), "c", manifest=manifest, taken=taken)
+    databricks.check_replica_tables(Cursor(taken), "c", manifest=manifest, taken=taken)
+
+
+def test_pi_round_2_observation_5_the_three_shifted_crude_series_carry_the_two_month_lag():
+    groups = {r["ID"]: r["Name"] for r in rows("mips", "mips_priceassessmentgroup")}
+    day = dt.date(2026, 10, 20)
+    periods = {}
+    for r in rows("mips", "mips_priceassessment"):
+        if r["updated_at"].date() == day and r["SortOrder"] == 1:
+            periods[groups[r["PriceAssessmentGroupID"]]] = r["PricePeriod"]
+    for name in catalog.CRUDE_SHIFTED:
+        assert periods[name] == dt.date(2026, 8, 1), name
+    assert periods["Mars vs. WTI Cushing"] == periods["NYH ULSD"] == dt.date(2026, 10, 1)
 
 
 def test_finding_7_replication_is_full_snapshot_only():

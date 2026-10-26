@@ -121,22 +121,33 @@ def build(files=None):
         check_built(cur, cat)
 
 
-def check_replica_tables(cur, cat, manifest=None):
-    """Each replica table holds exactly the rows the uploaded replica's manifest names (finding 5)."""
+def check_replica_tables(cur, cat, manifest=None, taken=None):
+    """Each replica table holds exactly the rows of the local replica's manifest, and every row comes from that same
+    run: its _replicated_at equals the manifest's. A volume left holding an earlier run's files has the same counts
+    but another _replicated_at, so a skipped upload is caught (finding 5; Pi round 2, finding 2)."""
     manifest = manifest or replicate.check_replica()
+    taken = taken or replicate.replicated_at()
     for key, rows in sorted(manifest.items()):
         system, table = key.split("/")
-        n = run(cur, f"SELECT COUNT(*) FROM {cat}.replica_{system}.{table}")[0][0]
+        n, first, last = run(cur, f"SELECT COUNT(*), MIN(_replicated_at), MAX(_replicated_at) FROM {cat}.replica_{system}.{table}")[0]
         if n != rows:
             raise SystemExit(f"{cat}.replica_{system}.{table} has {n} rows; the replica manifest says {rows}")
+        stamps = {str(v).replace(" ", "T") for v in (first, last)}
+        if stamps != {taken}:
+            raise SystemExit(f"{cat}.replica_{system}.{table} holds rows replicated at {sorted(stamps)}, not this run's {taken}: "
+                             "upload the current replica")
 
 
 def check_built(cur, cat):
-    """Every silver and gold table and metric view of a complete build exists (finding 5)."""
+    """Every silver and gold table and metric view of a complete build exists and holds rows (finding 5; Pi round 2)."""
     for schema, names in BUILT.items():
         found = {r[1] for r in run(cur, f"SHOW TABLES IN {cat}.{schema}")}
         if names - found:
             raise SystemExit(f"{cat}.{schema} lacks {sorted(names - found)}")
+        for name in sorted(names):
+            n = count(cur, f"{cat}.{schema}.{name}", metric_view=schema == "semantic_sem_commercial")
+            if not n:
+                raise SystemExit(f"{cat}.{schema}.{name} is empty")
 
 
 def counts():

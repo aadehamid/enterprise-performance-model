@@ -65,6 +65,11 @@ def parquet_rows(file):
     return pq.ParquetFile(file).metadata.num_rows
 
 
+def replicated_at(folder=REPLICA):
+    """When the replica in `folder` was taken, as its manifest records it."""
+    return json.load(open(os.path.join(folder, "manifest.json")))["replicated_at"]
+
+
 def check_replica(folder=REPLICA, rows_of=parquet_rows):
     """The manifest of a complete replica: every expected table, each file present with the rows the manifest names.
     Raises SystemExit otherwise, so an empty or partial replica is never uploaded (finding 5)."""

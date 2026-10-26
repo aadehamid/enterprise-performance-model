@@ -291,11 +291,14 @@ def build():
         scarcity = timeline.intensity("diesel_scarcity", day)
         for aid, sheet_id, value_fn, periods, name in series:
             base, base_label = value_fn(day)
+            # The shared system stores these three crude series' pricing periods two months early, which is why the
+            # Executive Summary agent shifts them forward two months (Pi round 2, observation 5).
+            lag = 2 if name in catalog.CRUDE_SHIFTED else 0
             for sort in range(1, periods + 1):
                 value = base if sort == 1 else forward(base, sort - 1, 0.008 + 0.012 * scarcity, rng)
                 prev = previous.get((aid, sort))
                 label = base_label if sort == 1 else "synthesized"
-                assessments.append((aid_seq, aid, sheet_id, batch_of[day], month_start(day, sort - 1), round(value, 6),
+                assessments.append((aid_seq, aid, sheet_id, batch_of[day], month_start(day, sort - 1 - lag), round(value, 6),
                                     None if prev is None else round(prev, 6), 0, sort, ts(day, 17), label))
                 previous[(aid, sort)] = value
                 aid_seq += 1

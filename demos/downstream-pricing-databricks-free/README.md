@@ -37,9 +37,11 @@ uv run --with pytest python -m pytest -q tests             # offline tests
 
 Postgres listens only on this machine (127.0.0.1:55432), with the throwaway login `demo`. To move the source databases to another host, such as an exe.dev VM, change `SOURCE_PG_DSN`; nothing else names the host, and a remote host needs its own password and network rules.
 
-Every replication run is a full snapshot: the downstream layers replace their contents from it. The run writes `out/replica/manifest.json` with each table's rows only after every table is there and not empty; `upload` refuses a replica that does not match its manifest, and `build` checks each replica table's rows against the manifest and that every silver and gold table and metric view exists. Each source database loads in one transaction. Databricks Free Edition limits outbound internet to trusted domains, so the replication pushes from the machine that can reach Postgres rather than letting Databricks pull.
+Every replication run is a full snapshot: the downstream layers replace their contents from it. The run writes `out/replica/manifest.json` with each table's rows only after every table is there and not empty; `upload` refuses a replica that does not match its manifest, and `build` checks each replica table's rows and its `_replicated_at` against the manifest, so a volume still holding an earlier run's files fails, and that every silver and gold table and metric view exists and holds rows. Each source database loads in one transaction. Databricks Free Edition limits outbound internet to trusted domains, so the replication pushes from the machine that can reach Postgres rather than letting Databricks pull.
 
 ## The last run (2026-10-25)
+
+The offline tests check the data, the SQL text and the agents' instructions; they cannot execute a metric view, so the views' behaviour rests on the live runs below. The benchmark view's row count moves with `CURRENT_DATE()`, because the view keeps only the last 160 days: rerunning `counts` on a later date gives a different figure, which is the shared view's design, not a defect.
 
 Free Edition created the `idp_sbx` catalog, so the objects carry their shared names. Rows, from `databricks counts`:
 
@@ -107,6 +109,7 @@ The demo uses generic names; the real names stay in the ontology (the decision o
 ## What matches the shared assets, and what does not
 
 - **Matches:** the schema, table, view and column names; the crack gold's joins (the MPR settle price unchanged, the MIPS crack sheets, the level-1 group) and constants (`KPI_ID` 'KPI Crack Spread 3-2-1', `Source_System_Id` '17'); the metric views' fields, measures, joins and filters; the benchmark view's defect, all five instruments times 100, and its 160-day window (EPM-DEC-001-0097, Known gaps).
+- **Matches, on purpose:** the three crude series the shared system stores two months early (Bakken - Patoka, SYN and WCS; Price Master IDs 30532, 79068, 79069) carry that two-month lag, so the Executive Summary agent's shift rule holds here too.
 - **Differs:** the price detail's high and low prices are left empty, because the demo generates only the settle. The crack view has no `Crack_Spread_Sum`, as the bound view lacks it, so the recreated crack agent says so instead of summing (EPM-DEC-001-0097, Known gaps). The silver fact for MIPS assessments carries `Price_Batch_Id`, so gold takes the effective date from the batch directly. The demo's refinery operations and their metric view are the demo's own; their formulas are not the ontology's definitions, which live in the `kpi` module.
 - **The Genie agents' instructions** are written for this demo from the decision owner's description of the two agents. They are not copies.
 
