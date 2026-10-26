@@ -436,3 +436,83 @@ def test_bugbot_380_every_example_reads_its_view_only_with_measure():
                 assert "MEASURE(" in sql[select:at], sql[select:at]
             for sub in re.findall(r"MEASURE\(Record_Count\) AS n FROM [^)]*", sql):
                 assert "GROUP BY" in sub, sub
+
+
+def test_purge_drops_only_what_the_build_creates_and_no_schema_by_cascade():
+    from pricing_demo import databricks as dbx
+    drops = dbx.purge_statements("cat")
+    assert not any("CASCADE" in d for d in drops)
+    made = {(s, n) for _, s, n in dbx.created_objects()}
+    for schema, names in dbx.BUILT.items():
+        assert {(schema, n) for n in names} <= made
+    assert {s for s, _ in made} == set(dbx.SCHEMAS[1:])
+    assert f"DROP VOLUME IF EXISTS cat.{dbx.VOLUME}" in drops
+    assert drops[-len(dbx.SCHEMAS):] == [f"DROP SCHEMA IF EXISTS cat.{s}" for s in reversed(dbx.SCHEMAS)]
+    assert sum(d.startswith(("DROP TABLE", "DROP VIEW")) for d in drops) == len(made)
+
+
+class _Cursor:
+    def __init__(self, comment, fail_on=None):
+        self.comment, self.fail_on, self.ran = comment, fail_on, []
+    def __enter__(self):
+        return self
+    def __exit__(self, *a):
+        return False
+    def execute(self, st):
+        if self.fail_on and st.startswith(self.fail_on):
+            raise RuntimeError("SCHEMA_NOT_EMPTY")
+        self.ran.append(st)
+        self._rows = ({"SHOW CATALOGS": [("idp_sbx",)], "SHOW SCHEMAS IN idp_sbx": [("replica_landing",)],
+                       "DESCRIBE CATALOG idp_sbx": [("Comment", self.comment)]}).get(st, [])
+    def fetchall(self):
+        return self._rows
+
+
+class _Conn:
+    def __init__(self, cur):
+        self.cur = cur
+    def __enter__(self):
+        return self
+    def __exit__(self, *a):
+        return False
+    def cursor(self):
+        return self.cur
+
+
+def _drops(cur):
+    return [s for s in cur.ran if s.startswith("DROP")]
+
+
+def test_purge_lists_without_dropping_unless_yes():
+    from pricing_demo import databricks as dbx
+    cur = _Cursor(dbx.DEMO_COMMENT)
+    dbx.purge(execute=False, connection=(_Conn(cur), {}))
+    assert _drops(cur) == []
+    cur = _Cursor(dbx.DEMO_COMMENT)
+    dbx.purge(execute=True, connection=(_Conn(cur), {}))
+    assert _drops(cur) == dbx.purge_statements("idp_sbx")
+
+
+def test_purge_refuses_a_catalog_the_demo_did_not_create():
+    from pricing_demo import databricks as dbx
+    cur = _Cursor("someone else's catalog")
+    try:
+        dbx.purge(execute=True, connection=(_Conn(cur), {}))
+        raise AssertionError("purge ran on a catalog the demo does not own")
+    except SystemExit as err:
+        assert "--catalog idp_sbx" in str(err)
+    assert _drops(cur) == []
+    cur = _Cursor("someone else's catalog")
+    dbx.purge(execute=True, catalog="idp_sbx", connection=(_Conn(cur), {}))
+    assert _drops(cur) == dbx.purge_statements("idp_sbx")
+
+
+def test_purge_stops_at_a_schema_that_holds_something_else():
+    from pricing_demo import databricks as dbx
+    cur = _Cursor(dbx.DEMO_COMMENT, fail_on="DROP SCHEMA")
+    try:
+        dbx.purge(execute=True, connection=(_Conn(cur), {}))
+        raise AssertionError("purge went on past a failed schema drop")
+    except RuntimeError:
+        pass
+    assert not any(s.startswith("DROP SCHEMA") for s in cur.ran)

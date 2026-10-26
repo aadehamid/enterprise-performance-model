@@ -4,6 +4,7 @@
     uv run python -m pricing_demo.databricks upload    # out/replica/*.parquet to the volume
     uv run python -m pricing_demo.databricks build     # sql/02 to sql/05: replica, silver, gold, metric views
     uv run python -m pricing_demo.databricks counts    # row counts of every table and view
+    uv run python -m pricing_demo.databricks purge     # list what a purge drops; --yes drops it
 
 The catalog is idp_sbx when the workspace lets you create it, otherwise DEMO_CATALOG (Free Edition: workspace), and
 every schema keeps the name it has in idp_sbx, so the objects read like the shared ones. One rule picks the catalog
@@ -33,6 +34,7 @@ BUILT = {
                                 "mips_mpr_benchmark_prices_fact_vw", "refinery_operations_metrics_vw"},
 }
 VOLUME = "replica_landing.raw"
+DEMO_COMMENT = "Synthetic sandbox mirror for the pricing demo"
 
 
 def connect():
@@ -52,7 +54,7 @@ def run(cur, statement):
 
 def catalog(cur, e):
     try:
-        run(cur, "CREATE CATALOG IF NOT EXISTS idp_sbx COMMENT 'Synthetic sandbox mirror for the pricing demo'")
+        run(cur, f"CREATE CATALOG IF NOT EXISTS idp_sbx COMMENT '{DEMO_COMMENT}'")
         return "idp_sbx"
     except Exception as err:
         print(f"idp_sbx not created ({type(err).__name__}); using {e['DEMO_CATALOG']}")
@@ -164,6 +166,52 @@ def counts():
     return found
 
 
+CREATED = re.compile(r"CREATE OR REPLACE (TABLE|VIEW) \$\{catalog\}\.(\w+)\.(\w+)")
+
+
+def created_objects():
+    """Every table and view the build's SQL creates, as (kind, schema, name): the purge drops exactly these."""
+    found = []
+    for path in sorted(glob.glob(os.path.join(SQL, "0[2-9]_*.sql"))):
+        found += CREATED.findall(open(path).read())
+    return found
+
+
+def purge_statements(cat):
+    """The demo's objects, dropped one by one, then its volume and schemas without CASCADE: a schema that still
+    holds anything the demo did not create is not dropped, and the statement fails instead."""
+    drops = [f"DROP {kind} IF EXISTS {cat}.{schema}.{name}" for kind, schema, name in reversed(created_objects())]
+    drops.append(f"DROP VOLUME IF EXISTS {cat}.{VOLUME}")
+    drops += [f"DROP SCHEMA IF EXISTS {cat}.{s}" for s in reversed(SCHEMAS)]
+    return drops
+
+
+def demo_owns(cur, cat):
+    """True for idp_sbx only when it carries the comment setup gives it: a catalog of that name made by anyone else
+    is not the demo's."""
+    if cat != "idp_sbx":
+        return False
+    rows = run(cur, "DESCRIBE CATALOG idp_sbx")
+    return any(str(r[0]).strip().lower() == "comment" and str(r[1]).strip() == DEMO_COMMENT for r in rows)
+
+
+def purge(execute=False, catalog=None, connection=None):
+    """Prints the drop statements; runs them only with --yes. Stops at the first statement that fails. A catalog the
+    demo does not own (DEMO_CATALOG, or an idp_sbx without setup's comment) is purged only when --catalog names it."""
+    conn, e = connection or connect()
+    with conn, conn.cursor() as cur:
+        cat = current_catalog(cur, e)
+        print(f"catalog {cat}")
+        if execute and not demo_owns(cur, cat) and catalog != cat:
+            raise SystemExit(f"{cat} is not a catalog the demo created; to purge the demo's objects in it, "
+                             f"add --catalog {cat}")
+        for st in purge_statements(cat):
+            print(st)
+            if execute:
+                run(cur, st)
+    print("purged" if execute else "dry run: nothing dropped; add --yes to drop")
+
+
 def count(cur, name, metric_view):
     """Rows of a table, or of a metric view through its Record_Count measure, which every view defines (finding 4)."""
     query = f"SELECT MEASURE(Record_Count) FROM {name}" if metric_view else f"SELECT COUNT(*) FROM {name}"
@@ -172,5 +220,11 @@ def count(cur, name, metric_view):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("step", choices=("setup", "upload", "build", "counts"))
-    {"setup": setup, "upload": upload, "build": build, "counts": counts}[ap.parse_args().step]()
+    ap.add_argument("step", choices=("setup", "upload", "build", "counts", "purge"))
+    ap.add_argument("--yes", action="store_true", help="purge: drop the objects instead of listing them")
+    ap.add_argument("--catalog", help="purge: confirm a catalog the demo did not create, by name")
+    args = ap.parse_args()
+    if args.step == "purge":
+        purge(execute=args.yes, catalog=args.catalog)
+    else:
+        {"setup": setup, "upload": upload, "build": build, "counts": counts}[args.step]()

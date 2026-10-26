@@ -19,7 +19,7 @@ Postgres (Docker, one database per source system)
 
 ## Run it
 
-You need Docker, [uv](https://docs.astral.sh/uv/), and a Databricks Free Edition workspace with a personal access token. Copy `.env.example` to `.env` and fill it in; the scripts also read `~/.config/databricks/epm.env`. They never print a secret.
+You need Docker, [uv](https://docs.astral.sh/uv/), and a Databricks Free Edition workspace with a personal access token. Copy `.env.example` to `.env` and fill it in; the scripts also read `~/.config/databricks/epm.env`. They never print a secret. To stop, restart, purge or reload the demo's stores together with the ontology's, see `business_architecture/ontology/projection/stores-runbook.html`.
 
 ```bash
 cd demos/downstream-pricing-databricks-free
@@ -32,6 +32,7 @@ uv run python -m pricing_demo.databricks upload            # Parquet -> the volu
 uv run python -m pricing_demo.databricks build             # replica, silver, gold, metric views
 uv run python -m pricing_demo.genie                        # the two Genie agents
 uv run python -m pricing_demo.databricks counts            # row counts
+uv run python -m pricing_demo.databricks purge             # list what a purge drops; --yes drops it
 uv run --with pytest python -m pytest -q tests             # offline tests
 ```
 
@@ -118,7 +119,7 @@ The demo uses generic names; the real names stay in the ontology (the decision o
 
 | Path | What |
 |---|---|
-| `pricing_demo/` | `public_data.py` (EIA cache), `timeline.py` (scenario events), `catalog.py` (price masters, MIPS hierarchy), `generate.py` (every source table, seeded), `load_postgres.py`, `replicate.py` (DuckDB), `databricks.py` (setup, upload, build, counts), `genie.py` |
+| `pricing_demo/` | `public_data.py` (EIA cache), `timeline.py` (scenario events), `catalog.py` (price masters, MIPS hierarchy), `generate.py` (every source table, seeded), `load_postgres.py`, `replicate.py` (DuckDB), `databricks.py` (setup, upload, build, counts, purge), `genie.py` |
 | `sql/` | The four Databricks layers |
 | `genie/` | The two agents' instructions |
 | `docker/` | The Postgres server and its six databases |

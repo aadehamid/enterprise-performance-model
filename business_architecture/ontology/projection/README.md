@@ -10,6 +10,7 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
 | `run_local.sh` | Steps 4 to 7 below in one command; `--keep` leaves the Neo4j container running |
 | `LOCAL-STORES.md` | The stores kept loaded for exploration since 2026-10-26, how to refresh each, and where its login lives |
+| `stores-runbook.html` | A standalone page for a person: the end-to-end workflow with diagrams, and how to check, stop, start, purge and reload each store |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, and that the report is current and passed |
 
 `scripts/check.sh` runs `pipeline.py build --verify` and the tests. Step 2 needs Java, and Steps 4 and 5 need a Neo4j container in Docker, so they run on a workstation, not in CI.
