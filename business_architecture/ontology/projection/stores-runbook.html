@@ -375,15 +375,15 @@ DEMO="$EPM/demos/downstream-pricing-databricks-free"</code></pre>
 <pre><code>docker ps --format '{{.Names}}  {{.Status}}'</code></pre>
 <p>All three local stores are up when the list shows <code>epm-lpg</code>, <code>lpg-local-neo4j-1</code> and <code>pricing-demo-sources</code>.</p>
 <h3>Count what each store holds</h3>
-<p>Pipeline Neo4j. The password is read from its file and never printed:</p>
+<p>Pipeline Neo4j. The password is read from its file into <code>NEO4J_PASSWORD</code>, which <code>docker exec -e</code> passes to <code>cypher-shell</code>, so it never appears on a command line or in the output:</p>
 <pre><code>set -a; . ~/epm-lpg/run.env; set +a
-docker exec epm-lpg cypher-shell -u neo4j -p "$NEO4J_PASSWORD" \
+docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j \
   "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships;"</code></pre>
 <p>Driver Neo4j. After a full driver run its login is in the <code>epm-rebuild</code> file; after a run with <code>--skip rebuild</code>, change <code>epm-rebuild</code> to <code>epm</code> in the first line:</p>
-<pre><code>pw=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
-docker exec lpg-local-neo4j-1 cypher-shell -u neo4j -p "$pw" \
+<pre><code>export NEO4J_PASSWORD=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
+docker exec -e NEO4J_PASSWORD lpg-local-neo4j-1 cypher-shell -u neo4j \
   "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships;"</code></pre>
-<p>Postgres, the exact row count of every table in each database. Postgres quotes each table name itself (<code>format</code> with <code>%I</code>), so no name is pasted into the SQL. The block prints <code>count failed</code> for any database it could not count, and ends with a non-zero status if one failed:</p>
+<p>Postgres, the exact row count of every table in each database. Postgres quotes each table name itself (<code>format</code> with <code>%I</code>), so no name is pasted into the SQL. psql 16.10's own help describes <code>\gexec</code> as "execute query, then execute each value in its result" and <code>ON_ERROR_STOP</code> as "stop batch execution after error"; on 2026-10-26 a count of a missing table exited with status 3. The block prints <code>count failed</code> for any database it could not count, and ends with a non-zero status if one failed:</p>
 <pre><code>rc=0
 for db in mips mpr kittyhawk ctrm planning prodacct; do
   printf '%s\n' "select format('select %L, count(*) from %I.%I', '$db.' || tablename, schemaname, tablename) from pg_tables where schemaname = 'public' order by tablename \gexec" \
@@ -443,17 +443,17 @@ done
 <pre><code>set -a; . ~/epm-lpg/run.env; set +a
 state="not ready"
 for i in $(seq 1 24); do
-  if docker exec epm-lpg cypher-shell -u neo4j -p "$NEO4J_PASSWORD" "RETURN 1" >/dev/null 2>&amp;1; then
+  if docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j "RETURN 1" >/dev/null 2>&amp;1; then
     state=ready; break
   fi
   sleep 5
 done
 echo "$state"; [ "$state" = ready ]</code></pre>
 <p>The driver's Neo4j (after a run with <code>--skip rebuild</code>, change <code>epm-rebuild</code> to <code>epm</code>):</p>
-<pre><code>pw=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
+<pre><code>export NEO4J_PASSWORD=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
 state="not ready"
 for i in $(seq 1 24); do
-  if docker exec lpg-local-neo4j-1 cypher-shell -u neo4j -p "$pw" "RETURN 1" >/dev/null 2>&amp;1; then
+  if docker exec -e NEO4J_PASSWORD lpg-local-neo4j-1 cypher-shell -u neo4j "RETURN 1" >/dev/null 2>&amp;1; then
     state=ready; break
   fi
   sleep 5
@@ -555,7 +555,7 @@ uv run --no-project --with rdflib python3 run_projection.py \
 <div class="ok"><strong>When it is done</strong>Every store holds the newest releases again. Run the counts in <a href="#check">Check what is running</a>.</div>
 
 <h2 id="purge">Purge</h2>
-<div class="warn"><strong>Read this first.</strong>A purge cannot be undone. The data comes back only by <a href="#reload">reloading</a>, which rebuilds what these commands remove from the repository. Each command below removes only what the demo or the projection created. On 2026-10-26 the decision owner asked to keep these stores loaded. Purge only when you mean to.</div>
+<div class="warn"><strong>Read this first.</strong>A purge cannot be undone. The data comes back only by <a href="#reload">reloading</a>, which rebuilds what these commands remove from the repository. The local and Databricks commands below remove only what the demo or the projection created; the AuraDB command empties the whole Aura database, which holds only these test runs (<code>skill-run/README.md</code>). On 2026-10-26 the decision owner asked to keep these stores loaded. Purge only when you mean to.</div>
 
 <div class="two">
   <div class="card">
@@ -582,7 +582,7 @@ docker compose -f docker/docker-compose.yml down -v</code></pre>
 <h3>Databricks</h3>
 <p>The ontology triples: run this in the Databricks SQL editor.</p>
 <pre><code>DROP TABLE IF EXISTS workspace.epm_ontology.epm_triples;</code></pre>
-<p>The demo: its own <code>purge</code> step drops exactly the tables and metric views its SQL files create, then its volume, then its eleven schemas without <code>CASCADE</code>. A schema that still holds anything the demo did not create is not dropped: that statement fails and the step stops. Run it once without <code>--yes</code> to see the statements and the catalog it will use, then with <code>--yes</code> to drop:</p>
+<p>The demo: its own <code>purge</code> step drops exactly the tables and metric views its SQL files create, then its volume, then its eleven schemas without <code>CASCADE</code>. A schema that still holds anything the demo did not create is not dropped: without <code>CASCADE</code>, <code>DROP SCHEMA</code> runs as <code>RESTRICT</code>, which "restricts dropping a non-empty schema and is enabled by default" (<a href="https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-drop-schema">Databricks, "DROP SCHEMA"</a>, read 2026-10-26), so that statement fails and the step stops. Run it once without <code>--yes</code> to see the statements and the catalog it will use, then with <code>--yes</code> to drop:</p>
 <pre><code>cd "$DEMO"
 uv run python -m pricing_demo.databricks purge         # lists the statements; drops nothing
 uv run python -m pricing_demo.databricks purge --yes   # drops them</code></pre>

@@ -119,7 +119,7 @@ The demo uses generic names; the real names stay in the ontology (the decision o
 
 | Path | What |
 |---|---|
-| `pricing_demo/` | `public_data.py` (EIA cache), `timeline.py` (scenario events), `catalog.py` (price masters, MIPS hierarchy), `generate.py` (every source table, seeded), `load_postgres.py`, `replicate.py` (DuckDB), `databricks.py` (setup, upload, build, counts), `genie.py` |
+| `pricing_demo/` | `public_data.py` (EIA cache), `timeline.py` (scenario events), `catalog.py` (price masters, MIPS hierarchy), `generate.py` (every source table, seeded), `load_postgres.py`, `replicate.py` (DuckDB), `databricks.py` (setup, upload, build, counts, purge), `genie.py` |
 | `sql/` | The four Databricks layers |
 | `genie/` | The two agents' instructions |
 | `docker/` | The Postgres server and its six databases |
