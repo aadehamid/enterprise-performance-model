@@ -44,7 +44,7 @@ Reading copy of the visual handbook: [EPM_Integrated_Architecture_Handbook_Compl
 
 Intentionally mirrors EPM patterns. **Not a governed EPM artifact set.** Charter, ADRs, stack decisions, and a ten-phase (0–9) roadmap live under [`EPM_Homelab/`](EPM_Homelab/).
 
-### 3. Demos — runnable O2C unbilled exposure
+### 3. Demos — runnable O2C unbilled exposure and downstream pricing
 
 Three packs: full Databricks/Metric Views, a learner variant with an empty ontology stub, and a dbt/DuckDB/MetricFlow pack. See [`demos/README.md`](demos/README.md). *2026-10-25:* a fourth pack rebuilds the pricing metric views and Genie agents in Databricks Free Edition from real EIA and MPC data where public ([`demos/downstream-pricing-databricks-free/`](demos/downstream-pricing-databricks-free/), EPM-DEC-001-0102).
 

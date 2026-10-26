@@ -11,4 +11,4 @@ Two runnable Order-to-Cash **unbilled exposure** packs plus one learner workbook
 
 These are homelab reference implementations, not governed EPM artifacts. Parent problem statement: [customer_domain_problem_statement_v0.1.md](../business_architecture/domain/customer_domain_problem_statement_v0.1.md).
 
-Meaning path for both Databricks packs: Turtle sidecar in git; expose through Neo4j when you stand the graph up. Fuseki is optional lab SPARQL only. Band split: [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg).
+Meaning path for both O2C Databricks packs (the pricing pack takes its meaning from the ontology's released modules, EPM-DEC-001-0097): Turtle sidecar in git; expose through Neo4j when you stand the graph up. Fuseki is optional lab SPARQL only. Band split: [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg).

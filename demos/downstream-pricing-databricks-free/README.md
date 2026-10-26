@@ -35,7 +35,9 @@ uv run python -m pricing_demo.databricks counts            # row counts
 uv run --with pytest python -m pytest -q tests             # offline tests
 ```
 
-To move the source databases to another host, such as an exe.dev VM, change `SOURCE_PG_DSN`; nothing else names the host. Databricks Free Edition limits outbound internet to trusted domains, so the replication pushes from the machine that can reach Postgres rather than letting Databricks pull.
+Postgres listens only on this machine (127.0.0.1:55432), with the throwaway login `demo`. To move the source databases to another host, such as an exe.dev VM, change `SOURCE_PG_DSN`; nothing else names the host, and a remote host needs its own password and network rules.
+
+Every replication run is a full snapshot: the downstream layers replace their contents from it. The run writes `out/replica/manifest.json` with each table's rows only after every table is there and not empty; `upload` refuses a replica that does not match its manifest, and `build` checks each replica table's rows against the manifest and that every silver and gold table and metric view exists. Each source database loads in one transaction. Databricks Free Edition limits outbound internet to trusted domains, so the replication pushes from the machine that can reach Postgres rather than letting Databricks pull.
 
 ## The last run (2026-10-25)
 
@@ -58,8 +60,8 @@ Both Genie agents answered from their metric views: the Chicago WTI 3-2-1 crack,
 
 Every row in the price and operations tables carries `DemoProvenance` (in silver and gold, `Demo_Provenance_Label`), a column the shared tables do not have:
 
-- **real:** an EIA value as published, or converted only in unit (propane to cents per gallon). The EIA series are cached in `data/public/` with their series IDs and the date pulled (`eia_series.csv`); `python -m pricing_demo.public_data --refresh` pulls them again. MPC's 13 refineries and their capacities come from MPC's FY2025 Form 10-K (`data/public/mpc_refineries.csv`).
-- **spot-anchored:** a formula of EIA values only: a benchmark's front month, which is the spot price, because EIA's NYMEX futures series end on 2024-04-05; a basis, cash minus the front month; the NYMEX 3-2-1 crack.
+- **real:** an EIA value as published on that date, or converted only in unit (propane to cents per gallon). The EIA series are cached in `data/public/` with their series IDs and the date pulled (`eia_series.csv`); `python -m pricing_demo.public_data --refresh` pulls them again. MPC's 13 refineries and their capacities come from MPC's FY2025 Form 10-K (`data/public/mpc_refineries.csv`).
+- **spot-anchored:** a formula of EIA values only: a benchmark's front month, which is the spot price, because EIA's NYMEX futures table says "Futures prices after April 5, 2024, are not available" ([pet_pri_fut_s1_d](https://www.eia.gov/dnav/pet/pet_pri_fut_s1_d.htm), release of 2026-10-21); a basis, cash minus the front month; the NYMEX 3-2-1 crack. An EIA value carried to a date the series has no observation for (at most seven days back) is spot-anchored too.
 - **synthesized:** anything with a generated part: forward months 2 to 7, inland differentials, crude differentials, renewables and RINs, butane, refinery runs and yields, plan targets, deals and freight.
 
 | Demo price | EIA series |
@@ -68,7 +70,7 @@ Every row in the price and operations tables carries `DemoProvenance` (in silver
 | ICE Brent front month | PET.RBRTE.D, Europe Brent spot |
 | NYMEX Natural Gas front month | NG.RNGWHHD.D, Henry Hub spot |
 | NYMEX Heating Oil front month, NYH ULSD cash | PET.EER_EPD2DXL0_PF4_Y35NY_DPG.D |
-| NYMEX RBOB front month, NYH CBOB cash | PET.EER_EPMRU_PF4_Y35NY_DPG.D, NY Harbor conventional regular; EIA publishes no NYH RBOB spot |
+| NYMEX RBOB front month, NYH CBOB cash | PET.EER_EPMRU_PF4_Y35NY_DPG.D, NY Harbor conventional regular: EIA's spot table lists RBOB only for Los Angeles ([pet_pri_spt_s1_d](https://www.eia.gov/dnav/pet/pet_pri_spt_s1_d.htm), release of 2026-10-21) |
 | USGC ULSD, USGC CBOB, USGC Jet cash | PET.EER_EPD2DXL0_PF4_RGC_DPG.D, PET.EER_EPMRU_PF4_RGC_DPG.D, PET.EER_EPJK_PF4_RGC_DPG.D |
 | LA CARBOB, LA CARB No. 2 cash | PET.EER_EPMRR_PF4_Y05LA_DPG.D, PET.EER_EPD2DC_PF4_Y05LA_DPG.D |
 | Propane Mt. Belvieu | PET.EER_EPLLPA_PF4_Y44MB_DPG.D |
@@ -84,6 +86,10 @@ Where the briefings and EIA differ, EIA wins:
 |---|---|---|
 | Week ending 2026-09-25: utilization 92.5%, crude runs 16.3 million b/d, gasoline stocks 204.4 million bbl, distillate stocks 105.2 million bbl | 92.5%, 16,257 thousand b/d, 204,362 thousand bbl, 105,180 thousand bbl | The same |
 | 2026-09-30: WTI settled $90.42, Brent $103.50 (futures settlements) | WTI Cushing spot $97.18, Brent spot $115.91 | EIA's spot prices, as the front month |
+| October 8: Brent settled at $104.28 | Brent spot $130.18 | EIA |
+| October 9: Brent settled near $104.72, WTI around $91.85 | Brent spot $130.03, WTI spot $98.73 | EIA |
+| October 16: Brent settled at $109.86, WTI closed at $101.41 | Brent spot $119.33, WTI spot $108.21 | EIA |
+| October 22: Brent settled at $113.17, WTI at $99.47 | Outside the cache, which ends on 2026-10-20 | Not in the demo |
 
 ## The source systems
 
@@ -101,7 +107,7 @@ The demo uses generic names; the real names stay in the ontology (the decision o
 ## What matches the shared assets, and what does not
 
 - **Matches:** the schema, table, view and column names; the crack gold's joins (the MPR settle price unchanged, the MIPS crack sheets, the level-1 group) and constants (`KPI_ID` 'KPI Crack Spread 3-2-1', `Source_System_Id` '17'); the metric views' fields, measures, joins and filters; the benchmark view's defect, all five instruments times 100, and its 160-day window (EPM-DEC-001-0097, Known gaps).
-- **Differs:** the crack view has no `Crack_Spread_Sum`, as the bound view lacks it, so the recreated crack agent says so instead of summing (EPM-DEC-001-0097, Known gaps). The silver fact for MIPS assessments carries `Price_Batch_Id`, so gold takes the effective date from the batch directly. The demo's refinery operations and their metric view are the demo's own; their formulas are not the ontology's definitions, which live in the `kpi` module.
+- **Differs:** the price detail's high and low prices are left empty, because the demo generates only the settle. The crack view has no `Crack_Spread_Sum`, as the bound view lacks it, so the recreated crack agent says so instead of summing (EPM-DEC-001-0097, Known gaps). The silver fact for MIPS assessments carries `Price_Batch_Id`, so gold takes the effective date from the batch directly. The demo's refinery operations and their metric view are the demo's own; their formulas are not the ontology's definitions, which live in the `kpi` module.
 - **The Genie agents' instructions** are written for this demo from the decision owner's description of the two agents. They are not copies.
 
 ## Files

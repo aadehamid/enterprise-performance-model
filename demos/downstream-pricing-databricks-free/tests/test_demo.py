@@ -115,3 +115,250 @@ def test_the_eia_cache_names_each_series():
         meta = {r["key"]: r for r in csv.DictReader(f)}
     assert meta["wti"]["series_id"] == "PET.RWTC.D" and meta["nyh_gasoline"]["series_id"] == "PET.EER_EPMRU_PF4_Y35NY_DPG.D"
     assert set(meta) == set(public_data.EIA_SERIES)
+
+
+# ---- Kimi round 1 findings ----
+import json  # noqa: E402
+import shutil  # noqa: E402
+import types  # noqa: E402
+
+import pytest  # noqa: E402
+
+from pricing_demo import config, databricks, genie, load_postgres, replicate, scenario  # noqa: E402
+
+SQL_TEXT = {f: open(os.path.join(ROOT, "sql", f)).read() for f in os.listdir(os.path.join(ROOT, "sql"))}
+
+
+def metric_views():
+    """{view name: (dimensions, measures)} parsed from 05_metric_views.sql."""
+    views = {}
+    for m in re.finditer(r"CREATE OR REPLACE VIEW \S+\.(\w+)\s+WITH METRICS.*?\$\$(.*?)\$\$", SQL_TEXT["05_metric_views.sql"], re.S):
+        body = m.group(2)
+        dims = body.split("measures:")[0]
+        meas = body.split("measures:")[1]
+        views[m.group(1)] = (set(re.findall(r"- name: (\w+)", dims)), set(re.findall(r"- name: (\w+)", meas)))
+    return views
+
+
+def test_finding_6_a_carried_eia_value_is_spot_anchored_not_real():
+    # 2026-05-04: Brent has no EIA observation that day; the generator carries May 1's value (118.26).
+    brent = public_data.load("brent")
+    assert dt.date(2026, 5, 4) not in brent and brent[dt.date(2026, 5, 1)] == 118.26
+    rows_ = [r for r in rows("mpr", "pricedetail") if r["PriceMasterId"] == 572 and r["EffectiveStartDate"].date() == dt.date(2026, 5, 4)]
+    period0 = next(r for r in rows_ if r["RelativePeriodNum"] == 0)
+    assert period0["SettlePrice"] == 118.26 and period0["DemoProvenance"] == "spot-anchored"
+
+
+def test_finding_16_a_gap_in_the_cache_raises_instead_of_looping():
+    market = object.__new__(generate.Market)
+    market.series = {"x": {}, "late": {dt.date(2026, 10, 1): 1.0}}
+    with pytest.raises(ValueError):
+        market._last("x", dt.date(2026, 5, 4))
+    with pytest.raises(ValueError):
+        market._last("late", dt.date(2026, 5, 4))
+    assert market._last("late", dt.date(2026, 10, 3)) == (1.0, dt.date(2026, 10, 1))
+
+
+def test_finding_9_every_price_and_operations_table_is_labelled_and_no_high_low_is_generated():
+    labelled = {("mpr", "pricedetail"), ("mpr", "pricemaster"), ("mips", "mips_priceassessment"), ("prodacct", "refinery_daily"),
+                ("ctrm", "deal"), ("ctrm", "movement"), ("planning", "plan_target")}
+    for system, table in labelled:
+        t = TABLES[system][table]
+        assert "DemoProvenance" in t.columns, (system, table)
+        assert {r[t.columns.index("DemoProvenance")] for r in t.rows} <= set(PROVENANCE), (system, table)
+    detail = rows("mpr", "pricedetail")
+    assert all(r["HighPrice"] is None and r["LowPrice"] is None for r in detail)
+    assert "DemoProvenance AS Demo_Provenance_Label" in SQL_TEXT["03_silver.sql"].split("refinery_plan_target_fact")[1].split(";")[0]
+
+
+def test_finding_15_assessment_groups_carry_their_own_units():
+    units = {r["ID"]: r["Code"] for r in rows("mips", "mips_unitofmeasure")}
+    by_name = {r["Name"]: units[r["UnitOfMeasureID"]] for r in rows("mips", "mips_priceassessmentgroup")}
+    assert by_name["NYMEX Natural Gas ($-MMbtu)"] == "$/MMbtu"
+    assert by_name["NYMEX Heating Oil (cpg)"] == by_name["NYMEX RBOB (cpg)"] == "$/gal"
+    assert by_name["ICE, BRENT ($-Bbl)"] == "$/Bbl"
+    assert by_name["CBOT SBO"] == "cents/lb"
+
+
+def test_finding_4_every_metric_view_defines_record_count_and_counts_uses_it():
+    for view, (_, measures) in metric_views().items():
+        assert "Record_Count" in measures, view
+
+    class Cursor:
+        def __init__(self):
+            self.queries = []
+
+        def execute(self, q):
+            self.queries.append(q)
+
+        def fetchall(self):
+            return [(7,)]
+    cur = Cursor()
+    assert databricks.count(cur, "c.semantic_sem_commercial.refinery_operations_metrics_vw", metric_view=True) == 7
+    assert cur.queries == ["SELECT MEASURE(Record_Count) FROM c.semantic_sem_commercial.refinery_operations_metrics_vw"]
+
+
+def test_finding_8_the_executive_summary_view_passes_every_gold_column_through():
+    gold = SQL_TEXT["04_gold.sql"].split("mips_mpr_executive_summary_fact AS")[1].split("FROM")[0]
+    gold = re.sub(r"\([^()]*\)", "(x)", gold)  # a function's arguments are not output columns
+    columns = set(re.findall(r"(\w+)\s*(?=,|\n|$)", gold.split("SELECT", 1)[1]))  # each output column's name
+    assert len(columns) == 24, sorted(columns)
+    dims, measures = metric_views()["mips_mpr_executive_summary_fact_vw"]
+    assert columns - dims - measures == set(), columns - dims - measures
+
+
+def test_findings_2_and_3_every_measure_an_agent_names_is_in_a_view_it_binds():
+    views = metric_views()
+    for title, spec in genie.AGENTS.items():
+        bound = {t.split(".")[-1] for t, _ in spec["tables"]}
+        allowed = set().union(*(views[b][1] for b in bound))
+        text = open(os.path.join(ROOT, "genie", spec["file"])).read() + " ".join(s for _, s in spec["examples"])
+        named = set(re.findall(r"MEASURE\((\w+)\)", text))
+        assert named and named <= allowed, (title, named - allowed)
+        # Examples read only the views the agent binds, never gold.
+        assert "gold_commercial_core" not in " ".join(s for _, s in spec["examples"])
+    exec_text = open(os.path.join(ROOT, "genie", "executive-summary-kpis-analytics.md")).read()
+    assert "MEASURE(assessment_amount) / MEASURE(Record_Count)" in exec_text
+    benchmark_rules = exec_text.split("Benchmark Prices: ")[1].split("\n")[0]
+    assert "Avg_Settle_Price" in benchmark_rules and "It has no `assessment_amount`" in benchmark_rules
+
+
+def make_replica(folder, manifest_tables, files):
+    os.makedirs(folder, exist_ok=True)
+    for key in files:
+        os.makedirs(os.path.dirname(os.path.join(folder, key)), exist_ok=True)
+        open(os.path.join(folder, f"{key}.parquet"), "w").close()
+    with open(os.path.join(folder, "manifest.json"), "w") as f:
+        json.dump({"tables": manifest_tables}, f)
+
+
+def test_finding_5_an_empty_partial_or_mismatched_replica_is_refused(tmp_path):
+    expected = {f"{s}/{t}": 3 for s, ts in replicate.expected_tables().items() for t in ts}
+    rows3 = lambda file: 3  # noqa: E731  stands in for reading each Parquet footer
+    with pytest.raises(SystemExit):
+        replicate.check_replica(str(tmp_path / "none"), rows_of=rows3)  # no manifest at all
+    partial = dict(list(expected.items())[:-1])
+    make_replica(str(tmp_path / "partial"), partial, partial)
+    with pytest.raises(SystemExit):
+        replicate.check_replica(str(tmp_path / "partial"), rows_of=rows3)  # a table missing from the run
+    make_replica(str(tmp_path / "nofile"), expected, list(expected)[:-1])
+    with pytest.raises(SystemExit):
+        replicate.check_replica(str(tmp_path / "nofile"), rows_of=rows3)  # a file missing
+    make_replica(str(tmp_path / "ok"), expected, expected)
+    with pytest.raises(SystemExit):
+        replicate.check_replica(str(tmp_path / "ok"), rows_of=lambda file: 0)  # empty files
+    assert replicate.check_replica(str(tmp_path / "ok"), rows_of=rows3) == expected
+
+
+def test_finding_5_build_checks_every_silver_gold_and_view_object():
+    class Cursor:
+        def execute(self, q):
+            self.q = q
+
+        def fetchall(self):
+            schema = self.q.rsplit(".", 1)[1]
+            names = sorted(databricks.BUILT[schema])
+            return [("c", n, False) for n in names[:-1]] if schema == "gold_commercial_core" else [("c", n, False) for n in names]
+    with pytest.raises(SystemExit):
+        databricks.check_built(Cursor(), "c")
+
+
+def test_finding_7_replication_is_full_snapshot_only():
+    import inspect
+    assert "since" not in inspect.signature(replicate.replicate).parameters
+    assert "--since" not in open(os.path.join(ROOT, "pricing_demo", "replicate.py")).read().split('"""', 2)[2]
+
+
+def test_finding_11_one_catalog_rule_for_every_step():
+    class Cursor:
+        def __init__(self, catalogs, idp_schemas):
+            self.catalogs, self.idp_schemas = catalogs, idp_schemas
+
+        def execute(self, q):
+            self.q = q
+
+        def fetchall(self):
+            return [(c,) for c in self.catalogs] if self.q == "SHOW CATALOGS" else [(s,) for s in self.idp_schemas]
+    env = {"DEMO_CATALOG": "workspace"}
+    assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["default"]), env) == "workspace"  # visible, not ours
+    assert databricks.current_catalog(Cursor(["workspace"], []), env) == "workspace"
+    assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["replica_landing"]), env) == "idp_sbx"
+
+
+def test_finding_20_a_database_commits_only_after_every_table_loaded(monkeypatch):
+    committed = []
+
+    class Conn:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def commit(self):
+            committed.append(True)
+
+    fake = types.SimpleNamespace(connect=lambda dsn: Conn())
+    monkeypatch.setitem(sys.modules, "psycopg", fake)
+
+    def failing(conn, tables):
+        raise RuntimeError("COPY failed midway")
+    monkeypatch.setattr(load_postgres, "load_database", failing)
+    with pytest.raises(RuntimeError):
+        load_postgres.load(TABLES)
+    assert committed == []
+
+
+def test_finding_21_a_failed_refresh_leaves_the_cache_byte_for_byte(tmp_path):
+    folder = tmp_path / "public"
+    shutil.copytree(os.path.join(ROOT, "data", "public"), folder)
+    before = {p: open(os.path.join(folder, p), "rb").read() for p in os.listdir(folder)}
+    calls = []
+
+    def fetch(series):
+        calls.append(series)
+        if len(calls) == 3:
+            return []  # one series comes back empty
+        return [{"period": "2026-10-20", "value": "1.0", "series-description": "x", "units": "y"}]
+    with pytest.raises(SystemExit):
+        public_data.refresh(fetch=fetch, folder=str(folder))
+    after = {p: open(os.path.join(folder, p), "rb").read() for p in os.listdir(folder)}
+    assert after == before
+
+
+def test_finding_22_one_registry_of_source_systems():
+    init = open(os.path.join(ROOT, "docker", "init", "01_databases.sql")).read()
+    assert set(TABLES) == set(config.SYSTEMS) == set(re.findall(r"CREATE DATABASE (\w+);", init))
+    assert {s for s in databricks.SCHEMAS if s.startswith("replica_") and s != "replica_landing"} == {f"replica_{s}" for s in config.SYSTEMS}
+    assert set(replicate.expected_tables()) == set(config.SYSTEMS)
+    replica_sql = set(re.findall(r"replica_(\w+)\.(\w+) AS", SQL_TEXT["02_replica.sql"]))
+    assert replica_sql == {(s, t) for s, ts in replicate.expected_tables().items() for t in ts}
+
+
+def test_finding_23_the_scenario_body_is_pinned_and_the_transform_makes_only_two_edits():
+    body = open(os.path.join(ROOT, "SCENARIO.md")).read().split("-->", 1)[1]
+    # Pinned on 2026-10-25 after comparing the transform of the decision owner's original line by line: 1,194 lines in,
+    # 1,193 out, no line changed beyond the two permitted edits.
+    assert hashlib.sha256(body.encode()).hexdigest() == "63e4e77ab7e511a42a0f23538357fa6171912074838f2216f1a7da2e78cf7d1a"
+    fixture = "# T\n\n> **Note:** This file consolidates the briefings produced elsewhere.\n**FACT:** a figure.\n**FACT — Oct 9:** b.\nkeep me\n"
+    out = scenario.transform(fixture).split("-->", 1)[1]
+    assert out == "\n# T\n\n**Scenario:** a figure.\n**Scenario — Oct 9:** b.\nkeep me\n"
+    with pytest.raises(ValueError):
+        scenario.transform("a FACT left bare\n")
+
+
+def test_finding_24_every_cached_series_matches_the_code_and_the_readme():
+    with open(os.path.join(ROOT, "data", "public", "eia_series.csv")) as f:
+        meta = {r["key"]: r for r in csv.DictReader(f)}
+    readme = open(os.path.join(ROOT, "README.md")).read()
+    assert set(meta) == set(public_data.EIA_SERIES) and len(meta) == 15
+    for key, (series, role) in public_data.EIA_SERIES.items():
+        assert meta[key]["series_id"] == series and meta[key]["demo_role"] == role, key
+        assert meta[key]["description"] and meta[key]["units"] and meta[key]["pulled_on"] == "2026-10-25", key
+        assert series in readme, series
+
+
+def test_finding_10_postgres_listens_on_this_machine_only():
+    compose = open(os.path.join(ROOT, "docker", "docker-compose.yml")).read()
+    ports = re.findall(r'- "([^"]+)"', compose)
+    assert ports == ["127.0.0.1:55432:5432"]
