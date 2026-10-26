@@ -535,7 +535,7 @@ system:sap a skos:Concept,
         src:downstream-process-map,
         src:vendor-sap-s4hana-help ;
     skos:altLabel "SAP"@en ;
-    skos:definition "SAP's business suite, by the vendor's description its next-generation business suite, built on the SAP HANA in-memory platform."@en ;
+    skos:definition "SAP's business suite. By the vendor's description, it is the next-generation business suite, built on the SAP HANA in-memory platform."@en ;
     skos:editorialNote "The process map's \"SAP\" is SAP S/4HANA by the decision owner's answer of 2026-10-25. Which edition MPC runs is not stated in the repository, so the definition is at product level (EPM-DEC-001-0099)."@en ;
     skos:inScheme sys:Systems ;
     skos:notation "sap"^^xsd:string ;
@@ -704,7 +704,7 @@ src:vendor-profisee-platform a dcterms:BibliographicResource ;
     dcterms:title "Profisee, Platform, https://profisee.com/platform/, retrieved 2026-10-25"@en .
 
 src:vendor-sap-s4hana-help a dcterms:BibliographicResource ;
-    dcterms:title "SAP Help Portal, SAP Readiness Check, Feature Scope Description, https://help.sap.com/docs/PRODUCT_ID/a281af437b3e4ef4a187c7f35a9093e9, retrieved 2026-10-25"@en .
+    dcterms:title "SAP, Conversion Guide for SAP S/4HANA 2025, document version 3.0 (2026-10-07), https://help.sap.com/doc/2b87656c4eee4284a5eb8976c0fe88fc/2025/en-US/CONV_OP2025.pdf, retrieved 2026-10-26"@en .
 
 src:vendor-aspentech-aspen-pims-brochure a dcterms:BibliographicResource ;
     dcterms:title "AspenTech, Aspen PIMS brochure (AT-06696, 2021), https://www.aspentech.com/-/media/aspentech/home/resources/brochure/pdfs/fy21/q3/at-03906-bro-aspen-pims.pdf, retrieved 2026-10-25"@en .

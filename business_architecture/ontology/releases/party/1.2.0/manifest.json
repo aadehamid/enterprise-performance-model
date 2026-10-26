@@ -30,8 +30,8 @@
   "files": {
     "CHANGELOG.md": "4558c27686e5b8f74905810bd84d91b27a5e8ca1dcf3f7c2035ce4f269464ea9",
     "catalog.ttl": "3d3fb76dcaf1f49e96c0ba3fd9102e4ebfad83292a6f9e84d399b1443a1b41cd",
-    "party.jsonld": "bdbd9130747f0bfb2292435eafefc79f73429a60ddde79474cf6e2e14da2891d",
-    "party.ttl": "ee927a9c388a26eb6551a794cf2ac630ce7d991f9bbb1155d11788a70ca82977",
+    "party.jsonld": "81731df1a2e43a3655f2bdbdf367702f973c334aba32b69b6738485fa7f8a1d3",
+    "party.ttl": "2e6d2ed332f8f12157f3a5e04c0603063089eef6098d08d20f95eb1b52c68d7e",
     "shapes.ttl": "6466673d25a40ec215f977129ef7bb7c5abae84ed3fe78411c66c4d6a66e37b3"
   }
 }

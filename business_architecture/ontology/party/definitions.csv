@@ -1,6 +1,6 @@
 slug,definition,sources,note
 sap-mdg,"SAP's master data governance software. By the vendor's description, it is the governance layer for an enterprise's business data, unifying master data, policy and metadata.",vendor-sap-mdg,
-sap-s4hana,"SAP's business suite, by the vendor's description its next-generation business suite, built on the SAP HANA in-memory platform.",vendor-sap-s4hana-help,
+sap-s4hana,"SAP's business suite. By the vendor's description, it is the next-generation business suite, built on the SAP HANA in-memory platform.",vendor-sap-s4hana-help,
 salesforce,"Salesforce's customer relationship management (CRM) platform. By the vendor's description, it helps companies connect with their customers.",vendor-salesforce,
 rightangle,"ION's commodities trading and risk management system for liquid hydrocarbon companies, such as refiners and fuel marketers. By the vendor's description, it covers the work from front to back and is strongest in scheduling, logistics and operations.",vendor-ion-rightangle,
 profisee,"Profisee's master data management (MDM) platform. By the vendor's description, it cleans, unifies and improves the quality of an enterprise's critical data across its systems.",vendor-profisee-platform,

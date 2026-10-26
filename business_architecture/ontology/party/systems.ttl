@@ -2185,7 +2185,7 @@ src:vendor-sap-mdg a dcterms:BibliographicResource ;
     dcterms:title "SAP, SAP Master Data Governance, https://www.sap.com/products/data-cloud/master-data-governance.html, retrieved 2026-10-25"@en .
 
 src:vendor-sap-s4hana-help a dcterms:BibliographicResource ;
-    dcterms:title "SAP Help Portal, SAP Readiness Check, Feature Scope Description, https://help.sap.com/docs/PRODUCT_ID/a281af437b3e4ef4a187c7f35a9093e9, retrieved 2026-10-25"@en .
+    dcterms:title "SAP, Conversion Guide for SAP S/4HANA 2025, document version 3.0 (2026-10-07), https://help.sap.com/doc/2b87656c4eee4284a5eb8976c0fe88fc/2025/en-US/CONV_OP2025.pdf, retrieved 2026-10-26"@en .
 
 src:vendor-sirion a dcterms:BibliographicResource ;
     dcterms:title "Sirion, https://www.sirion.ai/, retrieved 2026-10-25"@en .
@@ -2513,7 +2513,7 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     skos:altLabel "S/4"@en,
         "S4"@en,
         "SAP S/4"@en ;
-    skos:definition "SAP's business suite, by the vendor's description its next-generation business suite, built on the SAP HANA in-memory platform."@en ;
+    skos:definition "SAP's business suite. By the vendor's description, it is the next-generation business suite, built on the SAP HANA in-memory platform."@en ;
     skos:exactMatch system:sap ;
     skos:inScheme party:customer-systems ;
     skos:notation "sap-s4hana" ;
