@@ -97,9 +97,9 @@ def test_unsupported_markdown_stops_the_build_with_its_line():
     lines = ["Title", "=====", "", "![a picture](x.png)", "<div>raw</div>", "+ item", "1) item", "[ref]: https://x.test/",
              "```", "<kept> in code ![x](y)", "```", "`<kept>` in a code span"]
     problems = b.unsupported("doc.md", lines)
-    assert problems == ["doc.md:2: a Setext heading (use # headings)",
+    assert problems == ["doc.md:2: a Setext heading underline (use # headings)",
                         "doc.md:4: an image (embed pictures in the page instead)",
-                        "doc.md:5: inline HTML (the page would show it as text)",
+                        "doc.md:5: inline HTML or an autolink (the page would show it as text)",
                         "doc.md:6: a list item marked with +",
                         "doc.md:7: a list item numbered with a parenthesis",
                         "doc.md:8: a reference-style link definition"]
@@ -114,8 +114,12 @@ def test_unsupported_markdown_stops_the_build_with_its_line():
     (["``code with ` inside``"], "a code span opened with more than one backtick"),
     (["Text <!-- a note --> more."], "an HTML comment inside a line"),
     (["> > nested"], "a nested block quote"),
-    (["<div class=\"x\"", "id=\"y\">"], "inline HTML that runs onto the next line"),
+    (["<div class=\"x\"", "id=\"y\">"], "inline HTML or an autolink"),
     (["[ref]:https://x.test/"], "a reference-style link definition"),
+    (["  [ref]: https://x.test/"], "a reference-style link definition"),
+    (["    ~~~"], "a tilde code fence"),
+    (["Title", "  ===="], "a Setext heading underline"),
+    (["see <https://x.test/>"], "inline HTML or an autolink"),
 ])
 def test_each_construct_the_renderer_would_lose_stops_the_build(lines, what):
     assert any(what in p for p in b.unsupported("doc.md", lines)), b.unsupported("doc.md", lines)

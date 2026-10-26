@@ -163,16 +163,19 @@ HEADING = re.compile(r"^(#{1,6}) (.+?)\s*#*\s*$")
 
 UNSUPPORTED = [
     (re.compile(r"!\[[^\]]*\]\("), "an image (embed pictures in the page instead)"),
-    (re.compile(r"<(?!!--)[A-Za-z/][^>]*>"), "inline HTML (the page would show it as text)"),
-    (re.compile(r"<[A-Za-z][\w-]*(\s[^>]*)?$"), "inline HTML that runs onto the next line"),
+    # The start of any HTML tag, closing tag, declaration or autolink, also one that runs onto the next line
+    # (the skills builder's pattern); a comment is left to the next rule.
+    (re.compile(r"<(?:[A-Za-z][A-Za-z0-9-]*(?=[\s/>]|$)|/[A-Za-z]|!(?!--)|[A-Za-z][A-Za-z0-9+.-]*:)"),
+     "inline HTML or an autolink (the page would show it as text)"),
     (re.compile(r"\S\s*<!--|<!--.*-->\s*\S"), "an HTML comment inside a line (only a comment on its own lines is dropped)"),
     (re.compile(r"^ *\+ "), "a list item marked with +"),
     (re.compile(r"^ *\d+\) "), "a list item numbered with a parenthesis"),
-    (re.compile(r"^ {0,3}\[[^\]]+\]:"), "a reference-style link definition"),
+    (re.compile(r"^\s*\[[^\]]+\]:"), "a reference-style link definition"),
     (re.compile(r"\]\([^)\s]+\s+[\"'(]"), "a link with a title"),
     (re.compile(r"\\[\\`*_{}\[\]()#+.!>~-]"), "a backslash escape"),
     (re.compile(r"^\s*>\s*>"), "a nested block quote"),
-    (re.compile(r"^ *~~~"), "a tilde code fence (use backticks)"),
+    (re.compile(r"^\s*~~~"), "a tilde code fence (use backticks)"),
+    (re.compile(r"^\s*=+\s*$"), "a Setext heading underline (use # headings)"),
 ]
 
 
@@ -209,7 +212,7 @@ def unsupported(rel, lines):
             in_list = False
         if not in_list and not prev.strip() and re.match(r"^ {4,}\S", line):
             problems.append(f"{rel}:{n}: an indented code block (use a fence)")
-        if (re.fullmatch(r" {0,3}=+\s*", line) or re.fullmatch(r" {0,3}-+\s*", line)) and prev.strip() \
+        if re.fullmatch(r" {0,3}-+\s*", line) and prev.strip() \
                 and not prev.lstrip().startswith(("|", "#")) and not LIST_ITEM.match(prev):
             problems.append(f"{rel}:{n}: a Setext heading (use # headings)")
         prev = line
