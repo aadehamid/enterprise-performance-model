@@ -65,6 +65,28 @@ def test_unsupported_markdown_stops_the_build_with_its_line():
                         "doc.md:8: a reference-style link definition"]
 
 
+@pytest.mark.parametrize("lines, what", [
+    (["~~~", "code", "~~~"], "a tilde code fence"),
+    (["```", "never closed"], "a code fence that is never closed"),
+    (["Text.", "", "    indented code"], "an indented code block"),
+    (["[x](https://x.test/ \"a title\")"], "a link with a title"),
+    (["\\*not emphasis\\*"], "a backslash escape"),
+    (["``code with ` inside``"], "a code span opened with more than one backtick"),
+    (["Text <!-- a note --> more."], "an HTML comment inside a line"),
+    (["> > nested"], "a nested block quote"),
+    (["<div class=\"x\"", "id=\"y\">"], "inline HTML that runs onto the next line"),
+    (["[ref]:https://x.test/"], "a reference-style link definition"),
+])
+def test_each_construct_the_renderer_would_lose_stops_the_build(lines, what):
+    assert any(what in p for p in b.unsupported("doc.md", lines)), b.unsupported("doc.md", lines)
+
+
+def test_what_the_renderer_covers_passes_the_gate():
+    lines = ["<!-- module: core -->", "<!--", "a <b>comment</b> block", "-->", "- item", "", "    continued item",
+             "| `a \\| b` | split on \\| |", "> one quote", "```", "<raw> \\* ~~~", "```"]
+    assert b.unsupported("doc.md", lines) == []
+
+
 def test_a_thematic_break_and_a_table_rule_are_not_setext_headings():
     assert b.unsupported("doc.md", ["Text.", "", "---", "", "| A |", "|---|", "- item", "---"]) == []
 

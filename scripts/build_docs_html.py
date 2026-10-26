@@ -16,9 +16,12 @@ record goes to its anchor on decisions.html; a decision ID in running text (EPM-
 link to its anchor; any other relative link stays a relative path. Standard library only. The renderer
 covers the Markdown these files use: ATX headings, paragraphs, thematic breaks (dropped), HTML comments
 (dropped), fenced code (also inside list items), tables, nested ordered and unordered lists, block quotes,
-`code`, **bold**, *italic*, ~~strikethrough~~, [links](...) and bare https URLs. Markdown it does not cover
-(an image, inline HTML, a + or 1) list item, a reference-style link, a Setext heading) stops the build with
-its file and line, so a source edit cannot lose structure silently. The renderer started as
+`code`, **bold**, *italic*, ~~strikethrough~~, [links](...), bare https URLs, and an escaped pipe in a table
+cell. Markdown it does not cover stops the build with its file and line, so a source edit cannot lose
+structure silently: an image, inline HTML (also across lines), a comment inside a line, a + or 1) list item,
+a reference-style link, a link with a title, a backslash escape, a code span opened with two backticks, a
+nested block quote, a tilde fence, a fence never closed, an indented code block and a Setext heading
+(unsupported()). The renderer started as
 personal-agent-skills' scripts/build_playbook_html.py; the look is the stores runbook's (framed-sheet).
 """
 import glob
@@ -161,30 +164,57 @@ HEADING = re.compile(r"^(#{1,6}) (.+?)\s*#*\s*$")
 UNSUPPORTED = [
     (re.compile(r"!\[[^\]]*\]\("), "an image (embed pictures in the page instead)"),
     (re.compile(r"<(?!!--)[A-Za-z/][^>]*>"), "inline HTML (the page would show it as text)"),
+    (re.compile(r"<[A-Za-z][\w-]*(\s[^>]*)?$"), "inline HTML that runs onto the next line"),
+    (re.compile(r"\S\s*<!--|<!--.*-->\s*\S"), "an HTML comment inside a line (only a comment on its own lines is dropped)"),
     (re.compile(r"^ *\+ "), "a list item marked with +"),
     (re.compile(r"^ *\d+\) "), "a list item numbered with a parenthesis"),
-    (re.compile(r"^ {0,3}\[[^\]]+\]: "), "a reference-style link definition"),
+    (re.compile(r"^ {0,3}\[[^\]]+\]:"), "a reference-style link definition"),
+    (re.compile(r"\]\([^)\s]+\s+[\"'(]"), "a link with a title"),
+    (re.compile(r"\\[\\`*_{}\[\]()#+.!>~-]"), "a backslash escape"),
+    (re.compile(r"^\s*>\s*>"), "a nested block quote"),
+    (re.compile(r"^ *~~~"), "a tilde code fence (use backticks)"),
 ]
 
 
 def unsupported(rel, lines):
     """Each line of a source that holds Markdown the renderer does not cover, as "path:line: what", so a
-    source edit cannot lose structure without the build saying so. Fenced code and code spans are skipped."""
-    problems, fenced, prev = [], False, ""
+    source edit cannot lose structure without the build saying so. Fenced code, comment blocks and code spans
+    are skipped; an escaped pipe in a table row is covered."""
+    problems, fenced, opened, comment, prev, in_list = [], False, 0, False, "", False
     for n, line in enumerate(lines, 1):
+        if not fenced and not comment and line.strip().startswith("<!--"):
+            comment = "-->" not in line
+            if comment or line.strip().endswith("-->"):
+                prev = ""
+                continue
+        if comment:
+            comment = "-->" not in line
+            continue
         if FENCE.match(line):
-            fenced, prev = not fenced, ""
+            fenced, opened, prev = not fenced, n, ""
             continue
         if fenced:
             continue
+        if re.search(r"`{2,}", line):
+            problems.append(f"{rel}:{n}: a code span opened with more than one backtick")
         text = re.sub(r"`[^`]*`", "", line)
+        if text.lstrip().startswith("|"):
+            text = text.replace("\\|", "")
         for pattern, what in UNSUPPORTED:
             if pattern.search(text):
                 problems.append(f"{rel}:{n}: {what}")
+        if LIST_ITEM.match(line):
+            in_list = True
+        elif line.strip() and not line.startswith(" "):
+            in_list = False
+        if not in_list and not prev.strip() and re.match(r"^ {4,}\S", line):
+            problems.append(f"{rel}:{n}: an indented code block (use a fence)")
         if (re.fullmatch(r" {0,3}=+\s*", line) or re.fullmatch(r" {0,3}-+\s*", line)) and prev.strip() \
                 and not prev.lstrip().startswith(("|", "#")) and not LIST_ITEM.match(prev):
             problems.append(f"{rel}:{n}: a Setext heading (use # headings)")
         prev = line
+    if fenced:
+        problems.append(f"{rel}:{opened}: a code fence that is never closed")
     return problems
 
 
