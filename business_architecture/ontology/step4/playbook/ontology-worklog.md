@@ -2,7 +2,8 @@
 
 > **Renamed 2026-09-30** from `ontology-playbook.md` to `ontology-worklog.md`,
 > so the name says what this file is: the running log of this build. The
-> method keeps the playbook name (`business_architecture/ontology/ontology-playbook.md`).
+> method keeps the playbook name (`business_architecture/ontology/ontology-playbook.md`; since
+> 2026-10-25 the `ontology` skill's guide, `skills/data/ontology/references/playbook.md` in personal-agent-skills, EPM-DEC-001-0101).
 > Earlier entries and PR bodies refer to this file by its old name.
 
 **Status:** Living document. Updated as each plan step completes.
@@ -23,7 +24,10 @@ chosen and what was deliberately rejected.
 is now a company-neutral method. A project
 decision gets an EPM-DEC-001 record (`business_architecture/domain/decisions/`)
 and a dated pointer in §4 here; the playbook changes only when the method
-changes.
+changes. *2026-10-25:* the playbook is now the `ontology` skill's guide,
+`skills/data/ontology/references/playbook.md` in personal-agent-skills
+(#71); a method change goes through that repository's pull requests, and
+EPM keeps no copy (EPM-DEC-001-0101).
 Never rewrite history — correct it with a dated amendment so the team can
 see what changed and why.
 
@@ -963,6 +967,18 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### The playbook becomes the `ontology` skill's guide (2026-10-25)
+- On 2026-10-25 the decision owner asked whether to move it: "Should we
+  move to he ontology skills itesef since the Playbook is a guide on how to
+  create an ontology. what do you think?" Claude recommended the move, and
+  the decision owner's queue carried it: "Item E: the three playbook
+  sections, and move the ontology playbook into the ontology skill."
+  The guide is `skills/data/ontology/references/playbook.md` in
+  personal-agent-skills (#71, merge `a2b8d1a`); EPM deletes its copy and
+  `epm_facts.py playbook`, whose check is now the skill's
+  `scripts/test_playbook_guide.py`. §8, the evidence map, stays and names
+  the guide (EPM-DEC-001-0101, delegated under EPM-DEC-001-0028).
+
 ### The playbook's evidence moves here (2026-10-23)
 - The decision owner: "The ontology and projection playbooks should aloso
   be universally applicable." and "We probably should remove the evidence
@@ -975,7 +991,9 @@ without a dated amendment and the decision owner's explicit agreement.
   run by `scripts/check.sh`, keeps it that way. This changes the last
   sentence of EPM-DEC-001-0024's decision ("Project examples stay in the
   playbook's worked example (§7)"): project examples now stay in this
-  worklog, and the record carries a dated note.
+  worklog, and the record carries a dated note. *2026-10-25:* the check
+  moved into the `ontology` skill as `scripts/test_playbook_guide.py`, with
+  the guide (EPM-DEC-001-0101; see the entry of that date above).
 
 ### The ontology is closed (2026-10-23)
 - Under the delegation, on the goal the decision owner set on 2026-10-23
@@ -2742,6 +2760,13 @@ them written plainly, wrapped across lines, as relative, absolute or GitHub
 paths, and percent- or entity-encoded. It is a backstop for reviewed
 Markdown, not a detector of deliberate obfuscation such as zero-width
 characters or look-alike letters, which review catches.
+
+*2026-10-25:* the playbook moved into the `ontology` skill's guide, `skills/data/ontology/references/playbook.md` in personal-agent-skills (EPM-DEC-001-0101). This
+evidence map stays here and now illustrates that guide, section by section;
+its headings and numbering carried over. The guard moved with the guide as
+the skill's `scripts/test_playbook_guide.py`, with the fixed list of terms;
+the checks that read this repository's released packages and tracked paths
+stay out of the skill, which cannot see them.
 
 Section headings and numbering in the playbook are unchanged, except §7
 ("Worked example: the downstream process-map ontology" is now "Worked
