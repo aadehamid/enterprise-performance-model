@@ -8,6 +8,7 @@
   "robot_jar": "~/epm-lpg/robot.jar",
   "target_env": "~/.config/neo4j/aura.env",
   "replace_target": true,
+  "keep_neo4j": true,
   "databricks": {"env": "~/.config/databricks/epm.env", "table": "epm_triples"},
   "queries": "queries.json",
   "rebuild": {"source": "databricks", "out": "~/lpg-out/epm-rebuild"}

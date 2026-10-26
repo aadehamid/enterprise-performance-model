@@ -8,13 +8,15 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 | `inferred.nt` | The reasoner's inferences about the domain (empty today: the ontology is SKOS-first) |
 | `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none from core 2.0.0 to 2026-10-21; since 2026-10-22, 16 in value-stream, kpi, party and integration, each with its fix; *2026-10-23:* 14, in kpi, party and integration, since `value-stream` 1.1.0 closed two, EPM-DEC-001-0090; then 6, in kpi and integration, since `party` 1.1.0 closed eight, EPM-DEC-001-0092; then 5, in integration, since `kpi` 1.1.1 closed one, EPM-DEC-001-0093; none since `integration` 2.0.0, EPM-DEC-001-0094) |
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
+| `run_local.sh` | Steps 4 to 7 below in one command; `--keep` leaves the Neo4j container running |
+| `LOCAL-STORES.md` | The stores kept loaded for exploration since 2026-10-26, how to refresh each, and where its login lives |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, and that the report is current and passed |
 
 `scripts/check.sh` runs `pipeline.py build --verify` and the tests. Step 2 needs Java, and Steps 4 and 5 need a Neo4j container in Docker, so they run on a workstation, not in CI.
 
 ## Rerun the whole pipeline
 
-Rerun it after any input or shape changes. You need Java 11 or later ([ROBOT's Getting Started](https://robot.obolibrary.org/): "make sure you have Java 11 or later installed"), Docker, and [uv](https://docs.astral.sh/uv/). Run the commands from this folder.
+Rerun it after any input or shape changes. `run_local.sh` runs steps 4 to 7 in one command once steps 1 to 3 are done. You need Java 11 or later ([ROBOT's Getting Started](https://robot.obolibrary.org/): "make sure you have Java 11 or later installed"), Docker, and [uv](https://docs.astral.sh/uv/). Run the commands from this folder.
 
 1. Make two empty folders outside the repo: one for the Neo4j plugins and one for the import files.
 

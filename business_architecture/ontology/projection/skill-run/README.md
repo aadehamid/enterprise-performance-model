@@ -27,4 +27,6 @@ uv run --no-project --with rdflib python3 run_projection.py --config <this folde
 
 `replace_target` is on, so the copy and the rebuild's copy delete everything on Aura first. That Aura instance holds only these test runs.
 
+`keep_neo4j` is on (since 2026-10-26), so the local Neo4j stays up after the run for exploration. `../LOCAL-STORES.md` lists every store kept loaded and how to refresh it.
+
 The skill's `references/run-config.md` describes each step and the check it runs. Steps 2 to 4 cover checks V1 to V5 of the skill's validation path and the load covers V6 to V12. The copy, the triple-store counts and the round trips cover the rest, up to V14. For the `GRAPH TYPE` checks G1 to G4, the `graph-type` step writes the statement; applying it, reading it back with `SHOW CURRENT GRAPH TYPE` and probing it with a write that breaks it are done by hand.

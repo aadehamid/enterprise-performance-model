@@ -4,6 +4,7 @@ services:
   sources:
     image: postgres:16.10
     container_name: pricing-demo-sources
+    restart: unless-stopped  # kept running for exploration (the decision owner, 2026-10-26)
     environment:
       POSTGRES_USER: demo
       POSTGRES_PASSWORD: demo  # a local, synthetic-only database; change it when the host is not your Mac
@@ -12,3 +13,8 @@ services:
       - "127.0.0.1:55432:5432"  # this machine only (Kimi round 1, finding 10)
     volumes:
       - ./init:/docker-entrypoint-initdb.d:ro
+      - pricing-demo-pgdata:/var/lib/postgresql/data  # a named volume, so the data outlives the container
+
+volumes:
+  pricing-demo-pgdata:
+    name: pricing-demo-pgdata
