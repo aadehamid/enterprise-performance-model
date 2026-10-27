@@ -1,5 +1,6 @@
 system,category,label,describes,shared
 salesforce,create,Account Name,Party,legal-name
+salesforce,create,Financial Statement,CustomerAccount,credit
 salesforce,create,Financial Statement Request Frequency,CustomerAccount,credit
 salesforce,create,Company Type,CustomerClass,
 salesforce,create,Credit Monitor Desk Code,CustomerAccount,credit

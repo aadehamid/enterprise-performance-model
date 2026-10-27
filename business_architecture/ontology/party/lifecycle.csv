@@ -1,6 +1,6 @@
 stage,link,target,note
 lifecycle-stage/prospect,process,CM 1.3.6.2.1,Manage Sales Pipeline: prospects and opportunities.
-lifecycle-stage/prospect,process,CM 1.3.6.6.1,"Set Up Prospect: today only for loyalty and card programs (MPC-P10.1)."
+lifecycle-stage/prospect,process,CM 1.3.6.6.1,Set Up Prospect: today only for loyalty and card programs (MPC-P10.1).
 lifecycle-stage/prospect,process,CM 1.3.7.4.2,Establish Credit Limit & Risk Code: the credit assessment of the application.
 lifecycle-stage/onboarding,process,CM 1.3.7.4.6,Perform KYC Due Diligence: identity checks and watchlist screening.
 lifecycle-stage/onboarding,process,CM 1.3.7.4.2,Establish Credit Limit & Risk Code: the credit decision.
@@ -19,13 +19,17 @@ lifecycle-stage/relationship-management,process,CM 1.3.7.4.2,Establish Credit Li
 lifecycle-stage/offboarding,process,CM 1.3.7.4.5,Perform Credit-Driven Customer Closure and Reinstatement.
 lifecycle-stage/offboarding,process,CM 1.3.7.1.1,Maintain Customer and Commercial Account Master Data: retire the records.
 system-stage/prospect,system,salesforce,
+system-stage/prospect,system,dealer-master,Ship-to stations start here (EPM-DEC-001-0108).
 system-stage/master,system,sap-mdg,
 system-stage/record,system,sap-s4hana,
+system-stage/record,system,salesforce,The SAP customer number is written back here (EPM-DEC-001-0108).
 system-stage/execute,system,rightangle,
 system-stage/execute,system,polaris,
 system-stage/execute,system,dealer-master,
 system-stage/execute,system,terminal-download,
 system-stage/settle,system,sap-s4hana,
+system-stage/settle,system,dealer-master,Bank and payment details go from here to SAP S/4HANA (EPM-DEC-001-0108).
+system-stage/settle,system,polaris,Pipeline transport invoices go from here to SAP S/4HANA (EPM-DEC-001-0108).
 lifecycle-stage/prospect,stage,system-stage/prospect,
 lifecycle-stage/onboarding,stage,system-stage/master,
 lifecycle-stage/onboarding,stage,system-stage/record,

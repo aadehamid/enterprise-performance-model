@@ -1,20 +1,20 @@
 from,to,carries,inputs
 salesforce,sap-mdg,"The prospect, which triggers the customer's creation in SAP MDG.",3;6
-dealer-master,sap-mdg,"Jobbers, which start in Dealer Master.",2;3;6
-sap-mdg,dealer-master,"Direct dealers, which start in SAP MDG.",6
-salesforce,dealer-master,Customer data; the inputs do not say which.,3
-dealer-master,salesforce,Customer data; the inputs do not say which.,3
+dealer-master,sap-mdg,"Ship-to stations, which SAP MDG numbers in the 20000 series.",2;3;6;8;10;11
+sap-mdg,dealer-master,"The six-digit sold-to customers, replicated into Dealer Master so it can link each one to its stations.",6;9;10;11
+salesforce,dealer-master,"The approved operations change form for a new station, a change of owner, or a change of address or name.",3;10;11
+dealer-master,salesforce,Mastered station and dealer updates.,3;10;11
 sap-mdg,magic,"The created customer, for the new customer account integration.",2;3
 magic,salesforce,"The SAP customer number and the territory manager, and the daily sync of name, address, FEIN, status and credit monitor; the prospect becomes a customer account.",2;3;6
 kittyhawk,magic,The territory manager.,2;3
 sap-mdg,sap-s4hana,"The business partner, with company codes, sales areas and partner roles.",1;2;3;6
-sap-mdg,rightangle,"Basic customer data, with the tax ID mapped to FEIN.",2;3;6
+sap-mdg,rightangle,"Basic customer data, with the tax ID mapped to FEIN, and the ship-to customer records in the 20000 series.",2;3;6;9;11
 rightangle,sap-mdg,The business associate ID and locale.,2;3
 tax-image-silo,rightangle,The customer's sales tax exemption certificates.,3
 rightangle,allocation-manager,"The customer, for operational locks and limits.",2;3
 rightangle,kittyhawk,"The new customer, for transport and logistics.",2;3;6
 kittyhawk,gravitate,"The customer, for the gathering and processing portal.",2;3
-terminal-upload,kittyhawk,Cross-reference customer ID mappings.,2
+terminal-upload,kittyhawk,"Cross-reference customer ID mappings, for the new customer setup.",2;8
 sap-mdg,quorum,The customer.,2;3
 sap-mdg,polaris,The SAP customer number and basic attributes.,2;3;6
 sap-mdg,star,The customer.,2;3
@@ -34,3 +34,16 @@ drop-tank,profisee,Customer data.,1
 emk3,profisee,Customer data.,1
 customer-portal,profisee,Customer data.,1
 dtn-file-server,profisee,Customer data.,1
+rightangle,dealer-master,"Sold-to customer and business associate master data, replicated into Dealer Master.",10;11
+dealer-master,rightangle,"Branded ship-to stations, which fill RightAngle's locations under each business associate.",10;11
+sap-s4hana,bridger-insight,"The customer, for the compliance check against government watchlists.",8
+rightangle,tfr,"The customer, for freight calculation.",8
+rightangle,gravitate,"The customer, for the gathering and processing portal.",8
+rightangle,terminal-download,"The customer, for loading at terminals.",8
+kittyhawk,rcms,"The customer, for the renewable compliance records of its movements.",8
+fuelfacs,tasdm,"Terminal suppliers, products and carriers.",8
+station-pos,dealer-master,"Credit card sales, point-of-sale transactions, site asset data and the stations' fuel volumes.",10;11
+station-pos,street-price-aggregator,The historical pump prices from the point-of-sale transactions.,11
+street-price-aggregator,prm,"Past street prices, passed through.",11
+dealer-master,prm,"Station locations with their channel of trade, such as MST or DTW.",10;11
+dealer-master,credit-card-summary,Retail payment and credit card facts.,11

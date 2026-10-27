@@ -1,3 +1,11 @@
 slug,label,alt_labels,kind,named_by
 mips,MIPS,Market Information and Pricing System,application,decision-owner-pricing-assets-2026-10-25
 databricks,Databricks,,application,decision-owner-pricing-assets-2026-10-25
+prm,PRM,Pricing System,application,decision-owner-customer-inputs-2026-10-27
+station-pos,Station point-of-sale systems,Station POS,application,decision-owner-customer-inputs-2026-10-27
+street-price-aggregator,Third-party street price aggregator,,application,decision-owner-customer-inputs-2026-10-27
+credit-card-summary,Credit Card Summary,,application,decision-owner-customer-inputs-2026-10-27
+enterprise-data-lake,Enterprise Data Lake,Data Lake,application,decision-owner-customer-inputs-2026-10-27
+msmis,MSMIS,,application,decision-owner-customer-inputs-2026-10-27
+mcs,MCS,,application,decision-owner-customer-inputs-2026-10-27
+terminaling-throughputs,Terminaling Throughputs,,application,decision-owner-customer-inputs-2026-10-27
