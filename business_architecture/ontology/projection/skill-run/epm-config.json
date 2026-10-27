@@ -119,7 +119,7 @@
     }
   ],
   "packages": {
-    "core": "2.3.0",
+    "core": "2.4.0",
     "organization": "2.1.0",
     "ref-mpc": "1.2.0",
     "kpi": "1.2.0",
