@@ -33,14 +33,15 @@ class Clone:
     each call and the ref list it was given."""
 
     def __init__(self, tmp, check_status=0, with_entire=True):
-        self.repo = os.path.join(tmp, "repo")
+        self.repo = os.path.join(tmp, "a repo")
         self.log = os.path.join(tmp, "calls.log")
         fake_bin = os.path.join(tmp, "bin")
         os.makedirs(fake_bin)
         if with_entire:
             entire = os.path.join(fake_bin, "entire")
             with open(entire, "w") as f:
-                f.write(f'#!/bin/sh\necho "ENTIRE $* refs=$(cat | tr "\\n" "|")" >> "{self.log}"\n')
+                f.write(f'#!/bin/sh\necho "ENTIRE $* env=$ENTIRE_PRE_PUSH_STDIN_REFS refs=$(cat | tr "\\n" "|")"'
+                        f' >> "{self.log}"\nexit ${{FAKE_ENTIRE_STATUS:-0}}\n')
             os.chmod(entire, 0o755)
         self.env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
         self.env["PATH"] = _path_without_entire(fake_bin)
@@ -105,6 +106,35 @@ def test_setup_keeps_your_own_edit_to_a_tracked_hook():
         assert _git(c.repo, "status", "--porcelain", env=c.env) == "M scripts/hooks/pre-push"
 
 
+def test_setup_restores_an_edited_hook_that_entire_moved_aside():
+    with tempfile.TemporaryDirectory() as tmp:
+        c = Clone(tmp)
+        hook = os.path.join(c.repo, "scripts", "hooks", "pre-push")
+        with open(hook, "a") as f:
+            f.write("# my edit\n")
+        os.rename(hook, hook + ".pre-entire")
+        with open(hook, "w") as f:
+            f.write(MARKER + "entire hooks git pre-push\n")
+        c.setup()
+        with open(hook) as f:
+            assert f.read().endswith("# my edit\n")
+        assert sorted(os.listdir(os.path.dirname(hook))) == ["pre-push"]
+
+
+def test_setup_stops_at_an_entire_hook_it_cannot_restore():
+    with tempfile.TemporaryDirectory() as tmp:
+        c = Clone(tmp)
+        hook = os.path.join(c.repo, "scripts", "hooks", "pre-push")
+        with open(hook, "w") as f:
+            f.write(MARKER + "entire hooks git pre-push\n# my edit\n")
+        proc = subprocess.run(["bash", "scripts/entire-local.sh"], cwd=c.repo, env=c.env, capture_output=True,
+                              text=True)
+        assert proc.returncode == 1
+        assert "no .pre-entire backup" in proc.stderr
+        with open(hook) as f:
+            assert f.read().endswith("# my edit\n")
+
+
 def test_setup_excludes_entires_config_files():
     with tempfile.TemporaryDirectory() as tmp:
         c = Clone(tmp)
@@ -125,7 +155,7 @@ def test_a_push_runs_the_checks_then_entire_with_the_ref_list():
         c.setup()
         status, calls = c.push(f"refs/heads/a {SHA} refs/heads/a {ZERO}\n")
         assert status == 0
-        assert calls == ["CHECKS RAN", f"ENTIRE hooks git pre-push origin refs=refs/heads/a {SHA} refs/heads/a {ZERO}|"]
+        assert calls == ["CHECKS RAN", f"ENTIRE hooks git pre-push origin env=1 refs=refs/heads/a {SHA} refs/heads/a {ZERO}|"]
 
 
 def test_a_failing_check_stops_the_push_before_entire():
@@ -143,7 +173,7 @@ def test_a_delete_only_push_skips_the_checks_and_still_runs_entire():
         c.setup()
         status, calls = c.push(f"(delete) {ZERO} refs/heads/a {SHA}\n")
         assert status == 0
-        assert calls == [f"ENTIRE hooks git pre-push origin refs=(delete) {ZERO} refs/heads/a {SHA}|"]
+        assert calls == [f"ENTIRE hooks git pre-push origin env=1 refs=(delete) {ZERO} refs/heads/a {SHA}|"]
 
 
 def test_without_entire_the_hooks_run_only_the_checks():
@@ -166,3 +196,29 @@ def test_remove_goes_back_to_scripts_hooks():
         c.setup("--remove")
         assert _git(c.repo, "config", "core.hooksPath", env=c.env) == "scripts/hooks"
         assert not os.path.exists(hooks_path)
+
+
+def test_a_failing_entire_stops_the_push():
+    with tempfile.TemporaryDirectory() as tmp:
+        c = Clone(tmp)
+        c.setup()
+        c.env["FAKE_ENTIRE_STATUS"] = "3"
+        status, calls = c.push(f"refs/heads/a {SHA} refs/heads/a {ZERO}\n")
+        assert status == 3
+        assert calls[0] == "CHECKS RAN"
+
+
+def test_a_real_push_of_two_refs_from_a_linked_worktree():
+    with tempfile.TemporaryDirectory() as tmp:
+        c = Clone(tmp)
+        remote = os.path.join(tmp, "the remote.git")
+        _git(tmp, "init", "-q", "--bare", remote, env=c.env)
+        _git(c.repo, "remote", "add", "origin", remote, env=c.env)
+        worktree = os.path.join(tmp, "a worktree")
+        _git(c.repo, "worktree", "add", "-q", "-b", "two", worktree, env=c.env)
+        subprocess.run(["bash", "scripts/entire-local.sh"], cwd=worktree, env=c.env, check=True, capture_output=True)
+        assert _git(c.repo, "config", "core.hooksPath", env=c.env).endswith(os.path.join(".git", "entire-hooks"))
+        _git(worktree, "push", "-q", "origin", "HEAD:refs/heads/one", "HEAD:refs/heads/two", env=c.env)
+        head = _git(worktree, "rev-parse", "HEAD", env=c.env)
+        assert c.calls() == ["CHECKS RAN", f"ENTIRE hooks git pre-push origin env=1 refs=HEAD {head} refs/heads/one "
+                             f"{ZERO}|HEAD {head} refs/heads/two {ZERO}|"]
