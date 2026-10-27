@@ -72,11 +72,18 @@ hook commit-msg 'if command -v entire >/dev/null 2>&1; then entire hooks git com
 hook post-commit 'if command -v entire >/dev/null 2>&1; then entire hooks git post-commit 2>/dev/null || true; fi'
 hook post-rewrite 'if command -v entire >/dev/null 2>&1; then entire hooks git post-rewrite "$1" 2>/dev/null || true; fi'
 # pre-push saves git's ref list, gives it to the repo's hook, and gives it to Entire only after the
-# repo's hook passes. Entire's failure stops the push, as its own hook does.
-hook pre-push 'refs="$(mktemp "${TMPDIR:-/tmp}/epm-pre-push.XXXXXX")" || exit 1
+# repo's hook passes. Entire's failure stops the push, as its own hook does. If Entire has rewritten
+# scripts/hooks/pre-push again (a failed run of this script, or Entire writing between its steps),
+# the push stops, since that file would no longer run the checks.
+hook pre-push 'repo_hook="$(git rev-parse --show-toplevel)/scripts/hooks/pre-push"
+if grep -q "Entire CLI hooks" "$repo_hook"; then
+  echo "pre-push: $repo_hook is Entire'\''s hook, not the repo'\''s; run scripts/entire-local.sh, then push again" >&2
+  exit 1
+fi
+refs="$(mktemp "${TMPDIR:-/tmp}/epm-pre-push.XXXXXX")" || exit 1
 trap '\''rm -f "$refs"'\'' EXIT
 cat > "$refs" || exit 1
-"$(git rev-parse --show-toplevel)/scripts/hooks/pre-push" "$@" < "$refs" || exit $?
+"$repo_hook" "$@" < "$refs" || exit $?
 if command -v entire >/dev/null 2>&1; then
   ENTIRE_PRE_PUSH_STDIN_REFS=1 entire hooks git pre-push "$1" < "$refs" || exit $?
 fi'

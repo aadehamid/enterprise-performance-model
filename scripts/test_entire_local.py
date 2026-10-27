@@ -300,3 +300,26 @@ def test_a_failed_save_leaves_the_hook_folder_as_it_was():
                                   capture_output=True, text=True)
             assert proc.returncode != 0
             assert _git(c.repo, "config", "core.hooksPath", env=c.env) == before
+            if args:
+                # The hook folder is still entire-hooks, and scripts/hooks/pre-push is Entire's: the push
+                # stops. (After a failed setup the folder is scripts/hooks, where Entire's real wrapper
+                # chains to pre-push.pre-entire; the stand-in hook here does not chain.)
+                status, calls = c.push(f"refs/heads/a {SHA} refs/heads/a {ZERO}\n")
+                assert status == 1
+                assert calls == []
+
+
+def test_a_push_stops_when_entire_rewrites_scripts_hooks_after_setup():
+    with tempfile.TemporaryDirectory() as tmp:
+        c = Clone(tmp)
+        c.setup()
+        _entire_rewrote(c)
+        hook = os.path.join(c.repo, "scripts", "hooks", "pre-push")
+        os.chmod(hook, 0o755)
+        hooks_path = _git(c.repo, "config", "core.hooksPath", env=c.env)
+        proc = subprocess.run(["sh", os.path.join(hooks_path, "pre-push"), "origin", "x"],
+                              input=f"refs/heads/a {SHA} refs/heads/a {ZERO}\n", cwd=c.repo, env=c.env,
+                              capture_output=True, text=True)
+        assert proc.returncode == 1
+        assert "run scripts/entire-local.sh" in proc.stderr
+        assert c.calls() == []
