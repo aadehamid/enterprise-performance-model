@@ -15,7 +15,7 @@ The `system` module links a system to a process only where the process map's `sy
 
 **The decision owner's ruling:** accept the proposal's "Proposed (strong and medium evidence)" table, and leave out its "Not proposed (weak evidence)" table.
 
-The table has 19 rows. Two rows name more than one system (CM 1.3.7.1.7 with SAP MDG and MAGIC, and with Salesforce, SAP S/4HANA and RightAngle), so the rows hold 21 links, across 12 processes. The question put to the decision owner counted 19 links; this record counts the links themselves.
+The table has 18 rows. Two rows name more than one system (CM 1.3.7.1.7 with SAP MDG and MAGIC, and with Salesforce, SAP S/4HANA and RightAngle), so the 16 single-system rows and those two hold 21 links, across 12 processes. The option the decision owner chose said "Add all 19 proposed links"; that count was wrong, and this record counts the links themselves.
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
@@ -25,8 +25,8 @@ The table has 19 rows. Two rows name more than one system (CM 1.3.7.1.7 with SAP
 4. **The proposal's status** becomes Accepted, with this record.
 5. **`system` 1.4.0, a minor release,** carries the seven systems and the 21 links. It adds IRIs and removes none, so a minor is enough. It requires core 2.3.0, which holds all 12 processes. 39 of its 41 systems are defined, and 306 links reach 162 of the 165 processes with a `systems` field.
 6. **`party` 1.4.0, a minor release,** carries seven more `skos:exactMatch` links, one from each of the seven customer systems to the `system` system of the same slug, so 12 customer systems match. The `party` build states a match wherever the `system` module holds a customer system's slug (`party/build_party.py`), so the two releases go together. It requires system 1.4.0.
-7. **party 1.4.0 rewords its one shape message that held an apostrophe:** "A customer system's definition cites its source." becomes "The definition of a customer system cites its source." The meaning does not change. The `ontology` skill's SHACL rule 19 keeps apostrophes out of `sh:message`, because the neosemantics (n10s) validator writes the message into Cypher unescaped (personal-agent-skills #72).
-8. **Claude approves both releases under the delegation.** EPM-DEC-001-0028 lets Claude approve the queue's minor releases, and the decision owner's night brief of 2026-10-26 says the same: "minor releases only, which I approve", approved with "Approve (Recommended)" (`answers-2026-10-26-night.md`, answer 5).
+7. **party 1.4.0 rewords its one shape message that held an apostrophe,** so no `sh:message` in party's shapes holds one. The rule applies to every module; this record covers party only: "A customer system's definition cites its source." becomes "The definition of a customer system cites its source." The meaning does not change. The `ontology` skill's SHACL rule 19 keeps apostrophes out of `sh:message`, because the neosemantics (n10s) validator writes the message into Cypher unescaped (personal-agent-skills #72).
+8. **Claude approves both releases under the delegation.** EPM-DEC-001-0028 lets Claude approve the queue's minor releases, and the decision owner's night brief of 2026-10-26, which says Claude approves the night's minor releases, was approved with "Approve (Recommended)" (`answers-2026-10-26-night.md`, answer 5).
 
 ## Alternatives considered
 
@@ -35,7 +35,7 @@ The table has 19 rows. Two rows name more than one system (CM 1.3.7.1.7 with SAP
 
 ## The decision owner's recorded words
 
-Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md`, answer 1: "Accept strong + medium (Recommended)". For the releases, answer 5: "Approve (Recommended)", to a brief that read "minor releases only, which I approve".
+Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md`, answer 1: "Accept strong + medium (Recommended)". For the releases, answer 5: "Approve (Recommended)", to a brief that says Claude approves the night's minor releases.
 
 ## Evidence
 

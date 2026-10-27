@@ -2,7 +2,7 @@
 
 ## 1.4.0 (2026-10-26)
 
-A minor release: it adds seven matches and rewords one shape message, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Approve (Recommended)", the decision owner's approval of the night brief of 2026-10-26, which says "minor releases only, which I approve", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md`; EPM-DEC-001-0028; EPM-DEC-001-0104).
+A minor release: it adds seven matches and rewords one shape message, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Approve (Recommended)", the decision owner's approval of the night brief of 2026-10-26, which says Claude approves the night's minor releases, saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md`; EPM-DEC-001-0028; EPM-DEC-001-0104).
 
 - [minor] **Matches.** SAP MDG, Salesforce, MAGIC, Bridger Insight, Information Steward, Sirion and Customer Portal are now the system module's systems of the same name (`skos:exactMatch`), which system 1.4.0 adds with MPC-P11 (EPM-DEC-001-0104). 12 of the 42 customer systems now match a system-module system.
 - [minor] **Shapes.** The message "A customer system's definition cites its source." becomes "The definition of a customer system cites its source.", with the same meaning. The `ontology` skill's SHACL rule 19 keeps apostrophes out of `sh:message`, because the neosemantics (n10s) validator writes the message into Cypher unescaped.

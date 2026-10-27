@@ -30,7 +30,7 @@
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md"
   },
   "files": {
-    "CHANGELOG.md": "c4468b7b4ec5589c1804e58a6edfbe8a4ad891467a487fcc67b80471c3ee600b",
+    "CHANGELOG.md": "b6c74ade2663833ddec20a2fff7a256c142af867cba92e7490d10e1b100bc86c",
     "catalog.ttl": "dc5f5240bc0b3648f653451ecb538b695656e0199e50981f6e3a269cca616070",
     "party.jsonld": "477ff7100ab8a42173daf7d1ab120570c1235e7a35b028bd148db0748230dfec",
     "party.ttl": "9e42a1e8ecef4b3e48d98ea2f2ae577c8d6f9066208e4e683470b19aa8e4d7e7",
