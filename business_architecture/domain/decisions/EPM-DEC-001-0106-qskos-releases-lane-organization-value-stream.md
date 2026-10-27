@@ -21,7 +21,7 @@ The `ontology` skill's SHACL rule 19 (personal-agent-skills #72) says a shape's 
 4. **Each release requires the current releases.** Lane 1.1.0 requires core 2.3.0 (1.0.0 required 2.2.0), which its build already reads. Organization 2.1.0 requires core 2.3.0 (2.0.0 required 2.1.0). Value-stream 1.2.0 requires core 2.3.0, data-product 1.2.0 and kpi 1.2.0 (1.1.0 required data-product 1.0.0 and kpi 1.1.0). This follows value-stream 1.1.0, which required "the current releases" (EPM-DEC-001-0090). The released packages that pin the older versions stay as released: ref-mpc 1.2.0 still requires organization 2.0.0, and integration 2.3.0 still requires lane 1.0.0, organization 2.0.0 and value-stream 1.1.0. Their next releases can move the pins.
 5. **The projection loads the new releases.** `projection/pipeline.py` projects every module at its newest release (EPM-DEC-001-0036, amendment of 2026-10-22), so it now loads these three.
 
-Core's fixes from EPM-DEC-001-0098 (items 2 and 5) are not in this record. They go in core's next release.
+Core's fixes from EPM-DEC-001-0098 (items 2 and 5) are not in this record. They go in core's next release. *2026-10-26:* core 2.4.0 carries them (EPM-DEC-001-0105).
 
 ## The checker's findings, before and after
 
