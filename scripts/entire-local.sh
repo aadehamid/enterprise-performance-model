@@ -23,23 +23,28 @@ cd "$ROOT"
 COMMON="$(cd "$(git rev-parse --git-common-dir)" && pwd)"
 HOOKS="$COMMON/entire-hooks"
 
-# Undo what Entire did to scripts/hooks. A <hook>.pre-entire is the file Entire moved aside, edits
-# included, so it goes back in place. Then a file carrying Entire's marker is deleted if untracked;
-# a tracked one with no backup to restore stops the script, as it may hold edits of yours.
+# Undo what Entire did to scripts/hooks without losing anything. Each file carrying Entire's marker is
+# first copied to <git dir>/entire-local-saved, since you may have edited it. Then a <hook>.pre-entire
+# (the file Entire moved aside, edits included) goes back in place when its hook is Entire's or
+# missing; a tracked hook with no backup goes back to git's copy; an untracked one is deleted. A
+# backup beside a hook that is not Entire's is left alone.
 restore_tracked_hooks() {
-  local f
+  local f hook saved="$COMMON/entire-local-saved" stamp
+  stamp="$(date +%Y%m%d-%H%M%S)-$$"
+  for f in scripts/hooks/*; do
+    [ -f "$f" ] && grep -q "Entire CLI hooks" "$f" || continue
+    mkdir -p "$saved"
+    cp "$f" "$saved/$(basename "$f").$stamp"
+    echo "entire-local: saved $f to $saved/$(basename "$f").$stamp"
+  done
   for f in scripts/hooks/*.pre-entire; do
     [ -f "$f" ] || continue
-    if [ -f "${f%.pre-entire}" ] && grep -q "Entire CLI hooks" "${f%.pre-entire}"; then mv "$f" "${f%.pre-entire}"; fi
+    hook="${f%.pre-entire}"
+    if [ ! -e "$hook" ] || grep -q "Entire CLI hooks" "$hook"; then mv "$f" "$hook"; fi
   done
   for f in scripts/hooks/*; do
     [ -f "$f" ] && grep -q "Entire CLI hooks" "$f" || continue
-    if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
-      echo "entire-local: $f is Entire's hook and has no .pre-entire backup; copy out any edits, run" \
-        "\`git checkout -- $f\`, then run this again" >&2
-      exit 1
-    fi
-    rm "$f"
+    if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then git checkout -- "$f"; else rm "$f"; fi
   done
 }
 

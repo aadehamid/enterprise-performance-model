@@ -106,33 +106,95 @@ def test_setup_keeps_your_own_edit_to_a_tracked_hook():
         assert _git(c.repo, "status", "--porcelain", env=c.env) == "M scripts/hooks/pre-push"
 
 
+def _saved(c):
+    """The contents of every file entire-local.sh saved, keyed by hook name."""
+    saved = os.path.join(_git(c.repo, "rev-parse", "--absolute-git-dir", env=c.env), "entire-local-saved")
+    out = {}
+    for name in os.listdir(saved) if os.path.isdir(saved) else []:
+        with open(os.path.join(saved, name)) as f:
+            out[name.split(".")[0]] = f.read()
+    return out
+
+
+def _entire_rewrote(c, edit_before="", edit_after="", keep_hook=True):
+    """Do what `entire enable` does to scripts/hooks/pre-push, with optional edits before and after."""
+    hook = os.path.join(c.repo, "scripts", "hooks", "pre-push")
+    with open(hook, "a") as f:
+        f.write(edit_before)
+    os.rename(hook, hook + ".pre-entire")
+    if keep_hook:
+        with open(hook, "w") as f:
+            f.write(MARKER + "entire hooks git pre-push\n" + edit_after)
+    return hook
+
+
 def test_setup_restores_an_edited_hook_that_entire_moved_aside():
     with tempfile.TemporaryDirectory() as tmp:
         c = Clone(tmp)
-        hook = os.path.join(c.repo, "scripts", "hooks", "pre-push")
-        with open(hook, "a") as f:
-            f.write("# my edit\n")
-        os.rename(hook, hook + ".pre-entire")
-        with open(hook, "w") as f:
-            f.write(MARKER + "entire hooks git pre-push\n")
+        hook = _entire_rewrote(c, edit_before="# my edit\n")
         c.setup()
         with open(hook) as f:
             assert f.read().endswith("# my edit\n")
         assert sorted(os.listdir(os.path.dirname(hook))) == ["pre-push"]
 
 
-def test_setup_stops_at_an_entire_hook_it_cannot_restore():
+def test_an_edit_to_entires_hook_is_saved_before_the_backup_returns():
+    for args in ((), ("--remove",)):
+        with tempfile.TemporaryDirectory() as tmp:
+            c = Clone(tmp)
+            hook = _entire_rewrote(c, edit_after="# edited later\n")
+            c.setup(*args)
+            assert _git(c.repo, "status", "--porcelain", env=c.env) == ""
+            assert _saved(c)["pre-push"].endswith("# edited later\n")
+
+
+def test_an_entire_hook_with_no_backup_is_saved_and_the_checks_still_run():
+    for args in ((), ("--remove",)):
+        with tempfile.TemporaryDirectory() as tmp:
+            c = Clone(tmp)
+            hook = os.path.join(c.repo, "scripts", "hooks", "pre-push")
+            with open(hook, "w") as f:
+                f.write(MARKER + "entire hooks git pre-push\n# my edit\n")
+            c.setup(*args)
+            assert _git(c.repo, "status", "--porcelain", env=c.env) == ""
+            assert _saved(c)["pre-push"].endswith("# my edit\n")
+            assert c.push(f"refs/heads/a {SHA} refs/heads/a {ZERO}\n")[1][0] == "CHECKS RAN"
+
+
+def test_a_backup_with_no_hook_is_restored():
     with tempfile.TemporaryDirectory() as tmp:
         c = Clone(tmp)
-        hook = os.path.join(c.repo, "scripts", "hooks", "pre-push")
-        with open(hook, "w") as f:
-            f.write(MARKER + "entire hooks git pre-push\n# my edit\n")
-        proc = subprocess.run(["bash", "scripts/entire-local.sh"], cwd=c.repo, env=c.env, capture_output=True,
-                              text=True)
-        assert proc.returncode == 1
-        assert "no .pre-entire backup" in proc.stderr
-        with open(hook) as f:
-            assert f.read().endswith("# my edit\n")
+        _entire_rewrote(c, keep_hook=False)
+        c.setup()
+        assert _git(c.repo, "status", "--porcelain", env=c.env) == ""
+        assert c.push(f"refs/heads/a {SHA} refs/heads/a {ZERO}\n")[1][0] == "CHECKS RAN"
+
+
+def test_a_backup_beside_a_hook_that_is_not_entires_is_left():
+    with tempfile.TemporaryDirectory() as tmp:
+        c = Clone(tmp)
+        backup = os.path.join(c.repo, "scripts", "hooks", "pre-push.pre-entire")
+        with open(backup, "w") as f:
+            f.write("#!/bin/sh\n# some other tool\n")
+        c.setup()
+        assert os.path.exists(backup)
+        assert _saved(c) == {}
+
+
+def test_the_cursor_installer_keeps_an_entire_hook_folder():
+    with open(os.path.join(HERE, "..", ".cursor", "install.sh")) as f:
+        text = f.read()
+    block = text[text.index('case "$(git -C "$REPO_ROOT" config core.hooksPath'):]
+    block = block[:block.index("esac") + len("esac")]
+    for before, after in (("", "scripts/hooks"), ("/x/.git/entire-hooks", "/x/.git/entire-hooks"),
+                          ("other", "scripts/hooks")):
+        with tempfile.TemporaryDirectory() as tmp:
+            env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+            _git(tmp, "init", "-q", tmp, env=env)
+            if before:
+                _git(tmp, "config", "core.hooksPath", before, env=env)
+            subprocess.run(["bash", "-euo", "pipefail", "-c", block], env={**env, "REPO_ROOT": tmp}, check=True)
+            assert _git(tmp, "config", "core.hooksPath", env=env) == after
 
 
 def test_setup_excludes_entires_config_files():
