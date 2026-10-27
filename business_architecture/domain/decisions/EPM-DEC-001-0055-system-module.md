@@ -9,7 +9,7 @@
 
 ## Context
 
-153 nodes of the process map (`business_architecture/business_process/downstream_process_map.json`) have a `systems` field. Together they hold 37 distinct strings. Some are one system spelled two ways ("RightAngle", "Right Angle"). Three name several systems, joined by "/" ("SAP/ Hyperion", "RightAngle/ TMR/ TopDay", "Right Angle / CargoTracker"). Four name no system: "Manual", "TBD", "To be incorporated in regional Premise solution" and "Manual, to be incorporated in Crude Avails solution". Some are office software (MS Outlook, MS Teams, MS PowerPoint, MS Excel), and some are working documents (the premise documents, "Actuals Case Prep File", "RFC Hindsight Analysis Excel"). No file in the repository defines any of the systems. Every node with a `systems` field is in `core` 2.1.0.
+153 nodes of the process map (`business_architecture/business_process/downstream_process_map.json`) have a `systems` field. Together they hold 37 distinct strings. Some are one system spelled two ways ("RightAngle", "Right Angle"). Three name several systems, joined by "/" ("SAP/ Hyperion", "RightAngle/ TMR/ TopDay", "Right Angle / CargoTracker"). Four name no system: "Manual", "TBD", "To be incorporated in regional Premise solution" and "Manual, to be incorporated in Crude Avails solution". Some are office software (MS Outlook, MS Teams, MS PowerPoint, MS Excel), and some are working documents (the premise documents, "Actuals Case Prep File", "RFC Hindsight Analysis Excel"). No file in the repository defines any of the systems. Every node with a `systems` field is in `core` 2.1.0. *2026-10-26:* MPC-P11 gives 12 more processes a `systems` field, so 165 nodes hold 45 distinct strings (EPM-DEC-001-0104).
 
 ## Decision
 

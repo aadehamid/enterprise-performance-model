@@ -1,5 +1,18 @@
 # system changelog
 
+## 1.4.0 (2026-10-26)
+
+A minor release: it adds seven systems and 21 links, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Approve (Recommended)", the decision owner's approval of the night brief of 2026-10-26, which says "minor releases only, which I approve", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md`; EPM-DEC-001-0028; EPM-DEC-001-0104).
+
+- [minor] **MPC-P11** (EPM-DEC-001-0104). The decision owner accepted the proposal's strong and medium rows, so 12 customer-lifecycle processes now name the systems they use in the process map: 21 links. Seven systems join the module: SAP MDG, Salesforce, MAGIC, Bridger Insight, Information Steward, Sirion and Customer Portal, each with the slug, labels and definition the `party` module gives it. "SAP S/4HANA" is a new register string for the existing SAP S/4HANA system, and Profisee and RightAngle gain links. 39 of the 41 systems are defined; 306 links reach 162 processes.
+- It requires core 2.3.0.
+
+### Known gaps
+
+- TopDay and VALT have no definition; they wait for their owners (`ontology/business-closeout.md`, point 12).
+- The drafted descriptions wait for each system's owner to confirm or correct them (`business-closeout.md`, point 16).
+- MPC-P11's three weak links stay out until their owners confirm them (EPM-DEC-001-0104, item 3).
+
 ## 1.3.0 (2026-10-26)
 
 A minor release: it adds definitions and sources, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0103).

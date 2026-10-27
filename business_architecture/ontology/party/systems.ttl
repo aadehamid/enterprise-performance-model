@@ -2088,6 +2088,7 @@
     dcterms:source src:vendor-lexisnexis-bridger-insight-xg ;
     skos:altLabel "Bridger"@en ;
     skos:definition "LexisNexis Risk Solutions' compliance screening software, Bridger Insight XG. By the vendor's description, it automates account screening for regulatory compliance and reduces false positives."@en ;
+    skos:exactMatch system:bridger-insight ;
     skos:inScheme party:customer-systems ;
     skos:notation "bridger-insight" ;
     skos:prefLabel "Bridger Insight"@en ;
@@ -2099,6 +2100,7 @@
         party:CustomerSystem ;
     dcterms:source src:vendor-sap-information-steward ;
     skos:definition "SAP's data quality software, SAP Information Steward. By the vendor's description, it supports data profiling and monitoring and information policy management."@en ;
+    skos:exactMatch system:information-steward ;
     skos:inScheme party:customer-systems ;
     skos:notation "information-steward" ;
     skos:prefLabel "Information Steward"@en ;
@@ -2232,6 +2234,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:altLabel "MyMPC Customer Portal"@en ;
     skos:definition "The MyMPC customer portal; it sends customer data to Profisee."@en ;
     skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    skos:exactMatch system:customer-portal ;
     skos:inScheme party:customer-systems ;
     skos:notation "customer-portal" ;
     skos:prefLabel "Customer Portal"@en ;
@@ -2444,6 +2447,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
         party:CustomerSystem ;
     dcterms:source src:vendor-sirion ;
     skos:definition "Sirion's contract management software. By the vendor's description, it uses AI to manage an enterprise's contracts and get the most value from its relationships."@en ;
+    skos:exactMatch system:sirion ;
     skos:inScheme party:customer-systems ;
     skos:notation "sirion" ;
     skos:prefLabel "Sirion"@en ;
@@ -2538,6 +2542,7 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     dcterms:source src:decision-owner-answers-2026-10-24-systems ;
     skos:altLabel "Marketing Applications Graphical Interface for Clients"@en ;
     skos:definition "Marketing Applications Graphical Interface for Clients: an MPC-built integration that sets up new customer accounts. When SAP MDG creates a customer, MAGIC assigns the SAP MDG customer number and the KittyHawk territory manager to the account in Salesforce, and converts the prospect into a customer account. Every day it syncs the customer's number, name, address, FEIN, status, credit monitor and territory manager to Salesforce."@en ;
+    skos:exactMatch system:magic ;
     skos:inScheme party:customer-systems ;
     skos:notation "magic" ;
     skos:prefLabel "MAGIC"@en ;
@@ -2638,6 +2643,7 @@ src:decision-owner-customer-inputs a dcterms:BibliographicResource ;
     dcterms:source src:vendor-sap-mdg ;
     skos:altLabel "MDG"@en ;
     skos:definition "SAP's master data governance software. By the vendor's description, it is the governance layer for an enterprise's business data, unifying master data, policy and metadata."@en ;
+    skos:exactMatch system:sap-mdg ;
     skos:inScheme party:customer-systems ;
     skos:notation "sap-mdg" ;
     skos:prefLabel "SAP MDG"@en ;
@@ -2662,6 +2668,7 @@ src:decision-owner-customer-inputs a dcterms:BibliographicResource ;
     skos:altLabel "SF"@en,
         "Salesforce CRM"@en ;
     skos:definition "Salesforce's customer relationship management (CRM) platform. By the vendor's description, it helps companies connect with their customers."@en ;
+    skos:exactMatch system:salesforce ;
     skos:inScheme party:customer-systems ;
     skos:notation "salesforce" ;
     skos:prefLabel "Salesforce"@en ;

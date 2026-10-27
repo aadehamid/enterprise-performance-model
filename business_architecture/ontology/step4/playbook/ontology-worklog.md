@@ -1016,6 +1016,16 @@ without a dated amendment and the decision owner's explicit agreement.
   as superseded evidence; `projection/pipeline.py` stays on v2.2
   (EPM-DEC-001-0095, amending 0021).
 
+### system 1.4.0 and party 1.4.0 are released (2026-10-26)
+- The decision owner accepted MPC-P11's strong and medium rows: 12
+  customer-lifecycle processes name the systems they use in the process map,
+  21 links. The `system` module gains SAP MDG, Salesforce, MAGIC, Bridger
+  Insight, Information Steward, Sirion and Customer Portal, and `party`
+  matches each of them (`skos:exactMatch`, 12 in all). party 1.4.0 also
+  rewords its one shape message that held an apostrophe (the `ontology`
+  skill's SHACL rule 19). Claude approved both minor releases under the
+  delegation (EPM-DEC-001-0104).
+
 ### core 2.4.0 is released (2026-10-26)
 - The decision owner accepted MPC-P12: the 25 processes that shared seven
   names in the process map each name their parent's subject, with the old

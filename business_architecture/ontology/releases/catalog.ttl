@@ -36,6 +36,7 @@
         <https://w3id.org/lsc/ontology/modules/party/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/party/1.2.0>,
         <https://w3id.org/lsc/ontology/modules/party/1.3.0>,
+        <https://w3id.org/lsc/ontology/modules/party/1.4.0>,
         <https://w3id.org/lsc/ontology/modules/ref-mpc/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/ref-mpc/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/ref-mpc/1.2.0>,
@@ -43,6 +44,7 @@
         <https://w3id.org/lsc/ontology/modules/system/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/system/1.2.0>,
         <https://w3id.org/lsc/ontology/modules/system/1.3.0>,
+        <https://w3id.org/lsc/ontology/modules/system/1.4.0>,
         <https://w3id.org/lsc/ontology/modules/value-stream/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/value-stream/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/value-stream/1.2.0> .
@@ -326,6 +328,15 @@
         <https://w3id.org/lsc/ontology/modules/party/releases/1.3.0/party.ttl>,
         <https://w3id.org/lsc/ontology/modules/party/releases/1.3.0/shapes.ttl> .
 
+<https://w3id.org/lsc/ontology/modules/party/1.4.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/party> ;
+    dcterms:issued "2026-10-26"^^xsd:date ;
+    dcterms:title "LSC Party Module 1.4.0"@en ;
+    owl:versionInfo "1.4.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/party.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/party.ttl>,
+        <https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/shapes.ttl> .
+
 <https://w3id.org/lsc/ontology/modules/ref-mpc/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/ref-mpc> ;
     dcterms:issued "2026-10-13"^^xsd:date ;
@@ -388,6 +399,15 @@
     dcat:distribution <https://w3id.org/lsc/ontology/modules/system/releases/1.3.0/shapes.ttl>,
         <https://w3id.org/lsc/ontology/modules/system/releases/1.3.0/system.jsonld>,
         <https://w3id.org/lsc/ontology/modules/system/releases/1.3.0/system.ttl> .
+
+<https://w3id.org/lsc/ontology/modules/system/1.4.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/system> ;
+    dcterms:issued "2026-10-26"^^xsd:date ;
+    dcterms:title "LSC System Module 1.4.0"@en ;
+    owl:versionInfo "1.4.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/shapes.ttl>,
+        <https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/system.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/system.ttl> .
 
 <https://w3id.org/lsc/ontology/modules/value-stream/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/value-stream> ;
@@ -796,6 +816,18 @@
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/party/releases/1.3.0/shapes.ttl> ;
     dcat:mediaType "text/turtle" .
 
+<https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/party.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/party.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/party.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/party.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/party/releases/1.4.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
 <https://w3id.org/lsc/ontology/modules/ref-mpc/releases/1.0.0/ref-mpc.jsonld> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/ref-mpc/releases/1.0.0/ref-mpc.jsonld> ;
     dcat:mediaType "application/ld+json" .
@@ -878,6 +910,18 @@
 
 <https://w3id.org/lsc/ontology/modules/system/releases/1.3.0/system.ttl> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.3.0/system.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/system.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/system.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/system.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.4.0/system.ttl> ;
     dcat:mediaType "text/turtle" .
 
 <https://w3id.org/lsc/ontology/modules/value-stream/releases/1.0.0/shapes.ttl> a dcat:Distribution ;

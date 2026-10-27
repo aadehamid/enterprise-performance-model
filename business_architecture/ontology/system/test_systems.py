@@ -36,10 +36,13 @@ class Build(unittest.TestCase):
         # Pinned on 2026-10-19. The string, system and kind counts were checked by hand against
         # register.csv and systems.csv. The link count is the build's; 3 of the 153 processes with a
         # systems field name only Manual, TBD or a plan, so 150 receive a link.
+        # 2026-10-26, MPC-P11 (EPM-DEC-001-0104), checked by hand against the proposal's table: 8 more map strings
+        # (seven new systems and "SAP S/4HANA"), 7 more applications, 12 more processes with a systems field, each
+        # linked, and 21 more links: 37 + 8 = 45, 34 + 7 = 41, 32 + 7 = 39, 153 + 12 = 165, 150 + 12 = 162, 285 + 21 = 306.
         self.assertEqual(bs.figures(*bs.load()), {
-            "map strings": 37, "systems": 34, "defined": 32, "application": 25, "office-tool": 4, "document": 5,
-            "no-system strings": 4, "processes with a systems field": 153,
-            "processes with a link": 150, "links": 285,
+            "map strings": 45, "systems": 41, "defined": 39, "application": 32, "office-tool": 4, "document": 5,
+            "no-system strings": 4, "processes with a systems field": 165,
+            "processes with a link": 162, "links": 306,
             "links waiting for a core release": 0})
 
     def test_spelling_merge(self):
@@ -64,15 +67,16 @@ class Build(unittest.TestCase):
         self.assertEqual(SYSTEMS.value(SYSTEM["xpims"], SYS.systemKind), KIND["application"])
 
     def test_profisee_links(self):
+        # CM 1.3.7.1.1 since MPC-P11 (EPM-DEC-001-0104).
         self.assertEqual(set(SYSTEMS.objects(SYSTEM["profisee"], SYS.supports)),
-                         {PROC["CM-1-1-2-1"], PROC["CM-1-1-2-1-8"], PROC["CM-1-1-2-2"]})
+                         {PROC["CM-1-1-2-1"], PROC["CM-1-1-2-1-8"], PROC["CM-1-1-2-2"], PROC["CM-1-3-7-1-1"]})
 
 
     def test_definitions(self):
         # Item G (EPM-DEC-001-0099), checked by hand against definitions.csv on 2026-10-25: 15 systems are
         # defined; full forms are preferred labels, with the process map's abbreviation as an alternative.
         defined = {s for s in SYSTEMS.subjects(SKOS.definition, None)}
-        self.assertEqual(len(defined), 32)  # 15, then MIPS, MPR and Databricks in 1.2.0 (EPM-DEC-001-0100), then 14 in 1.3.0 (EPM-DEC-001-0103)
+        self.assertEqual(len(defined), 39)  # 15, then MIPS, MPR and Databricks in 1.2.0 (EPM-DEC-001-0100), then 14 in 1.3.0 (EPM-DEC-001-0103), then MPC-P11's 7 in 1.4.0 (0104)
         for slug, label, alt in (("dpo", "Distribution Planning Optimizer", "DPO"), ("aps", "Aspen Petroleum Scheduler", "APS"),
                                  ("sap", "SAP S/4HANA", "SAP"), ("hyperion", "Oracle Hyperion Planning", "Hyperion"),
                                  ("pi", "AVEVA PI System", "PI")):
@@ -107,6 +111,67 @@ class Build(unittest.TestCase):
             self.assertIsNone(SYSTEMS.value(SYSTEM[slug], SYS.supports))
         self.assertIn((SYSTEM["mips"], SKOS.altLabel, Literal("Market Information and Pricing System", lang="en")), SYSTEMS)
         self.assertIn("Master Price Record", str(SYSTEMS.value(SYSTEM["mpr"], SKOS.editorialNote)))
+
+    def test_mpc_p11_systems_and_their_links(self):
+        # EPM-DEC-001-0104, pinned by hand from MPC-P11's "Proposed" table: each new system, its label, and every process
+        # it supports. Each takes the party module's slug and label.
+        new = {
+            "salesforce": ("Salesforce", {"CM-1-3-6-2-1", "CM-1-3-6-6-1", "CM-1-3-7-1-7", "CM-1-3-7-4-2", "CM-1-3-7-2-6"}),
+            "sap-mdg": ("SAP MDG", {"CM-1-3-7-1-1", "CM-1-3-7-1-7"}),
+            "magic": ("MAGIC", {"CM-1-3-7-1-1", "CM-1-3-7-1-7"}),
+            "bridger-insight": ("Bridger Insight", {"CM-1-3-7-4-6"}),
+            "information-steward": ("Information Steward", {"CM-1-3-7-1-1"}),
+            "sirion": ("Sirion", {"CM-1-3-7-2-1"}),
+            "customer-portal": ("Customer Portal", {"CM-1-3-7-2-6"}),
+        }
+        for slug, (label, procs) in new.items():
+            self.assertEqual(SYSTEMS.value(SYSTEM[slug], SKOS.prefLabel), Literal(label, lang="en"), slug)
+            self.assertEqual(SYSTEMS.value(SYSTEM[slug], SYS.systemKind), KIND["application"], slug)
+            self.assertIsNotNone(SYSTEMS.value(SYSTEM[slug], SKOS.definition), slug)
+            self.assertEqual(set(SYSTEMS.objects(SYSTEM[slug], SYS.supports)), {PROC[p] for p in procs}, slug)
+        # The existing systems the proposal also names gain these links.
+        sap = set(SYSTEMS.objects(SYSTEM["sap"], SYS.supports))
+        for p in ("CM-1-3-7-1-7", "CM-1-3-7-4-2", "CM-1-3-7-4-3", "CM-1-3-8-2-1", "CM-1-3-8-2-3", "CM-1-3-8-3-2"):
+            self.assertIn(PROC[p], sap)
+        self.assertIn((SYSTEM["rightangle"], SYS.supports, PROC["CM-1-3-7-1-7"]), SYSTEMS)
+        # The weak links stay out (EPM-DEC-001-0104, item 3).
+        for slug, p in (("allocation-manager", "CM-1-3-7-4-3"), ("sap", "CM-1-3-7-4-5"), ("data-products-idp", "CM-1-3-7-4-4")):
+            self.assertNotIn((SYSTEM[slug], SYS.supports, PROC[p]), SYSTEMS)
+        self.assertIsNone(SYSTEMS.value(SYSTEM["allocation-manager"], SKOS.prefLabel))
+        self.assertIsNone(SYSTEMS.value(SYSTEM["data-products-idp"], SKOS.prefLabel))
+
+    def test_mpc_p11_links_are_in_the_process_map(self):
+        # EPM-DEC-001-0104: the 21 accepted links, as the map's systems field names them, pinned by hand; the weak three are not.
+        import json
+        with open(bs.MAP) as f:
+            roots = json.load(f)
+        fields = {}
+
+        def walk(node):
+            fields[node.get("id")] = node.get("systems") or []
+            for child in node.get("children") or []:
+                walk(child)
+        for r in roots:
+            walk(r)
+        accepted = [
+            ("CM 1.3.6.2.1", "Salesforce"), ("CM 1.3.6.6.1", "Salesforce"), ("CM 1.3.7.4.6", "Bridger Insight"),
+            ("CM 1.3.7.1.1", "SAP MDG"), ("CM 1.3.7.1.1", "MAGIC"), ("CM 1.3.7.1.1", "Information Steward"),
+            ("CM 1.3.7.1.1", "Profisee"), ("CM 1.3.7.1.7", "SAP MDG"), ("CM 1.3.7.1.7", "MAGIC"),
+            ("CM 1.3.7.1.7", "Salesforce"), ("CM 1.3.7.1.7", "SAP S/4HANA"), ("CM 1.3.7.1.7", "RightAngle"),
+            ("CM 1.3.7.4.2", "SAP S/4HANA"), ("CM 1.3.7.4.2", "Salesforce"), ("CM 1.3.7.2.1", "Sirion"),
+            ("CM 1.3.8.2.1", "SAP S/4HANA"), ("CM 1.3.8.2.3", "SAP S/4HANA"), ("CM 1.3.8.3.2", "SAP S/4HANA"),
+            ("CM 1.3.7.4.3", "SAP S/4HANA"), ("CM 1.3.7.2.6", "Customer Portal"), ("CM 1.3.7.2.6", "Salesforce"),
+        ]
+        self.assertEqual(len(accepted), 21)
+        self.assertEqual(len({pid for pid, _ in accepted}), 12)
+        for pid, text in accepted:
+            self.assertIn(text, fields[pid], pid)
+        # Each of the 12 processes names exactly the accepted systems.
+        for pid in {pid for pid, _ in accepted}:
+            self.assertEqual(sorted(fields[pid]), sorted(t for p, t in accepted if p == pid), pid)
+        self.assertNotIn("Allocation Manager", fields["CM 1.3.7.4.3"])
+        self.assertEqual(fields["CM 1.3.7.4.5"], [])
+        self.assertEqual(fields["CM 1.3.7.4.4"], [])
 
     def test_the_map_source_is_not_redeclared(self):
         # roles.ttl declares the process map's source node; this module only references it (Pi round 1).
