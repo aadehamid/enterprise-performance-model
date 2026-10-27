@@ -60,7 +60,10 @@ class Release(unittest.TestCase):
         self.assertEqual({(str(r.a), str(r.b)) for r in rows},
                          {(party + "rightangle", system + "rightangle"), (party + "kittyhawk", system + "kittyhawk"),
                           (party + "profisee", system + "profisee"), (party + "terminal-margin-ranking-system", system + "tmr"),
-                          (party + "sap-s4hana", system + "sap")})  # EPM-DEC-001-0099
+                          (party + "sap-s4hana", system + "sap")}  # EPM-DEC-001-0099
+                         # MPC-P11's seven systems, in both modules since system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104).
+                         | {(party + s, system + s) for s in ("sap-mdg", "salesforce", "magic", "bridger-insight",
+                                                              "information-steward", "sirion", "customer-portal")})
         self.assertEqual({str(r.word) for r in rows if str(r.a) == party + "terminal-margin-ranking-system"}, {"TMR"})
 
     def test_an_orphan_fails_q2(self):
