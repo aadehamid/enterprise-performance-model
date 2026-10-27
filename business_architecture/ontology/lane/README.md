@@ -1,6 +1,6 @@
 # lane: the office lanes
 
-The `lane` module holds the four office lanes of the trading organization (`../../business_process/office_lanes.json`) as a SKOS code list, and places each process the process map gives an `officeLane` (competency question 9). Its namespace is `https://w3id.org/lsc/ontology/modules/lane/`; its build reads `core` 2.3.0 for process IRIs (2.2.0 until 2026-10-23, EPM-DEC-001-0089; 2.1.0 until 2026-10-22, EPM-DEC-001-0076); its released 1.0.0 package requires `core` 2.2.0, and 1.1.0 requires `core` 2.3.0 (EPM-DEC-001-0106). EPM-DEC-001-0056 records the design.
+The `lane` module holds the four office lanes of the trading organization (`../../business_process/office_lanes.json`) as a SKOS code list, and places each process the process map gives an `officeLane` (competency question 9). Its namespace is `https://w3id.org/lsc/ontology/modules/lane/`; its build reads `core` 2.4.0 for process IRIs (since 2026-10-26, EPM-DEC-001-0105; 2.3.0 from 2026-10-23; 2.2.0 until 2026-10-23, EPM-DEC-001-0089; 2.1.0 until 2026-10-22, EPM-DEC-001-0076); its released 1.0.0 package requires `core` 2.2.0, and 1.1.0 requires `core` 2.3.0 (EPM-DEC-001-0106). EPM-DEC-001-0056 records the design.
 
 | File | What |
 |---|---|

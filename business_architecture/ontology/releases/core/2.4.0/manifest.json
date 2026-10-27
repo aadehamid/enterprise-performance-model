@@ -1,0 +1,30 @@
+{
+  "module": "core",
+  "version": "2.4.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/core",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/core/2.4.0",
+  "built_from": {
+    "core 2.3.0 manifest": "276906e5bf8936c4c59c5d6fca33f1c12f5607ae1938f94729cdaa6577c13de7",
+    "process map": "business_architecture/business_process/downstream_process_map.json at 4906666a06507d9c7d996d83df7b24ab824038d7"
+  },
+  "decisions": [
+    "EPM-DEC-001-0028",
+    "EPM-DEC-001-0098",
+    "EPM-DEC-001-0105"
+  ],
+  "approval": {
+    "who": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)",
+    "file": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md",
+    "words": "Yes, delegate as described (Recommended)"
+  },
+  "files": {
+    "CHANGELOG.md": "2dbac724c6da2432d68d86d75ed4fe460de9a8ff5ff883b2d6448c486120c52f",
+    "canonical-facts.csv": "6c8a68e3c23ab8cd6e45b624fe0352f0e643a27ad1a5a4b0d850acba8cf87a7a",
+    "catalog.ttl": "3295717f751ad4b9cf316e90dc629f7cfeb6b5ed54521f495cfc7af0ac9f0bcd",
+    "core.jsonld": "462539dc87287ca95a52f07f266901d47a068cb3b1c696d0b996fe5871d1f85f",
+    "core.ttl": "6b0365456230d7ed1b4c17f27bffb26d7fd5b9e159f06809c814fbbe7b8da12a",
+    "counts.json": "08c50d5c2d170196c8d92a7f44decf1cf681e07f9356b1fec3128ca6774b9345",
+    "shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680"
+  }
+}
