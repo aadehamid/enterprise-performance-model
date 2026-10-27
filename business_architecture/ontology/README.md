@@ -131,7 +131,7 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 
 ## Status
 
-**The ontology is closed** (EPM-DEC-001-0096, 2026-10-23). *2026-10-26:* **the ontology is done** (EPM-DEC-001-0107): MPC-P11 and MPC-P12 are accepted and released, the deferred qSKOS fixes are released, and what stays open is the business's points in `business-closeout.md` and the items parked for other reasons. Every item that
+**The ontology is closed** (EPM-DEC-001-0096, 2026-10-23). *2026-10-26:* **the ontology is done** (EPM-DEC-001-0107): MPC-P11 and MPC-P12 are accepted and released, the deferred qSKOS fixes are released, and what stays open is the business's points in `business-closeout.md`, the next releases' small fixes, the items parked for other reasons, and usage and integration, a separate, later task. Every item that
 waited on the decision owner is answered (EPM-DEC-001-0086 to 0095), the six
 close-out releases are built and tagged, the projection's list of release
 gaps is empty, and the competency regression is green. The worklog's plan
