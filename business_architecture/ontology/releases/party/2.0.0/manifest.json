@@ -31,7 +31,7 @@
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md"
   },
   "files": {
-    "CHANGELOG.md": "71c70db28daf5ca498052232c4113f99060176b49fb702b84b9ca1430b4dc149",
+    "CHANGELOG.md": "147c398c1553585172becbd0dee59be1109df48dcbbf7e51c31b891210cbe418",
     "catalog.ttl": "43f1e139bf196ecc2320e71147236322fdf6cf14aab1b00f937e37719fa52305",
     "party.jsonld": "db3be78e68faeee0db3380572ae182cccbfbfb6d72c738a9f1b1bdf10ef37e04",
     "party.ttl": "8d36de6b7b7ec1a1cf6116ad14e42fa5c8c1651004c9c4bc708994b3c256b464",

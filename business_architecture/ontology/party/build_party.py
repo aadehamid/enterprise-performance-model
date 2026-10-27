@@ -274,7 +274,7 @@ def load_systems(codes):
     problems += [f"source {r['system']}: not a listed system" for r in sources if r["system"] not in slugs]
     problems += [f"source {r['system']}: kind {r['kind']!r} is not a sourcing kind" for r in sources if ("sourcing-kind", r["kind"]) not in values]
     problems += [f"source {r['system']}: {r['concept']} is not a code-list value" for r in sources if tuple(r["concept"].split("/", 1)) not in values]
-    problems += [f"source {r['system']}: {r['concept']} is not a party role, customer class, line of business or party type"
+    problems += [f"source {r['system']}: {r['concept']} is not a party role, customer class, line of business, party type or site type"
                  for r in sources if r["concept"].split("/", 1)[0] not in SOURCED_SCHEMES]
     problems += [f"flow {r['from']} -> {r['to']}: carries nothing" for r in flows if not r["carries"].strip()]
     problems += [f"source {r['system']}: no note" for r in sources if not r["note"].strip()]
