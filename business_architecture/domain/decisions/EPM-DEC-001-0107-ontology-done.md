@@ -1,4 +1,4 @@
-# EPM-DEC-001-0107: The ontology is done: every question that waited on the build is closed, and the open points are the business's
+# EPM-DEC-001-0107: The ontology is done: the four kinds of question the work queue left open are settled, and the open points are the business's
 
 | Field | Value |
 |---|---|
@@ -25,7 +25,7 @@ EPM-DEC-001-0096 closed the ontology on 2026-10-23. The work queue that followed
 
 **What stays open.** None of it is build work:
 
-- **With the business:** points 1 to 16 of `business-closeout.md`. Each names who must answer it and the record that takes the answer. The decision owner may work through some of them first, to narrow them down (block 11). Each answer is an amendment to the named record and goes into that module's next minor release.
+- **With the business:** points 1 to 16 of `business-closeout.md`. The package's table gives, for each point, who is asked to answer it and the record and module that take the answer. The decision owner may work through some of them first, to narrow them down (block 11). Each answer is an amendment to the named record and goes into that module's next minor release.
 - **In the next release of a module:**
   - `market-data` rewords the one shape message that still holds an apostrophe (EPM-DEC-001-0106).
   - `integration` and `ref-mpc` move their pins to the current releases. Today they require the releases they were built against.
