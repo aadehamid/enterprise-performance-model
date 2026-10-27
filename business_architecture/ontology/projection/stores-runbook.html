@@ -173,12 +173,12 @@ td:first-child { font-weight: 600; }
   </div>
   <a class="btn" href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">Open the Eraser diagram</a>
 </div>
-<p class="notice">A snapshot: the figures are from the runs of 2026-10-26, on the releases of that day. Each new release changes them.</p>
+<p class="notice">A snapshot: the figures are from the runs of 2026-10-27, on the releases of 2026-10-26 (core 2.4.0, system 1.4.0, party 1.4.0, lane 1.1.0, organization 2.1.0 and value-stream 1.2.0). Each new release changes them.</p>
 
 <div class="stats">
   <div class="stat"><div class="k">Stores</div><div class="v">6</div><div class="d">3 on this Mac, 3 in the cloud</div></div>
-  <div class="stat"><div class="k">Released packages</div><div class="v">36</div><div class="d">each one tagged in git</div></div>
-  <div class="stat"><div class="k">Graph in each Neo4j</div><div class="v">4,137 nodes</div><div class="d">0 SHACL violations</div></div>
+  <div class="stat"><div class="k">Released packages</div><div class="v">42</div><div class="d">each one tagged in git</div></div>
+  <div class="stat"><div class="k">Graph in each Neo4j</div><div class="v">4,146 nodes</div><div class="d">0 SHACL violations</div></div>
   <div class="stat"><div class="k">Reload</div><div class="v">4 steps</div><div class="d">the driver takes about 10 min</div></div>
 </div>
 
@@ -203,7 +203,7 @@ td:first-child { font-weight: 600; }
   <rect class="node" x="190" y="134" width="146" height="64" rx="8"/>
   <text class="t" x="202" y="158">Builders</text><text class="s" x="202" y="176">build each module;</text><text class="m" x="202" y="190">check.sh gates it</text>
   <rect class="node key" x="356" y="134" width="150" height="64" rx="8"/>
-  <text class="t" x="368" y="158">Released packages</text><text class="s" x="368" y="176">36 in Turtle and</text><text class="s" x="368" y="190">JSON-LD, each tagged</text>
+  <text class="t" x="368" y="158">Released packages</text><text class="s" x="368" y="176">42 in Turtle and</text><text class="s" x="368" y="190">JSON-LD, each tagged</text>
 
   <rect class="node" x="540" y="50" width="150" height="64" rx="8"/>
   <text class="t" x="552" y="74">Pipeline</text><text class="m" x="552" y="92">pipeline.py,</text><text class="m" x="552" y="106">run_local.sh</text>
@@ -266,7 +266,7 @@ td:first-child { font-weight: 600; }
   
   <rect class="node" x="24" y="114" width="312" height="52" rx="8"/><text class="t" x="34" y="134">Builders</text><text class="s" x="34" y="150">build each module; check.sh gates it</text>
   
-  <rect class="node key" x="24" y="184" width="312" height="52" rx="8"/><text class="t" x="34" y="204">Released packages</text><text class="s" x="34" y="220">36 in Turtle and JSON-LD, each tagged</text>
+  <rect class="node key" x="24" y="184" width="312" height="52" rx="8"/><text class="t" x="34" y="204">Released packages</text><text class="s" x="34" y="220">42 in Turtle and JSON-LD, each tagged</text>
   
   <rect class="node" x="24" y="270" width="150" height="66" rx="8"/><text class="t" x="34" y="290">Pipeline</text><text class="m" x="34" y="306">pipeline.py,</text><text class="m" x="34" y="320">run_local.sh</text>
   
@@ -344,8 +344,8 @@ td:first-child { font-weight: 600; }
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Store</th><th>What it holds</th><th>Where</th><th>Login</th></tr></thead>
 <tbody>
-<tr><td>Local Neo4j, pipeline</td><td data-k="Holds">The projection that <code>pipeline.py</code> builds: 4,137 nodes, 21,295 relationships</td><td data-k="Where">Container <code>epm-lpg</code>, Bolt <code>localhost:17687</code>, browser <code>http://localhost:17474</code></td><td data-k="Login"><code>~/epm-lpg/run.env</code></td></tr>
-<tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step: 4,137 nodes, 21,666 relationships</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> after a full run, <code>~/lpg-out/epm/neo4j-run/run.env</code> after <code>--skip rebuild</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
+<tr><td>Local Neo4j, pipeline</td><td data-k="Holds">The projection that <code>pipeline.py</code> builds: 4,146 nodes, 21,503 relationships</td><td data-k="Where">Container <code>epm-lpg</code>, Bolt <code>localhost:17687</code>, browser <code>http://localhost:17474</code></td><td data-k="Login"><code>~/epm-lpg/run.env</code></td></tr>
+<tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step: 4,146 nodes, 21,874 relationships</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> after a full run, <code>~/lpg-out/epm/neo4j-run/run.env</code> after <code>--skip rebuild</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
 <tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the driver's graph: the driver's copy step checks that both give the same graph hash</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
 <tr><td>Databricks, <code>epm_triples</code></td><td data-k="Holds">The release triples as a Delta table</td><td data-k="Where"><code>workspace.epm_ontology.epm_triples</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code></td></tr>
 <tr><td>Databricks, <code>idp_sbx</code></td><td data-k="Holds">The demo's replica, silver and gold tables, four metric views and two Genie agents</td><td data-k="Where">Catalog <code>idp_sbx</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code> or the demo's <code>.env</code></td></tr>
@@ -393,7 +393,7 @@ done
 [ "$rc" -eq 0 ]</code></pre>
 <p>The demo in Databricks, every table and metric view with its row count:</p>
 <pre><code>cd "$DEMO" && uv run python -m pricing_demo.databricks counts</code></pre>
-<p>AuraDB: open the instance in the <a href="https://console.neo4j.io/">Aura console</a> and run the same two queries as for the driver's Neo4j. On 2026-10-26 they gave the same figures: 4,137 nodes and 21,666 relationships. The queries count only <code>:Resource</code> nodes, the projection itself; each store also holds a few nodes of its own (module tags and, locally, n10s settings), so a count of every node is a little higher.</p>
+<p>AuraDB: open the instance in the <a href="https://console.neo4j.io/">Aura console</a> and run the same two queries as for the driver's Neo4j. On 2026-10-27 they gave the same figures: 4,146 nodes and 21,874 relationships. The queries count only <code>:Resource</code> nodes, the projection itself; each store also holds a few nodes of its own (module tags and, locally, n10s settings), so a count of every node is a little higher.</p>
 
 <h2 id="stop">Stop, start and reboot</h2>
 <p class="lead">Stopping keeps the data; purging removes it. A reload brings a purged store back from the repository.</p>
