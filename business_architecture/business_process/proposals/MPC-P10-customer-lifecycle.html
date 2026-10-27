@@ -138,7 +138,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
   <span class="name">Proposal MPC-P10: the customer lifecycle in the process map</span>
   <span class="scope">Process-map proposal</span>
   <nav aria-label="Documents">
-    <a href="../../ontology/ontology-guide.html">Ontology guide</a>
+    <a href="../../ontology/epm-ontology-guide.html">Ontology guide</a>
     <a href="../../domain/decisions/decisions.html">Decisions</a>
     <a href="#top">Top</a>
   </nav>
@@ -182,7 +182,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <ul><li><strong>Gap.</strong> <code>data_product_portfolio.json</code> has no data product for the customer master. The decision owner's inputs name one: a data products platform that serves the customer master, sales, credit exposure and delinquency, fed by the customer data store.</li><li><strong>Proposal.</strong> Add a "Customer Master" data product to the Marketing &amp; Sales line (<code>dpl-marketing-sales</code>), produced by CM 1.3.7.1.1 Maintain Customer and Commercial Account Master Data (the process map's name for it is Maintain Customer Master Data). The data-product module then links it like the others (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0053">EPM-DEC-001-0053</a>).</li><li><em>2026-10-23:</em> <strong>Applied.</strong> The decision owner accepted it (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0087">EPM-DEC-001-0087</a>); <code>data-product</code> 1.1.0 carries <code>dp-customer-master</code> and its producer link (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0091">EPM-DEC-001-0091</a>).</li></ul>
 <h2 id="how-the-ontology-takes-it">How the ontology takes it<a class="hl" href="#how-the-ontology-takes-it" aria-label="Link to this section">#</a></h2>
 <ul><li>An accepted new process gets an ID, a slug and a definition (Steps 2 and 3), and lands in the next <code>core</code> release, which needs the decision owner's approval. <em>2026-10-22:</em> under the module policy (worklog, "Who approves a release"; <a href="../../domain/decisions/decisions.html#EPM-DEC-001-0037">EPM-DEC-001-0037</a>), a minor or patch release is the module owner's and a major the decision owner's; Claude asked the decision owner before every release issued on 2026-10-22 (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0074">EPM-DEC-001-0074</a>, and 0076 to 0080).</li><li>The value-stream link and the data product are rebuilt by their modules' builds.</li><li>The lifecycle's links in the <code>party</code> module then gain the new process.</li></ul>
-      <p class="end">Generated from <code>MPC-P10-customer-lifecycle.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../../ontology/ontology-guide.html">ontology guide</a>.</p>
+      <p class="end">Generated from <code>MPC-P10-customer-lifecycle.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../../ontology/epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>
 </div>

@@ -37,7 +37,7 @@ TEMPLATE = os.path.join(ROOT, "scripts", "docs_template.html")
 GENERATOR = "scripts/build_docs_html.py"
 MARK = f'<meta name="generator" content="{GENERATOR}">'
 
-GUIDE = "business_architecture/ontology/ontology-guide.html"
+GUIDE = "business_architecture/ontology/epm-ontology-guide.html"
 ONT = "business_architecture/ontology"
 DECISIONS_DIR = "business_architecture/domain/decisions"
 DECISIONS_PAGE = f"{DECISIONS_DIR}/decisions.html"

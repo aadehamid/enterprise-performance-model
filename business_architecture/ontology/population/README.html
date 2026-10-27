@@ -138,7 +138,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
   <span class="name">population: what a measure counts</span>
   <span class="scope">Module</span>
   <nav aria-label="Documents">
-    <a href="../ontology-guide.html">Ontology guide</a>
+    <a href="../epm-ontology-guide.html">Ontology guide</a>
     <a href="../../domain/decisions/decisions.html">Decisions</a>
     <a href="#top">Top</a>
   </nav>
@@ -164,7 +164,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <p>What each measure includes and excludes, in business words, where its public source states it (competency question 28). The statements hang on the kpi module's measure IRIs, so the released kpi package stays as it is. <em>2026-10-22:</em> <code>kpi</code> 1.1.0 carries these files in its package (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0079">EPM-DEC-001-0079</a>). <a href="../../domain/decisions/decisions.html#EPM-DEC-001-0062">EPM-DEC-001-0062</a> records the choice.</p>
 <div class="tblwrap"><table><thead><tr><th>File</th><th>What</th></tr></thead><tbody><tr><td><code>population.csv</code></td><td>Eight MPC-defined measures, each with what it includes, what it excludes where MPC says, and the evidence row</td></tr><tr><td><code>vocabulary.ttl</code></td><td><code>pop:includes</code>, <code>pop:excludes</code> and <code>pop:populationEvidence</code></td></tr><tr><td><code>build_population.py</code>, <code>population.ttl</code></td><td>The build. <code>--verify</code> fails unless <code>population.ttl</code> equals a fresh build. <code>scripts/check.sh</code> runs it</td></tr><tr><td><code>test_population.py</code></td><td>Tests: the build is current, the counts, the eight decided measures and every statement pinned to MPC's wording, and no other measure carries a population</td></tr></tbody></table></div>
 <p>The other 33 measures have no population here, because no source states one: 31 from the planning team's list, the R&amp;M Margin Indicator and turnaround lost margin. None is written in its place. Crack spreads is on the planning team's list too, but MPC states what its benchmark series exclude.</p>
-      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../ontology-guide.html">ontology guide</a>.</p>
+      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>
 </div>
