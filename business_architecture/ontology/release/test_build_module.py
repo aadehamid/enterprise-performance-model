@@ -280,7 +280,9 @@ class EarlierReleases(unittest.TestCase):
         try:
             bm.MODULES["kpi"].update(version="1.1.0", pins={"core": "2.2.0"})
             bm.MODULES["data-product"].update(version="1.1.0")
-            self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.0.0", "kpi": "1.1.0"})
+            # value-stream 1.2.0 pins data-product 1.2.0 and kpi 1.2.0 (EPM-DEC-001-0106), so the edited table changes nothing.
+            self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0",
+                                                                   "system": "1.2.0"})
             # market-data 1.1.0 requires kpi 1.2.0 (EPM-DEC-001-0100); its 1.0.0 manifest still names kpi 1.0.1.
             self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.2.0", "core": "2.3.0"})
             self.assertEqual(bm.released_requires("market-data", "1.0.0"), {"kpi": "1.0.1"})

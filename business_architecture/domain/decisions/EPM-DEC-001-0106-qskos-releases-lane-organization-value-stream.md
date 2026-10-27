@@ -5,7 +5,7 @@
 | Status | Decided (delegated under EPM-DEC-001-0028, amendment of 2026-10-25, evening; Claude approves the queue's minor releases) |
 | Date | 2026-10-26 |
 | Questions | EPM-DEC-001-0098, item 7: "Core, lane, organization and value-stream carry theirs in their next releases, which no queue item plans yet." Which releases carry lane's, organization's and value-stream's fixes, and what else do they carry? |
-| Source | Claude Code session of 2026-10-26 (night run); `answers-2026-10-26-night.md` in the handoff folder (the decision owner approved the night's brief, which names these releases) |
+| Source | Claude Code session of 2026-10-26 (night run); the decision owner approved the night's brief, which names these releases |
 
 ## Context
 
@@ -17,7 +17,7 @@ The `ontology` skill's SHACL rule 19 (personal-agent-skills #72) says a shape's 
 
 1. **Three minor releases**, issued 2026-10-26 and approved by Claude under the delegation: lane 1.1.0, organization 2.1.0 and value-stream 1.2.0. None removes or renames an IRI or changes a definition, so none is a major.
 2. **Top concepts both ways.** Each member of the three schemes states `skos:topConceptOf` its scheme, and the scheme states `skos:hasTopConcept` for it: the 4 office lanes, the 4 RACI levels and the 3 measure relationships, 11 members in all. SKOS defines the two properties as inverses, so the meaning does not change.
-3. **Lane's shape message is reworded.** "A process's lane is one of the four office lanes." becomes "The lane of a process is one of the four office lanes." The organization and value-stream shapes hold no message with an apostrophe. Party's messages are reworded in party 1.4.0, which the MPC-P11 work releases under EPM-DEC-001-0104.
+3. **Lane's shape message is reworded.** "A process's lane is one of the four office lanes." becomes "The lane of a process is one of the four office lanes." The organization and value-stream shapes hold no message with an apostrophe. Party's messages are reworded in party 1.4.0, which the MPC-P11 work releases under `EPM-DEC-001-0104` (in its own pull request).
 4. **Each release requires the current releases.** Lane 1.1.0 requires core 2.3.0 (1.0.0 required 2.2.0), which its build already reads. Organization 2.1.0 requires core 2.3.0 (2.0.0 required 2.1.0). Value-stream 1.2.0 requires core 2.3.0, data-product 1.2.0 and kpi 1.2.0 (1.1.0 required data-product 1.0.0 and kpi 1.1.0). This follows value-stream 1.1.0, which required "the current releases" (EPM-DEC-001-0090). The released packages that pin the older versions stay as released: ref-mpc 1.2.0 still requires organization 2.0.0, and integration 2.3.0 still requires lane 1.0.0, organization 2.0.0 and value-stream 1.1.0. Their next releases can move the pins.
 5. **The projection loads the new releases.** `projection/pipeline.py` projects every module at its newest release (EPM-DEC-001-0036, amendment of 2026-10-22), so it now loads these three.
 
@@ -42,7 +42,7 @@ The `scheme` findings that item 5 named are gone, and the `parent` findings go w
 
 ## The decision owner's recorded words
 
-The delegation: "Yes, delegate as described (Recommended)" (`answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening). The night's brief, which names "qSKOS releases for core, lane, organization, value-stream", was approved with "Approve (Recommended)" on 2026-10-26 (the handoff folder's `answers-2026-10-26-night.md`, answer 5).
+The delegation: "Yes, delegate as described (Recommended)" (`answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening). That delegation lets Claude approve the queue's minor releases, so these three need no further words from the decision owner. On 2026-10-26 the decision owner also approved the night's brief, which names qSKOS releases for these modules.
 
 ## Evidence
 
