@@ -1,11 +1,13 @@
 # The customer systems, data flows and attributes (EPM-DEC-001-0069). Built by build_party.py
-# from systems.csv, data-flows.csv, customer-sources.csv and attributes.csv. Do not edit by hand.
+# from systems.csv, data-flows.csv, customer-sources.csv, attributes.csv and change-notes.csv. Do not edit by hand.
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix src: <https://w3id.org/lsc/ontology/source/> .
 @prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/create/mdg-sap-customer-id> a party:SystemAttribute ;
     skos:prefLabel "MDG SAP Customer ID"@en ;
@@ -1136,6 +1138,13 @@
     party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
     party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
 
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/financial-statement> a party:SystemAttribute ;
+    skos:prefLabel "Financial Statement"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
 <https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/financial-statement-request-frequency> a party:SystemAttribute ;
     skos:prefLabel "Financial Statement Request Frequency"@en ;
     party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
@@ -1711,15 +1720,35 @@
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/customer-portal> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
 
+<https://w3id.org/lsc/ontology/modules/party/flow/dealer-master--credit-card-summary> a party:DataFlow ;
+    party:carries "Retail payment and credit card facts."@en ;
+    party:evidenceInput "11" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/credit-card-summary> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/dealer-master--prm> a party:DataFlow ;
+    party:carries "Station locations with their channel of trade, such as MST or DTW."@en ;
+    party:evidenceInput "10, 11" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/prm> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/dealer-master--rightangle> a party:DataFlow ;
+    party:carries "Branded ship-to stations, which fill RightAngle's locations under each business associate."@en ;
+    party:evidenceInput "10, 11" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
 <https://w3id.org/lsc/ontology/modules/party/flow/dealer-master--salesforce> a party:DataFlow ;
-    party:carries "Customer data; the inputs do not say which."@en ;
-    party:evidenceInput "3" ;
+    skos:changeNote "2026-10-27: what it carries is known: mastered station and dealer updates (EPM-DEC-001-0108)."@en ;
+    party:carries "Mastered station and dealer updates."@en ;
+    party:evidenceInput "3, 10, 11" ;
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
 
 <https://w3id.org/lsc/ontology/modules/party/flow/dealer-master--sap-mdg> a party:DataFlow ;
-    party:carries "Jobbers, which start in Dealer Master."@en ;
-    party:evidenceInput "2, 3, 6" ;
+    skos:changeNote "2026-10-27: it carries ship-to stations, not jobbers, which do not start in Dealer Master (EPM-DEC-001-0108)."@en ;
+    party:carries "Ship-to stations, which SAP MDG numbers in the 20000 series."@en ;
+    party:evidenceInput "2, 3, 6, 8, 10, 11" ;
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
 
@@ -1753,6 +1782,12 @@
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/federal-health> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
 
+<https://w3id.org/lsc/ontology/modules/party/flow/fuelfacs--tasdm> a party:DataFlow ;
+    party:carries "Terminal suppliers, products and carriers."@en ;
+    party:evidenceInput "8" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/tasdm> .
+
 <https://w3id.org/lsc/ontology/modules/party/flow/gas-buddy--profisee> a party:DataFlow ;
     party:carries "Customer data."@en ;
     party:evidenceInput "1" ;
@@ -1776,6 +1811,12 @@
     party:evidenceInput "1" ;
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/kittyhawk--rcms> a party:DataFlow ;
+    party:carries "The customer, for the renewable compliance records of its movements."@en ;
+    party:evidenceInput "8" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/rcms> .
 
 <https://w3id.org/lsc/ontology/modules/party/flow/magic--salesforce> a party:DataFlow ;
     party:carries "The SAP customer number and the territory manager, and the daily sync of name, address, FEIN, status and credit monitor; the prospect becomes a customer account."@en ;
@@ -1807,6 +1848,18 @@
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/allocation-manager> .
 
+<https://w3id.org/lsc/ontology/modules/party/flow/rightangle--dealer-master> a party:DataFlow ;
+    party:carries "Sold-to customer and business associate master data, replicated into Dealer Master."@en ;
+    party:evidenceInput "10, 11" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/rightangle--gravitate> a party:DataFlow ;
+    party:carries "The customer, for the gathering and processing portal."@en ;
+    party:evidenceInput "8" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/gravitate> .
+
 <https://w3id.org/lsc/ontology/modules/party/flow/rightangle--kittyhawk> a party:DataFlow ;
     party:carries "The new customer, for transport and logistics."@en ;
     party:evidenceInput "2, 3, 6" ;
@@ -1819,9 +1872,22 @@
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
 
+<https://w3id.org/lsc/ontology/modules/party/flow/rightangle--terminal-download> a party:DataFlow ;
+    party:carries "The customer, for loading at terminals."@en ;
+    party:evidenceInput "8" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-download> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/rightangle--tfr> a party:DataFlow ;
+    party:carries "The customer, for freight calculation."@en ;
+    party:evidenceInput "8" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/tfr> .
+
 <https://w3id.org/lsc/ontology/modules/party/flow/salesforce--dealer-master> a party:DataFlow ;
-    party:carries "Customer data; the inputs do not say which."@en ;
-    party:evidenceInput "3" ;
+    skos:changeNote "2026-10-27: what it carries is known: the approved operations change form (EPM-DEC-001-0108)."@en ;
+    party:carries "The approved operations change form for a new station, a change of owner, or a change of address or name."@en ;
+    party:evidenceInput "3, 10, 11" ;
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
 
@@ -1832,8 +1898,9 @@
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
 
 <https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--dealer-master> a party:DataFlow ;
-    party:carries "Direct dealers, which start in SAP MDG."@en ;
-    party:evidenceInput "6" ;
+    skos:changeNote "2026-10-27: it carries the replicated six-digit sold-to customers, not direct dealers that start in SAP MDG (EPM-DEC-001-0108)."@en ;
+    party:carries "The six-digit sold-to customers, replicated into Dealer Master so it can link each one to its stations."@en ;
+    party:evidenceInput "6, 9, 10, 11" ;
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
 
@@ -1856,8 +1923,9 @@
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/quorum> .
 
 <https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--rightangle> a party:DataFlow ;
-    party:carries "Basic customer data, with the tax ID mapped to FEIN."@en ;
-    party:evidenceInput "2, 3, 6" ;
+    skos:changeNote "2026-10-27: it also carries the ship-to customer records in the 20000 series (EPM-DEC-001-0108)."@en ;
+    party:carries "Basic customer data, with the tax ID mapped to FEIN, and the ship-to customer records in the 20000 series."@en ;
+    party:evidenceInput "2, 3, 6, 9, 11" ;
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
 
@@ -1885,6 +1953,30 @@
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-download> .
 
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-s4hana--bridger-insight> a party:DataFlow ;
+    party:carries "The customer, for the compliance check against government watchlists."@en ;
+    party:evidenceInput "8" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/bridger-insight> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/station-pos--dealer-master> a party:DataFlow ;
+    party:carries "Credit card sales, point-of-sale transactions, site asset data and the stations' fuel volumes."@en ;
+    party:evidenceInput "10, 11" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/station-pos> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/station-pos--street-price-aggregator> a party:DataFlow ;
+    party:carries "The historical pump prices from the point-of-sale transactions."@en ;
+    party:evidenceInput "11" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/station-pos> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/street-price-aggregator> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/street-price-aggregator--prm> a party:DataFlow ;
+    party:carries "Past street prices, passed through."@en ;
+    party:evidenceInput "11" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/street-price-aggregator> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/prm> .
+
 <https://w3id.org/lsc/ontology/modules/party/flow/tax-image-silo--rightangle> a party:DataFlow ;
     party:carries "The customer's sales tax exemption certificates."@en ;
     party:evidenceInput "3" ;
@@ -1898,8 +1990,9 @@
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> .
 
 <https://w3id.org/lsc/ontology/modules/party/flow/terminal-upload--kittyhawk> a party:DataFlow ;
-    party:carries "Cross-reference customer ID mappings."@en ;
-    party:evidenceInput "2" ;
+    skos:changeNote "2026-10-27: it serves the new customer setup (EPM-DEC-001-0108)."@en ;
+    party:carries "Cross-reference customer ID mappings, for the new customer setup."@en ;
+    party:evidenceInput "2, 8" ;
     party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-upload> ;
     party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> .
 
@@ -1944,7 +2037,10 @@
     party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/corp-vetting> .
 
 <https://w3id.org/lsc/ontology/modules/party/sourcing/dealer-master--origin--party-role--jobber> a party:CustomerSourcing ;
+    dcterms:isReplacedBy <https://w3id.org/lsc/ontology/modules/party/sourcing/dealer-master--origin--site-type--station> ;
     rdfs:comment "Jobbers start in Dealer Master and go to SAP MDG."@en ;
+    owl:deprecated true ;
+    skos:changeNote "2026-10-27: deprecated. Jobbers do not start in Dealer Master; ship-to stations do (EPM-DEC-001-0108)."@en ;
     party:evidenceInput "6" ;
     party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/party-role/jobber> ;
     party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> ;
@@ -2049,8 +2145,9 @@
     party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
 
 <https://w3id.org/lsc/ontology/modules/party/sourcing/sap-mdg--origin--customer-class--direct-dealer> a party:CustomerSourcing ;
-    rdfs:comment "Direct dealers start in SAP MDG and go to Dealer Master."@en ;
-    party:evidenceInput "6" ;
+    rdfs:comment "Sold-tos, among them direct dealers, are mastered in SAP MDG and RightAngle and replicated to Dealer Master."@en ;
+    skos:changeNote "2026-10-27: reworded. The sold-tos, direct dealers among them, are mastered in SAP MDG and RightAngle and replicated to Dealer Master (EPM-DEC-001-0108)."@en ;
+    party:evidenceInput "6, 9, 10, 11" ;
     party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/direct-dealer> ;
     party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> ;
     party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
@@ -2083,17 +2180,25 @@
     party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
     party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-margin-ranking-system> .
 
-<https://w3id.org/lsc/ontology/modules/party/system/bridger-insight> a skos:Concept,
+<https://w3id.org/lsc/ontology/modules/party/sourcing/dealer-master--origin--site-type--station> a party:CustomerSourcing ;
+    rdfs:comment "Ship-to stations start in Dealer Master and go to SAP MDG, which numbers them in the 20000 series."@en ;
+    party:evidenceInput "8, 9, 10, 11" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/site-type/station> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/enterprise-data-lake> a skos:Concept,
         party:CustomerSystem ;
-    dcterms:source src:vendor-lexisnexis-bridger-insight-xg ;
-    skos:altLabel "Bridger"@en ;
-    skos:definition "LexisNexis Risk Solutions' compliance screening software, Bridger Insight XG. By the vendor's description, it automates account screening for regulatory compliance and reduces false positives."@en ;
-    skos:exactMatch system:bridger-insight ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:altLabel "Data Lake"@en ;
+    skos:definition "The enterprise data lake and its analytics consumers, the internal reporting store."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:exactMatch system:enterprise-data-lake ;
     skos:inScheme party:customer-systems ;
-    skos:notation "bridger-insight" ;
-    skos:prefLabel "Bridger Insight"@en ;
+    skos:notation "enterprise-data-lake" ;
+    skos:prefLabel "Enterprise Data Lake"@en ;
     skos:topConceptOf party:customer-systems ;
-    party:customerRole "The compliance check of a customer against government watchlists."@en ;
+    party:customerRole "The enterprise data lake and its analytics consumers. Whether Dealer Master's fuel volumes reach it is not confirmed."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
 <https://w3id.org/lsc/ontology/modules/party/system/information-steward> a skos:Concept,
@@ -2108,6 +2213,32 @@
     party:customerRole "Monitors customer data quality."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
 
+<https://w3id.org/lsc/ontology/modules/party/system/mcs> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A source system of the customer logical model, which provides one fact table, Mcs_Cogeneral_Fact."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:exactMatch system:mcs ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "mcs" ;
+    skos:prefLabel "MCS"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A source system of the customer logical model, which provides one fact table, Mcs_Cogeneral_Fact."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/msmis> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A system of master contact details and point-of-contact profiles for customers in marine terminal and wholesale environments."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:exactMatch system:msmis ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "msmis" ;
+    skos:prefLabel "MSMIS"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "Holds the master contact details and point-of-contact profiles of customers in marine terminal and wholesale environments."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
 <https://w3id.org/lsc/ontology/modules/party/system/onesource> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-answers-2026-10-24-systems,
@@ -2120,31 +2251,18 @@
     party:customerRole "Calculates tax and supports tax compliance and reporting, for RightAngle and SAP S/4HANA invoices."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
-<https://w3id.org/lsc/ontology/modules/party/system/rcms> a skos:Concept,
+<https://w3id.org/lsc/ontology/modules/party/system/terminaling-throughputs> a skos:Concept,
         party:CustomerSystem ;
-    dcterms:source src:decision-owner-customer-inputs ;
-    skos:altLabel "Renewable Compliance Management System"@en ;
-    skos:definition "The Renewable Compliance Management System: it holds a reference ID tied to a fuel movement or a RIN trade."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A system of the third-party oil companies, traders and joint-venture partners that use the company's leased terminal storage and handling."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:exactMatch system:terminaling-throughputs ;
     skos:inScheme party:customer-systems ;
-    skos:notation "rcms" ;
-    skos:prefLabel "RCMS"@en ;
+    skos:notation "terminaling-throughputs" ;
+    skos:prefLabel "Terminaling Throughputs"@en ;
     skos:topConceptOf party:customer-systems ;
-    party:customerRole "The renewable compliance system: a reference ID tied to a fuel movement or a RIN trade."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
-<https://w3id.org/lsc/ontology/modules/party/system/tasdm> a skos:Concept,
-        party:CustomerSystem ;
-    dcterms:source src:decision-owner-customer-inputs ;
-    skos:altLabel "Terminal Automation System Data Manager"@en ;
-    skos:definition "The Terminal Automation System Data Manager: it creates the customers and destinations of MPLX's third-party suppliers in the terminal automation system."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "tasdm" ;
-    skos:prefLabel "TASDM"@en ;
-    skos:topConceptOf party:customer-systems ;
-    party:customerRole "Creates the customers and destinations of MPLX's third-party suppliers in the terminal automation system."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+    party:customerRole "Holds the third-party oil companies, traders and joint-venture partners that use the company's leased terminal storage and handling."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
 
 <https://w3id.org/lsc/ontology/modules/party/system/xref> a skos:Concept,
         party:CustomerSystem ;
@@ -2219,6 +2337,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
 <https://w3id.org/lsc/ontology/modules/party/system/brand-credit-card-system> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
+    skos:altLabel "Brand Credit Card Master database"@en ;
     skos:definition "A system in the customer landscape that is a source of dealers."@en ;
     skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
@@ -2331,15 +2450,17 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
 
 <https://w3id.org/lsc/ontology/modules/party/system/tax-image-silo> a skos:Concept,
         party:CustomerSystem ;
-    dcterms:source src:decision-owner-customer-inputs ;
+    dcterms:source src:decision-owner-customer-inputs,
+        src:decision-owner-customer-inputs-2026-10-27 ;
     skos:altLabel "Tax"@en ;
-    skos:definition "A store of customers' state sales tax exemption certificates, which it sends to RightAngle."@en ;
+    skos:changeNote "2026-10-27: the customer supplies the certificates (EPM-DEC-001-0108)."@en ;
+    skos:definition "A store of customers' state sales tax exemption certificates, which the customers supply and which it sends to RightAngle."@en ;
     skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "tax-image-silo" ;
     skos:prefLabel "Tax Image Silo"@en ;
     skos:topConceptOf party:customer-systems ;
-    party:customerRole "Holds the customer's state sales tax exemption certificates."@en ;
+    party:customerRole "Holds the customer's state sales tax exemption certificates, which the customer supplies."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
 
@@ -2369,19 +2490,6 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
 
-<https://w3id.org/lsc/ontology/modules/party/system/tfr> a skos:Concept,
-        party:CustomerSystem ;
-    dcterms:source src:decision-owner-customer-inputs ;
-    skos:definition "A system that calculates and processes freight and sends freight data to TMIS."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "tfr" ;
-    skos:prefLabel "TFR"@en ;
-    skos:topConceptOf party:customer-systems ;
-    party:customerRole "Calculates and processes freight."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/tmis> ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
 <https://w3id.org/lsc/ontology/modules/party/system/tmt> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
@@ -2407,6 +2515,20 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     party:customerRole "Derives operational decisions for a customer, such as locks and limits."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
+<https://w3id.org/lsc/ontology/modules/party/system/bridger-insight> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:vendor-lexisnexis-bridger-insight-xg ;
+    skos:altLabel "Bridger"@en ;
+    skos:changeNote "2026-10-27: SAP MDG calls it through the interface MDG.BP.I.1001 (EPM-DEC-001-0108)."@en ;
+    skos:definition "LexisNexis Risk Solutions' compliance screening software, Bridger Insight XG. By the vendor's description, it automates account screening for regulatory compliance and reduces false positives."@en ;
+    skos:exactMatch system:bridger-insight ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "bridger-insight" ;
+    skos:prefLabel "Bridger Insight"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "The compliance check of a customer against government watchlists, which SAP MDG calls through the interface MDG.BP.I.1001."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
 <https://w3id.org/lsc/ontology/modules/party/system/corp-vetting> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
@@ -2418,6 +2540,19 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     skos:topConceptOf party:customer-systems ;
     party:customerRole "A source of partner roles: vendor, surety and customer."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/credit-card-summary> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A reporting application for retail payment and credit card facts, kept apart from Dealer Master's settlement engine so that its reports can change outside that engine's SOX controls."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:exactMatch system:credit-card-summary ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "credit-card-summary" ;
+    skos:prefLabel "Credit Card Summary"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A reporting application kept apart from Dealer Master's settlement engine: it receives the retail payment and credit card facts, outside the settlement engine's SOX controls."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
 <https://w3id.org/lsc/ontology/modules/party/system/data-products-idp> a skos:Concept,
         party:CustomerSystem ;
@@ -2432,15 +2567,17 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     party:customerRole "Data products on the customer master, sales, credit exposure and delinquency."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
-<https://w3id.org/lsc/ontology/modules/party/system/gravitate> a skos:Concept,
+<https://w3id.org/lsc/ontology/modules/party/system/rcms> a skos:Concept,
         party:CustomerSystem ;
-    dcterms:source src:vendor-gravitate ;
-    skos:definition "Gravitate's software for fuel operations. By the vendor's description, it optimizes supply, pricing, freight and dispatch in real time for fuel operators."@en ;
+    dcterms:source src:decision-owner-customer-inputs ;
+    skos:altLabel "Renewable Compliance Management System"@en ;
+    skos:definition "The Renewable Compliance Management System: it holds a reference ID tied to a fuel movement or a RIN trade."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
-    skos:notation "gravitate" ;
-    skos:prefLabel "Gravitate"@en ;
+    skos:notation "rcms" ;
+    skos:prefLabel "RCMS"@en ;
     skos:topConceptOf party:customer-systems ;
-    party:customerRole "The gathering and processing customer portal."@en ;
+    party:customerRole "The renewable compliance system: a reference ID tied to a fuel movement or a RIN trade."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
 <https://w3id.org/lsc/ontology/modules/party/system/sirion> a skos:Concept,
@@ -2467,12 +2604,41 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     party:customerRole "Records crude movement tickets."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
+<https://w3id.org/lsc/ontology/modules/party/system/station-pos> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:altLabel "Station POS"@en ;
+    skos:definition "The point-of-sale systems at the retail stations, which record credit card sales, transactions and fuel volumes and send them to Dealer Master."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:exactMatch system:station-pos ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "station-pos" ;
+    skos:prefLabel "Station point-of-sale systems"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "The point-of-sale systems at the retail stations: they send credit card sales, transactions, site asset data and fuel volumes to Dealer Master."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
+        <https://w3id.org/lsc/ontology/modules/party/system/street-price-aggregator> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tasdm> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs ;
+    skos:altLabel "Terminal Automation System Data Manager"@en ;
+    skos:definition "The Terminal Automation System Data Manager: it creates the customers and destinations of MPLX's third-party suppliers in the terminal automation system."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tasdm" ;
+    skos:prefLabel "TASDM"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "Creates the customers and destinations of MPLX's third-party suppliers in the terminal automation system."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
 <https://w3id.org/lsc/ontology/modules/party/system/terminal-margin-ranking-system> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
     skos:altLabel "TMR"@en ;
     skos:definition "A system in the customer landscape that is a source of brand and wholesale customers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16). The decision owner's customer inputs of 2026-10-27 describe TMR as the authoritative source of the parties in business transactions and relationships. Which description is right, and whether Terminal Margin Ranking System is its name, waits for its owner (EPM-DEC-001-0108)."@en ;
     skos:exactMatch system:tmr ;
     skos:inScheme party:customer-systems ;
     skos:notation "terminal-margin-ranking-system" ;
@@ -2493,19 +2659,6 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     party:customerRole "The master data repository of carrier contracts and rates."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
-<https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> a skos:Concept,
-        party:CustomerSystem ;
-    dcterms:source src:decision-owner-customer-inputs ;
-    skos:altLabel "CBS"@en ;
-    skos:definition "The enterprise-wide terminal integration and business-information system: it holds terminal data on suppliers, products and carriers, and receives customer data from Terminal download."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "fuelfacs" ;
-    skos:prefLabel "FuelFacs"@en ;
-    skos:topConceptOf party:customer-systems ;
-    party:customerRole "The enterprise-wide terminal integration and business-information system (EPM-DEC-001-0072): it holds terminal data on suppliers, products and carriers, and receives customer data from Terminal download."@en ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
-
 <https://w3id.org/lsc/ontology/modules/party/system/quorum> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-answers-2026-10-24-systems,
@@ -2520,18 +2673,70 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
-<https://w3id.org/lsc/ontology/modules/party/system/terminal-download> a skos:Concept,
+<https://w3id.org/lsc/ontology/modules/party/system/street-price-aggregator> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A third party that passes the stations' historical pump prices, from their point-of-sale transactions, on to PRM, until Dealer Master has a direct interface for them."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:exactMatch system:street-price-aggregator ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "street-price-aggregator" ;
+    skos:prefLabel "Third-party street price aggregator"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "A third party that passes the stations' historical pump prices from their point-of-sale transactions on to PRM."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/prm> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tfr> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-customer-inputs ;
-    skos:altLabel "Terminal Download"@en ;
-    skos:definition "A system that sends customer data from SAP MDG to the terminals, through FuelFacs, so that the customer can load there."@en ;
+    skos:definition "A system that calculates and processes freight and sends freight data to TMIS."@en ;
     skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
     skos:inScheme party:customer-systems ;
-    skos:notation "terminal-download" ;
-    skos:prefLabel "Terminal download"@en ;
+    skos:notation "tfr" ;
+    skos:prefLabel "TFR"@en ;
     skos:topConceptOf party:customer-systems ;
-    party:customerRole "Sends customer data to terminals so the customer can load there."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> ;
+    party:customerRole "Calculates and processes freight."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/tmis> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs ;
+    skos:altLabel "CBS"@en ;
+    skos:definition "The enterprise-wide terminal integration and business-information system: it holds terminal data on suppliers, products and carriers, and receives customer data from Terminal download."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "fuelfacs" ;
+    skos:prefLabel "FuelFacs"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "The enterprise-wide terminal integration and business-information system (EPM-DEC-001-0072): it holds terminal data on suppliers, products and carriers, and receives customer data from Terminal download."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/tasdm> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/gravitate> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:vendor-gravitate ;
+    skos:definition "Gravitate's software for fuel operations. By the vendor's description, it optimizes supply, pricing, freight and dispatch in real time for fuel operators."@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "gravitate" ;
+    skos:prefLabel "Gravitate"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "The gathering and processing customer portal."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/prm> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:altLabel "Pricing System"@en ;
+    skos:definition "The pricing system that manages street-level fuel prices. It receives each station's location and channel of trade from Dealer Master, so it knows which stations need a street price the company manages. It is a different system from MPR."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:exactMatch system:prm ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "prm" ;
+    skos:prefLabel "PRM"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "The pricing system: from Dealer Master it receives each station's location and channel of trade, so it knows which stations need a street price the company manages. It is restricted."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
 src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
@@ -2551,6 +2756,20 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/integration> .
 
+<https://w3id.org/lsc/ontology/modules/party/system/terminal-download> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs ;
+    skos:altLabel "Terminal Download"@en ;
+    skos:definition "A system that sends customer data from SAP MDG to the terminals, through FuelFacs, so that the customer can load there."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "terminal-download" ;
+    skos:prefLabel "Terminal download"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "Sends customer data to terminals so the customer can load there."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
 <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:decision-owner-answers-2026-10-24-systems ;
@@ -2566,8 +2785,12 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     party:customerRole "Records physical product movements. It receives customers from RightAngle, holds the territory manager, and feeds Gravitate and MAGIC."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/gravitate>,
         <https://w3id.org/lsc/ontology/modules/party/system/magic>,
-        <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+        <https://w3id.org/lsc/ontology/modules/party/system/profisee>,
+        <https://w3id.org/lsc/ontology/modules/party/system/rcms> ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+src:decision-owner-customer-inputs-2026-10-27 a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's customer inputs of 2026-10-27 (two images and two Dealer Master documents, kept out of the repository by EPM-DEC-001-0108), as the party module holds them"@en .
 
 <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> a skos:Concept,
         party:CustomerSystem ;
@@ -2582,6 +2805,7 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
     skos:prefLabel "SAP S/4HANA"@en ;
     skos:topConceptOf party:customer-systems ;
     party:customerRole "The financial system of record. It receives the business partner from SAP MDG, with company codes, sales areas and partner roles, adds credit and collection data, and takes transaction postings and invoices from the execution systems."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/bridger-insight> ;
     party:implements party:CustomerAccount,
         party:Party,
         party:PartyRole ;
@@ -2604,25 +2828,6 @@ src:decision-owner-answers-2026-10-24-systems a dcterms:BibliographicResource ;
 src:decision-owner-customer-inputs a dcterms:BibliographicResource ;
     dcterms:title "The decision owner's customer inputs (seven files, kept out of the repository by EPM-DEC-001-0067), as the party module holds them in its customer roles, data flows and attributes"@en .
 
-<https://w3id.org/lsc/ontology/modules/party/system/dealer-master> a skos:Concept,
-        party:CustomerSystem ;
-    dcterms:source src:decision-owner-customer-inputs ;
-    skos:definition "The system of record for the branded dealer network, built on Salesforce: brand customers with their stations and ship-tos. It aggregates the stations' point-of-sale transactions, exchanges dealers with SAP MDG, and sends bank and payment details to SAP S/4HANA."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
-    skos:inScheme party:customer-systems ;
-    skos:notation "dealer-master" ;
-    skos:prefLabel "Dealer Master"@en ;
-    skos:topConceptOf party:customer-systems ;
-    party:customerRole "The system of record for the branded dealer network: brand customers and their stations and ship-tos. It is built on Salesforce and aggregates station point-of-sale transactions executed in other systems. Jobbers start here and go to SAP MDG; direct dealers start in SAP MDG and come here. It sends bank and payment details to SAP S/4HANA."@en ;
-    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/salesforce>,
-        <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg>,
-        <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
-    party:implements party:Agreement,
-        party:PartyRole,
-        party:Site,
-        party:SiteBrandAssignment ;
-    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
-
 <https://w3id.org/lsc/ontology/modules/party/system/polaris> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:phmsa-marathon-pipeline-noa-2024-09-26 ;
@@ -2635,6 +2840,32 @@ src:decision-owner-customer-inputs a dcterms:BibliographicResource ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
     party:implements party:CustomerAccount,
         party:PartyTransactionAssociation,
+        party:Site ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/dealer-master> a skos:Concept,
+        party:CustomerSystem ;
+    dcterms:source src:decision-owner-customer-inputs,
+        src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:changeNote "2026-10-27: its role and definition are corrected from the decision owner's customer inputs of that day. Salesforce is only its intake, not what it is built on; jobbers are mastered in SAP MDG and RightAngle and replicated here; it masters the ship-to stations (EPM-DEC-001-0108)."@en ;
+    skos:definition "The Retail Payments Application, the system of record for the branded dealer network's ship-to stations: it masters each station, links it to the jobber that supplies it, settles with the dealers and aggregates the stations' point-of-sale transactions. Jobbers are mastered in SAP MDG and RightAngle and replicated here. It sends bank and payment details to SAP S/4HANA."@en ;
+    skos:editorialNote "Corrected on 2026-10-27 from the decision owner's customer inputs of that day: Salesforce is only its intake, not what it is built on, and jobbers do not start here (EPM-DEC-001-0108). Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "dealer-master" ;
+    skos:prefLabel "Dealer Master"@en ;
+    skos:topConceptOf party:customer-systems ;
+    party:customerRole "The system of record for the branded dealer network's ship-to stations, the Retail Payments Application. It masters each station, links it to the jobber that supplies it, settles with the dealers, and aggregates the stations' point-of-sale transactions. Jobbers are mastered in SAP MDG and RightAngle and replicated here. It sends bank and payment details to SAP S/4HANA and station locations to PRM."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/credit-card-summary>,
+        <https://w3id.org/lsc/ontology/modules/party/system/prm>,
+        <https://w3id.org/lsc/ontology/modules/party/system/rightangle>,
+        <https://w3id.org/lsc/ontology/modules/party/system/salesforce>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:implements party:Agreement,
+        party:PartyRole,
+        party:Site,
+        party:SiteBrandAssignment ;
+    party:systemOfRecordFor party:PartyRelationship,
         party:Site ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
 
@@ -2689,6 +2920,7 @@ party:customer-systems a skos:ConceptScheme ;
         <https://w3id.org/lsc/ontology/modules/party/system/brand-credit-card-system>,
         <https://w3id.org/lsc/ontology/modules/party/system/bridger-insight>,
         <https://w3id.org/lsc/ontology/modules/party/system/corp-vetting>,
+        <https://w3id.org/lsc/ontology/modules/party/system/credit-card-summary>,
         <https://w3id.org/lsc/ontology/modules/party/system/customer-portal>,
         <https://w3id.org/lsc/ontology/modules/party/system/data-products-idp>,
         <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
@@ -2696,6 +2928,7 @@ party:customer-systems a skos:ConceptScheme ;
         <https://w3id.org/lsc/ontology/modules/party/system/dtn-file-server>,
         <https://w3id.org/lsc/ontology/modules/party/system/eis>,
         <https://w3id.org/lsc/ontology/modules/party/system/emk3>,
+        <https://w3id.org/lsc/ontology/modules/party/system/enterprise-data-lake>,
         <https://w3id.org/lsc/ontology/modules/party/system/federal-health>,
         <https://w3id.org/lsc/ontology/modules/party/system/flowcal>,
         <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs>,
@@ -2705,8 +2938,11 @@ party:customer-systems a skos:ConceptScheme ;
         <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk>,
         <https://w3id.org/lsc/ontology/modules/party/system/lenel-onguard>,
         <https://w3id.org/lsc/ontology/modules/party/system/magic>,
+        <https://w3id.org/lsc/ontology/modules/party/system/mcs>,
+        <https://w3id.org/lsc/ontology/modules/party/system/msmis>,
         <https://w3id.org/lsc/ontology/modules/party/system/onesource>,
         <https://w3id.org/lsc/ontology/modules/party/system/polaris>,
+        <https://w3id.org/lsc/ontology/modules/party/system/prm>,
         <https://w3id.org/lsc/ontology/modules/party/system/profisee>,
         <https://w3id.org/lsc/ontology/modules/party/system/quorum>,
         <https://w3id.org/lsc/ontology/modules/party/system/rcms>,
@@ -2716,12 +2952,15 @@ party:customer-systems a skos:ConceptScheme ;
         <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana>,
         <https://w3id.org/lsc/ontology/modules/party/system/sirion>,
         <https://w3id.org/lsc/ontology/modules/party/system/star>,
+        <https://w3id.org/lsc/ontology/modules/party/system/station-pos>,
+        <https://w3id.org/lsc/ontology/modules/party/system/street-price-aggregator>,
         <https://w3id.org/lsc/ontology/modules/party/system/tasdm>,
         <https://w3id.org/lsc/ontology/modules/party/system/tax-image-silo>,
         <https://w3id.org/lsc/ontology/modules/party/system/terminal-audit-system>,
         <https://w3id.org/lsc/ontology/modules/party/system/terminal-download>,
         <https://w3id.org/lsc/ontology/modules/party/system/terminal-margin-ranking-system>,
         <https://w3id.org/lsc/ontology/modules/party/system/terminal-upload>,
+        <https://w3id.org/lsc/ontology/modules/party/system/terminaling-throughputs>,
         <https://w3id.org/lsc/ontology/modules/party/system/tfr>,
         <https://w3id.org/lsc/ontology/modules/party/system/tmis>,
         <https://w3id.org/lsc/ontology/modules/party/system/tmt>,
@@ -2740,8 +2979,12 @@ party:customer-systems a skos:ConceptScheme ;
     skos:topConceptOf party:customer-systems ;
     party:customerRole "The commercial and logistics system for trading, deals, scheduling and financial exposure. It takes basic customer data from SAP MDG, creates the business associate and its locations, sends the business associate ID and locale back to SAP MDG, and shares data with Kittyhawk and the trading desks."@en ;
     party:feeds <https://w3id.org/lsc/ontology/modules/party/system/allocation-manager>,
+        <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
+        <https://w3id.org/lsc/ontology/modules/party/system/gravitate>,
         <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk>,
-        <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg>,
+        <https://w3id.org/lsc/ontology/modules/party/system/terminal-download>,
+        <https://w3id.org/lsc/ontology/modules/party/system/tfr> ;
     party:implements party:Agreement,
         party:ContactPoint,
         party:Party,

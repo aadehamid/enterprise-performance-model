@@ -150,6 +150,11 @@ party:identifiedBy a owl:ObjectProperty ;
     skos:definition "An external identifier of the party."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
 
+party:siteIdentifiedBy a owl:ObjectProperty ;
+    rdfs:label "site identified by"@en ; rdfs:domain party:Site ; rdfs:range party:ExternalIdentifier ;
+    skos:definition "An external identifier of the site, such as the SAP ship-to number that SAP MDG gives a station in the 20000 series."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0108"@en .
+
 party:identifierType a owl:ObjectProperty ;
     rdfs:label "identifier type"@en ; rdfs:domain party:ExternalIdentifier ; rdfs:range skos:Concept ;
     skos:definition "The kind of identifier, from the identifier-type list."@en ;
@@ -388,6 +393,11 @@ party:implements a owl:ObjectProperty ;
     skos:definition "An entity of the conceptual model the system holds records of, as the decision owner's model maps it."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
 
+party:systemOfRecordFor a owl:ObjectProperty ;
+    rdfs:label "system of record for"@en ; rdfs:domain party:CustomerSystem ; rdfs:range owl:Class ;
+    skos:definition "An entity of the conceptual model whose records the system is the authoritative source for, such as Dealer Master for the ship-to stations and for the link from each jobber to its stations."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0108"@en .
+
 party:DataFlow a owl:Class ;
     rdfs:label "data flow"@en ;
     skos:definition "A movement of customer data from one system to another, with what it carries."@en ;
@@ -421,13 +431,15 @@ party:pidxProductFamily a owl:DatatypeProperty ;
 
 party:evidenceInput a owl:DatatypeProperty ;
     rdfs:label "evidence input"@en ; rdfs:range xsd:string ;
-    skos:definition "The numbers of the decision owner's customer inputs that show the statement, as EPM-DEC-001-0067's Context lists them. The inputs are not in this repository."@en ;
-    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0069"@en .
+    skos:definition "The numbers of the decision owner's customer inputs that show the statement: 1 to 7 as EPM-DEC-001-0067's Context lists them, 8 to 11 as EPM-DEC-001-0108's Context lists them. The inputs are not in this repository."@en ;
+    skos:changeNote "2026-10-27: inputs 8 to 11 join, the customer inputs of that day (EPM-DEC-001-0108)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0069; EPM-DEC-001-0108"@en .
 
 party:CustomerSourcing a owl:Class ;
     rdfs:label "customer sourcing"@en ;
-    skos:definition "How a system relates to a kind of customer: the kind starts there, is set up there for a line of business, or comes from there."@en ;
-    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+    skos:definition "How a system relates to a kind of customer or of site: the kind starts there, is set up there for a line of business, or comes from there."@en ;
+    skos:changeNote "2026-10-27: a sourcing can name a site type, for the ship-to stations that start in Dealer Master (EPM-DEC-001-0108)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069; EPM-DEC-001-0108"@en .
 
 party:sourcingSystem a owl:ObjectProperty ;
     rdfs:label "sourcing system"@en ; rdfs:domain party:CustomerSourcing ; rdfs:range party:CustomerSystem ;
@@ -441,8 +453,9 @@ party:sourcingKind a owl:ObjectProperty ;
 
 party:sourcedConcept a owl:ObjectProperty ;
     rdfs:label "sourced concept"@en ; rdfs:domain party:CustomerSourcing ; rdfs:range skos:Concept ;
-    skos:definition "The kind of customer: a party role, a customer class, a line of business or a party type."@en ;
-    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+    skos:definition "The kind of customer or of site: a party role, a customer class, a line of business, a party type or a site type."@en ;
+    skos:changeNote "2026-10-27: a site type joins, for the ship-to stations that start in Dealer Master (EPM-DEC-001-0108)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069; EPM-DEC-001-0108"@en .
 
 party:SystemAttribute a owl:Class ;
     rdfs:label "system attribute"@en ;

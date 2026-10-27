@@ -39,9 +39,13 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system-stage/master> party:stageSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
 
-<https://w3id.org/lsc/ontology/modules/party/system-stage/prospect> party:stageSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+<https://w3id.org/lsc/ontology/modules/party/system-stage/prospect> party:stageSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
+        <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
 
-<https://w3id.org/lsc/ontology/modules/party/system-stage/record> party:stageSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+<https://w3id.org/lsc/ontology/modules/party/system-stage/record> party:stageSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
 
-<https://w3id.org/lsc/ontology/modules/party/system-stage/settle> party:stageSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+<https://w3id.org/lsc/ontology/modules/party/system-stage/settle> party:stageSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
+        <https://w3id.org/lsc/ontology/modules/party/system/polaris>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
 

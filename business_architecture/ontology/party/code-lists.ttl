@@ -1,5 +1,6 @@
 # The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069, 0070).
-# Built by build_party.py from code-lists.csv, product-mappings.csv and pidx-families.csv. Do not edit by hand.
+# Built by build_party.py from code-lists.csv, product-mappings.csv, pidx-families.csv, code-list-mappings.csv
+# and change-notes.csv. Do not edit by hand.
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix oeo: <https://openenergyplatform.org/ontology/oeo/> .
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
@@ -426,6 +427,20 @@
     skos:prefLabel "Enrich"@en ;
     skos:topConceptOf party:attribute-category .
 
+<https://w3id.org/lsc/ontology/modules/party/class-of-trade/dtw> a skos:Concept ;
+    skos:definition "The channel of trade of a station supplied at the dealer tank wagon price, whose street price the company manages."@en ;
+    skos:inScheme party:class-of-trade ;
+    skos:notation "dtw" ;
+    skos:prefLabel "Dealer Tank Wagon"@en ;
+    skos:topConceptOf party:class-of-trade .
+
+<https://w3id.org/lsc/ontology/modules/party/class-of-trade/mst> a skos:Concept ;
+    skos:definition "The channel of trade of a station supplied under a multi-site throughput arrangement, whose street price the company manages."@en ;
+    skos:inScheme party:class-of-trade ;
+    skos:notation "mst" ;
+    skos:prefLabel "Multi-Site Throughput"@en ;
+    skos:topConceptOf party:class-of-trade .
+
 <https://w3id.org/lsc/ontology/modules/party/contact-type/email> a skos:Concept ;
     skos:definition "An email address."@en ;
     skos:inScheme party:contact-type ;
@@ -447,6 +462,30 @@
     skos:prefLabel "Telephone"@en ;
     skos:topConceptOf party:contact-type .
 
+<https://w3id.org/lsc/ontology/modules/party/dealer-class/2> a skos:Concept ;
+    skos:definition "Dealer Master's class for a group of a jobber's stations that a third party runs and that settles apart from the jobber's own."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/party-role/sub-jobber> ;
+    skos:inScheme party:dealer-class ;
+    skos:notation "2" ;
+    skos:prefLabel "Sub-jobber"@en ;
+    skos:topConceptOf party:dealer-class .
+
+<https://w3id.org/lsc/ontology/modules/party/dealer-class/4> a skos:Concept ;
+    skos:definition "Dealer Master's class for a jobber that buys product at the company's terminals and supplies its stations."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/party-role/jobber> ;
+    skos:inScheme party:dealer-class ;
+    skos:notation "4" ;
+    skos:prefLabel "Supplying jobber"@en ;
+    skos:topConceptOf party:dealer-class .
+
+<https://w3id.org/lsc/ontology/modules/party/dealer-class/9> a skos:Concept ;
+    skos:definition "Dealer Master's class for a retail gas station, the ship-to that receives fuel."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/site-type/station> ;
+    skos:inScheme party:dealer-class ;
+    skos:notation "9" ;
+    skos:prefLabel "Retail gas station"@en ;
+    skos:topConceptOf party:dealer-class .
+
 <https://w3id.org/lsc/ontology/modules/party/identifier-type/industry-code> a skos:Concept ;
     skos:definition "An identifier or code issued by an industry body."@en ;
     skos:inScheme party:identifier-type ;
@@ -466,6 +505,13 @@
     skos:inScheme party:identifier-type ;
     skos:notation "public-company-identifier" ;
     skos:prefLabel "Public-company identifier"@en ;
+    skos:topConceptOf party:identifier-type .
+
+<https://w3id.org/lsc/ontology/modules/party/identifier-type/sap-ship-to-number> a skos:Concept ;
+    skos:definition "The number SAP MDG gives a ship-to station that Dealer Master masters, in the 20000 series."@en ;
+    skos:inScheme party:identifier-type ;
+    skos:notation "sap-ship-to-number" ;
+    skos:prefLabel "SAP ship-to number"@en ;
     skos:topConceptOf party:identifier-type .
 
 <https://w3id.org/lsc/ontology/modules/party/identifier-type/tax-identifier> a skos:Concept ;
@@ -653,13 +699,6 @@
     skos:prefLabel "Exchange Counterparty"@en ;
     skos:topConceptOf party:party-role .
 
-<https://w3id.org/lsc/ontology/modules/party/party-role/jobber> a skos:Concept ;
-    skos:definition "The role of an independent reseller that buys branded fuel under a supply agreement and owns or operates its outlets."@en ;
-    skos:inScheme party:party-role ;
-    skos:notation "jobber" ;
-    skos:prefLabel "Jobber"@en ;
-    skos:topConceptOf party:party-role .
-
 <https://w3id.org/lsc/ontology/modules/party/party-role/loading-authorized-party> a skos:Concept ;
     skos:definition "The role of a party that is allowed to lift product at a terminal. The role is held for a period; the permission that grants it is a separate record."@en ;
     skos:inScheme party:party-role ;
@@ -686,6 +725,7 @@
     skos:inScheme party:party-role ;
     skos:notation "sold-to" ;
     skos:prefLabel "Sold-To"@en ;
+    skos:scopeNote "Also called the Capital C customer. A sold-to is identified by a six-digit SAP customer number; SAP MDG and RightAngle master it, and Dealer Master holds a replica to link it to its stations (EPM-DEC-001-0108)."@en ;
     skos:topConceptOf party:party-role .
 
 <https://w3id.org/lsc/ontology/modules/party/party-role/supplier> a skos:Concept ;
@@ -778,6 +818,13 @@
     skos:prefLabel "credit roll-up"@en ;
     skos:topConceptOf party:relationship-type .
 
+<https://w3id.org/lsc/ontology/modules/party/relationship-type/grouped-under> a skos:Concept ;
+    skos:definition "One role's stations roll up under the other's for settlement, such as a sub-jobber's stations under its jobber."@en ;
+    skos:inScheme party:relationship-type ;
+    skos:notation "grouped-under" ;
+    skos:prefLabel "grouped under"@en ;
+    skos:topConceptOf party:relationship-type .
+
 <https://w3id.org/lsc/ontology/modules/party/relationship-type/guarantor-of> a skos:Concept ;
     skos:definition "One role guarantees the other's obligations."@en ;
     skos:inScheme party:relationship-type ;
@@ -818,6 +865,7 @@
     skos:inScheme party:shared-attribute ;
     skos:notation "class-of-trade" ;
     skos:prefLabel "Class of trade"@en ;
+    skos:scopeNote "Dealer Master calls it the channel of trade; its values include MST and DTW, in the class-of-trade list (EPM-DEC-001-0108)."@en ;
     skos:topConceptOf party:shared-attribute .
 
 <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> a skos:Concept ;
@@ -890,13 +938,6 @@
     skos:prefLabel "Pipeline delivery point"@en ;
     skos:topConceptOf party:site-type .
 
-<https://w3id.org/lsc/ontology/modules/party/site-type/station> a skos:Concept ;
-    skos:definition "A retail fuel station."@en ;
-    skos:inScheme party:site-type ;
-    skos:notation "station" ;
-    skos:prefLabel "Station"@en ;
-    skos:topConceptOf party:site-type .
-
 <https://w3id.org/lsc/ontology/modules/party/site-type/terminal> a skos:Concept ;
     skos:definition "A terminal where product is stored and lifted at racks."@en ;
     skos:inScheme party:site-type ;
@@ -940,7 +981,8 @@
     skos:topConceptOf party:system-stage .
 
 <https://w3id.org/lsc/ontology/modules/party/system-stage/prospect> a skos:Concept ;
-    skos:definition "Salesforce holds the first record of a prospect, on the Trade or the CRM/Basic track. Jobbers start in Dealer Master and direct dealers in SAP MDG."@en ;
+    skos:changeNote "2026-10-27: corrected. Dealer Master holds the first record of a ship-to station, and jobbers are mastered in SAP MDG and RightAngle (EPM-DEC-001-0108)."@en ;
+    skos:definition "Salesforce holds the first record of a prospect, on the Trade or the CRM/Basic track. Dealer Master holds the first record of a ship-to station; jobbers are mastered in SAP MDG and RightAngle."@en ;
     skos:inScheme party:system-stage ;
     skos:notation "prospect" ;
     skos:prefLabel "Prospect"@en ;
@@ -1044,6 +1086,27 @@
     skos:prefLabel "Transfer"@en ;
     skos:topConceptOf party:transaction-kind .
 
+<https://w3id.org/lsc/ontology/modules/party/party-role/jobber> a skos:Concept ;
+    skos:definition "The role of an independent reseller that buys branded fuel under a supply agreement and owns or operates its outlets."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "jobber" ;
+    skos:prefLabel "Jobber"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/sub-jobber> a skos:Concept ;
+    skos:definition "The role of a party that runs a group of a jobber's stations for a third party, so that the group settles and routes its payments apart from the jobber's own. Dealer Master holds it, and it is used rarely."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "sub-jobber" ;
+    skos:prefLabel "Sub-Jobber"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/site-type/station> a skos:Concept ;
+    skos:definition "A retail fuel station."@en ;
+    skos:inScheme party:site-type ;
+    skos:notation "station" ;
+    skos:prefLabel "Station"@en ;
+    skos:topConceptOf party:site-type .
+
 <https://w3id.org/lsc/ontology/modules/party/customer-class/brand-attached-resellers> a skos:Concept ;
     skos:definition "The customer classes that resell fuel under a company brand."@en ;
     skos:inScheme party:customer-class ;
@@ -1068,6 +1131,13 @@ party:attribute-category a skos:ConceptScheme ;
     skos:definition "The decision owner's two categories of a system's customer attributes: those that define the customer there, and those that enrich it."@en ;
     skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/attribute-category/create>,
         <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> .
+
+party:class-of-trade a skos:ConceptScheme ;
+    rdfs:label "classes of trade"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0108"@en ;
+    skos:definition "The channels of trade a station is supplied under, which tell the pricing system whether the company manages the station's street price."@en ;
+    skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/class-of-trade/dtw>,
+        <https://w3id.org/lsc/ontology/modules/party/class-of-trade/mst> .
 
 <https://w3id.org/lsc/ontology/modules/party/customer-class/end-users-specialty> a skos:Concept ;
     skos:definition "The customer classes that use the product themselves, or buy a specialty product or service."@en ;
@@ -1097,6 +1167,14 @@ party:contact-type a skos:ConceptScheme ;
     skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/contact-type/email>,
         <https://w3id.org/lsc/ontology/modules/party/contact-type/fax>,
         <https://w3id.org/lsc/ontology/modules/party/contact-type/telephone> .
+
+party:dealer-class a skos:ConceptScheme ;
+    rdfs:label "dealer classes"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0108"@en ;
+    skos:definition "Dealer Master's three classes of the records in its dealer master table. A record stays in the class it was created in."@en ;
+    skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/dealer-class/2>,
+        <https://w3id.org/lsc/ontology/modules/party/dealer-class/4>,
+        <https://w3id.org/lsc/ontology/modules/party/dealer-class/9> .
 
 party:operating-model a skos:ConceptScheme ;
     rdfs:label "site operating models"@en ;
@@ -1151,15 +1229,6 @@ party:address-usage a skos:ConceptScheme ;
         <https://w3id.org/lsc/ontology/modules/party/address-usage/operating-location>,
         <https://w3id.org/lsc/ontology/modules/party/address-usage/registered-office> .
 
-party:identifier-type a skos:ConceptScheme ;
-    rdfs:label "identifier types"@en ;
-    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
-    skos:definition "The kinds of external identifier of a party."@en ;
-    skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/identifier-type/industry-code>,
-        <https://w3id.org/lsc/ontology/modules/party/identifier-type/legacy-identifier>,
-        <https://w3id.org/lsc/ontology/modules/party/identifier-type/public-company-identifier>,
-        <https://w3id.org/lsc/ontology/modules/party/identifier-type/tax-identifier> .
-
 <https://w3id.org/lsc/ontology/modules/party/product/ngls-and-petrochemicals> a skos:Concept,
         party:Product ;
     dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
@@ -1170,15 +1239,15 @@ party:identifier-type a skos:ConceptScheme ;
     skos:prefLabel "NGLs and petrochemicals"@en ;
     skos:topConceptOf party:product .
 
-party:relationship-type a skos:ConceptScheme ;
-    rdfs:label "party relationship types"@en ;
+party:identifier-type a skos:ConceptScheme ;
+    rdfs:label "identifier types"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
-    skos:definition "The kinds of link from one party role to another."@en ;
-    skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/relationship-type/contact-for>,
-        <https://w3id.org/lsc/ontology/modules/party/relationship-type/credit-roll-up>,
-        <https://w3id.org/lsc/ontology/modules/party/relationship-type/guarantor-of>,
-        <https://w3id.org/lsc/ontology/modules/party/relationship-type/parent-of>,
-        <https://w3id.org/lsc/ontology/modules/party/relationship-type/supplies> .
+    skos:definition "The kinds of external identifier of a party."@en ;
+    skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/identifier-type/industry-code>,
+        <https://w3id.org/lsc/ontology/modules/party/identifier-type/legacy-identifier>,
+        <https://w3id.org/lsc/ontology/modules/party/identifier-type/public-company-identifier>,
+        <https://w3id.org/lsc/ontology/modules/party/identifier-type/sap-ship-to-number>,
+        <https://w3id.org/lsc/ontology/modules/party/identifier-type/tax-identifier> .
 
 party:system-stage a skos:ConceptScheme ;
     rdfs:label "customer system stages"@en ;
@@ -1210,6 +1279,17 @@ party:lifecycle-stage a skos:ConceptScheme ;
         <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/prospect>,
         <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/relationship-management>,
         <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/risk-management> .
+
+party:relationship-type a skos:ConceptScheme ;
+    rdfs:label "party relationship types"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The kinds of link from one party role to another."@en ;
+    skos:hasTopConcept <https://w3id.org/lsc/ontology/modules/party/relationship-type/contact-for>,
+        <https://w3id.org/lsc/ontology/modules/party/relationship-type/credit-roll-up>,
+        <https://w3id.org/lsc/ontology/modules/party/relationship-type/grouped-under>,
+        <https://w3id.org/lsc/ontology/modules/party/relationship-type/guarantor-of>,
+        <https://w3id.org/lsc/ontology/modules/party/relationship-type/parent-of>,
+        <https://w3id.org/lsc/ontology/modules/party/relationship-type/supplies> .
 
 party:site-type a skos:ConceptScheme ;
     rdfs:label "site types"@en ;
@@ -1298,6 +1378,7 @@ party:party-role a skos:ConceptScheme ;
         <https://w3id.org/lsc/ontology/modules/party/party-role/payer>,
         <https://w3id.org/lsc/ontology/modules/party/party-role/position-holder>,
         <https://w3id.org/lsc/ontology/modules/party/party-role/sold-to>,
+        <https://w3id.org/lsc/ontology/modules/party/party-role/sub-jobber>,
         <https://w3id.org/lsc/ontology/modules/party/party-role/supplier>,
         <https://w3id.org/lsc/ontology/modules/party/party-role/surety>,
         <https://w3id.org/lsc/ontology/modules/party/party-role/throughput-holder>,
