@@ -85,6 +85,19 @@ system:backcasting-dashboard a skos:Concept,
         proc:CM-1-1-5-8-6 ;
     sys:systemKind kind:application .
 
+system:bridger-insight a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-lexisnexis-bridger-insight-xg ;
+    skos:altLabel "Bridger"@en ;
+    skos:definition "LexisNexis Risk Solutions' compliance screening software, Bridger Insight XG. By the vendor's description, it automates account screening for regulatory compliance and reduces false positives."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "bridger-insight"^^xsd:string ;
+    skos:prefLabel "Bridger Insight"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-3-7-4-6 ;
+    sys:systemKind kind:application .
+
 system:cargotracker a skos:Concept,
         sys:System ;
     dcterms:source src:decision-owner-answers-2026-10-24-systems,
@@ -98,6 +111,20 @@ system:cargotracker a skos:Concept,
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:customer-portal a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs,
+        src:downstream-process-map ;
+    skos:altLabel "MyMPC Customer Portal"@en ;
+    skos:definition "The MyMPC customer portal; it sends customer data to Profisee."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: its customer role, data flows and attributes as the party module holds them from the decision owner's customer inputs; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "customer-portal"^^xsd:string ;
+    skos:prefLabel "Customer Portal"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-3-7-2-6 ;
     sys:systemKind kind:application .
 
 system:databricks a skos:Concept,
@@ -159,6 +186,18 @@ system:hyperion a skos:Concept,
         proc:CM-1-1-5-1-2-3 ;
     sys:systemKind kind:application .
 
+system:information-steward a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-sap-information-steward ;
+    skos:definition "SAP's data quality software, SAP Information Steward. By the vendor's description, it supports data profiling and monitoring and information policy management."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "information-steward"^^xsd:string ;
+    skos:prefLabel "Information Steward"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-3-7-1-1 ;
+    sys:systemKind kind:application .
+
 system:kittyhawk a skos:Concept,
         sys:System ;
     dcterms:source src:decision-owner-answers-2026-10-24-systems,
@@ -178,6 +217,20 @@ system:kittyhawk a skos:Concept,
         proc:CM-1-1-3-1-1,
         proc:CM-1-1-4-1,
         proc:CM-1-1-4-1-1 ;
+    sys:systemKind kind:application .
+
+system:magic a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-answers-2026-10-24-systems,
+        src:downstream-process-map ;
+    skos:altLabel "Marketing Applications Graphical Interface for Clients"@en ;
+    skos:definition "Marketing Applications Graphical Interface for Clients: an MPC-built integration that sets up new customer accounts. When SAP MDG creates a customer, MAGIC assigns the SAP MDG customer number and the KittyHawk territory manager to the account in Salesforce, and converts the prospect into a customer account. Every day it syncs the customer's number, name, address, FEIN, status, credit monitor and territory manager to Salesforce."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "magic"^^xsd:string ;
+    skos:prefLabel "MAGIC"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-3-7-1-1,
+        proc:CM-1-3-7-1-7 ;
     sys:systemKind kind:application .
 
 system:market-outlook-and-avails-dashboard a skos:Concept,
@@ -480,7 +533,8 @@ system:profisee a skos:Concept,
     skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-2-1,
         proc:CM-1-1-2-1-8,
-        proc:CM-1-1-2-2 ;
+        proc:CM-1-1-2-2,
+        proc:CM-1-3-7-1-1 ;
     sys:systemKind kind:application .
 
 system:psr a skos:Concept,
@@ -551,7 +605,24 @@ system:rightangle a skos:Concept,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-2,
         proc:CM-1-1-5-1-2-5,
-        proc:CM-1-1-5-1-2-6 ;
+        proc:CM-1-1-5-1-2-6,
+        proc:CM-1-3-7-1-7 ;
+    sys:systemKind kind:application .
+
+system:salesforce a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-salesforce ;
+    skos:definition "Salesforce's customer relationship management (CRM) platform. By the vendor's description, it helps companies connect with their customers."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "salesforce"^^xsd:string ;
+    skos:prefLabel "Salesforce"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-3-6-2-1,
+        proc:CM-1-3-6-6-1,
+        proc:CM-1-3-7-1-7,
+        proc:CM-1-3-7-2-6,
+        proc:CM-1-3-7-4-2 ;
     sys:systemKind kind:application .
 
 system:sap a skos:Concept,
@@ -568,7 +639,39 @@ system:sap a skos:Concept,
     skos:topConceptOf sys:Systems ;
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
-        proc:CM-1-1-5-1-2-3 ;
+        proc:CM-1-1-5-1-2-3,
+        proc:CM-1-3-7-1-7,
+        proc:CM-1-3-7-4-2,
+        proc:CM-1-3-7-4-3,
+        proc:CM-1-3-8-2-1,
+        proc:CM-1-3-8-2-3,
+        proc:CM-1-3-8-3-2 ;
+    sys:systemKind kind:application .
+
+system:sap-mdg a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-sap-mdg ;
+    skos:altLabel "MDG"@en ;
+    skos:definition "SAP's master data governance software. By the vendor's description, it is the governance layer for an enterprise's business data, unifying master data, policy and metadata."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "sap-mdg"^^xsd:string ;
+    skos:prefLabel "SAP MDG"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-3-7-1-1,
+        proc:CM-1-3-7-1-7 ;
+    sys:systemKind kind:application .
+
+system:sirion a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map,
+        src:vendor-sirion ;
+    skos:definition "Sirion's contract management software. By the vendor's description, it uses AI to manage an enterprise's contracts and get the most value from its relationships."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "sirion"^^xsd:string ;
+    skos:prefLabel "Sirion"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:supports proc:CM-1-3-7-2-1 ;
     sys:systemKind kind:application .
 
 system:tmr a skos:Concept,
@@ -705,9 +808,6 @@ system:xpims-dpo-integration-macro a skos:Concept,
         proc:CM-1-1-3-2-2 ;
     sys:systemKind kind:application .
 
-src:decision-owner-customer-inputs a dcterms:BibliographicResource ;
-    dcterms:title "The decision owner's customer inputs (seven files, kept out of the repository by EPM-DEC-001-0067), as the party module holds them in its customer roles, data flows and attributes"@en .
-
 src:vendor-aspentech-aspen-petroleum-scheduler a dcterms:BibliographicResource ;
     dcterms:title "AspenTech, Aspen Petroleum Scheduler, https://www.aspentech.com/en/products/msc/aspen-petroleum-scheduler, retrieved 2026-10-25"@en .
 
@@ -722,6 +822,9 @@ src:vendor-databricks-introduction a dcterms:BibliographicResource ;
 
 src:vendor-ion-rightangle a dcterms:BibliographicResource ;
     dcterms:title "ION, RightAngle, https://iongroup.com/products/commodities/rightangle/ (page modified 2026-08-10), retrieved 2026-10-25"@en .
+
+src:vendor-lexisnexis-bridger-insight-xg a dcterms:BibliographicResource ;
+    dcterms:title "LexisNexis Risk Solutions, Bridger Insight XG, https://risk.lexisnexis.com/products/bridger-insight-xg, retrieved 2026-10-25"@en .
 
 src:vendor-microsoft-excel a dcterms:BibliographicResource ;
     dcterms:title "Microsoft, Microsoft Excel, https://www.microsoft.com/en-us/microsoft-365/excel, retrieved 2026-10-25"@en .
@@ -741,8 +844,23 @@ src:vendor-oracle-hyperion-planning-11-2 a dcterms:BibliographicResource ;
 src:vendor-profisee-platform a dcterms:BibliographicResource ;
     dcterms:title "Profisee, Platform, https://profisee.com/platform/, retrieved 2026-10-25"@en .
 
+src:vendor-salesforce a dcterms:BibliographicResource ;
+    dcterms:title "Salesforce, What is Salesforce?, https://www.salesforce.com/products/what-is-salesforce/ (page modified 2026-09-24), retrieved 2026-10-25"@en .
+
+src:vendor-sap-information-steward a dcterms:BibliographicResource ;
+    dcterms:title "SAP, SAP Information Steward, https://www.sap.com/products/data-cloud/data-profiling-steward.html, retrieved 2026-10-25"@en .
+
+src:vendor-sap-mdg a dcterms:BibliographicResource ;
+    dcterms:title "SAP, SAP Master Data Governance, https://www.sap.com/products/data-cloud/master-data-governance.html, retrieved 2026-10-25"@en .
+
 src:vendor-sap-s4hana-help a dcterms:BibliographicResource ;
     dcterms:title "SAP, Conversion Guide for SAP S/4HANA 2025, document version 3.0 (2026-10-07), https://help.sap.com/doc/2b87656c4eee4284a5eb8976c0fe88fc/2025/en-US/CONV_OP2025.pdf, retrieved 2026-10-26"@en .
+
+src:vendor-sirion a dcterms:BibliographicResource ;
+    dcterms:title "Sirion, https://www.sirion.ai/, retrieved 2026-10-25"@en .
+
+src:decision-owner-customer-inputs a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's customer inputs (seven files, kept out of the repository by EPM-DEC-001-0067), as the party module holds them in its customer roles, data flows and attributes"@en .
 
 src:vendor-aspentech-aspen-pims-brochure a dcterms:BibliographicResource ;
     dcterms:title "AspenTech, Aspen PIMS brochure (AT-06696, 2021), https://www.aspentech.com/-/media/aspentech/home/resources/brochure/pdfs/fy21/q3/at-03906-bro-aspen-pims.pdf, retrieved 2026-10-25"@en .
@@ -766,11 +884,15 @@ sys:Systems skos:hasTopConcept system:actuals-case-prep-file,
         system:aps,
         system:aps-planning-db,
         system:backcasting-dashboard,
+        system:bridger-insight,
         system:cargotracker,
+        system:customer-portal,
         system:databricks,
         system:dpo,
         system:hyperion,
+        system:information-steward,
         system:kittyhawk,
+        system:magic,
         system:market-outlook-and-avails-dashboard,
         system:mips,
         system:mpr,
@@ -789,7 +911,10 @@ sys:Systems skos:hasTopConcept system:actuals-case-prep-file,
         system:refinery-premise-document,
         system:rfc-hindsight-analysis-excel,
         system:rightangle,
+        system:salesforce,
         system:sap,
+        system:sap-mdg,
+        system:sirion,
         system:tmr,
         system:topday,
         system:trr,

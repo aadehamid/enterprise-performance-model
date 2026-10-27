@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (delegated under EPM-DEC-001-0028, amendment of 2026-10-25, evening: the descriptions and the releases); one question open for the decision owner (MPC-P11) |
+| Status | Decided (delegated under EPM-DEC-001-0028, amendment of 2026-10-25, evening: the descriptions and the releases); one question open for the decision owner (MPC-P11); *2026-10-26:* MPC-P11 accepted (EPM-DEC-001-0104) |
 | Date | 2026-10-26 |
 | Questions | Item G, items 10 and 11 (EPM-DEC-001-0099): what do the internal systems do, and which systems do the customer-lifecycle processes use? |
 | Source | The process map and core 2.3.0's process definitions; the `party` module's customer roles, data flows and attributes, from the decision owner's customer inputs; `answers-2026-10-25-item-g.md`; `answers-2026-10-25-queue-delegation.md` |
@@ -21,7 +21,7 @@ EPM-DEC-001-0099 recorded the decision owner's acceptance of Claude's eleven ite
    - Each carries a note that Claude drafted it from the repository and approved it under the delegation. The business confirms or corrects each (`business-closeout.md`, point 16).
 2. **Still undefined:** TopDay and VALT, which wait for their owners (`business-closeout.md`, point 12), and Drop Tank, Gas Buddy, DTN File Server and Federal Health, which wait for the customer-data owner (point 11).
 3. **Two new sources, tier 1:** core 2.3.0's process definitions, and the decision owner's customer inputs as the `party` module holds them.
-4. **MPC-P11 is written and not applied.** `business_architecture/business_process/proposals/MPC-P11-customer-process-systems.md` proposes the strong and medium links and lists the weak ones as not proposed. The process map is the process authority, and AGENTS.md says to suggest its changes as proposals; the delegation covers questions the evidence order settles, and accepting a change to the authority itself is the decision owner's. So the proposal waits for the decision owner, and `downstream_process_map.json` does not change here.
+4. **MPC-P11 is written and not applied.** `business_architecture/business_process/proposals/MPC-P11-customer-process-systems.md` proposes the strong and medium links and lists the weak ones as not proposed. The process map is the process authority, and AGENTS.md says to suggest its changes as proposals; the delegation covers questions the evidence order settles, and accepting a change to the authority itself is the decision owner's. So the proposal waits for the decision owner, and `downstream_process_map.json` does not change here. *2026-10-26:* the decision owner accepted it, and the map gains its links (EPM-DEC-001-0104).
 5. **Releases, approved by Claude under the delegation (minor):** `system` 1.3.0 and `party` 1.3.0 carry the descriptions; `integration` 2.3.0 carries the two new sources.
 
 ## Open question for the decision owner

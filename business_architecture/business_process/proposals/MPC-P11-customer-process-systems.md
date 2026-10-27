@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed (2026-10-26). Waits for the decision owner's acceptance, because it changes the process map, the process authority (EPM-DEC-001-0103) |
+| Status | Accepted (the decision owner, 2026-10-26, EPM-DEC-001-0104): the strong and medium rows, 21 links across 12 processes; the weak rows stay out. Proposed 2026-10-26, because it changes the process map, the process authority (EPM-DEC-001-0103) |
 | Date | 2026-10-26 |
 | Decision | EPM-DEC-001-0099, item 11: "The customer processes' system links go to a process-map proposal (MPC-P11), after the decision owner checks the weak ones." |
 | Source | The processes in `party/lifecycle.csv` and the system stages linked to them (EPM-DEC-001-0070); each customer system's `party:customerRole` and data flows in `party` 1.2.0 (EPM-DEC-001-0069), from the decision owner's customer inputs (kept out of the repository, EPM-DEC-001-0067) |
