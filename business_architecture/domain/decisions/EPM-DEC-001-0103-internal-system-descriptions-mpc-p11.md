@@ -1,5 +1,7 @@
 # EPM-DEC-001-0103: The internal systems' descriptions, drafted from the repository; proposal MPC-P11 waits for the decision owner
 
+*2026-10-26:* the wait is over: the decision owner accepted MPC-P11 (EPM-DEC-001-0104).
+
 | Field | Value |
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028, amendment of 2026-10-25, evening: the descriptions and the releases); one question open for the decision owner (MPC-P11); *2026-10-26:* MPC-P11 accepted (EPM-DEC-001-0104) |
