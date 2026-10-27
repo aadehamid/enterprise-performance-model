@@ -1035,7 +1035,8 @@ without a dated amendment and the decision owner's explicit agreement.
   51 members as top concepts. The skill's collision, scheme and parent
   checks find 0 on 2.4.0 (11, 11 and 51 on 2.3.0). The regression, the
   checks, the projection and the apqc, data-product, kpi, lane, system and
-  value-stream builds read 2.4.0; party moves at its next release. Q38's
+  value-stream builds read 2.4.0; party moves at its next release
+  (*2026-10-26:* party 1.4.0, EPM-DEC-001-0104). Q38's
   same-name query now lists names shared as a preferred or prior preferred
   label (EPM-DEC-001-0105).
 ### lane 1.1.0, organization 2.1.0 and value-stream 1.2.0 are released (2026-10-26)
