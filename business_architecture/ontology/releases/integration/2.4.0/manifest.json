@@ -1,0 +1,43 @@
+{
+  "module": "integration",
+  "version": "2.4.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/integration",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/integration/2.4.0",
+  "depends_on": {
+    "core": "2.4.0",
+    "organization": "2.1.0",
+    "kpi": "1.2.0",
+    "data-product": "1.2.0",
+    "value-stream": "1.2.0",
+    "system": "1.5.0",
+    "lane": "1.1.0",
+    "market-data": "1.1.0",
+    "party": "2.0.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0058",
+    "EPM-DEC-001-0059",
+    "EPM-DEC-001-0061",
+    "EPM-DEC-001-0078",
+    "EPM-DEC-001-0088",
+    "EPM-DEC-001-0094",
+    "EPM-DEC-001-0098",
+    "EPM-DEC-001-0099",
+    "EPM-DEC-001-0100",
+    "EPM-DEC-001-0103",
+    "EPM-DEC-001-0108"
+  ],
+  "triples": 450,
+  "approved_by": {
+    "who": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the decision owner's alignment with the plan of 2026-10-27)",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md"
+  },
+  "files": {
+    "CHANGELOG.md": "5ceeaf72e1199f8c03d08ddbd365d4a38654d373016e6fb22f65de99f07d0f72",
+    "catalog.ttl": "463f6c95acb396f44575ee607032b9e5ea8c5042c73bd91cb6d391b70a57785c",
+    "integration.jsonld": "713495d85500e475b60d4f7a121442194df2ab416b903da5feacedc19374ff46",
+    "integration.ttl": "fdaea56194bbe8ac44b4f52e3801731ef7ed4f3cc0fc77f7f675d398636d7d34",
+    "shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d"
+  }
+}

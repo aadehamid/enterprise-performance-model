@@ -1,0 +1,40 @@
+{
+  "module": "party",
+  "version": "2.0.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/party",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/party/2.0.0",
+  "depends_on": {
+    "core": "2.4.0",
+    "system": "1.5.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0067",
+    "EPM-DEC-001-0068",
+    "EPM-DEC-001-0069",
+    "EPM-DEC-001-0070",
+    "EPM-DEC-001-0071",
+    "EPM-DEC-001-0072",
+    "EPM-DEC-001-0074",
+    "EPM-DEC-001-0087",
+    "EPM-DEC-001-0088",
+    "EPM-DEC-001-0092",
+    "EPM-DEC-001-0098",
+    "EPM-DEC-001-0099",
+    "EPM-DEC-001-0103",
+    "EPM-DEC-001-0104",
+    "EPM-DEC-001-0108"
+  ],
+  "triples": 4333,
+  "approved_by": {
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md"
+  },
+  "files": {
+    "CHANGELOG.md": "71c70db28daf5ca498052232c4113f99060176b49fb702b84b9ca1430b4dc149",
+    "catalog.ttl": "43f1e139bf196ecc2320e71147236322fdf6cf14aab1b00f937e37719fa52305",
+    "party.jsonld": "3882408bde5c8953c3c5bdbf8a1cf596a8c2d85d2ef5b2c38ef6567c4c1c977f",
+    "party.ttl": "3e676b3b60bb7e677402a2d963e24091d0b617df52b4957097c9751c4c778c4f",
+    "shapes.ttl": "ae4a164e63301fea094597f13a0229bd3cc5337bda48fb2c3107645e8fe757ce"
+  }
+}

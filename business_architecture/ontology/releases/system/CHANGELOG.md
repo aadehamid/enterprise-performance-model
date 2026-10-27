@@ -1,5 +1,18 @@
 # system changelog
 
+## 1.5.0 (2026-10-27)
+
+A minor release: it adds systems and notes, and changes no definition and removes no IRI. Approved by Claude under the delegation, with the decision owner's alignment with the plan that names it ("I am aligned with all your recommendation in the input plan.", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md`; EPM-DEC-001-0028; EPM-DEC-001-0108).
+
+- [minor] **Systems.** Eight systems the decision owner's customer inputs of 2026-10-27 name and the process map does not: PRM, the station point-of-sale systems, the third-party street price aggregator, Credit Card Summary, the Enterprise Data Lake, MSMIS, MCS and Terminaling Throughputs. Each is an application, defined in Claude's words from the inputs, and supports no process. PRM is not MPR. 49 systems, 47 defined.
+- [minor] **Notes.** TMR's note gives the inputs' description of it, and which description is right waits for its owner. Bridger Insight's note gives the interface SAP MDG calls it through, MDG.BP.I.1001.
+- It requires core 2.4.0.
+
+### Known gaps
+
+- TopDay and VALT have no definition; they wait for their owners (`business-closeout.md`, point 12).
+- The eight new descriptions wait for each system's owner to confirm or correct them (`business-closeout.md`, point 16).
+
 ## 1.4.0 (2026-10-26)
 
 A minor release: it adds seven systems and 21 links, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Approve (Recommended)", the decision owner's approval of the night brief of 2026-10-26, which says Claude approves the night's minor releases, saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md`; EPM-DEC-001-0028; EPM-DEC-001-0104).
