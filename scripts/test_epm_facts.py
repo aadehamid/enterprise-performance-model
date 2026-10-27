@@ -142,7 +142,7 @@ def test_find_skips_only_a_fresh_generated_copy(tmp_path, monkeypatch):
     subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
     monkeypatch.setattr(epm_facts, "built_pages", lambda root: {"README.html": fresh, "stale.html": fresh})
     hits = epm_facts.find_hits("crack spread", str(tmp_path))
-    assert sorted(name for name, _, _, _ in hits) == ["README.md", "orphan.html", "stale.html", "ontology-stores-runbook.html"]
+    assert sorted(name for name, _, _, _ in hits) == ["README.md", "ontology-stores-runbook.html", "orphan.html", "stale.html"]
 
 
 def test_the_repository_pages_are_skipped_when_fresh():
