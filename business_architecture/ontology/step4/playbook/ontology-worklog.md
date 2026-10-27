@@ -1022,8 +1022,9 @@ without a dated amendment and the decision owner's explicit agreement.
   accepted and released (system 1.4.0, party 1.4.0, core 2.4.0), and the
   deferred qSKOS fixes are released (core 2.4.0, lane 1.1.0, organization
   2.1.0, value-stream 1.2.0). Close-out points 1 and 2 stay open by the
-  decision owner's choice; points 1 to 16 of `business-closeout.md` and the
-  items parked for other reasons are what stays open.
+  decision owner's choice; points 1 to 16 of `business-closeout.md`, the next
+  releases' small fixes, the items parked for other reasons, and usage and
+  integration, a separate, later task, are what stays open.
 
 ### system 1.4.0 and party 1.4.0 are released (2026-10-26)
 - The decision owner accepted MPC-P11's strong and medium rows: 12

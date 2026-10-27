@@ -19,7 +19,7 @@ Postgres (Docker, one database per source system)
 
 ## Run it
 
-You need Docker, [uv](https://docs.astral.sh/uv/), and a Databricks Free Edition workspace with a personal access token. Copy `.env.example` to `.env` and fill it in; the scripts also read `~/.config/databricks/epm.env`. They never print a secret. To stop, restart, purge or reload the demo's stores together with the ontology's, see `business_architecture/ontology/projection/stores-runbook.html`.
+You need Docker, [uv](https://docs.astral.sh/uv/), and a Databricks Free Edition workspace with a personal access token. Copy `.env.example` to `.env` and fill it in; the scripts also read `~/.config/databricks/epm.env`. They never print a secret. To stop, restart, purge or reload the demo's stores together with the ontology's, see `business_architecture/ontology/projection/ontology-stores-runbook.html`.
 
 ```bash
 cd demos/downstream-pricing-databricks-free

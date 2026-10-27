@@ -138,7 +138,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
   <span class="name">Definitions and runs (Step 6)</span>
   <span class="scope">Module</span>
   <nav aria-label="Documents">
-    <a href="../ontology-guide.html">Ontology guide</a>
+    <a href="../epm-ontology-guide.html">Ontology guide</a>
     <a href="../../domain/decisions/decisions.html">Decisions</a>
     <a href="#top">Top</a>
   </nav>
@@ -164,7 +164,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <p>The ontology holds process definitions; the systems that use it hold the runs (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0016">EPM-DEC-001-0016</a>). This folder holds the pattern that links the two. The design is <a href="../../domain/decisions/decisions.html#EPM-DEC-001-0034">EPM-DEC-001-0034</a>.</p>
 <ul><li><code>run-shapes.ttl</code>: the SHACL a consumer's run must meet. A run is a <code>prov:Activity</code> with exactly one qualified association whose <code>prov:hadPlan</code> is a live core process concept (not retired, not a structural anchor, not a capability), and a start time. A further shape fails any core concept typed as a <code>prov:Activity</code>.</li><li><code>example-run.ttl</code>: one made-up run of a real process, for illustration. It is not data.</li><li><code>test_run_shapes.py</code>: the core release holds no runs, the example conforms, and broken runs fail. <code>scripts/check.sh</code> runs it.</li></ul>
 <p>To check your runs, validate them with <code>run-shapes.ttl</code> against the core release they follow.</p>
-      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../ontology-guide.html">ontology guide</a>.</p>
+      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>
 </div>

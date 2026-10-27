@@ -138,7 +138,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
   <span class="name">Step 9 validation shapes</span>
   <span class="scope">Module</span>
   <nav aria-label="Documents">
-    <a href="../ontology-guide.html">Ontology guide</a>
+    <a href="../epm-ontology-guide.html">Ontology guide</a>
     <a href="../../domain/decisions/decisions.html">Decisions</a>
     <a href="#top">Top</a>
   </nav>
@@ -164,7 +164,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <p>Shapes that run against the released modules without changing them. They join each module's release shapes at its next release.</p>
 <ul><li><code>controlled-values.ttl</code>: every code-list property takes its values from its own list (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0035">EPM-DEC-001-0035</a>). Since 2026-10-18 they are part of the <code>core</code> 2.1.0 release shapes (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0044">EPM-DEC-001-0044</a>); this file stays their source. <code>core</code> 2.1.0 and the organization module's RACI assignments conform.</li><li><code>test_all_module_shapes.py</code>: the Step 9 gate (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0065">EPM-DEC-001-0065</a>). Every shape file of <code>core</code> 2.4.0 (since 2026-10-26; 2.3.0 from 2026-10-23; 2.2.0 from 2026-10-22; 2.1.0 before) and the modules, run together on the graph the regression loads, finds zero violations; a cross-module break must fail. <code>scripts/check.sh</code> runs it.</li><li><code>test_release_package_shapes.py</code>: every package under <code>releases/</code> conforms to its own <code>shapes.ttl</code>, run over the package and the released packages it requires (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0081">EPM-DEC-001-0081</a>, 2026-10-22). A package missing from its hand-pinned list fails. <code>scripts/check.sh</code> runs it.</li><li><code>test_controlled_values.py</code>: the release (<code>core</code> 2.4.0 since 2026-10-26, 2.3.0 from 2026-10-23, 2.2.0 from 2026-10-22, each carrying 2.1.0's shapes unchanged) conforms, a value from the wrong list fails, and every code-list property of <code>core</code> has a shape here or in the release shapes (<code>core:businessDomain</code> is checked by the release's own shape). <code>scripts/check.sh</code> runs it.</li></ul>
 <p>The evidence-link shapes (every canonical fact links to its source evidence, and every fact node to its triple) are in the <code>core</code> 2.1.0 release shapes, with the build check that each node's rows match the mapping (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0044">EPM-DEC-001-0044</a>).</p>
-      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../ontology-guide.html">ontology guide</a>.</p>
+      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>
 </div>

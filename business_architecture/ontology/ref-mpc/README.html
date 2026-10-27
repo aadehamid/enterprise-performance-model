@@ -138,7 +138,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
   <span class="name">The ref-mpc module (Step 5)</span>
   <span class="scope">Module</span>
   <nav aria-label="Documents">
-    <a href="../ontology-guide.html">Ontology guide</a>
+    <a href="../epm-ontology-guide.html">Ontology guide</a>
     <a href="../../domain/decisions/decisions.html">Decisions</a>
     <a href="#top">Top</a>
   </nav>
@@ -165,7 +165,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <ul><li><code>ref-mpc.ttl</code>: MPC and MPLX as legal entities, MPC's control of MPLX (<code>orgm:ControlRelationship</code>, about 64 percent, as of 2025-12-31), MPC's three reportable segments, and its 13 refineries. Every fact comes from MPC's FY2025 Form 10-K (MPC-S01 in <code>../../reference/mpc/source-register.md</code>) and holds as of 2025-12-31. MPC and MPLX also carry their LEIs from GLEIF (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0023">EPM-DEC-001-0023</a>).</li><li><code>reference-parties.ttl</code>: MPC and MPLX in the <code>party</code> module's terms, on this module's IRIs: MPC holds the Throughput Holder and Payer roles and MPLX the Carrier and Vendor roles under MPLX's fee-based services agreements, each held since 2012-10-31 (the first agreements' date) and sourced to MPLX's FY2025 Form 10-K. They are the real organisations of competency questions section VII's done-when (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0071">EPM-DEC-001-0071</a>). Moved here from <code>../party/</code> on 2026-10-22 (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0075">EPM-DEC-001-0075</a>); the regression loads the file. The party module's shapes check it.</li><li><code>shapes.ttl</code>: every organization, segment and refinery has one English name, a described source and an as-of date; a segment belongs to one company and a refinery to one owner. The control relationship is checked by the organization module's shapes (<code>../organization/shapes.ttl</code>), which <code>test_ref_mpc.py</code> loads with these.</li><li><code>test_ref_mpc.py</code>: SHACL, the facts against the filing, broken instances that must fail, and MPC and MPLX as parties read both ways, held since 2012-10-31, citing MPLX's 10-K and conforming to the party module's shapes. <code>scripts/check.sh</code> runs it.</li></ul>
 <p>The module uses the organization module's terms, the party module's terms and W3C ORG terms by IRI and defines none of its own. Refinery capacity is not here yet: it is a dated quantity, which waits for the measure pattern in Step 7.</p>
 <p>Released as 1.0.0 and 1.1.0 (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0037">EPM-DEC-001-0037</a>, 0045), and as 1.2.0 on 2026-10-22, which adds <code>reference-parties.ttl</code> and requires organization 2.0.0 and party 1.0.0 (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0080">EPM-DEC-001-0080</a>): <code>../releases/ref-mpc/1.2.0/</code>.</p>
-      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../ontology-guide.html">ontology guide</a>.</p>
+      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>
 </div>

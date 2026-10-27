@@ -5,7 +5,7 @@ playbook (the method), the worklog (the build record), the acceptance
 test (competency questions), and the reproducible build scripts with their outputs.
 
 **Start here.** This README is the single entry point. Three documents, three
-roles, and a fourth to read first if you are new (`ontology-guide.html`, below the table):
+roles, and a fourth to read first if you are new (`epm-ontology-guide.html`, below the table):
 
 | File | Role | Read it for |
 |------|------|-------------|
@@ -13,7 +13,7 @@ roles, and a fourth to read first if you are new (`ontology-guide.html`, below t
 | `step4/playbook/ontology-worklog.md` | **Worklog**: the build record | The plan table with current step statuses (§2), the per-step log (§3), the dated decision journal (§4), and the evidence map for the playbook, section by section (§8, *2026-10-23*) |
 | `MODULES.md` | **Module guide**: the released modules and how they connect | What each module holds, the three kinds of content, each link between modules with a real example from the releases, and one walk across modules |
 
-**New to the ontology?** Open `ontology-guide.html` in a browser. It explains what the ontology is for, why it is split into modules, what each module holds and why, and follows one pricing measure, the crack spread, through every module, with diagrams and a query you can run. Its figures are a dated snapshot; `MODULES.md` and `scripts/epm_facts.py` stay the current reference.
+**New to the ontology?** Open `epm-ontology-guide.html` in a browser. It explains what the ontology is for, why it is split into modules, what each module holds and why, and follows one pricing measure, the crack spread, through every module, with diagrams and a query you can run. Its figures are a dated snapshot; `MODULES.md` and `scripts/epm_facts.py` stay the current reference.
 
 Check the playbook's §2 Policies and this project's decision records
 (`../domain/decisions/`, EPM-DEC-001) before making any modeling choice, and
@@ -68,7 +68,7 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 | The `ontology` skill's guide | **Playbook** (the method, normative): policies, method, standards, soundness, working agreements, a neutral worked example; in personal-agent-skills since 2026-10-25 (EPM-DEC-001-0101) |
 | `step4/playbook/ontology-worklog.md` | **Worklog** (the build record): plan table and statuses, step log, decision journal, the playbook's evidence map |
 | `MODULES.md` | **Module guide**: each released module, how the modules connect, with examples quoted from the releases (tested by `scripts/test_modules_guide.py`) |
-| `ontology-guide.html` | **Ontology guide**, a standalone page for a person: why modules, each module and why it exists, the module map, and the crack-spread measure traced through every module, with diagrams |
+| `epm-ontology-guide.html` | **Ontology guide**, a standalone page for a person: why modules, each module and why it exists, the module map, and the crack-spread measure traced through every module, with diagrams |
 | `step4/` | Step 4 working area: verb-predicate mapping, evidence gate, canonical facts, correction backlog (see `step4/README.md`) |
 | `step4/evidence-discipline.md` | The approved Step 4 evidence discipline text, moved word for word from the playbook on 2026-10-05 |
 | `lpg-projection/` | The superseded v2.2 copy of the ontology-to-LPG projection guideline, kept as evidence of what Step 12 followed (EPM-DEC-001-0020, 0021). Since 2026-10-23 the method is the `ontology-to-lpg` skill in personal-agent-skills, at `da75164`; the folder's README points to it (EPM-DEC-001-0095) |
@@ -131,7 +131,7 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 
 ## Status
 
-**The ontology is closed** (EPM-DEC-001-0096, 2026-10-23). *2026-10-26:* **the ontology is done** (EPM-DEC-001-0107): MPC-P11 and MPC-P12 are accepted and released, the deferred qSKOS fixes are released, and what stays open is the business's points in `business-closeout.md` and the items parked for other reasons. Every item that
+**The ontology is closed** (EPM-DEC-001-0096, 2026-10-23). *2026-10-26:* **the ontology is done** (EPM-DEC-001-0107): MPC-P11 and MPC-P12 are accepted and released, the deferred qSKOS fixes are released, and what stays open is the business's points in `business-closeout.md`, the next releases' small fixes, the items parked for other reasons, and usage and integration, a separate, later task. Every item that
 waited on the decision owner is answered (EPM-DEC-001-0086 to 0095), the six
 close-out releases are built and tagged, the projection's list of release
 gaps is empty, and the competency regression is green. The worklog's plan

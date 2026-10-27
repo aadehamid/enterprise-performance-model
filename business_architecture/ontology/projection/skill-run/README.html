@@ -138,7 +138,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
   <span class="name">Running the ontology-to-lpg skill on the EPM inputs</span>
   <span class="scope">EPM ontology</span>
   <nav aria-label="Documents">
-    <a href="../../ontology-guide.html">Ontology guide</a>
+    <a href="../../epm-ontology-guide.html">Ontology guide</a>
     <a href="../../../domain/decisions/decisions.html">Decisions</a>
     <a href="#top">Top</a>
   </nav>
@@ -174,7 +174,7 @@ uv run --no-project --with rdflib python3 run_projection.py --config &lt;this fo
 <p><code>replace_target</code> is on, so the copy and the rebuild's copy delete everything on Aura first. That Aura instance holds only these test runs.</p>
 <p><code>keep_neo4j</code> is on (since 2026-10-26, <code>../../step4/review-evidence/decision-owner-answers/answers-2026-10-26-keep-stores.md</code>), so the local Neo4j stays up after the run for exploration. <code>../LOCAL-STORES.md</code> lists every store kept loaded and how to refresh it.</p>
 <p>The skill's <code>references/run-config.md</code> describes each step and the check it runs. Steps 2 to 4 cover checks V1 to V5 of the skill's validation path and the load covers V6 to V12. The copy, the triple-store counts and the round trips cover the rest, up to V14. For the <code>GRAPH TYPE</code> checks G1 to G4, the <code>graph-type</code> step writes the statement; applying it, reading it back with <code>SHOW CURRENT GRAPH TYPE</code> and probing it with a write that breaks it are done by hand.</p>
-      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../../ontology-guide.html">ontology guide</a>.</p>
+      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../../epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>
 </div>

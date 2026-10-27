@@ -138,11 +138,11 @@ def test_find_skips_only_a_fresh_generated_copy(tmp_path, monkeypatch):
     (tmp_path / "README.html").write_text(fresh)
     (tmp_path / "stale.html").write_text(head + "<p>The crack spread was edited by hand.</p></html>\n")
     (tmp_path / "orphan.html").write_text(head + "<p>A crack spread page no source builds.</p></html>\n")
-    (tmp_path / "stores-runbook.html").write_text("<html><head></head>\n<p>The crack spread is a margin.</p></html>\n")
+    (tmp_path / "ontology-stores-runbook.html").write_text("<html><head></head>\n<p>The crack spread is a margin.</p></html>\n")
     subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
     monkeypatch.setattr(epm_facts, "built_pages", lambda root: {"README.html": fresh, "stale.html": fresh})
     hits = epm_facts.find_hits("crack spread", str(tmp_path))
-    assert sorted(name for name, _, _, _ in hits) == ["README.md", "orphan.html", "stale.html", "stores-runbook.html"]
+    assert sorted(name for name, _, _, _ in hits) == ["README.md", "ontology-stores-runbook.html", "orphan.html", "stale.html"]
 
 
 def test_the_repository_pages_are_skipped_when_fresh():

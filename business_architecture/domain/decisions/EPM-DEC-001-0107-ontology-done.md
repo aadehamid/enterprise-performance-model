@@ -23,7 +23,7 @@ EPM-DEC-001-0096 closed the ontology on 2026-10-23. The work queue that followed
 4. **The decision owner's two close-out points stay open by their decision.** Q17 (point 1) stays parked until the decision owner convenes the business leads, and the Risk Group stays provisionally accountable for Market Data until its mandate is confirmed (point 2): "Both stay open (Recommended)" (block 5).
 5. **The checks are green on the newest releases:** 42 packages listed in `releases/catalog.ttl`; the competency regression at 43 answerable, 0 partial, 0 waiting and 1 parked (Q17), run on core 2.4.0; and the Neo4j projection of every newest release at 4,146 nodes and 21,503 relationships from 36,473 triples, with 0 SHACL violations, an empty round trip and equal hashes (`projection/projection-report.json`).
 
-**What stays open.** None of it is build work:
+**What stays open.** None of it is build work (*2026-10-27:* except the next releases' small fixes below, which are release work in their modules):
 
 - **With the business:** points 1 to 16 of `business-closeout.md`. The package's table gives, for each point, who is asked to answer it and the record and module that take the answer. The decision owner may work through some of them first, to narrow them down (block 11). Each answer is an amendment to the named record and goes into that module's next minor release.
 - **In the next release of a module:**

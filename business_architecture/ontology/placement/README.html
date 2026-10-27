@@ -138,7 +138,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
   <span class="name">placement: what a placement claims</span>
   <span class="scope">Module</span>
   <nav aria-label="Documents">
-    <a href="../ontology-guide.html">Ontology guide</a>
+    <a href="../epm-ontology-guide.html">Ontology guide</a>
     <a href="../../domain/decisions/decisions.html">Decisions</a>
     <a href="#top">Top</a>
   </nav>
@@ -164,7 +164,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <p>Competency question 38 asks whether a measure's or concept's placement on a process certifies the process or is only context. This vocabulary answers it by marking each placing property of the other modules with its kind: <code>certification</code> (the link names a data product's owning process) or <code>context</code> (the link says only where one thing is used or placed with another). Only producing a data product certifies (<code>vs:produces</code>, <code>dp:producedBy</code>, the owning process). Every other placement, including every measure's, is context. <a href="../../domain/decisions/decisions.html#EPM-DEC-001-0058">EPM-DEC-001-0058</a> records the choice.</p>
 <div class="tblwrap"><table><thead><tr><th>File</th><th>What</th></tr></thead><tbody><tr><td><code>vocabulary.ttl</code></td><td>The <code>placementKind</code> annotation, the two kinds, and the annotations on twelve properties of the kpi, value-stream, data-product, system, lane and market-data modules</td></tr><tr><td><code>test_placement.py</code></td><td>Tests: the kinds are the decided ones, one per property, every annotated property exists in its module, and q38a sees a measure certified as an object</td></tr></tbody></table></div>
 <p>Released in <code>integration</code> 1.0.0 on 2026-10-22, with <code>authority</code> and <code>consumer</code> (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0078">EPM-DEC-001-0078</a>): the package in <code>../releases/integration/1.0.0/</code>. <em>2026-10-23:</em> <code>integration</code> 2.0.0 (<code>../releases/integration/2.0.0/</code>): <code>plc:placementKind</code> takes <code>rdfs:range skos:Concept</code>, and <code>placement/shapes.ttl</code> states one kind per placing property (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0094">EPM-DEC-001-0094</a>). <em>2026-10-25:</em> <code>integration</code> 2.1.0, in the item G pull request, states the code list's top concepts both ways (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0098">EPM-DEC-001-0098</a>).</p>
-      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../ontology-guide.html">ontology guide</a>.</p>
+      <p class="end">Generated from <code>README.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>
 </div>

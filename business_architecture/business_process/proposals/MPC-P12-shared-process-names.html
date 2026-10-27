@@ -138,7 +138,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
   <span class="name">Proposal MPC-P12: names for the processes that share a name in the process map</span>
   <span class="scope">Process-map proposal</span>
   <nav aria-label="Documents">
-    <a href="../../ontology/ontology-guide.html">Ontology guide</a>
+    <a href="../../ontology/epm-ontology-guide.html">Ontology guide</a>
     <a href="../../domain/decisions/decisions.html">Decisions</a>
     <a href="#top">Top</a>
   </nav>
@@ -174,7 +174,7 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <p>The analysis steps name the parent analysis as the map names it, so "Customer And Marketer Analysis" keeps the map's capital A. "Analyze ... Data" names the subject only, as the preview the decision owner accepted did. The two XPIMS steps name the evaluation each one supports, from their descriptions ("in support of COE", "in support of COP"). CM 1.2.3 keeps its name, because its description says what actualizations are, and its child takes the verb.</p>
 <h2 id="how-the-ontology-takes-it">How the ontology takes it<a class="hl" href="#how-the-ontology-takes-it" aria-label="Link to this section">#</a></h2>
 <p>The process map changes only through an accepted proposal (AGENTS.md). The decision owner accepted this one on 2026-10-26 (<a href="../../domain/decisions/decisions.html#EPM-DEC-001-0105">EPM-DEC-001-0105</a>). The renames change no IRI and move no node, so <code>core</code> takes them in a minor release, 2.4.0. Each renamed concept takes the new name as its <code>skos:prefLabel</code> and keeps the old name as <code>core:priorPreferredLabel</code>, the annotation core uses for former names. The old name is not an alternative label (<code>skos:altLabel</code>): it would still be shared, so a search on it would find several processes (the <code>ontology</code> skill's <code>identity-taxonomy.md</code>, Step 3, rule 8).</p>
-      <p class="end">Generated from <code>MPC-P12-shared-process-names.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../../ontology/ontology-guide.html">ontology guide</a>.</p>
+      <p class="end">Generated from <code>MPC-P12-shared-process-names.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../../ontology/epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>
 </div>
