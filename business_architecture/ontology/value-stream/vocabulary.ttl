@@ -154,10 +154,12 @@ vs:relationship a owl:ObjectProperty ;
 
 vs:MeasureRelationship a skos:ConceptScheme ; rdfs:label "measure relationship"@en ;
     skos:definition "The three ways a value-stream process can relate to a measure."@en ;
-    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
-rel:informs a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:prefLabel "Informs"@en ; skos:notation "informs" ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en ;
+    # A flat code list: every relationship is a top concept, stated both ways (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106).
+    skos:hasTopConcept rel:informs, rel:benchmarks, rel:measures-performance .
+rel:informs a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:topConceptOf vs:MeasureRelationship ; skos:prefLabel "Informs"@en ; skos:notation "informs" ;
     skos:definition "The process uses the measure as an input."@en .
-rel:benchmarks a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:prefLabel "Benchmarks"@en ; skos:notation "benchmarks" ;
+rel:benchmarks a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:topConceptOf vs:MeasureRelationship ; skos:prefLabel "Benchmarks"@en ; skos:notation "benchmarks" ;
     skos:definition "The process compares results against the measure as an external reference."@en .
-rel:measures-performance a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:prefLabel "Measures performance"@en ; skos:notation "measures-performance" ;
+rel:measures-performance a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:topConceptOf vs:MeasureRelationship ; skos:prefLabel "Measures performance"@en ; skos:notation "measures-performance" ;
     skos:definition "The process tracks the measure as a result of the business."@en .

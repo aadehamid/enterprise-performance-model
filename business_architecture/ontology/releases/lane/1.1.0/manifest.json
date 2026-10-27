@@ -1,0 +1,28 @@
+{
+  "module": "lane",
+  "version": "1.1.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/lane",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/lane/1.1.0",
+  "depends_on": {
+    "core": "2.3.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0056",
+    "EPM-DEC-001-0077",
+    "EPM-DEC-001-0098",
+    "EPM-DEC-001-0106"
+  ],
+  "triples": 67,
+  "approved_by": {
+    "who": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
+  },
+  "files": {
+    "CHANGELOG.md": "d8fa380a529df4dc94ec8481e8014b5948dccf3b3020d69eb773c106db4687f3",
+    "catalog.ttl": "4e251ac022e53345573ead0abdcb4db3f17d6001e1aefc845cdc56715dd9f474",
+    "lane.jsonld": "7da9c3869b10cb1662665d35545a6445c1ad3a715f28a12cb4051a281c944805",
+    "lane.ttl": "6b338c1cbc1b0ecde49df9a4ea2b46714c34df42ccc62fa58dfe3ee4ee345878",
+    "shapes.ttl": "17a71361c5c620a9bea93ec9cc49d409e2541f74e13a0dfc349eea13178602c4"
+  }
+}

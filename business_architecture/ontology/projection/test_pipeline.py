@@ -138,8 +138,8 @@ class Build(unittest.TestCase):
     def test_the_inputs_are_every_released_module_at_its_newest_version(self):
         # Pinned by hand (EPM-DEC-001-0036, amendment of 2026-10-22); a new release must be added here.
         self.assertEqual(pl.PACKAGES, [
-            ("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.2.0"), ("party", "1.3.0"),
-            ("data-product", "1.2.0"), ("value-stream", "1.1.0"), ("system", "1.3.0"), ("lane", "1.0.0"),
+            ("core", "2.3.0"), ("organization", "2.1.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.2.0"), ("party", "1.3.0"),
+            ("data-product", "1.2.0"), ("value-stream", "1.2.0"), ("system", "1.3.0"), ("lane", "1.1.0"),
             ("market-data", "1.1.0"), ("integration", "2.3.0")])
         import glob, os
         newest = {}
@@ -206,7 +206,7 @@ class Report(unittest.TestCase):
         real_open = open
         def edited(path, *a, **k):
             f = real_open(path, *a, **k)
-            if str(path).endswith("releases/organization/2.0.0/shapes.ttl"):
+            if str(path).endswith("releases/organization/2.1.0/shapes.ttl"):
                 import io
                 return io.StringIO(f.read() + "\n# edited\n")
             return f

@@ -1,0 +1,142 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rel: <https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/value-stream/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:Capability a sh:NodeShape ;
+    sh:property [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path vs:alignsToProcessGroup ] ;
+    sh:targetClass vs:Capability .
+
+shp:LinkIsNotADesignation a sh:NodeShape ;
+    sh:property [ sh:maxCount 0 ;
+            sh:path kpi:measureKind ],
+        [ sh:maxCount 0 ;
+            sh:path kpi:kpiCandidate ] ;
+    sh:targetClass vs:MeasureLink .
+
+shp:MeasureLink a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath vs:measureLink ] ],
+        [ sh:class kpi:MeasureDefinition ;
+            sh:maxCount 1 ;
+            sh:message "A measure link names exactly one measure of the kpi module." ;
+            sh:minCount 1 ;
+            sh:path vs:measure ],
+        [ sh:in ( rel:informs rel:benchmarks rel:measures-performance ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path vs:relationship ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "A measure link cites its basis." ;
+            sh:minCount 1 ;
+            sh:path dcterms:bibliographicCitation ] ;
+    sh:targetClass vs:MeasureLink .
+
+shp:Named a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:languageIn ( "en" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:notation ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:definition ],
+        [ sh:maxCount 1 ;
+            sh:message "Each item cites the value-stream file it comes from." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ] ;
+    sh:targetClass vs:Capability,
+        vs:Stage,
+        vs:ValueStream,
+        vs:ValueStreamProcess .
+
+shp:Stage a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:minInclusive 1 ;
+            sh:path vs:sequence ],
+        [ sh:maxCount 1 ;
+            sh:message "A stage belongs to exactly one value stream." ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath vs:hasStage ] ],
+        [ sh:class vs:ValueStreamProcess ;
+            sh:minCount 1 ;
+            sh:path vs:hasProcess ] ;
+    sh:targetClass vs:Stage .
+
+shp:ValueStream a sh:NodeShape ;
+    sh:property [ sh:class vs:Capability ;
+            sh:minCount 1 ;
+            sh:path vs:usesCapabilityInStream ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path vs:sourceDomain ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path vs:trigger ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path vs:outcome ],
+        [ sh:class vs:Stage ;
+            sh:minCount 1 ;
+            sh:path vs:hasStage ] ;
+    sh:targetClass vs:ValueStream .
+
+shp:ValueStreamProcess a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "A value-stream process sits in exactly one stage." ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath vs:hasProcess ] ],
+        [ sh:class vs:Capability ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path vs:usesCapability ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path vs:realizes ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:scopeNote ],
+        [ sh:maxCount 4 ;
+            sh:minCount 0 ;
+            sh:or ( [ sh:class dp:DataProduct ] [ sh:class dp:DataProductLine ] ) ;
+            sh:path vs:produces ],
+        [ sh:maxCount 4 ;
+            sh:minCount 0 ;
+            sh:or ( [ sh:class dp:DataProduct ] [ sh:class dp:DataProductLine ] ) ;
+            sh:path vs:consumes ],
+        [ sh:class vs:ValueStreamProcess ;
+            sh:minCount 0 ;
+            sh:path vs:feeds ],
+        [ sh:class vs:ValueStreamProcess ;
+            sh:minCount 0 ;
+            sh:path vs:informs ],
+        [ sh:class vs:ValueStreamProcess ;
+            sh:minCount 0 ;
+            sh:path vs:loopsTo ],
+        [ sh:class vs:MeasureLink ;
+            sh:minCount 0 ;
+            sh:path vs:measureLink ] ;
+    sh:targetClass vs:ValueStreamProcess .
+

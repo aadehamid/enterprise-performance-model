@@ -76,6 +76,8 @@ def build(lanes, placed, procs):
         g.add((iri, RDF.type, SKOS.Concept))
         g.add((iri, RDF.type, LANE.OfficeLane))
         g.add((iri, SKOS.inScheme, LANE.OfficeLanes))
+        g.add((iri, SKOS.topConceptOf, LANE.OfficeLanes))  # a flat scheme: every lane is a top concept (EPM-DEC-001-0098, item 5)
+        g.add((LANE.OfficeLanes, SKOS.hasTopConcept, iri))
         g.add((iri, SKOS.prefLabel, Literal(lane["name"], lang="en")))
         g.add((iri, SKOS.notation, Literal(key, datatype=XSD.string)))
         g.add((iri, SKOS.definition, Literal(lane["description"], lang="en")))

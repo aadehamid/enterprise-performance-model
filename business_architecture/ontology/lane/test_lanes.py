@@ -39,6 +39,30 @@ class Build(unittest.TestCase):
             ("CM-1-2-4", "back-office"), ("CM-1-2-5", "operations"), ("CM-1-2-6", "operations"),
             ("CM-1-2-7", "operations")})
 
+    def test_every_lane_is_a_top_concept_both_ways(self):
+        # A flat code list states each member as a top concept, both ways (EPM-DEC-001-0098, item 5; 0106).
+        lanes = {LANEV[k] for k in ("front-office", "middle-office", "back-office", "operations")}
+        self.assertEqual(len(set(LANES.subjects(SKOS.inScheme, LANE.OfficeLanes))), 4)  # counted by hand
+        self.assertEqual(set(LANES.subjects(SKOS.inScheme, LANE.OfficeLanes)), lanes)
+        self.assertEqual(set(LANES.subjects(SKOS.topConceptOf, LANE.OfficeLanes)), lanes)
+        self.assertEqual(set(LANES.objects(LANE.OfficeLanes, SKOS.hasTopConcept)), lanes)
+
+    def test_no_message_holds_an_apostrophe(self):
+        # n10s writes sh:message into Cypher unescaped, so a single quote breaks its validator (ontology skill,
+        # SHACL rule 19; EPM-DEC-001-0106).
+        self.assertEqual([str(m) for m in SHAPES.objects(None, URIRef("http://www.w3.org/ns/shacl#message")) if "'" in str(m)], [])
+
+    def test_no_iri_changed_since_1_0_0(self):
+        # A minor release removes no IRI: every subject of the 1.0.0 package, the ontology header aside, is still a
+        # subject of 1.1.0, and nothing is newly deprecated (EPM-DEC-001-0106).
+        releases = os.path.join(HERE, "..", "releases", "lane")
+        header = URIRef("https://w3id.org/lsc/ontology/modules/lane")
+        old = Graph().parse(os.path.join(releases, "1.0.0", "lane.ttl"))
+        new = Graph().parse(os.path.join(releases, "1.1.0", "lane.ttl"))
+        self.assertEqual({s for s in old.subjects() if s != header} - set(new.subjects()), set())
+        deprecated = URIRef("http://www.w3.org/2002/07/owl#deprecated")
+        self.assertEqual(set(new.subjects(deprecated, None)), set(old.subjects(deprecated, None)))
+
     def test_nothing_is_inherited(self):
         self.assertIsNone(LANES.value(PROC["CM-1-2-1-3"], LANE.officeLane))
 

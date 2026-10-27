@@ -1,5 +1,12 @@
 # organization changelog
 
+## 2.1.0 (2026-10-26)
+
+A minor release: it adds statements and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0106).
+
+- [minor] **Top concepts both ways.** Each of the four RACI levels states `skos:topConceptOf orgm:RaciLevel`, and the scheme states `skos:hasTopConcept` for each. The code list is flat, so every level is a top concept; this fixes the qSKOS finding "Omitted Top Concepts" (EPM-DEC-001-0098, item 5).
+- It requires core 2.3.0, the current release (2.0.0 required core 2.1.0). `ref-mpc` 1.2.0 still requires organization 2.0.0, which stays released as it is.
+
 ## 2.0.0 (2026-10-18)
 
 Major. Approved by the decision owner on 2026-10-18 ("Yes, approve 2.0.0 (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md`). It carries their answers to the role questions (EPM-DEC-001-0045).

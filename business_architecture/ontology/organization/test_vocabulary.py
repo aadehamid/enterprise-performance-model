@@ -8,7 +8,7 @@ import os
 import unittest
 
 from pyshacl import validate
-from rdflib import Graph, Literal, Namespace
+from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS, XSD
 
@@ -129,6 +129,29 @@ class Vocabulary(unittest.TestCase):
             | set(VOCAB.subjects(SKOS.topConceptOf, ORGM.RaciLevel))
         self.assertEqual(members, LEVELS)
         self.assertEqual(sorted(str(VOCAB.value(m, SKOS.notation)) for m in members), ["A", "C", "I", "R"])
+
+    def test_every_level_is_a_top_concept_both_ways(self):
+        # A flat code list states each member as a top concept, both ways (EPM-DEC-001-0098, item 5; 0106).
+        self.assertEqual(len(set(VOCAB.subjects(SKOS.inScheme, ORGM.RaciLevel))), 4)  # counted by hand
+        self.assertEqual(set(VOCAB.subjects(SKOS.topConceptOf, ORGM.RaciLevel)), LEVELS)
+        self.assertEqual(set(VOCAB.objects(ORGM.RaciLevel, SKOS.hasTopConcept)), LEVELS)
+
+    def test_no_message_holds_an_apostrophe(self):
+        # n10s writes sh:message into Cypher unescaped, so a single quote breaks its validator (ontology skill,
+        # SHACL rule 19; EPM-DEC-001-0106).
+        message = URIRef("http://www.w3.org/ns/shacl#message")
+        self.assertEqual([str(m) for m in SHAPES.objects(None, message) if "'" in str(m)], [])
+
+    def test_no_iri_changed_since_2_0_0(self):
+        # A minor release removes no IRI: every subject of the 2.0.0 package, the ontology header aside, is still a
+        # subject of 2.1.0, and nothing is newly deprecated (EPM-DEC-001-0106).
+        releases = os.path.join(HERE, "..", "releases", "organization")
+        header = URIRef("https://w3id.org/lsc/ontology/modules/organization")
+        old = Graph().parse(os.path.join(releases, "2.0.0", "organization.ttl"))
+        new = Graph().parse(os.path.join(releases, "2.1.0", "organization.ttl"))
+        self.assertEqual({s for s in old.subjects() if s != header} - set(new.subjects()), set())
+        deprecated = URIRef("http://www.w3.org/2002/07/owl#deprecated")
+        self.assertEqual(set(new.subjects(deprecated, None)), set(old.subjects(deprecated, None)))
 
     def test_the_shape_allows_exactly_the_four_levels(self):
         node = [n for n in SHAPES.objects(SHP.Assignment, SH.property)

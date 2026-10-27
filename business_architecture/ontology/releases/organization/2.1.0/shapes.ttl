@@ -1,0 +1,107 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/organization/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:Assignment a sh:NodeShape ;
+    sh:property [ sh:class skos:Concept ;
+            sh:maxCount 1 ;
+            sh:message "An assignment is for exactly one process concept." ;
+            sh:minCount 1 ;
+            sh:path orgm:forProcess ],
+        [ sh:maxCount 0 ;
+            sh:message "An assignment names a live role, not a deprecated one (EPM-DEC-001-0045)." ;
+            sh:path ( orgm:assignedRole owl:deprecated ) ],
+        [ sh:class org:Role ;
+            sh:maxCount 1 ;
+            sh:message "An assignment names exactly one role." ;
+            sh:minCount 1 ;
+            sh:path orgm:assignedRole ],
+        [ sh:in ( raci:responsible raci:accountable raci:consulted raci:informed ) ;
+            sh:maxCount 1 ;
+            sh:message "An assignment has exactly one RACI level." ;
+            sh:minCount 1 ;
+            sh:path orgm:raciLevel ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path orgm:sourceRoleText ],
+        [ sh:message "An assignment cites its source." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ] ;
+    sh:targetClass orgm:ResponsibilityAssignment .
+
+shp:Control a sh:NodeShape ;
+    sh:property [ sh:class org:FormalOrganization ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path orgm:controllingEntity ],
+        [ sh:class org:FormalOrganization ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path orgm:controlledEntity ],
+        [ sh:datatype xsd:decimal ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1 ;
+            sh:minCount 0 ;
+            sh:minInclusive 0 ;
+            sh:path orgm:ownershipShare ],
+        [ sh:datatype xsd:date ;
+            sh:maxCount 1 ;
+            sh:message "A control relationship states the date it held." ;
+            sh:minCount 1 ;
+            sh:path orgm:asOf ],
+        [ sh:message "A control relationship cites its source." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ] ;
+    sh:targetClass orgm:ControlRelationship .
+
+shp:Role a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:languageIn ( "en" ) ;
+            sh:maxCount 1 ;
+            sh:message "A role has exactly one English name." ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:altLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:definition ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:scopeNote ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:hiddenLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:editorialNote ],
+        [ sh:datatype xsd:boolean ;
+            sh:maxCount 1 ;
+            sh:message "A role carries owl:deprecated at most once, as a boolean (EPM-DEC-001-0045)." ;
+            sh:minCount 0 ;
+            sh:path owl:deprecated ],
+        [ sh:class org:Role ;
+            sh:maxCount 1 ;
+            sh:message "A deprecated role names one successor role." ;
+            sh:minCount 0 ;
+            sh:path dcterms:isReplacedBy ],
+        [ sh:message "A role cites the source that names it." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ] ;
+    sh:targetClass org:Role .
+
