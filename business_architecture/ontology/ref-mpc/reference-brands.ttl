@@ -1,0 +1,50 @@
+# MPC's brands as individuals of the party module's Brand class. The decision owner confirmed on
+# 2026-10-27 that Marathon, ARCO and Tesoro can be brand values ("yes those can be brand values";
+# answers-2026-10-27-customer-inputs.md, Block 12; EPM-DEC-001-0108, amendment of 2026-10-27). They are
+# instances of a real company, which the module policy puts in ref-mpc only (MODULES.md, "Three kinds of
+# content"), on this module's IRIs. Each brand also cites MPC's FY2025 Form 10-K, as the repository
+# records its wording:
+# - business_architecture/reference/mpc/customer-classification-evidence.md, C1: "independent entrepreneurs
+#   who operate primarily Marathon® branded outlets"; C2: "long-term supply contracts with direct dealers
+#   who operate locations mainly under the ARCO® brand"; brand status: "Branded: Marathon, ARCO, or other
+#   flags (Shell, Mobil, Tesoro, other)".
+# - business_architecture/reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 5: brand jobber outlets
+#   "7,882 in 40 states, DC and Mexico (mainly Marathon® brand; also Shell, Mobil, Tesoro, others)";
+#   direct dealer locations "1,162 under long-term supply contracts, mainly Southern California, largely ARCO®".
+# Each brand holds as of 2026-10-27, the date the decision owner confirmed it. Who owns or licenses
+# each brand is not stated here: that is a Brand License agreement, and the repository holds no source
+# for it.
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix brand: <https://w3id.org/lsc/ontology/modules/ref-mpc/brand/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# The two sources, described as the system and ref-mpc modules describe them.
+src:decision-owner-customer-inputs-2026-10-27 a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's customer inputs of 2026-10-27 (two images and two Dealer Master documents, kept out of the repository by EPM-DEC-001-0108), as the party module holds them"@en .
+
+src:mpc-s01 a dcterms:BibliographicResource ;
+    dcterms:title "Marathon Petroleum Corporation, Form 10-K for the fiscal year ended 2025-12-31"@en ;
+    dcterms:identifier "0001510295-26-000009" ;
+    dcterms:issued "2026-02-26"^^xsd:date ;
+    dcterms:bibliographicCitation "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm"@en .
+
+brand:marathon a party:Brand ;
+    skos:prefLabel "Marathon"@en ;
+    skos:definition "The brand that most of the outlets of MPC brand jobbers carry. Brand jobbers are independent businesses that run these outlets."@en ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27, src:mpc-s01 ;
+    dcterms:date "2026-10-27"^^xsd:date .
+
+brand:arco a party:Brand ;
+    skos:prefLabel "ARCO"@en ;
+    skos:definition "The brand that most of the locations of MPC direct dealers carry, mainly in Southern California. Direct dealers run these locations under long-term supply contracts with MPC."@en ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27, src:mpc-s01 ;
+    dcterms:date "2026-10-27"^^xsd:date .
+
+brand:tesoro a party:Brand ;
+    skos:prefLabel "Tesoro"@en ;
+    skos:definition "A brand that some outlets of MPC brand jobbers carry. The 10-K names it with Shell and Mobil among the other brands on those outlets."@en ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27, src:mpc-s01 ;
+    dcterms:date "2026-10-27"^^xsd:date .

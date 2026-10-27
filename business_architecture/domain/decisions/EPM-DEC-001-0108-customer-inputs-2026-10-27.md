@@ -70,4 +70,12 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 
 - `party` 2.0.0, `system` 1.5.0 and `integration` 2.4.0 are released in one pull request, with their changelogs and manifests.
 - EPM-DEC-001-0069, 0070, 0072 and 0103 carry dated notes.
-- Known gaps: the brands Marathon, ARCO and Tesoro as brand values; Dealer Master's billing customer number, whose relation to the SAP customer number the inputs leave open; and whether Dealer Master's fuel volumes reach the Enterprise Data Lake, which the inputs mark as not confirmed.
+- Known gaps: the brands Marathon, ARCO and Tesoro as brand values; Dealer Master's billing customer number, whose relation to the SAP customer number the inputs leave open; and whether Dealer Master's fuel volumes reach the Enterprise Data Lake, which the inputs mark as not confirmed. (2026-10-27, later: the brands gap is closed and the other two stay open; see the amendment below.)
+
+## Amendment, 2026-10-27 (later): the brands
+
+Claude asked the decision owner about the three known gaps. From `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md`: "yes those can be brand values. Others I cannot answer."
+
+- **The brands gap is closed.** Marathon, ARCO and Tesoro are individuals of `party:Brand`. They are instances of a real company, which the module policy puts in `ref-mpc` only (`MODULES.md`, "Three kinds of content"), so they go in `ref-mpc/reference-brands.ttl` on ref-mpc's IRIs, not in `party`. Each cites the customer inputs of 2026-10-27 and MPC's FY2025 Form 10-K, as `business_architecture/reference/mpc/customer-classification-evidence.md` and `mpc-fy2025-10k-fact-sheet.md` record its wording: brand jobbers "operate primarily Marathon® branded outlets"; direct dealers "operate locations mainly under the ARCO® brand"; and the brand jobbers' outlets also carry "Shell, Mobil, Tesoro, others". Who owns or licenses each brand is not stated, because the repository holds no source for it.
+- **ref-mpc 1.3.0 carries them.** It is a minor, because it only adds; Claude approves it on the decision owner's answer, delegated under EPM-DEC-001-0028. It requires organization 2.1.0 and party 2.0.0, the current releases.
+- **Two gaps stay open with the business.** The decision owner cannot answer them, so they wait for the business: how Dealer Master's billing customer number relates to the SAP customer number, and whether Dealer Master's fuel volumes reach the Enterprise Data Lake. The party 2.0.0 package is left as built, because its review had started; ref-mpc 1.3.0's changelog and this amendment carry the change to its known gaps.

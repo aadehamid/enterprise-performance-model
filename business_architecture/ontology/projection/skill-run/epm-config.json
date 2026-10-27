@@ -121,7 +121,7 @@
   "packages": {
     "core": "2.4.0",
     "organization": "2.1.0",
-    "ref-mpc": "1.2.0",
+    "ref-mpc": "1.3.0",
     "kpi": "1.2.0",
     "party": "2.0.0",
     "data-product": "1.2.0",

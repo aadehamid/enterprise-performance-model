@@ -23,7 +23,7 @@ The ontology holds three kinds of content, and keeps each in a fixed place:
 |---|---|---|
 | Definitions: classes, properties, role types | `organization`, `party` and the other modules | the control relationship; the Payer role |
 | Company-neutral instances | `organization`, `party`, `lane` and the other modules | the role register, RACI assignments, the customer lifecycle stages |
-| Company-specific instances | `ref-mpc` only | MPC, MPLX, and MPC's control of MPLX |
+| Company-specific instances | `ref-mpc` only | MPC, MPLX, MPC's control of MPLX, and MPC's brands (since 2026-10-27; EPM-DEC-001-0108) |
 
 Operational records stay in the business systems and never enter the ontology: actual customers, invoices and KPI values. The playbook's policy 2 calls this "define, don't record".
 

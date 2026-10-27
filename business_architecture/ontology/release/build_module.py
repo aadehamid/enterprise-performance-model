@@ -50,15 +50,22 @@ MODULES = {
         # 1.1.0 requires organization 2.0.0; its own content is unchanged (EPM-DEC-001-0045).
         # 1.2.0 adds MPC and MPLX as parties in the party module's terms, moved from party/, and requires
         # party 1.0.0; the decision owner approved it on its own (EPM-DEC-001-0075, EPM-DEC-001-0080).
-        "version": "1.2.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-ref-mpc-release.md", "Approve ref-mpc 1.2.0 (Recommended)"),
-        "parts": ["ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl"],
+        # 1.3.0 is a minor Claude approved under the delegation and the decision owner's words: MPC's brands Marathon,
+        # ARCO and Tesoro as party:Brand individuals; it requires organization 2.1.0 and party 2.0.0, the current
+        # releases (EPM-DEC-001-0108, amendment of 2026-10-27).
+        "version": "1.3.0", "stage": None,
+        "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the decision owner's answer of 2026-10-27 on the brands)",
+        "issued": "2026-10-27",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md",
+                     "yes those can be brand values. Others I cannot answer."),
+        "parts": ["ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl", "ref-mpc/reference-brands.ttl"],
         # Its own shapes, then the released shapes of the versions it pins, so a later party or organization
         # release cannot change what this released package is checked against (EPM-DEC-001-0094).
-        "shapes": ["ref-mpc/shapes.ttl", "releases/organization/2.0.0/shapes.ttl", "releases/party/1.0.0/shapes.ttl"],
+        "shapes": ["ref-mpc/shapes.ttl", "releases/organization/2.1.0/shapes.ttl", "releases/party/2.0.0/shapes.ttl"],
         "depends_on": ["organization", "party"],
-        "pins": {"organization": "2.0.0", "party": "1.0.0"},
-        "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033", "EPM-DEC-001-0071", "EPM-DEC-001-0075", "EPM-DEC-001-0080"],
+        "pins": {"organization": "2.1.0", "party": "2.0.0"},
+        "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033", "EPM-DEC-001-0071", "EPM-DEC-001-0075", "EPM-DEC-001-0080",
+                      "EPM-DEC-001-0108"],
     },
     "kpi": {
         "title": "LSC KPI Module",

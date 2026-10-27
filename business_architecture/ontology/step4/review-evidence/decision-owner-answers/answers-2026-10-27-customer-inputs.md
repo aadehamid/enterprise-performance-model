@@ -1,4 +1,4 @@
-<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-27, about the customer inputs of that day. Context (Claude's words, kept in this comment so they do not enter the quote corpus). The inputs themselves (two images and two Dealer Master documents) are kept out of the repository (EPM-DEC-001-0108). The body has 11 blocks, separated by blank lines.
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-27, about the customer inputs of that day. Context (Claude's words, kept in this comment so they do not enter the quote corpus). The inputs themselves (two images and two Dealer Master documents) are kept out of the repository (EPM-DEC-001-0108). The body has 12 blocks, separated by blank lines.
 Block 1: Claude asked which of the seven boxes drawn as core systems in the first image is not one of the six core systems.
 Block 2: Claude asked whether the arrows from RightAngle to the Gravitate customer portal and from SAP MDG to Star were right, after showing where the two boxes are.
 Block 3: Claude asked how many core fields Salesforce has, since the second image prints 11 and lists 10.
@@ -10,6 +10,7 @@ Block 8: Claude asked which records the second image's direct dealers, which syn
 Block 9: Claude asked whether the ontology should keep SAP MDG and SAP S/4HANA apart, when the second Dealer Master document draws them as one box. The option chosen keeps them apart, as both images show.
 Block 10: Claude presented the plan page, customer-inputs-plan-2026-10-27.html (kept with the inputs, out of the repository): 13 modeling questions with Claude's recommendations, and the releases party 2.0.0 (major), system 1.5.0 (minor), an integration minor, and no core change. The decision owner answered.
 Block 11: Claude asked which arrow of the first image the label for the new customer setup belongs to.
+Block 12: Later the same day, Claude asked about the three gaps EPM-DEC-001-0108 left open: whether Marathon, ARCO and Tesoro, the brands the inputs name, can be values of the party module's Brand class; how Dealer Master's billing customer number relates to the SAP customer number; and whether Dealer Master's fuel volumes reach the Enterprise Data Lake. The decision owner answered the first and could not answer the other two.
 Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
 MAGIC is not
@@ -33,3 +34,5 @@ Keep them separate (Recommended)
 I am aligned with all your recommendation in the input plan.
 
 Terminal upload to Kittyhawk
+
+yes those can be brand values. Others I cannot answer.
