@@ -8,7 +8,7 @@ import sys
 import unittest
 
 from pyshacl import validate
-from rdflib import Graph, Namespace
+from rdflib import Graph, Literal, Namespace
 from rdflib.namespace import DCTERMS, RDF, RDFS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -39,19 +39,25 @@ def slugs(subjects):
 
 class Systems(unittest.TestCase):
     def test_counts(self):
-        self.assertEqual(len(set(G.subjects(RDF.type, CUST.CustomerSystem))), 42)
-        self.assertEqual(len(set(G.subjects(RDF.type, CUST.DataFlow))), 35)
-        self.assertEqual(len(set(G.subjects(RDF.type, CUST.CustomerSourcing))), 24)
+        # 42 systems, 35 flows and 24 sourcings until 2.0.0, which adds the inputs of 2026-10-27: 8 systems (PRM, station
+        # point-of-sale systems, the street price aggregator, Credit Card Summary, the Enterprise Data Lake, MSMIS, MCS and
+        # Terminaling Throughputs), 13 flows and 1 sourcing, the ship-to stations' origin (EPM-DEC-001-0108).
+        self.assertEqual(len(set(G.subjects(RDF.type, CUST.CustomerSystem))), 42 + 8)
+        self.assertEqual(len(set(G.subjects(RDF.type, CUST.DataFlow))), 35 + 13)
+        self.assertEqual(len(set(G.subjects(RDF.type, CUST.CustomerSourcing))), 24 + 1)
 
     def test_systems_per_tier(self):
         def tier(t):
             return slugs(G.subjects(CUST.systemTier, CUST[f"system-tier/{t}"]))
         self.assertEqual(tier("integration"), {"magic"})
         self.assertEqual(tier("enrich"), {"tax-image-silo", "sirion", "terminal-upload", "xref", "information-steward"})
-        self.assertEqual(len(tier("downstream")), 22)
+        # 22 downstream until 2.0.0, which adds PRM, the street price aggregator, Credit Card Summary and the
+        # Enterprise Data Lake, and four landscape sources (EPM-DEC-001-0108).
+        self.assertEqual(len(tier("downstream")), 22 + 4)
         self.assertEqual(tier("landscape"), {"terminal-audit-system", "flowcal", "eis", "asphalt-marketing-system",
                                              "brand-credit-card-system", "terminal-margin-ranking-system",
-                                             "corp-vetting", "lenel-onguard"})
+                                             "corp-vetting", "lenel-onguard",
+                                             "station-pos", "msmis", "mcs", "terminaling-throughputs"})
 
     def test_nine_systems_below_magic_feed_profisee(self):
         self.assertEqual(slugs(G.subjects(CUST.feeds, S.profisee)),
@@ -65,8 +71,9 @@ class Systems(unittest.TestCase):
             self.assertEqual(str(G.value(CUST[scheme], cite)), "EPM-DEC-001-0069", scheme)
         self.assertEqual(str(G.value(CUST["attribute-category"], cite)), "EPM-DEC-001-0067; EPM-DEC-001-0069")
 
-    def test_48_attributes_carry_a_shared_attribute(self):
-        self.assertEqual(len(set(G.subjects(CUST.sharedAttribute, None))), 48)
+    def test_49_attributes_carry_a_shared_attribute(self):
+        # 48 until 2.0.0, which adds Salesforce's Financial Statement, a credit attribute (EPM-DEC-001-0108, question 13).
+        self.assertEqual(len(set(G.subjects(CUST.sharedAttribute, None))), 49)
 
     def test_the_six_core_systems_and_what_they_implement(self):
         expected = {
@@ -82,17 +89,25 @@ class Systems(unittest.TestCase):
         for slug, entities in expected.items():
             self.assertEqual(slugs(G.objects(S[slug], CUST.implements)), entities, slug)
 
-    def test_twelve_systems_match_the_system_module(self):
+    def test_twenty_systems_match_the_system_module(self):
         # Three share a slug with the system module; the Terminal Margin Ranking System is its TMR (EPM-DEC-001-0072);
         # SAP S/4HANA is the process map's "SAP", by the decision owner's answer of 2026-10-25 (EPM-DEC-001-0099).
         # Since party 1.4.0 the seven systems the system module gains with MPC-P11 match too (EPM-DEC-001-0104).
-        pairs = {(str(s).rsplit("/", 1)[1], str(o).rsplit("/", 1)[1]) for s, o in G.subject_objects(SKOS.exactMatch)}
+        # Only the customer systems' matches: the dealer classes' matches are within the module (EPM-DEC-001-0108).
+        pairs = {(str(s).rsplit("/", 1)[1], str(o).rsplit("/", 1)[1]) for s, o in G.subject_objects(SKOS.exactMatch)
+                 if str(s).startswith(str(S))}
         self.assertEqual(pairs, {("rightangle", "rightangle"), ("kittyhawk", "kittyhawk"), ("profisee", "profisee"),
                                  ("terminal-margin-ranking-system", "tmr"), ("sap-s4hana", "sap"),
                                  ("sap-mdg", "sap-mdg"), ("salesforce", "salesforce"), ("magic", "magic"),
                                  ("bridger-insight", "bridger-insight"), ("information-steward", "information-steward"),
-                                 ("sirion", "sirion"), ("customer-portal", "customer-portal")})
-        self.assertEqual(len(pairs), 12)
+                                 ("sirion", "sirion"), ("customer-portal", "customer-portal"),
+                                 # Since 2.0.0 the eight systems the system module gains in 1.5.0 (EPM-DEC-001-0108).
+                                 ("prm", "prm"), ("station-pos", "station-pos"),
+                                 ("street-price-aggregator", "street-price-aggregator"),
+                                 ("credit-card-summary", "credit-card-summary"),
+                                 ("enterprise-data-lake", "enterprise-data-lake"), ("msmis", "msmis"), ("mcs", "mcs"),
+                                 ("terminaling-throughputs", "terminaling-throughputs")})
+        self.assertEqual(len(pairs), 20)
         self.assertIn((S.rightangle, SKOS.exactMatch, SYSTEM.rightangle), G)
         self.assertIn((S["terminal-margin-ranking-system"], SKOS.exactMatch, SYSTEM.tmr), G)
         self.assertIn((S["sap-mdg"], SKOS.exactMatch, SYSTEM["sap-mdg"]), G)
@@ -118,7 +133,8 @@ class Systems(unittest.TestCase):
         defined = slugs(s for s in G.subjects(SKOS.definition, None) if s in systems)
         # 18 in 1.2.0 (EPM-DEC-001-0099), then the 20 internal systems drafted from the repository in 1.3.0
         # (EPM-DEC-001-0103): every customer system but the four the customer-data owner is asked about.
-        self.assertEqual(len(defined), 38)
+        # 46 since 2.0.0: the eight systems of 2026-10-27 are defined too (EPM-DEC-001-0108).
+        self.assertEqual(len(defined), 38 + 8)
         self.assertEqual(slugs(systems) - defined, {"drop-tank", "gas-buddy", "dtn-file-server", "federal-health"})
         for slug in ("drop-tank", "gas-buddy", "dtn-file-server", "federal-health"):
             self.assertIsNone(G.value(S[slug], SKOS.definition))
@@ -135,17 +151,56 @@ class Systems(unittest.TestCase):
                     for n in G.subjects(CUST.sourcedConcept, CUST[concept])
                     if (n, CUST.sourcingKind, CUST["sourcing-kind/origin"]) in G}
         self.assertEqual(origin("party-role/sold-to"), {"salesforce"})
+        # The jobber's origin in Dealer Master is deprecated in 2.0.0, its triples kept, and replaced by the ship-to
+        # stations' origin there (EPM-DEC-001-0108).
         self.assertEqual(origin("party-role/jobber"), {"dealer-master"})
+        old = CUST["sourcing/dealer-master--origin--party-role--jobber"]
+        new = CUST["sourcing/dealer-master--origin--site-type--station"]
+        from rdflib.namespace import OWL
+        self.assertIn((old, OWL.deprecated, Literal(True)), G)
+        self.assertIn((old, DCTERMS.isReplacedBy, new), G)
+        self.assertEqual(origin("site-type/station"), {"dealer-master"})
+        self.assertIsNone(G.value(new, OWL.deprecated))
         self.assertEqual(origin("customer-class/direct-dealer"), {"sap-mdg"})
+        self.assertIn("replicated to Dealer Master",
+                      str(G.value(CUST["sourcing/sap-mdg--origin--customer-class--direct-dealer"], RDFS.comment)))
 
     def test_key_flows(self):
         for a, b in [("salesforce", "sap-mdg"), ("dealer-master", "sap-mdg"), ("sap-mdg", "dealer-master"),
                      ("sap-mdg", "sap-s4hana"), ("sap-mdg", "rightangle"), ("rightangle", "sap-mdg"),
                      ("magic", "salesforce"), ("sap-mdg", "polaris"), ("polaris", "sap-s4hana")]:
             self.assertIn((S[a], CUST.feeds, S[b]), G, f"{a} -> {b}")
-        # Input 2's uncertain edges are not taken (EPM-DEC-001-0069).
-        self.assertNotIn((S["sap-s4hana"], CUST.feeds, S["bridger-insight"]), G)
-        self.assertNotIn((S["rightangle"], CUST.feeds, S["tfr"]), G)
+        # Input 2's uncertain edges were not taken (EPM-DEC-001-0069); input 8 shows both, and the decision owner
+        # confirmed its arrows, so 2.0.0 takes them (EPM-DEC-001-0108).
+        self.assertIn((S["sap-s4hana"], CUST.feeds, S["bridger-insight"]), G)
+        self.assertIn((S["rightangle"], CUST.feeds, S["tfr"]), G)
+        # The corrected flows carry ship-to stations and replicated sold-tos, not jobbers or direct dealers.
+        self.assertIn("Ship-to stations", str(G.value(CUST["flow/dealer-master--sap-mdg"], CUST.carries)))
+        self.assertIn("sold-to", str(G.value(CUST["flow/sap-mdg--dealer-master"], CUST.carries)))
+        for f in ("flow/dealer-master--sap-mdg", "flow/sap-mdg--dealer-master"):
+            self.assertIsNotNone(G.value(CUST[f], SKOS.changeNote), f)
+        # The Dealer Master loop with RightAngle, and the flows to PRM, written out by hand.
+        for a, b in [("rightangle", "dealer-master"), ("dealer-master", "rightangle"), ("dealer-master", "prm"),
+                     ("station-pos", "dealer-master"), ("station-pos", "street-price-aggregator"),
+                     ("street-price-aggregator", "prm"), ("dealer-master", "credit-card-summary"),
+                     ("rightangle", "gravitate"), ("rightangle", "terminal-download"), ("kittyhawk", "rcms"),
+                     ("fuelfacs", "tasdm")]:
+            self.assertIn((S[a], CUST.feeds, S[b]), G, f"{a} -> {b}")
+
+    def test_dealer_master_after_the_correction(self):
+        # EPM-DEC-001-0108: Dealer Master is not built on Salesforce, jobbers do not start there, and it is the system
+        # of record for the ship-to stations and the link from each jobber to its stations.
+        for p in (CUST.customerRole, SKOS.definition):
+            text = str(G.value(S["dealer-master"], p))
+            self.assertNotIn("built on Salesforce", text, p)
+            self.assertNotIn("Jobbers start here", text, p)
+            self.assertIn("ship-to stations", text, p)
+        self.assertEqual(set(G.objects(S["dealer-master"], CUST.systemOfRecordFor)), {CUST.Site, CUST.PartyRelationship})
+        self.assertIsNotNone(G.value(S["dealer-master"], SKOS.changeNote))
+        self.assertIn("Brand Credit Card Master database",
+                      {str(a) for a in G.objects(S["brand-credit-card-system"], SKOS.altLabel)})
+        self.assertIn("MDG.BP.I.1001", str(G.value(S["bridger-insight"], CUST.customerRole)))
+        self.assertIn("authoritative source", str(G.value(S["terminal-margin-ranking-system"], SKOS.editorialNote)))
 
 
 class Attributes(unittest.TestCase):
@@ -156,12 +211,13 @@ class Attributes(unittest.TestCase):
         return out
 
     def test_counts_by_category(self):
-        self.assertEqual(len(self.attrs()), 275)
-        self.assertEqual(len(self.attrs(attributeCategory=CUST["attribute-category/create"])), 43)
+        # 275 and 43 until 2.0.0, which adds Salesforce's Financial Statement (EPM-DEC-001-0108, question 13).
+        self.assertEqual(len(self.attrs()), 276)
+        self.assertEqual(len(self.attrs(attributeCategory=CUST["attribute-category/create"])), 44)
         self.assertEqual(len(self.attrs(attributeCategory=CUST["attribute-category/enrich"])), 232)
 
     def test_counts_by_system_and_category(self):
-        expected = {"salesforce": (9, 44), "sap-mdg": (9, 26), "rightangle": (9, 123),
+        expected = {"salesforce": (10, 44), "sap-mdg": (9, 26), "rightangle": (9, 123),
                     "dealer-master": (2, 17), "sap-s4hana": (2, 9), "polaris": (12, 13)}
         for slug, (create, enrich) in expected.items():
             self.assertEqual(len(self.attrs(inSystem=S[slug], attributeCategory=CUST["attribute-category/create"])), create, slug)
@@ -267,7 +323,7 @@ class Shapes(unittest.TestCase):
         ok, text = self.conforms('party:x a party:DataFlow ; party:fromSystem s:salesforce ; party:toSystem s:sap-mdg ; '
                                  'party:carries "x"@en ; party:evidenceInput "42" .')
         self.assertFalse(ok)
-        self.assertIn("from the seven inputs", text)
+        self.assertIn("from the inputs 1 to 11", text)
 
     def test_a_sourcing_of_something_that_is_not_a_kind_of_customer(self):
         ok, text = self.conforms('party:n a party:CustomerSourcing ; party:sourcingSystem s:salesforce ; '
