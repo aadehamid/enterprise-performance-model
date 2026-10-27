@@ -48,16 +48,17 @@ restore_tracked_hooks() {
   done
 }
 
+# Restore scripts/hooks before switching the hook folder, in both directions: set -e then stops the
+# script with the folder unchanged if a save or restore fails, so pushes keep the hooks they had.
 if [ "${1:-}" = "--remove" ]; then
+  restore_tracked_hooks
   git config core.hooksPath scripts/hooks
   rm -rf "$HOOKS"
-  restore_tracked_hooks
   echo "entire-local: hooks are scripts/hooks again; Entire's config files stay excluded"
   exit 0
 fi
 
-# Write the hooks and switch the hook folder before restoring scripts/hooks: Entire checks the
-# hook folder on each agent turn, and would otherwise write into scripts/hooks again.
+restore_tracked_hooks
 mkdir -p "$HOOKS"
 
 hook() {
@@ -81,7 +82,6 @@ if command -v entire >/dev/null 2>&1; then
 fi'
 
 git config core.hooksPath "$HOOKS"
-restore_tracked_hooks
 
 exclude="$COMMON/info/exclude"
 mkdir -p "$COMMON/info"

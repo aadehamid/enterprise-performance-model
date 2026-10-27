@@ -284,3 +284,19 @@ def test_a_real_push_of_two_refs_from_a_linked_worktree():
         head = _git(worktree, "rev-parse", "HEAD", env=c.env)
         assert c.calls() == ["CHECKS RAN", f"ENTIRE hooks git pre-push origin env=1 refs=HEAD {head} refs/heads/one "
                              f"{ZERO}|HEAD {head} refs/heads/two {ZERO}|"]
+
+
+def test_a_failed_save_leaves_the_hook_folder_as_it_was():
+    for args, before in (((), "scripts/hooks"), (("--remove",), None)):
+        with tempfile.TemporaryDirectory() as tmp:
+            c = Clone(tmp)
+            if before is None:
+                c.setup()
+                before = _git(c.repo, "config", "core.hooksPath", env=c.env)
+            _entire_rewrote(c)
+            git_dir = _git(c.repo, "rev-parse", "--absolute-git-dir", env=c.env)
+            open(os.path.join(git_dir, "entire-local-saved"), "w").close()
+            proc = subprocess.run(["bash", "scripts/entire-local.sh", *args], cwd=c.repo, env=c.env,
+                                  capture_output=True, text=True)
+            assert proc.returncode != 0
+            assert _git(c.repo, "config", "core.hooksPath", env=c.env) == before
