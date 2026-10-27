@@ -171,7 +171,7 @@ partysh:CustomerSystem a sh:NodeShape ;
         [ sh:property [ sh:path skos:definition ; sh:maxCount 0 ] ]
         [ sh:property [ sh:path dcterms:source ; sh:minCount 1 ] ]
     ) ;
-    sh:message "A customer system's definition cites its source." .
+    sh:message "The definition of a customer system cites its source." .
 
 # A customer class's MPC classification: at most one code, C1 to C8 (EPM-DEC-001-0068; stated for the projection, EPM-DEC-001-0092).
 partysh:MpcClassification a sh:NodeShape ;

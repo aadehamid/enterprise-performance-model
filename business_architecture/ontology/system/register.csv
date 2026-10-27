@@ -36,3 +36,11 @@ TRR,trr,exact
 RightAngle/ TMR/ TopDay,rightangle;tmr;topday,split
 Right Angle / CargoTracker,rightangle;cargotracker,split
 APS Planning DB,aps-planning-db,exact
+Salesforce,salesforce,exact
+SAP MDG,sap-mdg,exact
+MAGIC,magic,exact
+Bridger Insight,bridger-insight,exact
+Information Steward,information-steward,exact
+Sirion,sirion,exact
+Customer Portal,customer-portal,exact
+SAP S/4HANA,sap,exact

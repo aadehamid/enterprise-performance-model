@@ -1,5 +1,5 @@
 # The customer lifecycle's links to processes, systems and system stages (EPM-DEC-001-0070).
-# Built by build_party.py from lifecycle.csv and core 2.3.0. Do not edit by hand.
+# Built by build_party.py from lifecycle.csv and core 2.4.0. Do not edit by hand.
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix proc: <https://w3id.org/lsc/ontology/process/> .
 

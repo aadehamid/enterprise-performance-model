@@ -18,9 +18,9 @@ names a listed system, a category, an entity of the module and, if any, a shared
 Each flow must carry something; each source must have a note (blank text counts as none) and name a party role, customer
 class, line of business or party type; and every cited input must be one of the seven.
 
-lifecycle.csv links each business lifecycle stage to the core 2.3.0 processes that do its work,
+lifecycle.csv links each business lifecycle stage to the core 2.4.0 processes that do its work,
 each system stage to the customer systems that hold the record, and business stages to the system
-stages they span (EPM-DEC-001-0070). The build fails unless every process is in core 2.3.0, every
+stages they span (EPM-DEC-001-0070). The build fails unless every process is in core 2.4.0, every
 system is a customer system, only a business stage links to processes and system stages, only a
 system stage links to systems, every stage has a link, no link is listed twice, and each stage has
 exactly the links EPM-DEC-001-0070 decides, written out in DECIDED_LIFECYCLE.
@@ -39,7 +39,7 @@ TABLE = os.path.join(HERE, "code-lists.csv")
 OUTPUT = os.path.join(HERE, "code-lists.ttl")
 SYSTEMS_OUTPUT = os.path.join(HERE, "systems.ttl")
 LIFECYCLE_OUTPUT = os.path.join(HERE, "lifecycle.ttl")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
+CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
 SYSTEM_MODULE = os.path.join(HERE, "..", "system", "systems.csv")
 # The definitions' sources are shared with the system module (item G, EPM-DEC-001-0099).
 SYSTEM_SOURCES = os.path.join(HERE, "..", "system", "sources.csv")
@@ -292,7 +292,7 @@ def load_lifecycle(codes, systems):
     owner = {"process": "lifecycle-stage", "system": "system-stage", "stage": "lifecycle-stage"}
     problems += [f"{r['stage']}: only a {owner[r['link']]} has a {r['link']} link" for r in rows
                  if r["link"] in owner and r["stage"].split("/")[0] != owner[r["link"]]]
-    problems += [f"{r['stage']}: process {r['target']} is not in core 2.3.0" for r in rows if r["link"] == "process" and r["target"] not in procs]
+    problems += [f"{r['stage']}: process {r['target']} is not in core 2.4.0" for r in rows if r["link"] == "process" and r["target"] not in procs]
     problems += [f"{r['stage']}: system {r['target']} is not a customer system" for r in rows if r["link"] == "system" and r["target"] not in slugs]
     problems += [f"{r['stage']}: {r['target']} is not a system stage" for r in rows
                  if r["link"] == "stage" and (not r["target"].startswith("system-stage/") or tuple(r["target"].split("/", 1)) not in values)]
@@ -403,7 +403,7 @@ def main():
     lrows, procs = load_lifecycle(rows, systems)
     mappings, pidx = load_products(rows)
     ltext = ("# The customer lifecycle's links to processes, systems and system stages (EPM-DEC-001-0070).\n"
-             "# Built by build_party.py from lifecycle.csv and core 2.3.0. Do not edit by hand.\n"
+             "# Built by build_party.py from lifecycle.csv and core 2.4.0. Do not edit by hand.\n"
              + build_lifecycle(lrows, procs).serialize(format="turtle"))
     stext = ("# The customer systems, data flows and attributes (EPM-DEC-001-0069). Built by build_party.py\n"
              "# from systems.csv, data-flows.csv, customer-sources.csv and attributes.csv. Do not edit by hand.\n"

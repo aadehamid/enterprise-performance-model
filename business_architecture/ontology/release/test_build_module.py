@@ -51,6 +51,9 @@ DELEGATED = ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-qu
 APPROVALS.update({name: DELEGATED for name in ("system", "party", "integration")})  # system 1.3.0, party 1.3.0, integration 2.3.0
 # The deferred qSKOS fixes, approved by Claude under the same delegation (EPM-DEC-001-0106).
 APPROVALS.update({name: DELEGATED for name in ("lane", "organization", "value-stream")})  # lane 1.1.0, organization 2.1.0, value-stream 1.2.0
+# MPC-P11's releases, approved by Claude under the delegation and the decision owner's night brief (EPM-DEC-001-0104).
+NIGHT_BRIEF = ("step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md", "Approve (Recommended)")
+APPROVALS.update({name: NIGHT_BRIEF for name in ("system", "party")})  # system 1.4.0, party 1.4.0
 
 
 def approval_holds(name, m):
@@ -171,12 +174,12 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0"})  # 1.2.0, EPM-DEC-001-0080
         self.assertEqual(bm.dependencies("organization"), {"core": "2.3.0"})  # 2.1.0 in 2.0.0; 2.3.0 since 2.1.0 (0106)
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0; 1.2.0 too
-        self.assertEqual(bm.dependencies("party"), {"core": "2.3.0", "system": "1.3.0"})  # system 1.1.0 in 1.2.0 (0099); 1.3.0 (0103)
+        self.assertEqual(bm.dependencies("party"), {"core": "2.4.0", "system": "1.4.0"})  # system 1.1.0 in 1.2.0 (0099); 1.3.0 (0103); 1.4.0 (0104)
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
         self.assertEqual(bm.dependencies("data-product"), {"core": "2.3.0", "kpi": "1.2.0", "system": "1.2.0"})  # 1.2.0 (0100)
         # value-stream 1.1.0 required the current releases (EPM-DEC-001-0090), and 1.2.0 does too (EPM-DEC-001-0106).
         self.assertEqual(bm.dependencies("value-stream"), {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0"})
-        self.assertEqual(bm.dependencies("system"), {"core": "2.3.0"})  # since 1.1.0 (EPM-DEC-001-0099)
+        self.assertEqual(bm.dependencies("system"), {"core": "2.4.0"})  # 2.3.0 since 1.1.0 (EPM-DEC-001-0099); 2.4.0 since 1.4.0 (0104, 0105)
         self.assertEqual(bm.dependencies("lane"), {"core": "2.3.0"})  # 2.2.0 in 1.0.0; 2.3.0 since 1.1.0 (0106)
         self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.2.0"})  # since 1.1.0 (EPM-DEC-001-0100)
         # EPM-DEC-001-0078: integration names terms of each of these releases; 2.0.0 requires the current ones (0094).
@@ -431,11 +434,20 @@ class EarlierReleases(unittest.TestCase):
     def test_the_delegated_releases_carry_the_delegation(self):
         # EPM-DEC-001-0103: Claude approved the three minor releases under the delegation.
         # EPM-DEC-001-0106: and the three that carry the deferred qSKOS fixes.
-        for name, version in (("system", "1.3.0"), ("party", "1.3.0"), ("integration", "2.3.0"), ("lane", "1.1.0"),
-                              ("organization", "2.1.0"), ("value-stream", "1.2.0")):
+        # system 1.3.0 and party 1.3.0 carried it too, until system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104).
+        for name, version in (("integration", "2.3.0"), ("lane", "1.1.0"), ("organization", "2.1.0"), ("value-stream", "1.2.0")):
             self.assertEqual(bm.MODULES[name]["approval"], DELEGATED)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-26"))
+
+    def test_the_mpc_p11_releases_carry_the_night_brief(self):
+        # EPM-DEC-001-0104: system 1.4.0 and party 1.4.0, minors Claude approved under the delegation and the brief.
+        for name in ("system", "party"):
+            m = bm.MODULES[name]
+            self.assertEqual(m["approval"], NIGHT_BRIEF)
+            self.assertEqual((m["version"], m["stage"], m["issued"]), ("1.4.0", None, "2026-10-26"))
+            self.assertTrue(m["approver"].startswith("Claude, under the decision owner's delegation"))
+            self.assertIn("EPM-DEC-001-0104", m["decisions"])
 
     def test_the_item_f_releases_carry_their_approval(self):
         # EPM-DEC-001-0100: the decision owner approved the plan of the five.

@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed (2026-10-26). Waits for the decision owner's acceptance, because it changes the process map, the process authority (EPM-DEC-001-0103) |
+| Status | Accepted (the decision owner, 2026-10-26, EPM-DEC-001-0104): the strong and medium rows, 21 links across 12 processes; the weak rows stay out. Proposed 2026-10-26, because it changes the process map, the process authority (EPM-DEC-001-0103) |
 | Date | 2026-10-26 |
 | Decision | EPM-DEC-001-0099, item 11: "The customer processes' system links go to a process-map proposal (MPC-P11), after the decision owner checks the weak ones." |
 | Source | The processes in `party/lifecycle.csv` and the system stages linked to them (EPM-DEC-001-0070); each customer system's `party:customerRole` and data flows in `party` 1.2.0 (EPM-DEC-001-0069), from the decision owner's customer inputs (kept out of the repository, EPM-DEC-001-0067) |
@@ -50,4 +50,4 @@ No candidate for CM 1.3.6.2.2 Manage Key Accounts or CM 1.3.7.5.5 Conduct Custom
 
 ## How the ontology takes it
 
-The process map changes only through an accepted proposal (AGENTS.md). Accepted, it is applied to `downstream_process_map.json` in its own pull request; the `system` module then names the new systems (SAP MDG, Salesforce, MAGIC, Bridger Insight, Information Steward, Sirion, Customer Portal) through its register, links them, and matches each to its `party` customer system, in a minor release.
+The process map changes only through an accepted proposal (AGENTS.md). Accepted, it is applied to `downstream_process_map.json`; the `system` module names the new systems (SAP MDG, Salesforce, MAGIC, Bridger Insight, Information Steward, Sirion, Customer Portal) through its register and links them, and each is matched to its `party` customer system, in minor releases of both modules. *2026-10-26:* accepted (EPM-DEC-001-0104); the map change, `system` 1.4.0 and `party` 1.4.0 ship in one pull request.

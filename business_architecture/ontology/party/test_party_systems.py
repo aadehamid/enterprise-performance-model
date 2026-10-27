@@ -82,14 +82,34 @@ class Systems(unittest.TestCase):
         for slug, entities in expected.items():
             self.assertEqual(slugs(G.objects(S[slug], CUST.implements)), entities, slug)
 
-    def test_five_systems_match_the_system_module(self):
+    def test_twelve_systems_match_the_system_module(self):
         # Three share a slug with the system module; the Terminal Margin Ranking System is its TMR (EPM-DEC-001-0072);
         # SAP S/4HANA is the process map's "SAP", by the decision owner's answer of 2026-10-25 (EPM-DEC-001-0099).
+        # Since party 1.4.0 the seven systems the system module gains with MPC-P11 match too (EPM-DEC-001-0104).
         pairs = {(str(s).rsplit("/", 1)[1], str(o).rsplit("/", 1)[1]) for s, o in G.subject_objects(SKOS.exactMatch)}
         self.assertEqual(pairs, {("rightangle", "rightangle"), ("kittyhawk", "kittyhawk"), ("profisee", "profisee"),
-                                 ("terminal-margin-ranking-system", "tmr"), ("sap-s4hana", "sap")})
+                                 ("terminal-margin-ranking-system", "tmr"), ("sap-s4hana", "sap"),
+                                 ("sap-mdg", "sap-mdg"), ("salesforce", "salesforce"), ("magic", "magic"),
+                                 ("bridger-insight", "bridger-insight"), ("information-steward", "information-steward"),
+                                 ("sirion", "sirion"), ("customer-portal", "customer-portal")})
+        self.assertEqual(len(pairs), 12)
         self.assertIn((S.rightangle, SKOS.exactMatch, SYSTEM.rightangle), G)
         self.assertIn((S["terminal-margin-ranking-system"], SKOS.exactMatch, SYSTEM.tmr), G)
+        self.assertIn((S["sap-mdg"], SKOS.exactMatch, SYSTEM["sap-mdg"]), G)
+        self.assertIn((S["customer-portal"], SKOS.exactMatch, SYSTEM["customer-portal"]), G)
+        # The weak MPC-P11 candidates are not in the system module, so they match nothing.
+        for slug in ("allocation-manager", "data-products-idp"):
+            self.assertIsNone(G.value(S[slug], SKOS.exactMatch), slug)
+
+    def test_no_shape_message_holds_an_apostrophe(self):
+        # The ontology skill's SHACL rule 19: n10s writes sh:message into Cypher unescaped, so a quote breaks
+        # validation in Neo4j. party 1.4.0 rewords the one message that held one (EPM-DEC-001-0104).
+        from rdflib.namespace import SH
+        shapes = Graph().parse(os.path.join(HERE, "shapes.ttl"))
+        messages = [str(m) for m in shapes.objects(None, SH.message)]
+        self.assertEqual(len(messages), 40)
+        self.assertEqual([m for m in messages if "'" in m or "\u2019" in m], [])
+        self.assertIn("The definition of a customer system cites its source.", messages)
 
     def test_definitions(self):
         # Item G (EPM-DEC-001-0099), checked by hand against definitions.csv on 2026-10-25: 18 customer systems are
