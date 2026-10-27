@@ -15,7 +15,7 @@ EPM-DEC-001-0096 closed the ontology on 2026-10-23. The work queue that followed
 
 **The decision owner's decision:** record the ontology as done, with the business points open. Claude asked: "Points 3 to 16 need system, role and measure owners, not you. May I record the ontology as done, with those 14 points listed as open with the business?" The decision owner: "Yes, done with open points (Recommended)" (block 6).
 
-**What closed (Claude, under EPM-DEC-001-0028):**
+**What is settled (Claude, under EPM-DEC-001-0028):**
 
 1. **MPC-P11 is accepted and applied.** The decision owner accepted the strong and medium links (block 2). The process map's customer processes name their systems, and `system` 1.4.0 and `party` 1.4.0 carry them (EPM-DEC-001-0104).
 2. **The seven shared process names are settled.** The decision owner accepted MPC-P12, which names each of the 25 processes by its parent (block 4). `core` 2.4.0 applies it, keeping each old name as history (EPM-DEC-001-0105).
