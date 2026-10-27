@@ -1016,6 +1016,15 @@ without a dated amendment and the decision owner's explicit agreement.
   as superseded evidence; `projection/pipeline.py` stays on v2.2
   (EPM-DEC-001-0095, amending 0021).
 
+### The ontology is done (2026-10-26)
+- The decision owner chose to record the ontology as done with the
+  business's points open (EPM-DEC-001-0107). MPC-P11 and MPC-P12 are
+  accepted and released (system 1.4.0, party 1.4.0, core 2.4.0), and the
+  deferred qSKOS fixes are released (core 2.4.0, lane 1.1.0, organization
+  2.1.0, value-stream 1.2.0). Close-out points 1 and 2 stay open by the
+  decision owner's choice; points 1 to 16 of `business-closeout.md` and the
+  items parked for other reasons are what stays open.
+
 ### system 1.4.0 and party 1.4.0 are released (2026-10-26)
 - The decision owner accepted MPC-P11's strong and medium rows: 12
   customer-lifecycle processes name the systems they use in the process map,
