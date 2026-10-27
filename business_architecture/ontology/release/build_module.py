@@ -98,7 +98,7 @@ MODULES = {
         # drafted from the repository; it requires system 1.3.0 (EPM-DEC-001-0103).
         # 1.4.0 is a minor Claude approved under the delegation: seven more customer systems matched to the system
         # module's, which gains them with MPC-P11, and one shape message reworded without an apostrophe (the ontology
-        # skill's SHACL rule 19); it requires system 1.4.0 (EPM-DEC-001-0104).
+        # skill's SHACL rule 19); it requires core 2.4.0, which its build now reads, and system 1.4.0 (EPM-DEC-001-0104, 0105).
         "version": "1.4.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the night brief of 2026-10-26)", "issued": "2026-10-26",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md", "Approve (Recommended)"),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],
@@ -107,7 +107,7 @@ MODULES = {
         # (EPM-DEC-001-0099; the earlier packages name four of them without requiring system). 1.4.0 names twelve
         # and requires system 1.4.0 (EPM-DEC-001-0104).
         "depends_on": ["core", "system"],
-        "pins": {"core": "2.3.0", "system": "1.4.0"},
+        "pins": {"core": "2.4.0", "system": "1.4.0"},
         "decisions": ["EPM-DEC-001-0067", "EPM-DEC-001-0068", "EPM-DEC-001-0069", "EPM-DEC-001-0070",
                       "EPM-DEC-001-0071", "EPM-DEC-001-0072", "EPM-DEC-001-0074", "EPM-DEC-001-0087", "EPM-DEC-001-0088",
                       "EPM-DEC-001-0092", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0103",
@@ -162,13 +162,13 @@ MODULES = {
         # 1.3.0 is a minor Claude approved under the delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening):
         # the 14 internal systems' descriptions, drafted from the repository (EPM-DEC-001-0103).
         # 1.4.0 is a minor Claude approved under the delegation: the seven systems and 21 links of MPC-P11, which
-        # the decision owner accepted (EPM-DEC-001-0104).
+        # the decision owner accepted; it requires core 2.4.0, the current release (EPM-DEC-001-0104, 0105).
         "version": "1.4.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the night brief of 2026-10-26)", "issued": "2026-10-26",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md", "Approve (Recommended)"),
         "parts": ["system/vocabulary.ttl", "system/systems.ttl"],
         "shapes": ["system/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.3.0"},
+        "pins": {"core": "2.4.0"},
         "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100",
                       "EPM-DEC-001-0103", "EPM-DEC-001-0104"],
     },

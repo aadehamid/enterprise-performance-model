@@ -5,7 +5,7 @@
   "ontology_iri": "https://w3id.org/lsc/ontology/modules/system",
   "version_iri": "https://w3id.org/lsc/ontology/modules/system/1.4.0",
   "depends_on": {
-    "core": "2.3.0"
+    "core": "2.4.0"
   },
   "decisions": [
     "EPM-DEC-001-0055",
@@ -22,10 +22,10 @@
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md"
   },
   "files": {
-    "CHANGELOG.md": "2b5c0cd4485ceec5c8024c8f17b16fdc326babfd1a912ed547f056ae1ce66faf",
+    "CHANGELOG.md": "d0cc898e5e3bd86dd1817ef2f14fb137419f9fb9c81203e7eea3a3f48b0b8414",
     "catalog.ttl": "94e29d194f8c66cddb9a54a69a59f0046575ab52c0bd52667aa76c6c428f69ee",
     "shapes.ttl": "77849dd2e514e984775e0b9d1a26c2ffaf15925b70127f2859248869c863d10c",
-    "system.jsonld": "49cb86eb86a1cb39ff9abd6fd12f1fcbd03e2c12391102c433a0c48c6e3b86f7",
-    "system.ttl": "246a461f85947d23f1cdc7480a6cc16879460fafcde10ed0b8d172d23896f45b"
+    "system.jsonld": "1f33bbbda11211a3d11b7723aa475f5a97d5e8e106070b3bd1519a3f0422e762",
+    "system.ttl": "9eebfe53b54e234cf13bbcc5892d95efed1f4b77e793d8a3557c0fb01cd6136e"
   }
 }

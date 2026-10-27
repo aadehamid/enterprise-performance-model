@@ -30,7 +30,7 @@ class Catalog(unittest.TestCase):
 
     def test_one_dataset_per_release_package(self):
         datasets = {str(d)[len(MODULES_NS):] for d in self.g.objects(bc.CATALOG, bc.DCAT.dataset)}
-        self.assertEqual(len(datasets), 40)  # then core 2.4.0 (EPM-DEC-001-0105):  # 39, then three more (EPM-DEC-001-0103):  # 25, then item G's three (EPM-DEC-001-0099) and item F's five (0100)
+        self.assertEqual(len(datasets), 42)  # then system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104):  # 40, then core 2.4.0 (EPM-DEC-001-0105):  # 39, then three more (EPM-DEC-001-0103):  # 25, then item G's three (EPM-DEC-001-0099) and item F's five (0100)
         self.assertEqual({tuple(d.split("/")) for d in datasets}, package_folders())
         for d in self.g.objects(bc.CATALOG, bc.DCAT.dataset):
             self.assertIn((d, RDF.type, bc.DCAT.Dataset), self.g)
@@ -38,7 +38,7 @@ class Catalog(unittest.TestCase):
     def test_every_distribution_is_a_file_in_its_package(self):
         # Read from each dataset's dcat:distribution links, so a link to an undescribed distribution fails.
         linked = set(self.g.objects(None, bc.DCAT.distribution))
-        self.assertEqual(len(linked), 125)  # then core 2.4.0's four:  # 121, then nine more:  # 79, then eight packages of three distributions
+        self.assertEqual(len(linked), 131)  # then six more (0104):  # 125, then core 2.4.0's four:  # 121, then nine more:  # 79, then eight packages of three distributions
         for dist in linked:
             self.assertIn((dist, RDF.type, bc.DCAT.Distribution), self.g)
             self.assertEqual(list(self.g.objects(dist, bc.DCAT.downloadURL)), [dist])

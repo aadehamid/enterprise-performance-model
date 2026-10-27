@@ -1,6 +1,6 @@
 # system: the systems the process map names
 
-The `system` module holds the systems, office tools and working documents that the process map's `systems` fields name, and links each one to the processes that use it (competency question 6). Its namespace is `https://w3id.org/lsc/ontology/modules/system/`; its build reads `core` 2.4.0 for process IRIs (since 2026-10-26, EPM-DEC-001-0105; 2.3.0 from 2026-10-23; 2.2.0 until 2026-10-23, EPM-DEC-001-0089; 2.1.0 until 2026-10-22, EPM-DEC-001-0076); its released 1.0.0 package requires `core` 2.2.0. EPM-DEC-001-0055 records the design.
+The `system` module holds the systems, office tools and working documents that the process map's `systems` fields name, and links each one to the processes that use it (competency question 6). Its namespace is `https://w3id.org/lsc/ontology/modules/system/`; its build reads `core` 2.4.0 for process IRIs (since 2026-10-26, EPM-DEC-001-0105; 2.3.0 from 2026-10-23; 2.2.0 until 2026-10-23, EPM-DEC-001-0089; 2.1.0 until 2026-10-22, EPM-DEC-001-0076); its released 1.0.0 package requires `core` 2.2.0, and 1.4.0 requires 2.4.0 (EPM-DEC-001-0104). EPM-DEC-001-0055 records the design.
 
 | File | What |
 |---|---|

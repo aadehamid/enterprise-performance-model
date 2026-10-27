@@ -13,7 +13,7 @@
     dcterms:description "The systems, office tools and working documents the process map names, with their kind, definitions and the processes that use them, and the systems the pricing assets name (Step 7)."@en ;
     dcterms:issued "2026-10-26"^^xsd:date ;
     dcterms:modified "2026-10-26"^^xsd:date ;
-    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.3.0> ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.4.0> ;
     dcterms:title "LSC System Module"@en ;
     owl:versionIRI sys:1.4.0 ;
     owl:versionInfo "1.4.0" .

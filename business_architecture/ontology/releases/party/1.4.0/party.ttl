@@ -16,7 +16,7 @@
     dcterms:description "The Customer domain's concepts: parties, the roles they hold for a period, accounts, agreements and sites; the customer's systems, data flow and attributes; and the customer lifecycle linked to core processes (Steps 5 to 7). Definitions only, never records."@en ;
     dcterms:issued "2026-10-26"^^xsd:date ;
     dcterms:modified "2026-10-26"^^xsd:date ;
-    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.3.0>,
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.4.0>,
         <https://w3id.org/lsc/ontology/modules/system/1.4.0> ;
     dcterms:title "LSC Party Module"@en ;
     owl:versionIRI party:1.4.0 ;

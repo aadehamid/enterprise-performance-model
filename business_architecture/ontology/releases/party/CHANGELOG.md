@@ -6,7 +6,7 @@ A minor release: it adds seven matches and rewords one shape message, and remove
 
 - [minor] **Matches.** SAP MDG, Salesforce, MAGIC, Bridger Insight, Information Steward, Sirion and Customer Portal are now the system module's systems of the same name (`skos:exactMatch`), which system 1.4.0 adds with MPC-P11 (EPM-DEC-001-0104). 12 of the 42 customer systems now match a system-module system.
 - [minor] **Shapes.** The message "A customer system's definition cites its source." becomes "The definition of a customer system cites its source.", with the same meaning. The `ontology` skill's SHACL rule 19 keeps apostrophes out of `sh:message`, because the neosemantics (n10s) validator writes the message into Cypher unescaped.
-- It requires core 2.3.0 and system 1.4.0.
+- It requires core 2.4.0, the current release (EPM-DEC-001-0105) and system 1.4.0.
 
 ### Known gaps
 

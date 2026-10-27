@@ -174,12 +174,12 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0"})  # 1.2.0, EPM-DEC-001-0080
         self.assertEqual(bm.dependencies("organization"), {"core": "2.3.0"})  # 2.1.0 in 2.0.0; 2.3.0 since 2.1.0 (0106)
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0; 1.2.0 too
-        self.assertEqual(bm.dependencies("party"), {"core": "2.3.0", "system": "1.4.0"})  # system 1.1.0 in 1.2.0 (0099); 1.3.0 (0103); 1.4.0 (0104)
+        self.assertEqual(bm.dependencies("party"), {"core": "2.4.0", "system": "1.4.0"})  # system 1.1.0 in 1.2.0 (0099); 1.3.0 (0103); 1.4.0 (0104)
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
         self.assertEqual(bm.dependencies("data-product"), {"core": "2.3.0", "kpi": "1.2.0", "system": "1.2.0"})  # 1.2.0 (0100)
         # value-stream 1.1.0 required the current releases (EPM-DEC-001-0090), and 1.2.0 does too (EPM-DEC-001-0106).
         self.assertEqual(bm.dependencies("value-stream"), {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0"})
-        self.assertEqual(bm.dependencies("system"), {"core": "2.3.0"})  # since 1.1.0 (EPM-DEC-001-0099)
+        self.assertEqual(bm.dependencies("system"), {"core": "2.4.0"})  # 2.3.0 since 1.1.0 (EPM-DEC-001-0099); 2.4.0 since 1.4.0 (0104, 0105)
         self.assertEqual(bm.dependencies("lane"), {"core": "2.3.0"})  # 2.2.0 in 1.0.0; 2.3.0 since 1.1.0 (0106)
         self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.2.0"})  # since 1.1.0 (EPM-DEC-001-0100)
         # EPM-DEC-001-0078: integration names terms of each of these releases; 2.0.0 requires the current ones (0094).
