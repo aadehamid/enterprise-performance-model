@@ -63,7 +63,11 @@ class Release(unittest.TestCase):
                           (party + "sap-s4hana", system + "sap")}  # EPM-DEC-001-0099
                          # MPC-P11's seven systems, in both modules since system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104).
                          | {(party + s, system + s) for s in ("sap-mdg", "salesforce", "magic", "bridger-insight",
-                                                              "information-steward", "sirion", "customer-portal")})
+                                                              "information-steward", "sirion", "customer-portal")}
+                         # The eight systems of 2026-10-27, in both modules since system 1.5.0 and party 2.0.0 (EPM-DEC-001-0108).
+                         | {(party + s, system + s) for s in ("prm", "station-pos", "street-price-aggregator",
+                                                              "credit-card-summary", "enterprise-data-lake", "msmis", "mcs",
+                                                              "terminaling-throughputs")})
         self.assertEqual({str(r.word) for r in rows if str(r.a) == party + "terminal-margin-ranking-system"}, {"TMR"})
 
     def test_an_orphan_fails_q2(self):

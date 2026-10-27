@@ -138,9 +138,9 @@ class Build(unittest.TestCase):
     def test_the_inputs_are_every_released_module_at_its_newest_version(self):
         # Pinned by hand (EPM-DEC-001-0036, amendment of 2026-10-22); a new release must be added here.
         self.assertEqual(pl.PACKAGES, [
-            ("core", "2.4.0"), ("organization", "2.1.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.2.0"), ("party", "1.4.0"),
-            ("data-product", "1.2.0"), ("value-stream", "1.2.0"), ("system", "1.4.0"), ("lane", "1.1.0"),
-            ("market-data", "1.1.0"), ("integration", "2.3.0")])
+            ("core", "2.4.0"), ("organization", "2.1.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.2.0"), ("party", "2.0.0"),
+            ("data-product", "1.2.0"), ("value-stream", "1.2.0"), ("system", "1.5.0"), ("lane", "1.1.0"),
+            ("market-data", "1.1.0"), ("integration", "2.4.0")])
         import glob, os
         newest = {}
         for d in glob.glob(os.path.join(pl.ONTOLOGY, "releases", "*", "*", "")):

@@ -129,7 +129,8 @@ partysh:Site a sh:NodeShape ;
     sh:targetClass party:Site ;
     sh:property [ sh:path party:siteType ; sh:maxCount 1 ; sh:node partysh:InSiteType ] ;
     sh:property [ sh:path party:operatingModel ; sh:maxCount 1 ; sh:node partysh:InOperatingModel ] ;
-    sh:property [ sh:path party:suppliedByTerminal ; sh:class party:Site ] .
+    sh:property [ sh:path party:suppliedByTerminal ; sh:class party:Site ] ;
+    sh:property [ sh:path party:siteIdentifiedBy ; sh:minCount 0 ; sh:class party:ExternalIdentifier ] .
 
 # ---- Transactions ----
 
@@ -163,6 +164,13 @@ partysh:CustomerSystem a sh:NodeShape ;
                   sh:minCount 0 ;
                   sh:message "A customer system implements entities of the conceptual model only." ] ;
     sh:property [ sh:path party:feeds ; sh:minCount 0 ; sh:class party:CustomerSystem ] ;
+    sh:property [ sh:path party:systemOfRecordFor ;
+                  sh:in ( party:Party party:ExternalIdentifier party:Address party:ContactPoint party:PartyRole
+                          party:PartyRelationship party:CustomerAccount party:CustomerClass party:LineOfBusiness
+                          party:Brand party:Agreement party:SiteBrandAssignment party:PartyTransactionAssociation
+                          party:Product party:Site ) ;
+                  sh:minCount 0 ;
+                  sh:message "A customer system is the system of record for entities of the conceptual model only." ] ;
     # Item G (EPM-DEC-001-0099): a definition, where a system has one, cites its source.
     sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:editorialNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;

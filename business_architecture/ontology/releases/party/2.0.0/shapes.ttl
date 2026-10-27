@@ -117,7 +117,15 @@ partysh:CustomerSystem a sh:NodeShape ;
     sh:or ( [ sh:property [ sh:maxCount 0 ;
                         sh:path skos:definition ] ] [ sh:property [ sh:minCount 1 ;
                         sh:path dcterms:source ] ] ) ;
-    sh:property [ sh:minCount 0 ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:definition ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:editorialNote ],
+        [ sh:minCount 0 ;
             sh:nodeKind sh:IRI ;
             sh:path dcterms:source ],
         [ sh:maxCount 1 ;
@@ -141,14 +149,10 @@ partysh:CustomerSystem a sh:NodeShape ;
         [ sh:class party:CustomerSystem ;
             sh:minCount 0 ;
             sh:path party:feeds ],
-        [ sh:datatype rdf:langString ;
-            sh:maxCount 1 ;
+        [ sh:in ( party:Party party:ExternalIdentifier party:Address party:ContactPoint party:PartyRole party:PartyRelationship party:CustomerAccount party:CustomerClass party:LineOfBusiness party:Brand party:Agreement party:SiteBrandAssignment party:PartyTransactionAssociation party:Product party:Site ) ;
+            sh:message "A customer system is the system of record for entities of the conceptual model only." ;
             sh:minCount 0 ;
-            sh:path skos:definition ],
-        [ sh:datatype rdf:langString ;
-            sh:maxCount 1 ;
-            sh:minCount 0 ;
-            sh:path skos:editorialNote ] ;
+            sh:path party:systemOfRecordFor ] ;
     sh:targetClass party:CustomerSystem .
 
 partysh:DataFlow a sh:NodeShape ;
@@ -468,7 +472,10 @@ partysh:Site a sh:NodeShape ;
             sh:node partysh:InOperatingModel ;
             sh:path party:operatingModel ],
         [ sh:class party:Site ;
-            sh:path party:suppliedByTerminal ] ;
+            sh:path party:suppliedByTerminal ],
+        [ sh:class party:ExternalIdentifier ;
+            sh:minCount 0 ;
+            sh:path party:siteIdentifiedBy ] ;
     sh:targetClass party:Site .
 
 partysh:SiteBrandAssignment a sh:NodeShape ;

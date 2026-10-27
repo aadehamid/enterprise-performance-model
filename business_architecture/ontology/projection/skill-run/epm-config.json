@@ -123,13 +123,13 @@
     "organization": "2.1.0",
     "ref-mpc": "1.2.0",
     "kpi": "1.2.0",
-    "party": "1.4.0",
+    "party": "2.0.0",
     "data-product": "1.2.0",
     "value-stream": "1.2.0",
-    "system": "1.4.0",
+    "system": "1.5.0",
     "lane": "1.1.0",
     "market-data": "1.1.0",
-    "integration": "2.3.0"
+    "integration": "2.4.0"
   },
   "release_exceptions": {},
   "versions": {
