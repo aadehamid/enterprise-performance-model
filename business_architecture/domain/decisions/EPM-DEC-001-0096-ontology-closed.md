@@ -52,4 +52,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 - The worklog's plan table and decision log carry dated entries.
 - EPM-DEC-001-0083 carries a dated note that the items it listed as waiting on the decision owner are answered.
 - A later change to the ontology, such as a business answer from the package, is a new release under the module policy, recorded as usual.
-- *2026-10-26:* the questions the work queue left open after this closure are closed, and the ontology is recorded as done (EPM-DEC-001-0107).
+- *2026-10-26:* the ontology is recorded as done (EPM-DEC-001-0107). MPC-P11, the seven shared process names and the deferred qSKOS fixes are settled and released; the business's close-out points stay open.
