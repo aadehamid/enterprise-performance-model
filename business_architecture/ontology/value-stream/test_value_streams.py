@@ -68,6 +68,32 @@ class Vocabulary(unittest.TestCase):
         notations = {str(n) for s in VOCAB.subjects(SKOS.inScheme, VS.MeasureRelationship) for n in VOCAB.objects(s, SKOS.notation)}
         self.assertEqual(notations, {"informs", "benchmarks", "measures-performance"})
 
+    def test_every_relationship_is_a_top_concept_both_ways(self):
+        # A flat code list states each member as a top concept, both ways (EPM-DEC-001-0098, item 5; 0106).
+        members = set(VOCAB.subjects(SKOS.inScheme, VS.MeasureRelationship))
+        self.assertEqual(len(members), 3)  # counted by hand: informs, benchmarks, measures-performance
+        self.assertEqual(set(VOCAB.subjects(SKOS.topConceptOf, VS.MeasureRelationship)), members)
+        self.assertEqual(set(VOCAB.objects(VS.MeasureRelationship, SKOS.hasTopConcept)), members)
+
+
+class Release(unittest.TestCase):
+    def test_no_message_holds_an_apostrophe(self):
+        # n10s writes sh:message into Cypher unescaped, so a single quote breaks its validator (ontology skill,
+        # SHACL rule 19; EPM-DEC-001-0106).
+        message = URIRef("http://www.w3.org/ns/shacl#message")
+        self.assertEqual([str(m) for m in SHAPES.objects(None, message) if "'" in str(m)], [])
+
+    def test_no_iri_changed_since_1_1_0(self):
+        # A minor release removes no IRI: every subject of the 1.1.0 package, the ontology header aside, is still a
+        # subject of 1.2.0, and nothing is newly deprecated (EPM-DEC-001-0106).
+        releases = os.path.join(HERE, "..", "releases", "value-stream")
+        header = URIRef("https://w3id.org/lsc/ontology/modules/value-stream")
+        old = Graph().parse(os.path.join(releases, "1.1.0", "value-stream.ttl"))
+        new = Graph().parse(os.path.join(releases, "1.2.0", "value-stream.ttl"))
+        self.assertEqual({s for s in old.subjects() if s != header} - set(new.subjects()), set())
+        deprecated = URIRef("http://www.w3.org/2002/07/owl#deprecated")
+        self.assertEqual(set(new.subjects(deprecated, None)), set(old.subjects(deprecated, None)))
+
 
 class Build(unittest.TestCase):
     def test_build_is_current(self):

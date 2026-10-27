@@ -79,12 +79,14 @@ orgm:asOf a owl:DatatypeProperty ;
 
 orgm:RaciLevel a skos:ConceptScheme ; rdfs:label "RACI level"@en ;
     skos:definition "The four kinds of design-time responsibility a role can have on a process."@en ;
-    dcterms:bibliographicCitation "The four levels as the process authority uses them: business_architecture/business_process/downstream_process_map.json, raci (responsible, accountable, consulted, informed). Generic support only: PMI, Roles, responsibilities, and resources (https://www.pmi.org/learning/library/best-practices-managing-people-quality-management-7012), which names the RACI chart."@en .
-raci:responsible a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:prefLabel "Responsible"@en ; skos:notation "R" ;
+    dcterms:bibliographicCitation "The four levels as the process authority uses them: business_architecture/business_process/downstream_process_map.json, raci (responsible, accountable, consulted, informed). Generic support only: PMI, Roles, responsibilities, and resources (https://www.pmi.org/learning/library/best-practices-managing-people-quality-management-7012), which names the RACI chart."@en ;
+    # A flat code list: every level is a top concept, stated both ways (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106).
+    skos:hasTopConcept raci:responsible, raci:accountable, raci:consulted, raci:informed .
+raci:responsible a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:topConceptOf orgm:RaciLevel ; skos:prefLabel "Responsible"@en ; skos:notation "R" ;
     skos:definition "Does the work of the process."@en .
-raci:accountable a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:prefLabel "Accountable"@en ; skos:notation "A" ;
+raci:accountable a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:topConceptOf orgm:RaciLevel ; skos:prefLabel "Accountable"@en ; skos:notation "A" ;
     skos:definition "Answers for the outcome of the process and signs it off."@en .
-raci:consulted a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:prefLabel "Consulted"@en ; skos:notation "C" ;
+raci:consulted a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:topConceptOf orgm:RaciLevel ; skos:prefLabel "Consulted"@en ; skos:notation "C" ;
     skos:definition "Gives input before or during the work, in two-way communication."@en .
-raci:informed a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:prefLabel "Informed"@en ; skos:notation "I" ;
+raci:informed a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:topConceptOf orgm:RaciLevel ; skos:prefLabel "Informed"@en ; skos:notation "I" ;
     skos:definition "Is told of progress or the result, in one-way communication."@en .

@@ -33,13 +33,16 @@ MODULES = {
         # 2.0.0 carries the decision owner's role answers: three roles deprecated, their assignments moved
         # (EPM-DEC-001-0045). Each earlier package stays on disk as released; test_build_module.py
         # checks it is untouched.
-        "version": "2.0.0", "stage": None, "issued": "2026-10-18",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md", "Yes, approve 2.0.0 (Recommended)"),
+        # 2.1.0 is a minor Claude approved under the delegation: the RACI levels stated as top concepts both ways;
+        # it requires core 2.3.0, the current release (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106).
+        "version": "2.1.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["organization/vocabulary.ttl", "organization/roles.ttl", "organization/assignments.ttl"],
         "shapes": ["organization/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.1.0"},
-        "decisions": ["EPM-DEC-001-0030", "EPM-DEC-001-0031", "EPM-DEC-001-0032", "EPM-DEC-001-0045"],
+        "pins": {"core": "2.3.0"},
+        "decisions": ["EPM-DEC-001-0030", "EPM-DEC-001-0031", "EPM-DEC-001-0032", "EPM-DEC-001-0045", "EPM-DEC-001-0098",
+                      "EPM-DEC-001-0106"],
     },
     "ref-mpc": {
         "title": "LSC Reference Instances: Marathon Petroleum Corporation",
@@ -131,14 +134,17 @@ MODULES = {
         # 1.1.0 is a minor the decision owner approved with the close-out releases: the Order to Cash credit
         # review realizes CM 1.3.7.4.2 (MPC-P10.2), and vs:produces and vs:consumes gain rdfs:range skos:Concept;
         # it requires the current core, data-product and kpi releases (EPM-DEC-001-0087, 0088, 0090).
-        "version": "1.1.0", "stage": None, "issued": "2026-10-23",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
+        # 1.2.0 is a minor Claude approved under the delegation: the measure relationships stated as top concepts both
+        # ways; it requires the current core, data-product and kpi releases (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106).
+        "version": "1.2.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["value-stream/vocabulary.ttl", "value-stream/value-streams.ttl"],
         "shapes": ["value-stream/shapes.ttl"],
         "depends_on": ["core", "data-product", "kpi"],
         # Every dependency pinned: a later kpi or data-product release must not change this package.
-        "pins": {"core": "2.3.0", "data-product": "1.0.0", "kpi": "1.1.0"},
-        "decisions": ["EPM-DEC-001-0054", "EPM-DEC-001-0077", "EPM-DEC-001-0087", "EPM-DEC-001-0088", "EPM-DEC-001-0090"],
+        "pins": {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0"},
+        "decisions": ["EPM-DEC-001-0054", "EPM-DEC-001-0077", "EPM-DEC-001-0087", "EPM-DEC-001-0088", "EPM-DEC-001-0090",
+                      "EPM-DEC-001-0098", "EPM-DEC-001-0106"],
     },
     "system": {
         "title": "LSC System Module",
@@ -162,13 +168,16 @@ MODULES = {
     "lane": {
         "title": "LSC Lane Module",
         "description": "The four office lanes as a code list, and the processes the process map places in them (Step 7).",
-        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        # 1.1.0 is a minor Claude approved under the delegation: the four lanes stated as top concepts both ways, and a
+        # shape message reworded without an apostrophe (ontology skill, SHACL rule 19); it requires core 2.3.0, the
+        # current release, which build_lanes.py already reads (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106).
+        "version": "1.1.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["lane/vocabulary.ttl", "lane/lanes.ttl"],
         "shapes": ["lane/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.2.0"},
-        "decisions": ["EPM-DEC-001-0056", "EPM-DEC-001-0077"],
+        "pins": {"core": "2.3.0"},
+        "decisions": ["EPM-DEC-001-0056", "EPM-DEC-001-0077", "EPM-DEC-001-0098", "EPM-DEC-001-0106"],
     },
     "market-data": {
         "title": "LSC Market Data Module",

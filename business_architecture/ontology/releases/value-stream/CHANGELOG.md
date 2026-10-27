@@ -1,5 +1,12 @@
 # value-stream changelog
 
+## 1.2.0 (2026-10-26)
+
+A minor release: it adds statements and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0106).
+
+- [minor] **Top concepts both ways.** Each of the three measure relationships states `skos:topConceptOf vs:MeasureRelationship`, and the scheme states `skos:hasTopConcept` for each. The code list is flat, so every relationship is a top concept; this fixes the qSKOS finding "Omitted Top Concepts" (EPM-DEC-001-0098, item 5).
+- It requires core 2.3.0, data-product 1.2.0 and kpi 1.2.0, the current releases (1.1.0 required data-product 1.0.0 and kpi 1.1.0).
+
 ## 1.1.0 (2026-10-23)
 
 A minor release: it adds a link and two ranges, and removes no IRI. Approved by the decision owner with the close-out releases ("Approve all six (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`; EPM-DEC-001-0088, 0090).

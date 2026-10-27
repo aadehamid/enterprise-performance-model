@@ -32,9 +32,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
 # Every released module once, at its newest release (EPM-DEC-001-0036, amendment of 2026-10-22). So
 # kpi is 1.1.1 (EPM-DEC-001-0093), though market-data and integration were released against 1.0.1 (as was value-stream 1.0.0;
-# value-stream 1.1.0 requires kpi 1.1.0, EPM-DEC-001-0090); their own release checks still test those pinned versions.
-PACKAGES = [("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.2.0"), ("party", "1.3.0"),
-            ("data-product", "1.2.0"), ("value-stream", "1.1.0"), ("system", "1.3.0"), ("lane", "1.0.0"),
+# value-stream 1.1.0 requires kpi 1.1.0, EPM-DEC-001-0090; 1.2.0 requires kpi 1.2.0, EPM-DEC-001-0106); their own release
+# checks still test those pinned versions.
+PACKAGES = [("core", "2.3.0"), ("organization", "2.1.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.2.0"), ("party", "1.3.0"),
+            ("data-product", "1.2.0"), ("value-stream", "1.2.0"), ("system", "1.3.0"), ("lane", "1.1.0"),
             ("market-data", "1.1.0"), ("integration", "2.3.0")]
 INPUTS = [f"releases/{m}/{v}/{m}.ttl" for m, v in PACKAGES]
 # Each package's own shapes. core 2.3.0's, as 2.2.0's and 2.1.0's, carry the controlled-value shapes

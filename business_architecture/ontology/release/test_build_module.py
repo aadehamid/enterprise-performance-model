@@ -49,6 +49,8 @@ APPROVALS.update({name: ITEM_F for name in ("kpi", "market-data", "data-product"
 # The internal systems' descriptions, approved by Claude under the delegation (EPM-DEC-001-0028, 2026-10-25, evening; 0103).
 DELEGATED = ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)")
 APPROVALS.update({name: DELEGATED for name in ("system", "party", "integration")})  # system 1.3.0, party 1.3.0, integration 2.3.0
+# The deferred qSKOS fixes, approved by Claude under the same delegation (EPM-DEC-001-0106).
+APPROVALS.update({name: DELEGATED for name in ("lane", "organization", "value-stream")})  # lane 1.1.0, organization 2.1.0, value-stream 1.2.0
 
 
 def approval_holds(name, m):
@@ -167,15 +169,15 @@ class EarlierReleases(unittest.TestCase):
 
     def test_the_new_releases_require_the_current_ones(self):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0"})  # 1.2.0, EPM-DEC-001-0080
-        self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
+        self.assertEqual(bm.dependencies("organization"), {"core": "2.3.0"})  # 2.1.0 in 2.0.0; 2.3.0 since 2.1.0 (0106)
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0; 1.2.0 too
         self.assertEqual(bm.dependencies("party"), {"core": "2.3.0", "system": "1.3.0"})  # system 1.1.0 in 1.2.0 (0099); 1.3.0 (0103)
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
         self.assertEqual(bm.dependencies("data-product"), {"core": "2.3.0", "kpi": "1.2.0", "system": "1.2.0"})  # 1.2.0 (0100)
-        # value-stream 1.1.0 requires the current releases (EPM-DEC-001-0090).
-        self.assertEqual(bm.dependencies("value-stream"), {"core": "2.3.0", "data-product": "1.0.0", "kpi": "1.1.0"})
+        # value-stream 1.1.0 required the current releases (EPM-DEC-001-0090), and 1.2.0 does too (EPM-DEC-001-0106).
+        self.assertEqual(bm.dependencies("value-stream"), {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0"})
         self.assertEqual(bm.dependencies("system"), {"core": "2.3.0"})  # since 1.1.0 (EPM-DEC-001-0099)
-        self.assertEqual(bm.dependencies("lane"), {"core": "2.2.0"})
+        self.assertEqual(bm.dependencies("lane"), {"core": "2.3.0"})  # 2.2.0 in 1.0.0; 2.3.0 since 1.1.0 (0106)
         self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.2.0"})  # since 1.1.0 (EPM-DEC-001-0100)
         # EPM-DEC-001-0078: integration names terms of each of these releases; 2.0.0 requires the current ones (0094).
         self.assertEqual(bm.dependencies("integration"), {
@@ -183,8 +185,10 @@ class EarlierReleases(unittest.TestCase):
             "value-stream": "1.1.0", "system": "1.3.0", "lane": "1.0.0", "market-data": "1.1.0", "party": "1.3.0"})  # 2.3.0
 
     def test_a_check_loads_one_release_of_each_module(self):
-        # value-stream reaches core twice: directly at 2.3.0 and through kpi 1.1.0 at 2.2.0. Only 2.3.0 loads.
-        self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.0.0", "kpi": "1.1.0"})
+        # value-stream reaches core three times: directly, and through kpi 1.2.0 and data-product 1.2.0, each at 2.3.0;
+        # data-product also reaches system 1.2.0. One release of each loads.
+        self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0",
+                                                               "system": "1.2.0"})
         self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.2.0", "core": "2.3.0"})  # 1.1.0 (EPM-DEC-001-0100)
         self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0", "core": "2.1.0"})
 
@@ -416,7 +420,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(undefined, set())
 
     def test_the_step7_releases_carry_the_release_plan_approval(self):
-        for name in tuple(n for n in STEP7 if n not in ("value-stream", "data-product", "system", "market-data")):
+        for name in tuple(n for n in STEP7 if n not in ("value-stream", "data-product", "system", "market-data", "lane")):
             self.assertEqual(bm.MODULES[name]["approval"], PLAN)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              ("1.0.0", None, "2026-10-22"))
@@ -424,7 +428,9 @@ class EarlierReleases(unittest.TestCase):
 
     def test_the_delegated_releases_carry_the_delegation(self):
         # EPM-DEC-001-0103: Claude approved the three minor releases under the delegation.
-        for name, version in (("system", "1.3.0"), ("party", "1.3.0"), ("integration", "2.3.0")):
+        # EPM-DEC-001-0106: and the three that carry the deferred qSKOS fixes.
+        for name, version in (("system", "1.3.0"), ("party", "1.3.0"), ("integration", "2.3.0"), ("lane", "1.1.0"),
+                              ("organization", "2.1.0"), ("value-stream", "1.2.0")):
             self.assertEqual(bm.MODULES[name]["approval"], DELEGATED)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-26"))
@@ -437,11 +443,10 @@ class EarlierReleases(unittest.TestCase):
                              (version, None, "2026-10-25"))
 
     def test_the_close_out_releases_carry_the_close_out_approval(self):
-        # EPM-DEC-001-0088: the decision owner approved the six close-out releases together.
-        for name, version in (("value-stream", "1.1.0"),):
-            self.assertEqual(bm.MODULES[name]["approval"], APPROVALS[name])  # integration's words differ (0094)
-            self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
-                             (version, None, "2026-10-23"))
+        # EPM-DEC-001-0088: the decision owner approved the six close-out releases together. Since value-stream 1.2.0
+        # (EPM-DEC-001-0106) the builder builds none of them; value-stream 1.1.0's package keeps the approval it names.
+        with open(os.path.join(bm.ONTOLOGY, "releases", "value-stream", "1.1.0", "manifest.json")) as f:
+            self.assertEqual(json.load(f)["approved_by"]["recorded_in"], CLOSEOUT[0])
 
 
 class BuilderGate(unittest.TestCase):

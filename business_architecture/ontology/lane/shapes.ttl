@@ -9,7 +9,7 @@
 shp:Lane a sh:NodeShape ;
     sh:targetObjectsOf lane:officeLane ;
     sh:class lane:OfficeLane ;
-    sh:message "A process's lane is one of the four office lanes." .
+    sh:message "The lane of a process is one of the four office lanes." .
 
 shp:LaneConcept a sh:NodeShape ;
     sh:targetClass lane:OfficeLane ;
