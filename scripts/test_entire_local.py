@@ -323,3 +323,17 @@ def test_a_push_stops_when_entire_rewrites_scripts_hooks_after_setup():
         assert proc.returncode == 1
         assert "run scripts/entire-local.sh" in proc.stderr
         assert c.calls() == []
+
+
+def test_the_pre_push_removes_its_temporary_folder():
+    for marked in (False, True):
+        with tempfile.TemporaryDirectory() as tmp:
+            c = Clone(tmp)
+            c.setup()
+            if marked:
+                _entire_rewrote(c)
+            c.env["TMPDIR"] = os.path.join(tmp, "hook tmp")
+            os.makedirs(c.env["TMPDIR"])
+            status, _ = c.push(f"refs/heads/a {SHA} refs/heads/a {ZERO}\n")
+            assert status == (1 if marked else 0)
+            assert os.listdir(c.env["TMPDIR"]) == []
