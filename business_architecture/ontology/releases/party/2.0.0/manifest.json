@@ -25,7 +25,7 @@
     "EPM-DEC-001-0104",
     "EPM-DEC-001-0108"
   ],
-  "triples": 4333,
+  "triples": 4336,
   "approved_by": {
     "who": "The decision owner",
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md"
@@ -33,8 +33,8 @@
   "files": {
     "CHANGELOG.md": "71c70db28daf5ca498052232c4113f99060176b49fb702b84b9ca1430b4dc149",
     "catalog.ttl": "43f1e139bf196ecc2320e71147236322fdf6cf14aab1b00f937e37719fa52305",
-    "party.jsonld": "3882408bde5c8953c3c5bdbf8a1cf596a8c2d85d2ef5b2c38ef6567c4c1c977f",
-    "party.ttl": "3e676b3b60bb7e677402a2d963e24091d0b617df52b4957097c9751c4c778c4f",
+    "party.jsonld": "db3be78e68faeee0db3380572ae182cccbfbfb6d72c738a9f1b1bdf10ef37e04",
+    "party.ttl": "8d36de6b7b7ec1a1cf6116ad14e42fa5c8c1651004c9c4bc708994b3c256b464",
     "shapes.ttl": "93470d3ab3ca3e1437e92138bbd6cfb54b24bc7a780d056a1bfbb8849f40c535"
   }
 }

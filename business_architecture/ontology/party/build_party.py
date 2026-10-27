@@ -162,6 +162,8 @@ def build(rows, mappings=None, pidx=None, code_mappings=None):
         g.add((value_iri("product", p["product"]), CUST.pidxProductFamily, Literal(p["family"])))
     for m in code_mappings or []:
         g.add((CUST[m["from"]], MATCHES[m["relation"]], CUST[m["to"]]))
+        if m["relation"] in ("exactMatch", "closeMatch"):  # symmetric: stated both ways inside the module (qSKOS reciprocal)
+            g.add((CUST[m["to"]], MATCHES[m["relation"]], CUST[m["from"]]))
     return g
 
 

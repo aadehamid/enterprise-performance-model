@@ -462,30 +462,6 @@
     skos:prefLabel "Telephone"@en ;
     skos:topConceptOf party:contact-type .
 
-<https://w3id.org/lsc/ontology/modules/party/dealer-class/2> a skos:Concept ;
-    skos:definition "Dealer Master's class for a group of a jobber's stations that a third party runs and that settles apart from the jobber's own."@en ;
-    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/party-role/sub-jobber> ;
-    skos:inScheme party:dealer-class ;
-    skos:notation "2" ;
-    skos:prefLabel "Sub-jobber"@en ;
-    skos:topConceptOf party:dealer-class .
-
-<https://w3id.org/lsc/ontology/modules/party/dealer-class/4> a skos:Concept ;
-    skos:definition "Dealer Master's class for a jobber that buys product at the company's terminals and supplies its stations."@en ;
-    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/party-role/jobber> ;
-    skos:inScheme party:dealer-class ;
-    skos:notation "4" ;
-    skos:prefLabel "Supplying jobber"@en ;
-    skos:topConceptOf party:dealer-class .
-
-<https://w3id.org/lsc/ontology/modules/party/dealer-class/9> a skos:Concept ;
-    skos:definition "Dealer Master's class for a retail gas station, the ship-to that receives fuel."@en ;
-    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/site-type/station> ;
-    skos:inScheme party:dealer-class ;
-    skos:notation "9" ;
-    skos:prefLabel "Retail gas station"@en ;
-    skos:topConceptOf party:dealer-class .
-
 <https://w3id.org/lsc/ontology/modules/party/identifier-type/industry-code> a skos:Concept ;
     skos:definition "An identifier or code issued by an industry body."@en ;
     skos:inScheme party:identifier-type ;
@@ -1086,8 +1062,33 @@
     skos:prefLabel "Transfer"@en ;
     skos:topConceptOf party:transaction-kind .
 
+<https://w3id.org/lsc/ontology/modules/party/dealer-class/2> a skos:Concept ;
+    skos:definition "Dealer Master's class for a group of a jobber's stations that a third party runs and that settles apart from the jobber's own."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/party-role/sub-jobber> ;
+    skos:inScheme party:dealer-class ;
+    skos:notation "2" ;
+    skos:prefLabel "Sub-jobber"@en ;
+    skos:topConceptOf party:dealer-class .
+
+<https://w3id.org/lsc/ontology/modules/party/dealer-class/4> a skos:Concept ;
+    skos:definition "Dealer Master's class for a jobber that buys product at the company's terminals and supplies its stations."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/party-role/jobber> ;
+    skos:inScheme party:dealer-class ;
+    skos:notation "4" ;
+    skos:prefLabel "Supplying jobber"@en ;
+    skos:topConceptOf party:dealer-class .
+
+<https://w3id.org/lsc/ontology/modules/party/dealer-class/9> a skos:Concept ;
+    skos:definition "Dealer Master's class for a retail gas station, the ship-to that receives fuel."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/site-type/station> ;
+    skos:inScheme party:dealer-class ;
+    skos:notation "9" ;
+    skos:prefLabel "Retail gas station"@en ;
+    skos:topConceptOf party:dealer-class .
+
 <https://w3id.org/lsc/ontology/modules/party/party-role/jobber> a skos:Concept ;
     skos:definition "The role of an independent reseller that buys branded fuel under a supply agreement and owns or operates its outlets."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/dealer-class/4> ;
     skos:inScheme party:party-role ;
     skos:notation "jobber" ;
     skos:prefLabel "Jobber"@en ;
@@ -1095,6 +1096,7 @@
 
 <https://w3id.org/lsc/ontology/modules/party/party-role/sub-jobber> a skos:Concept ;
     skos:definition "The role of a party that runs a group of a jobber's stations for a third party, so that the group settles and routes its payments apart from the jobber's own. Dealer Master holds it, and it is used rarely."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/dealer-class/2> ;
     skos:inScheme party:party-role ;
     skos:notation "sub-jobber" ;
     skos:prefLabel "Sub-Jobber"@en ;
@@ -1102,6 +1104,7 @@
 
 <https://w3id.org/lsc/ontology/modules/party/site-type/station> a skos:Concept ;
     skos:definition "A retail fuel station."@en ;
+    skos:exactMatch <https://w3id.org/lsc/ontology/modules/party/dealer-class/9> ;
     skos:inScheme party:site-type ;
     skos:notation "station" ;
     skos:prefLabel "Station"@en ;

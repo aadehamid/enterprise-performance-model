@@ -14061,6 +14061,11 @@
     "@value": "The role of an independent reseller that buys branded fuel under a supply agreement and owns or operates its outlets."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#exactMatch": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/party/dealer-class/4"
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/party/party-role"
@@ -14230,6 +14235,11 @@
    {
     "@language": "en",
     "@value": "The role of a party that runs a group of a jobber's stations for a third party, so that the group settles and routes its payments apart from the jobber's own. Dealer Master holds it, and it is used rarely."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#exactMatch": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/party/dealer-class/2"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
@@ -17073,6 +17083,11 @@
    {
     "@language": "en",
     "@value": "A retail fuel station."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#exactMatch": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/party/dealer-class/9"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [

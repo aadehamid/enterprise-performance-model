@@ -47,3 +47,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 ## Consequences
 
 - `system/test_systems.py` and `party/test_party_systems.py` pin 32 and 38 defined systems and the remaining undefined ones. *2026-10-26:* `system` 1.4.0 adds MPC-P11's seven, so the system test pins 39 (EPM-DEC-001-0104).
+- *2026-10-27:* Dealer Master's drafted description is corrected from the decision owner's customer inputs of that day: it is not built on Salesforce, and jobbers do not start there (EPM-DEC-001-0108).

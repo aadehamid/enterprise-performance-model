@@ -55,8 +55,15 @@ class Release(unittest.TestCase):
         # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name;
         # EPM-DEC-001-0072: the Terminal Margin Ranking System is its TMR, which the party node carries as an alternative label.
         with open(os.path.join(HERE, "queries", "q15b-same-word-linked.rq")) as f:
-            rows = [r for r in GRAPH.query(f.read()) if r.link == SKOS.exactMatch]
+            found = [r for r in GRAPH.query(f.read()) if r.link == SKOS.exactMatch]
         party, system = "https://w3id.org/lsc/ontology/modules/party/system/", "https://w3id.org/lsc/ontology/modules/system/system/"
+        # Since party 2.0.0 the query also finds Dealer Master's dealer class 2, Sub-jobber, matched to the sub-jobber role
+        # of the same name (EPM-DEC-001-0108); that pair is a correct answer, pinned here, and the rest are systems.
+        codes = "https://w3id.org/lsc/ontology/modules/party/"
+        self.assertEqual({(str(r.a), str(r.b)) for r in found if not str(r.a).startswith(party)},
+                         {(codes + "dealer-class/2", codes + "party-role/sub-jobber"),
+                          (codes + "party-role/sub-jobber", codes + "dealer-class/2")})
+        rows = [r for r in found if str(r.a).startswith(party)]
         self.assertEqual({(str(r.a), str(r.b)) for r in rows},
                          {(party + "rightangle", system + "rightangle"), (party + "kittyhawk", system + "kittyhawk"),
                           (party + "profisee", system + "profisee"), (party + "terminal-margin-ranking-system", system + "tmr"),

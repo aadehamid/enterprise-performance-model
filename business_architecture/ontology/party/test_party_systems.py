@@ -122,7 +122,7 @@ class Systems(unittest.TestCase):
         from rdflib.namespace import SH
         shapes = Graph().parse(os.path.join(HERE, "shapes.ttl"))
         messages = [str(m) for m in shapes.objects(None, SH.message)]
-        self.assertEqual(len(messages), 40)
+        self.assertEqual(len(messages), 41)  # 40, then the system-of-record shape of 2.0.0 (EPM-DEC-001-0108)
         self.assertEqual([m for m in messages if "'" in m or "\u2019" in m], [])
         self.assertIn("The definition of a customer system cites its source.", messages)
 
