@@ -93,6 +93,8 @@ class Systems(unittest.TestCase):
                                  ("bridger-insight", "bridger-insight"), ("information-steward", "information-steward"),
                                  ("sirion", "sirion"), ("customer-portal", "customer-portal")})
         self.assertEqual(len(pairs), 12)
+        self.assertIn((S.rightangle, SKOS.exactMatch, SYSTEM.rightangle), G)
+        self.assertIn((S["terminal-margin-ranking-system"], SKOS.exactMatch, SYSTEM.tmr), G)
         self.assertIn((S["sap-mdg"], SKOS.exactMatch, SYSTEM["sap-mdg"]), G)
         self.assertIn((S["customer-portal"], SKOS.exactMatch, SYSTEM["customer-portal"]), G)
         # The weak MPC-P11 candidates are not in the system module, so they match nothing.
@@ -108,8 +110,6 @@ class Systems(unittest.TestCase):
         self.assertEqual(len(messages), 40)
         self.assertEqual([m for m in messages if "'" in m or "\u2019" in m], [])
         self.assertIn("The definition of a customer system cites its source.", messages)
-        self.assertIn((S.rightangle, SKOS.exactMatch, SYSTEM.rightangle), G)
-        self.assertIn((S["terminal-margin-ranking-system"], SKOS.exactMatch, SYSTEM.tmr), G)
 
     def test_definitions(self):
         # Item G (EPM-DEC-001-0099), checked by hand against definitions.csv on 2026-10-25: 18 customer systems are

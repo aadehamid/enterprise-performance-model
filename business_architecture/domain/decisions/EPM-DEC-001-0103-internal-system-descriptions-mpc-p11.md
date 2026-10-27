@@ -26,7 +26,7 @@ EPM-DEC-001-0099 recorded the decision owner's acceptance of Claude's eleven ite
 
 ## Open question for the decision owner
 
-- **MPC-P11:** accept the proposal's strong and medium links, so the process map names those systems for the customer processes? Claude's recommendation: accept them, and leave the three weak links out until a source shows them.
+- **MPC-P11:** accept the proposal's strong and medium links, so the process map names those systems for the customer processes? Claude's recommendation: accept them, and leave the three weak links out until a source shows them. *2026-10-26:* the decision owner accepted them, and the three weak links stay out (EPM-DEC-001-0104).
 
 ## Alternatives considered
 
