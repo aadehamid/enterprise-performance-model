@@ -44,4 +44,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Consequences
 
-- `system/test_systems.py` and `party/test_party_systems.py` pin 32 and 38 defined systems and the remaining undefined ones.
+- `system/test_systems.py` and `party/test_party_systems.py` pin 32 and 38 defined systems and the remaining undefined ones. *2026-10-26:* `system` 1.4.0 adds MPC-P11's seven, so the system test pins 39 (EPM-DEC-001-0104).
