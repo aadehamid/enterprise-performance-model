@@ -46,5 +46,5 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 ## Consequences
 
 - The map change and the new systems ship in `system` 1.4.0 and `party` 1.4.0, in one pull request, each with its release notes.
-- The Neo4j projection, rerun on the new releases, has 4,146 nodes and 21,379 relationships from 36,295 triples, with every check passing.
+- The Neo4j projection, rerun on the new releases, has 4,146 nodes and 21,503 relationships from 36,473 triples, with every check passing.
 - EPM-DEC-001-0103 carries a dated note.
