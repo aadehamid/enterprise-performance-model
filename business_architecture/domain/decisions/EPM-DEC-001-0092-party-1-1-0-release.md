@@ -67,7 +67,6 @@ For the amendment of 2026-10-28, from `business_architecture/ontology/step4/revi
 ## Consequences
 
 - `releases/party/1.1.0/` is written; `scripts/check.sh` fails unless it equals a fresh build.
-- The business close-out package's point 5 now asks the business to confirm the product list and the PIDX letters (with PIDX).
+- The business close-out package's point 5 now asks the business to confirm the product list and the PIDX letters (with PIDX). *2026-10-28:* the product list is closed; point 5 asks only for the PIDX letters (amendment of 2026-10-28 above).
 - EPM-DEC-001-0064 records that the PIDX and OEO trigger is met.
 - Tag `party-v1.1.0` after the merge.
-- *2026-10-28:* the close-out package's point 5 keeps only the PIDX family letters open; the products are closed (amendment of 2026-10-28 above).
