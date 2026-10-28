@@ -1,20 +1,20 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "bbccf1257cfa2a1a4bfce5583166d0ec226fd24df81a8e49deb98a806b62c267",
+  "input_fingerprint": "e3e2bf44ebc35230eef3a3973ca9a2119aacfdea973c6077f5ef7246867c0d6e",
   "inputs": {
     "releases/core/2.4.0/core.ttl": "6b0365456230d7ed1b4c17f27bffb26d7fd5b9e159f06809c814fbbe7b8da12a",
     "releases/data-product/1.2.0/data-product.ttl": "91072ca004bebacd5c6f70bd8d4fe5c69f3525a465d3769f49959299c4f484a4",
     "releases/integration/2.5.0/integration.ttl": "be19b2c16e15983ab7c80316ee7f61997952e826b2dfb4b072707a9bf840cd57",
-    "releases/kpi/1.2.0/kpi.ttl": "01cacca965f9aa3f615bf06d6347c57b062efe31a72ebcbcfa3b1d7ff522dc5a",
+    "releases/kpi/1.3.0/kpi.ttl": "005989e34633156671bdad6ed4f33dd82ae25f413899e91bd2486547c8fb6196",
     "releases/lane/1.1.0/lane.ttl": "6b338c1cbc1b0ecde49df9a4ea2b46714c34df42ccc62fa58dfe3ee4ee345878",
     "releases/market-data/1.1.0/market-data.ttl": "8920d651d721462d2217d14ce23b680e584e0bebf6c01d03e471c551c502f3fd",
     "releases/organization/2.2.0/organization.ttl": "5fada0f28923afd1df0d2cc42bae650b04cd0e05a52c52e064ec06947ecc0b31",
-    "releases/party/2.1.0/party.ttl": "11fcf46be1c2a5f4f45baa0975881603b45bbf7e789ba5368b8ba4f22398c0c1",
+    "releases/party/2.1.0/party.ttl": "7c619984090e78a59bc5408d2e2f26bb3a38d0d8b9d1d0266ea16e44294af6ba",
     "releases/ref-mpc/1.3.0/ref-mpc.ttl": "e1d89333dca5c700f8ae01a5663a0eb86e293ca8406b8a452597e045c6fe56be",
     "releases/system/1.5.0/system.ttl": "6d58ab6dd76f0f74c999056ef07e3ab1f3d42aefa8c75a3793339a63a024663e",
     "releases/value-stream/1.2.0/value-stream.ttl": "2333e4109d3b78e6326b056cf550390bb0977f9e5e2f8864cd67745989683f42"
   },
-  "loadable_triples": 36918,
+  "loadable_triples": 36951,
   "release_exceptions": {},
   "rule4": "4a: qualified-relation nodes (EPM-DEC-001-0020)",
   "shapes": {
@@ -22,7 +22,7 @@
     "releases/core/2.4.0/shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680",
     "releases/data-product/1.2.0/shapes.ttl": "dde4da25e9c9124a29ebf0349777dbbc79ae030517817411e43b4af980c3c9f8",
     "releases/integration/2.5.0/shapes.ttl": "d04f683aca154739b626768963ed76e5fa0a11d00999c28e0ad90d053632126d",
-    "releases/kpi/1.2.0/shapes.ttl": "8e094d7ca37d99b530d924299284e7daf32f427b62d681a1aa0428e6e3ceb52d",
+    "releases/kpi/1.3.0/shapes.ttl": "9b7785121a78d5b8b27f68aff6389cfd169172f79a8a54ecf08e0fc118d503f3",
     "releases/lane/1.1.0/shapes.ttl": "17a71361c5c620a9bea93ec9cc49d409e2541f74e13a0dfc349eea13178602c4",
     "releases/market-data/1.1.0/shapes.ttl": "7a9e6962519e0423d49720c99d4e9270ef9540248fd0735cb1f0d0908acd49a1",
     "releases/organization/2.2.0/shapes.ttl": "2f3a700dc332c23cff4c78a574afeca8995ae914187aecc078ea21f3e3cb3338",
