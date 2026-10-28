@@ -250,11 +250,11 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <a class="btn" href="#copy">Copy the ontology</a>
 </div>
 
-<p class="notice">A snapshot: every figure is from the newest release of each module on <code>main</code> at commit <code>35feaa7</code>, after the releases of 2026-10-27, which bring in the decision owner's customer inputs of that day (EPM-DEC-001-0108). Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
+<p class="notice">A snapshot: every figure is from the newest release of each module on <code>main</code> after organization 2.2.0 (2026-10-28, EPM-DEC-001-0045), which follows the releases of 2026-10-27 that bring in the decision owner's customer inputs of that day (EPM-DEC-001-0108). Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
 
 <div class="stats">
   <div class="stat"><div class="k">Modules</div><div class="v">11</div><div class="d">each released and versioned on its own</div></div>
-  <div class="stat"><div class="k">Triples</div><div class="v">36,901</div><div class="d">in the eleven newest releases together</div></div>
+  <div class="stat"><div class="k">Triples</div><div class="v">36,902</div><div class="d">in the eleven newest releases together</div></div>
   <div class="stat"><div class="k">Processes</div><div class="v">463</div><div class="d">in <code>core</code>, with 640 evidenced relationships</div></div>
   <div class="stat"><div class="k">Measures</div><div class="v">41</div><div class="d">defined in <code>kpi</code>; values stay in the systems</div></div>
 </div>
@@ -433,7 +433,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 </figure>
 
 <h3>The walk, as one query</h3>
-<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the eleven newest releases loaded together, 36,901 triples; the output below is what it returned on 2026-10-27, after that day's releases.</p>
+<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the eleven newest releases loaded together, 36,902 triples since organization 2.2.0; the output below is what it returned on 2026-10-27, over 36,901 triples, after that day's releases. Organization 2.2.0 changes no statement the query reads.</p>
 <pre><code>PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
 PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
 PREFIX kpi: &lt;https://w3id.org/lsc/ontology/modules/kpi/&gt;
@@ -753,7 +753,7 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td><code>releases/catalog.ttl</code></td><td data-k="Why">The DCAT catalog of all 47 released packages: the one file that lists what exists.</td></tr>
 </tbody></table></div>
 
-<p>The newest version of each module, from its manifest. Load these together for the whole ontology (36,901 triples):</p>
+<p>The newest version of each module, from its manifest. Load these together for the whole ontology (36,902 triples):</p>
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Module</th><th class="n">Newest</th><th>Requires</th></tr></thead>
 <tbody>

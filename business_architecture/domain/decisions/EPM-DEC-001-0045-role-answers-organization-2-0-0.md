@@ -19,7 +19,7 @@ EPM-DEC-001-0031 merged role strings on spelling only and left seven questions f
 3. Refinery Technical Service Representative is the Refinery Technical Representative.
 4. Of the two long VP strings, the one with "RVCO" survives.
 5. Crude RFC stays its own role. RFC is read as Refinery Feedstock Coordinator, as a contextual reading pending confirmation. *2026-10-28:* the decision owner confirmed the reading (amendment of 2026-10-28 below).
-6. The acronym expansions with evidence are adopted: CP (Clean Products), CPVC (Clean Products Value Chain), GFVC (Global Feedstocks Value Chain), RVCO (Refinery Value Chain Optimization), CCI (Continual Commercial Improvement), E&P (Economics and Planning), BP&A (Business Planning and Analysis) and RO (Regional Optimization). PSM stays unresolved. An expansion is not a merge.
+6. The acronym expansions with evidence are adopted: CP (Clean Products), CPVC (Clean Products Value Chain), GFVC (Global Feedstocks Value Chain), RVCO (Refinery Value Chain Optimization), CCI (Continual Commercial Improvement), E&P (Economics and Planning), BP&A (Business Planning and Analysis) and RO (Regional Optimization). PSM stays unresolved. An expansion is not a merge. *2026-10-28:* PSM is Process Safety Management, the decision owner's answer, in organization 2.2.0 (amendment of 2026-10-28).
 7. Who owns a concept's meaning is a separate governance decision, not answered by process RACI.
 8. Organization 2.0.0 is approved for these merges, and a `ref-mpc` release if one is needed.
 
