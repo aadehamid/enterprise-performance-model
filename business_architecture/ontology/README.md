@@ -139,9 +139,9 @@ table (`step4/playbook/ontology-worklog.md` §2) is authoritative for step
 status: Steps 0 to 12 are done or stand as recorded, each with its listed
 exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
 
-- **Releases:** 49 packages under `releases/`, listed in
+- **Releases:** 50 packages under `releases/`, listed in
   `releases/catalog.ttl` (EPM-DEC-001-0082). The newest of each module:
-  `core` 2.4.0 (EPM-DEC-001-0105), organization 2.2.0 (EPM-DEC-001-0045, amendment of 2026-10-28), ref-mpc 1.3.0 (EPM-DEC-001-0108), kpi 1.2.0 (EPM-DEC-001-0100), party 2.1.0
+  `core` 2.4.0 (EPM-DEC-001-0105), organization 2.2.0 (EPM-DEC-001-0045, amendment of 2026-10-28), ref-mpc 1.3.0 (EPM-DEC-001-0108), kpi 1.3.0 (EPM-DEC-001-0109), party 2.1.0
   (EPM-DEC-001-0099, amendment of 2026-10-28),
   value-stream 1.2.0 (EPM-DEC-001-0106), data-product 1.2.0
   (EPM-DEC-001-0100), system 1.5.0 (EPM-DEC-001-0108), lane 1.1.0 (EPM-DEC-001-0106), market-data 1.1.0 (EPM-DEC-001-0100), and
