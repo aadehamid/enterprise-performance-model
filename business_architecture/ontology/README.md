@@ -139,15 +139,15 @@ table (`step4/playbook/ontology-worklog.md` §2) is authoritative for step
 status: Steps 0 to 12 are done or stand as recorded, each with its listed
 exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
 
-- **Releases:** 47 packages under `releases/`, listed in
+- **Releases:** 49 packages under `releases/`, listed in
   `releases/catalog.ttl` (EPM-DEC-001-0082). The newest of each module:
-  `core` 2.4.0 (EPM-DEC-001-0105), organization 2.2.0 (EPM-DEC-001-0045, amendment of 2026-10-28), ref-mpc 1.3.0 (EPM-DEC-001-0108), kpi 1.2.0 (EPM-DEC-001-0100), party 2.0.0
-  (EPM-DEC-001-0108),
+  `core` 2.4.0 (EPM-DEC-001-0105), organization 2.2.0 (EPM-DEC-001-0045, amendment of 2026-10-28), ref-mpc 1.3.0 (EPM-DEC-001-0108), kpi 1.2.0 (EPM-DEC-001-0100), party 2.1.0
+  (EPM-DEC-001-0099, amendment of 2026-10-28),
   value-stream 1.2.0 (EPM-DEC-001-0106), data-product 1.2.0
   (EPM-DEC-001-0100), system 1.5.0 (EPM-DEC-001-0108), lane 1.1.0 (EPM-DEC-001-0106), market-data 1.1.0 (EPM-DEC-001-0100), and
-  integration 2.4.0 (EPM-DEC-001-0108). *2026-10-25:* system 1.1.0, party 1.2.0 and integration
+  integration 2.5.0 (EPM-DEC-001-0099, amendment of 2026-10-28). *2026-10-25:* system 1.1.0, party 1.2.0 and integration
   2.1.0 carry the systems' definitions from item G and the qSKOS top-concept fixes (EPM-DEC-001-0098); item F's
-  five releases carry the pricing measures' bindings, prices, platform tables and lineage (EPM-DEC-001-0097, 0100). *2026-10-26:* system 1.3.0, party 1.3.0 and integration 2.3.0 carry the internal systems' descriptions, drafted from the repository (EPM-DEC-001-0103). Lane 1.1.0, organization 2.1.0 and value-stream 1.2.0 carry the deferred qSKOS top-concept fixes (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106). core 2.4.0 renames the 25 processes that shared seven names (MPC-P12) and carries core's qSKOS fixes (EPM-DEC-001-0098, 0105). System 1.4.0 and party 1.4.0 carry MPC-P11, which the decision owner accepted, and party's shape message without an apostrophe (EPM-DEC-001-0104). *2026-10-27:* party 2.0.0 (a major the decision owner approved), system 1.5.0 and integration 2.4.0 carry the decision owner's customer inputs of that day (EPM-DEC-001-0108). ref-mpc 1.3.0 adds MPC's brands Marathon, ARCO and Tesoro, which the decision owner confirmed as brand values later that day (EPM-DEC-001-0108, amendment of 2026-10-27). *2026-10-28:* organization 2.2.0 carries the decision owner's close-out answers: PSM expanded as Process Safety Management, and the Crude RFC reading and Business Planning and Analysis's definition confirmed (EPM-DEC-001-0045, amendment of 2026-10-28).
+  five releases carry the pricing measures' bindings, prices, platform tables and lineage (EPM-DEC-001-0097, 0100). *2026-10-26:* system 1.3.0, party 1.3.0 and integration 2.3.0 carry the internal systems' descriptions, drafted from the repository (EPM-DEC-001-0103). Lane 1.1.0, organization 2.1.0 and value-stream 1.2.0 carry the deferred qSKOS top-concept fixes (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106). core 2.4.0 renames the 25 processes that shared seven names (MPC-P12) and carries core's qSKOS fixes (EPM-DEC-001-0098, 0105). System 1.4.0 and party 1.4.0 carry MPC-P11, which the decision owner accepted, and party's shape message without an apostrophe (EPM-DEC-001-0104). *2026-10-27:* party 2.0.0 (a major the decision owner approved), system 1.5.0 and integration 2.4.0 carry the decision owner's customer inputs of that day (EPM-DEC-001-0108). ref-mpc 1.3.0 adds MPC's brands Marathon, ARCO and Tesoro, which the decision owner confirmed as brand values later that day (EPM-DEC-001-0108, amendment of 2026-10-27). *2026-10-28:* organization 2.2.0 carries the decision owner's close-out answers: PSM expanded as Process Safety Management, and the Crude RFC reading and Business Planning and Analysis's definition confirmed (EPM-DEC-001-0045, amendment of 2026-10-28). Party 2.1.0 defines Drop Tank, GasBuddy and the DTN File Server from their own public pages and notes the decision owner's belief that Polaris is bought; integration 2.5.0 tiers the three new sources (EPM-DEC-001-0099, amendment of 2026-10-28).
 - **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);
   the competency regression has 43 questions answerable, 0 partial,
   0 waiting and 1 parked (Q17, EPM-DEC-001-0086); the Neo4j projection of every released package passes,
@@ -178,7 +178,9 @@ exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
   PIDX family letters, and points 17 and 18 (Dealer Master) are added
   (EPM-DEC-001-0086, amendment of 2026-10-28). Organization 2.2.0 closes
   points 7 (Crude RFC) and 8 (PSM) and settles one of point 9's four
-  definitions (EPM-DEC-001-0045, amendment of 2026-10-28).
+  definitions (EPM-DEC-001-0045, amendment of 2026-10-28). Party 2.1.0
+  narrows point 11 to Federal Health and what MPC sends the four systems,
+  and notes point 15's answer (EPM-DEC-001-0099, amendment of 2026-10-28).
 - **Open after closure, apart from the ontology:** the store tests are a
   separate, later task: load the ontology into Apache Jena and into a
   Databricks Delta triple table, project it to a local Neo4j and to Aura, then

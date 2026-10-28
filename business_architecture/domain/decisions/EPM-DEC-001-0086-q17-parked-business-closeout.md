@@ -40,8 +40,8 @@ On 2026-10-26 the decision owner said they might work through some of the packag
 | 8 | PSM is Process Safety Management: "By the was PSM = Process Safety Management". The decision owner sent it after first choosing to leave the point open | EPM-DEC-001-0045, with `organization`'s next minor release (*2026-10-28:* released as organization 2.2.0) |
 | 9 | Business Planning and Analysis's definition is confirmed; the other three stay open: "Confirm 1, rest open (Recommended)" | EPM-DEC-001-0045, with `organization`'s next minor release (*2026-10-28:* released as organization 2.2.0) |
 | 10, 12, 13, 14, 16 | Each stays open: "Leave open (Recommended)" | This amendment |
-| 11 | Drop Tank, GasBuddy and DTN are to be defined from their own public pages; Federal Health, and what MPC sends each of the four, stay open: "Define 3, rest open (Recommended)" | EPM-DEC-001-0099, with `party`'s next minor release |
-| 15 | The decision owner believes Polaris is bought: "I think this is an off the shelf system that offers this service". The point stays open for the vendor and what Polaris does | EPM-DEC-001-0099, with `party`'s next minor release |
+| 11 | Drop Tank, GasBuddy and DTN are to be defined from their own public pages; Federal Health, and what MPC sends each of the four, stay open: "Define 3, rest open (Recommended)" | EPM-DEC-001-0099, with `party`'s next minor release (*2026-10-28:* released as party 2.1.0) |
+| 15 | The decision owner believes Polaris is bought: "I think this is an off the shelf system that offers this service". The point stays open for the vendor and what Polaris does | EPM-DEC-001-0099, with `party`'s next minor release (*2026-10-28:* released as party 2.1.0) |
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 

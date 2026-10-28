@@ -47,7 +47,7 @@ Claude walked the decision owner through the business close-out package on 2026-
 **What follows (Claude, under EPM-DEC-001-0028):**
 
 - **organization 2.2.0, a minor release, issued 2026-10-28.** It removes no IRI. `role:psm` takes the preferred label Process Safety Management, with "PSM" kept as an alternative label, as 2.0.0 did for the other acronyms. Crude Refinery Feedstock Coordinator's and Business Planning and Analysis's editorial notes say the decision owner confirmed them. The unresolved questions on PSM and Crude RFC are removed from `roles.csv`.
-- It still requires core 2.3.0. `ref-mpc` 1.3.0 and `integration` 2.4.0 still require organization 2.1.0, which stays released as it is.
+- It still requires core 2.3.0. `ref-mpc` 1.3.0 and `integration` 2.4.0 still require organization 2.1.0, which stays released as it is. *2026-10-28:* `integration` 2.5.0 requires organization 2.2.0 (EPM-DEC-001-0099, amendment of 2026-10-28).
 - `test_vocabulary.py` compares 2.2.0 with 2.1.0 (every IRI kept, nothing newly deprecated, the changed triples counted by hand), and `test_roles.py` pins the three answers. The taxonomy checker gives the same 940 findings on 2.1.0 and 2.2.0, all untagged source role texts on assignments, which this release does not touch.
 - The Refinery Value Chain Optimization Advisor, Refinery Technical Representative and Crude Refinery Feedstock Coordinator definitions stay EPM working definitions, open with their managers.
 

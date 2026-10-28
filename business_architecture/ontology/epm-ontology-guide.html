@@ -250,11 +250,11 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <a class="btn" href="#copy">Copy the ontology</a>
 </div>
 
-<p class="notice">A snapshot: every figure is from the newest release of each module at commit <code>acbc142</code>, on the branch that releases organization 2.2.0 (2026-10-28, EPM-DEC-001-0045), which follows the releases of 2026-10-27 that bring in the decision owner's customer inputs of that day (EPM-DEC-001-0108). Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
+<p class="notice">A snapshot: every figure is from the newest release of each module at commit <code>SNAPSHOT_COMMIT</code>, on the branch that releases party 2.1.0 and integration 2.5.0 (2026-10-28, EPM-DEC-001-0099), which follow organization 2.2.0 (EPM-DEC-001-0045) and the releases of 2026-10-27 that bring in the decision owner's customer inputs of that day (EPM-DEC-001-0108). Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
 
 <div class="stats">
   <div class="stat"><div class="k">Modules</div><div class="v">11</div><div class="d">each released and versioned on its own</div></div>
-  <div class="stat"><div class="k">Triples</div><div class="v">36,902</div><div class="d">in the eleven newest releases together</div></div>
+  <div class="stat"><div class="k">Triples</div><div class="v">36,918</div><div class="d">in the eleven newest releases together</div></div>
   <div class="stat"><div class="k">Processes</div><div class="v">463</div><div class="d">in <code>core</code>, with 640 evidenced relationships</div></div>
   <div class="stat"><div class="k">Measures</div><div class="v">41</div><div class="d">defined in <code>kpi</code>; values stay in the systems</div></div>
 </div>
@@ -321,7 +321,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
     <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head key" d="M0 0 10 5 0 10z"/></marker>
   </defs>
   <rect class="lane" x="20" y="14" width="1000" height="66" rx="8"/>
-  <text class="t" x="40" y="42">integration 2.4.0</text><text class="m" x="40" y="62">plc: auth: con:  · placement, authority and consumer rules; requires nine modules, not ref-mpc</text>
+  <text class="t" x="40" y="42">integration 2.5.0</text><text class="m" x="40" y="62">plc: auth: con:  · placement, authority and consumer rules; requires nine modules, not ref-mpc</text>
   <!-- edges -->
   <path class="e int" d="M145 80 V238" marker-end="url(#a1)"/>
   <path class="e int" d="M385 80 V128" marker-end="url(#a1)"/>
@@ -352,7 +352,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <rect class="node" x="820" y="130" width="170" height="54" rx="6"/><text class="t" x="834" y="153">ref-mpc 1.3.0</text><text class="m" x="834" y="172">refmpc:</text>
   <rect class="node key" x="60" y="240" width="170" height="54" rx="6"/><text class="t" x="74" y="263">market-data 1.1.0</text><text class="m" x="74" y="282">mkt:</text>
   <rect class="node key" x="430" y="240" width="170" height="54" rx="6"/><text class="t" x="444" y="263">data-product 1.2.0</text><text class="m" x="444" y="282">dp:</text>
-  <rect class="node" x="690" y="240" width="170" height="54" rx="6"/><text class="t" x="704" y="263">party 2.0.0</text><text class="m" x="704" y="282">party:</text>
+  <rect class="node" x="690" y="240" width="170" height="54" rx="6"/><text class="t" x="704" y="263">party 2.1.0</text><text class="m" x="704" y="282">party:</text>
   <rect class="node" x="40" y="350" width="170" height="54" rx="6"/><text class="t" x="54" y="373">lane 1.1.0</text><text class="m" x="54" y="392">lane:</text>
   <rect class="node store" x="300" y="350" width="170" height="54" rx="6"/><text class="t" x="314" y="373">kpi 1.2.0</text><text class="m" x="314" y="392">kpi: measure:</text>
   <rect class="node key" x="560" y="350" width="170" height="54" rx="6"/><text class="t" x="574" y="373">system 1.5.0</text><text class="m" x="574" y="392">sys: system:</text>
@@ -362,13 +362,13 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 </div>
 <div class="diagram tall" role="img" aria-label="Module map as a list, top to bottom.">
 <svg viewBox="0 0 360 700" xmlns="http://www.w3.org/2000/svg">
-  <rect class="lane" x="10" y="10" width="340" height="56" rx="8"/><text class="t" x="24" y="34">integration 2.4.0</text><text class="s" x="24" y="53">requires every module below except ref-mpc</text>
+  <rect class="lane" x="10" y="10" width="340" height="56" rx="8"/><text class="t" x="24" y="34">integration 2.5.0</text><text class="s" x="24" y="53">requires every module below except ref-mpc</text>
   <g>
   <rect class="node" x="10" y="80" width="340" height="50" rx="6"/><text class="t" x="24" y="101">value-stream 1.2.0</text><text class="s" x="24" y="119">requires data-product, kpi, core</text>
   <rect class="node" x="10" y="140" width="340" height="50" rx="6"/><text class="t" x="24" y="161">ref-mpc 1.3.0</text><text class="s" x="24" y="179">requires organization, party</text>
   <rect class="node key" x="10" y="200" width="340" height="50" rx="6"/><text class="t" x="24" y="221">market-data 1.1.0</text><text class="s" x="24" y="239">requires kpi</text>
   <rect class="node key" x="10" y="260" width="340" height="50" rx="6"/><text class="t" x="24" y="281">data-product 1.2.0</text><text class="s" x="24" y="299">requires core, kpi, system</text>
-  <rect class="node" x="10" y="320" width="340" height="50" rx="6"/><text class="t" x="24" y="341">party 2.0.0</text><text class="s" x="24" y="359">requires core, system</text>
+  <rect class="node" x="10" y="320" width="340" height="50" rx="6"/><text class="t" x="24" y="341">party 2.1.0</text><text class="s" x="24" y="359">requires core, system</text>
   <rect class="node store" x="10" y="380" width="340" height="50" rx="6"/><text class="t" x="24" y="401">kpi 1.2.0</text><text class="s" x="24" y="419">requires core</text>
   <rect class="node key" x="10" y="440" width="340" height="50" rx="6"/><text class="t" x="24" y="461">system 1.5.0</text><text class="s" x="24" y="479">requires core</text>
   <rect class="node" x="10" y="500" width="340" height="50" rx="6"/><text class="t" x="24" y="521">organization 2.2.0</text><text class="s" x="24" y="539">requires core</text>
@@ -433,7 +433,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 </figure>
 
 <h3>The walk, as one query</h3>
-<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the eleven newest releases loaded together, 36,902 triples since organization 2.2.0; the output below is what it returned on 2026-10-27, over 36,901 triples, after that day's releases. Organization 2.2.0 changes no statement the query reads.</p>
+<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the eleven newest releases loaded together, 36,918 triples since party 2.1.0 and integration 2.5.0; the output below is what it returned on 2026-10-27, over 36,901 triples, after that day's releases. The releases of 2026-10-28 (organization 2.2.0, party 2.1.0, integration 2.5.0) change no statement the query reads.</p>
 <pre><code>PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
 PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
 PREFIX kpi: &lt;https://w3id.org/lsc/ontology/modules/kpi/&gt;
@@ -609,11 +609,11 @@ ORDER BY ?hop ?label</code></pre>
 </section>
 
 <section class="mod" id="m-party">
-<h3>party <span class="pill">2.0.0</span> <span class="pill">4,336 triples</span></h3>
+<h3>party <span class="pill">2.1.0</span> <span class="pill">4,349 triples</span></h3>
 <div class="two">
 <div>
 <p><strong>Holds</strong> the customer domain: the customer model with 22 concept schemes, 50 customer systems with 48 data flows and 276 attributes, 27 products, and the customer lifecycle in a business view and a system view (EPM-DEC-001-0068 to 0070).</p>
-<p>Since 2.0.0, a major release, Dealer Master is the system of record for the ship-to stations, and jobbers are mastered in SAP MDG and RightAngle and replicated to it. The release adds the sub-jobber role, the dealer classes 4, 2 and 9, the classes of trade MST and DTW, and the SAP ship-to number (EPM-DEC-001-0108).</p>
+<p>Since 2.0.0, a major release, Dealer Master is the system of record for the ship-to stations, and jobbers are mastered in SAP MDG and RightAngle and replicated to it. The release adds the sub-jobber role, the dealer classes 4, 2 and 9, the classes of trade MST and DTW, and the SAP ship-to number (EPM-DEC-001-0108). Since 2.1.0, Drop Tank, GasBuddy and the DTN File Server are defined from their own public pages, and a note gives the decision owner's belief that Polaris is bought (EPM-DEC-001-0099, amendment of 2026-10-28).</p>
 <p><strong>Why:</strong> the customer domain has its own owner and its own sources, the customer systems' data flows, and changes on its own schedule.</p>
 </div>
 <div class="card story">
@@ -621,7 +621,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>KittyHawk, one of the view's three systems, is also a customer system. <code>party:system/kittyhawk skos:exactMatch system:kittyhawk</code> says they are the same system. The customer view adds that it "records physical product movements" and receives customers from RightAngle.</p>
 </div>
 </div>
-<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.4.0 and system 1.5.0. Twenty of its 50 customer systems match a system-module system (EPM-DEC-001-0104, 0108). Open: Federal Health, and what MPC sends each of the four customer systems downstream of MAGIC, wait for the customer-data owner, while Drop Tank, GasBuddy and DTN are to be defined from their own public pages in party's next minor release (close-out point 11); the four undefined codes and TID Nbr's reading were closed as they stand on 2026-10-28 (points 3 and 4, EPM-DEC-001-0072); the 28 drafted customer-system descriptions, the eight of 2026-10-27 among them, wait for each owner (point 16; EPM-DEC-001-0108); the PIDX family letters await confirmation, and the product list was closed on 2026-10-28 (point 5, EPM-DEC-001-0092); and how Dealer Master's billing customer number relates to the SAP customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open with the business (points 17 and 18, EPM-DEC-001-0108).</p>
+<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.4.0 and system 1.5.0. Twenty of its 50 customer systems match a system-module system (EPM-DEC-001-0104, 0108). Open: Federal Health, and what MPC sends each of the four customer systems downstream of MAGIC, wait for the customer-data owner (close-out point 11); Polaris's vendor and what it does wait for its owners (point 15); the four undefined codes and TID Nbr's reading were closed as they stand on 2026-10-28 (points 3 and 4, EPM-DEC-001-0072); the 28 drafted customer-system descriptions, the eight of 2026-10-27 among them, wait for each owner (point 16; EPM-DEC-001-0108); the PIDX family letters await confirmation, and the product list was closed on 2026-10-28 (point 5, EPM-DEC-001-0092); and how Dealer Master's billing customer number relates to the SAP customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open with the business (points 17 and 18, EPM-DEC-001-0108).</p>
 </section>
 
 <section class="mod" id="m-ref-mpc">
@@ -655,13 +655,13 @@ ORDER BY ?hop ?label</code></pre>
 </section>
 
 <section class="mod" id="m-integration">
-<h3>integration <span class="pill">2.4.0</span> <span class="pill">450 triples</span></h3>
+<h3>integration <span class="pill">2.5.0</span> <span class="pill">456 triples</span></h3>
 <div class="two">
 <div>
 <p><strong>Holds</strong> no new facts, only rules about the other modules' links. It ships three source folders as one package:</p>
 <ul>
 <li><strong>placement:</strong> which links prove the work. <code>vs:produces</code> and <code>dp:producedBy</code> certify; every other placement, <code>kpi:informsProcess</code> among them, is context (EPM-DEC-001-0058).</li>
-<li><strong>authority:</strong> five evidence tiers for the 103 cited sources: process authority, MPC, U.S. refining peers, industry and regulatory sources, and generic frameworks. The best tier wins (EPM-DEC-001-0059).</li>
+<li><strong>authority:</strong> five evidence tiers for the 106 cited sources: process authority, MPC, U.S. refining peers, industry and regulatory sources, and generic frameworks. The best tier wins (EPM-DEC-001-0059).</li>
 <li><strong>consumer:</strong> 13 rules for what a catalog binds and an agent may answer or must refuse (EPM-DEC-001-0061).</li>
 </ul>
 </div>
@@ -750,10 +750,10 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/CHANGELOG.md</code></td><td data-k="Why">What this version changed, who approved it, and its known gaps.</td></tr>
 <tr><td><code>releases/core/&lt;version&gt;/canonical-facts.csv</code>, <code>counts.json</code></td><td data-k="Why">Core's extras: the evidence row behind each approved process relationship, and the release's counts. Core 1.0.0 also holds <code>conservation.csv</code> and <code>label-dispositions.csv</code>, the ledger of how every source row was handled.</td></tr>
 <tr><td><code>releases/&lt;module&gt;/CHANGELOG.md</code></td><td data-k="Why">Each module's whole history in one file (ten modules; core's is <code>business_architecture/ontology/release/CHANGELOG.md</code>, listed in group 2 as HTML).</td></tr>
-<tr><td><code>releases/catalog.ttl</code></td><td data-k="Why">The DCAT catalog of all 47 released packages: the one file that lists what exists.</td></tr>
+<tr><td><code>releases/catalog.ttl</code></td><td data-k="Why">The DCAT catalog of all 49 released packages: the one file that lists what exists.</td></tr>
 </tbody></table></div>
 
-<p>The newest version of each module, from its manifest. Load these together for the whole ontology (36,902 triples):</p>
+<p>The newest version of each module, from its manifest. Load these together for the whole ontology (36,918 triples):</p>
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Module</th><th class="n">Newest</th><th>Requires</th></tr></thead>
 <tbody>
@@ -761,13 +761,13 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td>organization</td><td class="n" data-k="Newest">2.2.0</td><td data-k="Requires">core 2.3.0</td></tr>
 <tr><td>ref-mpc</td><td class="n" data-k="Newest">1.3.0</td><td data-k="Requires">organization 2.1.0, party 2.0.0</td></tr>
 <tr><td>kpi</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">core 2.3.0</td></tr>
-<tr><td>party</td><td class="n" data-k="Newest">2.0.0</td><td data-k="Requires">core 2.4.0, system 1.5.0</td></tr>
+<tr><td>party</td><td class="n" data-k="Newest">2.1.0</td><td data-k="Requires">core 2.4.0, system 1.5.0</td></tr>
 <tr><td>data-product</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">core 2.3.0, kpi 1.2.0, system 1.2.0</td></tr>
 <tr><td>value-stream</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">core 2.3.0, data-product 1.2.0, kpi 1.2.0</td></tr>
 <tr><td>system</td><td class="n" data-k="Newest">1.5.0</td><td data-k="Requires">core 2.4.0</td></tr>
 <tr><td>lane</td><td class="n" data-k="Newest">1.1.0</td><td data-k="Requires">core 2.3.0</td></tr>
 <tr><td>market-data</td><td class="n" data-k="Newest">1.1.0</td><td data-k="Requires">kpi 1.2.0</td></tr>
-<tr><td>integration</td><td class="n" data-k="Newest">2.4.0</td><td data-k="Requires">core 2.4.0, organization 2.1.0, kpi 1.2.0, data-product 1.2.0, value-stream 1.2.0, system 1.5.0, lane 1.1.0, market-data 1.1.0, party 2.0.0</td></tr>
+<tr><td>integration</td><td class="n" data-k="Newest">2.5.0</td><td data-k="Requires">core 2.4.0, organization 2.2.0, kpi 1.2.0, data-product 1.2.0, value-stream 1.2.0, system 1.5.0, lane 1.1.0, market-data 1.1.0, party 2.1.0</td></tr>
 </tbody></table></div>
 <p>To check that a copied version folder is complete and unchanged, the teammate hashes its files and compares each hash with the <code>files</code> entry in that folder's <code>manifest.json</code>. For kpi 1.2.0, for example:</p>
 <pre><code>cd business_architecture/ontology/releases/kpi/1.2.0 &amp;&amp; shasum -a 256 kpi.ttl kpi.jsonld shapes.ttl catalog.ttl CHANGELOG.md</code></pre>
