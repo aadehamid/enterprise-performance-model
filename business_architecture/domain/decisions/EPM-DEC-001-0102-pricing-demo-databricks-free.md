@@ -39,7 +39,7 @@ The decision owner had already created a Postgres VM on exe.dev ("I have already
 
 - The databases are `rightangle` (was `ctrm`), `aspen_pims` (was `planning`), `reference_data_hub` (was `kittyhawk`), `price_assessment` (was `mips`), `price_reference` (was `mpr`) and `production_accounting` (was `prodacct`). RightAngle cannot also name the KittyHawk database, because the CTRM database is RightAngle's, so KittyHawk takes a generic name.
 - On the VM, `databases.exe.xyz`, Postgres listens only on the VM's localhost, so the demo reaches it through an SSH tunnel. A new login role `demo` owns the six databases. Its password is generated, kept only in the demo's local `.env`, and never printed. The VM's other databases are untouched.
-- The copy holds 17 tables with row counts equal to the local container's, 167,804 rows in all. The full pipeline ran from the VM on 2026-10-28 with the same counts in every layer. The local databases carry the new names too, so the fallback works unchanged.
+- The copy holds 17 tables with row counts equal to the local container's, 167,804 rows in all. The full pipeline ran from the VM on 2026-10-28 with the same counts in every layer, except the benchmark view, whose 160-day window moves with the date (4,173 rows that day). On this machine the local databases were renamed in place (`ALTER DATABASE … RENAME TO`), so the fallback works unchanged. A volume created before 2026-10-28 elsewhere still holds the old names, because Postgres creates the databases only on an empty volume; the README's run steps give the one-time rename.
 - The six old replica schemas and their landing-volume folders were removed from the demo's catalog `idp_sbx`.
 
 ## Alternatives considered

@@ -24,6 +24,10 @@ You need Docker, [uv](https://docs.astral.sh/uv/), and a Databricks Free Edition
 ```bash
 cd demos/downstream-pricing-databricks-free
 docker compose -f docker/docker-compose.yml up -d          # the six source databases
+# A volume created before 2026-10-28 holds the old database names. Rename them once (Postgres creates databases only
+# on an empty volume):
+#   for p in mips:price_assessment mpr:price_reference kittyhawk:reference_data_hub ctrm:rightangle planning:aspen_pims prodacct:production_accounting; do
+#     docker exec pricing-demo-sources psql -U demo -d postgres -c "ALTER DATABASE ${p%%:*} RENAME TO ${p##*:}"; done
 uv sync
 uv run python -m pricing_demo.load_postgres                # generate and load the source tables
 uv run python -m pricing_demo.replicate                    # Postgres -> Parquet with DuckDB
@@ -55,9 +59,9 @@ Free Edition created the `idp_sbx` catalog, so the objects carry their shared na
 | Gold | `gold_commercial_core.mpr_mips_crack_spread_price_fact` | 108,204 (127 series in 44 groups, 142 days, periods 0 to 5) |
 | | `gold_commercial_core.mips_mpr_executive_summary_fact` | 50,552 |
 | | `gold_commercial_core.refinery_operations_daily_fact` | 1,846 |
-| Metric views | `mpr_mips_crack_spread_price_fact_metrics_vw`, `mips_mpr_executive_summary_fact_vw`, `mips_mpr_benchmark_prices_fact_vw` (160-day window), `refinery_operations_metrics_vw` | 108,204, 50,552, 4,251, 1,846 |
+| Metric views | `mpr_mips_crack_spread_price_fact_metrics_vw`, `mips_mpr_executive_summary_fact_vw`, `mips_mpr_benchmark_prices_fact_vw` (160-day window), `refinery_operations_metrics_vw` | 108,204, 50,552, 4,251 (2026-10-25 and 26; 4,173 on 2026-10-28), 1,846 |
 
-Both Genie agents answered from their metric views: the Chicago WTI 3-2-1 crack, ex-RIN, prompt, at $49.84/bbl on the latest date; NYH ULSD cash at $5.27/gal on 2026-10-20, up $0.09, which is EIA's published spot. `SELECT *` on a metric view is refused (`METRIC_VIEW_MISSING_MEASURE_FUNCTION`), as it should be. On 2026-10-28 the pipeline ran from the exe.dev VM through the tunnel, under the new database names: the same counts in every replica, silver, gold and metric view, with the benchmark view at 4,173 on that date (its 160-day window moves with the date). After the review fixes the pipeline ran again the same day, with the same counts: the Executive Summary agent gave ICE Brent's front month as $115.22/bbl (the benchmark view's value divided by 100) and NYH ULSD's forward monthly averages as $5.27, $5.22, $5.13 and $5.15/gal (sum divided by count). On 2026-10-26 (UTC) it ran again after round 2's fixes, with the same counts (the benchmark view's 4,251 on that date). A build run after a fresh replication but without the upload stopped with "holds rows replicated at … not this run's …", as it should.
+Both Genie agents answered from their metric views: the Chicago WTI 3-2-1 crack, ex-RIN, prompt, at $49.84/bbl on the latest date; NYH ULSD cash at $5.27/gal on 2026-10-20, up $0.09, which is EIA's published spot. `SELECT *` on a metric view is refused (`METRIC_VIEW_MISSING_MEASURE_FUNCTION`), as it should be. After the review fixes the pipeline ran again the same day, with the same counts: the Executive Summary agent gave ICE Brent's front month as $115.22/bbl (the benchmark view's value divided by 100) and NYH ULSD's forward monthly averages as $5.27, $5.22, $5.13 and $5.15/gal (sum divided by count). On 2026-10-26 (UTC) it ran again after round 2's fixes, with the same counts (the benchmark view's 4,251 on that date). A build run after a fresh replication but without the upload stopped with "holds rows replicated at … not this run's …", as it should. On 2026-10-28 the pipeline ran from the exe.dev VM through the tunnel, under the new database names: the same counts in every replica, silver and gold table and in three of the four metric views; the benchmark view held 4,173 on that date, because its 160-day window moves with the date.
 
 ## Real, spot-anchored, synthesized
 
