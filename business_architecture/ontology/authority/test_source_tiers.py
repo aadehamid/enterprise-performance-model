@@ -47,7 +47,7 @@ class Tiers(unittest.TestCase):
         from rdflib.namespace import DCTERMS, RDF
         sources = {s for s, p, o in TIERS if str(p).endswith("evidenceTier")}
         # then 2 in tier 1 (EPM-DEC-001-0103): 102, 15 / 3 / 1 / 69 / 14; then the customer inputs of 2026-10-27 in tier 1
-        # (EPM-DEC-001-0108): 103, 16 / 3 / 1 / 69 / 14; then the three public pages of party 2.1.0 in tier 4
+        # (EPM-DEC-001-0108): 103, 16 / 3 / 1 / 69 / 14; then the three public sources of party 2.1.0 in tier 4
         # (EPM-DEC-001-0099, amendment of 2026-10-28): 106, 16 / 3 / 1 / 72 / 14.
         self.assertEqual(len(sources), 106)
         for s in sources:

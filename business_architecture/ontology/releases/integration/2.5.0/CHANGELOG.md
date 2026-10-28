@@ -4,7 +4,7 @@
 
 A minor release: it adds three sources, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0099, amendment of 2026-10-28).
 
-- [minor] **Source tiers.** The three public pages that define Drop Tank, GasBuddy and DTN in party 2.1.0 join `authority` in tier 4 (106 sources in all).
+- [minor] **Source tiers.** The three public sources that define Drop Tank, GasBuddy and DTN in party 2.1.0 (two vendor pages and, for Drop Tank, a 2018 press release) join `authority` in tier 4 (106 sources in all).
 - It requires the current releases: core 2.4.0, organization 2.2.0, kpi 1.2.0, data-product 1.2.0, value-stream 1.2.0, system 1.5.0, lane 1.1.0, market-data 1.1.0 and party 2.1.0.
 
 ### Known gaps

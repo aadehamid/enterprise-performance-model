@@ -34,7 +34,7 @@
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md"
   },
   "files": {
-    "CHANGELOG.md": "70ee61e556bacdd7d737751cfd337bf1533c4812449ccae0f6e63d68345c903f",
+    "CHANGELOG.md": "c177186d1c3de6bcf3a2e318bef7a0b281d79a3172d838d947e545742a0c9b20",
     "catalog.ttl": "1a3cdab7ccfad4757e243cb2ea3d91f99b705e424aad463a56546a0a3325a308",
     "integration.jsonld": "ef981280163d50a6c59d890eb26640146af1e1f730c7a4fbfc59327fee2ec27b",
     "integration.ttl": "be19b2c16e15983ab7c80316ee7f61997952e826b2dfb4b072707a9bf840cd57",

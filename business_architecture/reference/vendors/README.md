@@ -1,6 +1,6 @@
 # Vendor product descriptions
 
-Each passage below is a vendor's own description of its product, quoted whole from the vendor's page or documentation, with the URL, any version or page date the page states, and the date it was read. The `system` and `party` modules define their off-the-shelf systems from these passages, in Claude's words, and mark each definition as the vendor's description (item G, EPM-DEC-001-0099). Each source is in evidence tier 4, industry sources (`ontology/authority/source-tiers.csv`; EPM-DEC-001-0059).
+Each passage below is a vendor's own description of its product, quoted whole from the vendor's page or documentation (for Drop Tank, whose site is gone, from a press release it issued), with the URL, any version or page date the page states, and the date it was read. The `system` and `party` modules define their off-the-shelf systems from these passages, in Claude's words, and mark each definition as the vendor's description (item G, EPM-DEC-001-0099). Each source is in evidence tier 4, industry sources (`ontology/authority/source-tiers.csv`; EPM-DEC-001-0059).
 
 A vendor's page says what its product is in general. It says nothing about how MPC uses the product: that comes from the process map's `systems` fields and the decision owner's customer inputs. A vendor page is also marketing, so it never outranks MPC's own sources or the process map.
 

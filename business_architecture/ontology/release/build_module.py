@@ -243,7 +243,7 @@ MODULES = {
         # internal systems' descriptions; it requires the new system and party releases (EPM-DEC-001-0103).
         # 2.4.0 is a minor Claude approved under the delegation, with the decision owner's alignment with the plan: the
         # customer inputs of 2026-10-27 in tier 1; it requires the current releases (EPM-DEC-001-0108).
-        # 2.5.0 is a minor Claude approved under the delegation: the three public pages that define Drop Tank, GasBuddy
+        # 2.5.0 is a minor Claude approved under the delegation: the three public sources (two vendor pages, a press release) that define Drop Tank, GasBuddy
         # and DTN in party 2.1.0, in tier 4; it requires the current releases, organization 2.2.0 and party 2.1.0
         # among them (EPM-DEC-001-0099, amendment of 2026-10-28).
         "version": "2.5.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-28",
