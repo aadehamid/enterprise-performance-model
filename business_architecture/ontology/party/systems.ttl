@@ -2443,7 +2443,7 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
 <https://w3id.org/lsc/ontology/modules/party/system/gas-buddy> a skos:Concept,
         party:CustomerSystem ;
     dcterms:source src:vendor-gasbuddy-about ;
-    skos:definition "GasBuddy's fuel-savings service for drivers. By the vendor's description, it gives real-time gas price information at more than 150,000 stations, cashback rewards with brand partners and a payments card with cents off per gallon, through an app downloaded over 100 million times. What MPC sends it is not known."@en ;
+    skos:definition "GasBuddy's fuel-savings service for drivers. By the vendor's description, it gives real-time gas price information at more than 150,000 stations, cashback rewards with brand partners and a payments card with cents off per gallon; its app has been downloaded over 100 million times. What MPC sends it is not known."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "gas-buddy" ;
     skos:prefLabel "Gas Buddy"@en ;

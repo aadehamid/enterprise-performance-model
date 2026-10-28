@@ -19940,7 +19940,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "GasBuddy's fuel-savings service for drivers. By the vendor's description, it gives real-time gas price information at more than 150,000 stations, cashback rewards with brand partners and a payments card with cents off per gallon, through an app downloaded over 100 million times. What MPC sends it is not known."
+    "@value": "GasBuddy's fuel-savings service for drivers. By the vendor's description, it gives real-time gas price information at more than 150,000 stations, cashback rewards with brand partners and a payments card with cents off per gallon; its app has been downloaded over 100 million times. What MPC sends it is not known."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#inScheme": [
