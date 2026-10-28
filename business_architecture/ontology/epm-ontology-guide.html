@@ -250,11 +250,11 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <a class="btn" href="#copy">Copy the ontology</a>
 </div>
 
-<p class="notice">A snapshot: every figure is from the newest release of each module on <code>main</code> at commit <code>33c2669</code>, after the releases of 2026-10-26 and the record that the ontology is done (EPM-DEC-001-0107). Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
+<p class="notice">A snapshot: every figure is from the newest release of each module on <code>main</code> at commit <code>35feaa7</code>, after the releases of 2026-10-27, which bring in the decision owner's customer inputs of that day (EPM-DEC-001-0108). Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
 
 <div class="stats">
   <div class="stat"><div class="k">Modules</div><div class="v">11</div><div class="d">each released and versioned on its own</div></div>
-  <div class="stat"><div class="k">Triples</div><div class="v">36,473</div><div class="d">in the eleven newest releases together</div></div>
+  <div class="stat"><div class="k">Triples</div><div class="v">36,901</div><div class="d">in the eleven newest releases together</div></div>
   <div class="stat"><div class="k">Processes</div><div class="v">463</div><div class="d">in <code>core</code>, with 640 evidenced relationships</div></div>
   <div class="stat"><div class="k">Measures</div><div class="v">41</div><div class="d">defined in <code>kpi</code>; values stay in the systems</div></div>
 </div>
@@ -307,7 +307,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <div>
     <p>Two rules keep the split sound. The module policy (the skill's <code>foundations.md</code>, policy 8) says modules depend one way, with no cycles, and use each other's terms by IRI, never by redefining them. A cycle would make a module impossible to release on its own.</p>
     <p>Some splits follow the business's own lines. Market Data is a domain separate from commercial pricing, so its benchmark recipes have their own module (EPM-DEC-001-0006). The cross-module rules (what certifies, which source wins, what an agent may answer) sit in one <code>integration</code> package above the rest.</p>
-    <p>The split has a cost. A module's pin can lag: <code>ref-mpc</code> 1.2.0 requires <code>organization</code> 2.0.0 and <code>party</code> 1.0.0, and <code>integration</code> 2.3.0 requires <code>core</code> 2.3.0, though those modules are now at 2.1.0, 1.4.0 and 2.4.0. That is why the closure rule, the whole-graph gate and each changelog's list of required versions exist.</p>
+    <p>The split has a cost. A module's pin can lag: <code>data-product</code> 1.2.0 requires <code>core</code> 2.3.0 and <code>system</code> 1.2.0, though those modules are now at 2.4.0 and 1.5.0. That is why the closure rule, the whole-graph gate and each changelog's list of required versions exist.</p>
   </div>
 </div>
 
@@ -433,7 +433,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 </figure>
 
 <h3>The walk, as one query</h3>
-<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the eleven newest releases loaded together, 36,473 triples; the output below is what it returned on 2026-10-27.</p>
+<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the eleven newest releases loaded together, 36,901 triples; the output below is what it returned on 2026-10-27, after that day's releases.</p>
 <pre><code>PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
 PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
 PREFIX kpi: &lt;https://w3id.org/lsc/ontology/modules/kpi/&gt;
@@ -564,10 +564,10 @@ ORDER BY ?hop ?label</code></pre>
 </section>
 
 <section class="mod" id="m-system">
-<h3>system <span class="pill">1.4.0</span> <span class="pill">906 triples</span></h3>
+<h3>system <span class="pill">1.5.0</span> <span class="pill">1,008 triples</span></h3>
 <div class="two">
 <div>
-<p><strong>Holds</strong> 41 systems, office tools and working documents: the 39 the process map names, plus MIPS and Databricks. 39 have a definition; TopDay and VALT do not. The 39 the process map names say which processes they support (<code>sys:supports</code>), taken from its "systems" fields: 306 links to 162 processes (EPM-DEC-001-0055, 0099, 0103, 0104). Since 1.4.0 the customer-lifecycle processes name their systems too, which adds seven, such as SAP MDG and Salesforce (MPC-P11, EPM-DEC-001-0104). MIPS and Databricks come from the pricing assets and support no process in this release (EPM-DEC-001-0100).</p>
+<p><strong>Holds</strong> 49 systems, office tools and working documents: the 39 the process map names, plus ten that other sources name: MIPS and Databricks from the pricing assets, and eight from the decision owner's customer inputs of 2026-10-27, among them PRM, the pricing system, which is not MPR (EPM-DEC-001-0108). 47 have a definition; TopDay and VALT do not. The 39 the process map names say which processes they support (<code>sys:supports</code>), taken from its "systems" fields: 306 links to 162 processes (EPM-DEC-001-0055, 0099, 0103, 0104). Since 1.4.0 the customer-lifecycle processes name their systems too, which adds seven, such as SAP MDG and Salesforce (MPC-P11, EPM-DEC-001-0104). MIPS, Databricks and the eight support no process in this release (EPM-DEC-001-0100, 0108).</p>
 <p><strong>Why:</strong> to answer which tool a process runs on, and which system a data product reads. Names were merged on spelling, so one system has one IRI.</p>
 </div>
 <div class="card story">
@@ -609,10 +609,11 @@ ORDER BY ?hop ?label</code></pre>
 </section>
 
 <section class="mod" id="m-party">
-<h3>party <span class="pill">1.4.0</span> <span class="pill">4,027 triples</span></h3>
+<h3>party <span class="pill">2.0.0</span> <span class="pill">4,336 triples</span></h3>
 <div class="two">
 <div>
-<p><strong>Holds</strong> the customer domain: the customer model with 20 concept schemes, 42 customer systems with 35 data flows and 275 attributes, 27 products, and the customer lifecycle in a business view and a system view (EPM-DEC-001-0068 to 0070).</p>
+<p><strong>Holds</strong> the customer domain: the customer model with 22 concept schemes, 50 customer systems with 48 data flows and 276 attributes, 27 products, and the customer lifecycle in a business view and a system view (EPM-DEC-001-0068 to 0070).</p>
+<p>Since 2.0.0, a major release, Dealer Master is the system of record for the ship-to stations, and jobbers are mastered in SAP MDG and RightAngle and replicated to it. The release adds the sub-jobber role, the dealer classes 4, 2 and 9, the classes of trade MST and DTW, and the SAP ship-to number (EPM-DEC-001-0108).</p>
 <p><strong>Why:</strong> the customer domain has its own owner and its own sources, the customer systems' data flows, and changes on its own schedule.</p>
 </div>
 <div class="card story">
@@ -620,14 +621,14 @@ ORDER BY ?hop ?label</code></pre>
 <p>KittyHawk, one of the view's three systems, is also a customer system. <code>party:system/kittyhawk skos:exactMatch system:kittyhawk</code> says they are the same system. The customer view adds that it "records physical product movements" and receives customers from RightAngle.</p>
 </div>
 </div>
-<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.4.0 and system 1.4.0. Twelve of its 42 customer systems match a system-module system (EPM-DEC-001-0104). Open: four customer systems and four codes wait for their owners (close-out points 3, 4 and 11); the 20 drafted customer-system descriptions wait for each owner (point 16); and the product list awaits confirmation (point 5).</p>
+<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.4.0 and system 1.5.0. Twenty of its 50 customer systems match a system-module system (EPM-DEC-001-0104, 0108). Open: four customer systems and four codes wait for their owners (close-out points 3, 4 and 11); the 20 drafted customer-system descriptions wait for each owner (point 16); the product list awaits confirmation (point 5); and how Dealer Master's billing customer number relates to the SAP customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open with the business (EPM-DEC-001-0108).</p>
 </section>
 
 <section class="mod" id="m-ref-mpc">
-<h3>ref-mpc <span class="pill">1.2.0</span> <span class="pill">180 triples</span></h3>
+<h3>ref-mpc <span class="pill">1.3.0</span> <span class="pill">200 triples</span></h3>
 <div class="two">
 <div>
-<p><strong>Holds</strong> the company facts: MPC and MPLX, MPC's control of MPLX, its three reportable segments and its 13 refineries, each dated to 31 December 2025 from MPC's FY2025 Form 10-K. It defines no terms of its own; it uses those of <code>organization</code> and <code>party</code>.</p>
+<p><strong>Holds</strong> the company facts: MPC and MPLX, MPC's control of MPLX, its three reportable segments and its 13 refineries, each dated to 31 December 2025 from MPC's FY2025 Form 10-K, and, since 1.3.0, the brands Marathon, ARCO and Tesoro (EPM-DEC-001-0108). It defines no terms of its own; it uses those of <code>organization</code> and <code>party</code>.</p>
 <p><strong>Why:</strong> it is the only company-specific module, so every other module stays company-neutral and reusable (EPM-DEC-001-0015, 0033).</p>
 </div>
 <div class="card story">
@@ -635,7 +636,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>The measure's public counterpart is MPC's own Gulf Coast, Mid-Continent, West Coast and blended 3-2-1 cracks. Its value-stream link cites MPC's FY2025 10-K, Item 7. The Garyville refinery here sits "in MPC's Gulf Coast refining region", the region of the Gulf Coast series. That tie is a note today, not a triple.</p>
 </div>
 </div>
-<p class="note">Links: uses organization's and party's classes and properties. Requires organization 2.0.0 and party 1.0.0.</p>
+<p class="note">Links: uses organization's and party's classes and properties. Requires organization 2.1.0 and party 2.0.0.</p>
 </section>
 
 <section class="mod" id="m-lane">
@@ -654,13 +655,13 @@ ORDER BY ?hop ?label</code></pre>
 </section>
 
 <section class="mod" id="m-integration">
-<h3>integration <span class="pill">2.3.0</span> <span class="pill">448 triples</span></h3>
+<h3>integration <span class="pill">2.4.0</span> <span class="pill">450 triples</span></h3>
 <div class="two">
 <div>
 <p><strong>Holds</strong> no new facts, only rules about the other modules' links. It ships three source folders as one package:</p>
 <ul>
 <li><strong>placement:</strong> which links prove the work. <code>vs:produces</code> and <code>dp:producedBy</code> certify; every other placement, <code>kpi:informsProcess</code> among them, is context (EPM-DEC-001-0058).</li>
-<li><strong>authority:</strong> five evidence tiers for the 102 cited sources: process authority, MPC, U.S. refining peers, industry and regulatory sources, and generic frameworks. The best tier wins (EPM-DEC-001-0059).</li>
+<li><strong>authority:</strong> five evidence tiers for the 103 cited sources: process authority, MPC, U.S. refining peers, industry and regulatory sources, and generic frameworks. The best tier wins (EPM-DEC-001-0059).</li>
 <li><strong>consumer:</strong> 13 rules for what a catalog binds and an agent may answer or must refuse (EPM-DEC-001-0061).</li>
 </ul>
 </div>
@@ -676,6 +677,7 @@ ORDER BY ?hop ?label</code></pre>
 <div class="two">
 <div>
 <p>The eleven releases are the master copy, as Turtle. From them, two projections build a Neo4j property graph. The repository's <code>pipeline.py</code> loads a local Neo4j. The <code>ontology-to-lpg</code> skill's driver loads a second local Neo4j, copies it to AuraDB, writes the triples to the Databricks table <code>workspace.epm_ontology.epm_triples</code>, and rebuilds the graph from that table to prove it holds the whole ontology.</p>
+<p class="notice"><em>2026-10-27:</em> the four ontology stores are empty. The decision owner had both local Neo4j stores, AuraDB and the Databricks table purged that day, and chose to reload them at the start of Part 2, once the business close-out answers ship. The runbook's Reload section gives the commands.</p>
 <p>The planned next step links the metric views in Unity Catalog to the ontology's measures by KPI identifier, so that an agent working in Databricks can reach a measure's full context.</p>
 </div>
 <div class="card">
@@ -690,14 +692,14 @@ ORDER BY ?hop ?label</code></pre>
 </div>
 
 <h2 id="copy">Copy the ontology</h2>
-<p class="lead">To give a teammate 100% of the ontology and everything they need to understand and use it, copy the three groups below, keeping each repository path as it is. Every group is required. No scripts are needed: the ontology is the release files, and every document to read is an HTML page. In all: 322 files and two links. That is 281 release files, 34 pages and data files to understand it, and 7 files for using it.</p>
+<p class="lead">To give a teammate 100% of the ontology and everything they need to understand and use it, copy the three groups below, keeping each repository path as it is. Every group is required. No scripts are needed: the ontology is the release files, and every document to read is an HTML page. In all: 346 files and two links. That is 305 release files, 34 pages and data files to understand it, and 7 files for using it.</p>
 
 <figure>
 <div class="diagram wide" role="img" aria-label="The package to share has three groups: the releases folder with eleven modules, the HTML documents, and the files for using it in a graph and the method.">
 <svg viewBox="0 0 1040 380" xmlns="http://www.w3.org/2000/svg">
   <rect class="lane" x="20" y="14" width="1000" height="50" rx="8"/><text class="t" x="40" y="44">What you send: three groups, each at its repository path</text>
   <rect class="lane" x="20" y="80" width="320" height="286" rx="8"/><text class="lane-l" x="36" y="104">1. The ontology itself</text>
-  <rect class="node store" x="36" y="118" width="288" height="44" rx="6"/><text class="t" x="50" y="137">releases/</text><text class="m" x="50" y="154">11 modules · 42 versions · 281 files</text>
+  <rect class="node store" x="36" y="118" width="288" height="44" rx="6"/><text class="t" x="50" y="137">releases/</text><text class="m" x="50" y="154">11 modules · 46 versions · 305 files</text>
   <rect class="node" x="56" y="172" width="268" height="44" rx="6"/><text class="t" x="70" y="191">&lt;module&gt;/&lt;version&gt;/</text><text class="m" x="70" y="208">.ttl .jsonld shapes manifest …</text>
   <rect class="node" x="56" y="226" width="268" height="40" rx="6"/><text class="t" x="70" y="250">&lt;module&gt;/CHANGELOG.md</text>
   <rect class="node" x="56" y="276" width="268" height="40" rx="6"/><text class="t" x="70" y="300">releases/catalog.ttl</text>
@@ -719,7 +721,7 @@ ORDER BY ?hop ?label</code></pre>
 <div class="diagram tall" role="img" aria-label="The three groups to copy, as a list.">
 <svg viewBox="0 0 360 470" xmlns="http://www.w3.org/2000/svg">
   <rect class="lane" x="10" y="10" width="340" height="140" rx="8"/><text class="lane-l" x="24" y="34">1. The ontology itself</text>
-  <rect class="node store" x="24" y="46" width="312" height="44" rx="6"/><text class="t" x="38" y="65">releases/</text><text class="m" x="38" y="82">11 modules · 42 versions · 281 files</text>
+  <rect class="node store" x="24" y="46" width="312" height="44" rx="6"/><text class="t" x="38" y="65">releases/</text><text class="m" x="38" y="82">11 modules · 46 versions · 305 files</text>
   <text class="s" x="24" y="112">version folders, module changelogs,</text><text class="s" x="24" y="130">catalog.ttl; check with shasum</text>
   <rect class="lane" x="10" y="162" width="340" height="140" rx="8"/><text class="lane-l" x="24" y="186">2. The documents to understand it</text>
   <rect class="node key" x="24" y="198" width="312" height="44" rx="6"/><text class="t" x="38" y="217">epm-ontology-guide.html</text><text class="s" x="38" y="234">this page: start here</text>
@@ -736,7 +738,7 @@ ORDER BY ?hop ?label</code></pre>
 </figure>
 
 <h3>1. The ontology itself</h3>
-<p>Copy the whole folder <code>business_architecture/ontology/releases/</code>: 11 modules, 42 version folders and 281 files, about 48 MB. Copy every version, not only the newest: a module requires named versions of others (ref-mpc 1.2.0 requires organization 2.0.0 and party 1.0.0, for example), and each manifest points at them.</p>
+<p>Copy the whole folder <code>business_architecture/ontology/releases/</code>: 11 modules, 46 version folders and 305 files, about 48 MB. Copy every version, not only the newest: a module requires named versions of others (ref-mpc 1.2.0 requires organization 2.0.0 and party 1.0.0, for example), and each manifest points at them.</p>
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Path</th><th>What it is, and why it is needed</th></tr></thead>
 <tbody>
@@ -748,24 +750,24 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/CHANGELOG.md</code></td><td data-k="Why">What this version changed, who approved it, and its known gaps.</td></tr>
 <tr><td><code>releases/core/&lt;version&gt;/canonical-facts.csv</code>, <code>counts.json</code></td><td data-k="Why">Core's extras: the evidence row behind each approved process relationship, and the release's counts. Core 1.0.0 also holds <code>conservation.csv</code> and <code>label-dispositions.csv</code>, the ledger of how every source row was handled.</td></tr>
 <tr><td><code>releases/&lt;module&gt;/CHANGELOG.md</code></td><td data-k="Why">Each module's whole history in one file (ten modules; core's is <code>business_architecture/ontology/release/CHANGELOG.md</code>, listed in group 2 as HTML).</td></tr>
-<tr><td><code>releases/catalog.ttl</code></td><td data-k="Why">The DCAT catalog of all 42 released packages: the one file that lists what exists.</td></tr>
+<tr><td><code>releases/catalog.ttl</code></td><td data-k="Why">The DCAT catalog of all 46 released packages: the one file that lists what exists.</td></tr>
 </tbody></table></div>
 
-<p>The newest version of each module, from its manifest. Load these together for the whole ontology (36,473 triples):</p>
+<p>The newest version of each module, from its manifest. Load these together for the whole ontology (36,901 triples):</p>
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Module</th><th class="n">Newest</th><th>Requires</th></tr></thead>
 <tbody>
 <tr><td>core</td><td class="n" data-k="Newest">2.4.0</td><td data-k="Requires">nothing</td></tr>
 <tr><td>organization</td><td class="n" data-k="Newest">2.1.0</td><td data-k="Requires">core 2.3.0</td></tr>
-<tr><td>ref-mpc</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">organization 2.0.0, party 1.0.0</td></tr>
+<tr><td>ref-mpc</td><td class="n" data-k="Newest">1.3.0</td><td data-k="Requires">organization 2.1.0, party 2.0.0</td></tr>
 <tr><td>kpi</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">core 2.3.0</td></tr>
-<tr><td>party</td><td class="n" data-k="Newest">1.4.0</td><td data-k="Requires">core 2.4.0, system 1.4.0</td></tr>
+<tr><td>party</td><td class="n" data-k="Newest">2.0.0</td><td data-k="Requires">core 2.4.0, system 1.5.0</td></tr>
 <tr><td>data-product</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">core 2.3.0, kpi 1.2.0, system 1.2.0</td></tr>
 <tr><td>value-stream</td><td class="n" data-k="Newest">1.2.0</td><td data-k="Requires">core 2.3.0, data-product 1.2.0, kpi 1.2.0</td></tr>
-<tr><td>system</td><td class="n" data-k="Newest">1.4.0</td><td data-k="Requires">core 2.4.0</td></tr>
+<tr><td>system</td><td class="n" data-k="Newest">1.5.0</td><td data-k="Requires">core 2.4.0</td></tr>
 <tr><td>lane</td><td class="n" data-k="Newest">1.1.0</td><td data-k="Requires">core 2.3.0</td></tr>
 <tr><td>market-data</td><td class="n" data-k="Newest">1.1.0</td><td data-k="Requires">kpi 1.2.0</td></tr>
-<tr><td>integration</td><td class="n" data-k="Newest">2.3.0</td><td data-k="Requires">core 2.3.0, organization 2.0.0, kpi 1.2.0, data-product 1.2.0, value-stream 1.1.0, system 1.3.0, lane 1.0.0, market-data 1.1.0, party 1.3.0</td></tr>
+<tr><td>integration</td><td class="n" data-k="Newest">2.4.0</td><td data-k="Requires">core 2.4.0, organization 2.1.0, kpi 1.2.0, data-product 1.2.0, value-stream 1.2.0, system 1.5.0, lane 1.1.0, market-data 1.1.0, party 2.0.0</td></tr>
 </tbody></table></div>
 <p>To check that a copied version folder is complete and unchanged, the teammate hashes its files and compares each hash with the <code>files</code> entry in that folder's <code>manifest.json</code>. For kpi 1.2.0, for example:</p>
 <pre><code>cd business_architecture/ontology/releases/kpi/1.2.0 &amp;&amp; shasum -a 256 kpi.ttl kpi.jsonld shapes.ttl catalog.ttl CHANGELOG.md</code></pre>
@@ -819,7 +821,7 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td><code>business_architecture/ontology/projection/LOCAL-STORES.html</code></td><td data-k="Why">The short index of the kept stores and where each login lives.</td></tr>
 <tr><td><code>business_architecture/ontology/projection/skill-run/README.html</code></td><td data-k="Why">How to run the <code>ontology-to-lpg</code> skill's driver on these releases.</td></tr>
 <tr><td><code>business_architecture/ontology/projection/skill-run/queries.json</code></td><td data-k="Why">The 14 saved walks across the graph, the starting points for exploring it.</td></tr>
-<tr><td><code>skills/data/ontology/references/ontology-build-playbook.html</code> (personal-agent-skills)</td><td data-k="Why">The ontology method: why and how each step is done.</td></tr>
+<tr><td><code>skills/data/ontology/references/ontology-build-playbook.html</code> (personal-agent-skills)</td><td data-k="Why">The ontology method: why and how each step is done, and, in section 5, the testing and validation every change passes.</td></tr>
 <tr><td><code>skills/data/ontology-to-lpg/references/ontology-to-neo4j-playbook.html</code> (personal-agent-skills)</td><td data-k="Why">The projection method: how the ontology becomes a property graph.</td></tr>
 <tr><td><a href="https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj">EPM ontology: modules and how they connect</a>, <a href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">EPM integration</a></td><td data-k="Why">The two architecture diagrams, in Eraser. Send the links; the teammate needs access to the folder.</td></tr>
 </tbody></table></div>
@@ -839,7 +841,7 @@ ORDER BY ?hop ?label</code></pre>
 </tbody></table></div>
 
 <h2 id="open">What is still open</h2>
-<p class="lead">The ontology is done (EPM-DEC-001-0107, 2026-10-26): MPC-P11 and MPC-P12 are accepted and released, and the deferred qSKOS fixes are released. What stays open is below. EPM-DEC-001-0107 lists four kinds: the business's close-out points, none answered yet, with points 1 and 2 kept open by the decision owner's choice; the next releases' small fixes; the items parked for other reasons; and usage and integration, a separate, later task. The table also carries the gaps the releases' changelogs record.</p>
+<p class="lead">The ontology is done (EPM-DEC-001-0107, 2026-10-26): MPC-P11 and MPC-P12 are accepted and released, and the deferred qSKOS fixes are released. The decision owner's customer inputs of 2026-10-27 then brought <code>party</code> 2.0.0 and three minor releases, and two gaps that stay open with the business (EPM-DEC-001-0108). What stays open is below. EPM-DEC-001-0107 lists four kinds: the business's close-out points, none answered yet, with points 1 and 2 kept open by the decision owner's choice; the next releases' small fixes; the items parked for other reasons; and usage and integration, a separate, later task. The table also carries the gaps the releases' changelogs record.</p>
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Item</th><th>What it needs</th><th>Record</th></tr></thead>
 <tbody>
@@ -855,7 +857,8 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td>Pricing platform</td><td data-k="Needs">The benchmark view's scaling and 160-day window, KPI ID lineage, joins read from code, lineage reach, production names, and fresh data.</td><td data-k="Record"><code>data-product</code> 1.2.0 changelog</td></tr>
 <tr><td>Undefined data products</td><td data-k="Needs">Definitions for 33 portfolio data products.</td><td data-k="Record"><code>data-product</code> 1.1.0 changelog</td></tr>
 <tr><td>Weak system links</td><td data-k="Needs">Allocation Manager for CM 1.3.7.4.3, SAP S/4HANA for CM 1.3.7.4.5 and Data Products IDP for CM 1.3.7.4.4 stay out of the process map until their owners confirm them, through a new proposal.</td><td data-k="Record">EPM-DEC-001-0104, item 3; <code>system</code> 1.4.0 changelog</td></tr>
-<tr><td>Next releases' small fixes</td><td data-k="Needs"><code>market-data</code> rewords its one shape message that holds an apostrophe; <code>integration</code> and <code>ref-mpc</code> move their pins to the current releases.</td><td data-k="Record">EPM-DEC-001-0106, 0107</td></tr>
+<tr><td>Next releases' small fixes</td><td data-k="Needs"><code>market-data</code> rewords its one shape message that holds an apostrophe. <em>2026-10-27:</em> <code>integration</code> 2.4.0 and <code>ref-mpc</code> 1.3.0 moved their pins to the current releases.</td><td data-k="Record">EPM-DEC-001-0106, 0107, 0108</td></tr>
+<tr><td>Dealer Master's identifiers and volumes</td><td data-k="Needs">How Dealer Master's billing customer number relates to the SAP customer number, and whether its fuel volumes reach the Enterprise Data Lake.</td><td data-k="Record">EPM-DEC-001-0108</td></tr>
 <tr><td>Process map</td><td data-k="Needs">The held process-map rows, each re-judged only if its source is corrected.</td><td data-k="Record">EPM-DEC-001-0025, 0083</td></tr>
 <tr><td>IOF Supply Chain mapping</td><td data-k="Needs">A concept layer for logistics assets or movements, or a consumer that needs IOF terms.</td><td data-k="Record">EPM-DEC-001-0064</td></tr>
 <tr><td>IRIs that resolve</td><td data-k="Needs">A registered, hosted namespace in place of the w3id placeholder.</td><td data-k="Record">EPM-DEC-001-0039</td></tr>
@@ -863,7 +866,7 @@ ORDER BY ?hop ?label</code></pre>
 </tbody></table></div>
 
 <div class="src" id="sources">
-<p><strong>Sources.</strong> The newest release of each module under <code>business_architecture/ontology/releases/</code> (its <code>.ttl</code>, <code>manifest.json</code> and <code>CHANGELOG.md</code>); <code>scripts/epm_facts.py modules</code> and <code>counts</code> at commit <code>33c2669</code>; <code>MODULES.md</code>; <code>business-closeout.md</code>; the decision records EPM-DEC-001-0006, 0015, 0017, 0030, 0033, 0040, 0042, 0043, 0045, 0046, 0053 to 0056, 0058, 0059, 0061, 0062, 0065, 0066, 0068 to 0070, 0086, 0098 to 0100 and 0103 to 0107 in <code>business_architecture/domain/decisions/</code>; and the <code>ontology</code> skill's <code>references/playbook.md</code>, "Why split an ontology into modules", and <code>references/foundations.md</code>, policy 8. Counts of classes and concepts were taken by loading each release with rdflib.</p>
+<p><strong>Sources.</strong> The newest release of each module under <code>business_architecture/ontology/releases/</code> (its <code>.ttl</code>, <code>manifest.json</code> and <code>CHANGELOG.md</code>); <code>scripts/epm_facts.py modules</code> and <code>counts</code> at commit <code>35feaa7</code>; <code>MODULES.md</code>; <code>business-closeout.md</code>; the decision records EPM-DEC-001-0006, 0015, 0017, 0030, 0033, 0040, 0042, 0043, 0045, 0046, 0053 to 0056, 0058, 0059, 0061, 0062, 0065, 0066, 0068 to 0070, 0086, 0098 to 0100 and 0103 to 0108 in <code>business_architecture/domain/decisions/</code>; and the <code>ontology</code> skill's <code>references/playbook.md</code>, "Why split an ontology into modules", and <code>references/foundations.md</code>, policy 8. Counts of classes and concepts were taken by loading each release with rdflib.</p>
 </div>
 
 </div>
