@@ -50,7 +50,7 @@ APPROVALS.update({name: ITEM_F for name in ("kpi", "market-data", "data-product"
 DELEGATED = ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)")
 APPROVALS.update({name: DELEGATED for name in ("system", "party", "integration")})  # system 1.3.0, party 1.3.0, integration 2.3.0
 # The deferred qSKOS fixes, approved by Claude under the same delegation (EPM-DEC-001-0106).
-APPROVALS.update({name: DELEGATED for name in ("lane", "organization", "value-stream")})  # lane 1.1.0, organization 2.1.0, value-stream 1.2.0
+APPROVALS.update({name: DELEGATED for name in ("lane", "organization", "value-stream")})  # lane 1.1.0, organization 2.1.0 and 2.2.0, value-stream 1.2.0
 # MPC-P11's releases, approved by Claude under the delegation and the decision owner's night brief (EPM-DEC-001-0104).
 NIGHT_BRIEF = ("step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md", "Approve (Recommended)")
 APPROVALS.update({name: NIGHT_BRIEF for name in ("system", "party")})  # system 1.4.0, party 1.4.0
@@ -481,10 +481,16 @@ class EarlierReleases(unittest.TestCase):
         # EPM-DEC-001-0106: and the three that carry the deferred qSKOS fixes.
         # system 1.3.0 and party 1.3.0 carried it too, until system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104), and
         # integration 2.3.0 until integration 2.4.0 (EPM-DEC-001-0108).
-        for name, version in (("lane", "1.1.0"), ("organization", "2.1.0"), ("value-stream", "1.2.0")):
+        # organization 2.1.0 carried it until organization 2.2.0, which carries it too (EPM-DEC-001-0045, amendment
+        # of 2026-10-28).
+        for name, version in (("lane", "1.1.0"), ("value-stream", "1.2.0")):
             self.assertEqual(bm.MODULES[name]["approval"], DELEGATED)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-26"))
+        m = bm.MODULES["organization"]
+        self.assertEqual(m["approval"], DELEGATED)
+        self.assertEqual((m["version"], m["stage"], m["issued"]), ("2.2.0", None, "2026-10-28"))
+        self.assertTrue(m["approver"].startswith("Claude, under the decision owner's delegation"))
 
     def test_the_mpc_p11_releases_carry_the_night_brief(self):
         # EPM-DEC-001-0104: system 1.4.0 and party 1.4.0, minors Claude approved under the delegation and the brief.

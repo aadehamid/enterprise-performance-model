@@ -1,5 +1,14 @@
 # organization changelog
 
+## 2.2.0 (2026-10-28)
+
+A minor release: it changes statements on three roles and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening). It carries the decision owner's close-out answers of 2026-10-28 (EPM-DEC-001-0045, amendment of 2026-10-28; saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-28-closeout.md`).
+
+- [minor] **PSM expanded.** `role:psm` takes the preferred label Process Safety Management, and "PSM" becomes an alternative label, as 2.0.0 did for the other acronyms (close-out point 8).
+- [minor] **Crude RFC confirmed.** Crude Refinery Feedstock Coordinator's editorial note says the decision owner confirmed the reading of RFC; it is no longer a contextual reading pending confirmation (close-out point 7).
+- [minor] **Business Planning and Analysis's definition confirmed.** Its editorial note says the decision owner confirmed the definition. The other three working definitions stay open with their managers (close-out point 9).
+- It still requires core 2.3.0. `ref-mpc` 1.3.0 and `integration` 2.4.0 still require organization 2.1.0, which stays released as it is.
+
 ## 2.1.0 (2026-10-26)
 
 A minor release: it adds statements and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0106).

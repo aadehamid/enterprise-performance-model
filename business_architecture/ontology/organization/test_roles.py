@@ -12,7 +12,7 @@ import unittest
 from unittest import mock
 
 from pyshacl import validate
-from rdflib import Graph
+from rdflib import Graph, Literal
 from rdflib.namespace import OWL, RDF, SKOS
 
 import build_roles as br
@@ -177,8 +177,20 @@ class RolesConform(unittest.TestCase):
         kept = {r["slug"] for r in rows(br.ROLES) if not r["replaced_by"]}
         self.assertTrue({"forecaster", "local-refinery-forecaster", "crude-rfc", "vp-rvco"} <= kept)
 
-    def test_ten_roles_take_an_expanded_name(self):
-        self.assertEqual(sum(1 for r in rows(br.ROLES) if r["preferred_label"]), 10)
+    def test_eleven_roles_take_an_expanded_name(self):
+        # Ten from the role answers of 2026-10-18 (organization 2.0.0), and PSM from the close-out answer of
+        # 2026-10-28 (organization 2.2.0; EPM-DEC-001-0045, amendment of 2026-10-28).
+        self.assertEqual(sum(1 for r in rows(br.ROLES) if r["preferred_label"]), 11)
+
+    def test_the_close_out_answers_of_2026_10_28(self):
+        roles = {r["slug"]: r for r in rows(br.ROLES)}
+        self.assertEqual(roles["psm"]["preferred_label"], "Process Safety Management")
+        self.assertEqual(roles["psm"]["question"], "")
+        self.assertEqual(roles["crude-rfc"]["question"], "")
+        self.assertIn("confirmed on 2026-10-28", roles["crude-rfc"]["note"])
+        self.assertIn("confirmed it on 2026-10-28", roles["bpa"]["note"])
+        data = Graph().parse(br.OUTPUT)
+        self.assertIn(Literal("PSM", lang="en"), set(data.objects(br.ROLE["psm"], SKOS.altLabel)))
 
     def test_teams_carry_the_team_note_and_positions_do_not(self):
         data = Graph().parse(br.OUTPUT)

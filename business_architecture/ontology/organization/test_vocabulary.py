@@ -143,15 +143,33 @@ class Vocabulary(unittest.TestCase):
         self.assertEqual([str(m) for m in SHAPES.objects(None, message) if "'" in str(m)], [])
 
     def test_no_iri_changed_since_2_0_0(self):
-        # A minor release removes no IRI: every subject of the 2.0.0 package, the ontology header aside, is still a
-        # subject of 2.1.0, and nothing is newly deprecated (EPM-DEC-001-0106).
+        # A minor release removes no IRI: every subject of the earlier package, the ontology header aside, is still a
+        # subject of the next, and nothing is newly deprecated (EPM-DEC-001-0106; 2.2.0, EPM-DEC-001-0045, amendment
+        # of 2026-10-28).
         releases = os.path.join(HERE, "..", "releases", "organization")
         header = URIRef("https://w3id.org/lsc/ontology/modules/organization")
-        old = Graph().parse(os.path.join(releases, "2.0.0", "organization.ttl"))
-        new = Graph().parse(os.path.join(releases, "2.1.0", "organization.ttl"))
-        self.assertEqual({s for s in old.subjects() if s != header} - set(new.subjects()), set())
         deprecated = URIRef("http://www.w3.org/2002/07/owl#deprecated")
-        self.assertEqual(set(new.subjects(deprecated, None)), set(old.subjects(deprecated, None)))
+        for before, after in (("2.0.0", "2.1.0"), ("2.1.0", "2.2.0")):
+            old = Graph().parse(os.path.join(releases, before, "organization.ttl"))
+            new = Graph().parse(os.path.join(releases, after, "organization.ttl"))
+            self.assertEqual({s for s in old.subjects() if s != header} - set(new.subjects()), set(), after)
+            self.assertEqual(set(new.subjects(deprecated, None)), set(old.subjects(deprecated, None)), after)
+
+    def test_2_2_0_changes_only_the_three_answered_roles(self):
+        # Figures written from the decision (release.md rule 29): PSM gains one preferred label and one alternative
+        # label and loses its old preferred label; three editorial notes change; nothing else differs.
+        releases = os.path.join(HERE, "..", "releases", "organization")
+        header = URIRef("https://w3id.org/lsc/ontology/modules/organization")
+        old = Graph().parse(os.path.join(releases, "2.1.0", "organization.ttl"))
+        new = Graph().parse(os.path.join(releases, "2.2.0", "organization.ttl"))
+        role = "https://w3id.org/lsc/ontology/modules/organization/role/"
+        added = {(s, p, o) for s, p, o in new - old if s != header}
+        removed = {(s, p, o) for s, p, o in old - new if s != header}
+        self.assertEqual({str(s) for s, _, _ in added | removed}, {role + "psm", role + "crude-rfc", role + "bpa"})
+        self.assertEqual((len(added), len(removed)), (5, 4))
+        psm = URIRef(role + "psm")
+        self.assertEqual(new.value(psm, SKOS.prefLabel), Literal("Process Safety Management", lang="en"))
+        self.assertIn(Literal("PSM", lang="en"), set(new.objects(psm, SKOS.altLabel)))
 
     def test_the_shape_allows_exactly_the_four_levels(self):
         node = [n for n in SHAPES.objects(SHP.Assignment, SH.property)

@@ -30,9 +30,9 @@ The result: 60 roles, 54 positions and 6 teams. Splitting the 11 compound string
 
 ### Questions for the decision owner
 
-*2026-10-18:* answered by the decision owner; organization 2.0.0 carries the answers (EPM-DEC-001-0045). Forecaster and PSM stay open.
+*2026-10-18:* answered by the decision owner; organization 2.0.0 carries the answers (EPM-DEC-001-0045). Forecaster and PSM stay open. *2026-10-28:* PSM is expanded as Process Safety Management in organization 2.2.0; Forecaster stays open (EPM-DEC-001-0045, amendment of 2026-10-28).
 
-These do not block the build. Each would merge two roles, or define one, if the decision owner confirms it. `roles.csv` held each one in its `question` column; since 2.0.0 that column holds only the questions still open (Forecaster, PSM and Crude RFC's expansion), and the answers and settled rationales sit in its `note` column.
+These do not block the build. Each would merge two roles, or define one, if the decision owner confirms it. `roles.csv` held each one in its `question` column; since 2.0.0 that column holds only the questions still open (Forecaster, PSM and Crude RFC's expansion; *2026-10-28:* since organization 2.2.0, only Forecaster, EPM-DEC-001-0045, amendment of 2026-10-28), and the answers and settled rationales sit in its `note` column.
 
 - **RCVO Advisor** (written once) and **RVCO Advisor** (written 32 times): one role misspelt?
 - **Forecaster** and **Refinery Technical Service Representative** appear only inside two compound strings. Are they the Local Refinery Forecaster and the Refinery Technical Representative?
