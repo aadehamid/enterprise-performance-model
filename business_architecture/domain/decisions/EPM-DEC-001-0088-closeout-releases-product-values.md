@@ -33,7 +33,7 @@ The question put to the decision owner said 7 fixes for party and 3 for integrat
 
 1. **The product scheme** takes the 10-K's six refinery product groups (gasoline, distillates, propane, NGLs and petrochemicals, heavy fuel oil, asphalt) as top concepts and its named products beneath them, each cited to the filing (`reference/mpc/mpc-fy2025-10k-fact-sheet.md`, section 4). A mapping is added only where the external term's own definition matches; each cites the source's version and date. Under PIDX's licence, a mapping points to a PIDX code by identifier and copies no PIDX list (EPM-DEC-001-0064, item 1). *2026-10-23:* superseded for PIDX: products carry PIDX family letters, not mappings to codes; the decision owner chose "Family codes, flagged (Recommended)" (EPM-DEC-001-0092).
 2. **Each release has its own pull request and release record,** in the order above, through `check.sh`, the sweep, Codex's independent review, the Cursor bot's verdict and a merge.
-3. **The product list is a point for the business** in the close-out package (EPM-DEC-001-0086): MPC's own product list can refine or replace the public categories.
+3. **The product list is a point for the business** in the close-out package (EPM-DEC-001-0086): MPC's own product list can refine or replace the public categories. *2026-10-28:* the decision owner closed the product list; only the PIDX family letters stay open (EPM-DEC-001-0092, amendment of 2026-10-28).
 
 ## Alternatives considered
 
