@@ -55,15 +55,26 @@ class Release(unittest.TestCase):
         # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name;
         # EPM-DEC-001-0072: the Terminal Margin Ranking System is its TMR, which the party node carries as an alternative label.
         with open(os.path.join(HERE, "queries", "q15b-same-word-linked.rq")) as f:
-            rows = [r for r in GRAPH.query(f.read()) if r.link == SKOS.exactMatch]
+            found = [r for r in GRAPH.query(f.read()) if r.link == SKOS.exactMatch]
         party, system = "https://w3id.org/lsc/ontology/modules/party/system/", "https://w3id.org/lsc/ontology/modules/system/system/"
+        # Since party 2.0.0 the query also finds Dealer Master's dealer class 2, Sub-jobber, matched to the sub-jobber role
+        # of the same name (EPM-DEC-001-0108); that pair is a correct answer, pinned here, and the rest are systems.
+        codes = "https://w3id.org/lsc/ontology/modules/party/"
+        self.assertEqual({(str(r.a), str(r.b)) for r in found if not str(r.a).startswith(party)},
+                         {(codes + "dealer-class/2", codes + "party-role/sub-jobber"),
+                          (codes + "party-role/sub-jobber", codes + "dealer-class/2")})
+        rows = [r for r in found if str(r.a).startswith(party)]
         self.assertEqual({(str(r.a), str(r.b)) for r in rows},
                          {(party + "rightangle", system + "rightangle"), (party + "kittyhawk", system + "kittyhawk"),
                           (party + "profisee", system + "profisee"), (party + "terminal-margin-ranking-system", system + "tmr"),
                           (party + "sap-s4hana", system + "sap")}  # EPM-DEC-001-0099
                          # MPC-P11's seven systems, in both modules since system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104).
                          | {(party + s, system + s) for s in ("sap-mdg", "salesforce", "magic", "bridger-insight",
-                                                              "information-steward", "sirion", "customer-portal")})
+                                                              "information-steward", "sirion", "customer-portal")}
+                         # The eight systems of 2026-10-27, in both modules since system 1.5.0 and party 2.0.0 (EPM-DEC-001-0108).
+                         | {(party + s, system + s) for s in ("prm", "station-pos", "street-price-aggregator",
+                                                              "credit-card-summary", "enterprise-data-lake", "msmis", "mcs",
+                                                              "terminaling-throughputs")})
         self.assertEqual({str(r.word) for r in rows if str(r.a) == party + "terminal-margin-ranking-system"}, {"TMR"})
 
     def test_an_orphan_fails_q2(self):

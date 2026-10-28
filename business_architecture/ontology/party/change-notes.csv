@@ -1,0 +1,13 @@
+term,note
+system/dealer-master,"2026-10-27: its role and definition are corrected from the decision owner's customer inputs of that day. Salesforce is only its intake, not what it is built on; jobbers are mastered in SAP MDG and RightAngle and replicated here; it masters the ship-to stations (EPM-DEC-001-0108)."
+system/tax-image-silo,"2026-10-27: the customer supplies the certificates (EPM-DEC-001-0108)."
+system/bridger-insight,"2026-10-27: SAP MDG calls it through the interface MDG.BP.I.1001 (EPM-DEC-001-0108)."
+flow/dealer-master--sap-mdg,"2026-10-27: it carries ship-to stations, not jobbers, which do not start in Dealer Master (EPM-DEC-001-0108)."
+flow/sap-mdg--dealer-master,"2026-10-27: it carries the replicated six-digit sold-to customers, not direct dealers that start in SAP MDG (EPM-DEC-001-0108)."
+flow/salesforce--dealer-master,"2026-10-27: what it carries is known: the approved operations change form (EPM-DEC-001-0108)."
+flow/dealer-master--salesforce,"2026-10-27: what it carries is known: mastered station and dealer updates (EPM-DEC-001-0108)."
+flow/sap-mdg--rightangle,"2026-10-27: it also carries the ship-to customer records in the 20000 series (EPM-DEC-001-0108)."
+flow/terminal-upload--kittyhawk,"2026-10-27: it serves the new customer setup (EPM-DEC-001-0108)."
+sourcing/dealer-master--origin--party-role--jobber,"2026-10-27: deprecated. Jobbers do not start in Dealer Master; ship-to stations do (EPM-DEC-001-0108)."
+sourcing/sap-mdg--origin--customer-class--direct-dealer,"2026-10-27: reworded. The sold-tos, direct dealers among them, are mastered in SAP MDG and RightAngle and replicated to Dealer Master (EPM-DEC-001-0108)."
+system-stage/prospect,"2026-10-27: corrected. Dealer Master holds the first record of a ship-to station, and jobbers are mastered in SAP MDG and RightAngle (EPM-DEC-001-0108)."

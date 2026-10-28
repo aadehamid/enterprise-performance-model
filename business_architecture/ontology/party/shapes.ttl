@@ -129,7 +129,8 @@ partysh:Site a sh:NodeShape ;
     sh:targetClass party:Site ;
     sh:property [ sh:path party:siteType ; sh:maxCount 1 ; sh:node partysh:InSiteType ] ;
     sh:property [ sh:path party:operatingModel ; sh:maxCount 1 ; sh:node partysh:InOperatingModel ] ;
-    sh:property [ sh:path party:suppliedByTerminal ; sh:class party:Site ] .
+    sh:property [ sh:path party:suppliedByTerminal ; sh:class party:Site ] ;
+    sh:property [ sh:path party:siteIdentifiedBy ; sh:minCount 0 ; sh:class party:ExternalIdentifier ] .
 
 # ---- Transactions ----
 
@@ -163,6 +164,13 @@ partysh:CustomerSystem a sh:NodeShape ;
                   sh:minCount 0 ;
                   sh:message "A customer system implements entities of the conceptual model only." ] ;
     sh:property [ sh:path party:feeds ; sh:minCount 0 ; sh:class party:CustomerSystem ] ;
+    sh:property [ sh:path party:systemOfRecordFor ;
+                  sh:in ( party:Party party:ExternalIdentifier party:Address party:ContactPoint party:PartyRole
+                          party:PartyRelationship party:CustomerAccount party:CustomerClass party:LineOfBusiness
+                          party:Brand party:Agreement party:SiteBrandAssignment party:PartyTransactionAssociation
+                          party:Product party:Site ) ;
+                  sh:minCount 0 ;
+                  sh:message "A customer system is the system of record for entities of the conceptual model only." ] ;
     # Item G (EPM-DEC-001-0099): a definition, where a system has one, cites its source.
     sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:editorialNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
@@ -197,8 +205,8 @@ partysh:DataFlow a sh:NodeShape ;
                   sh:message "A data flow goes from one customer system to one other." ] ;
     sh:property [ sh:path party:carries ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "\\S" ;
                   sh:message "A data flow says what it carries." ] ;
-    sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[1-7](, [1-7])*$" ;
-                  sh:message "A data flow names the inputs that show it, from the seven inputs." ] .
+    sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^([1-9]|1[01])(, ([1-9]|1[01]))*$" ;
+                  sh:message "A data flow names the inputs that show it, from the inputs 1 to 11." ] .
 
 partysh:CustomerSourcing a sh:NodeShape ;
     sh:targetClass party:CustomerSourcing ;
@@ -208,12 +216,13 @@ partysh:CustomerSourcing a sh:NodeShape ;
                   sh:or ( [ sh:path skos:inScheme ; sh:hasValue party:party-role ]
                           [ sh:path skos:inScheme ; sh:hasValue party:customer-class ]
                           [ sh:path skos:inScheme ; sh:hasValue party:line-of-business ]
-                          [ sh:path skos:inScheme ; sh:hasValue party:party-type ] ) ;
-                  sh:message "A customer sourcing names a party role, a customer class, a line of business or a party type." ] ;
+                          [ sh:path skos:inScheme ; sh:hasValue party:party-type ]
+                          [ sh:path skos:inScheme ; sh:hasValue party:site-type ] ) ;
+                  sh:message "A customer sourcing names a party role, a customer class, a line of business, a party type or a site type." ] ;
     sh:property [ sh:path rdfs:comment ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "\\S" ;
                   sh:message "A customer sourcing has a note." ] ;
-    sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[1-7](, [1-7])*$" ;
-                  sh:message "A customer sourcing names the inputs that show it, from the seven inputs." ] .
+    sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^([1-9]|1[01])(, ([1-9]|1[01]))*$" ;
+                  sh:message "A customer sourcing names the inputs that show it, from the inputs 1 to 11." ] .
 
 partysh:SystemAttribute a sh:NodeShape ;
     sh:targetClass party:SystemAttribute ;
@@ -321,9 +330,9 @@ partysh:Decided-lifecycle-stage-offboarding a sh:NodeShape ;
 partysh:Decided-system-stage-prospect a sh:NodeShape ;
     sh:target [ a sh:SPARQLTarget ; sh:prefixes partysh: ;
                 sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/system-stage/prospect>) }" ] ;
-    sh:property [ sh:path party:stageSystem ; sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ) ;
-                  sh:minCount 1 ; sh:maxCount 1 ;
-                  sh:message "system-stage/prospect has exactly the systems EPM-DEC-001-0070 decides." ] .
+    sh:property [ sh:path party:stageSystem ; sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/salesforce> <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ) ;
+                  sh:minCount 2 ; sh:maxCount 2 ;
+                  sh:message "system-stage/prospect has exactly the systems EPM-DEC-001-0070 and 0108 decide." ] .
 
 partysh:Decided-system-stage-master a sh:NodeShape ;
     sh:target [ a sh:SPARQLTarget ; sh:prefixes partysh: ;
@@ -335,9 +344,9 @@ partysh:Decided-system-stage-master a sh:NodeShape ;
 partysh:Decided-system-stage-record a sh:NodeShape ;
     sh:target [ a sh:SPARQLTarget ; sh:prefixes partysh: ;
                 sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/system-stage/record>) }" ] ;
-    sh:property [ sh:path party:stageSystem ; sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ) ;
-                  sh:minCount 1 ; sh:maxCount 1 ;
-                  sh:message "system-stage/record has exactly the systems EPM-DEC-001-0070 decides." ] .
+    sh:property [ sh:path party:stageSystem ; sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ) ;
+                  sh:minCount 2 ; sh:maxCount 2 ;
+                  sh:message "system-stage/record has exactly the systems EPM-DEC-001-0070 and 0108 decide." ] .
 
 partysh:Decided-system-stage-execute a sh:NodeShape ;
     sh:target [ a sh:SPARQLTarget ; sh:prefixes partysh: ;
@@ -349,9 +358,9 @@ partysh:Decided-system-stage-execute a sh:NodeShape ;
 partysh:Decided-system-stage-settle a sh:NodeShape ;
     sh:target [ a sh:SPARQLTarget ; sh:prefixes partysh: ;
                 sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/system-stage/settle>) }" ] ;
-    sh:property [ sh:path party:stageSystem ; sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ) ;
-                  sh:minCount 1 ; sh:maxCount 1 ;
-                  sh:message "system-stage/settle has exactly the systems EPM-DEC-001-0070 decides." ] .
+    sh:property [ sh:path party:stageSystem ; sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> <https://w3id.org/lsc/ontology/modules/party/system/polaris> ) ;
+                  sh:minCount 3 ; sh:maxCount 3 ;
+                  sh:message "system-stage/settle has exactly the systems EPM-DEC-001-0070 and 0108 decide." ] .
 
 # ---- The vocabulary: customer is not a kind of party ----
 # Any chain of subclass links counts: a class under Person or Organization is a subclass of party too.

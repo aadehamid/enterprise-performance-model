@@ -174,5 +174,52 @@ class RealParties(unittest.TestCase):
         self.assertTrue(ok, text[:3000])
 
 
+class Brands(unittest.TestCase):
+    """MPC's brands as party:Brand individuals: the decision owner confirmed on 2026-10-27 that Marathon, ARCO and
+    Tesoro can be brand values (EPM-DEC-001-0108, amendment of 2026-10-27). Expected values are written by hand."""
+    BRANDS = Graph().parse(os.path.join(HERE, "reference-brands.ttl"))
+    BRAND = Namespace("https://w3id.org/lsc/ontology/modules/ref-mpc/brand/")
+    EXPECTED = {"marathon": "Marathon", "arco": "ARCO", "tesoro": "Tesoro"}
+
+    def test_three_brands_with_their_labels(self):
+        found = {s: str(self.BRANDS.value(s, SKOS.prefLabel)) for s in self.BRANDS.subjects(RDF.type, CUST.Brand)}
+        self.assertEqual(found, {self.BRAND[k]: v for k, v in self.EXPECTED.items()})
+
+    def test_each_brand_is_in_this_modules_namespace(self):
+        for s in self.BRANDS.subjects(RDF.type, CUST.Brand):
+            self.assertTrue(str(s).startswith("https://w3id.org/lsc/ontology/modules/ref-mpc/brand/"), s)
+
+    def test_each_brand_cites_the_customer_inputs_and_the_10k_and_holds_as_of_the_answer(self):
+        sources = {SRC["decision-owner-customer-inputs-2026-10-27"], SRC["mpc-s01"]}
+        for k in self.EXPECTED:
+            self.assertEqual(set(self.BRANDS.objects(self.BRAND[k], DCTERMS.source)), sources, k)
+            self.assertEqual(self.BRANDS.value(self.BRAND[k], DCTERMS.date), Literal("2026-10-27", datatype=XSD.date), k)
+            self.assertEqual(self.BRANDS.value(self.BRAND[k], SKOS.definition).language, "en", k)
+
+    def test_the_brands_conform_and_a_brand_without_a_definition_fails(self):
+        ok, _, text = validate(self.BRANDS, shacl_graph=SHAPES)
+        self.assertTrue(ok, text)
+        g = Graph()
+        g += self.BRANDS
+        g.remove((self.BRAND.tesoro, SKOS.definition, None))
+        self.assertFalse(validate(g, shacl_graph=SHAPES)[0])
+
+    def test_the_brands_meet_the_core_source_shape(self):
+        core_shapes = Graph().parse(os.path.join(HERE, "..", "releases", "core", "1.0.0", "shapes.ttl"))
+        ok, _, text = validate(self.BRANDS, shacl_graph=core_shapes)
+        self.assertTrue(ok, text)
+
+    def test_the_brands_are_released_in_ref_mpc_1_3_0(self):
+        released = Graph().parse(os.path.join(HERE, "..", "releases", "ref-mpc", "1.3.0", "ref-mpc.ttl"))
+        for k, label in self.EXPECTED.items():
+            self.assertIn((self.BRAND[k], RDF.type, CUST.Brand), released, k)
+            self.assertIn((self.BRAND[k], SKOS.prefLabel, Literal(label, lang="en")), released, k)
+
+    def test_the_brands_are_not_in_the_party_module(self):
+        for n in ("vocabulary.ttl", "code-lists.ttl", "systems.ttl", "lifecycle.ttl"):
+            g = Graph().parse(os.path.join(PARTY, n))
+            self.assertEqual(list(g.subjects(RDF.type, CUST.Brand)), [], n)
+
+
 if __name__ == "__main__":
     unittest.main()

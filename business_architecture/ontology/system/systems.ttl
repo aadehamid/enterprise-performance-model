@@ -91,6 +91,7 @@ system:bridger-insight a skos:Concept,
         src:vendor-lexisnexis-bridger-insight-xg ;
     skos:altLabel "Bridger"@en ;
     skos:definition "LexisNexis Risk Solutions' compliance screening software, Bridger Insight XG. By the vendor's description, it automates account screening for regulatory compliance and reduces false positives."@en ;
+    skos:editorialNote "SAP MDG calls it through the interface MDG.BP.I.1001, by the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108)."@en ;
     skos:inScheme sys:Systems ;
     skos:notation "bridger-insight"^^xsd:string ;
     skos:prefLabel "Bridger Insight"@en ;
@@ -111,6 +112,18 @@ system:cargotracker a skos:Concept,
     sys:supports proc:CM-1-1-5-1,
         proc:CM-1-1-5-1-2,
         proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:credit-card-summary a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A reporting application for retail payment and credit card facts, kept apart from Dealer Master's settlement engine so that its reports can change outside that engine's SOX controls."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "credit-card-summary"^^xsd:string ;
+    skos:prefLabel "Credit Card Summary"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-customer-inputs-2026-10-27 ;
     sys:systemKind kind:application .
 
 system:customer-portal a skos:Concept,
@@ -167,6 +180,19 @@ system:dpo a skos:Concept,
         proc:CM-1-1-6-1-1,
         proc:CM-1-1-6-2,
         proc:CM-1-1-6-3 ;
+    sys:systemKind kind:application .
+
+system:enterprise-data-lake a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:altLabel "Data Lake"@en ;
+    skos:definition "The enterprise data lake and its analytics consumers, the internal reporting store."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "enterprise-data-lake"^^xsd:string ;
+    skos:prefLabel "Enterprise Data Lake"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-customer-inputs-2026-10-27 ;
     sys:systemKind kind:application .
 
 system:hyperion a skos:Concept,
@@ -246,6 +272,18 @@ system:market-outlook-and-avails-dashboard a skos:Concept,
     sys:supports proc:CM-1-1-2-2-5-1,
         proc:CM-1-1-2-3,
         proc:CM-1-1-2-3-1 ;
+    sys:systemKind kind:application .
+
+system:mcs a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A source system of the customer logical model, which provides one fact table, Mcs_Cogeneral_Fact."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "mcs"^^xsd:string ;
+    skos:prefLabel "MCS"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-customer-inputs-2026-10-27 ;
     sys:systemKind kind:application .
 
 system:mips a skos:Concept,
@@ -394,6 +432,18 @@ system:ms-teams a skos:Concept,
         proc:CM-1-1-5-9-2 ;
     sys:systemKind kind:office-tool .
 
+system:msmis a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A system of master contact details and point-of-contact profiles for customers in marine terminal and wholesale environments."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "msmis"^^xsd:string ;
+    skos:prefLabel "MSMIS"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-customer-inputs-2026-10-27 ;
+    sys:systemKind kind:application .
+
 system:network-premise-document a skos:Concept,
         sys:System ;
     dcterms:source src:core-2-3-0-process-definitions,
@@ -521,6 +571,19 @@ system:premise-document a skos:Concept,
     sys:supports proc:CM-1-1-2-2-1-1,
         proc:CM-1-1-2-2-1-2 ;
     sys:systemKind kind:document .
+
+system:prm a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:altLabel "Pricing System"@en ;
+    skos:definition "The pricing system that manages street-level fuel prices. It receives each station's location and channel of trade from Dealer Master, so it knows which stations need a street price the company manages. It is a different system from MPR."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "prm"^^xsd:string ;
+    skos:prefLabel "PRM"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-customer-inputs-2026-10-27 ;
+    sys:systemKind kind:application .
 
 system:profisee a skos:Concept,
         sys:System ;
@@ -674,13 +737,50 @@ system:sirion a skos:Concept,
     sys:supports proc:CM-1-3-7-2-1 ;
     sys:systemKind kind:application .
 
+system:station-pos a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:altLabel "Station POS"@en ;
+    skos:definition "The point-of-sale systems at the retail stations, which record credit card sales, transactions and fuel volumes and send them to Dealer Master."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "station-pos"^^xsd:string ;
+    skos:prefLabel "Station point-of-sale systems"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-customer-inputs-2026-10-27 ;
+    sys:systemKind kind:application .
+
+system:street-price-aggregator a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A third party that passes the stations' historical pump prices, from their point-of-sale transactions, on to PRM, until Dealer Master has a direct interface for them."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "street-price-aggregator"^^xsd:string ;
+    skos:prefLabel "Third-party street price aggregator"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-customer-inputs-2026-10-27 ;
+    sys:systemKind kind:application .
+
+system:terminaling-throughputs a skos:Concept,
+        sys:System ;
+    dcterms:source src:decision-owner-customer-inputs-2026-10-27 ;
+    skos:definition "A system of the third-party oil companies, traders and joint-venture partners that use the company's leased terminal storage and handling."@en ;
+    skos:editorialNote "Drafted by Claude from the decision owner's customer inputs of 2026-10-27 (EPM-DEC-001-0108); it waits for its owners to confirm it."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "terminaling-throughputs"^^xsd:string ;
+    skos:prefLabel "Terminaling Throughputs"@en ;
+    skos:topConceptOf sys:Systems ;
+    sys:namedBy src:decision-owner-customer-inputs-2026-10-27 ;
+    sys:systemKind kind:application .
+
 system:tmr a skos:Concept,
         sys:System ;
     dcterms:source src:core-2-3-0-process-definitions,
         src:decision-owner-customer-inputs,
         src:downstream-process-map ;
     skos:definition "A source of actual product prices for the regional backcast. The decision owner's customer inputs name it the Terminal Margin Ranking System, a source of brand and wholesale customers."@en ;
-    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16)."@en ;
+    skos:editorialNote "Drafted by Claude from the repository: the processes the process map says use it and their definitions in core 2.3.0; approved under EPM-DEC-001-0028 (EPM-DEC-001-0103); it waits for its owners to confirm it (business-closeout.md, point 16). The decision owner's customer inputs of 2026-10-27 describe TMR as the authoritative source of the parties in business transactions and relationships. Which description is right, and whether Terminal Margin Ranking System is its name, waits for its owner (EPM-DEC-001-0108)."@en ;
     skos:inScheme sys:Systems ;
     skos:notation "tmr"^^xsd:string ;
     skos:prefLabel "TMR"@en ;
@@ -880,32 +980,40 @@ src:decision-owner-answers-2026-10-25-item-g a dcterms:BibliographicResource ;
 src:core-2-3-0-process-definitions a dcterms:BibliographicResource ;
     dcterms:title "LSC core 2.3.0, the names and definitions of the processes each system supports, business_architecture/ontology/releases/core/2.3.0/core.ttl"@en .
 
+src:decision-owner-customer-inputs-2026-10-27 a dcterms:BibliographicResource ;
+    dcterms:title "The decision owner's customer inputs of 2026-10-27 (two images and two Dealer Master documents, kept out of the repository by EPM-DEC-001-0108), as the party module holds them"@en .
+
 sys:Systems skos:hasTopConcept system:actuals-case-prep-file,
         system:aps,
         system:aps-planning-db,
         system:backcasting-dashboard,
         system:bridger-insight,
         system:cargotracker,
+        system:credit-card-summary,
         system:customer-portal,
         system:databricks,
         system:dpo,
+        system:enterprise-data-lake,
         system:hyperion,
         system:information-steward,
         system:kittyhawk,
         system:magic,
         system:market-outlook-and-avails-dashboard,
+        system:mcs,
         system:mips,
         system:mpr,
         system:ms-excel,
         system:ms-outlook,
         system:ms-powerpoint,
         system:ms-teams,
+        system:msmis,
         system:network-premise-document,
         system:pi,
         system:planning-and-scheduling-ui,
         system:planning-db,
         system:ppims,
         system:premise-document,
+        system:prm,
         system:profisee,
         system:psr,
         system:refinery-premise-document,
@@ -915,6 +1023,9 @@ sys:Systems skos:hasTopConcept system:actuals-case-prep-file,
         system:sap,
         system:sap-mdg,
         system:sirion,
+        system:station-pos,
+        system:street-price-aggregator,
+        system:terminaling-throughputs,
         system:tmr,
         system:topday,
         system:trr,

@@ -50,15 +50,22 @@ MODULES = {
         # 1.1.0 requires organization 2.0.0; its own content is unchanged (EPM-DEC-001-0045).
         # 1.2.0 adds MPC and MPLX as parties in the party module's terms, moved from party/, and requires
         # party 1.0.0; the decision owner approved it on its own (EPM-DEC-001-0075, EPM-DEC-001-0080).
-        "version": "1.2.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-ref-mpc-release.md", "Approve ref-mpc 1.2.0 (Recommended)"),
-        "parts": ["ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl"],
+        # 1.3.0 is a minor Claude approved under the delegation and the decision owner's words: MPC's brands Marathon,
+        # ARCO and Tesoro as party:Brand individuals; it requires organization 2.1.0 and party 2.0.0, the current
+        # releases (EPM-DEC-001-0108, amendment of 2026-10-27).
+        "version": "1.3.0", "stage": None,
+        "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the decision owner's answer of 2026-10-27 on the brands)",
+        "issued": "2026-10-27",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md",
+                     "yes those can be brand values. Others I cannot answer."),
+        "parts": ["ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl", "ref-mpc/reference-brands.ttl"],
         # Its own shapes, then the released shapes of the versions it pins, so a later party or organization
         # release cannot change what this released package is checked against (EPM-DEC-001-0094).
-        "shapes": ["ref-mpc/shapes.ttl", "releases/organization/2.0.0/shapes.ttl", "releases/party/1.0.0/shapes.ttl"],
+        "shapes": ["ref-mpc/shapes.ttl", "releases/organization/2.1.0/shapes.ttl", "releases/party/2.0.0/shapes.ttl"],
         "depends_on": ["organization", "party"],
-        "pins": {"organization": "2.0.0", "party": "1.0.0"},
-        "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033", "EPM-DEC-001-0071", "EPM-DEC-001-0075", "EPM-DEC-001-0080"],
+        "pins": {"organization": "2.1.0", "party": "2.0.0"},
+        "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033", "EPM-DEC-001-0071", "EPM-DEC-001-0075", "EPM-DEC-001-0080",
+                      "EPM-DEC-001-0108"],
     },
     "kpi": {
         "title": "LSC KPI Module",
@@ -99,19 +106,24 @@ MODULES = {
         # 1.4.0 is a minor Claude approved under the delegation: seven more customer systems matched to the system
         # module's, which gains them with MPC-P11, and one shape message reworded without an apostrophe (the ontology
         # skill's SHACL rule 19); it requires core 2.4.0, which its build now reads, and system 1.4.0 (EPM-DEC-001-0104, 0105).
-        "version": "1.4.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the night brief of 2026-10-26)", "issued": "2026-10-26",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md", "Approve (Recommended)"),
+        # 2.0.0 is a major the decision owner approved: the customer inputs of 2026-10-27 correct Dealer Master's role and
+        # definition, two data flows, a sourcing note and the prospect system stage, and deprecate the sourcing that says
+        # jobbers start in Dealer Master; they add the sub-jobber role, the dealer classes, the classes of trade, eight
+        # systems and 13 flows; it requires system 1.5.0 (EPM-DEC-001-0108).
+        "version": "2.0.0", "stage": None, "approver": "The decision owner", "issued": "2026-10-27",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md",
+                     "I am aligned with all your recommendation in the input plan."),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],
         "shapes": ["party/shapes.ttl"],
         # Since 1.2.0 it also requires system 1.1.0, whose systems its five skos:exactMatch links name
         # (EPM-DEC-001-0099; the earlier packages name four of them without requiring system). 1.4.0 names twelve
-        # and requires system 1.4.0 (EPM-DEC-001-0104).
+        # and requires system 1.4.0 (EPM-DEC-001-0104). 2.0.0 names twenty and requires system 1.5.0 (EPM-DEC-001-0108).
         "depends_on": ["core", "system"],
-        "pins": {"core": "2.4.0", "system": "1.4.0"},
+        "pins": {"core": "2.4.0", "system": "1.5.0"},
         "decisions": ["EPM-DEC-001-0067", "EPM-DEC-001-0068", "EPM-DEC-001-0069", "EPM-DEC-001-0070",
                       "EPM-DEC-001-0071", "EPM-DEC-001-0072", "EPM-DEC-001-0074", "EPM-DEC-001-0087", "EPM-DEC-001-0088",
                       "EPM-DEC-001-0092", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0103",
-                      "EPM-DEC-001-0104"],
+                      "EPM-DEC-001-0104", "EPM-DEC-001-0108"],
     },
     # The Step 7 modules' first releases, majors the decision owner approved with the release plan
     # (EPM-DEC-001-0077). Each requires core 2.2.0, the release that holds every process they link.
@@ -163,14 +175,18 @@ MODULES = {
         # the 14 internal systems' descriptions, drafted from the repository (EPM-DEC-001-0103).
         # 1.4.0 is a minor Claude approved under the delegation: the seven systems and 21 links of MPC-P11, which
         # the decision owner accepted; it requires core 2.4.0, the current release (EPM-DEC-001-0104, 0105).
-        "version": "1.4.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the night brief of 2026-10-26)", "issued": "2026-10-26",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md", "Approve (Recommended)"),
+        # 1.5.0 is a minor Claude approved under the delegation, with the decision owner's alignment with the plan: eight
+        # systems the customer inputs of 2026-10-27 name and the process map does not, and notes on TMR and Bridger
+        # Insight (EPM-DEC-001-0108).
+        "version": "1.5.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the decision owner's alignment with the plan of 2026-10-27)", "issued": "2026-10-27",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md",
+                     "I am aligned with all your recommendation in the input plan."),
         "parts": ["system/vocabulary.ttl", "system/systems.ttl"],
         "shapes": ["system/shapes.ttl"],
         "depends_on": ["core"],
         "pins": {"core": "2.4.0"},
         "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100",
-                      "EPM-DEC-001-0103", "EPM-DEC-001-0104"],
+                      "EPM-DEC-001-0103", "EPM-DEC-001-0104", "EPM-DEC-001-0108"],
     },
     "lane": {
         "title": "LSC Lane Module",
@@ -220,18 +236,22 @@ MODULES = {
         # 0100).
         # 2.3.0 is a minor Claude approved under the delegation: two more sources in tier 1, the sources of the
         # internal systems' descriptions; it requires the new system and party releases (EPM-DEC-001-0103).
-        "version": "2.3.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
+        # 2.4.0 is a minor Claude approved under the delegation, with the decision owner's alignment with the plan: the
+        # customer inputs of 2026-10-27 in tier 1; it requires the current releases (EPM-DEC-001-0108).
+        "version": "2.4.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the decision owner's alignment with the plan of 2026-10-27)", "issued": "2026-10-27",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md",
+                     "I am aligned with all your recommendation in the input plan."),
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
         "shapes": ["consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl"],
         "own_shapes": 3,  # all three shape files are the package's own; the package's shapes.ttl holds them merged
         "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data",
                        "party"],
-        "pins": {"core": "2.3.0", "organization": "2.0.0", "kpi": "1.2.0", "data-product": "1.2.0", "value-stream": "1.1.0",
-                 "system": "1.3.0", "lane": "1.0.0", "market-data": "1.1.0", "party": "1.3.0"},
+        "pins": {"core": "2.4.0", "organization": "2.1.0", "kpi": "1.2.0", "data-product": "1.2.0", "value-stream": "1.2.0",
+                 "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.0.0"},
         "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078", "EPM-DEC-001-0088",
-                      "EPM-DEC-001-0094", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100", "EPM-DEC-001-0103"],
+                      "EPM-DEC-001-0094", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100", "EPM-DEC-001-0103",
+                      "EPM-DEC-001-0108"],
     },
 }
 

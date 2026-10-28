@@ -69,17 +69,34 @@ class Build(unittest.TestCase):
 
 class CodeLists(unittest.TestCase):
     def test_party_roles_are_the_twelve_plus_the_two_added(self):
+        # The twelve and two of EPM-DEC-001-0068, and since 2.0.0 Dealer Master's sub-jobber (EPM-DEC-001-0108).
         self.assertEqual(notations("party-role"), {
             "sold-to", "payer", "bill-to", "consignee", "jobber", "dealer", "exchange-counterparty",
             "throughput-holder", "carrier", "vendor", "surety", "supplier",
-            "position-holder", "loading-authorized-party"})
+            "position-holder", "loading-authorized-party", "sub-jobber"})
 
     def test_relationship_and_agreement_types(self):
         self.assertEqual(notations("relationship-type"),
-                         {"parent-of", "guarantor-of", "supplies", "credit-roll-up", "contact-for"})
+                         {"parent-of", "guarantor-of", "supplies", "credit-roll-up", "contact-for", "grouped-under"})
         self.assertEqual(notations("agreement-type"), {
             "fuel-supply", "exchange-buy-sell", "throughput-storage", "brand-license",
             "consignment-commission", "fleet-card-program", "offtake"})
+
+    def test_the_customer_inputs_of_2026_10_27(self):
+        # EPM-DEC-001-0108, written out by hand: Dealer Master's three dealer classes, each mapped to what it stands
+        # for; the two classes of trade; the SAP ship-to number; and the two scope notes.
+        self.assertEqual(notations("dealer-class"), {"4", "2", "9"})
+        self.assertEqual(notations("class-of-trade"), {"mst", "dtw"})
+        self.assertIn("sap-ship-to-number", notations("identifier-type"))
+        for code, target in [("4", "party-role/jobber"), ("2", "party-role/sub-jobber"), ("9", "site-type/station")]:
+            self.assertIn((CUST[f"dealer-class/{code}"], SKOS.exactMatch, CUST[target]), CODES, code)
+        self.assertIn("Capital C", str(CODES.value(CUST["party-role/sold-to"], SKOS.scopeNote)))
+        self.assertIn("MST and DTW", str(CODES.value(CUST["shared-attribute/class-of-trade"], SKOS.scopeNote)))
+        # The prospect system stage is corrected: jobbers do not start in Dealer Master; ship-to stations do.
+        prospect = str(CODES.value(CUST["system-stage/prospect"], SKOS.definition))
+        self.assertNotIn("Jobbers start in Dealer Master", prospect)
+        self.assertIn("ship-to station", prospect)
+        self.assertIsNotNone(CODES.value(CUST["system-stage/prospect"], SKOS.changeNote))
 
     def test_lines_of_business_keep_sdp_as_a_label(self):
         self.assertEqual(notations("line-of-business"), {

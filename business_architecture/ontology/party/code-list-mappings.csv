@@ -1,0 +1,4 @@
+from,relation,to
+dealer-class/4,exactMatch,party-role/jobber
+dealer-class/2,exactMatch,party-role/sub-jobber
+dealer-class/9,exactMatch,site-type/station

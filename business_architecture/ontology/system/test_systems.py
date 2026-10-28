@@ -39,8 +39,10 @@ class Build(unittest.TestCase):
         # 2026-10-26, MPC-P11 (EPM-DEC-001-0104), checked by hand against the proposal's table: 8 more map strings
         # (seven new systems and "SAP S/4HANA"), 7 more applications, 12 more processes with a systems field, each
         # linked, and 21 more links: 37 + 8 = 45, 34 + 7 = 41, 32 + 7 = 39, 153 + 12 = 165, 150 + 12 = 162, 285 + 21 = 306.
+        # 2026-10-27, system 1.5.0 (EPM-DEC-001-0108): eight systems the process map does not name, each defined, all
+        # applications: 41 + 8 = 49, 39 + 8 = 47, 32 + 8 = 40. The map's strings and links do not change.
         self.assertEqual(bs.figures(*bs.load()), {
-            "map strings": 45, "systems": 41, "defined": 39, "application": 32, "office-tool": 4, "document": 5,
+            "map strings": 45, "systems": 49, "defined": 47, "application": 40, "office-tool": 4, "document": 5,
             "no-system strings": 4, "processes with a systems field": 165,
             "processes with a link": 162, "links": 306,
             "links waiting for a core release": 0})
@@ -76,7 +78,7 @@ class Build(unittest.TestCase):
         # Item G (EPM-DEC-001-0099), checked by hand against definitions.csv on 2026-10-25: 15 systems are
         # defined; full forms are preferred labels, with the process map's abbreviation as an alternative.
         defined = {s for s in SYSTEMS.subjects(SKOS.definition, None)}
-        self.assertEqual(len(defined), 39)  # 15, then MIPS, MPR and Databricks in 1.2.0 (EPM-DEC-001-0100), then 14 in 1.3.0 (EPM-DEC-001-0103), then MPC-P11's 7 in 1.4.0 (0104)
+        self.assertEqual(len(defined), 47)  # 15, then MIPS, MPR and Databricks in 1.2.0 (EPM-DEC-001-0100), then 14 in 1.3.0 (EPM-DEC-001-0103), then MPC-P11's 7 in 1.4.0 (0104), then the eight of 2026-10-27 in 1.5.0 (0108)
         for slug, label, alt in (("dpo", "Distribution Planning Optimizer", "DPO"), ("aps", "Aspen Petroleum Scheduler", "APS"),
                                  ("sap", "SAP S/4HANA", "SAP"), ("hyperion", "Oracle Hyperion Planning", "Hyperion"),
                                  ("pi", "AVEVA PI System", "PI")):
@@ -111,6 +113,24 @@ class Build(unittest.TestCase):
             self.assertIsNone(SYSTEMS.value(SYSTEM[slug], SYS.supports))
         self.assertIn((SYSTEM["mips"], SKOS.altLabel, Literal("Market Information and Pricing System", lang="en")), SYSTEMS)
         self.assertIn("Master Price Record", str(SYSTEMS.value(SYSTEM["mpr"], SKOS.editorialNote)))
+
+    def test_the_systems_of_2026_10_27(self):
+        # EPM-DEC-001-0108, pinned by hand: the eight systems the decision owner's customer inputs of 2026-10-27 name,
+        # which the process map does not, so they support no process. Each takes the party module's slug and label.
+        new = {"prm": "PRM", "station-pos": "Station point-of-sale systems",
+               "street-price-aggregator": "Third-party street price aggregator", "credit-card-summary": "Credit Card Summary",
+               "enterprise-data-lake": "Enterprise Data Lake", "msmis": "MSMIS", "mcs": "MCS",
+               "terminaling-throughputs": "Terminaling Throughputs"}
+        for slug, label in new.items():
+            self.assertEqual(SYSTEMS.value(SYSTEM[slug], SKOS.prefLabel), Literal(label, lang="en"), slug)
+            self.assertEqual(SYSTEMS.value(SYSTEM[slug], SYS.systemKind), KIND["application"], slug)
+            self.assertIsNotNone(SYSTEMS.value(SYSTEM[slug], SKOS.definition), slug)
+            self.assertEqual(set(SYSTEMS.objects(SYSTEM[slug], SYS.supports)), set(), slug)
+        # PRM is not MPR (question 8), and TMR keeps its definition, with the inputs' description as a note (question 7).
+        self.assertIn("different system from MPR", str(SYSTEMS.value(SYSTEM["prm"], SKOS.definition)))
+        self.assertTrue(str(SYSTEMS.value(SYSTEM["tmr"], SKOS.definition)).startswith("A source of actual product prices"))
+        self.assertIn("authoritative source", str(SYSTEMS.value(SYSTEM["tmr"], SKOS.editorialNote)))
+        self.assertIn("MDG.BP.I.1001", str(SYSTEMS.value(SYSTEM["bridger-insight"], SKOS.editorialNote)))
 
     def test_mpc_p11_systems_and_their_links(self):
         # EPM-DEC-001-0104, pinned by hand from MPC-P11's "Proposed" table: each new system, its label, and every process

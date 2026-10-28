@@ -57,9 +57,12 @@ class Lifecycle(unittest.TestCase):
             self.assertEqual(found, procs, stage)
 
     def test_each_system_stage_and_its_systems(self):
-        expected = {"prospect": {"salesforce"}, "master": {"sap-mdg"}, "record": {"sap-s4hana"},
+        # Since 2.0.0 Dealer Master holds the prospect stage's ship-to stations, Salesforce takes the SAP customer
+        # number back in the record stage, and Dealer Master and Polaris settle (EPM-DEC-001-0108).
+        expected = {"prospect": {"salesforce", "dealer-master"}, "master": {"sap-mdg"},
+                    "record": {"sap-s4hana", "salesforce"},
                     "execute": {"rightangle", "polaris", "dealer-master", "terminal-download"},
-                    "settle": {"sap-s4hana"}}
+                    "settle": {"sap-s4hana", "dealer-master", "polaris"}}
         for stage, systems in expected.items():
             found = {tail(s) for s in G.objects(CUST[f"system-stage/{stage}"], CUST.stageSystem)}
             self.assertEqual(found, systems, stage)

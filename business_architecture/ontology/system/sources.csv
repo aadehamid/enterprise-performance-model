@@ -30,3 +30,4 @@ decision-owner-pricing-assets-2026-10-25,"The decision owner's Databricks pricin
 vendor-databricks-introduction,"Databricks, What is Databricks?, https://docs.databricks.com/aws/en/introduction/ (updated 2026-09-11), retrieved 2026-10-25",4
 core-2-3-0-process-definitions,"LSC core 2.3.0, the names and definitions of the processes each system supports, business_architecture/ontology/releases/core/2.3.0/core.ttl",1
 decision-owner-customer-inputs,"The decision owner's customer inputs (seven files, kept out of the repository by EPM-DEC-001-0067), as the party module holds them in its customer roles, data flows and attributes",1
+decision-owner-customer-inputs-2026-10-27,"The decision owner's customer inputs of 2026-10-27 (two images and two Dealer Master documents, kept out of the repository by EPM-DEC-001-0108), as the party module holds them",1

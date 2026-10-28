@@ -1,5 +1,28 @@
 # party changelog
 
+## 2.0.0 (2026-10-27)
+
+A major release: the decision owner's customer inputs of 2026-10-27 change what five existing statements mean, and deprecate one. No IRI is removed. Approved by the decision owner, who aligned with the plan that names this major release ("I am aligned with all your recommendation in the input plan.", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md`; EPM-DEC-001-0108).
+
+- [major] **Dealer Master.** Its role and definition no longer say it is built on Salesforce, which is only its intake, or that jobbers start there. It is the Retail Payments Application, the system of record for the branded dealer network's ship-to stations (`party:systemOfRecordFor` sites and party relationships). The term keeps its IRI and gains a dated `skos:changeNote`.
+- [major] **Two flows.** Dealer Master to SAP MDG carries ship-to stations, which SAP MDG numbers in the 20000 series, not jobbers. SAP MDG to Dealer Master carries the replicated six-digit sold-tos, not direct dealers that start in SAP MDG. Each gains a dated change note.
+- [major] **The direct dealers' sourcing** in SAP MDG is reworded: sold-tos, direct dealers among them, are mastered in SAP MDG and RightAngle and replicated to Dealer Master.
+- [major] **The prospect system stage's definition** is corrected the same way.
+- [major] **Deprecated:** `party:sourcing/dealer-master--origin--party-role--jobber`, with its triples kept and `dcterms:isReplacedBy` the new `party:sourcing/dealer-master--origin--site-type--station`. A sourcing can now name a site type.
+- [minor] **New terms.** `party:siteIdentifiedBy` and `party:systemOfRecordFor`; the sub-jobber role and the grouped-under relationship type; the SAP ship-to number identifier type; the dealer-class list (4, 2, 9), each value an exact match of the jobber role, the sub-jobber role and the station site type; the class-of-trade list (MST, DTW); scope notes on the sold-to role (also called the Capital C customer, with its six-digit SAP customer number) and on the class-of-trade attribute.
+- [minor] **Systems and flows.** Eight customer systems (PRM, the station point-of-sale systems, the street price aggregator, Credit Card Summary, the Enterprise Data Lake, MSMIS, MCS and Terminaling Throughputs), each matching system 1.5.0's (20 of the 50 customer systems now match); 13 flows, among them Dealer Master's loop with RightAngle, the flows to PRM, and SAP S/4HANA to Bridger Insight and RightAngle to TFR; four system-stage links; Salesforce's Financial Statement field; the Brand Credit Card Master database as an alternative label; a note on TMR. Inputs 8 to 11 can be cited.
+- [minor] **Four flows say more of what they carry.** Salesforce to Dealer Master (`flow/salesforce--dealer-master`) and Dealer Master to Salesforce (`flow/dealer-master--salesforce`) said only that they carry customer data the inputs did not name; they now name it: the approved operations change form for a new station, a change of owner, or a change of address or name; and mastered station and dealer updates. SAP MDG to RightAngle (`flow/sap-mdg--rightangle`) also carries the ship-to customer records in the 20000 series, and Terminal Upload to Kittyhawk (`flow/terminal-upload--kittyhawk`) carries its mappings for the new customer setup. Each gains a dated change note. Minor under rules 3 and 4 of the `ontology` skill's `release.md`: each text states more of what the flow carries, and every answer the old text gave stays correct, because the old text either named no content or named content the new text keeps.
+- [minor] **Tax Image Silo and Bridger Insight say more.** Tax Image Silo's definition and customer role now say that the customers supply its certificates; Bridger Insight's customer role now says that SAP MDG calls it through the interface MDG.BP.I.1001. Each gains a dated change note. Minor under the same rules: what each system holds or does is unchanged, and each text only adds.
+- [minor] **Three definitions widened.** `party:evidenceInput` now counts the inputs 8 to 11, and `party:CustomerSourcing` and `party:sourcedConcept` now allow a site type. Each gains a dated change note. Minor under the same rules: each widens what the term covers, and every earlier value stays valid.
+- It requires core 2.4.0 and system 1.5.0.
+
+### Known gaps
+
+- Drop Tank, Gas Buddy, DTN File Server and Federal Health have no definition; they wait for the customer-data owner (`business-closeout.md`, point 11).
+- The drafted descriptions, the eight new ones among them, wait for each system's owner to confirm or correct them (`business-closeout.md`, point 16).
+- Which description of TMR is right waits for its owner (EPM-DEC-001-0108, question 7).
+- The brands Marathon, ARCO and Tesoro are not yet brand values (*2026-10-27:* now `party:Brand` individuals in `ref-mpc` 1.3.0, EPM-DEC-001-0108, amendment); Dealer Master's billing customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open (EPM-DEC-001-0108).
+
 ## 1.4.0 (2026-10-26)
 
 A minor release: it adds seven matches and rewords one shape message, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Approve (Recommended)", the decision owner's approval of the night brief of 2026-10-26, which says Claude approves the night's minor releases, saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md`; EPM-DEC-001-0028; EPM-DEC-001-0104).

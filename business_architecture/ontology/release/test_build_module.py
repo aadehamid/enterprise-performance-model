@@ -54,6 +54,15 @@ APPROVALS.update({name: DELEGATED for name in ("lane", "organization", "value-st
 # MPC-P11's releases, approved by Claude under the delegation and the decision owner's night brief (EPM-DEC-001-0104).
 NIGHT_BRIEF = ("step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md", "Approve (Recommended)")
 APPROVALS.update({name: NIGHT_BRIEF for name in ("system", "party")})  # system 1.4.0, party 1.4.0
+# The customer inputs' releases: party 2.0.0, a major the decision owner approved by aligning with the plan; system 1.5.0
+# and integration 2.4.0, minors Claude approved under the delegation with that alignment (EPM-DEC-001-0108).
+CUSTOMER_INPUTS = ("step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md",
+                   "I am aligned with all your recommendation in the input plan.")
+APPROVALS.update({name: CUSTOMER_INPUTS for name in ("party", "system", "integration")})
+# ref-mpc 1.3.0, a minor Claude approved under the delegation on the decision owner's answer about the brands
+# (EPM-DEC-001-0108, amendment of 2026-10-27).
+BRANDS = (CUSTOMER_INPUTS[0], "yes those can be brand values. Others I cannot answer.")
+APPROVALS["ref-mpc"] = BRANDS
 
 
 def approval_holds(name, m):
@@ -171,10 +180,10 @@ class EarlierReleases(unittest.TestCase):
             self.assertFalse(set(outside) & set(released), path)
 
     def test_the_new_releases_require_the_current_ones(self):
-        self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0"})  # 1.2.0, EPM-DEC-001-0080
+        self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.1.0", "party": "2.0.0"})  # 2.0.0 and 1.0.0 in 1.2.0 (0080); 1.3.0 (0108)
         self.assertEqual(bm.dependencies("organization"), {"core": "2.3.0"})  # 2.1.0 in 2.0.0; 2.3.0 since 2.1.0 (0106)
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0; 1.2.0 too
-        self.assertEqual(bm.dependencies("party"), {"core": "2.4.0", "system": "1.4.0"})  # system 1.1.0 in 1.2.0 (0099); 1.3.0 (0103); 1.4.0 (0104)
+        self.assertEqual(bm.dependencies("party"), {"core": "2.4.0", "system": "1.5.0"})  # system 1.1.0 in 1.2.0 (0099); 1.3.0 (0103); 1.4.0 (0104); 1.5.0 (0108)
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
         self.assertEqual(bm.dependencies("data-product"), {"core": "2.3.0", "kpi": "1.2.0", "system": "1.2.0"})  # 1.2.0 (0100)
         # value-stream 1.1.0 required the current releases (EPM-DEC-001-0090), and 1.2.0 does too (EPM-DEC-001-0106).
@@ -182,10 +191,11 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("system"), {"core": "2.4.0"})  # 2.3.0 since 1.1.0 (EPM-DEC-001-0099); 2.4.0 since 1.4.0 (0104, 0105)
         self.assertEqual(bm.dependencies("lane"), {"core": "2.3.0"})  # 2.2.0 in 1.0.0; 2.3.0 since 1.1.0 (0106)
         self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.2.0"})  # since 1.1.0 (EPM-DEC-001-0100)
-        # EPM-DEC-001-0078: integration names terms of each of these releases; 2.0.0 requires the current ones (0094).
+        # EPM-DEC-001-0078: integration names terms of each of these releases; 2.0.0 requires the current ones (0094),
+        # and so does 2.4.0 (EPM-DEC-001-0108).
         self.assertEqual(bm.dependencies("integration"), {
-            "core": "2.3.0", "organization": "2.0.0", "kpi": "1.2.0", "data-product": "1.2.0",
-            "value-stream": "1.1.0", "system": "1.3.0", "lane": "1.0.0", "market-data": "1.1.0", "party": "1.3.0"})  # 2.3.0
+            "core": "2.4.0", "organization": "2.1.0", "kpi": "1.2.0", "data-product": "1.2.0",
+            "value-stream": "1.2.0", "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.0.0"})  # 2.4.0
 
     def test_a_check_loads_one_release_of_each_module(self):
         # value-stream reaches core three times: directly, and through kpi 1.2.0 and data-product 1.2.0, each at 2.3.0;
@@ -193,7 +203,9 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0",
                                                                "system": "1.2.0"})
         self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.2.0", "core": "2.3.0"})  # 1.1.0 (EPM-DEC-001-0100)
-        self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0", "core": "2.1.0"})
+        # ref-mpc 1.3.0 reaches core through organization 2.1.0 (2.3.0) and party 2.0.0 (2.4.0); the higher one loads.
+        self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.1.0", "party": "2.0.0", "core": "2.4.0",
+                                                          "system": "1.5.0"})
 
     def test_a_release_that_loses_to_a_higher_one_adds_no_requirements(self):
         # catalog 1.0.0 needs types 1.0.0; catalog 1.1.0 needs nothing. reviews needs catalog 1.1.0, so
@@ -239,7 +251,7 @@ class EarlierReleases(unittest.TestCase):
     def test_the_validated_graph_holds_one_core_release(self):
         # Codex round 1 on EPM-DEC-001-0077, item 3: the graph the shapes see, not only the version table.
         core = URIRef(bm.MODULES_NS + "core")
-        expected = {"value-stream": "2.3.0", "market-data": "2.3.0", "ref-mpc": "2.1.0"}  # market-data 1.1.0 (0100)
+        expected = {"value-stream": "2.3.0", "market-data": "2.3.0", "ref-mpc": "2.4.0"}  # market-data 1.1.0 (0100); ref-mpc 1.3.0 (0108)
         for name, version in expected.items():
             with self.subTest(module=name):
                 data = bm.validation_graph(name, bm.build(name))
@@ -263,7 +275,7 @@ class EarlierReleases(unittest.TestCase):
             return real(data, **kwargs)
         bm.validate = capture
         try:
-            expected = {"value-stream": "2.3.0", "market-data": "2.3.0", "ref-mpc": "2.1.0"}  # market-data 1.1.0 (0100)
+            expected = {"value-stream": "2.3.0", "market-data": "2.3.0", "ref-mpc": "2.4.0"}  # market-data 1.1.0 (0100); ref-mpc 1.3.0 (0108)
             for name, version in expected.items():
                 with self.subTest(module=name):
                     seen.clear()
@@ -317,7 +329,7 @@ class EarlierReleases(unittest.TestCase):
                 self.assertEqual(set(released), set(sources))
 
     def test_ref_mpc_1_1_0_is_untouched(self):
-        # ref-mpc 1.2.0 is built now; the released 1.1.0 package must still match its own manifest.
+        # A later ref-mpc is built now; the released 1.1.0 package must still match its own manifest.
         out = os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.1.0")
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
@@ -325,6 +337,39 @@ class EarlierReleases(unittest.TestCase):
         for fname, digest in manifest["files"].items():
             with self.subTest(file=fname), open(os.path.join(out, fname), "rb") as f:
                 self.assertEqual(hashlib.sha256(f.read()).hexdigest(), digest)
+
+    def test_ref_mpc_1_2_0_is_untouched(self):
+        # ref-mpc 1.3.0 is built now; the released 1.2.0 package must still match its own manifest.
+        out = os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.2.0")
+        with open(os.path.join(out, "manifest.json")) as f:
+            manifest = json.load(f)
+        self.assertEqual(manifest["version"], "1.2.0")
+        for fname, digest in manifest["files"].items():
+            with self.subTest(file=fname), open(os.path.join(out, fname), "rb") as f:
+                self.assertEqual(hashlib.sha256(f.read()).hexdigest(), digest)
+
+    def test_ref_mpc_1_3_0_holds_the_companies_the_parties_and_the_brands(self):
+        # EPM-DEC-001-0108, amendment of 2026-10-27: the brands join the two parts of 1.2.0.
+        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.3.0", "ref-mpc.ttl"))
+        header = URIRef(bm.MODULES_NS + "ref-mpc")
+        released.remove((header, None, None))
+        sources = Graph()
+        for part in ("ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl", "ref-mpc/reference-brands.ttl"):
+            sources.parse(os.path.join(bm.ONTOLOGY, part))
+        sources.remove((header, None, None))
+        self.assertEqual(set(released), set(sources))
+        for slug in ("marathon", "arco", "tesoro"):
+            self.assertIn((URIRef(bm.MODULES_NS + "ref-mpc/brand/" + slug), None, None), released)
+        with open(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.3.0", "manifest.json")) as f:
+            manifest = json.load(f)
+        self.assertEqual(manifest["approved_by"]["recorded_in"], BRANDS[0])
+
+    def test_the_brands_release_carries_the_answer(self):
+        m = bm.MODULES["ref-mpc"]
+        self.assertEqual(m["approval"], BRANDS)
+        self.assertEqual((m["version"], m["stage"], m["issued"]), ("1.3.0", None, "2026-10-27"))
+        self.assertIn("EPM-DEC-001-0108", m["decisions"])
+        self.assertTrue(m["approver"].startswith("Claude, under the decision owner's delegation"))
 
     def test_ref_mpc_1_2_0_holds_the_companies_and_the_parties(self):
         # EPM-DEC-001-0080: ref-mpc.ttl and the reference parties moved from party/ (EPM-DEC-001-0075).
@@ -434,20 +479,31 @@ class EarlierReleases(unittest.TestCase):
     def test_the_delegated_releases_carry_the_delegation(self):
         # EPM-DEC-001-0103: Claude approved the three minor releases under the delegation.
         # EPM-DEC-001-0106: and the three that carry the deferred qSKOS fixes.
-        # system 1.3.0 and party 1.3.0 carried it too, until system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104).
-        for name, version in (("integration", "2.3.0"), ("lane", "1.1.0"), ("organization", "2.1.0"), ("value-stream", "1.2.0")):
+        # system 1.3.0 and party 1.3.0 carried it too, until system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104), and
+        # integration 2.3.0 until integration 2.4.0 (EPM-DEC-001-0108).
+        for name, version in (("lane", "1.1.0"), ("organization", "2.1.0"), ("value-stream", "1.2.0")):
             self.assertEqual(bm.MODULES[name]["approval"], DELEGATED)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-26"))
 
     def test_the_mpc_p11_releases_carry_the_night_brief(self):
         # EPM-DEC-001-0104: system 1.4.0 and party 1.4.0, minors Claude approved under the delegation and the brief.
+        # Since system 1.5.0 and party 2.0.0 (EPM-DEC-001-0108) the builder builds neither; their packages keep it.
         for name in ("system", "party"):
+            with open(os.path.join(bm.ONTOLOGY, "releases", name, "1.4.0", "manifest.json")) as f:
+                self.assertEqual(json.load(f)["approved_by"]["recorded_in"], NIGHT_BRIEF[0])
+
+    def test_the_customer_inputs_releases_carry_the_alignment(self):
+        # EPM-DEC-001-0108: party 2.0.0, a major the decision owner approved by aligning with the plan that names it;
+        # system 1.5.0 and integration 2.4.0, minors Claude approved under the delegation with that alignment.
+        for name, version in (("party", "2.0.0"), ("system", "1.5.0"), ("integration", "2.4.0")):
             m = bm.MODULES[name]
-            self.assertEqual(m["approval"], NIGHT_BRIEF)
-            self.assertEqual((m["version"], m["stage"], m["issued"]), ("1.4.0", None, "2026-10-26"))
-            self.assertTrue(m["approver"].startswith("Claude, under the decision owner's delegation"))
-            self.assertIn("EPM-DEC-001-0104", m["decisions"])
+            self.assertEqual(m["approval"], CUSTOMER_INPUTS)
+            self.assertEqual((m["version"], m["stage"], m["issued"]), (version, None, "2026-10-27"))
+            self.assertIn("EPM-DEC-001-0108", m["decisions"])
+        self.assertEqual(bm.MODULES["party"]["approver"], "The decision owner")
+        for name in ("system", "integration"):
+            self.assertTrue(bm.MODULES[name]["approver"].startswith("Claude, under the decision owner's delegation"))
 
     def test_the_item_f_releases_carry_their_approval(self):
         # EPM-DEC-001-0100: the decision owner approved the plan of the five.

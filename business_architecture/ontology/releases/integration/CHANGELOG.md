@@ -1,5 +1,16 @@
 # integration changelog
 
+## 2.4.0 (2026-10-27)
+
+A minor release: it adds a source, and removes no IRI. Approved by Claude under the delegation, with the decision owner's alignment with the plan that names it ("I am aligned with all your recommendation in the input plan.", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md`; EPM-DEC-001-0028; EPM-DEC-001-0108).
+
+- [minor] **Source tiers.** The decision owner's customer inputs of 2026-10-27 join `authority` in tier 1 (103 sources in all).
+- It requires the current releases: core 2.4.0, organization 2.1.0, kpi 1.2.0, data-product 1.2.0, value-stream 1.2.0, system 1.5.0, lane 1.1.0, market-data 1.1.0 and party 2.0.0.
+
+### Known gaps
+
+None.
+
 ## 2.3.0 (2026-10-26)
 
 A minor release: it adds two sources, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening; EPM-DEC-001-0103).

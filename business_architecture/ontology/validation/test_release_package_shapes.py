@@ -21,12 +21,12 @@ import build_module  # noqa: E402
 # Pinned by hand: a new release must join this list, so its package is checked here.
 PACKAGES = [
     ("core", "1.0.0"), ("core", "2.0.0"), ("core", "2.1.0"), ("core", "2.2.0"), ("core", "2.3.0"), ("core", "2.4.0"),
-    ("data-product", "1.0.0"), ("data-product", "1.1.0"), ("data-product", "1.2.0"), ("integration", "1.0.0"), ("integration", "2.0.0"), ("integration", "2.1.0"), ("integration", "2.2.0"), ("integration", "2.3.0"),
+    ("data-product", "1.0.0"), ("data-product", "1.1.0"), ("data-product", "1.2.0"), ("integration", "1.0.0"), ("integration", "2.0.0"), ("integration", "2.1.0"), ("integration", "2.2.0"), ("integration", "2.3.0"), ("integration", "2.4.0"),
     ("kpi", "1.0.0"), ("kpi", "1.0.1"), ("kpi", "1.1.0"), ("kpi", "1.1.1"), ("kpi", "1.2.0"),
     ("lane", "1.0.0"), ("lane", "1.1.0"), ("market-data", "1.0.0"), ("market-data", "1.1.0"),
-    ("organization", "1.0.0"), ("organization", "2.0.0"), ("organization", "2.1.0"), ("party", "1.0.0"), ("party", "1.1.0"), ("party", "1.2.0"), ("party", "1.3.0"), ("party", "1.4.0"),
-    ("ref-mpc", "1.0.0"), ("ref-mpc", "1.1.0"), ("ref-mpc", "1.2.0"),
-    ("system", "1.0.0"), ("system", "1.1.0"), ("system", "1.2.0"), ("system", "1.3.0"), ("system", "1.4.0"), ("value-stream", "1.0.0"), ("value-stream", "1.1.0"), ("value-stream", "1.2.0"),
+    ("organization", "1.0.0"), ("organization", "2.0.0"), ("organization", "2.1.0"), ("party", "1.0.0"), ("party", "1.1.0"), ("party", "1.2.0"), ("party", "1.3.0"), ("party", "1.4.0"), ("party", "2.0.0"),
+    ("ref-mpc", "1.0.0"), ("ref-mpc", "1.1.0"), ("ref-mpc", "1.2.0"), ("ref-mpc", "1.3.0"),
+    ("system", "1.0.0"), ("system", "1.1.0"), ("system", "1.2.0"), ("system", "1.3.0"), ("system", "1.4.0"), ("system", "1.5.0"), ("value-stream", "1.0.0"), ("value-stream", "1.1.0"), ("value-stream", "1.2.0"),
 ]
 
 

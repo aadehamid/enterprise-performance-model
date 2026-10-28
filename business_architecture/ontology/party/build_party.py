@@ -16,7 +16,11 @@ unless every system is listed once, has a role that is not blank and implements 
 of the conceptual model, a system the system module already has keeps its label there, every flow and source names listed systems and code-list values, and every attribute
 names a listed system, a category, an entity of the module and, if any, a shared attribute.
 Each flow must carry something; each source must have a note (blank text counts as none) and name a party role, customer
-class, line of business or party type; and every cited input must be one of the seven.
+class, line of business, party type or site type; and every cited input must be one of the eleven (inputs 1 to 7,
+EPM-DEC-001-0067; inputs 8 to 11, the customer inputs of 2026-10-27, EPM-DEC-001-0108). A source replaced by another names
+it in replaced_by and is built deprecated, with its triples kept (since 2.0.0). change-notes.csv gives the dated change
+notes of terms whose meaning a release changed, and code-list-mappings.csv maps a code list's values to other values of
+the module, such as Dealer Master's dealer classes to the roles and site type they stand for (EPM-DEC-001-0108).
 
 lifecycle.csv links each business lifecycle stage to the core 2.4.0 processes that do its work,
 each system stage to the customer systems that hold the record, and business stages to the system
@@ -32,7 +36,7 @@ import sys
 from collections import Counter
 
 from rdflib import Graph, Literal, Namespace, URIRef
-from rdflib.namespace import DCTERMS, RDF, RDFS, SKOS
+from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TABLE = os.path.join(HERE, "code-lists.csv")
@@ -41,6 +45,10 @@ SYSTEMS_OUTPUT = os.path.join(HERE, "systems.ttl")
 LIFECYCLE_OUTPUT = os.path.join(HERE, "lifecycle.ttl")
 CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
 SYSTEM_MODULE = os.path.join(HERE, "..", "system", "systems.csv")
+# The system module's systems the process map does not name, such as PRM since system 1.5.0 (EPM-DEC-001-0100, 0108).
+SYSTEM_OTHERS = os.path.join(HERE, "..", "system", "other-systems.csv")
+CHANGE_NOTES = os.path.join(HERE, "change-notes.csv")
+CODE_MAPPINGS = os.path.join(HERE, "code-list-mappings.csv")
 # The definitions' sources are shared with the system module (item G, EPM-DEC-001-0099).
 SYSTEM_SOURCES = os.path.join(HERE, "..", "system", "sources.csv")
 SRC = Namespace("https://w3id.org/lsc/ontology/source/")
@@ -72,6 +80,8 @@ SCHEMES = {
     "lifecycle-stage": ("customer lifecycle stages", "The six business stages of a customer's life with the company, from prospect to offboarding.", "EPM-DEC-001-0070"),
     "system-stage": ("customer system stages", "The five stages of a customer's record across the systems, from the first record to settlement.", "EPM-DEC-001-0070"),
     "sourcing-kind": ("customer sourcing kinds", "How a system relates to a kind of customer: where it starts, where it is set up, or a source of it.", "EPM-DEC-001-0069"),
+    "dealer-class": ("dealer classes", "Dealer Master's three classes of the records in its dealer master table. A record stays in the class it was created in.", "EPM-DEC-001-0108"),
+    "class-of-trade": ("classes of trade", "The channels of trade a station is supplied under, which tell the pricing system whether the company manages the station's street price.", "EPM-DEC-001-0108"),
     "product": ("products", "The refined products the company makes and sells, as MPC's FY2025 Form 10-K names them: its six refinery product groups and the products it names under them, and renewable diesel. Each value is a party:Product.", "MPC FY2025 Form 10-K, Item 1; business_architecture/reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 4; EPM-DEC-001-0088; EPM-DEC-001-0092"),
 }
 # The product values' mappings to the Open Energy Ontology, and their PIDX product families (EPM-DEC-001-0092).
@@ -111,7 +121,7 @@ def load():
     return rows
 
 
-def build(rows, mappings=None, pidx=None):
+def build(rows, mappings=None, pidx=None, code_mappings=None):
     g = Graph()
     g.bind("party", CUST)
     g.bind("skos", SKOS)
@@ -132,6 +142,8 @@ def build(rows, mappings=None, pidx=None):
         g.add((v, SKOS.notation, Literal(r["notation"])))
         g.add((v, SKOS.prefLabel, Literal(r["label"], lang="en")))
         g.add((v, SKOS.definition, Literal(r["definition"], lang="en")))
+        if r.get("scope_note"):
+            g.add((v, SKOS.scopeNote, Literal(r["scope_note"], lang="en")))
         if r["broader"]:
             g.add((v, SKOS.broader, value_iri(r["scheme"], r["broader"])))
         else:
@@ -148,7 +160,25 @@ def build(rows, mappings=None, pidx=None):
         g.add((value_iri("product", m["product"]), MATCHES[m["relation"]], OEO[m["target"]]))
     for p in pidx or []:
         g.add((value_iri("product", p["product"]), CUST.pidxProductFamily, Literal(p["family"])))
+    for m in code_mappings or []:
+        g.add((CUST[m["from"]], MATCHES[m["relation"]], CUST[m["to"]]))
+        if m["relation"] in ("exactMatch", "closeMatch"):  # symmetric: stated both ways inside the module (qSKOS reciprocal)
+            g.add((CUST[m["to"]], MATCHES[m["relation"]], CUST[m["from"]]))
     return g
+
+
+def load_code_mappings(rows):
+    """Mappings between the module's own code-list values (EPM-DEC-001-0108). The build fails unless both ends are values
+    of different code lists and the relation is a known SKOS mapping relation."""
+    values = {f"{r['scheme']}/{r['notation']}" for r in rows}
+    maps = read(CODE_MAPPINGS)
+    problems = [f"code-list-mappings.csv: {m[e]} is not a code-list value" for m in maps for e in ("from", "to") if m[e] not in values]
+    problems += [f"code-list-mappings.csv: {m['from']}: unknown relation {m['relation']!r}" for m in maps if m["relation"] not in MATCHES]
+    problems += [f"code-list-mappings.csv: {m['from']} and {m['to']} are in one code list" for m in maps
+                 if m["from"].split("/")[0] == m["to"].split("/")[0]]
+    if problems:
+        sys.exit("the code-list mappings do not reconcile:\n  " + "\n  ".join(problems))
+    return maps
 
 
 def load_products(rows):
@@ -188,9 +218,11 @@ def split(text):
     return [t for t in text.split(";") if t]
 
 
-# What a customer sourcing may name (party:sourcedConcept), and the decision owner's seven inputs (EPM-DEC-001-0067).
-SOURCED_SCHEMES = {"party-role", "customer-class", "line-of-business", "party-type"}
-INPUTS = {str(i) for i in range(1, 8)}
+# What a customer sourcing may name (party:sourcedConcept), and the decision owner's eleven inputs: 1 to 7 as
+# EPM-DEC-001-0067 lists them, 8 to 11 the customer inputs of 2026-10-27 (EPM-DEC-001-0108). Since 2.0.0 a sourcing may
+# name a site type, for the ship-to stations that start in Dealer Master (EPM-DEC-001-0108).
+SOURCED_SCHEMES = {"party-role", "customer-class", "line-of-business", "party-type", "site-type"}
+INPUTS = {str(i) for i in range(1, 12)}
 # Customer systems that are a system-module node under another slug, as the decision owner said
 # ("Terminal Margin Ranking System = TMR", EPM-DEC-001-0072). Same slugs match without an entry here.
 SAME_SYSTEM = {"terminal-margin-ranking-system": "tmr", "sap-s4hana": "sap"}  # sap: EPM-DEC-001-0099
@@ -202,11 +234,13 @@ DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: ea
     ("lifecycle-stage/risk-management", "process"): {"CM 1.3.7.4.3", "CM 1.3.7.4.4"},
     ("lifecycle-stage/relationship-management", "process"): {"CM 1.3.6.2.2", "CM 1.3.7.5.5", "CM 1.3.7.2.6", "CM 1.3.7.4.2"},
     ("lifecycle-stage/offboarding", "process"): {"CM 1.3.7.4.5", "CM 1.3.7.1.1"},
-    ("system-stage/prospect", "system"): {"salesforce"},
+    # Dealer Master in prospect, Salesforce in record, and Dealer Master and Polaris in settle joined on 2026-10-27,
+    # from the decision owner's customer inputs of that day (EPM-DEC-001-0108).
+    ("system-stage/prospect", "system"): {"salesforce", "dealer-master"},
     ("system-stage/master", "system"): {"sap-mdg"},
-    ("system-stage/record", "system"): {"sap-s4hana"},
+    ("system-stage/record", "system"): {"sap-s4hana", "salesforce"},
     ("system-stage/execute", "system"): {"rightangle", "polaris", "dealer-master", "terminal-download"},
-    ("system-stage/settle", "system"): {"sap-s4hana"},
+    ("system-stage/settle", "system"): {"sap-s4hana", "dealer-master", "polaris"},
     ("lifecycle-stage/prospect", "stage"): {"system-stage/prospect"},
     ("lifecycle-stage/onboarding", "stage"): {"system-stage/master", "system-stage/record"},
     ("lifecycle-stage/payment-management", "stage"): {"system-stage/settle"},
@@ -218,7 +252,7 @@ DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: ea
 
 def load_systems(codes):
     systems, flows, sources, attrs = (read(n) for n in ("systems.csv", "data-flows.csv", "customer-sources.csv", "attributes.csv"))
-    existing = {r["slug"]: r["label"] for r in read(SYSTEM_MODULE)}
+    existing = {r["slug"]: r["label"] for r in read(SYSTEM_MODULE) + read(SYSTEM_OTHERS)}
     values = {(r["scheme"], r["notation"]) for r in codes}
     slugs = {r["slug"] for r in systems}
     problems = [f"systems.csv lists {s} {n} times" for s, n in Counter(r["slug"] for r in systems).items() if n > 1]
@@ -240,12 +274,17 @@ def load_systems(codes):
     problems += [f"source {r['system']}: not a listed system" for r in sources if r["system"] not in slugs]
     problems += [f"source {r['system']}: kind {r['kind']!r} is not a sourcing kind" for r in sources if ("sourcing-kind", r["kind"]) not in values]
     problems += [f"source {r['system']}: {r['concept']} is not a code-list value" for r in sources if tuple(r["concept"].split("/", 1)) not in values]
-    problems += [f"source {r['system']}: {r['concept']} is not a party role, customer class, line of business or party type"
+    problems += [f"source {r['system']}: {r['concept']} is not a party role, customer class, line of business, party type or site type"
                  for r in sources if r["concept"].split("/", 1)[0] not in SOURCED_SCHEMES]
     problems += [f"flow {r['from']} -> {r['to']}: carries nothing" for r in flows if not r["carries"].strip()]
     problems += [f"source {r['system']}: no note" for r in sources if not r["note"].strip()]
     problems += [f"source {r['system']}: no input" for r in sources if not split(r["inputs"])]
-    problems += [f"{what}: input {i!r} is not one of the seven inputs" for what, r in
+    problems += [f"{r['slug']}: system of record for {e!r}, not an entity of the conceptual model"
+                 for r in systems for e in split(r.get("system_of_record", "")) if e not in MODEL_ENTITIES]
+    source_keys = {f"{r['system']}--{r['kind']}--{r['concept'].replace('/', '--')}" for r in sources}
+    problems += [f"source {r['system']}: replaced by {r['replaced_by']!r}, which is not a listed source"
+                 for r in sources if r.get("replaced_by") and r["replaced_by"] not in source_keys]
+    problems += [f"{what}: input {i!r} is not one of the eleven inputs" for what, r in
                  [(f"flow {r['from']} -> {r['to']}", r) for r in flows] + [(f"source {r['system']}", r) for r in sources]
                  for i in split(r["inputs"]) if i not in INPUTS]
     problems += [f"attribute {r['label']!r}: {r['system']} is not a listed system" for r in attrs if r["system"] not in slugs]
@@ -365,6 +404,8 @@ def build_systems(systems, flows, sources, attrs, existing):
             g.add((SRC[key], DCTERMS.title, Literal(title, lang="en")))
         for e in split(r["implements"]):
             g.add((s, CUST.implements, CUST[e]))
+        for e in split(r.get("system_of_record", "")):
+            g.add((s, CUST.systemOfRecordFor, CUST[e]))
     for r in flows:
         f = CUST[f"flow/{r['from']}--{r['to']}"]
         g.add((f, RDF.type, CUST.DataFlow))
@@ -381,6 +422,9 @@ def build_systems(systems, flows, sources, attrs, existing):
         g.add((n, CUST.sourcedConcept, CUST[r["concept"]]))
         g.add((n, RDFS.comment, Literal(r["note"], lang="en")))
         g.add((n, CUST.evidenceInput, Literal(", ".join(split(r["inputs"])))))
+        if r.get("replaced_by"):  # deprecated, never deleted: its triples stay (since 2.0.0; EPM-DEC-001-0108)
+            g.add((n, OWL.deprecated, Literal(True)))
+            g.add((n, DCTERMS.isReplacedBy, CUST[f"sourcing/{r['replaced_by']}"]))
     for r in attrs:
         a = CUST[f"attribute/{r['system']}/{r['category']}/{slugify(r['label'])}"]
         g.add((a, RDF.type, CUST.SystemAttribute))
@@ -393,6 +437,26 @@ def build_systems(systems, flows, sources, attrs, existing):
     return g
 
 
+def add_change_notes(graphs):
+    """Each row of change-notes.csv gives one dated skos:changeNote to a term the module builds: a term whose meaning a
+    release changed keeps its IRI and says what changed (since 2.0.0; EPM-DEC-001-0108). The build fails unless the term
+    is built and the note is dated and cites its record."""
+    import re
+    rows = read(CHANGE_NOTES)
+    problems = []
+    for r in rows:
+        term = CUST[r["term"]]
+        where = [g for g in graphs if (term, None, None) in g]
+        if not where:
+            problems.append(f"change-notes.csv: {r['term']} is not a term the module builds")
+        elif not re.match(r"\d{4}-\d{2}-\d{2}: .*\(EPM-DEC-001-\d{4}\)\.$", r["note"]):
+            problems.append(f"change-notes.csv: {r['term']}: the note must start with its date and end with its record")
+        else:
+            where[0].add((term, SKOS.changeNote, Literal(r["note"], lang="en")))
+    if problems:
+        sys.exit("the change notes do not reconcile:\n  " + "\n  ".join(problems))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
@@ -402,15 +466,21 @@ def main():
     systems, flows, sources, attrs, existing = load_systems(rows)
     lrows, procs = load_lifecycle(rows, systems)
     mappings, pidx = load_products(rows)
+    code_maps = load_code_mappings(rows)
+    lgraph = build_lifecycle(lrows, procs)
+    sgraph = build_systems(systems, flows, sources, attrs, existing)
+    cgraph = build(rows, mappings, pidx, code_maps)
+    add_change_notes((cgraph, sgraph))
     ltext = ("# The customer lifecycle's links to processes, systems and system stages (EPM-DEC-001-0070).\n"
              "# Built by build_party.py from lifecycle.csv and core 2.4.0. Do not edit by hand.\n"
-             + build_lifecycle(lrows, procs).serialize(format="turtle"))
+             + lgraph.serialize(format="turtle"))
     stext = ("# The customer systems, data flows and attributes (EPM-DEC-001-0069). Built by build_party.py\n"
-             "# from systems.csv, data-flows.csv, customer-sources.csv and attributes.csv. Do not edit by hand.\n"
-             + build_systems(systems, flows, sources, attrs, existing).serialize(format="turtle"))
+             "# from systems.csv, data-flows.csv, customer-sources.csv, attributes.csv and change-notes.csv. Do not edit by hand.\n"
+             + sgraph.serialize(format="turtle"))
     text = ("# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069, 0070).\n"
-            "# Built by build_party.py from code-lists.csv, product-mappings.csv and pidx-families.csv. Do not edit by hand.\n"
-            + build(rows, mappings, pidx).serialize(format="turtle"))
+            "# Built by build_party.py from code-lists.csv, product-mappings.csv, pidx-families.csv, code-list-mappings.csv\n"
+            "# and change-notes.csv. Do not edit by hand.\n"
+            + cgraph.serialize(format="turtle"))
     counts = Counter(r["scheme"] for r in rows)
     print("code lists " + ", ".join(f"{s} {counts[s]}" for s in SCHEMES))
     cat = Counter(r["category"] for r in attrs)
