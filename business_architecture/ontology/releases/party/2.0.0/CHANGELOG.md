@@ -21,7 +21,7 @@ A major release: the decision owner's customer inputs of 2026-10-27 change what 
 - Drop Tank, Gas Buddy, DTN File Server and Federal Health have no definition; they wait for the customer-data owner (`business-closeout.md`, point 11).
 - The drafted descriptions, the eight new ones among them, wait for each system's owner to confirm or correct them (`business-closeout.md`, point 16).
 - Which description of TMR is right waits for its owner (EPM-DEC-001-0108, question 7).
-- The brands Marathon, ARCO and Tesoro are not yet brand values; Dealer Master's billing customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open (EPM-DEC-001-0108).
+- The brands Marathon, ARCO and Tesoro are not yet brand values (*2026-10-27:* now `party:Brand` individuals in `ref-mpc` 1.3.0, EPM-DEC-001-0108, amendment); Dealer Master's billing customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open (EPM-DEC-001-0108).
 
 ## 1.4.0 (2026-10-26)
 
