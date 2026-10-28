@@ -9,7 +9,7 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 | `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none from core 2.0.0 to 2026-10-21; since 2026-10-22, 16 in value-stream, kpi, party and integration, each with its fix; *2026-10-23:* 14, in kpi, party and integration, since `value-stream` 1.1.0 closed two, EPM-DEC-001-0090; then 6, in kpi and integration, since `party` 1.1.0 closed eight, EPM-DEC-001-0092; then 5, in integration, since `kpi` 1.1.1 closed one, EPM-DEC-001-0093; none since `integration` 2.0.0, EPM-DEC-001-0094) |
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
 | `run_local.sh` | Steps 4 to 7 below in one command; `--keep` leaves the Neo4j container running |
-| `LOCAL-STORES.md` | The stores kept loaded for exploration since 2026-10-26, how to refresh each, and where its login lives |
+| `LOCAL-STORES.md` | The stores kept loaded for exploration since 2026-10-26 (*2026-10-27:* the four ontology stores are empty since that day's purge and are reloaded at the start of Part 2), how to refresh each, and where its login lives |
 | `ontology-stores-runbook.html` | A standalone page for a person: the end-to-end workflow with diagrams, and how to check, stop, start, purge and reload each store |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, and that the report is current and passed |
 
