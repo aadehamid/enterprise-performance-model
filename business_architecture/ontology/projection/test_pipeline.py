@@ -206,7 +206,7 @@ class Report(unittest.TestCase):
         real_open = open
         def edited(path, *a, **k):
             f = real_open(path, *a, **k)
-            if str(path).endswith("releases/organization/2.1.0/shapes.ttl"):
+            if str(path).endswith("releases/organization/2.2.0/shapes.ttl"):
                 import io
                 return io.StringIO(f.read() + "\n# edited\n")
             return f
