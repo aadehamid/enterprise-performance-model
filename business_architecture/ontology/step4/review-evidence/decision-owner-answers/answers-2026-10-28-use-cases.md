@@ -4,7 +4,7 @@ Block 2: Claude proposed four more questions of the second's shape (3 to 6). The
 Block 3: Claude proposed use cases 7 to 12 from the briefing's levers and the data they need, to be saved in the demo README. The decision owner then asked this.
 Block 4: Claude proposed use cases 13 to 17, tracing decisions to outcomes on the backcasting processes, with synthetic plan assumptions, a decision log and a PROV-O decision trail. The option read: "13 to 17 go into the use-cases PR now; their data and tests are built in Part 2." The decision owner chose it.
 Block 5: sent while Claude added 13 to 17.
-Block 6: the decision owner asked Claude to read the enterprise-context-engineering repository and propose the minimal part to add.
+Block 6: the decision owner asked Claude to read the enterprise-context-engineering repository and propose the minimal part to add; the URL in the message, which holds the account name, is replaced here by <the enterprise-context-engineering repository URL>.
 Block 7: Claude proposed five pieces from it (decision-dossier fields, hidden truth apart from agent-visible evidence, evidence/inference/unknown labels, claim-level citations, as-of-date context) and use case 18. The option read: "Built in Part 2 with the decision log; use case 18 goes into the use-cases PR now." The decision owner chose it.
 Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
@@ -18,6 +18,6 @@ Add all five (Recommended)
 
 In all of these use case, I want to show ehere the ontology becomes really important
 
-one last thing on the use case can you read the https://github.com/aadehamid/enterprise-context-engineering let us see what part of it we can add here. We dont have to add everything just the minimal part that can be used to demonstarte some of the things here. let me know your thought
+one last thing on the use case can you read the <the enterprise-context-engineering repository URL> let us see what part of it we can add here. We dont have to add everything just the minimal part that can be used to demonstarte some of the things here. let me know your thought
 
 Take the five, add 18 (Recommended)
