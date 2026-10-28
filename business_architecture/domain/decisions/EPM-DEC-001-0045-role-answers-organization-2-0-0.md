@@ -18,7 +18,7 @@ EPM-DEC-001-0031 merged role strings on spelling only and left seven questions f
 2. Forecaster stays apart from Local Refinery Forecaster until the refinery Economics and Planning process owner confirms they are the same.
 3. Refinery Technical Service Representative is the Refinery Technical Representative.
 4. Of the two long VP strings, the one with "RVCO" survives.
-5. Crude RFC stays its own role. RFC is read as Refinery Feedstock Coordinator, as a contextual reading pending confirmation.
+5. Crude RFC stays its own role. RFC is read as Refinery Feedstock Coordinator, as a contextual reading pending confirmation. *2026-10-28:* the decision owner confirmed the reading (amendment of 2026-10-28 below).
 6. The acronym expansions with evidence are adopted: CP (Clean Products), CPVC (Clean Products Value Chain), GFVC (Global Feedstocks Value Chain), RVCO (Refinery Value Chain Optimization), CCI (Continual Commercial Improvement), E&P (Economics and Planning), BP&A (Business Planning and Analysis) and RO (Regional Optimization). PSM stays unresolved. An expansion is not a merge.
 7. Who owns a concept's meaning is a separate governance decision, not answered by process RACI.
 8. Organization 2.0.0 is approved for these merges, and a `ref-mpc` release if one is needed.
@@ -33,6 +33,24 @@ EPM-DEC-001-0031 merged role strings on spelling only and left seven questions f
 7. **Competency question 17** stays waiting, now on this record. The proposed design, not built: a qualified governance assignment that names a concept or scheme, a role, a responsibility (semantic owner, business data steward, technical data custodian or process owner), a scope, dates, evidence and an approval status. *2026-10-23:* the decision owner parked Q17 until the ontology is first shared with business consumers; the design above is built then, from the business's assignments (EPM-DEC-001-0086, `ontology/business-closeout.md`, point 1).
 8. **Release.** Organization 2.0.0 (issued 2026-10-18) requires `core` 2.1.0. The branch first required 2.0.0; core 2.1.0 was released while it was open (EPM-DEC-001-0044). 2.1.0 is a minor release: it adds evidence nodes and shapes and keeps every process concept the assignments point at, so the assignments mean the same on it. A new release requires the current release of what it depends on, and organization 2.0.0 was not yet released, so changing its requirement changes no published package. `ref-mpc` 1.1.0 (issued 2026-10-19) requires organization 2.0.0. It is a minor release: only its requirement changes, and every query on 1.0.0 gives the same answer on 1.1.0, because ref-mpc uses only the control relationship, which organization 2.0.0 keeps unchanged. The 1.0.0 packages of both modules stay on disk as released. `build_module.py` gives organization 2.0.0 5,987 triples and ref-mpc 1.1.0 140. The projection, rerun on core 2.1.0 with organization 2.0.0, loads 2,811 nodes and 14,865 relationships: three more relationships than on organization 1.0.0, the `dcterms:isReplacedBy` links. It has no SHACL violation in the graph, an empty round-trip diff and equal hashes for two load orders.
 
+## Amendment, 2026-10-28: PSM expanded, Crude RFC and Business Planning and Analysis confirmed (organization 2.2.0)
+
+Claude walked the decision owner through the business close-out package on 2026-10-28 (EPM-DEC-001-0086, amendment of 2026-10-28). Points 6 to 9 are this record's.
+
+**The decision owner's answers:**
+
+1. **Forecaster stays apart from the Local Refinery Forecaster, and the point stays open** for the refinery Economics and Planning process owner: "Keep apart, leave open (Recommended)" (point 6).
+2. **The Crude RFC reading is confirmed:** "Confirm the reading" (point 7). The option read: Crude RFC = Crude Refinery Feedstock Coordinator, recorded as the decision owner's confirmed reading.
+3. **PSM is Process Safety Management:** "By the was PSM = Process Safety Management" (point 8). The decision owner first chose to leave the point open, then sent this answer later the same session.
+4. **Business Planning and Analysis's definition is confirmed; the other three stay open:** "Confirm 1, rest open (Recommended)" (point 9). The question quoted the four definitions; the decision owner's first reply, "BP&A = Business Planning & Analysis", expanded the label and did not answer it, so Claude asked again.
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+- **organization 2.2.0, a minor release, issued 2026-10-28.** It removes no IRI. `role:psm` takes the preferred label Process Safety Management, with "PSM" kept as an alternative label, as 2.0.0 did for the other acronyms. Crude Refinery Feedstock Coordinator's and Business Planning and Analysis's editorial notes say the decision owner confirmed them. The unresolved questions on PSM and Crude RFC are removed from `roles.csv`.
+- It still requires core 2.3.0. `ref-mpc` 1.3.0 and `integration` 2.4.0 still require organization 2.1.0, which stays released as it is.
+- `test_vocabulary.py` compares 2.2.0 with 2.1.0 (every IRI kept, nothing newly deprecated, the changed triples counted by hand), and `test_roles.py` pins the three answers. The taxonomy checker gives the same 940 findings on 2.1.0 and 2.2.0, all untagged source role texts on assignments, which this release does not touch.
+- The Refinery Value Chain Optimization Advisor, Refinery Technical Representative and Crude Refinery Feedstock Coordinator definitions stay EPM working definitions, open with their managers.
+
 ## Alternatives considered
 
 - **Delete the merged roles.** Not chosen: the playbook forbids it; a deleted IRI orphans every reference.
@@ -44,6 +62,8 @@ EPM-DEC-001-0031 merged role strings on spelling only and left seven questions f
 
 Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-18.md`: "1 yes. Merge RCVO Advisor into RVCO Advisor as a source-label correction.", "2 no for now. Retain Forecaster separately until the refinery Economics and Planning process owner confirms that it denotes the Local Refinery Forecaster.", "3 yes. Merge the technical-service representative into Refinery Technical Representative and retain both source labels.", "For queston 4 choose the string with "RVCO" in the list", "5 b. Retain Crude RFC as a distinct crude-specific role.", "Q6: RO = Regional Optimization", "Keep PSM unresolved.", "7 a. Address concept-meaning ownership through a separate governance decision and explicit assignments, independent of process RACI." Saved in `answers-2026-10-18-night.md`: "Yes, approve 2.0.0 (Recommended)". Saved in `answers-2026-10-19-ref-mpc.md`: "Approve the ref-mpc release too if needed"; and in `answers-2026-10-19-releases.md`: "You have my approval to keep going and release things as needed. while I am out". Items 1 to 8 under "What follows" are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and the decision owner can reverse them.
 
+For the amendment of 2026-10-28, from `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-28-closeout.md`: "Keep apart, leave open (Recommended)", "Confirm the reading", "By the was PSM = Process Safety Management", "BP&A = Business Planning & Analysis" and "Confirm 1, rest open (Recommended)".
+
 ## Evidence
 
 `decision-packages/2026-10-14/role-questions.md`; EPM-DEC-001-0031; `organization/roles.csv` (the editorial notes name each source); `releases/organization/2.0.0/`; `ontology-playbook.md`, Appendix B.
@@ -52,3 +72,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 - `organization/build_roles.py` and `build_assignments.py` read the new columns; `test_roles.py`, `test_assignments.py` and `release/test_build_module.py` test the merges, the kept IRIs and the untouched 1.0.0 package.
 - EPM-DEC-001-0031's questions are answered here.
+- *2026-10-28:* organization 2.2.0 carries the close-out answers on PSM, Crude RFC and Business Planning and Analysis (amendment of 2026-10-28 above); `releases/organization/2.2.0/` is written, and the tag is `organization-v2.2.0` after the merge.

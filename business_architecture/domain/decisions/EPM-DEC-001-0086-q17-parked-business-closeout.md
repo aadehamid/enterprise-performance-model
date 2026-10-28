@@ -36,9 +36,9 @@ On 2026-10-26 the decision owner said they might work through some of the packag
 | 4 | TID Nbr keeps its reading, and the point closes: "Keep reading, close (Recommended)" | EPM-DEC-001-0072, amendment of 2026-10-28 |
 | 5 | The products close; the PIDX family letters stay open: "Close products, PIDX open (Recommended)" | EPM-DEC-001-0092, amendment of 2026-10-28 |
 | 6 | Forecaster stays apart and the point stays open: "Keep apart, leave open (Recommended)" | This amendment |
-| 7 | The Crude RFC reading is confirmed: "Confirm the reading" | EPM-DEC-001-0045, with `organization`'s next minor release |
-| 8 | PSM is Process Safety Management: "By the was PSM = Process Safety Management". The decision owner sent it after first choosing to leave the point open | EPM-DEC-001-0045, with `organization`'s next minor release |
-| 9 | Business Planning and Analysis's definition is confirmed; the other three stay open: "Confirm 1, rest open (Recommended)" | EPM-DEC-001-0045, with `organization`'s next minor release |
+| 7 | The Crude RFC reading is confirmed: "Confirm the reading" | EPM-DEC-001-0045, with `organization`'s next minor release (*2026-10-28:* released as organization 2.2.0) |
+| 8 | PSM is Process Safety Management: "By the was PSM = Process Safety Management". The decision owner sent it after first choosing to leave the point open | EPM-DEC-001-0045, with `organization`'s next minor release (*2026-10-28:* released as organization 2.2.0) |
+| 9 | Business Planning and Analysis's definition is confirmed; the other three stay open: "Confirm 1, rest open (Recommended)" | EPM-DEC-001-0045, with `organization`'s next minor release (*2026-10-28:* released as organization 2.2.0) |
 | 10, 12, 13, 14, 16 | Each stays open: "Leave open (Recommended)" | This amendment |
 | 11 | Drop Tank, GasBuddy and DTN are to be defined from their own public pages; Federal Health, and what MPC sends each of the four, stay open: "Define 3, rest open (Recommended)" | EPM-DEC-001-0099, with `party`'s next minor release |
 | 15 | The decision owner believes Polaris is bought: "I think this is an off the shelf system that offers this service". The point stays open for the vendor and what Polaris does | EPM-DEC-001-0099, with `party`'s next minor release |
@@ -46,7 +46,7 @@ On 2026-10-26 the decision owner said they might work through some of the packag
 **What follows (Claude, under EPM-DEC-001-0028):**
 
 - The package marks points 3 and 4 as closed, and point 5 as open for the PIDX letters only. Each row keeps its place, so the numbering does not change.
-- Points 7, 8, 9, 11 and 15 change the ontology. Each release's own pull request records its answer on the named record and updates its row in the package.
+- Points 7, 8, 9, 11 and 15 change the ontology. Each release's own pull request records its answer on the named record and updates its row in the package. *2026-10-28:* points 7, 8 and 9 are released in `organization` 2.2.0 (EPM-DEC-001-0045, amendment of 2026-10-28).
 - The package gains two rows from EPM-DEC-001-0108, which the decision owner cannot answer ("Others I cannot answer."): point 17, how Dealer Master's billing customer number relates to the SAP customer number; and point 18, whether Dealer Master's fuel volumes reach the Enterprise Data Lake.
 
 ## Alternatives considered
