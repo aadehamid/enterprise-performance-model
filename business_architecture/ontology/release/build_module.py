@@ -35,7 +35,10 @@ MODULES = {
         # checks it is untouched.
         # 2.1.0 is a minor Claude approved under the delegation: the RACI levels stated as top concepts both ways;
         # it requires core 2.3.0, the current release (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106).
-        "version": "2.1.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
+        # 2.2.0 is a minor Claude approved under the delegation: the decision owner's close-out answers of 2026-10-28,
+        # PSM expanded as Process Safety Management, the Crude RFC reading and Business Planning and Analysis's
+        # definition confirmed; it still requires core 2.3.0 (EPM-DEC-001-0045, amendment of 2026-10-28).
+        "version": "2.2.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-28",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["organization/vocabulary.ttl", "organization/roles.ttl", "organization/assignments.ttl"],
         "shapes": ["organization/shapes.ttl"],
