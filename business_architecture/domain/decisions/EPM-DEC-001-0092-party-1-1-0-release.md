@@ -32,6 +32,18 @@ Claude put PIDX to the decision owner again, because no SKOS mapping to PIDX is 
 8. **It requires core 2.3.0,** the current release, for CM 1.3.7.1.7. The `party` build reads 2.3.0. 1.0.0 stays on disk as released.
 9. **The projection** loads party 1.1.0 with a fixed prefix `oeo` for the mapping targets. The eight gaps leave its list, so 6 remain, in kpi and integration. The rerun gave 34,054 triples, 3,971 nodes and 19,840 relationships, no SHACL violation in the graph over 602 in-graph constraints (the mutant still caught), an empty round-trip diff and equal hashes for the sorted and shuffled loads.
 
+## Amendment, 2026-10-28: the product list closes; the PIDX family letters stay open
+
+Claude walked the decision owner through the business close-out package on 2026-10-28 (EPM-DEC-001-0086, amendment of 2026-10-28). Point 5 is this record's.
+
+**The decision owner's answer:** "Close products, PIDX open (Recommended)". The option read: products closed on the 10-K evidence; the PIDX family letters stay open for the commercial owners and PIDX.
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+- The 27 products and their definitions stand as released. They no longer wait on the business.
+- The PIDX family letters stay open: the commercial product owners confirm them with PIDX, because the family list dates from 2015.
+- No file in the `party` module changes.
+
 ## Alternatives considered
 
 - **A SKOS mapping to PIDX codes.** Not possible: PIDX publishes no IRIs, and a code names one company's grade, not a product.
@@ -43,6 +55,8 @@ Claude put PIDX to the decision owner again, because no SKOS mapping to PIDX is 
 
 From `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`: "10-K slate in party (Recommended)", "Approve all six (Recommended)", "Approve 8 and 5 (Recommended)" and "Family codes, flagged (Recommended)".
 
+For the amendment of 2026-10-28, from `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-28-closeout.md`: "Close products, PIDX open (Recommended)".
+
 ## Evidence
 
 - MPC FY2025 Form 10-K, Item 1 (`business_architecture/reference/mpc/mpc-fy2025-10k-fact-sheet.md`, section 4; the NGLs and petrochemicals paragraph, read at https://www.marathonpetroleum.com/content/documents/Investors/Annual_Report/2025_MPC_Annual_Report_and_10K.pdf on 2026-10-23).
@@ -53,6 +67,6 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 ## Consequences
 
 - `releases/party/1.1.0/` is written; `scripts/check.sh` fails unless it equals a fresh build.
-- The business close-out package's point 5 now asks the business to confirm the product list and the PIDX letters (with PIDX).
+- The business close-out package's point 5 now asks the business to confirm the product list and the PIDX letters (with PIDX). *2026-10-28:* the product list is closed; point 5 asks only for the PIDX letters (amendment of 2026-10-28 above).
 - EPM-DEC-001-0064 records that the PIDX and OEO trigger is met.
 - Tag `party-v1.1.0` after the merge.
