@@ -134,10 +134,16 @@ class Systems(unittest.TestCase):
         # 18 in 1.2.0 (EPM-DEC-001-0099), then the 20 internal systems drafted from the repository in 1.3.0
         # (EPM-DEC-001-0103): every customer system but the four the customer-data owner is asked about.
         # 46 since 2.0.0: the eight systems of 2026-10-27 are defined too (EPM-DEC-001-0108).
-        self.assertEqual(len(defined), 38 + 8)
-        self.assertEqual(slugs(systems) - defined, {"drop-tank", "gas-buddy", "dtn-file-server", "federal-health"})
-        for slug in ("drop-tank", "gas-buddy", "dtn-file-server", "federal-health"):
-            self.assertIsNone(G.value(S[slug], SKOS.definition))
+        # 49 since 2.1.0: Drop Tank, GasBuddy and DTN are defined from their own public pages; only Federal Health stays
+        # undefined (EPM-DEC-001-0099, amendment of 2026-10-28).
+        self.assertEqual(len(defined), 38 + 8 + 3)
+        self.assertEqual(slugs(systems) - defined, {"federal-health"})
+        self.assertIsNone(G.value(S["federal-health"], SKOS.definition))
+        src = Namespace("https://w3id.org/lsc/ontology/source/")
+        for slug, key in (("drop-tank", "drop-tank-points-release-2018-04-23"), ("gas-buddy", "vendor-gasbuddy-about"),
+                          ("dtn-file-server", "vendor-dtn-refined-fuels")):
+            self.assertEqual(set(G.objects(S[slug], DCTERMS.source)), {src[key]})
+        self.assertIn("off-the-shelf", str(G.value(S.polaris, SKOS.editorialNote)))
         src = Namespace("https://w3id.org/lsc/ontology/source/")
         self.assertEqual(set(G.objects(S.polaris, DCTERMS.source)), {src["phmsa-marathon-pipeline-noa-2024-09-26"]})
         self.assertIn("Terminal Upload", str(G.value(S.kittyhawk, SKOS.editorialNote)))
@@ -334,7 +340,7 @@ class Shapes(unittest.TestCase):
         self.assertIn("names a party role, a customer class", text)
 
     def test_a_definition_without_its_source(self):
-        ok, text = self.conforms('s:drop-tank <http://www.w3.org/2004/02/skos/core#definition> "A system."@en .')
+        ok, text = self.conforms('s:federal-health <http://www.w3.org/2004/02/skos/core#definition> "A system."@en .')
         self.assertFalse(ok)
         self.assertIn("cites its source", text)
 

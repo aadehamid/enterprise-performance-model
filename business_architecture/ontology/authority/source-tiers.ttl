@@ -43,6 +43,9 @@
 <https://w3id.org/lsc/ontology/source/downstream-process-map> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:process-authority .
 
+<https://w3id.org/lsc/ontology/source/drop-tank-points-release-2018-04-23> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
+
 <https://w3id.org/lsc/ontology/source/gleif-lei> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:industry .
 
@@ -247,7 +250,13 @@
 <https://w3id.org/lsc/ontology/source/vendor-databricks-introduction> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:industry .
 
+<https://w3id.org/lsc/ontology/source/vendor-dtn-refined-fuels> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
+
 <https://w3id.org/lsc/ontology/source/vendor-emk3-senergy> a dcterms:BibliographicResource ;
+    auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/vendor-gasbuddy-about> a dcterms:BibliographicResource ;
     auth:evidenceTier tier:industry .
 
 <https://w3id.org/lsc/ontology/source/vendor-gravitate> a dcterms:BibliographicResource ;

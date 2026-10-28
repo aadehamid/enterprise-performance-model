@@ -47,12 +47,13 @@ class Tiers(unittest.TestCase):
         from rdflib.namespace import DCTERMS, RDF
         sources = {s for s, p, o in TIERS if str(p).endswith("evidenceTier")}
         # then 2 in tier 1 (EPM-DEC-001-0103): 102, 15 / 3 / 1 / 69 / 14; then the customer inputs of 2026-10-27 in tier 1
-        # (EPM-DEC-001-0108): 103, 16 / 3 / 1 / 69 / 14.
-        self.assertEqual(len(sources), 103)
+        # (EPM-DEC-001-0108): 103, 16 / 3 / 1 / 69 / 14; then the three public pages of party 2.1.0 in tier 4
+        # (EPM-DEC-001-0099, amendment of 2026-10-28): 106, 16 / 3 / 1 / 72 / 14.
+        self.assertEqual(len(sources), 106)
         for s in sources:
             self.assertIn((s, RDF.type, DCTERMS.BibliographicResource), TIERS, s)
         tiers = Counter(str(o).rsplit("/", 1)[1] for s, p, o in TIERS if str(p).endswith("evidenceTier"))
-        self.assertEqual(sorted(tiers.values()), sorted([16, 3, 1, 69, 14]))
+        self.assertEqual(sorted(tiers.values()), sorted([16, 3, 1, 72, 14]))
 
     def test_decided_tiers(self):
         # EPM-DEC-001-0059, items 2 to 6, one example per tier.
