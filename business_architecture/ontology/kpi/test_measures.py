@@ -191,8 +191,25 @@ class Release130(unittest.TestCase):
         self.assertIn("market indicator", str(MEASURES.value(MEASURE["crack-spreads"], SKOS.note)))
 
     def test_the_build_rejects_an_identifier_off_its_kind(self):
-        rows, _d, _p, _l, _pr = bm.load()
-        self.assertTrue(all(r["identifier"] == "" or re.fullmatch(r"(KPI|OPM)-\d{4}", r["identifier"]) for r in rows))
+        import tempfile
+        from unittest import mock
+        with open(bm.IDENTIFIER_TABLE, newline="") as f:
+            table = list(csv.DictReader(f))
+        cases = (("crude-utilization", "KPI-0099", "needs a OPM-nnnn identifier"),  # a KPI ID on an operational metric
+                 ("crack-spreads", "OPM-0099", "must stay KPI-0001"),                # the shared asset's ID changed
+                 ("tar-activities-tracker", "OPM-0099", "has no identifier"))          # an ID on a tracker
+        for measure, bad, message in cases:
+            rows = [dict(r) for r in table if r["measure_id"] != measure] + [{"measure_id": measure, "identifier": bad}]
+            with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False, newline="") as t:
+                w = csv.DictWriter(t, fieldnames=list(table[0].keys()))
+                w.writeheader()
+                w.writerows([{k: r.get(k, "") for k in table[0].keys()} for r in rows])
+            try:
+                with mock.patch.object(bm, "IDENTIFIER_TABLE", t.name), self.assertRaises(SystemExit) as caught:
+                    bm.load()
+                self.assertIn(message, str(caught.exception), measure)
+            finally:
+                os.unlink(t.name)
 
 
 class Shapes(unittest.TestCase):
