@@ -280,7 +280,7 @@ def test_pi_round_2_finding_2_an_empty_built_table_or_view_fails():
 
 
 def test_pi_round_2_finding_2_a_same_count_replica_from_another_run_fails():
-    manifest = {"mpr/pricedetail": 10, "mpr/pricemaster": 2}
+    manifest = {"price_reference/pricedetail": 10, "price_reference/pricemaster": 2}
     taken = "2026-10-26T01:00:00"
 
     class Cursor:

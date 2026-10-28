@@ -1,13 +1,13 @@
 # Downstream pricing demo: synthetic data in Databricks Free Edition
 
-This demo rebuilds the pricing assets the ontology binds its pricing measures to (EPM-DEC-001-0097) in a Databricks Free Edition workspace, from real public data where it exists and synthetic data where it does not. It covers six source systems in Postgres, DuckDB replication, the replica layer, a silver star schema, gold tables, four metric views and the two Genie agents. Every object has the name and columns the shared `idp_sbx` asset has, so the ontology's walk from a measure to its metric view works here. Every price row says whether it is real, spot-anchored or synthesized. The design choices are in EPM-DEC-001-0102.
+This demo rebuilds the pricing assets the ontology binds its pricing measures to (EPM-DEC-001-0097) in a Databricks Free Edition workspace, from real public data where it exists and synthetic data where it does not. It covers six source systems in Postgres, DuckDB replication, the replica layer, a silver star schema, gold tables, four metric views and the two Genie agents. Every object except the six replica schemas has the name and columns the shared `idp_sbx` asset has (the replica schemas follow the source databases' names since 2026-10-28; see "The source systems"), so the ontology's walk from a measure to its metric view works here. Every price row says whether it is real, spot-anchored or synthesized. The design choices are in EPM-DEC-001-0102.
 
 The scenario is the decision owner's executive briefings for October 2026, in [SCENARIO.md](SCENARIO.md): diesel scarcity, Hurricane Isaias, a freight spike that closes arbitrage, and the G7 stock release. It drives only the synthesized parts.
 
 ## The pipeline
 
 ```
-Postgres (Docker, one database per source system)
+Postgres, one database per source system (the exe.dev VM through an SSH tunnel; the local Docker container is the fallback)
   -> DuckDB replication: out/replica/<system>/<table>.parquet, with _change_ts and _replicated_at
   -> Unity Catalog volume idp_sbx.replica_landing.raw
   -> replica tables        idp_sbx.replica_<system>.*                         sql/02_replica.sql
@@ -40,11 +40,11 @@ Postgres listens only on this machine (127.0.0.1:55432), with the throwaway logi
 
 Every replication run is a full snapshot: the downstream layers replace their contents from it. The run writes `out/replica/manifest.json` with each table's rows only after every table is there and not empty; `upload` refuses a replica that does not match its manifest, and `build` checks each replica table's rows and its `_replicated_at` against the manifest, so a volume still holding an earlier run's files fails, and that every silver and gold table and metric view exists and holds rows. Each source database loads in one transaction. Databricks Free Edition limits outbound internet to trusted domains, so the replication pushes from the machine that can reach Postgres rather than letting Databricks pull.
 
-## The last run (2026-10-25)
+## The runs (2026-10-25 to 2026-10-28)
 
 The offline tests check the data, the SQL text and the agents' instructions; they cannot execute a metric view, so the views' behaviour rests on the live runs below. The benchmark view's row count moves with `CURRENT_DATE()`, because the view keeps only the last 160 days: rerunning `counts` on a later date gives a different figure, which is the shared view's design, not a defect.
 
-Free Edition created the `idp_sbx` catalog, so the objects carry their shared names. Rows, from `databricks counts`:
+Free Edition created the `idp_sbx` catalog, so the objects carry their shared names, except the replica schemas, which follow the source databases' names since 2026-10-28. Rows, from `databricks counts`:
 
 | Layer | Object | Rows |
 |---|---|---|
@@ -109,7 +109,7 @@ The demo names each source database after a public product where one exists (Rig
 
 ## What matches the shared assets, and what does not
 
-- **Matches:** the schema, table, view and column names; the crack gold's joins (the MPR settle price unchanged, the MIPS crack sheets, the level-1 group) and constants (`KPI_ID` 'KPI Crack Spread 3-2-1', `Source_System_Id` '17'); the metric views' fields, measures, joins and filters; the benchmark view's defect, all five instruments times 100, and its 160-day window (EPM-DEC-001-0097, Known gaps).
+- **Matches:** the schema, table, view and column names, except the six replica schemas, which follow the source databases' public or generic names since 2026-10-28 (`replica_rightangle` and the others, where the shared asset has `replica_ctrm` and the others); the crack gold's joins (the MPR settle price unchanged, the MIPS crack sheets, the level-1 group) and constants (`KPI_ID` 'KPI Crack Spread 3-2-1', `Source_System_Id` '17'); the metric views' fields, measures, joins and filters; the benchmark view's defect, all five instruments times 100, and its 160-day window (EPM-DEC-001-0097, Known gaps).
 - **Matches, on purpose:** the three crude series the shared system stores two months early (Bakken - Patoka, SYN and WCS; Price Master IDs 30532, 79068, 79069) carry that two-month lag, so the Executive Summary agent's shift rule holds here too.
 - **Spelled as the shared asset spells it:** the MPR price master dimension's `Facitlity_Id`, with the shared silver table's misspelling, so a query that names this column runs here unchanged.
 - **Differs:** the price detail's high and low prices are left empty, because the demo generates only the settle. The crack view has no `Crack_Spread_Sum`, as the bound view lacks it, so the recreated crack agent says so instead of summing (EPM-DEC-001-0097, Known gaps). The silver fact for MIPS assessments carries `Price_Batch_Id`, so gold takes the effective date from the batch directly. The demo's refinery operations and their metric view are the demo's own; their formulas are not the ontology's definitions, which live in the `kpi` module.
