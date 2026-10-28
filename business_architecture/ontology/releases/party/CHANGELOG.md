@@ -1,5 +1,21 @@
 # party changelog
 
+## 2.1.0 (2026-10-28)
+
+A minor release: it adds three definitions and one note, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening). It carries the decision owner's close-out answers of 2026-10-28 (EPM-DEC-001-0099, amendment of 2026-10-28; saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-28-closeout.md`).
+
+- [minor] **Three customer systems defined from their own public pages** (close-out point 11). Drop Tank, from the press release in which Points and Drop Tank announced Marathon's MakeItCount rewards program (2018-04-23); its own site now redirects to PDI Technologies. GasBuddy, from GasBuddy's About page. The DTN File Server, from DTN's Refined Fuels page. Each cites its source, in tier 4. What MPC sends each one is not known, and each definition says so.
+- [minor] **A note on Polaris** (close-out point 15): the decision owner believes it is bought, an off-the-shelf product; a web search on 2026-10-28 found no liquids-pipeline scheduling product of that name, so the vendor and what it does stay open.
+- It still requires core 2.4.0 and system 1.5.0. Its three new sources go into `integration` 2.5.0, which requires this release. `ref-mpc` 1.3.0 still requires party 2.0.0, which stays released as it is.
+
+### Known gaps
+
+- Federal Health has no definition, and what MPC sends Drop Tank, GasBuddy, the DTN File Server and Federal Health is not known; they wait for the customer-data owner (`business-closeout.md`, point 11).
+- Polaris's vendor, and what it does, wait for Marathon Pipe Line's scheduling owners (`business-closeout.md`, point 15).
+- The drafted descriptions wait for each system's owner to confirm or correct them (`business-closeout.md`, point 16).
+- Which description of TMR is right waits for its owner (EPM-DEC-001-0108, question 7).
+- Dealer Master's billing customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open (`business-closeout.md`, points 17 and 18; EPM-DEC-001-0108).
+
 ## 2.0.0 (2026-10-27)
 
 A major release: the decision owner's customer inputs of 2026-10-27 change what five existing statements mean, and deprecate one. No IRI is removed. Approved by the decision owner, who aligned with the plan that names this major release ("I am aligned with all your recommendation in the input plan.", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md`; EPM-DEC-001-0108).

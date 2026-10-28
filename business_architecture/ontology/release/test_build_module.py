@@ -63,6 +63,8 @@ APPROVALS.update({name: CUSTOMER_INPUTS for name in ("party", "system", "integra
 # (EPM-DEC-001-0108, amendment of 2026-10-27).
 BRANDS = (CUSTOMER_INPUTS[0], "yes those can be brand values. Others I cannot answer.")
 APPROVALS["ref-mpc"] = BRANDS
+APPROVALS["party"] = DELEGATED  # party 2.1.0, EPM-DEC-001-0099, amendment of 2026-10-28
+APPROVALS["integration"] = DELEGATED  # integration 2.5.0, EPM-DEC-001-0099, amendment of 2026-10-28
 
 
 def approval_holds(name, m):
@@ -192,10 +194,10 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("lane"), {"core": "2.3.0"})  # 2.2.0 in 1.0.0; 2.3.0 since 1.1.0 (0106)
         self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.2.0"})  # since 1.1.0 (EPM-DEC-001-0100)
         # EPM-DEC-001-0078: integration names terms of each of these releases; 2.0.0 requires the current ones (0094),
-        # and so does 2.4.0 (EPM-DEC-001-0108).
+        # and so do 2.4.0 (EPM-DEC-001-0108) and 2.5.0 (EPM-DEC-001-0099, amendment of 2026-10-28).
         self.assertEqual(bm.dependencies("integration"), {
-            "core": "2.4.0", "organization": "2.1.0", "kpi": "1.2.0", "data-product": "1.2.0",
-            "value-stream": "1.2.0", "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.0.0"})  # 2.4.0
+            "core": "2.4.0", "organization": "2.2.0", "kpi": "1.2.0", "data-product": "1.2.0",
+            "value-stream": "1.2.0", "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.1.0"})  # 2.5.0
 
     def test_a_check_loads_one_release_of_each_module(self):
         # value-stream reaches core three times: directly, and through kpi 1.2.0 and data-product 1.2.0, each at 2.3.0;
@@ -502,12 +504,20 @@ class EarlierReleases(unittest.TestCase):
     def test_the_customer_inputs_releases_carry_the_alignment(self):
         # EPM-DEC-001-0108: party 2.0.0, a major the decision owner approved by aligning with the plan that names it;
         # system 1.5.0 and integration 2.4.0, minors Claude approved under the delegation with that alignment.
-        for name, version in (("party", "2.0.0"), ("system", "1.5.0"), ("integration", "2.4.0")):
+        # party 2.0.0 and integration 2.4.0 carried it until party 2.1.0 and integration 2.5.0 (EPM-DEC-001-0099,
+        # amendment of 2026-10-28); their packages keep it.
+        m = bm.MODULES["system"]
+        self.assertEqual(m["approval"], CUSTOMER_INPUTS)
+        self.assertEqual((m["version"], m["stage"], m["issued"]), ("1.5.0", None, "2026-10-27"))
+        self.assertIn("EPM-DEC-001-0108", m["decisions"])
+        for name, version in (("party", "2.0.0"), ("integration", "2.4.0")):
+            with open(os.path.join(bm.ONTOLOGY, "releases", name, version, "manifest.json")) as f:
+                self.assertEqual(json.load(f)["approved_by"]["recorded_in"], CUSTOMER_INPUTS[0])
+        for name, version in (("party", "2.1.0"), ("integration", "2.5.0")):
             m = bm.MODULES[name]
-            self.assertEqual(m["approval"], CUSTOMER_INPUTS)
-            self.assertEqual((m["version"], m["stage"], m["issued"]), (version, None, "2026-10-27"))
-            self.assertIn("EPM-DEC-001-0108", m["decisions"])
-        self.assertEqual(bm.MODULES["party"]["approver"], "The decision owner")
+            self.assertEqual(m["approval"], DELEGATED)
+            self.assertEqual((m["version"], m["stage"], m["issued"]), (version, None, "2026-10-28"))
+            self.assertTrue(m["approver"].startswith("Claude, under the decision owner's delegation"))
         for name in ("system", "integration"):
             self.assertTrue(bm.MODULES[name]["approver"].startswith("Claude, under the decision owner's delegation"))
 
