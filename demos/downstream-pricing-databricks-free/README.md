@@ -36,7 +36,7 @@ uv run python -m pricing_demo.databricks purge             # list what a purge d
 uv run --with pytest python -m pytest -q tests             # offline tests
 ```
 
-Postgres listens only on this machine (127.0.0.1:55432), with the throwaway login `demo`. To move the source databases to another host, such as an exe.dev VM, change `SOURCE_PG_DSN`; nothing else names the host, and a remote host needs its own password and network rules.
+Postgres listens only on this machine (127.0.0.1:55432), with the throwaway login `demo`. To move the source databases to another host, change `SOURCE_PG_DSN`; nothing else names the host. Since 2026-10-28 the six databases also run on an exe.dev VM, `databases.exe.xyz`, where Postgres listens only on the VM's localhost. Open a tunnel and leave it running, `ssh -N -L 127.0.0.1:5433:127.0.0.1:5432 databases.exe.xyz`, then set `SOURCE_PG_DSN=postgresql://demo:<password>@127.0.0.1:5433` in `.env`. The VM's `demo` login has its own generated password, kept only in the local `.env`. The local container stays as the fallback.
 
 Every replication run is a full snapshot: the downstream layers replace their contents from it. The run writes `out/replica/manifest.json` with each table's rows only after every table is there and not empty; `upload` refuses a replica that does not match its manifest, and `build` checks each replica table's rows and its `_replicated_at` against the manifest, so a volume still holding an earlier run's files fails, and that every silver and gold table and metric view exists and holds rows. Each source database loads in one transaction. Databricks Free Edition limits outbound internet to trusted domains, so the replication pushes from the machine that can reach Postgres rather than letting Databricks pull.
 
@@ -48,16 +48,16 @@ Free Edition created the `idp_sbx` catalog, so the objects carry their shared na
 
 | Layer | Object | Rows |
 |---|---|---|
-| Replica | `replica_mpr.pricedetail` / `pricemaster` | 113,742 / 132 |
-| | `replica_mips.mips_priceassessment` / `mips_priceassessmentgroup` / `mips_pricegroup` / `mips_pricesheet` / `mips_pricebatch` | 50,552 / 188 / 66 / 7 / 142 |
-| | `replica_kittyhawk.*`, `replica_ctrm.deal` and `movement`, `replica_planning.plan_target`, `replica_prodacct.refinery` and `refinery_daily` | 10, 504 each, 91, 13 and 1,846 |
+| Replica | `replica_price_reference.pricedetail` / `pricemaster` | 113,742 / 132 |
+| | `replica_price_assessment.mips_priceassessment` / `mips_priceassessmentgroup` / `mips_pricegroup` / `mips_pricesheet` / `mips_pricebatch` | 50,552 / 188 / 66 / 7 / 142 |
+| | `replica_reference_data_hub.*`, `replica_rightangle.deal` and `movement`, `replica_aspen_pims.plan_target`, `replica_production_accounting.refinery` and `refinery_daily` | 10, 504 each, 91, 13 and 1,846 |
 | Silver | `silver_udm_core.mpr_price_detail_fact` / `mips_price_assessment_fact` | 113,742 / 50,552 |
 | Gold | `gold_commercial_core.mpr_mips_crack_spread_price_fact` | 108,204 (127 series in 44 groups, 142 days, periods 0 to 5) |
 | | `gold_commercial_core.mips_mpr_executive_summary_fact` | 50,552 |
 | | `gold_commercial_core.refinery_operations_daily_fact` | 1,846 |
 | Metric views | `mpr_mips_crack_spread_price_fact_metrics_vw`, `mips_mpr_executive_summary_fact_vw`, `mips_mpr_benchmark_prices_fact_vw` (160-day window), `refinery_operations_metrics_vw` | 108,204, 50,552, 4,251, 1,846 |
 
-Both Genie agents answered from their metric views: the Chicago WTI 3-2-1 crack, ex-RIN, prompt, at $49.84/bbl on the latest date; NYH ULSD cash at $5.27/gal on 2026-10-20, up $0.09, which is EIA's published spot. `SELECT *` on a metric view is refused (`METRIC_VIEW_MISSING_MEASURE_FUNCTION`), as it should be. After the review fixes the pipeline ran again the same day, with the same counts: the Executive Summary agent gave ICE Brent's front month as $115.22/bbl (the benchmark view's value divided by 100) and NYH ULSD's forward monthly averages as $5.27, $5.22, $5.13 and $5.15/gal (sum divided by count). On 2026-10-26 (UTC) it ran again after round 2's fixes, with the same counts (the benchmark view's 4,251 on that date). A build run after a fresh replication but without the upload stopped with "holds rows replicated at … not this run's …", as it should.
+Both Genie agents answered from their metric views: the Chicago WTI 3-2-1 crack, ex-RIN, prompt, at $49.84/bbl on the latest date; NYH ULSD cash at $5.27/gal on 2026-10-20, up $0.09, which is EIA's published spot. `SELECT *` on a metric view is refused (`METRIC_VIEW_MISSING_MEASURE_FUNCTION`), as it should be. On 2026-10-28 the pipeline ran from the exe.dev VM through the tunnel, under the new database names: the same counts in every replica, silver, gold and metric view, with the benchmark view at 4,173 on that date (its 160-day window moves with the date). After the review fixes the pipeline ran again the same day, with the same counts: the Executive Summary agent gave ICE Brent's front month as $115.22/bbl (the benchmark view's value divided by 100) and NYH ULSD's forward monthly averages as $5.27, $5.22, $5.13 and $5.15/gal (sum divided by count). On 2026-10-26 (UTC) it ran again after round 2's fixes, with the same counts (the benchmark view's 4,251 on that date). A build run after a fresh replication but without the upload stopped with "holds rows replicated at … not this run's …", as it should.
 
 ## Real, spot-anchored, synthesized
 
@@ -96,16 +96,16 @@ Where the briefings and EIA differ, EIA wins:
 
 ## The source systems
 
-The demo uses generic names; the real names stay in the ontology (the decision owner: "they work").
+The demo names each source database after a public product where one exists (RightAngle, Aspen PIMS) and gives the others generic names (the decision owner, 2026-10-28). The real names stay in the ontology. The replica schemas follow the database names (`replica_rightangle`); the silver and gold tables keep the shared asset's names, so its queries run unchanged.
 
-| Database | Demo name | Real system |
-|---|---|---|
-| `mips` | Market Price Assessment System | MIPS |
-| `mpr` | Price Reference Master | MPR |
-| `kittyhawk` | Commercial Reference Data Hub | KittyHawk |
-| `ctrm` | Commodity Trading and Risk Management (CTRM) System | RightAngle |
-| `planning` | Refinery Planning Model | Aspen PIMS |
-| `prodacct` | Refinery Production Accounting | Refinery production accounting (no product named) |
+| Database | Demo name | Real system | Before 2026-10-28 |
+|---|---|---|---|
+| `price_assessment` | Market Price Assessment System | MIPS | `mips` |
+| `price_reference` | Price Reference Master | MPR | `mpr` |
+| `reference_data_hub` | Commercial Reference Data Hub | KittyHawk | `kittyhawk` |
+| `rightangle` | RightAngle, the Commodity Trading and Risk Management (CTRM) system | RightAngle | `ctrm` |
+| `aspen_pims` | Aspen PIMS, the refinery planning model | Aspen PIMS | `planning` |
+| `production_accounting` | Refinery Production Accounting | Refinery production accounting (no product named) | `prodacct` |
 
 ## What matches the shared assets, and what does not
 
