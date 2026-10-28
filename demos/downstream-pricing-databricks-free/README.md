@@ -98,6 +98,27 @@ Where the briefings and EIA differ, EIA wins:
 | October 16: Brent settled at $109.86, WTI closed at $101.41 | Brent spot $119.33, WTI spot $108.21 | EIA |
 | October 22: Brent settled at $113.17, WTI at $99.47 | Outside the cache, which ends on 2026-10-20 | Not in the demo |
 
+## Use cases
+
+The questions the demo is built to answer, agreed with the decision owner on 2026-10-28. The first two came out of the Databricks-to-ontology design; 3 to 6 share the second's shape, a question the supervisor agent answers by combining two or more Genie agents; 7 to 12 come from the levers in `SCENARIO.md`, the decision owner's October 2026 briefings. Each becomes an acceptance test: it passes when the supervisor calls the agents named and the answer matches a SQL check against the metric views. None is built yet; the status column says what each waits for.
+
+| # | Question | Agents and sources | Waits for |
+|---|---|---|---|
+| 1 | If the price reference feed is late today, which KPIs, metric views and Genie agents are affected? | The technical graph, from the source database to the metric views, and the ontology's KPI and OPM identifiers | The technical graph |
+| 2 | Why did margin capture drop at a refinery last week, and was the crack spread the cause? | Refinery operations and Crack Spread, under the supervisor | The supervisor |
+| 3 | Did the refineries that ran below plan utilization last month also lose margin capture, and how did the crack spread move over the same weeks? | Refinery operations (actual and planned utilization) and Crack Spread | The supervisor; three years of history |
+| 4 | Which month had the widest gap between the benchmark 3-2-1 crack and the realized R&M margin per barrel, and what were utilization and yields that month? | Crack Spread and Refinery operations | The supervisor; three years of history |
+| 5 | When Brent rose above $110, how did gasoline and distillate market prices and the Gulf Coast crack respond, and did distillate yield shift? | Executive Summary, Pricing and Market Margin, Crack Spread and Refinery operations | The pricing metric view and its agent |
+| 6 | How does the New York Harbor ULSD forward curve compare with the distillate yield the Gulf Coast refineries ran this quarter? | Executive Summary and Refinery operations | The supervisor |
+| 7 | Which regions have distillate stocks below their five-year average while our runs fell and the crack widened? | EIA stocks by PADD, Refinery operations and Crack Spread (the briefing's Distillate Availability and Margin-at-Risk alert, October 5) | EIA weekly stocks by PADD, six years |
+| 8 | What is the Gulf Coast diesel netback to New York Harbor against export to Europe after freight, and how does it compare with the crack and the realized margin? | Freight, Pricing and Market Margin, Crack Spread and Refinery operations (crack against realized margin, and delivered netbacks, October 9 and 12) | Tanker freight, synthetic and labeled so, because no free primary source exists |
+| 9 | Which refineries did Hurricane Isaias hit, how far did runs and margin capture fall, how fast did they recover, and which KPIs moved? | The event table, Refinery operations, Crack Spread and the technical graph (event to impact, October 9) | The event table |
+| 10 | How much margin did the autumn turnarounds cost, at the crack during each outage? | The event table, Refinery operations and Crack Spread; the ontology's Lost Margin from Turnarounds measure | The event table |
+| 11 | After the dyed-diesel order and China's export restart, how did New York Harbor diesel, its forward curve, the crack and East Coast stocks move? | The event table, Executive Summary, Crack Spread and EIA stocks by PADD (policy as a market driver, October 9 and 16) | The event table; EIA weekly stocks by PADD |
+| 12 | With distillate cracks above gasoline cracks, did our refineries shift yield toward distillate, and what did that earn? | Crack Spread and Refinery operations (diesel as the dominant signal, October 16 and 19) | The supervisor |
+
+The data these need beyond today's: EIA's weekly distillate and gasoline stocks, refinery utilization and crude runs, product supplied and exports, by PADD, from the same EIA API the demo already uses; tanker freight from the US Gulf Coast to New York Harbor and to Europe, generated and labeled synthetic, shaped to the briefing's freight spike; and a disruption and policy event table drawn from the scenario timeline the generator already holds (`pricing_demo/timeline.py`).
+
 ## The source systems
 
 The demo names each source database after a public product where one exists (RightAngle, Aspen PIMS) and gives the others generic names (the decision owner, 2026-10-28). The real names stay in the ontology. The replica schemas follow the database names (`replica_rightangle`); the silver and gold tables keep the shared asset's names, so its queries run unchanged.
