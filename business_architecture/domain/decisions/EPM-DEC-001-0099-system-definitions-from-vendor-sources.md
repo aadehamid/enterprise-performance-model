@@ -21,7 +21,7 @@ The decision owner's answers, item by item (the questions are in the context com
 4. **PI is the AVEVA PI System.**
 5. **Hyperion is Oracle Hyperion Planning.** Claude's recommendation called this a guess between Planning, Financial Management and Essbase; the system keeps a note saying so.
 6. **TopDay and VALT are MPC-built** until the decision owner says otherwise. Neither has a definition yet.
-7. **Polaris is a Marathon Pipeline LLC scheduling system,** built or bought unknown, from PHMSA's notice of amendment of 2024-09-26.
+7. **Polaris is a Marathon Pipeline LLC scheduling system,** built or bought unknown, from PHMSA's notice of amendment of 2024-09-26. *2026-10-28:* the decision owner believes it is bought; the vendor stays unknown (amendment of 2026-10-28).
 8. **Drop Tank, Gas Buddy, DTN File Server and Federal Health** go to the customer-data owner as one question (`business-closeout.md`, point 11). None is defined. *2026-10-28:* Drop Tank, GasBuddy and the DTN File Server are defined from their own public pages in party 2.1.0; Federal Health, and what MPC sends the four, still go to the customer-data owner (amendment of 2026-10-28).
 9. **Terminal Upload's direct flow to KittyHawk stays,** because the decision owner's input shows it; KittyHawk's note says its customer data comes from RightAngle and Terminal Upload sends it cross-reference IDs.
 10. **Claude drafts a description of each internal system** from the repository (its process links or its customer role) for one approval round with the decision owner, as was done for DPO.

@@ -1038,7 +1038,7 @@ without a dated amendment and the decision owner's explicit agreement.
   close as they stand (EPM-DEC-001-0072), and point 5 keeps only the PIDX family letters open (EPM-DEC-001-0092).
 - Points 7, 8 and 9 (Crude RFC confirmed, PSM as Process Safety Management, Business Planning and Analysis's
   definition) go into `organization`'s next minor release (2.2.0, released the same day); points 11 and 15 (three public customer systems, the
-  Polaris note) into `party`'s. The other points stay open with the business, and the package gains points 17 and
+  Polaris note) into `party`'s (2.1.0, released the same day). The other points stay open with the business, and the package gains points 17 and
   18, Dealer Master's two open gaps (EPM-DEC-001-0108).
 
 ### party 2.0.0, system 1.5.0 and integration 2.4.0 are released (2026-10-27)
