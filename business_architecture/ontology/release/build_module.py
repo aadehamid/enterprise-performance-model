@@ -114,7 +114,7 @@ MODULES = {
         # jobbers start in Dealer Master; they add the sub-jobber role, the dealer classes, the classes of trade, eight
         # systems and 13 flows; it requires system 1.5.0 (EPM-DEC-001-0108).
         # 2.1.0 is a minor Claude approved under the delegation: the decision owner's close-out answers of 2026-10-28,
-        # Drop Tank, GasBuddy and DTN defined from their own public pages and a note on Polaris; it still requires core
+        # Drop Tank, GasBuddy and DTN defined from their vendors' own published words (Drop Tank's from a 2018 press release, its site being gone) and a note on Polaris; it still requires core
         # 2.4.0 and system 1.5.0 (EPM-DEC-001-0099, amendment of 2026-10-28).
         "version": "2.1.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-28",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),

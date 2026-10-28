@@ -134,7 +134,7 @@ class Systems(unittest.TestCase):
         # 18 in 1.2.0 (EPM-DEC-001-0099), then the 20 internal systems drafted from the repository in 1.3.0
         # (EPM-DEC-001-0103): every customer system but the four the customer-data owner is asked about.
         # 46 since 2.0.0: the eight systems of 2026-10-27 are defined too (EPM-DEC-001-0108).
-        # 49 since 2.1.0: Drop Tank, GasBuddy and DTN are defined from their own public pages; only Federal Health stays
+        # 49 since 2.1.0: Drop Tank, GasBuddy and DTN are defined from their vendors' own published words (Drop Tank's from a 2018 press release, its site being gone); only Federal Health stays
         # undefined (EPM-DEC-001-0099, amendment of 2026-10-28).
         self.assertEqual(len(defined), 38 + 8 + 3)
         self.assertEqual(slugs(systems) - defined, {"federal-health"})

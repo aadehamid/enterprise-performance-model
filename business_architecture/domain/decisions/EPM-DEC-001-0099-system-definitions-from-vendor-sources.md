@@ -22,7 +22,7 @@ The decision owner's answers, item by item (the questions are in the context com
 5. **Hyperion is Oracle Hyperion Planning.** Claude's recommendation called this a guess between Planning, Financial Management and Essbase; the system keeps a note saying so.
 6. **TopDay and VALT are MPC-built** until the decision owner says otherwise. Neither has a definition yet.
 7. **Polaris is a Marathon Pipeline LLC scheduling system,** built or bought unknown, from PHMSA's notice of amendment of 2024-09-26. *2026-10-28:* the decision owner believes it is bought; the vendor stays unknown (amendment of 2026-10-28).
-8. **Drop Tank, Gas Buddy, DTN File Server and Federal Health** go to the customer-data owner as one question (`business-closeout.md`, point 11). None is defined. *2026-10-28:* Drop Tank, GasBuddy and the DTN File Server are defined from their own public pages in party 2.1.0; Federal Health, and what MPC sends the four, still go to the customer-data owner (amendment of 2026-10-28).
+8. **Drop Tank, Gas Buddy, DTN File Server and Federal Health** go to the customer-data owner as one question (`business-closeout.md`, point 11). None is defined. *2026-10-28:* Drop Tank, GasBuddy and the DTN File Server are defined from their vendors' own published words (Drop Tank's from a 2018 press release, its site being gone) in party 2.1.0; Federal Health, and what MPC sends the four, still go to the customer-data owner (amendment of 2026-10-28).
 9. **Terminal Upload's direct flow to KittyHawk stays,** because the decision owner's input shows it; KittyHawk's note says its customer data comes from RightAngle and Terminal Upload sends it cross-reference IDs.
 10. **Claude drafts a description of each internal system** from the repository (its process links or its customer role) for one approval round with the decision owner, as was done for DPO.
 11. **The customer processes' system links go to a process-map proposal** (MPC-P11), after the decision owner checks the weak ones.
@@ -41,7 +41,7 @@ The identifications of 2026-10-24 (`answers-2026-10-24-systems.md`): APS is Aspe
 8. **Still to do:** the internal systems' descriptions for one approval round (item 10), and proposal MPC-P11 (item 11). Each comes in its own pull request. *2026-10-26:* both are done: the descriptions in EPM-DEC-001-0103, and MPC-P11, accepted and applied, in EPM-DEC-001-0104.
 9. **The four approved descriptions are used word for word.** The drafts of CargoTracker, MAGIC, Allocation Manager and DPO the decision owner approved on 2026-10-24 are in the context comment of `answers-2026-10-24-systems.md`, as the store-tests handoff recorded them; each definition is its draft with a capital first letter. KittyHawk's definition is Claude's rewording of the decision owner's own description, quoted in full below.
 
-## Amendment, 2026-10-28: Drop Tank, GasBuddy and DTN defined from their own public pages; a note on Polaris
+## Amendment, 2026-10-28: Drop Tank, GasBuddy and DTN defined from their vendors' own published words (Drop Tank's from a 2018 press release, its site being gone); a note on Polaris
 
 Claude walked the decision owner through the business close-out package on 2026-10-28 (EPM-DEC-001-0086, amendment of 2026-10-28). Points 11 and 15 are this record's.
 
@@ -54,7 +54,7 @@ Claude walked the decision owner through the business close-out package on 2026-
 
 - **Three definitions, released in `party` 2.1.0.** Each is in Claude's words, marked as the source's description, and cites its source in tier 4, as item G's vendor definitions do. Each passage is quoted whole in `business_architecture/reference/vendors/README.md`.
   - **GasBuddy**, from GasBuddy's About page (https://www.gasbuddy.com/about, read 2026-10-28).
-  - **DTN File Server**, from DTN's Refined Fuels page (https://www.dtn.com/refined-fuels/, read 2026-10-28). The page describes DTN, not the file server, so the definition says the server carries data exchanged with DTN.
+  - **DTN File Server**, from DTN's Refined Fuels page (https://www.dtn.com/refined-fuels/, read 2026-10-28). The page describes DTN, not the file server, so the definition gives DTN's description and says the page does not describe the file server.
   - **Drop Tank**, from the press release in which Points and Drop Tank announced Marathon's MakeItCount rewards program (GlobeNewswire, 2018-04-23, read 2026-10-28). Drop Tank's own site, https://www.drop-tank.com/, redirected to PDI Technologies' home page on 2026-10-28, and no page of PDI's read that day describes Drop Tank, so the release's "About Drop Tank" paragraph is the company's own description.
   - Each definition says that what MPC sends the system is not known. Federal Health stays undefined. Both wait for the customer-data owner (`business-closeout.md`, point 11).
 - **A note on Polaris, in `party` 2.1.0.** It records the decision owner's belief that Polaris is bought. A web search on 2026-10-28 for liquids-pipeline scheduling software found Emerson's SchedulingManager, myQuorum and Pandell's Latitude, and no product named Polaris. Its vendor and what it does stay open (`business-closeout.md`, point 15).
