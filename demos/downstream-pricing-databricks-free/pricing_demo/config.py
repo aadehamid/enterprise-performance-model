@@ -13,15 +13,16 @@ WINDOW_START = dt.date(2026, 4, 1)
 WINDOW_END = dt.date(2026, 10, 20)
 SEED = 20261025
 
-# The generic names the demo uses for the source systems (the decision owner: "they work").
-# The real names stay in the ontology; README.md maps each. Every module takes the systems from here.
+# The names the demo uses for the source systems: a public product name where one exists (RightAngle, Aspen PIMS),
+# otherwise a generic one (the decision owner, 2026-10-28). The real names stay in the ontology; README.md maps
+# each. Every module takes the systems from here.
 SYSTEMS = {
-    "mips": "Market Price Assessment System",
-    "mpr": "Price Reference Master",
-    "kittyhawk": "Commercial Reference Data Hub",
-    "ctrm": "Commodity Trading and Risk Management (CTRM) System",
-    "planning": "Refinery Planning Model",
-    "prodacct": "Refinery Production Accounting",
+    "price_assessment": "Market Price Assessment System",
+    "price_reference": "Price Reference Master",
+    "reference_data_hub": "Commercial Reference Data Hub",
+    "rightangle": "RightAngle, the Commodity Trading and Risk Management (CTRM) system",
+    "aspen_pims": "Aspen PIMS, the refinery planning model",
+    "production_accounting": "Refinery Production Accounting",
 }
 
 # Every price and operations row carries one of these: Claude's design under EPM-DEC-001-0028 (EPM-DEC-001-0102, item 2).

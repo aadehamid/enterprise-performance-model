@@ -7,7 +7,8 @@
     uv run python -m pricing_demo.databricks purge     # list what a purge drops; --yes drops it
 
 The catalog is idp_sbx when the workspace lets you create it, otherwise DEMO_CATALOG (Free Edition: workspace), and
-every schema keeps the name it has in idp_sbx, so the objects read like the shared ones. One rule picks the catalog
+every schema except the replica schemas keeps the name it has in idp_sbx, so the objects read like the shared ones;
+the replica schemas follow the source databases' names since 2026-10-28 (README.md, "The source systems"). One rule picks the catalog
 for every step: idp_sbx only if it holds this demo's landing schema, which setup creates (Kimi round 1, finding 11).
 Upload refuses an incomplete replica, and build checks each replica table against the replica's manifest (finding 5).
 Secrets stay in variables.

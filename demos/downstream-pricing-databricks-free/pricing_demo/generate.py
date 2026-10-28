@@ -138,12 +138,12 @@ def build():
     out = {s: {} for s in SYSTEMS}
 
     # ---- Commercial Reference Data Hub (KittyHawk): price services, holiday calendar, delivery periods ----
-    out["kittyhawk"]["priceservice"] = Table(["Id", "Name", "PublisherId", "updated_at"], [
+    out["reference_data_hub"]["priceservice"] = Table(["Id", "Name", "PublisherId", "updated_at"], [
         (1, "MPR settlement service", 1, ts(WINDOW_START)), (2, "MIPS assessment service", 2, ts(WINDOW_START))])
     holidays = [dt.date(2026, 4, 3), dt.date(2026, 5, 25), dt.date(2026, 6, 19), dt.date(2026, 7, 3), dt.date(2026, 9, 7)]
-    out["kittyhawk"]["holidaycalendar"] = Table(["Id", "Name", "HolidayDate", "updated_at"],
+    out["reference_data_hub"]["holidaycalendar"] = Table(["Id", "Name", "HolidayDate", "updated_at"],
                                                 [(i + 1, "NYMEX", d, ts(WINDOW_START)) for i, d in enumerate(holidays)])
-    out["kittyhawk"]["deliveryperiodcategory"] = Table(["Id", "Name", "updated_at"], [
+    out["reference_data_hub"]["deliveryperiodcategory"] = Table(["Id", "Name", "updated_at"], [
         (1, "Prompt", ts(WINDOW_START)), (2, "Monthly", ts(WINDOW_START)), (3, "Daily", ts(WINDOW_START))])
 
     # ---- Price Reference Master (MPR): price masters and daily price details ----
@@ -152,7 +152,7 @@ def build():
     for m in benchmarks + cracks:
         pm_rows.append((int(m.id), m.name, m.display_name, 1 if m.kind == "benchmark" else 2, 1, 2 if m.kind == "benchmark" else 1,
                         1, None, None, None, 1, 1, 1, 1, 1, 1, 1, 1, None, None, dt.date(2008, 2, 29), ts(WINDOW_START), m.provenance))
-    out["mpr"]["pricemaster"] = Table(
+    out["price_reference"]["pricemaster"] = Table(
         ["Id", "Name", "DisplayName", "ProductId", "PriceTypeId", "FrequencyId", "CountryId", "AreaStateId", "CityId",
          "FacilityId", "PublisherId", "PublisherCategoryId", "PublisherCurrencyId", "PublisherUnitOfMeasureId",
          "MprCurrencyId", "MprUnitOfMeasureId", "HolidayCalendarId", "ExpirationCalendarId", "PreviousId", "NextId",
@@ -183,23 +183,23 @@ def build():
                 v = value if period == 0 else forward(value, period, 0.012 + 0.02 * scarcity, rng)
                 detail.append(_detail(pid, m, day, period, v, label if period == 0 else "synthesized"))
                 pid += 1
-    out["mpr"]["pricedetail"] = Table(
+    out["price_reference"]["pricedetail"] = Table(
         ["Id", "PriceMasterId", "EffectiveStartDate", "EffectiveEndDate", "RelativePeriodNum", "ContractPeriod",
          "ContractPeriodDate", "FlowDate", "CycleNum", "SettlePrice", "HighPrice", "LowPrice", "DataSource",
          "CDC_DELETED_FLAG", "updated_at", "DemoProvenance"], detail)
 
     # ---- Market Price Assessment System (MIPS): batches, sheets, groups, assessment groups, assessments ----
-    out["mips"]["mips_currency"] = Table(["ID", "Code", "updated_at"], [(1, "USD", ts(WINDOW_START))])
-    out["mips"]["mips_unitofmeasure"] = Table(["ID", "Code", "updated_at"],
+    out["price_assessment"]["mips_currency"] = Table(["ID", "Code", "updated_at"], [(1, "USD", ts(WINDOW_START))])
+    out["price_assessment"]["mips_unitofmeasure"] = Table(["ID", "Code", "updated_at"],
                                               [(i, code, ts(WINDOW_START)) for code, i in UNIT_IDS.items()])
     batches = [(i + 1, ts(day, 17), "Published", "MIPS", ts(day, 17)) for i, day in enumerate(days)]
-    out["mips"]["mips_pricebatch"] = Table(["ID", "EffectiveDate", "Status", "DataSource", "updated_at"], batches)
+    out["price_assessment"]["mips_pricebatch"] = Table(["ID", "EffectiveDate", "Status", "DataSource", "updated_at"], batches)
     batch_of = {day: i + 1 for i, day in enumerate(days)}
 
     sheet_names = ("Executive Summary", "Benchmark") + catalog.CRACK_SHEETS + (
         "Crude Reporting Sheet - Domestic Roll", "Crude Reporting Sheet Calendar Month Roll")
     sheets = {name: i + 1 for i, name in enumerate(sheet_names)}
-    out["mips"]["mips_pricesheet"] = Table(["ID", "Name", "PriceBatchID", "Status", "CurrencyID", "UnitOfMeasureID", "updated_at"],
+    out["price_assessment"]["mips_pricesheet"] = Table(["ID", "Name", "PriceBatchID", "Status", "CurrencyID", "UnitOfMeasureID", "updated_at"],
                                            [(sid, n, batches[-1][0], "Active", 1, 1, ts(WINDOW_START)) for n, sid in sheets.items()])
     groups, group_id = [], [0]
 
@@ -226,7 +226,7 @@ def build():
     crack_group = {}
     for rcode, tcode, name, sheet in catalog.crack_groups():
         crack_group[name] = group(name, sheet, crack_parent[sheet])
-    out["mips"]["mips_pricegroup"] = Table(["ID", "ParentPriceGroupID", "PriceSheetID", "Name", "LevelNumber", "updated_at"], groups)
+    out["price_assessment"]["mips_pricegroup"] = Table(["ID", "ParentPriceGroupID", "PriceSheetID", "Name", "LevelNumber", "updated_at"], groups)
 
     # Assessment groups: one per assessed series; each value function returns (value, provenance label).
     agroups, series = [], []
@@ -282,7 +282,7 @@ def build():
            lambda day: (market.leg("mb_propane", day)[0] * 100, market.leg("mb_propane", day)[1]))  # cents per gallon, as the agent expects: a unit conversion
     agroup("Butane Mt. Belvieu (Non-Tet)", g["NGL's"], "Executive Summary", None, 4, "MIPS",
            lambda day: (market.leg("mb_propane", day)[0] * 100 * 1.18 + rng.gauss(0, 0.8), "synthesized"))
-    out["mips"]["mips_priceassessmentgroup"] = Table(
+    out["price_assessment"]["mips_priceassessmentgroup"] = Table(
         ["ID", "PersistentID", "PriceMasterID", "PriceMasterIDforCycles", "ReferenceID", "PriceGroupID", "PriceSheetID",
          "Name", "DataSource", "CurrencyID", "UnitOfMeasureID", "updated_at"], agroups)
 
@@ -302,13 +302,13 @@ def build():
                                     None if prev is None else round(prev, 6), 0, sort, ts(day, 17), label))
                 previous[(aid, sort)] = value
                 aid_seq += 1
-    out["mips"]["mips_priceassessment"] = Table(
+    out["price_assessment"]["mips_priceassessment"] = Table(
         ["ID", "PriceAssessmentGroupID", "PriceSheetID", "PriceBatchID", "PricePeriod", "Value", "PreviousValue",
          "CycleNum", "SortOrder", "updated_at", "DemoProvenance"], assessments)
 
     # ---- Refinery Production Accounting, Refinery Planning Model and CTRM ----
     refineries = list(csv.DictReader(open(os.path.join(DATA, "public", "mpc_refineries.csv"))))
-    out["prodacct"]["refinery"] = Table(["RefineryCode", "RefineryName", "Region", "CrudeCapacityMbpcd", "updated_at"],
+    out["production_accounting"]["refinery"] = Table(["RefineryCode", "RefineryName", "Region", "CrudeCapacityMbpcd", "updated_at"],
                                         [(r["refinery_code"], r["refinery_name"], r["region"], int(r["crude_capacity_mbpcd"]), ts(WINDOW_START))
                                          for r in refineries])
     util = public_data.load("us_utilization")
@@ -343,15 +343,15 @@ def build():
             moves.append((deal_id, deal_id, route[2], route[0], route[1], day + dt.timedelta(days=rng.randint(1, 10)), volume,
                           round(volume * fpb, 2), ts(day, 21), "synthesized"))
             deal_id += 1
-    out["prodacct"]["refinery_daily"] = Table(
+    out["production_accounting"]["refinery_daily"] = Table(
         ["RefineryCode", "ProductionDate", "CrudeRunsMbpd", "CrudeCapacityMbpcd", "GasolineYieldPct", "DistillateYieldPct",
          "OtherYieldPct", "OpexUsdPerBbl", "updated_at", "DemoProvenance"], production)
-    out["planning"]["plan_target"] = Table(
+    out["aspen_pims"]["plan_target"] = Table(
         ["RefineryCode", "PlanMonth", "PlannedCrudeRunsMbpd", "PlannedUtilizationPct", "PlannedGasolineYieldPct",
          "PlannedDistillateYieldPct", "PlannedOtherYieldPct", "updated_at", "DemoProvenance"], plans)
-    out["ctrm"]["deal"] = Table(["DealId", "TradeDate", "Direction", "Product", "Origin", "Destination", "VolumeBbl",
+    out["rightangle"]["deal"] = Table(["DealId", "TradeDate", "Direction", "Product", "Origin", "Destination", "VolumeBbl",
                                  "FreightUsdPerBbl", "updated_at", "DemoProvenance"], deals)
-    out["ctrm"]["movement"] = Table(["MovementId", "DealId", "Mode", "Origin", "Destination", "LoadDate", "VolumeBbl",
+    out["rightangle"]["movement"] = Table(["MovementId", "DealId", "Mode", "Origin", "Destination", "LoadDate", "VolumeBbl",
                                      "FreightCostUsd", "updated_at", "DemoProvenance"], moves)
     return out
 

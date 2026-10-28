@@ -48,7 +48,7 @@ def test_127_crack_series_in_44_groups_keep_the_named_ids():
 def test_the_five_benchmarks_and_their_tenors():
     bench = {m.id: m for m in catalog.benchmark_masters()}
     assert set(bench) == {"572", "747", "750", "752", "9471"}
-    detail = rows("mpr", "pricedetail")
+    detail = rows("price_reference", "pricedetail")
     tenors = {}
     for r in detail:
         if str(r["PriceMasterId"]) in bench:
@@ -57,8 +57,8 @@ def test_the_five_benchmarks_and_their_tenors():
 
 
 def test_every_price_row_is_labelled():
-    for system, table in (("mpr", "pricedetail"), ("mips", "mips_priceassessment"), ("prodacct", "refinery_daily"),
-                          ("ctrm", "deal"), ("mpr", "pricemaster")):
+    for system, table in (("price_reference", "pricedetail"), ("price_assessment", "mips_priceassessment"), ("production_accounting", "refinery_daily"),
+                          ("rightangle", "deal"), ("price_reference", "pricemaster")):
         labels = {r["DemoProvenance"] for r in rows(system, table)}
         assert labels <= set(PROVENANCE), (system, table, labels)
 
@@ -66,7 +66,7 @@ def test_every_price_row_is_labelled():
 def test_real_rows_are_eia_values():
     wti = public_data.load("wti")
     day = dt.date(2026, 10, 20)
-    spot = [r for r in rows("mpr", "pricedetail") if r["PriceMasterId"] == 747 and r["EffectiveStartDate"].date() == day]
+    spot = [r for r in rows("price_reference", "pricedetail") if r["PriceMasterId"] == 747 and r["EffectiveStartDate"].date() == day]
     by_period = {r["RelativePeriodNum"]: r for r in spot}
     assert by_period[0]["SettlePrice"] == round(wti[day], 6) == 107.89 and by_period[0]["DemoProvenance"] == "real"
     assert by_period[1]["SettlePrice"] == 107.89 and by_period[1]["DemoProvenance"] == "spot-anchored"
@@ -74,10 +74,10 @@ def test_real_rows_are_eia_values():
 
 
 def test_nyh_ulsd_cash_is_real_and_its_basis_spot_anchored():
-    groups = {r["ID"]: r for r in rows("mips", "mips_priceassessmentgroup")}
-    pgroups = {r["ID"]: r for r in rows("mips", "mips_pricegroup")}
+    groups = {r["ID"]: r for r in rows("price_assessment", "mips_priceassessmentgroup")}
+    pgroups = {r["ID"]: r for r in rows("price_assessment", "mips_pricegroup")}
     found = {}
-    for r in rows("mips", "mips_priceassessment"):
+    for r in rows("price_assessment", "mips_priceassessment"):
         g = groups[r["PriceAssessmentGroupID"]]
         if g["Name"] == "NYH ULSD" and r["SortOrder"] == 1 and r["updated_at"].date() == dt.date(2026, 10, 20):
             found[pgroups[g["PriceGroupID"]]["Name"]] = r
@@ -86,7 +86,7 @@ def test_nyh_ulsd_cash_is_real_and_its_basis_spot_anchored():
 
 
 def test_refineries_are_mpcs_13_with_their_10k_capacities():
-    refineries = rows("prodacct", "refinery")
+    refineries = rows("production_accounting", "refinery")
     assert len(refineries) == 13 and sum(r["CrudeCapacityMbpcd"] for r in refineries) == 2986
 
 
@@ -144,7 +144,7 @@ def test_finding_6_a_carried_eia_value_is_spot_anchored_not_real():
     # 2026-05-04: Brent has no EIA observation that day; the generator carries May 1's value (118.26).
     brent = public_data.load("brent")
     assert dt.date(2026, 5, 4) not in brent and brent[dt.date(2026, 5, 1)] == 118.26
-    rows_ = [r for r in rows("mpr", "pricedetail") if r["PriceMasterId"] == 572 and r["EffectiveStartDate"].date() == dt.date(2026, 5, 4)]
+    rows_ = [r for r in rows("price_reference", "pricedetail") if r["PriceMasterId"] == 572 and r["EffectiveStartDate"].date() == dt.date(2026, 5, 4)]
     period0 = next(r for r in rows_ if r["RelativePeriodNum"] == 0)
     assert period0["SettlePrice"] == 118.26 and period0["DemoProvenance"] == "spot-anchored"
 
@@ -160,20 +160,20 @@ def test_finding_16_a_gap_in_the_cache_raises_instead_of_looping():
 
 
 def test_finding_9_every_price_and_operations_table_is_labelled_and_no_high_low_is_generated():
-    labelled = {("mpr", "pricedetail"), ("mpr", "pricemaster"), ("mips", "mips_priceassessment"), ("prodacct", "refinery_daily"),
-                ("ctrm", "deal"), ("ctrm", "movement"), ("planning", "plan_target")}
+    labelled = {("price_reference", "pricedetail"), ("price_reference", "pricemaster"), ("price_assessment", "mips_priceassessment"), ("production_accounting", "refinery_daily"),
+                ("rightangle", "deal"), ("rightangle", "movement"), ("aspen_pims", "plan_target")}
     for system, table in labelled:
         t = TABLES[system][table]
         assert "DemoProvenance" in t.columns, (system, table)
         assert {r[t.columns.index("DemoProvenance")] for r in t.rows} <= set(PROVENANCE), (system, table)
-    detail = rows("mpr", "pricedetail")
+    detail = rows("price_reference", "pricedetail")
     assert all(r["HighPrice"] is None and r["LowPrice"] is None for r in detail)
     assert "DemoProvenance AS Demo_Provenance_Label" in SQL_TEXT["03_silver.sql"].split("refinery_plan_target_fact")[1].split(";")[0]
 
 
 def test_finding_15_assessment_groups_carry_their_own_units():
-    units = {r["ID"]: r["Code"] for r in rows("mips", "mips_unitofmeasure")}
-    by_name = {r["Name"]: units[r["UnitOfMeasureID"]] for r in rows("mips", "mips_priceassessmentgroup")}
+    units = {r["ID"]: r["Code"] for r in rows("price_assessment", "mips_unitofmeasure")}
+    by_name = {r["Name"]: units[r["UnitOfMeasureID"]] for r in rows("price_assessment", "mips_priceassessmentgroup")}
     assert by_name["NYMEX Natural Gas ($-MMbtu)"] == "$/MMbtu"
     assert by_name["NYMEX Heating Oil (cpg)"] == by_name["NYMEX RBOB (cpg)"] == "$/gal"
     assert by_name["ICE, BRENT ($-Bbl)"] == "$/Bbl"
@@ -280,7 +280,7 @@ def test_pi_round_2_finding_2_an_empty_built_table_or_view_fails():
 
 
 def test_pi_round_2_finding_2_a_same_count_replica_from_another_run_fails():
-    manifest = {"mpr/pricedetail": 10, "mpr/pricemaster": 2}
+    manifest = {"price_reference/pricedetail": 10, "price_reference/pricemaster": 2}
     taken = "2026-10-26T01:00:00"
 
     class Cursor:
@@ -299,10 +299,10 @@ def test_pi_round_2_finding_2_a_same_count_replica_from_another_run_fails():
 
 
 def test_pi_round_2_observation_5_the_three_shifted_crude_series_carry_the_two_month_lag():
-    groups = {r["ID"]: r["Name"] for r in rows("mips", "mips_priceassessmentgroup")}
+    groups = {r["ID"]: r["Name"] for r in rows("price_assessment", "mips_priceassessmentgroup")}
     day = dt.date(2026, 10, 20)
     periods = {}
-    for r in rows("mips", "mips_priceassessment"):
+    for r in rows("price_assessment", "mips_priceassessment"):
         if r["updated_at"].date() == day and r["SortOrder"] == 1:
             periods[groups[r["PriceAssessmentGroupID"]]] = r["PricePeriod"]
     for name in catalog.CRUDE_SHIFTED:
