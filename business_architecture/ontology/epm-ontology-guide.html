@@ -575,7 +575,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>The crack-spread view depends on MPR, MIPS and KittyHawk. MPR is the price master. It holds each priced instrument and its daily price details and settlement prices, and supports eight processes, such as <em>CM 1.1.5.1.2.6 Receive actual data product prices</em>. MIPS holds market price assessments in sheets, groups and batches.</p>
 </div>
 </div>
-<p class="note">Links: <code>sys:supports</code> to core. Requires core 2.4.0. Open: TopDay and VALT wait for their owners' descriptions (close-out point 12); CargoTracker, Allocation Manager, Hyperion, Quorum and Polaris need fuller answers (points 13 to 15); the 14 drafted descriptions wait for each system's owner (point 16); MIPS and MPR are described only as the pricing views see them, and MPR's expansion (Master Price Record or Market Price Report) is not settled; and XPIMS's meaning rests on the decision owner's answer (<code>system</code> 1.3.0 and 1.2.0 changelogs).</p>
+<p class="note">Links: <code>sys:supports</code> to core. Requires core 2.4.0. Open: TopDay and VALT wait for their owners' descriptions (close-out point 12); CargoTracker, Allocation Manager, Hyperion, Quorum and Polaris need fuller answers (points 13 to 15); the 22 drafted descriptions wait for each system's owner (point 16; EPM-DEC-001-0103, 0108); MIPS and MPR are described only as the pricing views see them, and MPR's expansion (Master Price Record or Market Price Report) is not settled; and XPIMS's meaning rests on the decision owner's answer (<code>system</code> 1.3.0 and 1.2.0 changelogs).</p>
 </section>
 
 <section class="mod" id="m-organization">
@@ -621,7 +621,7 @@ ORDER BY ?hop ?label</code></pre>
 <p>KittyHawk, one of the view's three systems, is also a customer system. <code>party:system/kittyhawk skos:exactMatch system:kittyhawk</code> says they are the same system. The customer view adds that it "records physical product movements" and receives customers from RightAngle.</p>
 </div>
 </div>
-<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.4.0 and system 1.5.0. Twenty of its 50 customer systems match a system-module system (EPM-DEC-001-0104, 0108). Open: four customer systems and four codes wait for their owners (close-out points 3, 4 and 11); the 28 drafted customer-system descriptions, the eight of 2026-10-27 among them, wait for each owner (point 16; EPM-DEC-001-0108); the product list awaits confirmation (point 5); and how Dealer Master's billing customer number relates to the SAP customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open with the business (EPM-DEC-001-0108).</p>
+<p class="note">Links: <code>party:stageProcess</code> to core, <code>skos:exactMatch</code> to system. Requires core 2.4.0 and system 1.5.0. Twenty of its 50 customer systems match a system-module system (EPM-DEC-001-0104, 0108). Open: four customer systems and five codes wait for their owners (close-out points 3, 4 and 11); the 28 drafted customer-system descriptions, the eight of 2026-10-27 among them, wait for each owner (point 16; EPM-DEC-001-0108); the product list awaits confirmation (point 5); and how Dealer Master's billing customer number relates to the SAP customer number, and whether its fuel volumes reach the Enterprise Data Lake, are open with the business (EPM-DEC-001-0108).</p>
 </section>
 
 <section class="mod" id="m-ref-mpc">
