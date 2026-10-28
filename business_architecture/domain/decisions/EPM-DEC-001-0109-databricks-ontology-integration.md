@@ -59,7 +59,18 @@ What Claude found from primary sources, on 2026-10-28:
 
 ## The decision owner's recorded words
 
-From `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-28-databricks-grill.md`, quoted in the Decision above.
+From `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-28-databricks-grill.md`:
+
+- "Q&A now, then one goal (Recommended)"
+- "Give all measure classify as  KPIs an ID like we did for crakc spread but make it incremental."
+- "By the way OPM = Operationam Metrics. This is to distinguisg Operation KPI from the tru KPI i the KPI Store."
+- "So since the ontology will be in a delta table, it may be best for the genie agent to read the ontology from that table."
+- "Yes to all with some coments below"
+- "I like the concept of the supervisor agent. Is this a concept in Databricks? Can you check? If it is let us implement even if we have two agents today."
+- "I do want to test the connection to auraDB. This will give me an idea on how this will work with Neo4j enterprise as well."
+- "Q16: I do not have Enteprise Neo4j on this machine. So we will have to go with what we have."
+- "Approve, start (Recommended)"
+- "extedn it and use the current EIA key"
 
 ## Evidence
 
