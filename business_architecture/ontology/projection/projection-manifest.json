@@ -1,6 +1,6 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "32ba19095e749ab4fc79cfd6a20483595ad4029f22d1defffd97cfe0142815a5",
+  "input_fingerprint": "bbccf1257cfa2a1a4bfce5583166d0ec226fd24df81a8e49deb98a806b62c267",
   "inputs": {
     "releases/core/2.4.0/core.ttl": "6b0365456230d7ed1b4c17f27bffb26d7fd5b9e159f06809c814fbbe7b8da12a",
     "releases/data-product/1.2.0/data-product.ttl": "91072ca004bebacd5c6f70bd8d4fe5c69f3525a465d3769f49959299c4f484a4",
@@ -9,7 +9,7 @@
     "releases/lane/1.1.0/lane.ttl": "6b338c1cbc1b0ecde49df9a4ea2b46714c34df42ccc62fa58dfe3ee4ee345878",
     "releases/market-data/1.1.0/market-data.ttl": "8920d651d721462d2217d14ce23b680e584e0bebf6c01d03e471c551c502f3fd",
     "releases/organization/2.2.0/organization.ttl": "5fada0f28923afd1df0d2cc42bae650b04cd0e05a52c52e064ec06947ecc0b31",
-    "releases/party/2.1.0/party.ttl": "4510d175aacfb460fe85f11801207c5f695fc4b91118e405011ee5cda7ebc99c",
+    "releases/party/2.1.0/party.ttl": "11fcf46be1c2a5f4f45baa0975881603b45bbf7e789ba5368b8ba4f22398c0c1",
     "releases/ref-mpc/1.3.0/ref-mpc.ttl": "e1d89333dca5c700f8ae01a5663a0eb86e293ca8406b8a452597e045c6fe56be",
     "releases/system/1.5.0/system.ttl": "6d58ab6dd76f0f74c999056ef07e3ab1f3d42aefa8c75a3793339a63a024663e",
     "releases/value-stream/1.2.0/value-stream.ttl": "2333e4109d3b78e6326b056cf550390bb0977f9e5e2f8864cd67745989683f42"
