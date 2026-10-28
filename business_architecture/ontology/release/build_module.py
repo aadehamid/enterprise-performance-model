@@ -113,9 +113,11 @@ MODULES = {
         # definition, two data flows, a sourcing note and the prospect system stage, and deprecate the sourcing that says
         # jobbers start in Dealer Master; they add the sub-jobber role, the dealer classes, the classes of trade, eight
         # systems and 13 flows; it requires system 1.5.0 (EPM-DEC-001-0108).
-        "version": "2.0.0", "stage": None, "approver": "The decision owner", "issued": "2026-10-27",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md",
-                     "I am aligned with all your recommendation in the input plan."),
+        # 2.1.0 is a minor Claude approved under the delegation: the decision owner's close-out answers of 2026-10-28,
+        # Drop Tank, GasBuddy and DTN defined from their vendors' own published words (Drop Tank's from a 2018 press release, its site being gone) and a note on Polaris; it still requires core
+        # 2.4.0 and system 1.5.0 (EPM-DEC-001-0099, amendment of 2026-10-28).
+        "version": "2.1.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-28",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],
         "shapes": ["party/shapes.ttl"],
         # Since 1.2.0 it also requires system 1.1.0, whose systems its five skos:exactMatch links name
@@ -241,17 +243,19 @@ MODULES = {
         # internal systems' descriptions; it requires the new system and party releases (EPM-DEC-001-0103).
         # 2.4.0 is a minor Claude approved under the delegation, with the decision owner's alignment with the plan: the
         # customer inputs of 2026-10-27 in tier 1; it requires the current releases (EPM-DEC-001-0108).
-        "version": "2.4.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028; the decision owner's alignment with the plan of 2026-10-27)", "issued": "2026-10-27",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-27-customer-inputs.md",
-                     "I am aligned with all your recommendation in the input plan."),
+        # 2.5.0 is a minor Claude approved under the delegation: the three public sources (two vendor pages, a press release) that define Drop Tank, GasBuddy
+        # and DTN in party 2.1.0, in tier 4; it requires the current releases, organization 2.2.0 and party 2.1.0
+        # among them (EPM-DEC-001-0099, amendment of 2026-10-28).
+        "version": "2.5.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-28",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
         "shapes": ["consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl"],
         "own_shapes": 3,  # all three shape files are the package's own; the package's shapes.ttl holds them merged
         "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data",
                        "party"],
-        "pins": {"core": "2.4.0", "organization": "2.1.0", "kpi": "1.2.0", "data-product": "1.2.0", "value-stream": "1.2.0",
-                 "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.0.0"},
+        "pins": {"core": "2.4.0", "organization": "2.2.0", "kpi": "1.2.0", "data-product": "1.2.0", "value-stream": "1.2.0",
+                 "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.1.0"},
         "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078", "EPM-DEC-001-0088",
                       "EPM-DEC-001-0094", "EPM-DEC-001-0098", "EPM-DEC-001-0099", "EPM-DEC-001-0100", "EPM-DEC-001-0103",
                       "EPM-DEC-001-0108"],

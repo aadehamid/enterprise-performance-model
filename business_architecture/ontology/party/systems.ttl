@@ -2277,11 +2277,20 @@
     party:customerRole "The cross-reference on the Salesforce to RightAngle interface that excludes specific customers."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
 
+src:drop-tank-points-release-2018-04-23 a dcterms:BibliographicResource ;
+    dcterms:title "Points International and Drop Tank, Points Partners With Drop Tank To Power Marathon's New Rewards Program, press release, 2018-04-23, https://www.globenewswire.com/news-release/2018/04/23/1485563/16082/en/Points-Partners-With-Drop-Tank-To-Power-Marathon-s-New-Rewards-Program.html, retrieved 2026-10-28"@en .
+
 src:phmsa-marathon-pipeline-noa-2024-09-26 a dcterms:BibliographicResource ;
     dcterms:title "PHMSA, Notice of Amendment to Marathon Pipeline LLC, 2024-09-26, https://primis.phmsa.dot.gov/enforcement-documents/32024055NOA/32024055NOA_Notice%20of%20Amendment_09262024_(23-264547)_text.pdf, retrieved 2026-10-25"@en .
 
+src:vendor-dtn-refined-fuels a dcterms:BibliographicResource ;
+    dcterms:title "DTN, Refined Fuels, https://www.dtn.com/refined-fuels/, retrieved 2026-10-28"@en .
+
 src:vendor-emk3-senergy a dcterms:BibliographicResource ;
     dcterms:title "EMK3, Overview, https://www.emk3.com/Pages/Overview.aspx, retrieved 2026-10-25"@en .
+
+src:vendor-gasbuddy-about a dcterms:BibliographicResource ;
+    dcterms:title "GasBuddy, About GasBuddy, https://www.gasbuddy.com/about, retrieved 2026-10-28"@en .
 
 src:vendor-gravitate a dcterms:BibliographicResource ;
     dcterms:title "Gravitate, https://gravitate.energy/, retrieved 2026-10-25"@en .
@@ -2364,6 +2373,8 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
 
 <https://w3id.org/lsc/ontology/modules/party/system/drop-tank> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:drop-tank-points-release-2018-04-23 ;
+    skos:definition "A gas station loyalty technology company's service. By the company's own description in a 2018 press release, Drop Tank specializes in gas station loyalty technology and partners with fuel and c-store brands to deploy consistent loyalty functionality across stations which may have inconsistent retail technology. The same release, issued on 2018-04-23 with Points, announces that Drop Tank and Points power Marathon Petroleum Company LP's MakeItCount rewards program. Its own site now redirects to PDI Technologies. What MPC sends it is not known."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "drop-tank" ;
     skos:prefLabel "Drop Tank"@en ;
@@ -2374,6 +2385,8 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
 
 <https://w3id.org/lsc/ontology/modules/party/system/dtn-file-server> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-dtn-refined-fuels ;
+    skos:definition "The DTN File Server, named for DTN. By DTN's description, DTN helps energy companies decide across the fuel value chain, from supply to pricing to compliance, through its Fuel Operations Hub, and offers bi-directional, API-ready data exchange. DTN's page does not describe the file server, and what MPC sends through it is not known."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "dtn-file-server" ;
     skos:prefLabel "DTN File Server"@en ;
@@ -2429,6 +2442,8 @@ src:vendor-thomson-reuters-onesource-determination a dcterms:BibliographicResour
 
 <https://w3id.org/lsc/ontology/modules/party/system/gas-buddy> a skos:Concept,
         party:CustomerSystem ;
+    dcterms:source src:vendor-gasbuddy-about ;
+    skos:definition "GasBuddy's fuel-savings service for drivers. By the vendor's description, it gives real-time gas price information at more than 150,000 stations, cashback rewards with brand partners and a payments card with cents off per gallon; its app has been downloaded over 100 million times. What MPC sends it is not known."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "gas-buddy" ;
     skos:prefLabel "Gas Buddy"@en ;
@@ -2832,6 +2847,7 @@ src:decision-owner-customer-inputs a dcterms:BibliographicResource ;
         party:CustomerSystem ;
     dcterms:source src:phmsa-marathon-pipeline-noa-2024-09-26 ;
     skos:definition "A scheduling system of Marathon Pipeline LLC, named in a PHMSA notice of amendment of 2024-09-26. Whether MPC built or bought it is not known."@en ;
+    skos:editorialNote "The decision owner believes it is bought, an off-the-shelf product (2026-10-28); a web search that day found no liquids-pipeline scheduling product of that name, so the vendor and what it does stay open (EPM-DEC-001-0099, amendment of 2026-10-28)."@en ;
     skos:inScheme party:customer-systems ;
     skos:notation "polaris" ;
     skos:prefLabel "Polaris"@en ;
