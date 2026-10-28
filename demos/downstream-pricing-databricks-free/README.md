@@ -24,8 +24,8 @@ You need Docker, [uv](https://docs.astral.sh/uv/), and a Databricks Free Edition
 ```bash
 cd demos/downstream-pricing-databricks-free
 docker compose -f docker/docker-compose.yml up -d          # the six source databases
-# A volume created before 2026-10-28 holds the old database names. Rename them once (Postgres creates databases only
-# on an empty volume):
+# A volume created before 2026-10-28 holds the old database names. Rename them once: the postgres image runs
+# docker/init/ only on an empty data directory (hub.docker.com/_/postgres, "Initialization scripts", read 2026-10-28).
 #   for p in mips:price_assessment mpr:price_reference kittyhawk:reference_data_hub ctrm:rightangle planning:aspen_pims prodacct:production_accounting; do
 #     docker exec pricing-demo-sources psql -U demo -d postgres -c "ALTER DATABASE ${p%%:*} RENAME TO ${p##*:}"; done
 uv sync
