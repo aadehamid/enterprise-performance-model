@@ -25,7 +25,7 @@ EPM-DEC-001-0096 closed the ontology on 2026-10-23. The work queue that followed
 
 **What stays open.** None of it is build work (*2026-10-27:* except the next releases' small fixes below, which are release work in their modules):
 
-- **With the business:** points 1 to 16 of `business-closeout.md`. The package's table gives, for each point, who is asked to answer it and the record and module that take the answer. The decision owner may work through some of them first, to narrow them down (block 11). Each answer is an amendment to the named record and goes into that module's next minor release.
+- **With the business:** points 1 to 16 of `business-closeout.md`. The package's table gives, for each point, who is asked to answer it and the record and module that take the answer. The decision owner may work through some of them first, to narrow them down (block 11). Each answer is an amendment to the named record and goes into that module's next minor release. *2026-10-28:* the decision owner worked through the package: points 3 and 4 are closed, point 5 is narrowed to the PIDX family letters, and points 17 and 18 are added (EPM-DEC-001-0086, amendment of 2026-10-28).
 - **In the next release of a module:**
   - `market-data` rewords the one shape message that still holds an apostrophe (EPM-DEC-001-0106).
   - `integration` and `ref-mpc` move their pins to the current releases. Today they require the releases they were built against.

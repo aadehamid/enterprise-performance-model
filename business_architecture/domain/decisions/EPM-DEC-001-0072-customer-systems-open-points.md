@@ -43,6 +43,20 @@ The session 7 morning summary asked the decision owner about the two points this
 - TABS Seller ID keeps the reading in EPM-DEC-001-0069, item 8: the party's seller identifier in a terminal lifting-control service, mapped to an external identifier of the party. It is now the decision owner's confirmed reading, not only Claude's.
 - No file in the `party` module changes: the attributes carry no definition or note for these codes.
 
+## Amendment, 2026-10-28: the four codes and TID Nbr close as they stand
+
+Claude walked the decision owner through the business close-out package on 2026-10-28 (EPM-DEC-001-0086, amendment of 2026-10-28). Points 3 and 4 are this record's.
+
+**The decision owner's answers:**
+
+1. **HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag stay undefined, and the point closes:** "leave those as undefined for now and close this out".
+2. **TID Nbr keeps its reading, and the point closes:** the decision owner chose "Keep reading, close (Recommended)", whose option read: TID Nbr stays a terminal identifier describing a site; the point closes; no release changes.
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+- The four codes stay named fields without a definition, and TID Nbr stays read as a terminal identifier that describes a site. Neither waits on the business any longer. Either reopens if a consumer needs a code's meaning or the reading confirmed.
+- No file in the `party` module changes.
+
 ## Alternatives considered
 
 - **Keep CBS open until a source confirms it.** Not chosen: the decision owner decided to assume it for this model.
@@ -62,6 +76,11 @@ For the amendment of 2026-10-22, from `business_architecture/ontology/step4/revi
 - "let us keep the code this way. We wont settle it until finish the ontology and start sharing for consumption at which point we will confirm what these means from the business"
 - "I confirm"
 
+For the amendment of 2026-10-28, from `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-28-closeout.md`:
+
+- "leave those as undefined for now and close this out"
+- "Keep reading, close (Recommended)"
+
 ## Evidence
 
 - EPM-DEC-001-0067, 0068, 0069.
@@ -70,5 +89,5 @@ For the amendment of 2026-10-22, from `business_architecture/ontology/step4/revi
 ## Consequences
 
 - `party/systems.csv`, `customer-sources.csv` and `build_party.py` carry the answers; `systems.ttl` is rebuilt. `test_party_systems.py` pins the four matches (*2026-10-25:* five, EPM-DEC-001-0099), the build's rejection of a hand-held match that does not hold, and the CBS sourcing's note, and `regression/test_run.py` pins q15b's four cross-module pairs (*2026-10-25:* five, with SAP S/4HANA, EPM-DEC-001-0099).
-- Still open for the decision owner: the meaning of HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag, which they will define later; whether TABS Seller ID is read rightly; whether TID Nbr is a terminal identifier. *2026-10-22:* TABS Seller ID's reading is confirmed; the four codes and TID Nbr wait until the ontology is shared for consumption, when the business confirms them (amendment of 2026-10-22 above).
+- Still open for the decision owner: the meaning of HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag, which they will define later; whether TABS Seller ID is read rightly; whether TID Nbr is a terminal identifier. *2026-10-22:* TABS Seller ID's reading is confirmed; the four codes and TID Nbr wait until the ontology is shared for consumption, when the business confirms them (amendment of 2026-10-22 above). *2026-10-28:* both points close as they stand (amendment of 2026-10-28 above).
 - *2026-10-27:* input 8 names the system FuelFacs CBS, which settles this record's assumption that CBS is FuelFacs (EPM-DEC-001-0108).

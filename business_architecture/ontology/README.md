@@ -173,7 +173,10 @@ exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
   to: Q17, Market Data's accountable group, the four codes and TID Nbr, the
   product list, Forecaster, Crude RFC, PSM, four working role definitions
   and 33 measure populations. They are settled when the ontology is first
-  shared with business consumers.
+  shared with business consumers. *2026-10-28:* the decision owner worked
+  through the package: points 3 and 4 are closed, point 5 is narrowed to the
+  PIDX family letters, and points 17 and 18 (Dealer Master) are added
+  (EPM-DEC-001-0086, amendment of 2026-10-28).
 - **Open after closure, apart from the ontology:** the store tests are a
   separate, later task: load the ontology into Apache Jena and into a
   Databricks Delta triple table, project it to a local Neo4j and to Aura, then

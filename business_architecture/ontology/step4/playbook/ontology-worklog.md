@@ -1016,6 +1016,15 @@ without a dated amendment and the decision owner's explicit agreement.
   as superseded evidence; `projection/pipeline.py` stays on v2.2
   (EPM-DEC-001-0095, amending 0021).
 
+### The decision owner works through the close-out package (2026-10-28)
+- Claude put close-out points 3 to 16 to the decision owner one at a time, each with a recommendation, and asked
+  again about points 1 and 2 (EPM-DEC-001-0086, amendment of 2026-10-28). Points 1 and 2 stay open. Points 3 and 4
+  close as they stand (EPM-DEC-001-0072), and point 5 keeps only the PIDX family letters open (EPM-DEC-001-0092).
+- Points 7, 8 and 9 (Crude RFC confirmed, PSM as Process Safety Management, Business Planning and Analysis's
+  definition) go into `organization`'s next minor release; points 11 and 15 (three public customer systems, the
+  Polaris note) into `party`'s. The other points stay open with the business, and the package gains points 17 and
+  18, Dealer Master's two open gaps (EPM-DEC-001-0108).
+
 ### party 2.0.0, system 1.5.0 and integration 2.4.0 are released (2026-10-27)
 - The decision owner's customer inputs of 2026-10-27, inputs 8 to 11, correct the `party` module: Dealer Master is the
   system of record for the ship-to stations and is not built on Salesforce; jobbers are mastered in SAP MDG and RightAngle

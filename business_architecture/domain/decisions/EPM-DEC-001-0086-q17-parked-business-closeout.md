@@ -23,6 +23,32 @@ The decision owner already ruled the same way for four customer-system codes: th
 2. **The trigger** is the ontology's first sharing with business consumers. The business then names, for each module or concept scheme, the role that owns the meaning, the role that stewards the data and the role that keeps the systems. A minor release of `organization` then adds the qualified governance assignment that EPM-DEC-001-0045, item 7, proposes, and Q17 gets its queries.
 3. **The package is `business_architecture/ontology/business-closeout.md`.** It lists each point only the business can settle: Q17; Market Data's accountable group (EPM-DEC-001-0046); the four codes and TID Nbr (EPM-DEC-001-0069, 0072); the product list (EPM-DEC-001-0088); Forecaster, Crude RFC, PSM and four working role definitions (EPM-DEC-001-0045); and the 33 measures with no stated population (EPM-DEC-001-0062). For each it gives what the ontology holds today, what the business needs to say, who can say it, and the record and module the answer goes to. It also lists, apart, the items parked for reasons that are not the business's.
 
+## Amendment, 2026-10-28: the decision owner works through the package
+
+On 2026-10-26 the decision owner said they might work through some of the package's points first, to narrow them down (EPM-DEC-001-0107). On 2026-10-28 Claude put points 3 to 16 to them, one at a time, each with a recommendation, and asked again about points 1 and 2.
+
+**The decision owner's answers, point by point:**
+
+| Point | Answer | Where it is recorded |
+|---|---|---|
+| 1, 2 | Both stay open: "Keep both open (Recommended)" | This amendment |
+| 3 | The four codes stay undefined, and the point closes: "leave those as undefined for now and close this out" | EPM-DEC-001-0072, amendment of 2026-10-28 |
+| 4 | TID Nbr keeps its reading, and the point closes: "Keep reading, close (Recommended)" | EPM-DEC-001-0072, amendment of 2026-10-28 |
+| 5 | The products close; the PIDX family letters stay open: "Close products, PIDX open (Recommended)" | EPM-DEC-001-0092, amendment of 2026-10-28 |
+| 6 | Forecaster stays apart and the point stays open: "Keep apart, leave open (Recommended)" | This amendment |
+| 7 | The Crude RFC reading is confirmed: "Confirm the reading" | EPM-DEC-001-0045, with `organization`'s next minor release |
+| 8 | PSM is Process Safety Management: "By the was PSM = Process Safety Management". The decision owner sent it after first choosing to leave the point open | EPM-DEC-001-0045, with `organization`'s next minor release |
+| 9 | Business Planning and Analysis's definition is confirmed; the other three stay open: "Confirm 1, rest open (Recommended)" | EPM-DEC-001-0045, with `organization`'s next minor release |
+| 10, 12, 13, 14, 16 | Each stays open: "Leave open (Recommended)" | This amendment |
+| 11 | Drop Tank, GasBuddy and DTN are to be defined from their own public pages; Federal Health, and what MPC sends each of the four, stay open: "Define 3, rest open (Recommended)" | EPM-DEC-001-0099, with `party`'s next minor release |
+| 15 | The decision owner believes Polaris is bought: "I think this is an off the shelf system that offers this service". The point stays open for the vendor and what Polaris does | EPM-DEC-001-0099, with `party`'s next minor release |
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+- The package marks points 3 and 4 as closed, and point 5 as open for the PIDX letters only. Each row keeps its place, so the numbering does not change.
+- Points 7, 8, 9, 11 and 15 change the ontology. Each release's own pull request records its answer on the named record and updates its row in the package.
+- The package gains two rows from EPM-DEC-001-0108, which the decision owner cannot answer ("Others I cannot answer."): point 17, how Dealer Master's billing customer number relates to the SAP customer number; and point 18, whether Dealer Master's fuel volumes reach the Enterprise Data Lake.
+
 ## Alternatives considered
 
 - **Build the meaning-owner relation now and assign later.** Not chosen by the decision owner: a relation with no assignments answers nothing, and Q17 would still wait.
@@ -31,6 +57,8 @@ The decision owner already ruled the same way for four customer-system codes: th
 ## The decision owner's recorded words
 
 Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`: "I agree with 1. Can we document this as a package to go with the ontology so that we know what to close out with the business."
+
+For the amendment of 2026-10-28, from `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-28-closeout.md`: "Keep both open (Recommended)", "leave those as undefined for now and close this out", "Keep reading, close (Recommended)", "Close products, PIDX open (Recommended)", "Keep apart, leave open (Recommended)", "Confirm the reading", "By the was PSM = Process Safety Management", "Confirm 1, rest open (Recommended)", "Leave open (Recommended)", "Define 3, rest open (Recommended)" and "I think this is an off the shelf system that offers this service".
 
 ## Evidence
 
@@ -42,3 +70,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 - Every competency question is answerable or parked by a recorded decision, so Step 11 is all green.
 - EPM-DEC-001-0045's item 7, EPM-DEC-001-0083's lists and the regression README carry dated notes.
 - When the business answers a point in the package, its answer is recorded as an amendment to the record the package names.
+- *2026-10-28:* the decision owner worked through the package; points 3 and 4 are closed, point 5 is narrowed to the PIDX letters, and points 17 and 18 are added (amendment of 2026-10-28 above).
