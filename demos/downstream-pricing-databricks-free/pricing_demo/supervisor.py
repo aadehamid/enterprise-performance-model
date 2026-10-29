@@ -66,7 +66,10 @@ def descriptions(cur, catalog):
         rows = run(cur, f"SELECT Identifier, Label FROM {catalog}.{definitions_view(spec)} ORDER BY Identifier")
         if not rows:
             raise SystemExit(f"{definitions_view(spec)} is empty: build the definitions views first (databricks build)")
-        computed = {i for v in metric_views(spec) for i in tags.get(v, "").split()}
+        untagged = [v for v in metric_views(spec) if not tags.get(v, "").strip()]
+        if untagged:  # without the tags every measure would read as "defined, not computed"
+            raise SystemExit(f"{', '.join(untagged)} has no epm_measure_identifiers tag: rebuild the metric views (databricks build)")
+        computed = {i for v in metric_views(spec) for i in tags[v].split()}
         out[title] = description(title, spec, [(r[0], r[1]) for r in rows], computed)
     return out
 

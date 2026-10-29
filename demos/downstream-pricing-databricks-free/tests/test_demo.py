@@ -959,6 +959,15 @@ def test_e4_supervisor_descriptions_come_from_the_definitions_rows_and_mark_what
             == {f"ontology_definitions.{d}" for _, d in AGENT_VIEWS.values()})
 
 
+def test_e4_descriptions_refuse_a_metric_view_without_its_identifier_tag(monkeypatch):
+    # Without the tags every measure would read as "defined, not computed" (Pi, round 1): fail closed instead.
+    def run(cur, sql):
+        return [] if "table_tags" in sql else [("KPI-0001", "Crack Spreads Pricing")]
+    monkeypatch.setattr(supervisor, "run", run)
+    with pytest.raises(SystemExit, match="no epm_measure_identifiers tag"):
+        supervisor.descriptions(None, "idp_sbx")
+
+
 def test_e4_the_supervisor_names_the_regional_cracks_the_gold_margin_uses():
     case = re.search(r"CASE r\.Region_Name (.*?) END", SQL_TEXT["04_gold.sql"]).group(1)
     pairs = dict(re.findall(r"WHEN '([^']+)' THEN '(\d+)'", case)) | {"Mid-Continent": re.search(r"ELSE '(\d+)'", case).group(1)}
