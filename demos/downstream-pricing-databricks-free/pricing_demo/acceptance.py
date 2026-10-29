@@ -263,8 +263,31 @@ EXPECTED_BOUNDS = {
     "D08": ("change_usd_per_bbl", -2.0, "max"),             # WTI at least $2.00/bbl lower
     "D09": ("change_cents_per_gal", -5.0, "max"),           # NYH ULSD at least 5 cents/gal lower
 }
-NO_LESSON = ("no lesson", "not record", "no record", "isn't recorded", "is not recorded", "doesn't record",
-             "does not record", "wasn't recorded", "was not recorded", "none recorded", "no backcast lesson")
+
+
+class NoneRecorded(str):
+    """An expected answer that the records hold no such thing: every clause of the answer that names it must deny it."""
+
+
+def lesson_records(ctx):
+    """Every lesson the stores record for a decision: a lesson column in the tables the agents read (the decision log,
+    its evidence, the plan backcast), an evidence item whose kind or text names a lesson, and any field of the hidden
+    dossiers that does. Each is (source, decision, text)."""
+    found = []
+    tables = ("decision_dim", "decision_evidence_detail_fact", "refinery_plan_backcast_fact")
+    columns = ctx.q("SELECT table_schema AS s, table_name AS t, column_name AS c FROM {c}.information_schema.columns "
+                    f"WHERE table_name IN {tables} AND LOWER(column_name) LIKE '%lesson%'")
+    for col in columns:
+        for r in ctx.q(f"SELECT * FROM {{c}}.{col['s']}.{col['t']} WHERE {col['c']} IS NOT NULL"):
+            found.append((f"{col['t']}.{col['c']}", r.get("Decision_Id"), str(r[col["c"]])))
+    for r in ctx.q("SELECT Decision_Id AS d, Evidence_Text AS x FROM {c}.gold_commercial_core.decision_evidence_detail_fact "
+                   "WHERE LOWER(Evidence_Kind) LIKE '%lesson%' OR LOWER(Evidence_Text) LIKE '%lesson%'"):
+        found.append(("decision_evidence_detail_fact", r["d"], r["x"]))
+    for r in ctx.pg("SELECT * FROM decision_dossier"):
+        for field, value in r.items():
+            if "lesson" in field.lower() or "lesson" in str(value).lower():
+                found.append((f"decision_dossier.{field}", r["DecisionId"], str(value)))
+    return found
 
 
 def miss(actual, bound, side):
@@ -287,8 +310,9 @@ def trail_roles():
 def c14(ctx):
     """The README's use case 14. The gap is each 2026 decision's miss against the bound its expected outcome states
     (EXPECTED_BOUNDS), with the actual figure from the hidden dossiers, which only the tests read; the two widest misses
-    are D08 and D04, each several times its bound, far ahead of the rest. The roles come from the decision trail. No
-    store records a lesson, the backcast included, so the answer must say none is recorded."""
+    are D08 and D04, each several times its bound, far ahead of the rest. The roles come from the decision trail. The
+    lesson is whatever the stores record (lesson_records): the answer must give each one, or, when they record none,
+    say so without claiming one."""
     rows = ctx.pg("SELECT \"DecisionId\" AS id, \"ActualOutcomeData\" AS data FROM decision_dossier "
                   "WHERE \"DecisionTime\" >= '2026-01-01' ORDER BY 1")
     actual = {r["id"]: json.loads(r["data"]) for r in rows}
@@ -300,7 +324,9 @@ def c14(ctx):
         f, _, _ = EXPECTED_BOUNDS[d]
         out += [Expect(f"decision {d}", d, None), Expect(f"{d} owner role", tuple(sorted(roles[d])), None),
                 Expect(f"{d} actual outcome", actual[d][f], 0.05 * abs(actual[d][f]))]
-    return out + [Expect("the records hold no lesson", NO_LESSON, None)]
+    lessons = [x for x in lesson_records(ctx) if x[1] in widest]
+    return out + ([Expect(f"lesson in {src} for {d}", text, None) for src, d, text in lessons]
+                  or [Expect("the records hold no lesson", NoneRecorded("lesson"), None)])
 
 
 def c15(ctx):
@@ -496,6 +522,9 @@ def near(e, value):
             or (target >= 1e5 and abs(v * 1e6 - target) <= e.tol))
 
 
+NEGATION = re.compile(r"\b(?:no|not|none|never|nor|neither|without)\b|n't\b", re.I)
+
+
 def shares(term, terms):
     """Whether a term shares a spelling with any of terms ("october" with "2026-10")."""
     return any(set(term) & set(t) for t in terms)
@@ -510,10 +539,13 @@ def distance(terms, clause, m):
 
 def holds(answer, e, siblings=()):
     """Whether the answer holds one expected figure. A string or tuple must appear. A number must appear in the same
-    clause as a term of its own label; where a term only another figure's label has (the other month, "actual" against
+    clause as a term of its own label (a NoneRecorded value instead needs every clause that names it to deny it); where a term only another figure's label has (the other month, "actual" against
     "planned") is in the clause too, the number must be nearer to a term only its own label has, so a value stated
     against another figure's label does not count. A figure with a cue must match its cue instead."""
     text = answer or ""
+    if isinstance(e.value, NoneRecorded):
+        named = [c for c in CLAUSE.split(text) if re.search(rf"\b{e.value}s?\b", c, re.I)]
+        return bool(named) and all(NEGATION.search(c) for c in named)
     if isinstance(e.value, tuple):
         return any(alt.lower() in text.lower() for alt in e.value)
     if isinstance(e.value, str):

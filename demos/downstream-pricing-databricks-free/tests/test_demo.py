@@ -1321,7 +1321,8 @@ def test_e7_one_case_per_use_case_naming_only_real_agents_and_identifiers():
 def test_e7_every_table_a_check_reads_is_one_the_build_creates():
     created = {f"{schema}.{name}" for _, schema, name in databricks.created_objects()}
     source = open(os.path.join(ROOT, "pricing_demo", "acceptance.py")).read()
-    read = set(re.findall(r"\{c\}\.([a-z_]+\.[a-z_]+)", source))
+    # information_schema is the catalog's own description, which Databricks keeps, not a table the build creates
+    read = {t for t in re.findall(r"\{c\}\.([a-z_]+\.[a-z_]+)", source) if not t.startswith("information_schema.")}
     assert read and read <= created, read - created
 
 
@@ -1415,7 +1416,31 @@ def test_e7_case_14_asks_the_readme_question_and_checks_the_trail_and_the_lesson
     roles = acceptance.trail_roles()
     assert roles["D08"] == {"crude oil trader", "crude planning and optimization director"}
     assert roles["D04"] == {"refinery planner", "regional planning director"}
-    assert acceptance.holds("The records hold no lesson for either decision.", acceptance.Expect("lesson", acceptance.NO_LESSON, None))
+    none = acceptance.Expect("the records hold no lesson", acceptance.NoneRecorded("lesson"), None)
+    assert acceptance.holds("The records hold no lesson for either decision.", none)
+    assert acceptance.holds("No lesson is recorded: the backcast doesn't record lessons.", none)
+    # Codex, round 2 on E7: a denial next to a claim must fail, and so must an answer that never mentions a lesson
+    assert not acceptance.holds("No lesson is recorded, but the backcast recorded a lesson.", none)
+    assert not acceptance.holds("The backcast recorded the lesson: plan for longer turnarounds.", none)
+    assert not acceptance.holds("D08 missed by $12.32/bbl.", none)
+
+
+def test_e7_case_14_looks_for_lessons_in_every_store_before_expecting_none():
+    class Stores:  # the stores as the check sees them: one lesson column, one evidence item, one dossier field
+        def __init__(self, lesson):
+            self.lesson = lesson
+        def q(self, sql):
+            if "information_schema.columns" in sql:
+                return [{"s": "silver_mdm_core", "t": "decision_dim", "c": "Lesson_Text"}] if self.lesson else []
+            if "Lesson_Text IS NOT NULL" in sql:
+                return [{"Decision_Id": "D04", "Lesson_Text": "Book turnaround crews earlier."}]
+            return []
+        def pg(self, sql):
+            return [{"DecisionId": "D08", "GroundTruthRationale": "The release was expected to ease prices."}]
+    assert acceptance.lesson_records(Stores(False)) == []
+    assert acceptance.lesson_records(Stores(True)) == [("decision_dim.Lesson_Text", "D04", "Book turnaround crews earlier.")]
+    source = open(os.path.join(ROOT, "pricing_demo", "acceptance.py")).read()
+    assert "NoneRecorded(\"lesson\")" in source and "lesson_records(ctx)" in source
 
 
 def test_e7_rejudged_runs_keep_their_original_verdicts_beside_the_new_ones():
