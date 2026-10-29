@@ -1,5 +1,5 @@
 # Run by rdflib over the graph the other queries built (plain SPARQL 1.1, no SPARQL Anything): each step points to the
-# next in the README's order, and each node points to the step that makes it.
+# next in the README's order, and each node points to the step that makes or fills it (sync fills the tech_graph tables).
 PREFIX tv: <urn:pricing-demo:tech-vocab#>
 
 CONSTRUCT {
