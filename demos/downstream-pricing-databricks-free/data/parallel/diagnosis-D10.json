@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.6076092832067806,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "weather",
+   "confidence": 0.3448666657019396,
+   "probabilities": {
+    "crude_market": 0.08714836159334244,
+    "logistics": 0.010381116285362651,
+    "none": 0.18346850002533668,
+    "policy": 0.011371140564473796,
+    "product_market": 0.25357532677986816,
+    "weather": 0.4540555547516163
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Product Markets and Refinery Operations - Sep 09 - Financials and Investment",
+   "url": "https://gulfoilandgas.com/webpro1/main/mainnews.asp?id=9217"
+  },
+  {
+   "title": "Are \u201cmargins\u201d and \u201ccrack spreads\u201d communicating profit? Why are earnings today so much higher than in previous years?",
+   "url": "https://www.afpm.org/print/pdf/node/40397"
+  },
+  {
+   "title": "Oil Market Report - September 2026 \u2013 Analysis - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-september-2026"
+  },
+  {
+   "title": "Conventional Gasoline Prices: U.S. Gulf Coast, Regular (DGASUSGULF) | FRED | St. Louis Fed",
+   "url": "https://fred.stlouisfed.org/series/DGASUSGULF"
+  },
+  {
+   "title": "EIA Says US Crude Inventories Sink Further | OilPrice.com",
+   "url": "https://oilprice.com/Energy/Crude-Oil/EIA-Says-US-Crude-Inventories-Sink-Further.html?source=newscura"
+  },
+  {
+   "title": "\n        Kerosene-Type Jet Fuel Prices: U.S. Gulf Coast | ALFRED | St. Louis Fed\n    ",
+   "url": "https://alfred.stlouisfed.org/series?seid=WJFUELUSGULF"
+  },
+  {
+   "title": "Fuel Data | prices, inventories, refining, taxes | Fuel Data Portal",
+   "url": "https://fueldataportal.com/data"
+  },
+  {
+   "title": "US President Trump says Russia refinery strikes and US closures are driving up gas prices | Newsquawk",
+   "url": "https://www.newsquawk.com/headlines/us-president-trump-says-russia-refinery-strikes-and-us-closures-are-driving-up-gas-prices"
+  },
+  {
+   "title": "Oil Nears $100 as Gulf Hurricane and Houthi Strikes Add Risks | FXBrokerTrust",
+   "url": "https://www.fxbrokertrust.com/insights/oil-nears-100-as-gulf-hurricane-and-houthi-strikes-add-risks"
+  },
+  {
+   "title": "\n        Kerosene-Type Jet Fuel Prices: U.S. Gulf Coast | ALFRED | St. Louis Fed\n    ",
+   "url": "https://alfred.stlouisfed.org/series?seid=DJFUELUSGULF"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2024-09-25",
+   "decision": "Hold Gulf Coast crude runs through a weak crack rather than cut them",
+   "expected_outcome": "The USGC 3-2-1 crack at least $3.00/bbl higher 20 trading days later",
+   "refineries": "Galveston Bay, Texas City, TX, Garyville, LA",
+   "region": "Gulf Coast",
+   "window": "2024-09-25 to 2024-10-25"
+  }
+ },
+ "request_id": "diagnosis-D10",
+ "request_key": "eeb37e8b5530ac73",
+ "retrieved_at": "2026-10-29T16:53:10+00:00",
+ "usage": {
+  "input_tokens": 4319,
+  "output_tokens": 0
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.8672572507533345,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "G7 nations agree to release 100 million barrels of oil, including diesel | PBS News",
+   "url": "https://www.pbs.org/newshour/world/g7-nations-agree-to-release-100-million-barrels-of-oil-including-diesel"
+  },
+  {
+   "title": "G7 to release 100 million barrels of oil and diesel after Trump export ban threat - BBC News",
+   "url": "https://www.bbc.co.uk/news/articles/ck87zg8jnwngo"
+  },
+  {
+   "title": "IEA says 325 million barrels of emergency oil released, with 75 million still to come | Euronews",
+   "url": "https://www.euronews.com/2026/10/03/iea-says-325-million-barrels-of-emergency-oil-released-with-75-million-still-to-come"
+  },
+  {
+   "title": "G7 members agree to release 100 million barrels of diesel and other reserves | The National",
+   "url": "https://www.thenationalnews.com/business/energy/2026/10/02/g7-members-agree-to-release-100-million-barrels-of-diesel-and-other-reserves/"
+  },
+  {
+   "title": "G7 to Release Up to 100 Million Barrels of Diesel, Crude - Bloomberg",
+   "url": "https://www.bloomberg.com/news/articles/2026-10-02/g7-to-release-up-to-100-millions-of-barrels-of-diesel-and-oil?srnd=phx-markets"
+  },
+  {
+   "title": "G7 agrees 100 million-barrel emergency oil release amid US pressure over diesel  | Euronews",
+   "url": "https://www.euronews.com/2026/10/02/g7-agrees-100-million-barrel-emergency-oil-release-amid-us-pressure-over-diesel"
+  },
+  {
+   "title": "G7 countries agree on release of diesel and oil reserves after US pressure - Nikkei Asia",
+   "url": "https://asia.nikkei.com/business/energy/g7-to-release-100m-barrels-of-diesel-and-other-reserves-through-iea"
+  },
+  {
+   "title": "G7 Agrees to Release 100 Million Barrels of Diesel and Crude Amid Trump Pressure - Bloomberg",
+   "url": "https://www.bloomberg.com/news/newsletters/2026-10-02/g7-agrees-to-release-100-million-barrels-of-diesel-and-crude-amid-trump-pressure"
+  },
+  {
+   "title": "G7 Agree on Coordinated Oil Release of 100 M. Barrels | Nippon.com",
+   "url": "https://www.nippon.com/en/news/yjj2026100300168/g7-agree-on-coordinated-oil-release-of-100-m-barrels.html"
+  },
+  {
+   "title": "G7 Leaders\u2019 Statement on global energy security and market stability | France in the U.S.",
+   "url": "https://us.diplomatie.gouv.fr/en/g7-leaders-statement-global-energy-security-and-market-stability"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "G7 coordinated release of 100 million barrels of emergency stocks",
+   "from": "2026-10-02",
+   "region": "International",
+   "to": "2026-10-20"
+  }
+ },
+ "request_id": "event-g7_release",
+ "request_key": "5c2e89ed97ac3c09",
+ "retrieved_at": "2026-10-29T16:51:37+00:00",
+ "usage": {
+  "input_tokens": 3705,
+  "output_tokens": 0
+ }
+}

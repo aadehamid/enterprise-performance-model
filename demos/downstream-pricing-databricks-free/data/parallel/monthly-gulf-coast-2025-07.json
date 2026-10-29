@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.45682107152499796,
+   "probabilities": {
+    "crude_supply": 0.18029846004399974,
+    "demand": 0.1217766377790611,
+    "logistics": 0.028323962298268383,
+    "policy": 0.08641216912035567,
+    "product_inventories": 0.03583787782081684,
+    "weather": 0.5473508929374983
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.8496605555862478,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.5807294258025912,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tHurricane Harvey caused U.S. Gulf Coast refinery runs to drop, gasoline prices to rise -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=32852"
+  },
+  {
+   "title": "Energy Department Authorizes Strategic Petroleum Reserve Exchange to Support Fuel Supply in Gulf Coast | Department of Energy",
+   "url": "https://www.energy.gov/articles/energy-department-authorizes-strategic-petroleum-reserve-exchange-support-fuel-supply-gulf"
+  },
+  {
+   "title": "Gulf coast refiners continue storm assessments: Update | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2586007-gulf-coast-refiners-continue-storm-assessments-update"
+  },
+  {
+   "title": "\n\t\tRefining industry risks from 2025 hurricane season -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65304&utm"
+  },
+  {
+   "title": "US Refiners Face Historic Stress Test as Global Crisis Looms: Bousso - Energy News, Top Headlines, Commentaries, Features & Events - EnergyNow.com",
+   "url": "https://energynow.com/2026/08/us-refiners-face-historic-stress-test-as-global-crisis-looms-bousso"
+  },
+  {
+   "title": "Gulf Coast Energy Outlook 2025",
+   "url": "https://www.lsu.edu/ces/publications/2024/gulf-coast-energy-outlook-2025-df-e-version.pdf"
+  },
+  {
+   "title": "US Crude Refiners Are Pushing Run Rates to Maximum Levels: Safety Concerns, Maintenance Trade-offs, Export Boom, and Investor Implications - Energy News Beat",
+   "url": "https://energynewsbeat.co/big-oil-companies/us-crude-refiners-are-pushing-run-rates-to-maximum-levels-safety-concerns-maintenance-trade-offs-export-boom-and-investor-implications/"
+  },
+  {
+   "title": "[PDF] \u00bc\u00f7\u0436\u0443\u00f7\u0441\u042f\u043d\u044e\u00f7\u041c\u00bf\u00ae\u044c\u00bc\u00d7\u00bd\u0417\u0417\u042d \u00bd\u0419\u0425\u00b8\u0417\u041e\u044c",
+   "url": "https://lawandadvisors.com/files/notice/b7cb1f820f36e5916d2314db20c705b8.pdf"
+  },
+  {
+   "title": "Oil slips to $114 as traders weigh Saudi supply risks",
+   "url": "https://mettisglobal.news/Oil-falls-to-114-as-traders-weigh-Saudi-supply-risks-64496"
+  },
+  {
+   "title": "List policy results for a business",
+   "url": "https://docs.middesk.com/api-reference/business-verification/policy-results/list-business-policy-results"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during July 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during July 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during July 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "July 2025",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2025-07",
+ "request_key": "0819dbb3a75c5272",
+ "retrieved_at": "2026-10-29T16:52:07+00:00",
+ "usage": {
+  "input_tokens": 4234,
+  "output_tokens": 0
+ }
+}

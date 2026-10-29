@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.2633729007617291,
+   "probabilities": {
+    "crude_supply": 0.38614408396810757,
+    "demand": 0.18691611303181546,
+    "logistics": 0.10759249395789713,
+    "policy": 0.028642011455016103,
+    "product_inventories": 0.25330034024902676,
+    "weather": 0.037404957338137125
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.46449211241265326,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.8811777449875321,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/report/perspectives/2024/05-summergasoline/article.php"
+  },
+  {
+   "title": "\n\t\tCalifornia gasoline prices increase following refinery outages and declining inventories -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=39592"
+  },
+  {
+   "title": "SB X1-2 and AB X2-1 Implementation | California Energy Commission",
+   "url": "https://www.energy.ca.gov/proceeding/sb-x1-2-and-ab-x2-1-implementation"
+  },
+  {
+   "title": "\n\t\tWest Coast summer refinery margins decline despite reduced capacity -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=62463"
+  },
+  {
+   "title": "\n\t\tNew supply patterns and additional disruptions push California gasoline prices higher -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=21192"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "\n\t\tReduced refinery activity puts upward pressure on gasoline and diesel prices -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=61543"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "Trends and Effects of Changes in Business Cases for Petroleum ...",
+   "url": "https://www.pnnl.gov/sites/default/files/media/file/Petroleum%20Refineries%20Trends%20Report_PNNL-37597%20%281%29.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during May 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during May 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during May 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "May 2024",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2024-05",
+ "request_key": "db0723713616f07a",
+ "retrieved_at": "2026-10-29T16:52:43+00:00",
+ "usage": {
+  "input_tokens": 4069,
+  "output_tokens": 0
+ }
+}

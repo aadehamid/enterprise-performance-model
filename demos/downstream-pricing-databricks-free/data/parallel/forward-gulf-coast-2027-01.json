@@ -1,0 +1,124 @@
+{
+ "answers": {
+  "distillate_outlook": {
+   "choice": "lower",
+   "confidence": 0.24784738168454337,
+   "probabilities": {
+    "about_the_same": 0.12516635871020937,
+    "higher": 0.37626872016676166,
+    "lower": 0.4985649211230289
+   },
+   "type": "choice"
+  },
+  "maintenance_announced": {
+   "noul": 0.03676315034814123,
+   "type": "noul"
+  },
+  "opec_meeting": {
+   "noul": 0.09763143292160291,
+   "type": "noul"
+  },
+  "policy_deadline": {
+   "noul": 0.14630389971128357,
+   "type": "noul"
+  },
+  "weather_outlook": {
+   "choice": "near_normal",
+   "confidence": 0.23524311823737445,
+   "probabilities": {
+    "above_normal": 0.1958462724729951,
+    "below_normal": 0.31399164870208857,
+    "near_normal": 0.4901620788249163
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/report/us_oil.php"
+  },
+  {
+   "title": "Diesel Market Dashboard: Futures, Crack Spread, Stocks",
+   "url": "https://worldoilmonitor.com/diesel-market"
+  },
+  {
+   "title": "Diesel Price Predictions: How Much Higher Prices Can Go as Diesel Prices Top Record $6 Per Gallon",
+   "url": "https://www.barchart.com/story/news/4638736/diesel-price-predictions-how-much-higher-prices-can-go-as-diesel-prices-top-record-6-per-gallon"
+  },
+  {
+   "title": "Gas Prices Top $4 as Oil Above $90 Puts PSX, VLO and MPC in Focus | Markets Insider",
+   "url": "https://markets.businessinsider.com/news/stocks/gas-prices-top-4-as-oil-above-90-puts-psx-vlo-and-mpc-in-focus-1036525062"
+  },
+  {
+   "title": "MPC Bull and Bear Case \u2013 Marathon Petroleum Corporation | Athenic Finance",
+   "url": "https://www.athenic.com/finance/MPC/bull-bear"
+  },
+  {
+   "title": "What High Diesel Prices Mean for These 5 Energy Stocks - AOL",
+   "url": "https://www.aol.com/articles/high-diesel-prices-mean-5-125000000.html"
+  },
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "Marathon Petroleum (MPC) Cours de l'action aujourd'hui, actualit\u00e9s, graphique, r\u00e9sultats | Coinbase",
+   "url": "https://www.coinbase.com/fr/stock/MPC"
+  },
+  {
+   "title": "MPC Stock Forecast 2026-2027 - Marathon Petroleum Corp. Price Targets & Predictions",
+   "url": "https://tickernerd.com/stock/mpc-forecast/"
+  },
+  {
+   "title": "Refining District Louisiana Gulf Coast Refinery Net Production of Petrochemical Feedstocks (Thousand Barrels per Day)",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s=MPCRX_R3C_2"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "distillate_outlook": {
+    "criteria": {
+     "about_the_same": "About the same",
+     "higher": "Higher than in October 2026",
+     "lower": "Lower than in October 2026"
+    },
+    "instructions": "According to the U.S. EIA's most recent Short-Term Energy Outlook, how are U.S. diesel prices expected to move in January 2027 compared with October 2026?",
+    "type": "choice"
+   },
+   "maintenance_announced": {
+    "instructions": "Has planned refinery maintenance (a turnaround) been announced or reported for refineries in the U.S. Gulf Coast (Texas and Louisiana) during January 2027?",
+    "type": "noul"
+   },
+   "opec_meeting": {
+    "instructions": "Is an OPEC+ ministerial or monitoring committee meeting scheduled during January 2027?",
+    "type": "noul"
+   },
+   "policy_deadline": {
+    "instructions": "Is a U.S. federal fuel-policy deadline or effective date (renewable fuel rules, sanctions, export rules or fuel taxes) scheduled during January 2027?",
+    "type": "noul"
+   },
+   "weather_outlook": {
+    "criteria": {
+     "above_normal": "Above normal",
+     "below_normal": "Below normal",
+     "near_normal": "Near normal"
+    },
+    "instructions": "According to NOAA's latest seasonal outlook, how are temperatures expected to compare with normal in the U.S. Gulf Coast (Texas and Louisiana) during January 2027?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "month": "January 2027",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "forward-gulf-coast-2027-01",
+ "request_key": "71ec230a014d2e4f",
+ "retrieved_at": "2026-10-29T16:53:15+00:00",
+ "usage": {
+  "input_tokens": 4008,
+  "output_tokens": 0
+ }
+}

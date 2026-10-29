@@ -1,0 +1,73 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.06745844711442626,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Calendar \u2022 Anacortes, WA \u2022 CivicEngage",
+   "url": "https://www.anacorteswa.gov/calendar.aspx?Keywords=&enddate=12/31/2026&showPastEvents=false&startDate="
+  },
+  {
+   "title": "Share Article -- ANS / Nuclear Newswire / Where\u2019s the plan?",
+   "url": "https://www.ans.org/news/share/article-3516"
+  },
+  {
+   "title": "\n        West Coast gasoline imports hit five-year high after refineries went dark: CAS | S&P Global\n    ",
+   "url": "https://www.spglobal.com/energy/en/news-research/latest-news/refined-products/101626-west-coast-gasoline-imports-hit-five-year-high-after-refineries-went-dark-cas"
+  },
+  {
+   "title": "Refinery Outages & Turnarounds | EuroOilWatch | EuroOilWatch",
+   "url": "https://eurooilwatch.com/refineries"
+  },
+  {
+   "title": "Calendar \u2022 Anacortes, WA \u2022 CivicEngage",
+   "url": "https://www.anacorteswa.gov/calendar"
+  },
+  {
+   "title": "Calendar \u2022 Shell refinery is turned on (1955)",
+   "url": "https://www.anacorteswa.gov/Calendar.aspx?EID=6239&calType=0&day=12&month=10&year=2026"
+  },
+  {
+   "title": "California Fuel Import Reliance, Refinery Closures Raise West Coast Supply Concerns   \u2013 NaturalNews.com",
+   "url": "https://www.naturalnews.com/2026-10-18-california-fuel-import-reliance-refinery-closures-concerns.html"
+  },
+  {
+   "title": "2026 Gulf Coast Refinery Turnaround Schedule | ExecGraph",
+   "url": "https://execgraphenergy.com/turnarounds/2026"
+  },
+  {
+   "title": "California gasoline demand elasticity estimated using refinery outages",
+   "url": "https://www.econstor.eu/bitstream/10419/322347/1/1922901822.pdf"
+  },
+  {
+   "title": "Turnaround Season Dents U.S. LNG Feedgas Demand, EIA Data Show \u2014 Rig & Refinery",
+   "url": "https://www.rigandrefinery.com/articles/turnaround-season-dents-u-s-lng-feedgas-demand-eia-data-show-85448ca4"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "Planned turnaround at the AN refinery (scenario, not MPC's schedule)",
+   "from": "2026-10-01",
+   "refinery": "Anacortes, WA",
+   "region": "West Coast",
+   "to": "2026-10-25"
+  }
+ },
+ "request_id": "event-turnaround_an",
+ "request_key": "ed5eae8ce8939032",
+ "retrieved_at": "2026-10-29T16:51:41+00:00",
+ "usage": {
+  "input_tokens": 4582,
+  "output_tokens": 0
+ }
+}

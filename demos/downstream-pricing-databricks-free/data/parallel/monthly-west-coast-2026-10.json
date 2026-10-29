@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.20190224797835038,
+   "probabilities": {
+    "crude_supply": 0.33491853998195864,
+    "demand": 0.07593868456903494,
+    "logistics": 0.09564458898529894,
+    "policy": 0.0827430278414553,
+    "product_inventories": 0.130794252536154,
+    "weather": 0.2799609060860981
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.05892572456772361,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.8802806459079748,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  },
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "3:2:1 Crack Spread Today | Refining Margin | Fuel Data Portal",
+   "url": "https://fueldataportal.com/data/3-2-1-crack-spread"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "Market Talk | $5 Diesel Now Feels Inevitable: ULSD Blasts Past March Highs, No Resistance in Sight",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/usd5-diesel-now-feels-inevitable-ulsd-blasts-past-march-highs-no-resistance-in-sight"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Oil Market Report - September 2026 \u2013 Analysis - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-september-2026"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145/"
+  },
+  {
+   "title": "Oil Market Report - July 2026 \u2013 Analysis",
+   "url": "https://www.iea.org/reports/oil-market-report-july-2026"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during October 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during October 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during October 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "October 2026",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2026-10",
+ "request_key": "2f27ec9a7f5b4f4a",
+ "retrieved_at": "2026-10-29T16:53:00+00:00",
+ "usage": {
+  "input_tokens": 3961,
+  "output_tokens": 0
+ }
+}

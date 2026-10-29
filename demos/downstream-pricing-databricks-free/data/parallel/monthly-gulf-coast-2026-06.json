@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "logistics",
+   "confidence": 0.5307186945714447,
+   "probabilities": {
+    "crude_supply": 0.05941550568575815,
+    "demand": 0.017273781643321287,
+    "logistics": 0.608932245476204,
+    "policy": 0.08291312356905788,
+    "product_inventories": 0.12991080163058963,
+    "weather": 0.10155454199506905
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.07720779715322856,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.18584299061763526,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "Hurricane heads for US Gulf coast, causing shut-ins | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2888293-hurricane-heads-for-us-gulf-coast-causing-shut-ins"
+  },
+  {
+   "title": "Hurricane Isaias shuts down nearly 63% of Gulf oil output, raising pump-price concerns",
+   "url": "https://abcnews4.com/news/nation-world/hurricane-isaias-shuts-in-nearly-63-of-gulf-oil-output-raising-pump-price-concerns-category-3-hurricane-strong-wind-speeds-aaa-gas-prices-florida-news"
+  },
+  {
+   "title": "Hurricane Isaias shuts down nearly 63% of Gulf oil output, raising pump-price concerns",
+   "url": "https://fox23.com/news/nation-world/hurricane-isaias-shuts-in-nearly-63-of-gulf-oil-output-raising-pump-price-concerns-category-3-hurricane-strong-wind-speeds-aaa-gas-prices-florida-news"
+  },
+  {
+   "title": "Hurricane Isaias shuts down nearly 63% of Gulf oil output, raising pump-price concerns",
+   "url": "https://abcnews4.com/news/nation-world/hurricane-isaias-shuts-in-nearly-63-of-gulf-oil-output-raising-pump-price-concerns-category-3-hurricane-strong-wind-speeds-aaa-gas-prices-florida-news?teaserSource=trending"
+  },
+  {
+   "title": "Hurricane Isaias shuts down nearly 63% of Gulf oil output, raising pump-price concerns",
+   "url": "https://katv.com/news/nation-world/hurricane-isaias-shuts-in-nearly-63-of-gulf-oil-output-raising-pump-price-concerns-category-3-hurricane-strong-wind-speeds-aaa-gas-prices-florida-news"
+  },
+  {
+   "title": "3:2:1 Crack Spread Today | Refining Margin | Fuel Data Portal",
+   "url": "https://fueldataportal.com/data/3-2-1-crack-spread"
+  },
+  {
+   "title": "\n\t\t\t\tAmerica Has Little Fuel Cushion Left If A Hurricane Knocks Out Gulf Coast Refineries | \n\t\tThe Daily Caller\n\t",
+   "url": "https://dailycaller.com/2026/10/10/hurricane-isaias-gulf-coast-refineries-fuel-inventories-strategic-petroleum-reserve-steve-milloy-ellen-wald/"
+  },
+  {
+   "title": "DOE Taps Gulf Coast Oil Reserve to Support Louisiana Refinery \u00b7 Big Energy",
+   "url": "https://bigenergynews.com/2026/10/doe-taps-gulf-coast-oil-reserve-to-support-louisiana-refinery/"
+  },
+  {
+   "title": "Trump-Putin Diesel Deal: What It Means For Refiner Stocks - Marathon Petroleum (NYSE:MPC), Phillips 66 (N",
+   "url": "https://www.benzinga.com/markets/commodities/26/10/62499797/trump-putin-diesel-deal-refiner-stocks-valero-pbf-marathon"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during June 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during June 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during June 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "June 2026",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2026-06",
+ "request_key": "43470f2cab4805d2",
+ "retrieved_at": "2026-10-29T16:52:14+00:00",
+ "usage": {
+  "input_tokens": 5254,
+  "output_tokens": 0
+ }
+}

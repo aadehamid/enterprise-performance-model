@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.42642383519285815,
+   "probabilities": {
+    "crude_supply": 0.5220198626607151,
+    "demand": 0.2265582741388658,
+    "logistics": 0.028123351723096907,
+    "policy": 0.019550100928944346,
+    "product_inventories": 0.07346864652320276,
+    "weather": 0.13027976402517508
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.05228413512500579,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.17065669231074948,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Argus Monthly Sulphur Outlook",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/APAC-RSMT-FER-2025-10-01-SAM-FER-Fertilizer%20Campaign-Argus%20Monthly%20Sulphur%20Outlook.pdf?version=0"
+  },
+  {
+   "title": "[PDF] MPC Q3 2025 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_news/2025/MPC-Q3-2025-Earnings-Release.pdf"
+  },
+  {
+   "title": "MPC Q1 2025 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Earnings-Release.pdf"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Market Talk | $5 Diesel Now Feels Inevitable: ULSD Blasts Past March Highs, No Resistance in Sight",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/usd5-diesel-now-feels-inevitable-ulsd-blasts-past-march-highs-no-resistance-in-sight"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Oil Market Report - September 2026 \u2013 Analysis - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-september-2026"
+  },
+  {
+   "title": "Oil Market Report - December 2025 - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-december-2025"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during September 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during September 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during September 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "September 2025",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2025-09",
+ "request_key": "943ffebbec6ddc10",
+ "retrieved_at": "2026-10-29T16:52:30+00:00",
+ "usage": {
+  "input_tokens": 4407,
+  "output_tokens": 0
+ }
+}

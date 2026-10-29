@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.8307731883860063,
+   "probabilities": {
+    "crude_supply": 0.8589776569883386,
+    "demand": 0.0072862532399174465,
+    "logistics": 0.0055237908239857214,
+    "policy": 0.0310944617013238,
+    "product_inventories": 0.0135669452252437,
+    "weather": 0.08355089202119065
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.37199954448889155,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.5601621934280028,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "SB X1-2 and AB X2-1 Implementation | California Energy Commission",
+   "url": "https://www.energy.ca.gov/proceeding/sb-x1-2-and-ab-x2-1-implementation"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  },
+  {
+   "title": "[PDF] Energy Argus Petroleum Coke",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/GEN-Sample-Report-Energy-Argus-Petroleum-Coke-(2025-07-09).pdf?version=0"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145/"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603/"
+  },
+  {
+   "title": "Why the El Segundo Chevron Fire Still Makes People Nervous \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/why-the-el-segundo-chevron-fire-still-makes-people-nervous-i6x"
+  },
+  {
+   "title": "California gasoline demand elasticity estimated using refinery outages",
+   "url": "https://www.econstor.eu/bitstream/10419/322347/1/1922901822.pdf"
+  },
+  {
+   "title": "Oil Market Report - March 2025 - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-march-2025"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during February 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during February 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during February 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "February 2025",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2025-02",
+ "request_key": "807f02528b43ac58",
+ "retrieved_at": "2026-10-29T16:52:48+00:00",
+ "usage": {
+  "input_tokens": 4060,
+  "output_tokens": 0
+ }
+}

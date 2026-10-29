@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.42158112258612085,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "weather",
+   "confidence": 0.886133764085987,
+   "probabilities": {
+    "crude_market": 0.02952730013886331,
+    "logistics": 0.02905524801561085,
+    "none": 0.02533306212399678,
+    "policy": 0.0035821908987278216,
+    "product_market": 0.007390728751145311,
+    "weather": 0.9051114700716558
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "US Gulf operators shut-in output before storm: Update | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2887918-us-gulf-operators-shut-in-output-before-storm-update"
+  },
+  {
+   "title": "Hurricane Isaias could nudge fuel prices higher if Gulf of Mexico refineries lose power",
+   "url": "https://www.mercurynews.com/2026/10/09/extreme-weather-isaias-energy"
+  },
+  {
+   "title": "\n\t\tHurricane Isaias nears landfall, leading to production shut-ins -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68284"
+  },
+  {
+   "title": "Hurricane heads for US Gulf coast, causing shut-ins | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2888293-hurricane-heads-for-us-gulf-coast-causing-shut-ins"
+  },
+  {
+   "title": "A person's profile page (not kept)",
+   "url": "https://muckrack.com"
+  },
+  {
+   "title": "How the oil industry is preparing for Hurricane Isaias : NPR",
+   "url": "https://www.npr.org/2026/10/09/nx-s1-5995417/hurricane-isaias-oil-refineries-diesel-gasoline-prices"
+  },
+  {
+   "title": "Hurricane Isaias shuts down nearly 63% of Gulf oil output, raising pump-price concerns",
+   "url": "https://abcnews4.com/news/nation-world/hurricane-isaias-shuts-in-nearly-63-of-gulf-oil-output-raising-pump-price-concerns-category-3-hurricane-strong-wind-speeds-aaa-gas-prices-florida-news"
+  },
+  {
+   "title": "Hurricane heads for US Gulf coast: Update | Latest Market News",
+   "url": "https://www.argusmedia.com/es/news-and-insights/latest-market-news/2888459-hurricane-heads-for-us-gulf-coast-update"
+  },
+  {
+   "title": "Hurricane Isaias could nudge fuel prices higher if Gulf of Mexico refineries lose power",
+   "url": "https://www.saratogian.com/2026/10/09/extreme-weather-isaias-energy"
+  },
+  {
+   "title": "How the oil industry is preparing for Hurricane Isaias",
+   "url": "https://kvcr.org/news/npr-top-stories/2026-10-09/hurricane-isaias-oil-refineries-diesel-gasoline-prices"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-10-06",
+   "decision": "Cut crude runs at Garyville by up to 45 points of utilization at the storm's peak, ahead of Hurricane Isaias",
+   "expected_outcome": "Crude utilization no lower than about 48% during the storm (October 7 to 15), the pre-storm 93% less the full cut",
+   "refineries": "Garyville, LA",
+   "region": "Gulf Coast",
+   "window": "2026-10-06 to 2026-11-05"
+  }
+ },
+ "request_id": "diagnosis-D01",
+ "request_key": "39ad5adc745c44f3",
+ "retrieved_at": "2026-10-29T16:53:04+00:00",
+ "usage": {
+  "input_tokens": 4165,
+  "output_tokens": 0
+ }
+}

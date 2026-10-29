@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.30060287381737494,
+   "probabilities": {
+    "crude_supply": 0.4171690615144791,
+    "demand": 0.040341414116570926,
+    "logistics": 0.08943026648348365,
+    "policy": 0.04175899797993773,
+    "product_inventories": 0.3069324768074408,
+    "weather": 0.10436778309808782
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.03990942361776653,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.7527449466299538,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tReduced refinery activity puts upward pressure on gasoline and diesel prices -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php/detail.php?id=61543"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "gasoline prices - Thoughtful Journalism",
+   "url": "https://energi.media/news/reduced-refinery-activity-puts-upward-pressure-on-diesel-and-gasoline-prices/"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  },
+  {
+   "title": "\n\t\tMidwest refinery outage is affecting petroleum product markets -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=61403&quot"
+  },
+  {
+   "title": "FAQ California Gas Prices and the Impacts of the Iran War",
+   "url": "https://www.energy.ca.gov/programs-and-topics/topics/petroleum-fuels-transition/faq-california-gas-prices-and-impacts-iran"
+  },
+  {
+   "title": "MNI US Refinery Maintenance Schedule (28 Mar 2024) - rbl.ms",
+   "url": "https://roar-assets-auto.rbl.ms/files/60585/MNI%20US%20Refinery%20Maintenance%20Schedule%20.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during March 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during March 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during March 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "March 2024",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2024-03",
+ "request_key": "7521d1e785f2debe",
+ "retrieved_at": "2026-10-29T16:52:41+00:00",
+ "usage": {
+  "input_tokens": 3703,
+  "output_tokens": 0
+ }
+}

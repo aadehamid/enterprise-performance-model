@@ -1,0 +1,124 @@
+{
+ "answers": {
+  "distillate_outlook": {
+   "choice": "lower",
+   "confidence": 0.3099106104450748,
+   "probabilities": {
+    "about_the_same": 0.3386089697808763,
+    "higher": 0.12145062325574058,
+    "lower": 0.5399404069633832
+   },
+   "type": "choice"
+  },
+  "maintenance_announced": {
+   "noul": 0.10768116530302832,
+   "type": "noul"
+  },
+  "opec_meeting": {
+   "noul": 0.017917227299783463,
+   "type": "noul"
+  },
+  "policy_deadline": {
+   "noul": 0.038030277530642025,
+   "type": "noul"
+  },
+  "weather_outlook": {
+   "choice": "near_normal",
+   "confidence": 0.15129043552390092,
+   "probabilities": {
+    "above_normal": 0.19363767907371315,
+    "below_normal": 0.37216869724368634,
+    "near_normal": 0.4341936236826006
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/report/us_oil.php"
+  },
+  {
+   "title": "Regional gasoline price differences - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/energyexplained/gasoline/regional-price-differences.php"
+  },
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.doe.gov/outlooks/steo/report/petro_prod.php"
+  },
+  {
+   "title": "\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/petroleum/prices/"
+  },
+  {
+   "title": "Gulf Coast and Mid-Continent crude oil supply north to Midwest refining markets. However, production from those regions is in decline,",
+   "url": "https://digitalprairie.ok.gov/digital/api/collection/stgovpub/id/646980/download"
+  },
+  {
+   "title": "Refining crude oil - refinery rankings - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/energyexplained/oil-and-petroleum-products/refining-crude-oil-refinery-rankings.php"
+  },
+  {
+   "title": "MPC Stock Forecast 2026-2027 - Marathon Petroleum Corp. Price Targets & Predictions",
+   "url": "https://tickernerd.com/stock/mpc-forecast/"
+  },
+  {
+   "title": "Diesel Prices Could Moderate as Midwest Refinery Issues Ease - RFD-TV",
+   "url": "https://www.rfdtv.com/diesel-prices-could-moderate-as-midwest-refinery-issues-ease"
+  },
+  {
+   "title": "Refinery Outages: Description and Potential Impact on Petroleum Product Prices - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/articles/refoutagesindex.php"
+  },
+  {
+   "title": "Opec+ Holds Quotas Steady as Gulf Shipping Lanes Cap Real Supply",
+   "url": "https://discoveryalert.com/news/opec-quotas-gulf-shipping-supply-october-2026/"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "distillate_outlook": {
+    "criteria": {
+     "about_the_same": "About the same",
+     "higher": "Higher than in October 2026",
+     "lower": "Lower than in October 2026"
+    },
+    "instructions": "According to the U.S. EIA's most recent Short-Term Energy Outlook, how are U.S. diesel prices expected to move in January 2027 compared with October 2026?",
+    "type": "choice"
+   },
+   "maintenance_announced": {
+    "instructions": "Has planned refinery maintenance (a turnaround) been announced or reported for refineries in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during January 2027?",
+    "type": "noul"
+   },
+   "opec_meeting": {
+    "instructions": "Is an OPEC+ ministerial or monitoring committee meeting scheduled during January 2027?",
+    "type": "noul"
+   },
+   "policy_deadline": {
+    "instructions": "Is a U.S. federal fuel-policy deadline or effective date (renewable fuel rules, sanctions, export rules or fuel taxes) scheduled during January 2027?",
+    "type": "noul"
+   },
+   "weather_outlook": {
+    "criteria": {
+     "above_normal": "Above normal",
+     "below_normal": "Below normal",
+     "near_normal": "Near normal"
+    },
+    "instructions": "According to NOAA's latest seasonal outlook, how are temperatures expected to compare with normal in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during January 2027?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "month": "January 2027",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "forward-mid-continent-2027-01",
+ "request_key": "19ec0f074900d13b",
+ "retrieved_at": "2026-10-29T16:53:17+00:00",
+ "usage": {
+  "input_tokens": 3848,
+  "output_tokens": 0
+ }
+}

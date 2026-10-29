@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.09416973410632018,
+   "probabilities": {
+    "crude_supply": 0.24514144508860014,
+    "demand": 0.10575909633097302,
+    "logistics": 0.07099388672086808,
+    "policy": 0.21911495195426217,
+    "product_inventories": 0.16652147003100656,
+    "weather": 0.19246914987429004
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.0964204267980375,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.5518376688013026,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "\n\t\tU.S. refining capacity decreased during 2025 -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=67807"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  },
+  {
+   "title": "Refiner Earnings Supercycle: History Says Buy These 5 Stocks - Marathon Petroleum (NYSE:MPC)",
+   "url": "https://www.benzinga.com/markets/equities/26/03/51197585/refiner-earnings-supercycle-hormuz-iran-war-diesel-crack-spread-2026-stocks-to-buy"
+  },
+  {
+   "title": "\n\t\tRefinery closures present risk for higher gasoline prices on the West Coast -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65704"
+  },
+  {
+   "title": "Oil Market Report - December 2025 - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-december-2025"
+  },
+  {
+   "title": "DPMO Market Update and Consumer Advisory",
+   "url": "https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=98245&tn=261778"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during June 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during June 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during June 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "June 2025",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2025-06",
+ "request_key": "069de64578756c55",
+ "retrieved_at": "2026-10-29T16:52:50+00:00",
+ "usage": {
+  "input_tokens": 4036,
+  "output_tokens": 0
+ }
+}

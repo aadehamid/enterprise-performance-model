@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "product_inventories",
+   "confidence": 0.17791367583873355,
+   "probabilities": {
+    "crude_supply": 0.13154567248182567,
+    "demand": 0.15073833889318014,
+    "logistics": 0.13481913135425394,
+    "policy": 0.03749591245429343,
+    "product_inventories": 0.3149280631989446,
+    "weather": 0.2304728816175022
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.20645107115849684,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.25671478339958376,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145/"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "Refiners running full throttle could lead to a heavier fall maintenance season | RBN Energy",
+   "url": "https://rbnenergy.com/about/in-the-news/refiners-running-full-throttle-could-lead-heavier-fall-maintenance-season"
+  },
+  {
+   "title": "Tight product supplies lift US summer refinery utilization to highest level since 1998 | Oil & Gas Journal",
+   "url": "https://www.ogj.com/general-interest/economics-markets/news/55413722/tight-product-supplies-lift-us-summer-refinery-utilization-to-highest-since-1998"
+  },
+  {
+   "title": "Argus Base Oils Outlook",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/PRO-sample-report-Argus-Base-Oils-Outlook-2023-09-29.pdf?version=0"
+  },
+  {
+   "title": "Market Talk | $5 Diesel Now Feels Inevitable: ULSD Blasts Past March Highs, No Resistance in Sight",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/usd5-diesel-now-feels-inevitable-ulsd-blasts-past-march-highs-no-resistance-in-sight"
+  },
+  {
+   "title": "Refinery Conflagration Dynamics and Infrastructure Fragility \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/refinery-conflagration-dynamics-infrastructure-fragility-metrics"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during December 2023?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during December 2023?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during December 2023?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "December 2023",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2023-12",
+ "request_key": "fd483bfd61756e08",
+ "retrieved_at": "2026-10-29T16:52:17+00:00",
+ "usage": {
+  "input_tokens": 3478,
+  "output_tokens": 0
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.8900495728038299,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "IRS provides dyed diesel fuel relief related to excise tax following President Trump\u2019s Executive Order | Internal Revenue Service",
+   "url": "https://www.irs.gov/newsroom/irs-provides-dyed-diesel-fuel-relief-related-to-excise-tax-following-president-trumps-executive-order"
+  },
+  {
+   "title": "Fact Sheet: President Donald J. Trump Promotes Diesel Affordability \u2013 The White House",
+   "url": "https://www.whitehouse.gov/fact-sheets/2026/10/fact-sheet-president-donald-j-trump-promotes-diesel-affordability/"
+  },
+  {
+   "title": "Presidential Documents",
+   "url": "https://www.whitehouse.gov/wp-content/uploads/2026/10/eo-14435.pdf"
+  },
+  {
+   "title": "WHAT THEY ARE SAYING: President Trump Delivers Immediate Diesel Relief, Saving Americans Up to $100 Per Fill \u2013 The White House",
+   "url": "https://www.whitehouse.gov/releases/2026/10/what-they-are-saying-president-trump-delivers-immediate-diesel-relief-saving-americans-up-to-100-per-fill/?cst&query-11-page=7"
+  },
+  {
+   "title": "President Trump Takes Decisive Action to Lower Diesel Costs for American Truckers, Farmers \u2013 The White House",
+   "url": "https://www.whitehouse.gov/releases/2026/10/president-trump-takes-decisive-action-to-lower-diesel-costs-for-american-truckers-farmers"
+  },
+  {
+   "title": "\n\tNewsline | UPDATED: President Trump Issues EO on Emergency Tax Re\n",
+   "url": "https://www.abc.org/News-Media/Newsline/president-trump-issues-eo-on-emergency-tax-relief-on-diesel-fuel"
+  },
+  {
+   "title": "Emergency Tax Relief on Diesel Fuel \u2013 The White House",
+   "url": "https://www.whitehouse.gov/presidential-actions/2026/10/emergency-tax-relief-on-diesel-fuel/"
+  },
+  {
+   "title": "\n\tNewsline | UPDATED: IRS Announces Further Guidance on Temporary R\n",
+   "url": "https://www.abc.org/News-Media/Newsline/irs-announces-temporary-reporting-and-recordkeeping-relief-for-dyed-diesel"
+  },
+  {
+   "title": "\n      Federal Register\n       :: \n      Emergency Tax Relief on Diesel Fuel\n    ",
+   "url": "https://www.federalregister.gov/documents/2026/10/09/2026-20855/emergency-tax-relief-on-diesel-fuel"
+  },
+  {
+   "title": "IRS Grants Dyed Diesel Relief, Eases Reporting and Recordkeeping After Executive Order \u2013 Office of Advocacy",
+   "url": "https://advocacy.sba.gov/2026/10/22/irs-grants-dyed-diesel-relief-eases-reporting-and-recordkeeping-after-executive-order/"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "U.S. executive order expanding access to dyed diesel and deferring certain federal excise-tax payments through year-end",
+   "from": "2026-10-05",
+   "region": "United States",
+   "to": "2026-12-31"
+  }
+ },
+ "request_id": "event-dyed_diesel_order",
+ "request_key": "54a634027541f8f5",
+ "retrieved_at": "2026-10-29T16:51:39+00:00",
+ "usage": {
+  "input_tokens": 4560,
+  "output_tokens": 0
+ }
+}

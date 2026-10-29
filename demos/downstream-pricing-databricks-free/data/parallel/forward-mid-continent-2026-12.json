@@ -1,0 +1,124 @@
+{
+ "answers": {
+  "distillate_outlook": {
+   "choice": "lower",
+   "confidence": 0.2971920982314062,
+   "probabilities": {
+    "about_the_same": 0.17230724850999637,
+    "higher": 0.2962313526690662,
+    "lower": 0.5314613988209375
+   },
+   "type": "choice"
+  },
+  "maintenance_announced": {
+   "noul": 0.11680257334245035,
+   "type": "noul"
+  },
+  "opec_meeting": {
+   "noul": 0.11299683902652442,
+   "type": "noul"
+  },
+  "policy_deadline": {
+   "noul": 0.04223720035793383,
+   "type": "noul"
+  },
+  "weather_outlook": {
+   "choice": "near_normal",
+   "confidence": 0.23082493200994103,
+   "probabilities": {
+    "above_normal": 0.20222810977965003,
+    "below_normal": 0.31055526888038926,
+    "near_normal": 0.4872166213399607
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/report/us_oil.php"
+  },
+  {
+   "title": "Regional gasoline price differences - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/energyexplained/gasoline/regional-price-differences.php"
+  },
+  {
+   "title": "Diesel Market Dashboard: Futures, Crack Spread, Stocks",
+   "url": "https://worldoilmonitor.com/diesel-market"
+  },
+  {
+   "title": "\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/petroleum/prices/"
+  },
+  {
+   "title": "With Diesel Margins Stretched, Production Is Underway at Nevada's Only Crude Oil Refinery",
+   "url": "https://money.tmx.com/quote/MPC:US/news/7480908760300212/With_Diesel_Margins_Stretched_Production_Is_Underway_at_Nevadas_Only_Crude_Oil_Refinery"
+  },
+  {
+   "title": "MPC Stock Forecast 2026-2027 - Marathon Petroleum Corp. Price Targets & Predictions",
+   "url": "https://tickernerd.com/stock/mpc-forecast/"
+  },
+  {
+   "title": "US-Russia Diesel Deal: What\u2019s in the Plan and Will Fuel Prices Fall? | EBC Financial Group",
+   "url": "https://www.ebc.com/forex/us-russia-diesel-deal-2026-fuel-prices"
+  },
+  {
+   "title": "What High Diesel Prices Mean for These 5 Energy Stocks - AOL",
+   "url": "https://www.aol.com/articles/high-diesel-prices-mean-5-125000000.html"
+  },
+  {
+   "title": "Refinery Outages: Description and Potential Impact on Petroleum Product Prices - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/articles/refoutagesindex.php"
+  },
+  {
+   "title": "Delek starts maintenance at Big Spring refinery units",
+   "url": "https://www.qcintel.com/article/delek-starts-maintenance-at-big-spring-refinery-units-74480.html"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "distillate_outlook": {
+    "criteria": {
+     "about_the_same": "About the same",
+     "higher": "Higher than in October 2026",
+     "lower": "Lower than in October 2026"
+    },
+    "instructions": "According to the U.S. EIA's most recent Short-Term Energy Outlook, how are U.S. diesel prices expected to move in December 2026 compared with October 2026?",
+    "type": "choice"
+   },
+   "maintenance_announced": {
+    "instructions": "Has planned refinery maintenance (a turnaround) been announced or reported for refineries in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during December 2026?",
+    "type": "noul"
+   },
+   "opec_meeting": {
+    "instructions": "Is an OPEC+ ministerial or monitoring committee meeting scheduled during December 2026?",
+    "type": "noul"
+   },
+   "policy_deadline": {
+    "instructions": "Is a U.S. federal fuel-policy deadline or effective date (renewable fuel rules, sanctions, export rules or fuel taxes) scheduled during December 2026?",
+    "type": "noul"
+   },
+   "weather_outlook": {
+    "criteria": {
+     "above_normal": "Above normal",
+     "below_normal": "Below normal",
+     "near_normal": "Near normal"
+    },
+    "instructions": "According to NOAA's latest seasonal outlook, how are temperatures expected to compare with normal in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during December 2026?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "month": "December 2026",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "forward-mid-continent-2026-12",
+ "request_key": "e8faac0b6e2dfb1d",
+ "retrieved_at": "2026-10-29T16:53:17+00:00",
+ "usage": {
+  "input_tokens": 4667,
+  "output_tokens": 0
+ }
+}

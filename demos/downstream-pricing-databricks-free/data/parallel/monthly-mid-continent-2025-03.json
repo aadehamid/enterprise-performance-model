@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.8522185941988651,
+   "probabilities": {
+    "crude_supply": 0.8768488284990543,
+    "demand": 0.01515490895286492,
+    "logistics": 0.003844051702182403,
+    "policy": 0.0057288357610070575,
+    "product_inventories": 0.08600887157719878,
+    "weather": 0.012414503507692584
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.02276594411256395,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.8396541201957671,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tReduced refinery activity puts upward pressure on gasoline and diesel prices -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php/detail.php?id=61543"
+  },
+  {
+   "title": "Oil Market Report - March 2025 - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-march-2025"
+  },
+  {
+   "title": "\n\t\tMidwest refinery outage is affecting petroleum product markets -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=61403"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Oil Market Report - December 2025 - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-december-2025"
+  },
+  {
+   "title": "Refining Margins Soar as Global Oil Product Markets Tighten | OilPrice.com",
+   "url": "https://oilprice.com/Energy/Energy-General/Refining-Margins-Soar-as-Global-Oil-Product-Markets-Tighten.html"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "User | chroniclejournal.com - Marathon Petroleum (MPC): A Deep-Dive into the Refining Giant\u2019s \u201cCash Flow Machine\u201d",
+   "url": "http://markets.chroniclejournal.com/chroniclejournal/article/finterra-2026-3-12-marathon-petroleum-mpc-a-deep-dive-into-the-refining-giants-cash-flow-machine"
+  },
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during March 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during March 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during March 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "March 2025",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2025-03",
+ "request_key": "e2a0abbfdf51e563",
+ "retrieved_at": "2026-10-29T16:52:26+00:00",
+ "usage": {
+  "input_tokens": 3517,
+  "output_tokens": 0
+ }
+}

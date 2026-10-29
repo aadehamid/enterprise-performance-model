@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.7485808556519195,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "weather",
+   "confidence": 0.5679482324044647,
+   "probabilities": {
+    "crude_market": 0.15999669095213445,
+    "logistics": 0.046889547942828826,
+    "none": 0.008180287267689407,
+    "policy": 0.12158170222426831,
+    "product_market": 0.023394911276025176,
+    "weather": 0.6399568603370539
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "The G7 reserve release is calming traders. The Gulf hurricane and a frozen OPEC+ review suggest it shouldn't. \u2014 EnergyReader.io",
+   "url": "http://energyreader.io/brief/15253"
+  },
+  {
+   "title": "Oil Prices Diverge as Supply Risks Mount",
+   "url": "https://www.rigzone.com/News/Print/184860/Oil_Prices_Diverge_as_Supply_Risks_Mount"
+  },
+  {
+   "title": "US crude stocks fall on hurricane production shut-ins; distillate inventories fall, EIA says | BOE Report",
+   "url": "https://boereport.com/2026/10/15/us-crude-stocks-fall-on-hurricane-production-shut-ins-distillate-inventories-fall-eia-says/amp/"
+  },
+  {
+   "title": "gulf oil supplies disruption News and Updates from The Economic Times - Page 1",
+   "url": "http://widgets.economictimes.com/topic/gulf-oil-supplies-disruption/news"
+  },
+  {
+   "title": "gulf oil supplies disruption: Latest News & Videos, Photos about gulf oil supplies disruption  | The Economic Times - Page 1",
+   "url": "http://widgets.economictimes.com/topic/gulf-oil-supplies-disruption"
+  },
+  {
+   "title": "Cracks in the Pump: Why the White House\u2019s Emergency Diesel Order Falls Short for Farmers and Truckers",
+   "url": "https://myselectroof.com/cracks-in-the-pump-why-the-white-houses-emergency-diesel-order-falls-short-for-farmers-and-truckers"
+  },
+  {
+   "title": "Crude oil price outlook (WTI): bullish or bearish? \u00b7 ForexDecider",
+   "url": "https://forexdecider.com/oil"
+  },
+  {
+   "title": "NKHP Grain Export Terminal Says Repairs After Ukrainian ...",
+   "url": "https://thetruestory.news/en/world/story/81e80eb0-a0b1-11f1-9ef7-a8a1590471b5"
+  },
+  {
+   "title": "Trump expands access to tax-exempt diesel fuel | 1450 AM 99.7 FM WHTC | Holland",
+   "url": "https://whtc.com/2026/10/05/trump-to-issue-order-expanding-access-to-tax-exempt-diesel-fuel-sources-say"
+  },
+  {
+   "title": "USDA secretary urges states to allow on-road dyed diesel | Arkansas Advocate",
+   "url": "https://arkansasadvocate.com/2026/10/06/repub/usda-secretary-urges-states-to-allow-on-road-dyed-diesel"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-10-02",
+   "decision": "Defer part of November's crude purchases after the G7 emergency-stock release",
+   "expected_outcome": "WTI at least $2.00/bbl lower ten trading days later",
+   "refineries": "Galveston Bay, Texas City, TX, Garyville, LA",
+   "region": "Gulf Coast",
+   "window": "2026-10-02 to 2026-11-01"
+  }
+ },
+ "request_id": "diagnosis-D08",
+ "request_key": "53407a30029337d2",
+ "retrieved_at": "2026-10-29T16:53:09+00:00",
+ "usage": {
+  "input_tokens": 4793,
+  "output_tokens": 0
+ }
+}

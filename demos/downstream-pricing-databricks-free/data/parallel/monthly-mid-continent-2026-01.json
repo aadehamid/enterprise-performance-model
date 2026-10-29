@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.6953610167526297,
+   "probabilities": {
+    "crude_supply": 0.06837482945404441,
+    "demand": 0.07579194768176876,
+    "logistics": 0.01710237391711352,
+    "policy": 0.0238811650384809,
+    "product_inventories": 0.06871550328140105,
+    "weather": 0.7461341806271914
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.05924436546043467,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.7306802155153503,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "[PDF] MPC Q1 2026 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2026/q1/MPC-1Q-2026-Earnings-Release.pdf"
+  },
+  {
+   "title": "Russia Bans Producers From Exporting Gasoline Until July 31 - The Moscow Times",
+   "url": "https://www.themoscowtimes.com/2026/04/02/russia-bans-producers-from-exporting-gasoline-until-july-31-a92412"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Refinery Conflagration Dynamics and Infrastructure Fragility \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/refinery-conflagration-dynamics-infrastructure-fragility-metrics"
+  },
+  {
+   "title": "Market Talk | $5 Diesel Now Feels Inevitable: ULSD Blasts Past March Highs, No Resistance in Sight",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/usd5-diesel-now-feels-inevitable-ulsd-blasts-past-march-highs-no-resistance-in-sight"
+  },
+  {
+   "title": "Will Martinez Refinery Restart Strengthen PBF Energy's ...",
+   "url": "https://www.zacks.com/stock/news/3015898/will-martinez-refinery-restart-strengthen-pbf-energys-cash-flow?cid=CS-ZC-FT-analyst_blog|quick_take-3015898"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during January 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during January 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during January 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "January 2026",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2026-01",
+ "request_key": "9e4e8daf58b5856f",
+ "retrieved_at": "2026-10-29T16:52:33+00:00",
+ "usage": {
+  "input_tokens": 3922,
+  "output_tokens": 0
+ }
+}

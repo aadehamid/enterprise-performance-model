@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.18411048245418193,
+   "probabilities": {
+    "crude_supply": 0.3200920687118183,
+    "demand": 0.07300291044002274,
+    "logistics": 0.050939852036676704,
+    "policy": 0.011824960081511399,
+    "product_inventories": 0.2849051882273359,
+    "weather": 0.25923502050263486
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.04147015704950257,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.6406736176669527,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Gulf coast refiners continue storm damage assessments | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2585935-gulf-coast-refiners-continue-storm-damage-assessments"
+  },
+  {
+   "title": "Gulf coast refiners continue storm assessments: Update | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2586007-gulf-coast-refiners-continue-storm-assessments-update"
+  },
+  {
+   "title": "\n\t\tCold weather led to refinery shutdowns in U.S. Gulf Coast region -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=46936"
+  },
+  {
+   "title": "US Gulf Coast fuel oil imports at record low as refiners opt for heavier crude | Reuters",
+   "url": "https://www.reuters.com/business/energy/us-gulf-coast-fuel-oil-imports-record-low-refiners-opt-heavier-crude-2025-07-07"
+  },
+  {
+   "title": "Gulf Coast refineries face margin squeeze as crude prices tumble - BIC Magazine",
+   "url": "https://www.bicmagazine.com/industry/refining-petrochem/gulf-coast-refineries-face-margin-squeeze"
+  },
+  {
+   "title": "US Gulf Coast-Bound Fuel Oil Cargoes Hit Five-Year Low",
+   "url": "https://www.marinelink.com/news/us-gulf-coastbound-fuel-oil-cargoes-hit-516806"
+  },
+  {
+   "title": "\n\t\tRefining industry risks from 2025 hurricane season -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65304"
+  },
+  {
+   "title": "US Gulf bunker fuel supply could tighten amid outage at\n      Valero Port Arthur refinery | ICIS",
+   "url": "https://www.icis.com/explore/resources/news/2026/03/25/11191758/us-gulf-bunker-fuel-supply-could-tighten-amid-outage-at-valero-port-arthur-refinery/"
+  },
+  {
+   "title": "Refining District Louisiana Gulf Coast Refinery and ...",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s=MGRRP3C2"
+  },
+  {
+   "title": "Refining District Louisiana Gulf Coast Refinery Yield of Distillate Fuel Oil (Percent)",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=A&n=PET&s=MDIRY3C3"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during June 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during June 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during June 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "June 2024",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2024-06",
+ "request_key": "e968ebd41d2d4bae",
+ "retrieved_at": "2026-10-29T16:51:59+00:00",
+ "usage": {
+  "input_tokens": 3877,
+  "output_tokens": 0
+ }
+}

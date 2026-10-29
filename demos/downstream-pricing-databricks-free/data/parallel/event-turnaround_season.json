@@ -1,0 +1,72 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.8223918982948439,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Swift Autumn Edition 2026 - The IFT",
+   "url": "https://www.the-ift.com/autumn-summer-edition-2026/"
+  },
+  {
+   "title": "Arlington Garden Marks 20 Years With \u201cAutumn in the Garden\u201d",
+   "url": "https://www.coloradoboulevard.net/arlington-garden-marks-20-years-with-autumn-in-the-garden/"
+  },
+  {
+   "title": "US EIA Refinery Crude Runs Change (Oct/09) 0.135M (Prev. 0.223M) | Newsquawk",
+   "url": "https://www.newsquawk.com/headlines/us-eia-refinery-crude-runs-change-oct09-0135m-prev-0223m"
+  },
+  {
+   "title": "\u201cStrong\u201d festive period performance for Mulberry amid turnaround strategy  | Insider Media",
+   "url": "https://www.insidermedia.com/news/national/strong-festive-period-performance-for-mulberry-amid-turnaround-strategy"
+  },
+  {
+   "title": "Release Update - Autumn 2026",
+   "url": "https://info.trint.com/e3t/Ctc/WZ+50013/csVPp04/JkM2-6qcW6N1vHY6lZ3kZW4C_vkw55qXz6W5zCSf316QN0ZMQ5N1fW5-JbW40C23Y3przwPW8YJrcS6KKfwyW7nC9yX6KQhHRW5mzLXt1pRckSW3knjhL2LSKXHVW0_NK4GftvsW7cFq2n7v0s4kW7jYhjh1PZjkZW70BTdl4MdJg2N5c47l9B1YhqW62S9DV4mfBK4W7WYJl_7-v96cW9c86g735NjgCW3CbYxP1914MSW7PY87l1ppMqqW1wYnQv39BPDCW2ddBpV3ZDhpfV9ygr43TF54vW2mnfft5fkCh6f75rydd04"
+  },
+  {
+   "title": "R3 Members\u2019 Briefing Webinar \u2013 Autumn 2026",
+   "url": "https://www.r3.org.uk/news/r3-members-briefing-webinar-autumn-2026/"
+  },
+  {
+   "title": "Business Restructuring Review Vol. 25 No. 5 September-October 2026 | Jones Day - JDSupra",
+   "url": "https://www.jdsupra.com/legalnews/business-restructuring-review-vol-25-no-6475550"
+  },
+  {
+   "title": "Spokesman-Review stories from October 15, 2026",
+   "url": "https://www.spokesman.com/stories/2026/oct/15"
+  },
+  {
+   "title": "Release Update - Autumn 2026",
+   "url": "https://info.trint.com/e3t/Ctc/WZ+50013/csVPp04/JkM2-6qcW6N1vHY6lZ3mTW34HKnT4PcKGRW6hdH-s4fKPFTN8GjMn-ZPXfzMYL72ZZx9RvW4MqggL2P8wdsW18DKH93QrSZ9W4WDKfl5VLmTSW2qmhcS759g6BW4nVsb-7cYN71W2Z_dM-5WKrQ7W8M8YlW1Kl9s1W4nXCZX1CpsNYW8pJCNZ3hy2T8W6kBpl86lRf8ZW4KPD2Y5h9py0V-_74N3_cSmZW4cdWTs1rxWfwVwxgyx4KS9LhV4xP916PFXVkW4Yhccn1b86GpW8XlRWk6KKn7GW2rPhqT8FdNVwf7zQFKR04"
+  },
+  {
+   "title": "H1 2026 RESULTS PRESENTATION - fdj united",
+   "url": "https://www.fdjunited.com/wp-content/uploads/2026/07/20260729InvestorpresentationH12026VDEF.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "Autumn turnaround season",
+   "from": "2026-09-15",
+   "region": "United States",
+   "to": "2026-10-31"
+  }
+ },
+ "request_id": "event-turnaround_season",
+ "request_key": "b9a4bbebe0273aff",
+ "retrieved_at": "2026-10-29T16:51:39+00:00",
+ "usage": {
+  "input_tokens": 4680,
+  "output_tokens": 0
+ }
+}

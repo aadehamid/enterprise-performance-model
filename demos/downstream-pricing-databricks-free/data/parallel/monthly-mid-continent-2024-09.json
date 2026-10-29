@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.3466583774303523,
+   "probabilities": {
+    "crude_supply": 0.455548647858627,
+    "demand": 0.22920606512361932,
+    "logistics": 0.02388717881302524,
+    "policy": 0.035303635141300936,
+    "product_inventories": 0.13294761206171407,
+    "weather": 0.12310686100171345
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.0904768037898079,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.12906606983322488,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Reconciliation of Renewable Diesel Margin to Gross Margin & Segment Results*............................. 16",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2024/q4/IR_Packet/MPC-Q4-2024-IR-Packet.pdf"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603/"
+  },
+  {
+   "title": "Argus Monthly Sulphur Outlook",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/APAC-RSMT-FER-2025-10-01-SAM-FER-Fertilizer%20Campaign-Argus%20Monthly%20Sulphur%20Outlook.pdf?version=0"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145/"
+  },
+  {
+   "title": "2024 ANNUAL REPORT",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Annual_Report/2024_MPC_Annual_Report_and_10K.pdf"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "Market Talk | $5 Diesel Now Feels Inevitable: ULSD Blasts Past March Highs, No Resistance in Sight",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/usd5-diesel-now-feels-inevitable-ulsd-blasts-past-march-highs-no-resistance-in-sight"
+  },
+  {
+   "title": "[PDF] Energy Argus Petroleum Coke",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/GEN-Sample-Report-Energy-Argus-Petroleum-Coke-(2025-07-09).pdf?version=0"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during September 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during September 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during September 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "September 2024",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2024-09",
+ "request_key": "10458f2597e17bab",
+ "retrieved_at": "2026-10-29T16:52:23+00:00",
+ "usage": {
+  "input_tokens": 4380,
+  "output_tokens": 0
+ }
+}

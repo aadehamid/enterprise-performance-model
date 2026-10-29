@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.5627153714116667,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "weather",
+   "confidence": 0.4354235892223657,
+   "probabilities": {
+    "crude_market": 0.11704131665535539,
+    "logistics": 0.12050374485946096,
+    "none": 0.09673029201574096,
+    "policy": 0.054440038973856776,
+    "product_market": 0.08176494981028114,
+    "weather": 0.5295196576853047
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n        Most USGC refineries set to avoid direct hit from hurricane; exports affected | S&P Global\n    ",
+   "url": "https://www.spglobal.com/energy/en/news-research/latest-news/crude-oil/100826-most-usgc-refineries-set-to-avoid-direct-hit-from-hurricane-exports-affected"
+  },
+  {
+   "title": "https://energia.pr.gov/wp-content/uploads/sites/7/2026/10/20261023-MI20200001-Motion-in-Compliance-with-Resolution-and-Order-of-September-25-2026-and-Responding-Questions-of-Fourth-Request-for-Information.pdf",
+   "url": "https://energia.pr.gov/wp-content/uploads/sites/7/2026/10/20261023-MI20200001-Motion-in-Compliance-with-Resolution-and-Order-of-September-25-2026-and-Responding-Questions-of-Fourth-Request-for-Information.pdf"
+  },
+  {
+   "title": "Oil Holds Above $100 as Hormuz Attacks Lift Brent to $102.30 \u2014 EnergyReader.io",
+   "url": "http://energyreader.io/brief/17028"
+  },
+  {
+   "title": "Gulf Coast (PADD 3) Exports to China of Finished Motor Gasoline (Thousand Barrels per Day)",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=M_EPM0F_EEX_R30-NCH_2&f=M"
+  },
+  {
+   "title": "Gulf Coast (PADD 3) Exports to China of Crude Oil and Petroleum Products (Thousand Barrels)",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=pet&s=m_ep00_eex_r30-nch_1&f=m"
+  },
+  {
+   "title": "Gulf Coast (PADD 3) Exports to China of Crude Oil and Petroleum Products (Thousand Barrels)",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=pet&s=m_ep00_eex_r30-nch_1&f=a"
+  },
+  {
+   "title": "Alert: Trump Halts \u2018Hellish\u2019 Russia Oil Sanctions, Easing Supply\u2026",
+   "url": "https://hamerintel.com/data/alerts/27015"
+  },
+  {
+   "title": "Gulf Coast (PADD 3) Exports to China of Crude Oil (Thousand Barrels per Day)",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=M_EPC0_EEX_R30-NCH_2&f=A"
+  },
+  {
+   "title": "Bloomberg Surveillance guest sees crude output rising meaningfully in 12 to 18 months while refining stays constrained \u2014 EnergyReader.io",
+   "url": "http://energyreader.io/brief/16967"
+  },
+  {
+   "title": "Market Talk | Refiners Win, Biofuels Worry, And Fuel Bulls Stay In Control",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/refiners-win-biofuels-worry-and-fuel-bulls-stay-in-control"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-10-08",
+   "decision": "Hold Gulf Coast ULSD export nominations flat as China restarts product exports",
+   "expected_outcome": "NYH ULSD at least 5 cents/gal lower within 8 trading days",
+   "refineries": "Galveston Bay, Texas City, TX, Garyville, LA",
+   "region": "Gulf Coast",
+   "window": "2026-10-08 to 2026-11-07"
+  }
+ },
+ "request_id": "diagnosis-D09",
+ "request_key": "6d01d171b5744396",
+ "retrieved_at": "2026-10-29T16:53:09+00:00",
+ "usage": {
+  "input_tokens": 4755,
+  "output_tokens": 0
+ }
+}

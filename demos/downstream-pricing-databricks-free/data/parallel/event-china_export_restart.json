@@ -1,0 +1,72 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.8016255708978992,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\tChina to resume October fuel exports after a brief halt, trade sources say - The Hindu\n",
+   "url": "https://www.thehindu.com/news/international/china-to-resume-october-fuel-exports-after-a-brief-halt-trade-sources-say/article71562527.ece"
+  },
+  {
+   "title": "China to resume October fuel exports after holiday pause, sources say | live",
+   "url": "https://live.euronext.com/en/financial-news/china-resume-october-fuel-exports-after-holiday-pause-sources-say"
+  },
+  {
+   "title": "China to resume October fuel exports after holiday pause, sources say | KELO-AM",
+   "url": "https://kelo.com/2026/10/08/china-to-resume-october-fuel-exports-after-a-brief-halt-four-trade-sources-say"
+  },
+  {
+   "title": "China to resume October fuel exports after holiday pause, sources say",
+   "url": "https://finance.yahoo.com/energy/articles/china-resume-october-fuel-exports-032753419.html"
+  },
+  {
+   "title": "China resumes fuel exports, approves 3.7m tonnes for October \u2014 OilPrice | UA.NEWS",
+   "url": "https://ua.news/en/energetika/kitai-vidnoviv-eksport-palnogo-ta-skhvaliv-3-7-mln-tonn-na-zhovten-oilprice"
+  },
+  {
+   "title": "China Cuts Annual Fuel Quotas to 36.5M Tons in Export Restart | MarketBrief",
+   "url": "https://marketbrief.now/commodity/china-cuts-annual-fuel-quotas-to-365m-tons-in-export-restart-4a35b8f8"
+  },
+  {
+   "title": "China Set to Resume October Fuel Exports After Golden Week Pause, Easing Tight Global Diesel Markets",
+   "url": "https://political.org/2026/10/08/china-set-to-resume-october-fuel-exports-after-golden-week-pause-easing-tight-global-diesel-markets/"
+  },
+  {
+   "title": "China to resume October fuel exports after holiday pause, sources say | 1470 & 100.3 WMBD",
+   "url": "https://wmbdradio.com/2026/10/08/china-to-resume-october-fuel-exports-after-a-brief-halt-four-trade-sources-say"
+  },
+  {
+   "title": "China to Resume October Fuel Exports after Holiday Pause",
+   "url": "https://english.aawsat.com/business/5327629-china-resume-october-fuel-exports-after-holiday-pause"
+  },
+  {
+   "title": "China set to resume fuel exports in October following brief suspension \u2014 Reuters",
+   "url": "https://www.mitrade.com/au/insights/news/live-news/article-2-2149857-20261009"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "China expected to resume refined-product exports after its national holiday, about 3.7 million metric tons approved for October",
+   "from": "2026-10-08",
+   "region": "International",
+   "to": "2026-10-31"
+  }
+ },
+ "request_id": "event-china_export_restart",
+ "request_key": "897188deaa86d9f8",
+ "retrieved_at": "2026-10-29T16:51:40+00:00",
+ "usage": {
+  "input_tokens": 3780,
+  "output_tokens": 0
+ }
+}

@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "policy",
+   "confidence": 0.1356440681223164,
+   "probabilities": {
+    "crude_supply": 0.12698201026562453,
+    "demand": 0.20010118078837044,
+    "logistics": 0.0441641803874037,
+    "policy": 0.27970339010193035,
+    "product_inventories": 0.19043959828826107,
+    "weather": 0.15860964016840987
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.031571292447164084,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.1368698974886852,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "[PDF] MPC Q1 2026 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2026/q1/MPC-1Q-2026-Earnings-Release.pdf"
+  },
+  {
+   "title": "MPC 2Q2026 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2026/q2/MPC-2Q-2026-Slides.pdf"
+  },
+  {
+   "title": "3:2:1 Crack Spread Today | Refining Margin | Fuel Data Portal",
+   "url": "https://fueldataportal.com/data/3-2-1-crack-spread"
+  },
+  {
+   "title": "US pain at the pump worsens after more US-Iran fighting lifts oil prices | Reuters",
+   "url": "https://www.reuters.com/business/energy/us-pain-pump-worsens-after-more-us-iran-fighting-lifts-oil-prices-2026-07-10"
+  },
+  {
+   "title": "Marathon Petroleum Corporation (MPC) Q1 FY2026  earnings call transcript",
+   "url": "https://finance.yahoo.com/quote/MPC/earnings/MPC-Q1-2026-earnings_call-551053.html?fr=sycsrp_catchall"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights - The Globe and Mail",
+   "url": "https://www.theglobeandmail.com/investing/markets/stocks/MPC/pressreleases/1893018/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights",
+   "url": "https://www.barchart.com/story/news/1893017/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "First Atlantic Hurricane of 2026 Season Triggers Gulf Coast Energy Shut-Downs | VOCM",
+   "url": "https://vocm.com/2026/10/08/first-atlantic-hurricane-of-2026-season-triggers-gulf-coast-energy-shut-downs/"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during August 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during August 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during August 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "August 2026",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2026-08",
+ "request_key": "459837b6d2c582fd",
+ "retrieved_at": "2026-10-29T16:52:15+00:00",
+ "usage": {
+  "input_tokens": 4752,
+  "output_tokens": 0
+ }
+}

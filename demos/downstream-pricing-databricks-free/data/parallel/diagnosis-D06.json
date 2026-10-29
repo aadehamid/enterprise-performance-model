@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.7046555745315596,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "policy",
+   "confidence": 0.8200285638665771,
+   "probabilities": {
+    "crude_market": 0.009914289331347893,
+    "logistics": 0.014778983428921371,
+    "none": 0.008582594242979177,
+    "policy": 0.8500238032221475,
+    "product_market": 0.11221582186242816,
+    "weather": 0.004484507912175761
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "They Cannot Ban Their Way Out: The Yield Slate Does Not Negotiate | VanEck Americas Offshore",
+   "url": "https://www.vaneck.com/offshore/en/news-and-insights/blogs/natural-resources/they-cannot-ban-their-way-out-the-yield-slate-does-not-negotiate"
+  },
+  {
+   "title": "The Commodities Feed: Diesel release drives down distillate margins, capping oil | articles | ING THINK",
+   "url": "https://think.ing.com/articles/the-commodities-feed-middle-distillate-cracks-under-pressure-amid-diesel-release051026/"
+  },
+  {
+   "title": "The Diesel Forecast",
+   "url": "https://www.agmanager.info/sites/default/files/pdf/article%20-%20diesel%20forecast%209-16-26.pdf"
+  },
+  {
+   "title": "Falling Russian diesel exports tighten global distillate markets | Oil & Gas Journal",
+   "url": "https://www.ogj.com/general-interest/economics-markets/news/55391756/falling-russian-diesel-exports-tighten-global-distillate-markets"
+  },
+  {
+   "title": "US EIA Distillate Fuel Production Change (Oct/02) 0.287M (Prev. -0.156M) | Newsquawk",
+   "url": "https://www.newsquawk.com/headlines/us-eia-distillate-fuel-production-change-oct02-0287m-prev--0156m"
+  },
+  {
+   "title": "Diesel Release Drives Down Distillate Margins, Capping Oil | Investing.com",
+   "url": "https://www.investing.com/analysis/diesel-release-drives-down-distillate-margins-capping-oil-200688900"
+  },
+  {
+   "title": "The Diesel Forecast",
+   "url": "https://agricultural.substack.com/p/the-diesel-forecast"
+  },
+  {
+   "title": "Diesel Shortage Today: Where Supply Is Tight & Why | GEF",
+   "url": "https://global-energy-flow.com/shortages/diesel"
+  },
+  {
+   "title": "\n\tUnited States Distillate Fuel Production\n",
+   "url": "https://tradingeconomics.com/united-states/distillate-fuel-production"
+  },
+  {
+   "title": "Shipping Disruption Hits US Distillate Stocks Already 12% Below Average, Pushing Diesel Costs Up 22%  - Article | Crux Investor",
+   "url": "https://www.cruxinvestor.com/posts/shipping-disruption-hits-us-distillate-stocks-already-12-below-average-pushing-diesel-costs-up-22"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-09-25",
+   "decision": "Raise distillate yield targets across the system while diesel is scarce",
+   "expected_outcome": "System distillate yield in October about 1.5 points above September's before the scarcity",
+   "refineries": "Anacortes, WA, Catlettsburg, KY, Canton, OH, Detroit, MI, El Paso, TX, Galveston Bay, Texas City, TX, Garyville, LA, Kenai, AK, Los Angeles, CA, Mandan, ND, Robinson, IL, Salt Lake City, UT, St. Paul Park, MN",
+   "region": "Gulf Coast, Mid-Continent, West Coast",
+   "window": "2026-09-25 to 2026-10-25"
+  }
+ },
+ "request_id": "diagnosis-D06",
+ "request_key": "647e3b8069603c58",
+ "retrieved_at": "2026-10-29T16:53:07+00:00",
+ "usage": {
+  "input_tokens": 5034,
+  "output_tokens": 0
+ }
+}

@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.6705259491166728,
+   "probabilities": {
+    "crude_supply": 0.7254382909305607,
+    "demand": 0.06359681094900559,
+    "logistics": 0.030075663376567537,
+    "policy": 0.046983793623879576,
+    "product_inventories": 0.07557207414385862,
+    "weather": 0.0583333669761278
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.05256858282651289,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.05218267716708311,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "Russia Bans Producers From Exporting Gasoline Until July 31 - The Moscow Times",
+   "url": "https://www.themoscowtimes.com/2026/04/02/russia-bans-producers-from-exporting-gasoline-until-july-31-a92412"
+  },
+  {
+   "title": "Oil Market Report - July 2026 \u2013 Analysis",
+   "url": "https://www.iea.org/reports/oil-market-report-july-2026"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "Document - SEC.gov",
+   "url": "https://www.sec.gov/Archives/edgar/data/1534504/000153450426000029/a991pressreleaseq2-26.htm"
+  },
+  {
+   "title": "Refinery Conflagration Dynamics and Infrastructure Fragility \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/refinery-conflagration-dynamics-infrastructure-fragility-metrics"
+  },
+  {
+   "title": "Oil Market Report - September 2026 \u2013 Analysis - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-september-2026"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Marathon Petroleum Rose 55.1% as Refiners Led Q3 Energy Stocks",
+   "url": "https://www.karmactive.com/marathon-petroleum-q3-2026-refiner-returns"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during July 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during July 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during July 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "July 2026",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2026-07",
+ "request_key": "8d88dc987242e2ec",
+ "retrieved_at": "2026-10-29T16:52:36+00:00",
+ "usage": {
+  "input_tokens": 4572,
+  "output_tokens": 0
+ }
+}

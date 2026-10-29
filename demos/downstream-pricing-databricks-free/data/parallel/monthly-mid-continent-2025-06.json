@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "product_inventories",
+   "confidence": 0.3643528067090492,
+   "probabilities": {
+    "crude_supply": 0.13023872209823367,
+    "demand": 0.1024080618095766,
+    "logistics": 0.1590373474183579,
+    "policy": 0.023469264793412707,
+    "product_inventories": 0.47029400559087436,
+    "weather": 0.11455259828954477
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.05161235920823745,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.2347662447010381,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tUnplanned refinery outage leads to higher Midwest gasoline prices -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=22552"
+  },
+  {
+   "title": "\n\t\tMidwest refinery outage is affecting petroleum product markets -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=61403&quot"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "Refining Margins Soar as Global Oil Product Markets Tighten | OilPrice.com",
+   "url": "https://oilprice.com/Energy/Energy-General/Refining-Margins-Soar-as-Global-Oil-Product-Markets-Tighten.html"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Oil Market Report - December 2025 - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-december-2025"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "Tight product supplies lift US summer refinery utilization to highest level since 1998 | Oil & Gas Journal",
+   "url": "https://www.ogj.com/general-interest/economics-markets/news/55413722/tight-product-supplies-lift-us-summer-refinery-utilization-to-highest-since-1998"
+  },
+  {
+   "title": "\n\t\tU.S. refining capacity decreased during 2025 -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=67807"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during June 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during June 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during June 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "June 2025",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2025-06",
+ "request_key": "2e75d4839a08d05e",
+ "retrieved_at": "2026-10-29T16:52:28+00:00",
+ "usage": {
+  "input_tokens": 3307,
+  "output_tokens": 0
+ }
+}

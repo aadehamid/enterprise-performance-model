@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "policy",
+   "confidence": 0.0741396939879346,
+   "probabilities": {
+    "crude_supply": 0.2006909718702674,
+    "demand": 0.08840779748920805,
+    "logistics": 0.04421749610093295,
+    "policy": 0.2284497449899455,
+    "product_inventories": 0.2105426838040278,
+    "weather": 0.22769130574561833
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.16683945510731998,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.08885016638768503,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "Russia Bans Producers From Exporting Gasoline Until July 31 - The Moscow Times",
+   "url": "https://www.themoscowtimes.com/2026/04/02/russia-bans-producers-from-exporting-gasoline-until-july-31-a92412"
+  },
+  {
+   "title": "Refinery Conflagration Dynamics and Infrastructure Fragility \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/refinery-conflagration-dynamics-infrastructure-fragility-metrics"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145/"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "Marathon Petroleum Rose 55.1% as Refiners Led Q3 Energy Stocks",
+   "url": "https://www.karmactive.com/marathon-petroleum-q3-2026-refiner-returns"
+  },
+  {
+   "title": "\n   Trade Intelligence | ERGON ENERGY\n  ",
+   "url": "https://ergon.energy/TradeIntelligence"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603/"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during April 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during April 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during April 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "April 2026",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2026-04",
+ "request_key": "2e65a9d5217f9188",
+ "retrieved_at": "2026-10-29T16:52:35+00:00",
+ "usage": {
+  "input_tokens": 3322,
+  "output_tokens": 0
+ }
+}

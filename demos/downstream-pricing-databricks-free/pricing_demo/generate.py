@@ -14,7 +14,7 @@ import os
 import random
 from dataclasses import dataclass
 
-from . import catalog, decisions, public_data, timeline
+from . import catalog, decisions, outside, public_data, timeline
 from .config import DATA, HIDDEN_SYSTEMS, SEED, SYSTEMS, WEEKLY_START, WINDOW_END, WINDOW_START
 
 
@@ -459,8 +459,8 @@ def build():
         events.append((len(events) + 1, f"turnaround_{code.lower()}", f"Planned turnaround at the {code} refinery (scenario, not MPC's schedule)",
                        "operations", region, code, start, end, "pricing_demo/timeline.py: TURNAROUNDS",
                        "scenario timeline", "not checked", None, "[]", ts(WINDOW_END)))
-    # Until the outside-context step checks each event against public sources, the status reads "not checked", the
-    # probability is empty and the citations are an empty JSON array.
+    # Each event starts "not checked", with no probability and an empty JSON array of citations. At the end of build()
+    # outside.tables() puts in the evidence from the events step's cached call; an event with no cached call stays so.
     out["reference_data_hub"]["market_event"] = Table(
         ["EventId", "EventKey", "Title", "Category", "Region", "RefineryCode", "StartDate", "EndDate", "Source", "SourceKind",
          "EvidenceStatus", "EvidenceProbability", "EvidenceCitations", "updated_at"], events)
@@ -489,6 +489,14 @@ def build():
     for system, tables in decisions.build(out).items():
         for name, (columns, rows_) in tables.items():
             out[system][name] = Table(columns, rows_)
+
+    # ---- Outside context from Parallel Decisions, built from its cache in data/parallel/ (outside.py): the checked
+    # evidence on market_event, and the event scan, the decision diagnoses and the forward look ----
+    evidence, outside_tables = outside.tables(out)
+    event = out["reference_data_hub"]["market_event"]
+    event.rows = [r[:10] + evidence.get(r[0], r[10:13]) + r[13:] for r in event.rows]
+    for name, (columns, rows_) in outside_tables.items():
+        out["reference_data_hub"][name] = Table(columns, rows_)
     return out
 
 

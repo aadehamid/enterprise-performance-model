@@ -1,0 +1,124 @@
+{
+ "answers": {
+  "distillate_outlook": {
+   "choice": "lower",
+   "confidence": 0.4786914959892484,
+   "probabilities": {
+    "about_the_same": 0.2225620751698579,
+    "higher": 0.12497692750397661,
+    "lower": 0.6524609973261656
+   },
+   "type": "choice"
+  },
+  "maintenance_announced": {
+   "noul": 0.031805598792488066,
+   "type": "noul"
+  },
+  "opec_meeting": {
+   "noul": 0.3847771327479703,
+   "type": "noul"
+  },
+  "policy_deadline": {
+   "noul": 0.05697278655013098,
+   "type": "noul"
+  },
+  "weather_outlook": {
+   "choice": "near_normal",
+   "confidence": 0.38227467736916804,
+   "probabilities": {
+    "above_normal": 0.16583522285721214,
+    "below_normal": 0.2459816588966758,
+    "near_normal": 0.588183118246112
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Gasoline and Diesel Fuel Update - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/gasdiesel/"
+  },
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/report/us_oil.php"
+  },
+  {
+   "title": "Gasoline and Diesel Fuel Update - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/gasdiesel/?os=io...%5B0"
+  },
+  {
+   "title": "Diesel Market Dashboard: Futures, Crack Spread, Stocks",
+   "url": "https://worldoilmonitor.com/diesel-market"
+  },
+  {
+   "title": "Petroleum & Other Liquids Data - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/data.php"
+  },
+  {
+   "title": "Gas Prices Top $4 as Oil Above $90 Puts PSX, VLO and MPC in Focus | Markets Insider",
+   "url": "https://markets.businessinsider.com/news/stocks/gas-prices-top-4-as-oil-above-90-puts-psx-vlo-and-mpc-in-focus-1036525062"
+  },
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "Organization of the Petroleum Exporting Countries",
+   "url": "https://www.opec.org/pr-detail/616-4-october-2026.html"
+  },
+  {
+   "title": "US-Russia Diesel Deal: What\u2019s in the Plan and Will Fuel Prices Fall? | EBC Financial Group",
+   "url": "https://www.ebc.com/forex/us-russia-diesel-deal-2026-fuel-prices"
+  },
+  {
+   "title": "MPC Stock Forecast 2026-2027 - Marathon Petroleum Corp. Price Targets & Predictions",
+   "url": "https://tickernerd.com/stock/mpc-forecast/"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "distillate_outlook": {
+    "criteria": {
+     "about_the_same": "About the same",
+     "higher": "Higher than in October 2026",
+     "lower": "Lower than in October 2026"
+    },
+    "instructions": "According to the U.S. EIA's most recent Short-Term Energy Outlook, how are U.S. diesel prices expected to move in December 2026 compared with October 2026?",
+    "type": "choice"
+   },
+   "maintenance_announced": {
+    "instructions": "Has planned refinery maintenance (a turnaround) been announced or reported for refineries in the U.S. Gulf Coast (Texas and Louisiana) during December 2026?",
+    "type": "noul"
+   },
+   "opec_meeting": {
+    "instructions": "Is an OPEC+ ministerial or monitoring committee meeting scheduled during December 2026?",
+    "type": "noul"
+   },
+   "policy_deadline": {
+    "instructions": "Is a U.S. federal fuel-policy deadline or effective date (renewable fuel rules, sanctions, export rules or fuel taxes) scheduled during December 2026?",
+    "type": "noul"
+   },
+   "weather_outlook": {
+    "criteria": {
+     "above_normal": "Above normal",
+     "below_normal": "Below normal",
+     "near_normal": "Near normal"
+    },
+    "instructions": "According to NOAA's latest seasonal outlook, how are temperatures expected to compare with normal in the U.S. Gulf Coast (Texas and Louisiana) during December 2026?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "month": "December 2026",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "forward-gulf-coast-2026-12",
+ "request_key": "10443aecae3637ed",
+ "retrieved_at": "2026-10-29T16:53:15+00:00",
+ "usage": {
+  "input_tokens": 4397,
+  "output_tokens": 0
+ }
+}

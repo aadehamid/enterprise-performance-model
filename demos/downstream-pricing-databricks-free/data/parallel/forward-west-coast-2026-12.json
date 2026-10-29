@@ -1,0 +1,124 @@
+{
+ "answers": {
+  "distillate_outlook": {
+   "choice": "lower",
+   "confidence": 0.4393809729579312,
+   "probabilities": {
+    "about_the_same": 0.22084445883111636,
+    "higher": 0.15290155919692958,
+    "lower": 0.6262539819719541
+   },
+   "type": "choice"
+  },
+  "maintenance_announced": {
+   "noul": 0.1563701673784553,
+   "type": "noul"
+  },
+  "opec_meeting": {
+   "noul": 0.10936402402242663,
+   "type": "noul"
+  },
+  "policy_deadline": {
+   "noul": 0.04589142615625945,
+   "type": "noul"
+  },
+  "weather_outlook": {
+   "choice": "near_normal",
+   "confidence": 0.0737602988534012,
+   "probabilities": {
+    "above_normal": 0.2938560398276958,
+    "below_normal": 0.32363709427003673,
+    "near_normal": 0.38250686590226746
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Gasoline and Diesel Fuel Update - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/gasdiesel/"
+  },
+  {
+   "title": "Gasoline and Diesel Fuel Update - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/gasdiesel/?quot"
+  },
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/report/us_oil.php"
+  },
+  {
+   "title": "Gasoline and Diesel Fuel Update - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/gasdiesel/?pubDate=20260302"
+  },
+  {
+   "title": "Regional gasoline price differences - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/energyexplained/gasoline/regional-price-differences.php"
+  },
+  {
+   "title": "Diesel Market Dashboard: Futures, Crack Spread, Stocks",
+   "url": "https://worldoilmonitor.com/diesel-market"
+  },
+  {
+   "title": "MPC Stock Forecast 2026-2027 - Marathon Petroleum Corp. Price Targets & Predictions",
+   "url": "https://tickernerd.com/stock/mpc-forecast/"
+  },
+  {
+   "title": "What High Diesel Prices Mean for These 5 Energy Stocks - AOL",
+   "url": "https://www.aol.com/articles/high-diesel-prices-mean-5-125000000.html"
+  },
+  {
+   "title": "West Coast fuel crisis deepens as remaining refiners threaten to follow Valero, Phillips   \u2013 NaturalNews.com",
+   "url": "https://www.naturalnews.com/2026-08-26-west-coast-fuel-crisis-refiners.html"
+  },
+  {
+   "title": "US-Russia Diesel Deal: What\u2019s in the Plan and Will Fuel Prices Fall? | EBC Financial Group",
+   "url": "https://www.ebc.com/forex/us-russia-diesel-deal-2026-fuel-prices"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "distillate_outlook": {
+    "criteria": {
+     "about_the_same": "About the same",
+     "higher": "Higher than in October 2026",
+     "lower": "Lower than in October 2026"
+    },
+    "instructions": "According to the U.S. EIA's most recent Short-Term Energy Outlook, how are U.S. diesel prices expected to move in December 2026 compared with October 2026?",
+    "type": "choice"
+   },
+   "maintenance_announced": {
+    "instructions": "Has planned refinery maintenance (a turnaround) been announced or reported for refineries in the U.S. West Coast and Alaska (California, Washington and Alaska) during December 2026?",
+    "type": "noul"
+   },
+   "opec_meeting": {
+    "instructions": "Is an OPEC+ ministerial or monitoring committee meeting scheduled during December 2026?",
+    "type": "noul"
+   },
+   "policy_deadline": {
+    "instructions": "Is a U.S. federal fuel-policy deadline or effective date (renewable fuel rules, sanctions, export rules or fuel taxes) scheduled during December 2026?",
+    "type": "noul"
+   },
+   "weather_outlook": {
+    "criteria": {
+     "above_normal": "Above normal",
+     "below_normal": "Below normal",
+     "near_normal": "Near normal"
+    },
+    "instructions": "According to NOAA's latest seasonal outlook, how are temperatures expected to compare with normal in the U.S. West Coast and Alaska (California, Washington and Alaska) during December 2026?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "month": "December 2026",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "forward-west-coast-2026-12",
+ "request_key": "61458c88e7b64f90",
+ "retrieved_at": "2026-10-29T16:53:19+00:00",
+ "usage": {
+  "input_tokens": 4826,
+  "output_tokens": 0
+ }
+}

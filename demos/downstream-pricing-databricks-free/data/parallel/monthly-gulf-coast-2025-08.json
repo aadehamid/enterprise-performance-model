@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.43088640510093384,
+   "probabilities": {
+    "crude_supply": 0.5257386709174449,
+    "demand": 0.1677186930398198,
+    "logistics": 0.022531628697302485,
+    "policy": 0.028999538297596127,
+    "product_inventories": 0.07653100693449645,
+    "weather": 0.1784804621133404
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.051206584188039174,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.08085431580034809,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "[PDF] MPC 3Q2025 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_presentations/2025/MPC-Q3-2025-Slides.pdf"
+  },
+  {
+   "title": "MPC Q2 2025 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q2/MPC-Q2-2025-Press-Release.pdf"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://s29.q4cdn.com/948964180/files/doc_financials/2025/ar/MPLX_2025_AR_10-K.pdf"
+  },
+  {
+   "title": "[PDF] MPC Q1 2026 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2026/q1/MPC-1Q-2026-Earnings-Release.pdf"
+  },
+  {
+   "title": "[PDF] MPC Q3 2025 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_news/2025/MPC-Q3-2025-Earnings-Release.pdf"
+  },
+  {
+   "title": "[PDF] MPC 4Q2025 Slides - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Events_and_Presentations/2026/MPC_4Q_2025_Slides.pdf"
+  },
+  {
+   "title": "2025 MPC Sustainability Report",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2025_Sustainability_pd.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights - The Globe and Mail",
+   "url": "https://www.theglobeandmail.com/investing/markets/stocks/MPC/pressreleases/1893018/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "Marathon Petroleum Corp 8-K exhibit 99.1, filed August 5, 2025",
+   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029525000052/mpcq22025earningsrelease.htm"
+  },
+  {
+   "title": "Trends and Effects of Changes in Business Cases for Petroleum ...",
+   "url": "https://www.pnnl.gov/sites/default/files/media/file/Petroleum%20Refineries%20Trends%20Report_PNNL-37597%20%281%29.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during August 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during August 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during August 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "August 2025",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2025-08",
+ "request_key": "f65c0662b4844ad4",
+ "retrieved_at": "2026-10-29T16:52:07+00:00",
+ "usage": {
+  "input_tokens": 5978,
+  "output_tokens": 0
+ }
+}

@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.4189148808280936,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "weather",
+   "confidence": 0.804403611364746,
+   "probabilities": {
+    "crude_market": 0.03302302490565522,
+    "logistics": 0.02742770791595574,
+    "none": 0.054330485758666905,
+    "policy": 0.03782526519768999,
+    "product_market": 0.01039050675141038,
+    "weather": 0.8370030094706217
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tHurricane Isaias nears landfall, leading to production shut-ins -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68284"
+  },
+  {
+   "title": "Gas prices face new threat as Hurricane Isaias forces ...",
+   "url": "https://www.nbcnews.com/business/energy/gas-prices-hurricane-isaias-gulf-mexico-rcna602258"
+  },
+  {
+   "title": "How the oil industry is preparing for Hurricane Isaias",
+   "url": "https://kvcr.org/news/npr-top-stories/2026-10-09/hurricane-isaias-oil-refineries-diesel-gasoline-prices"
+  },
+  {
+   "title": "How the oil industry is preparing for Hurricane Isaias : NPR",
+   "url": "https://www.npr.org/2026/10/09/nx-s1-5995417/hurricane-isaias-oil-refineries-diesel-gasoline-prices"
+  },
+  {
+   "title": "Oil Platforms in the Gulf shut down in preparation for Hurricane Isaias : NPR",
+   "url": "https://www.npr.org/2026/10/09/nx-s1-5995573/oil-platforms-in-the-gulf-shut-down-in-preparation-for-hurricane-isaias"
+  },
+  {
+   "title": "Gasoline jumps, crude down; Harvey shuts 24 percent of US refining \u2013 Business Recorder",
+   "url": "https://fp.brecorder.com/2017/08/20170831214114/"
+  },
+  {
+   "title": "Oil prices slip as traders weigh strong Mideast exports against Gulf tensions | Business | The Daily News",
+   "url": "https://www.galvnews.com/news_reuters/business/oil-prices-slip-as-traders-weigh-strong-mideast-exports-against-gulf-tensions/article_0a93f80e-66dd-5d60-b51a-14a3d36e6a3a.html"
+  },
+  {
+   "title": "Oil futures: Crude drifts lower on Mideast de-escalation hopes",
+   "url": "https://www.qcintel.com/article/oil-futures-crude-drifts-lower-on-mideast-de-escalation-hopes-76024.html"
+  },
+  {
+   "title": "West of Suez: Crude, LSGO dip on stock release, hurricane",
+   "url": "https://www.qcintel.com/article/west-of-suez-crude-lsgo-dip-on-stock-release-hurricane-74855.html"
+  },
+  {
+   "title": "This Week In Petroleum Summary Printer-Friendly Version",
+   "url": "https://www.eia.gov/petroleum/weekly/archive/2017/170908/includes/analysis_print.php"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-10-06",
+   "decision": "Cut crude runs at Galveston Bay by up to 20 points of utilization at the storm's peak, ahead of Hurricane Isaias",
+   "expected_outcome": "Crude utilization no lower than about 73% during the storm (October 7 to 15), the pre-storm 93% less the full cut",
+   "refineries": "Galveston Bay, Texas City, TX",
+   "region": "Gulf Coast",
+   "window": "2026-10-06 to 2026-11-05"
+  }
+ },
+ "request_id": "diagnosis-D02",
+ "request_key": "d9e0ae8877c30d35",
+ "retrieved_at": "2026-10-29T16:53:05+00:00",
+ "usage": {
+  "input_tokens": 3380,
+  "output_tokens": 0
+ }
+}

@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.4714918351953612,
+   "probabilities": {
+    "crude_supply": 0.08126934529079256,
+    "demand": 0.04073003731281095,
+    "logistics": 0.10112267186610363,
+    "policy": 0.01986002440330537,
+    "product_inventories": 0.19744139179751988,
+    "weather": 0.5595765293294677
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.07235263608342972,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.18028502046505648,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\tMarathon Petroleum Corp. Reports First-Quarter 2023 Results | Marathon Petroleum Corporation\n",
+   "url": "https://ir.marathonpetroleum.com/investor/news-releases/news-details/2023/Marathon-Petroleum-Corp.-Reports-First-Quarter-2023-Results/default.aspx"
+  },
+  {
+   "title": "Feature article:",
+   "url": "https://www.opec.org/assets/assetdb/momr-august-2024.pdf"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "[PDF] Q2 2025 Earnings Presentation - T\u00fcpra\u015f",
+   "url": "https://www.tupras.com.tr/assets/uploads/investor-relations/presentation/tupras-q225-results-webcast-presentation.pdf"
+  },
+  {
+   "title": "2023 SUSTAINABILITY REPORT",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2023_SustainabilityReport.pdf"
+  },
+  {
+   "title": "MPC 1Q2025 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Slides.pdf"
+  },
+  {
+   "title": "5 Energy Stocks Positioned for a Prolonged Iran War | OilPrice.com",
+   "url": "https://oilprice.com/Energy/Crude-Oil/5-Energy-Stocks-Positioned-for-a-Prolonged-Iran-War.html"
+  },
+  {
+   "title": "Marathon Petroleum Q2 Earnings Call Highlights \u2014 TradingView News",
+   "url": "https://de.tradingview.com/news/marketbeat%3Af592aa6ee094b%3A0-marathon-petroleum-q2-earnings-call-highlights"
+  },
+  {
+   "title": "US Crude Refiners Are Pushing Run Rates to Maximum Levels: Safety Concerns, Maintenance Trade-offs, Export Boom, and Investor Implications - Energy News Beat",
+   "url": "https://energynewsbeat.co/big-oil-companies/us-crude-refiners-are-pushing-run-rates-to-maximum-levels-safety-concerns-maintenance-trade-offs-export-boom-and-investor-implications/"
+  },
+  {
+   "title": "[PDF] 2024 Sustainability Report - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2024_SustainabilityReport.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during November 2023?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during November 2023?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during November 2023?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "November 2023",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2023-11",
+ "request_key": "e49f2154ba30ed8a",
+ "retrieved_at": "2026-10-29T16:51:54+00:00",
+ "usage": {
+  "input_tokens": 4575,
+  "output_tokens": 0
+ }
+}

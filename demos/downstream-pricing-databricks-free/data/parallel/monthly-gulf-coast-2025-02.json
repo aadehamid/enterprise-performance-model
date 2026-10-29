@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.30244654045545094,
+   "probabilities": {
+    "crude_supply": 0.20577735133501993,
+    "demand": 0.13682871981163344,
+    "logistics": 0.022049690740146368,
+    "policy": 0.021672935084891605,
+    "product_inventories": 0.19496585264876634,
+    "weather": 0.41870545037954243
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.05942422316984794,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.1078232814561569,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "MPC 1Q2025 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Slides.pdf"
+  },
+  {
+   "title": "[PDF] MPC 4Q2025 Slides - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Events_and_Presentations/2026/MPC_4Q_2025_Slides.pdf"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://s29.q4cdn.com/948964180/files/doc_financials/2025/ar/MPLX_2025_AR_10-K.pdf"
+  },
+  {
+   "title": "2025 MPC Sustainability Report",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2025_Sustainability_pd.pdf"
+  },
+  {
+   "title": "Trends and Effects of Changes in Business Cases for Petroleum ...",
+   "url": "https://www.pnnl.gov/sites/default/files/media/file/Petroleum%20Refineries%20Trends%20Report_PNNL-37597%20%281%29.pdf"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights",
+   "url": "https://www.barchart.com/story/news/1893017/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "[PDF] Q2 2025 Earnings Presentation - T\u00fcpra\u015f",
+   "url": "https://www.tupras.com.tr/assets/uploads/investor-relations/presentation/tupras-q225-results-webcast-presentation.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights \u2014 Actualit\u00e9s TradingView",
+   "url": "https://fr.tradingview.com/news/marketbeat%3Ae43b9f549094b%3A0-marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "Feature article:",
+   "url": "https://www.opec.org/assets/assetdb/momr-august-2024.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during February 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during February 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during February 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "February 2025",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2025-02",
+ "request_key": "5401b1aed65f711e",
+ "retrieved_at": "2026-10-29T16:52:03+00:00",
+ "usage": {
+  "input_tokens": 5008,
+  "output_tokens": 0
+ }
+}
