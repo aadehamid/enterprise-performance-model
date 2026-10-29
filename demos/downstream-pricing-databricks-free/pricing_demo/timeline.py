@@ -48,6 +48,25 @@ EVENTS = (
 
 BY_KEY = {e.key: e for e in EVENTS}
 
+# Events the briefings name that drive no generated value. They are listed so the event table holds every disruption
+# and policy event the use cases name (README.md, "Use cases"). The dates are the briefings'.
+BRIEFING_EVENTS = (
+    Event("dyed_diesel_order", dt.date(2026, 10, 5), dt.date(2026, 12, 31),
+          "U.S. executive order expanding access to dyed diesel and deferring certain federal excise-tax payments through year-end",
+          "October 9, 2026: 5. Pricing policy and global supply; October 12, 2026: 5. Policy and global diesel availability"),
+    Event("china_export_restart", dt.date(2026, 10, 8), dt.date(2026, 10, 31),
+          "China expected to resume refined-product exports after its national holiday, about 3.7 million metric tons approved for October",
+          "October 9, 2026: 5. Pricing policy and global supply (the holiday ends October 7: October 5, 2026, Most important actions and watch items)"),
+)
+
+# The region and category of each event, for the event table: Claude's reading of each briefing section.
+EVENT_REGION = {"diesel_scarcity": "International", "g7_release": "International", "hurricane_isaias": "Gulf Coast",
+                "freight_spike": "International", "turnaround_season": "United States", "dyed_diesel_order": "United States",
+                "china_export_restart": "International"}
+EVENT_CATEGORY = {"diesel_scarcity": "policy", "g7_release": "policy", "hurricane_isaias": "weather",
+                  "freight_spike": "logistics", "turnaround_season": "operations", "dyed_diesel_order": "policy",
+                  "china_export_restart": "policy"}
+
 # Refineries the hurricane takes down, and by how much of capacity at the event's peak (scenario, not an MPC fact).
 HURRICANE_RUN_CUTS = {"GV": 0.45, "GB": 0.20}
 # Turnarounds: refinery code, start, end (scenario, not MPC's schedule).

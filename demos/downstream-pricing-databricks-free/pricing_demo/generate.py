@@ -15,7 +15,7 @@ import random
 from dataclasses import dataclass
 
 from . import catalog, public_data, timeline
-from .config import DATA, SEED, SYSTEMS, WINDOW_END, WINDOW_START
+from .config import DATA, SEED, SYSTEMS, WEEKLY_START, WINDOW_END, WINDOW_START
 
 
 # The units of measure, by the code an assessment group is quoted in (Kimi round 1, finding 15).
@@ -35,6 +35,81 @@ def ts(day, hour=18):
 def month_start(day, plus=0):
     m = day.month - 1 + plus
     return dt.date(day.year + m // 12, m % 12 + 1, 1)
+
+
+def _nth_weekday(year, month, weekday, n):
+    """The n-th weekday (Monday 0) of a month; n = -1 for the last."""
+    if n > 0:
+        first = dt.date(year, month, 1)
+        return first + dt.timedelta(days=(weekday - first.weekday()) % 7 + 7 * (n - 1))
+    last = month_start(dt.date(year, month, 1), 1) - dt.timedelta(days=1)
+    return last - dt.timedelta(days=(last.weekday() - weekday) % 7)
+
+
+def _observed(day):
+    """A fixed-date holiday on a weekend is observed on the Friday before or the Monday after."""
+    return day - dt.timedelta(days=1) if day.weekday() == 5 else day + dt.timedelta(days=1) if day.weekday() == 6 else day
+
+
+def _easter(year):
+    """Gregorian Easter Sunday (the anonymous Gregorian algorithm)."""
+    a, b, c = year % 19, year // 100, year % 100
+    d, e = b // 4, b % 4
+    f = (b + 8) // 25
+    g = (b - f + 1) // 3
+    h = (19 * a + b - d - g + 15) % 30
+    i, k = c // 4, c % 4
+    m = (32 + 2 * e + 2 * i - h - k) % 7
+    n = (a + 11 * h + 22 * m) // 451
+    month = (h + m - 7 * n + 114) // 31
+    return dt.date(year, month, (h + m - 7 * n + 114) % 31 + 1)
+
+
+def exchange_holidays(start, end):
+    """U.S. exchange holidays by rule (New Year's Day, Martin Luther King Jr. Day, Presidents Day, Good Friday,
+    Memorial Day, Juneteenth, Independence Day, Labor Day, Thanksgiving, Christmas). Generated reference data: the
+    rules are the common U.S. exchange calendar, not a copy of NYMEX's published schedule."""
+    days = set()
+    for y in range(start.year, end.year + 1):
+        days |= {_observed(dt.date(y, 1, 1)), _nth_weekday(y, 1, 0, 3), _nth_weekday(y, 2, 0, 3),
+                 _easter(y) - dt.timedelta(days=2), _nth_weekday(y, 5, 0, -1), _observed(dt.date(y, 6, 19)),
+                 _observed(dt.date(y, 7, 4)), _nth_weekday(y, 9, 0, 1), _nth_weekday(y, 11, 3, 4), _observed(dt.date(y, 12, 25))}
+    return sorted(d for d in days if start <= d <= end)
+
+
+# Process units at each refinery: code, name, capacity as a share of crude capacity, normal load as a share of crude
+# runs, and the smallest crude capacity (mbpcd) a refinery has for the unit to be present. The unit kinds are the ones
+# MPC's FY2025 Form 10-K, Item 1, names (atmospheric and vacuum distillation, fluid catalytic cracking, hydrocracking,
+# catalytic reforming, coking, desulfurization); which refinery has which unit, and every ratio, are generated:
+# the 10-K gives no per-refinery unit list.
+UNITS = (
+    ("ATM", "Atmospheric distillation", 1.00, 1.00, 0),
+    ("VAC", "Vacuum distillation", 0.46, 0.42, 0),
+    ("FCC", "Fluid catalytic cracking", 0.31, 0.27, 0),
+    ("HCK", "Hydrocracking", 0.16, 0.13, 250),
+    ("REF", "Catalytic reforming", 0.17, 0.14, 0),
+    ("CKR", "Coking", 0.15, 0.12, 140),
+    ("DHT", "Distillate desulfurization", 0.33, 0.29, 0),
+    ("NHT", "Naphtha desulfurization", 0.19, 0.16, 0),
+    ("GHT", "Gasoline desulfurization", 0.25, 0.21, 0),
+)
+
+# Product tanker freight routes, in $/bbl for a clean-products cargo (generated). EIA publishes no freight series, and
+# the market's assessments (Argus Freight, the Baltic Exchange) are paid (README.md, "Use cases").
+FREIGHT_ROUTES = (("USGC-NYH", "U.S. Gulf Coast to New York Harbor", "Jones Act MR", 3.10),
+                  ("USGC-NWE", "U.S. Gulf Coast to Northwest Europe", "MR", 2.60))
+# SCENARIO.md, October 9, 2026, "2. Physical trading": freight on major routes "increased more than 300% since
+# mid-August". The generated rate rises from its base in mid-August 2026 to four times the base by October 9.
+FREIGHT_SPIKE = (dt.date(2026, 8, 15), dt.date(2026, 10, 9), 4.0)
+
+
+def freight_multiplier(day):
+    start, peak, top = FREIGHT_SPIKE
+    if day < start:
+        return 1.0
+    if day >= peak:
+        return top
+    return 1.0 + (top - 1.0) * (day - start).days / (peak - start).days
 
 
 class Market:
@@ -140,7 +215,7 @@ def build():
     # ---- Commercial Reference Data Hub (KittyHawk): price services, holiday calendar, delivery periods ----
     out["reference_data_hub"]["priceservice"] = Table(["Id", "Name", "PublisherId", "updated_at"], [
         (1, "MPR settlement service", 1, ts(WINDOW_START)), (2, "MIPS assessment service", 2, ts(WINDOW_START))])
-    holidays = [dt.date(2026, 4, 3), dt.date(2026, 5, 25), dt.date(2026, 6, 19), dt.date(2026, 7, 3), dt.date(2026, 9, 7)]
+    holidays = exchange_holidays(WINDOW_START, WINDOW_END)
     out["reference_data_hub"]["holidaycalendar"] = Table(["Id", "Name", "HolidayDate", "updated_at"],
                                                 [(i + 1, "NYMEX", d, ts(WINDOW_START)) for i, d in enumerate(holidays)])
     out["reference_data_hub"]["deliveryperiodcategory"] = Table(["Id", "Name", "updated_at"], [
@@ -306,17 +381,27 @@ def build():
         ["ID", "PriceAssessmentGroupID", "PriceSheetID", "PriceBatchID", "PricePeriod", "Value", "PreviousValue",
          "CycleNum", "SortOrder", "updated_at", "DemoProvenance"], assessments)
 
-    # ---- Refinery Production Accounting, Refinery Planning Model and CTRM ----
+    # ---- Production accounting (refineries, refinery-days, unit-days), the planning model, RightAngle (deals,
+    # movements, freight), the event table and EIA's weekly series by PADD ----
     refineries = list(csv.DictReader(open(os.path.join(DATA, "public", "mpc_refineries.csv"))))
     out["production_accounting"]["refinery"] = Table(["RefineryCode", "RefineryName", "Region", "CrudeCapacityMbpcd", "updated_at"],
                                         [(r["refinery_code"], r["refinery_name"], r["region"], int(r["crude_capacity_mbpcd"]), ts(WINDOW_START))
                                          for r in refineries])
     util = public_data.load("us_utilization")
-    production, plans, deals, moves = [], [], [], []
+    production, plans, deals, moves, units = [], [], [], [], []
+    unit_rng = random.Random(SEED + 1)  # its own stream, so the unit rows never shift the other tables
+    months = sorted({month_start(d) for d in days})
     for r in refineries:
         cap = int(r["crude_capacity_mbpcd"])
-        for month in sorted({month_start(d) for d in days}):
-            plans.append((r["refinery_code"], month, round(cap * 0.93, 1), 93.0, 47.0, 34.5, 18.5, ts(month), "synthesized"))
+        for month in months:
+            # The plan for a month assumes the U.S. utilization EIA reported for the same month a year earlier (real),
+            # with distillate weighted up in the heating season (generated).
+            year_ago = [v for d, v in util.items() if d.year == month.year - 1 and d.month == month.month]
+            planned_util = round(min(sum(year_ago) / len(year_ago), 97.0), 1) if year_ago else 93.0
+            dist = 35.5 if month.month in (10, 11, 12, 1, 2) else 34.0
+            gas = 47.5 if month.month in (5, 6, 7, 8) else 46.5
+            plans.append((r["refinery_code"], month, round(cap * planned_util / 100, 1), planned_util, gas, dist,
+                          round(100 - gas - dist, 1), ts(month), "synthesized"))
         for day in days:
             week = max(d for d in util if d <= day + dt.timedelta(days=6))
             u = util[week] / 100 + rng.gauss(0, 0.012)
@@ -329,6 +414,12 @@ def build():
             gas_yield = 47.0 + rng.gauss(0, 0.6)
             production.append((r["refinery_code"], day, round(runs, 1), cap, round(gas_yield, 2), round(dist_yield, 2),
                                round(100 - gas_yield - dist_yield, 2), round(5.2 + rng.gauss(0, 0.3), 2), ts(day, 23), "synthesized"))
+            for code, name, cap_share, load_share, min_cap in UNITS:
+                if cap < min_cap:
+                    continue
+                unit_cap = round(cap * cap_share, 1)
+                load = round(runs, 1) if code == "ATM" else min(unit_cap, runs * load_share * (1 + unit_rng.gauss(0, 0.03)))
+                units.append((r["refinery_code"], code, name, day, round(load, 1), unit_cap, ts(day, 23), "synthesized"))
     deal_id = 1
     for day in days:
         freight = timeline.intensity("freight_spike", day)
@@ -343,6 +434,43 @@ def build():
             moves.append((deal_id, deal_id, route[2], route[0], route[1], day + dt.timedelta(days=rng.randint(1, 10)), volume,
                           round(volume * fpb, 2), ts(day, 21), "synthesized"))
             deal_id += 1
+    out["production_accounting"]["unit_daily"] = Table(
+        ["RefineryCode", "UnitCode", "UnitName", "ProductionDate", "UnitThroughputMbpd", "UnitCapacityMbpd", "updated_at",
+         "DemoProvenance"], units)
+    freight_rng = random.Random(SEED + 2)
+    freight = []
+    for code, name, vessel, base in FREIGHT_ROUTES:
+        x = 0.0
+        for day in days:
+            x = 0.9 * x + freight_rng.gauss(0, 0.04)
+            seasonal = 0.06 * math.sin(2 * math.pi * (day.timetuple().tm_yday - 30) / 365)
+            freight.append((code, name, vessel, day, round(base * freight_multiplier(day) * (1 + seasonal + x), 2), ts(day, 19), "synthesized"))
+    out["rightangle"]["freight_rate"] = Table(
+        ["RouteCode", "RouteName", "VesselClass", "RateDate", "RateUsdPerBbl", "updated_at", "DemoProvenance"], freight)
+    events = []
+    for e in timeline.EVENTS + timeline.BRIEFING_EVENTS:
+        events.append((len(events) + 1, e.key, e.label, timeline.EVENT_CATEGORY[e.key], timeline.EVENT_REGION[e.key], None,
+                       e.start, e.end, "SCENARIO.md: " + e.scenario,
+                       "briefing" if e in timeline.BRIEFING_EVENTS else "scenario timeline",
+                       "not checked", None, "[]", ts(WINDOW_END)))
+    for code, start, end in timeline.TURNAROUNDS:
+        region = next(r["region"] for r in refineries if r["refinery_code"] == code)
+        events.append((len(events) + 1, f"turnaround_{code.lower()}", f"Planned turnaround at the {code} refinery (scenario, not MPC's schedule)",
+                       "operations", region, code, start, end, "pricing_demo/timeline.py: TURNAROUNDS",
+                       "scenario timeline", "not checked", None, "[]", ts(WINDOW_END)))
+    # Until the outside-context step checks each event against public sources, the status reads "not checked", the
+    # probability is empty and the citations are an empty JSON array.
+    out["reference_data_hub"]["market_event"] = Table(
+        ["EventId", "EventKey", "Title", "Category", "Region", "RefineryCode", "StartDate", "EndDate", "Source", "SourceKind",
+         "EvidenceStatus", "EvidenceProbability", "EvidenceCitations", "updated_at"], events)
+    weekly_values, weekly_meta = public_data.weekly()
+    out["eia_weekly"]["series"] = Table(
+        ["SeriesKey", "SeriesId", "Measure", "Area", "Description", "Units", "PulledOn", "updated_at", "DemoProvenance"],
+        [(k, m["series_id"], m["measure"], m["area"], m["description"], m["units"], dt.date.fromisoformat(m["pulled_on"]),
+          ts(WINDOW_END), "real") for k, m in sorted(weekly_meta.items())])
+    out["eia_weekly"]["weekly_value"] = Table(
+        ["SeriesKey", "SeriesId", "WeekEnding", "Value", "updated_at", "DemoProvenance"],
+        [(k, s, d, v, ts(d, 10), "real") for k, s, d, v in weekly_values if WEEKLY_START <= d <= WINDOW_END])
     out["production_accounting"]["refinery_daily"] = Table(
         ["RefineryCode", "ProductionDate", "CrudeRunsMbpd", "CrudeCapacityMbpcd", "GasolineYieldPct", "DistillateYieldPct",
          "OtherYieldPct", "OpexUsdPerBbl", "updated_at", "DemoProvenance"], production)
