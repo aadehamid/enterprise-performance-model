@@ -14,8 +14,8 @@ import os
 import random
 from dataclasses import dataclass
 
-from . import catalog, public_data, timeline
-from .config import DATA, SEED, SYSTEMS, WEEKLY_START, WINDOW_END, WINDOW_START
+from . import catalog, decisions, public_data, timeline
+from .config import DATA, HIDDEN_SYSTEMS, SEED, SYSTEMS, WEEKLY_START, WINDOW_END, WINDOW_START
 
 
 # The units of measure, by the code an assessment group is quoted in (Kimi round 1, finding 15).
@@ -482,6 +482,13 @@ def build():
                                  "FreightUsdPerBbl", "updated_at", "DemoProvenance"], deals)
     out["rightangle"]["movement"] = Table(["MovementId", "DealId", "Mode", "Origin", "Destination", "LoadDate", "VolumeBbl",
                                      "FreightCostUsd", "updated_at", "DemoProvenance"], moves)
+
+    # ---- Plan versions, the decision log and its evidence (aspen_pims), and the hidden dossiers (decision_truth),
+    # computed from the tables above (decisions.py) ----
+    out.update({s: {} for s in HIDDEN_SYSTEMS})
+    for system, tables in decisions.build(out).items():
+        for name, (columns, rows_) in tables.items():
+            out[system][name] = Table(columns, rows_)
     return out
 
 

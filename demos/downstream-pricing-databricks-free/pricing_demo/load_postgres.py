@@ -10,7 +10,7 @@ import datetime as dt
 import decimal
 
 from . import generate
-from .config import SYSTEMS, source_dsn
+from .config import HIDDEN_SYSTEMS, SYSTEMS, source_dsn
 
 
 def pg_type(values):
@@ -47,7 +47,7 @@ def load(tables=None):
     import psycopg
     tables = tables or generate.build()
     base = source_dsn().rstrip("/")
-    for system in SYSTEMS:
+    for system in list(SYSTEMS) + list(HIDDEN_SYSTEMS):  # the hidden ones too: loaded, never replicated
         with psycopg.connect(f"{base}/{system}") as conn:  # one transaction per database; an error rolls it back
             load_database(conn, tables[system])
             conn.commit()

@@ -67,3 +67,35 @@ SELECT u.Refinery_Code, r.Refinery_Name, r.Region_Name, u.Unit_Code, u.Unit_Name
        ROUND(100 * u.Unit_Throughput_Mbpd / u.Unit_Capacity_Mbpd, 2) AS Unit_Utilization_Pct, u.Demo_Provenance_Label
 FROM ${catalog}.silver_udm_core.refinery_unit_daily_fact u
 JOIN ${catalog}.silver_mdm_core.refinery_dim r ON r.Refinery_Code = u.Refinery_Code;
+
+-- Added for E2 (2026-10-28): each plan version against what happened in its month (use cases 13, 16 and 17). The
+-- actuals average the refinery operations gold table over the plan month's trading days.
+CREATE OR REPLACE TABLE ${catalog}.gold_commercial_core.refinery_plan_backcast_fact AS
+WITH actual AS (
+  SELECT Refinery_Code, DATE_TRUNC('MONTH', Production_Date) AS Plan_Month, COUNT(*) AS Actual_Trading_Days,
+         AVG(Benchmark_Crack_Usd_Per_Bbl) AS Actual_Benchmark_Crack_Usd_Per_Bbl, AVG(Crude_Runs_Mbpd) AS Actual_Crude_Runs_Mbpd,
+         AVG(Utilization_Pct) AS Actual_Utilization_Pct, AVG(Gasoline_Yield_Pct) AS Actual_Gasoline_Yield_Pct,
+         AVG(Distillate_Yield_Pct) AS Actual_Distillate_Yield_Pct
+  FROM ${catalog}.gold_commercial_core.refinery_operations_daily_fact
+  GROUP BY Refinery_Code, DATE_TRUNC('MONTH', Production_Date)
+)
+SELECT v.Plan_Version_Id, v.Refinery_Code, v.Plan_Month, v.Plan_Date, v.Version_Number, v.Assumptions_Through_Date,
+       v.Assumed_Benchmark_Crack_Usd_Per_Bbl, ROUND(a.Actual_Benchmark_Crack_Usd_Per_Bbl, 4) AS Actual_Benchmark_Crack_Usd_Per_Bbl,
+       ROUND(a.Actual_Benchmark_Crack_Usd_Per_Bbl - v.Assumed_Benchmark_Crack_Usd_Per_Bbl, 4) AS Crack_Error_Usd_Per_Bbl,
+       v.Planned_Crude_Runs_Mbpd, ROUND(a.Actual_Crude_Runs_Mbpd, 1) AS Actual_Crude_Runs_Mbpd,
+       v.Planned_Utilization_Pct, ROUND(a.Actual_Utilization_Pct, 2) AS Actual_Utilization_Pct,
+       ROUND(a.Actual_Utilization_Pct - v.Planned_Utilization_Pct, 2) AS Utilization_Error_Pct,
+       v.Planned_Gasoline_Yield_Pct, ROUND(a.Actual_Gasoline_Yield_Pct, 2) AS Actual_Gasoline_Yield_Pct,
+       v.Planned_Distillate_Yield_Pct, ROUND(a.Actual_Distillate_Yield_Pct, 2) AS Actual_Distillate_Yield_Pct,
+       a.Actual_Trading_Days, v.Demo_Provenance_Label
+FROM ${catalog}.silver_udm_core.refinery_plan_version_fact v
+JOIN actual a ON a.Refinery_Code = v.Refinery_Code AND a.Plan_Month = v.Plan_Month;
+
+-- Each evidence item with the public part of its decision: what the agents may read about a decision (use cases 14,
+-- 15 and 18). The dossiers' drivers, constraints, options, rationale and actual outcomes are not here.
+CREATE OR REPLACE TABLE ${catalog}.gold_commercial_core.decision_evidence_detail_fact AS
+SELECT e.Evidence_Id, e.Decision_Id, d.Decision_Datetime, d.Decision_Domain, d.Decision_Statement, d.Owner_Role_Slugs,
+       d.Refinery_Codes, d.Refinery_Iris, d.Measure_Identifiers, d.Selected_Option, d.Expected_Outcome,
+       e.Evidence_Kind, e.Authored_Datetime, e.Author_Role_Slug, e.Evidence_Text, e.Demo_Provenance_Label
+FROM ${catalog}.silver_udm_core.decision_evidence_fact e
+JOIN ${catalog}.silver_mdm_core.decision_dim d ON d.Decision_Id = e.Decision_Id;

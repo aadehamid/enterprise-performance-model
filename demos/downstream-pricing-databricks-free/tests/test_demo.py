@@ -375,7 +375,8 @@ def test_finding_21_a_failed_refresh_leaves_the_cache_byte_for_byte(tmp_path):
 
 def test_finding_22_one_registry_of_source_systems():
     init = open(os.path.join(ROOT, "docker", "init", "01_databases.sql")).read()
-    assert set(TABLES) == set(config.SYSTEMS) == set(re.findall(r"CREATE DATABASE (\w+);", init))
+    assert set(TABLES) == set(config.SYSTEMS) | set(config.HIDDEN_SYSTEMS) == set(re.findall(r"CREATE DATABASE (\w+);", init))
+    assert not set(config.SYSTEMS) & set(config.HIDDEN_SYSTEMS)
     assert {s for s in databricks.SCHEMAS if s.startswith("replica_") and s != "replica_landing"} == {f"replica_{s}" for s in config.SYSTEMS}
     assert set(replicate.expected_tables()) == set(config.SYSTEMS)
     replica_sql = set(re.findall(r"replica_(\w+)\.(\w+) AS", SQL_TEXT["02_replica.sql"]))
@@ -598,3 +599,106 @@ def test_eia_weekly_holds_every_padd_series_six_years_back_all_real():
     data_md = open(os.path.join(ROOT, "DATA.md")).read()
     for s in series:
         assert s["SeriesId"] in data_md, s["SeriesId"]
+
+
+# ---- E2 (2026-10-28): plan versions, the decision log, its evidence and the hidden dossiers ----
+from pricing_demo import decisions  # noqa: E402
+
+ONTOLOGY = os.path.join(ROOT, "..", "..", "business_architecture", "ontology")
+
+
+def _price(master, day):
+    return next(float(r["SettlePrice"]) for r in rows("price_reference", "pricedetail")
+                if r["PriceMasterId"] == master and r["RelativePeriodNum"] == 0 and r["EffectiveStartDate"].date() == day)
+
+
+def test_e2_tables_hold_their_grains_and_counts():
+    versions = rows("aspen_pims", "plan_version")
+    assert len(versions) == 13 * 35 == 455  # December 2023 to October 2026: earlier plan dates have no prices behind them
+    assert len({(v["RefineryCode"], v["PlanMonth"]) for v in versions}) == 455
+    assert min(v["PlanMonth"] for v in versions) == dt.date(2023, 12, 1)
+    assert len(rows("aspen_pims", "decision_log")) == len(rows("decision_truth", "decision_dossier")) == 10
+    evidence = rows("aspen_pims", "decision_evidence")
+    assert len(evidence) == 20 and len({e["EvidenceId"] for e in evidence}) == 20
+    per_decision = {}
+    for e in evidence:
+        per_decision[e["DecisionId"]] = per_decision.get(e["DecisionId"], 0) + 1
+    assert set(per_decision.values()) <= {1, 2, 3} and set(per_decision) == {f"D{i:02d}" for i in range(1, 11)}
+    for t in ("plan_version", "decision_log", "decision_evidence"):
+        assert {r["DemoProvenance"] for r in rows("aspen_pims", t)} == {"synthesized"}
+    assert all(r["Synthetic"] is True for r in rows("decision_truth", "decision_dossier"))
+
+
+def test_e2_no_plan_assumption_uses_a_price_after_its_plan_date():
+    versions = rows("aspen_pims", "plan_version")
+    for v in versions:
+        assert v["AssumptionsFromDate"] <= v["AssumptionsThroughDate"] <= v["PlanDate"] < v["PlanMonth"], v
+    # Recompute two versions from the price detail: the 20 trading days up to the plan date, nothing later.
+    days = sorted({r["RateDate"] for r in rows("rightangle", "freight_rate")})
+    for code, month in (("GB", dt.date(2026, 10, 1)), ("LA", dt.date(2024, 6, 1))):
+        v = next(x for x in versions if x["RefineryCode"] == code and x["PlanMonth"] == month)
+        window = [d for d in days if d <= v["PlanDate"]][-20:]
+        assert (window[0], window[-1]) == (v["AssumptionsFromDate"], v["AssumptionsThroughDate"])
+        master = v["BenchmarkCrackPriceMasterId"]
+        assert v["AssumedBenchmarkCrackUsdPerBbl"] == round(sum(_price(master, d) for d in window) / 20, 4)
+        assert v["AssumedWtiUsdPerBbl"] == round(sum(_price(747, d) for d in window) / 20, 4)
+
+
+def test_e2_hidden_truth_is_never_replicated_or_built():
+    assert "decision_truth" not in replicate.expected_tables()
+    assert not any("decision_truth" in s for s in databricks.SCHEMAS)
+    statements = [re.sub(r"^--.*$", "", text, flags=re.M) for text in SQL_TEXT.values()]  # comments may name it
+    assert not any("decision_truth" in text or "decision_dossier" in text for text in statements)
+    public = set(TABLES["aspen_pims"]["decision_log"].columns) | set(TABLES["aspen_pims"]["decision_evidence"].columns)
+    hidden_only = {"Drivers", "Constraints", "Options", "ActualOutcome", "ActualOutcomeData", "GroundTruthRationale",
+                   "KnownUncertainties"}
+    assert hidden_only <= set(TABLES["decision_truth"]["decision_dossier"].columns) and not hidden_only & public
+    dossiers = {r["DecisionId"]: r for r in rows("decision_truth", "decision_dossier")}
+    for e in rows("aspen_pims", "decision_evidence"):
+        d = dossiers[e["DecisionId"]]
+        assert e["AuthoredAt"] <= d["DecisionTime"] + dt.timedelta(days=1)  # written at the decision, before any outcome
+        assert d["ActualOutcome"] not in e["EvidenceText"] and d["GroundTruthRationale"] not in e["EvidenceText"]
+
+
+def test_e2_every_role_refinery_and_measure_named_exists_in_the_ontology():
+    slugs = {r["slug"] for r in csv.DictReader(open(os.path.join(ONTOLOGY, "organization", "roles.csv")))}
+    refineries = set(re.findall(r"refmpc:(refinery-[a-z-]+) a org:Site", open(os.path.join(ONTOLOGY, "ref-mpc", "ref-mpc.ttl")).read()))
+    identifiers = {r["identifier"] for r in csv.DictReader(open(os.path.join(ONTOLOGY, "kpi", "measure-identifiers.csv")))}
+    for d in rows("aspen_pims", "decision_log"):
+        assert set(d["OwnerRoleSlugs"].split(";")) <= slugs, d["DecisionId"]
+        assert {i.rsplit("/", 1)[1] for i in d["RefineryIris"].split(";")} <= refineries, d["DecisionId"]
+        assert set(d["MeasureIdentifiers"].split(";")) <= identifiers, d["DecisionId"]
+    assert {e["AuthorRoleSlug"] for e in rows("aspen_pims", "decision_evidence")} <= slugs
+    assert set(decisions.REFINERY_SLUG) == {r["RefineryCode"] for r in rows("production_accounting", "refinery")}
+
+
+def test_e2_actual_outcomes_are_recomputed_from_the_demos_own_tables():
+    dossiers = {r["DecisionId"]: json.loads(r["ActualOutcomeData"]) for r in rows("decision_truth", "decision_dossier")}
+    daily = {(r["RefineryCode"], r["ProductionDate"]): r["CrudeRunsMbpd"] for r in rows("production_accounting", "refinery_daily")}
+    days = sorted({d for _, d in daily})
+    # D04: the Robinson turnaround's lost throughput against the 28 days before it.
+    base = [daily[("RB", d)] for d in days if dt.date(2026, 8, 24) <= d <= dt.date(2026, 9, 20)]
+    lost = sum(max(sum(base) / len(base) - daily[("RB", d)], 0) for d in days if dt.date(2026, 9, 21) <= d <= dt.date(2026, 10, 12))
+    assert dossiers["D04"]["lost_throughput_mbbl"] == round(lost, 1)
+    # D06: the system's distillate yield, October against September.
+    dist = {(r["RefineryCode"], r["ProductionDate"]): r["DistillateYieldPct"] for r in rows("production_accounting", "refinery_daily")}
+    sep = [v for (c, d), v in dist.items() if dt.date(2026, 9, 1) <= d <= dt.date(2026, 9, 19)]
+    octo = [v for (c, d), v in dist.items() if d >= dt.date(2026, 10, 1)]
+    assert dossiers["D06"]["change_points"] == round(round(sum(octo) / len(octo), 4) - round(sum(sep) / len(sep), 4), 4)
+    # D07: the domestic freight premium over the ten trading days from the load date.
+    freight = {(r["RouteCode"], r["RateDate"]): r["RateUsdPerBbl"] for r in rows("rightangle", "freight_rate")}
+    span = [d for d in days if d >= dt.date(2026, 10, 9)][:10]
+    premium = sum(freight[("USGC-NYH", d)] - freight[("USGC-NWE", d)] for d in span) / len(span)
+    assert len(span) == dossiers["D07"]["trading_days"] == 8  # the window ends on 2026-10-20
+    assert dossiers["D07"]["avg_domestic_premium_usd_per_bbl"] == round(premium, 4)
+    # D08: WTI ten trading days after the G7 release decision, from the price detail (EIA's spot).
+    later = [d for d in days if d >= dt.date(2026, 10, 2)]
+    assert dossiers["D08"]["wti_ten_days_later"] == _price(747, later[10])
+
+
+def test_e2_data_md_and_the_readme_describe_the_new_tables():
+    data_md = open(os.path.join(ROOT, "DATA.md")).read()
+    for name in ("plan_version", "decision_log", "decision_evidence", "decision_dossier", "decision_truth",
+                 "refinery_plan_version_fact", "decision_dim", "decision_evidence_fact", "refinery_plan_backcast_fact",
+                 "decision_evidence_detail_fact"):
+        assert f"`{name}`" in data_md, name
