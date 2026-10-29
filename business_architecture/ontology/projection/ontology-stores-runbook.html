@@ -182,7 +182,7 @@ td:first-child { font-weight: 600; }
 </div>
 
 <h2 id="flow">How it fits together</h2>
-<p class="lead">Two flows feed the stores. The ontology flow starts at the process map and ends in the graph stores and a Databricks table. The demo flow starts at public market data and ends in Databricks metric views and Genie agents. Since E3 (2026-10-29) each metric-view measure that implements a <code>kpi</code> measure carries its KPI or OPM identifier, and definitions views read those measures' definitions from the Databricks table. Since E4 (2026-10-29) four Genie agents each read one subject area's metric views and its definitions view, and an orchestrator run from this Mac routes questions between them.</p>
+<p class="lead">Two flows feed the stores. The ontology flow starts at the process map and ends in the graph stores and a Databricks table. The demo flow starts at public market data and ends in Databricks metric views and Genie agents. Since E3 (2026-10-29) each metric-view measure that implements a <code>kpi</code> measure carries its KPI or OPM identifier, and definitions views read those measures' definitions from the Databricks table. Since E4 (2026-10-29) four Genie agents each read one subject area's metric views and its definitions view, and an orchestrator run from this Mac routes questions between them. Since E5 (2026-10-29) a technical graph of the demo's pipeline and its decision trail sit beside the ontology in both local Neo4j stores and AuraDB, under the label <code>Tech</code>, and in two Delta tables.</p>
 <figure>
 <div class="diagram wide" role="img" aria-labelledby="f1t">
 <svg viewBox="0 0 1040 560" xmlns="http://www.w3.org/2000/svg">
@@ -333,7 +333,7 @@ td:first-child { font-weight: 600; }
       <li>A seeded generator writes the six source systems' rows, and EIA's weekly series, into local Postgres.</li>
       <li>DuckDB copies them to Parquet, and the Parquet files go to the <code>idp_sbx</code> volume.</li>
       <li>Databricks builds the replica, silver and gold tables, then six metric views and five definitions views of the ontology's measures.</li>
-      <li>Four Genie agents answer questions from the metric views, each reading its definitions view; an orchestrator routes a question to one or more of them.</li>
+      <li>Four Genie agents answer questions from the metric views, each reading its definitions view; an orchestrator routes a question to one or more of them. SPARQL Anything then builds a technical graph of the pipeline, which goes into Neo4j and two Delta tables (E5).</li>
     </ol>
   </div>
 </div>
@@ -343,11 +343,11 @@ td:first-child { font-weight: 600; }
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Store</th><th>What it holds</th><th>Where</th><th>Login</th></tr></thead>
 <tbody>
-<tr><td>Local Neo4j, pipeline</td><td data-k="Holds">The projection that <code>pipeline.py</code> builds. Reloaded on 2026-10-28, on that day's releases with <code>kpi</code> 1.3.0: 4,193 nodes and 21,767 relationships from 36,951 triples, with no SHACL violation</td><td data-k="Where">Container <code>epm-lpg</code>, Bolt <code>localhost:17687</code>, browser <code>http://localhost:17474</code></td><td data-k="Login"><code>~/epm-lpg/run.env</code></td></tr>
-<tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step. Reloaded on 2026-10-28, on that day's releases with <code>kpi</code> 1.3.0: 4,193 nodes and 22,142 relationships, the same as the driver's first load, and its 14 walks and module map matched the same walks in the triple store</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> after a full run, <code>~/lpg-out/epm/neo4j-run/run.env</code> after <code>--skip rebuild</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
-<tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the driver's graph: the driver's copy step checks that both give the same graph hash. Reloaded on 2026-10-28: 4,193 nodes and 22,142 relationships, the driver's figures, read back after the copy</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
+<tr><td>Local Neo4j, pipeline</td><td data-k="Holds">The projection that <code>pipeline.py</code> builds. Reloaded on 2026-10-28, on that day's releases with <code>kpi</code> 1.3.0: 4,193 nodes and 21,767 relationships from 36,951 triples, with no SHACL violation. Since 2026-10-29 it also holds the demo's technical graph and decision trail: 134 nodes labelled <code>Tech</code>, which those counts leave out (E5)</td><td data-k="Where">Container <code>epm-lpg</code>, Bolt <code>localhost:17687</code>, browser <code>http://localhost:17474</code></td><td data-k="Login"><code>~/epm-lpg/run.env</code></td></tr>
+<tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step. Reloaded on 2026-10-28, on that day's releases with <code>kpi</code> 1.3.0: 4,193 nodes and 22,142 relationships, the same as the driver's first load, and its 14 walks and module map matched the same walks in the triple store. Since 2026-10-29 also the 134 <code>Tech</code> nodes (E5)</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> after a full run, <code>~/lpg-out/epm/neo4j-run/run.env</code> after <code>--skip rebuild</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
+<tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the driver's graph: the driver's copy step checks that both give the same graph hash. Reloaded on 2026-10-28: 4,193 nodes and 22,142 relationships, the driver's figures, read back after the copy. Since 2026-10-29 also the 134 <code>Tech</code> nodes, which a Databricks job reached through the secret scope <code>epm-neo4j</code> (E5)</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
 <tr><td>Databricks, <code>epm_triples</code></td><td data-k="Holds">The release triples as a Delta table. Reloaded on 2026-10-28, on that day's releases with <code>kpi</code> 1.3.0: 40,169 quads in 33 graphs, with the same RDFC-1.0 hash as the releases. The definitions views read <code>kpi</code> 1.3.0 from it (E3, 2026-10-29)</td><td data-k="Where"><code>workspace.epm_ontology.epm_triples</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code></td></tr>
-<tr><td>Databricks, <code>idp_sbx</code></td><td data-k="Holds">The demo's replica, silver and gold tables, six metric views, five definitions views and four Genie agents</td><td data-k="Where">Catalog <code>idp_sbx</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code> or the demo's <code>.env</code></td></tr>
+<tr><td>Databricks, <code>idp_sbx</code></td><td data-k="Holds">The demo's replica, silver and gold tables, six metric views, five definitions views, four Genie agents, and the technical graph's tables <code>tech_graph.tech_graph_nodes</code> and <code>tech_graph_edges</code> (E5)</td><td data-k="Where">Catalog <code>idp_sbx</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code> or the demo's <code>.env</code></td></tr>
 <tr><td>Local Postgres</td><td data-k="Holds">The demo's seven source databases: price_assessment, price_reference, reference_data_hub, rightangle, aspen_pims, production_accounting (six synthetic, renamed on 2026-10-28) and eia_weekly (EIA's public weekly data by PADD, added 2026-10-28 for the three-year extension), with an eighth, decision_truth, holding the hidden decision dossiers, which the pipeline never replicates (added 2026-10-28). The same eight also run on the exe.dev VM <code>databases.exe.xyz</code>, which the demo now reads through an SSH tunnel</td><td data-k="Where">Container <code>pricing-demo-sources</code>, <code>127.0.0.1:55432</code>, volume <code>pricing-demo-pgdata</code></td><td data-k="Login">The local demo login in the demo's <code>docker/docker-compose.yml</code></td></tr>
 </tbody></table></div>
 <p class="note">Loaded from the same releases, the two local graphs hold the same nodes but count relationships differently, because they follow different versions of the projection guideline: the pipeline v2.2, the driver the skill's v2.3. Each passes its own checks. Both were reloaded from the releases of 2026-10-28, so they hold the same 4,193 nodes; the pipeline counts 21,767 relationships and the driver 22,142. The driver's run also loads transient Apache Jena Fuseki stores, which it does not keep; the one that compares the walks held 37,089 quads, with an equal hash.</p>
@@ -374,6 +374,7 @@ DEMO="$EPM/demos/downstream-pricing-databricks-free"</code></pre>
 <pre><code>docker ps --format '{{.Names}}  {{.Status}}'</code></pre>
 <p>All three local stores are up when the list shows <code>epm-lpg</code>, <code>lpg-local-neo4j-1</code> and <code>pricing-demo-sources</code>.</p>
 <h3>Count what each store holds</h3>
+<p>Every count below reads <code>:Resource</code> nodes and the edges between them, the projection itself. The demo's technical graph (E5) is labelled <code>Tech</code>, has no edge pointing into it from the ontology, and so changes none of them; <code>MATCH (n:Tech) RETURN count(n)</code> counts it, 134 nodes after its load on 2026-10-29.</p>
 <p>Pipeline Neo4j. The password is read from its file into <code>NEO4J_PASSWORD</code>, which <code>docker exec -e</code> passes to <code>cypher-shell</code>, so it never appears on a command line or in the output:</p>
 <pre><code>set -a; . ~/epm-lpg/run.env; set +a
 docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j \
@@ -523,7 +524,7 @@ uv run python -m pricing_demo.load_postgres</code></pre>
 uv run python -m pricing_demo.replicate          # Postgres to Parquet, with DuckDB
 uv run python -m pricing_demo.databricks setup   # catalog idp_sbx (or DEMO_CATALOG), schemas, volume
 uv run python -m pricing_demo.databricks upload  # Parquet to the volume
-uv run python -m pricing_demo.databricks build   # replica, silver, gold, metric views, definitions views
+uv run python -m pricing_demo.databricks build   # replica, silver, gold, metric views, definitions views, empty tech_graph tables
 uv run python -m pricing_demo.genie              # the four Genie agents
 uv run python -m pricing_demo.databricks counts  # check the row counts</code></pre>
 <p>The Genie step updates an agent that already exists by its title, so running it again makes no duplicates.</p>
@@ -553,6 +554,15 @@ uv run --no-project --with rdflib python3 run_projection.py \
 </ul>
 <div class="ok"><strong>When it is done</strong>Every store holds the newest releases again. Run the counts in <a href="#check">Check what is running</a>.</div>
 
+<h3>5. The demo's technical graph</h3>
+<p>Steps 3 and 4 empty their Neo4j stores and AuraDB, so the technical graph goes back in after them. Steps 1 and 2 must have run, and the Databricks build leaves its two Delta tables empty until the sync fills them:</p>
+<pre><code>cd "$DEMO"
+uv run --group graph python -m pricing_demo.tech_graph collect   # live facts, checks, lineage
+uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything -> graph/*.ttl
+uv run --group graph python -m pricing_demo.tech_graph load      # both local Neo4j stores and AuraDB
+uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_sbx.tech_graph</code></pre>
+<p>The load stops if a store's <code>:Resource</code> counts change, or if an edge to the ontology finds no node.</p>
+
 <h2 id="purge">Purge</h2>
 <div class="warn"><strong>Read this first.</strong>A purge cannot be undone. The data comes back only by <a href="#reload">reloading</a>, which rebuilds what these commands remove from the repository. The local and Databricks commands below remove only what the demo or the projection created; the AuraDB command empties the whole Aura database, which holds only these test runs (<code>skill-run/README.md</code>). On 2026-10-26 the decision owner asked to keep these stores loaded. Purge only when you mean to.</div>
 
@@ -581,10 +591,11 @@ docker compose -f docker/docker-compose.yml down -v</code></pre>
 <h3>Databricks</h3>
 <p>The ontology triples: run this in the Databricks SQL editor.</p>
 <pre><code>DROP TABLE IF EXISTS workspace.epm_ontology.epm_triples;</code></pre>
-<p>The demo: its own <code>purge</code> step drops exactly the tables and views its SQL files create, then its volume, then its thirteen schemas without <code>CASCADE</code>. A schema that still holds anything the demo did not create is not dropped: without <code>CASCADE</code>, <code>DROP SCHEMA</code> runs as <code>RESTRICT</code>, which "restricts dropping a non-empty schema and is enabled by default" (<a href="https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-drop-schema">Databricks, "DROP SCHEMA"</a>, read 2026-10-26), so that statement fails and the step stops. Run it once without <code>--yes</code> to see the statements and the catalog it will use, then with <code>--yes</code> to drop:</p>
+<p>The demo: its own <code>purge</code> step drops exactly the tables and views its SQL files create, then its volume, then its fourteen schemas without <code>CASCADE</code> (<code>tech_graph</code> since E5). A schema that still holds anything the demo did not create is not dropped: without <code>CASCADE</code>, <code>DROP SCHEMA</code> runs as <code>RESTRICT</code>, which "restricts dropping a non-empty schema and is enabled by default" (<a href="https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-drop-schema">Databricks, "DROP SCHEMA"</a>, read 2026-10-26), so that statement fails and the step stops. Run it once without <code>--yes</code> to see the statements and the catalog it will use, then with <code>--yes</code> to drop:</p>
 <pre><code>cd "$DEMO"
 uv run python -m pricing_demo.databricks purge         # lists the statements; drops nothing
 uv run python -m pricing_demo.databricks purge --yes   # drops them</code></pre>
+<p>The AuraDB login the demo wrote for its Databricks test sits in the secret scope <code>epm-neo4j</code>, outside the catalog. Delete the scope with <code>uv run python -c "from pricing_demo.config import databricks_env; from databricks.sdk import WorkspaceClient; e = databricks_env(); WorkspaceClient(host=e['DATABRICKS_HOST'], token=e['DATABRICKS_TOKEN']).secrets.delete_scope('epm-neo4j')"</code>. The probe it ran, <code>aura_probe.py</code>, sits in your workspace folder <code>pricing-demo</code>; delete that folder in the workspace browser.</p>
 <p>The Genie agents are not in the catalog. Delete <em>Crack Spread Price Analytics</em>, <em>Executive Summary KPIs Analytics</em>, <em>Pricing and Market Margin Analytics</em> and <em>Refinery Operations Analytics</em> in Genie, or leave them: the next <code>genie</code> step updates them in place.</p>
 
 <h2 id="trouble">When something fails</h2>

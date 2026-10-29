@@ -4,6 +4,8 @@ Since 2026-10-26 the stores below stay loaded after a run, so the decision owner
 
 *2026-10-28:* the four ontology stores (both local Neo4j stores, AuraDB and `epm_triples`), empty since the purge of 2026-10-27, were reloaded from that day's releases, with `kpi` 1.3.0. `ontology-stores-runbook.html` gives each store's figures.
 
+*2026-10-29:* both local Neo4j stores and AuraDB also hold the pricing demo's technical graph and decision trail (E5): 134 nodes labelled `Tech`, never `Resource`, with edges only from them, so the projection's counts and hash, which read `:Resource` nodes and the edges between them, do not change. A pipeline reload, a driver run or a purge removes them; load them again with `uv run --group graph python -m pricing_demo.tech_graph load` from the demo's folder.
+
 | Store | What it holds | Refresh it with | Login |
 |---|---|---|---|
 | Local Neo4j, from the driver | The projection of every released package, as the driver's last step (`rebuild`) loads it back from `epm_triples` | `uv run --no-project --with rdflib python3 run_projection.py --config <this folder>/skill-run/epm-run.json`, from the skill's `scripts/` folder (`skill-run/README.md`, "Running it"); `keep_neo4j` is on, so the container stays up | Bolt `localhost:17711`; `~/lpg-out/epm-rebuild/neo4j-run/run.env` after a full run, because the rebuild replaces the first container; `~/lpg-out/epm/neo4j-run/run.env` only when the rebuild is skipped |
@@ -11,7 +13,7 @@ Since 2026-10-26 the stores below stay loaded after a run, so the decision owner
 | Neo4j AuraDB | A copy of the driver's local graph | The same driver run (its copy step) | `~/.config/neo4j/aura.env` |
 | Databricks Free Edition, `epm_triples` | The release triples as a Delta table | The same driver run (its `databricks` step) | `~/.config/databricks/epm.env` |
 | Local Postgres, `pricing-demo-sources` | The pricing demo's seven source databases (six synthetic; `eia_weekly` holds EIA's public weekly data, since 2026-10-28), and the hidden `decision_truth`, which holds the synthetic decision dossiers and is never replicated (since 2026-10-28) | `docker compose -f docker/docker-compose.yml up -d`, then `uv run python -m pricing_demo.load_postgres`, from the demo's folder (`demos/downstream-pricing-databricks-free/README.md`, "Run it") | `127.0.0.1:55432`; the local demo login in `docker/docker-compose.yml` |
-| Databricks Free Edition, catalog `idp_sbx` | The demo's replica, silver and gold tables, metric views, definitions views (E3, 2026-10-29) and Genie agents (four since E4, 2026-10-29) | The demo's `replicate`, `databricks` and `genie` commands, in the README's order | `~/.config/databricks/epm.env` or the demo's `.env` |
+| Databricks Free Edition, catalog `idp_sbx` | The demo's replica, silver and gold tables, metric views, definitions views (E3, 2026-10-29), Genie agents (four since E4, 2026-10-29) and the technical graph's tables `tech_graph.tech_graph_nodes` and `tech_graph_edges` (E5, 2026-10-29) | The demo's `replicate`, `databricks`, `genie` and `tech_graph` commands, in the README's order | `~/.config/databricks/epm.env` or the demo's `.env` |
 
 The Postgres data sits in the named Docker volume `pricing-demo-pgdata`, so a reboot keeps it. The container has `restart: unless-stopped`; after a reboot, start all three local containers as `ontology-stores-runbook.html` says, whichever came back by itself. `replace_target` is on in `skill-run/epm-run.json`, so each driver run replaces what Aura holds.
 

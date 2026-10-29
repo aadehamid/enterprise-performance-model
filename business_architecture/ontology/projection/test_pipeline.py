@@ -4,7 +4,9 @@ the committed Step 5 report describes the current inputs and passed.
 
 Run: python3 -m pytest test_pipeline.py (needs rdflib, pyshacl).
 """
+import inspect
 import json
+import re
 import unittest
 from unittest import mock
 
@@ -198,6 +200,22 @@ class RoundTripRules(unittest.TestCase):
         self.assertFalse(any(isinstance(m, Literal) for c in lists for m in c))
         party = URIRef("https://w3id.org/lsc/ontology/modules/party/Party")
         self.assertTrue(any(party in list(c) for c in lists))
+
+
+class OntologyLabelsOnly(unittest.TestCase):
+    """The pricing demo's technical graph shares the local Neo4j stores, under the label Tech, with edges only from Tech
+    nodes to ontology nodes (EPM-DEC-001-0109, decision 6). The projection's counts, hash and round trip read only
+    :Resource nodes and the edges between them, so those nodes change none of them; only the load's wipe reads all."""
+
+    def test_every_match_but_the_wipe_names_the_resource_label(self):
+        source = inspect.getsource(pl)
+        # an OPTIONAL MATCH extends a node an earlier MATCH bound (the round trip's, pinned below)
+        unlabelled = re.findall(r"(?<!OPTIONAL )MATCH \(\w+\)[^\"']*", source)
+        self.assertEqual(unlabelled, ["MATCH (n) DETACH DELETE n"])
+
+    def test_the_hash_and_the_round_trip_read_edges_between_resources_only(self):
+        self.assertIn("MATCH (a:Resource)-[r]->(b:Resource)", inspect.getsource(pl.graph_hash))
+        self.assertIn("OPTIONAL MATCH (n)-[r]->(m:Resource)", inspect.getsource(pl.roundtrip))
 
 
 class Report(unittest.TestCase):

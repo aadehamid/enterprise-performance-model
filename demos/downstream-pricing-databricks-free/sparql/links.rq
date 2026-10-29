@@ -1,0 +1,67 @@
+# Where a technical-graph node stands for something the ontology holds, link it by the ontology's IRI:
+# - a metric view implements the kpi measures its epm_measure_identifiers tag lists (the tag as deployed, from
+#   out/tech/live.json), each identifier joined to its measure in kpi's measure-identifiers.csv;
+# - a demo table or view is the one the data-product module designs (data-product/pricing/tables.csv), matched by
+#   name; the demo's replica schemas follow its source databases' names (README.md, "The source systems");
+# - a Genie agent the module records (data-product/pricing/agents.csv) is that agent;
+# - a source database stands for the real system the README maps it to, where the system module holds one.
+# %REPO% is the repository root and %LIVE% the live facts file, filled in by tech_graph.py.
+PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX tv:  <urn:pricing-demo:tech-vocab#>
+
+CONSTRUCT {
+  ?view tv:implements ?measure .
+  ?obj tv:designedAs ?designed .
+  ?agent tv:designedAs ?designedAgent .
+  ?db tv:standsFor ?system .
+}
+WHERE {
+  {
+    SERVICE <x-sparql-anything:> {
+      fx:properties fx:location "%LIVE%" ; fx:media-type "application/json" .
+      ?root xyz:tags ?tags . ?tags ?i ?t . ?t xyz:view ?viewId ; xyz:identifiers ?ids .
+    }
+    SERVICE <x-sparql-anything:> {
+      fx:properties fx:location "%REPO%/business_architecture/ontology/kpi/measure-identifiers.csv" ;
+                    fx:csv.headers true .
+      ?row xyz:measure_id ?slug ; xyz:identifier ?identifier .
+    }
+    FILTER(CONTAINS(CONCAT(" ", ?ids, " "), CONCAT(" ", ?identifier, " ")))
+    BIND(IRI(CONCAT("urn:pricing-demo:tech:object/", ?viewId)) AS ?view)
+    BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/kpi/measure/", ?slug)) AS ?measure)
+  } UNION {
+    SERVICE <x-sparql-anything:> {
+      fx:properties fx:location "%REPO%/business_architecture/ontology/data-product/pricing/tables.csv" ;
+                    fx:csv.headers true .
+      ?row xyz:slug ?tableSlug ; xyz:name ?designedName .
+    }
+    # synapse_dev.replica_mips.mips_currency -> replica_price_assessment.mips_currency; idp_sbx.x.y -> x.y
+    BIND(REPLACE(?designedName, "^[a-z_]+\\.", "") AS ?schemaAndName)
+    BIND(STRBEFORE(?schemaAndName, ".") AS ?designedSchema)
+    OPTIONAL {
+      VALUES (?designedSchema ?demoSchema) {
+        ("replica_mips" "replica_price_assessment") ("replica_mpr" "replica_price_reference")
+        ("replica_kittyhawk" "replica_reference_data_hub")
+      }
+    }
+    BIND(CONCAT(COALESCE(?demoSchema, ?designedSchema), ".", STRAFTER(?schemaAndName, ".")) AS ?demoName)
+    BIND(IRI(CONCAT("urn:pricing-demo:tech:object/", ?demoName)) AS ?obj)
+    BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/data-product/table/", ?tableSlug)) AS ?designed)
+  } UNION {
+    SERVICE <x-sparql-anything:> {
+      fx:properties fx:location "%REPO%/business_architecture/ontology/data-product/pricing/agents.csv" ;
+                    fx:csv.headers true .
+      ?row xyz:slug ?agentSlug .
+    }
+    BIND(IRI(CONCAT("urn:pricing-demo:tech:agent/", ?agentSlug)) AS ?agent)
+    BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/data-product/agent/", ?agentSlug)) AS ?designedAgent)
+  } UNION {
+    # README.md, "The source systems"; Aspen PIMS, production accounting and EIA's data have no system in the module.
+    VALUES (?dbName ?systemSlug) {
+      ("price_assessment" "mips") ("price_reference" "mpr") ("reference_data_hub" "kittyhawk") ("rightangle" "rightangle")
+    }
+    BIND(IRI(CONCAT("urn:pricing-demo:tech:database/", ?dbName)) AS ?db)
+    BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/system/system/", ?systemSlug)) AS ?system)
+  }
+}
