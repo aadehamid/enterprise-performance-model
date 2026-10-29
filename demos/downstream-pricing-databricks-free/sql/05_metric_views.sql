@@ -240,7 +240,7 @@ measures:
     display_name: "OPM-0020 Price Comparison"
     synonyms: ["OPM-0020", "basis", "price difference"]
   - name: Additional_Market_Price
-    expr: AVG(source.assessment_amount) FILTER (WHERE source.Price_Group_Name IN ('Renewables', 'NGL''s'))
+    expr: AVG(source.assessment_amount) FILTER (WHERE source.Price_Group_Name IN ('Renewables', 'NGL\'s'))
     comment: "OPM-0021: Additional Market Prices (Renewables, NGLs), renewable feedstocks, renewable fuels and their credits, and NGLs, as published: the Renewables and NGL's groups, averaged over the selected days. Group by Blend."
     display_name: "OPM-0021 Additional Market Prices (Renewables, NGLs)"
     synonyms: ["OPM-0021", "renewables price", "NGL price", "RIN price"]

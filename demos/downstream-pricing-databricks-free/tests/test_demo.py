@@ -818,6 +818,8 @@ def test_e3_the_new_views_hold_their_measures_and_skip_the_rm_margin_indicator()
     assert "OPM-0026 R&M Margin Indicator is not computed" in specs["pricing_market_margin_metrics_vw"]["comment"]
     pricing = SQL_TEXT["05_metric_views.sql"].split("VIEW ${catalog}.semantic_sem_commercial.pricing_market_margin_metrics_vw")[1]
     assert "source.SortColumns = 1" in pricing and "gold_commercial_core.mips_mpr_executive_summary_fact" in pricing
+    # Spark reads 'NGL''s' as two adjacent literals, 'NGLs', so the NGL group needs a backslash (found on the live run).
+    assert "''" not in SQL_TEXT["05_metric_views.sql"] and r"'NGL\'s'" in pricing
     unit = SQL_TEXT["05_metric_views.sql"].split("VIEW ${catalog}.semantic_sem_commercial.refinery_unit_operations_metrics_vw")[1]
     assert "gold_commercial_core.refinery_unit_operations_daily_fact" in unit
     assert "100 * SUM(Unit_Throughput_Mbpd) / SUM(Unit_Capacity_Mbpd)" in unit
