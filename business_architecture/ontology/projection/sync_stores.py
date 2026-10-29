@@ -80,7 +80,7 @@ def expected(ref=None):
 def drift(markers, live, want):
     """Each store's status from its marker, its live count and the repository's expected values:
     current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or
-    unreachable (the reader could not connect)."""
+    unreachable (the store could not be read: no connection, or the table it reads is missing)."""
     rows = []
     for store in STORES:
         m = markers.get(store)
