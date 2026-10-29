@@ -2,14 +2,16 @@
 
     uv run --group graph python -m pricing_demo.acceptance expected        # compute every check's figures; ask nothing
     uv run --group graph python -m pricing_demo.acceptance run [N ...]     # ask each question and judge the answer
+    uv run --group graph python -m pricing_demo.acceptance rejudge FILE ...  # judge a recorded run again; ask nothing
 
 A use case passes when the orchestrator (supervisor.py) calls the agents its row names, its answer holds every figure
-a SQL check computes from the stores (within the rounding a reader would use), and the answer uses what the row's
-"Where the ontology matters" column names: identifiers, definitions or labels. Use case 1 has no agent: its question
-is answered by a walk through the technical graph, and the check compares the walk with Unity Catalog's observed
-lineage. Use case 14 compares the answer with the hidden decision dossiers in decision_truth, which only the tests
-read. `run` writes every answer, check and verdict to out/acceptance/results.json; the runs the README records are
-kept in data/acceptance/.
+a SQL check computes from the stores (within the rounding a reader would use, each number tied to its own label), and
+the answer uses what the row's "Where the ontology matters" column names: identifiers, definitions or labels. Use case
+1 has no agent: its question is answered by a walk through the technical graph, and the check compares the walk with
+Unity Catalog's observed lineage. Use case 14 compares the answer with the hidden decision dossiers in decision_truth,
+which only the tests read, and takes the deciding roles from the decision trail (graph/decision-trail.ttl). `run`
+writes every answer, check and verdict to out/acceptance/results.json; the runs the README records, and their
+re-judgings, are kept in data/acceptance/.
 """
 import datetime as dt
 import json
@@ -18,10 +20,12 @@ import re
 import sys
 from collections import namedtuple
 
-from .config import OUT, source_dsn
+from .config import OUT, ROOT, source_dsn
 
-# A figure the answer must hold: a number within tol, a string, or a tuple of strings any one of which will do.
-Expect = namedtuple("Expect", "label value tol")
+# A figure the answer must hold: a number within tol, a string, or a tuple of strings any one of which will do. A
+# number counts only where the answer ties it to its own label (see holds); cue, when given, is a regex in which {v}
+# stands for the number, for a figure the label's words cannot place, as in "4 out of 13".
+Expect = namedtuple("Expect", "label value tol cue", defaults=(None,))
 RESULTS = os.path.join(OUT, "acceptance", "results.json")
 
 CRACK = "Crack Spread Price Analytics"
@@ -246,17 +250,57 @@ def c13(ctx):
             Expect("actual utilization", float(r["Actual_Utilization_Pct"]), PCT)]
 
 
+# Each 2026 decision's expected outcome as a bound on one dossier figure (pricing_demo/decisions.py, "expected"):
+# the figure, the bound and whether the outcome had to stay at or above it ("min") or at or below it ("max").
+EXPECTED_BOUNDS = {
+    "D01": ("lowest_storm_utilization_pct", 48.0, "min"),   # no lower than about 48% during the storm
+    "D02": ("lowest_storm_utilization_pct", 73.0, "min"),   # no lower than about 73% during the storm
+    "D03": ("trading_days_after_storm", 3.0, "max"),        # back above 90% of pre-storm runs within 3 trading days
+    "D04": ("lost_margin_usd_million", 25.0, "max"),        # lost margin under $25 million
+    "D05": ("lost_margin_usd_million", 25.0, "max"),
+    "D06": ("change_points", 1.5, "min"),                   # distillate yield about 1.5 points higher
+    "D07": ("avg_domestic_premium_usd_per_bbl", 1.0, "max"),  # freight premium under $1.00/bbl
+    "D08": ("change_usd_per_bbl", -2.0, "max"),             # WTI at least $2.00/bbl lower
+    "D09": ("change_cents_per_gal", -5.0, "max"),           # NYH ULSD at least 5 cents/gal lower
+}
+NO_LESSON = ("no lesson", "not record", "no record", "isn't recorded", "is not recorded", "doesn't record",
+             "does not record", "wasn't recorded", "was not recorded", "none recorded", "no backcast lesson")
+
+
+def miss(actual, bound, side):
+    """How far an outcome fell outside its bound, as a multiple of the bound's size; 0 when the bound was met."""
+    gap = bound - actual if side == "min" else actual - bound
+    return max(gap, 0.0) / abs(bound)
+
+
+def trail_roles():
+    """Each decision's owner roles, as the decision trail (graph/decision-trail.ttl, PROV-O) associates them."""
+    from rdflib import Graph, Namespace
+    prov = Namespace("http://www.w3.org/ns/prov#")
+    g = Graph().parse(os.path.join(ROOT, "graph", "decision-trail.ttl"))
+    roles = {}
+    for activity, role in g.subject_objects(prov.wasAssociatedWith):
+        roles.setdefault(str(activity).rsplit("/", 1)[-1], set()).add(str(role).rsplit("/", 1)[-1].replace("-", " "))
+    return roles
+
+
 def c14(ctx):
-    """The decision with the widest miss, from the hidden dossiers: the one whose actual outcome exceeds its expected
-    bound by the largest multiple (D04's lost margin against its $25 million bound)."""
+    """The README's use case 14. The gap is each 2026 decision's miss against the bound its expected outcome states
+    (EXPECTED_BOUNDS), with the actual figure from the hidden dossiers, which only the tests read; the two widest misses
+    are D08 and D04, each several times its bound, far ahead of the rest. The roles come from the decision trail. No
+    store records a lesson, the backcast included, so the answer must say none is recorded."""
     rows = ctx.pg("SELECT \"DecisionId\" AS id, \"ActualOutcomeData\" AS data FROM decision_dossier "
                   "WHERE \"DecisionTime\" >= '2026-01-01' ORDER BY 1")
-    lost = {r["id"]: json.loads(r["data"]).get("lost_margin_usd_million") for r in rows}
-    worst = max((k for k, v in lost.items() if v), key=lambda k: lost[k] / 25.0)
-    owners = ctx.q(f"SELECT Owner_Role_Slugs AS o FROM {{c}}.silver_mdm_core.decision_dim WHERE Decision_Id = '{worst}'")[0]["o"]
-    role = owners.split(";")[0].replace("-", " ")
-    return [Expect("decision", worst, None), Expect("owner role", role, None),
-            Expect("actual lost margin, $ million", lost[worst], 0.05 * lost[worst])]
+    actual = {r["id"]: json.loads(r["data"]) for r in rows}
+    gaps = {d: miss(actual[d][f], b, side) for d, (f, b, side) in EXPECTED_BOUNDS.items()}
+    widest = sorted(gaps, key=gaps.get, reverse=True)[:2]
+    roles = trail_roles()
+    out = []
+    for d in widest:
+        f, _, _ = EXPECTED_BOUNDS[d]
+        out += [Expect(f"decision {d}", d, None), Expect(f"{d} owner role", tuple(sorted(roles[d])), None),
+                Expect(f"{d} actual outcome", actual[d][f], 0.05 * abs(actual[d][f]))]
+    return out + [Expect("the records hold no lesson", NO_LESSON, None)]
 
 
 def c15(ctx):
@@ -265,12 +309,21 @@ def c15(ctx):
             + [Expect(f"{name} lowest utilization in the storm", low, PCT) for name, (low, _) in lows.items()])
 
 
+BEAT, PLANS = "refineries above their planned distillate yield", "refineries in October's plans"
+# A part and its whole share their words ("4 out of 13 refinery plans ran a higher yield"), so each is placed by its
+# role in the phrase: the part before "out of"/"of" or next to "higher"/"above", the whole after "of" or before
+# "refineries"/"plans".
+CUES = {
+    BEAT: r"(?<!of )(?<!of \*\*)\b{v}\b(?:\*\*)?\s+(?:out\s+)?of\b|(?<!of )(?<!of \*\*)\b{v}\b[^.;\n]{0,40}\b(?:higher|above|beat|exceed)",
+    PLANS: r"\bof\s+(?:\*\*)?{v}\b|\b{v}\b(?:\*\*)?\s+(?:total\s+)?(?:refiner|plan)",
+}
+
+
 def c16(ctx):
     rows = ctx.q(f"SELECT Refinery_Code, Planned_Distillate_Yield_Pct AS p, Actual_Distillate_Yield_Pct AS a FROM {BACKCAST} "
                  "WHERE Plan_Month = '2026-10-01'")
     beat = sum(float(r["a"]) > float(r["p"]) for r in rows)
-    return [Expect("refineries above their planned distillate yield", float(beat), 0.0),
-            Expect("refineries in October's plans", float(len(rows)), 0.0)]
+    return [Expect(BEAT, float(beat), 0.0, CUES[BEAT]), Expect(PLANS, float(len(rows)), 0.0, CUES[PLANS])]
 
 
 def c17(ctx):
@@ -359,8 +412,8 @@ CASES = [
      "question": "For Garyville's September 2026 plan, what benchmark crack and crude utilization did the plan assume, what happened, and how much of the gap came from the market and how much from operations?",
      "ontology": [["backcast", "Regional Backcasting"]]},
     {"n": 14, "agents": [REFINERY], "check": c14,
-     "question": "Which decision in 2026 missed its expected outcome by the widest margin, which role made it, and what did it actually cost?",
-     "ontology": [["planner", "director", "role"]]},
+     "question": "Which decisions this year (2026) had the largest gap between expected and actual outcome, which role made them, and what did the backcast record as the lesson?",
+     "ontology": [["planner", "director", "trader", "role"]]},
     {"n": 15, "agents": [REFINERY, CRACK], "check": c15,
      "question": "When we cut runs at Garyville and Galveston Bay for Hurricane Isaias (decisions D01 and D02), how low did utilization go, and did cutting beat running through at the cracks that actually prevailed?",
      "ontology": [["OPM-0002", "OPM-0024"]]},
@@ -399,19 +452,92 @@ def numbers(text):
     return out
 
 
-def holds(answer, e):
-    """Whether the answer holds one expected figure."""
+MONTHS = [dt.date(2000, m, 1) for m in range(1, 13)]
+# words that name a unit or a statistic rather than a figure: every price is "per barrel", so they place nothing
+STOP = {"the", "of", "in", "and", "to", "per", "week", "million", "their", "its", "for", "after", "barrel", "bbl",
+        "gal", "gallon", "average", "mean"}
+QUARTERS = {"q1": "first quarter", "q2": "second quarter", "q3": "third quarter", "q4": "fourth quarter"}
+
+
+def label_terms(label):
+    """The words an answer may tie a figure to, from its label: each a tuple of spellings, any one of which will do.
+    Dates become the ways an answer names them; other words keep their first four letters, so plural and tense vary."""
+    terms = []
+    for tok in re.findall(r"\d{4}-\d{2}-\d{2}|\d{4}-\d{2}|Q[1-4]|\d{4}|[A-Za-z&']+", label):
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", tok):
+            d = dt.date.fromisoformat(tok)
+            terms.append((tok, f"{d:%B} {d.day}", f"{d:%b} {d.day}", f"{d.month}/{d.day}"))
+        elif re.fullmatch(r"\d{4}-\d{2}", tok):
+            d = dt.date.fromisoformat(tok + "-01")
+            terms.append((tok, f"{d:%B}".lower(), f"{d:%b}".lower()))
+        elif tok.lower() in QUARTERS:
+            terms.append((tok.lower(), QUARTERS[tok.lower()]))
+        elif tok.isdigit():
+            terms.append((tok,))
+        else:
+            w = tok.lower().strip("'")
+            month = next((m for m in MONTHS if w in (f"{m:%B}".lower(), f"{m:%b}".lower())), None)
+            if month:
+                terms.append((f"{month:%B}".lower(), f"{month:%b}".lower()))
+            elif w not in STOP and len(w) >= 3:
+                terms.append((w[:4],))
+    return list(dict.fromkeys(terms))
+
+
+CLAUSE = re.compile(r"[\n;]|(?<!\d)\.(?!\d)|\.(?=\s)|,(?!\d)"
+                    r"|\s(?:and|but|while|whereas|compared\s+(?:to|with)|versus|vs\.?|against)\s", re.I)
+
+
+def near(e, value):
+    """Whether one number in the answer is within the figure's tolerance (a probability may be given as a percentage,
+    dollars in millions)."""
+    target, v = abs(e.value), abs(value)
+    return (abs(v - target) <= e.tol + 1e-9 or (target <= 1.5 and abs(v - 100 * target) <= 100 * e.tol + 1e-9)
+            or (target >= 1e5 and abs(v * 1e6 - target) <= e.tol))
+
+
+def shares(term, terms):
+    """Whether a term shares a spelling with any of terms ("october" with "2026-10")."""
+    return any(set(term) & set(t) for t in terms)
+
+
+def distance(terms, clause, m):
+    """How far the nearest of the terms sits from number match m in the clause, or None; a term after the number
+    ("$57.11 in October") binds more closely than one before it."""
+    spots = [j.start() for t in terms for alt in t for j in re.finditer(re.escape(alt.lower()), clause.lower())]
+    return min((i - m.end() if i >= m.end() else 1.5 * (m.start() - i) for i in spots), default=None)
+
+
+def holds(answer, e, siblings=()):
+    """Whether the answer holds one expected figure. A string or tuple must appear. A number must appear in the same
+    clause as a term of its own label; where a term only another figure's label has (the other month, "actual" against
+    "planned") is in the clause too, the number must be nearer to a term only its own label has, so a value stated
+    against another figure's label does not count. A figure with a cue must match its cue instead."""
+    text = answer or ""
     if isinstance(e.value, tuple):
-        return any(alt.lower() in answer.lower() for alt in e.value)
+        return any(alt.lower() in text.lower() for alt in e.value)
     if isinstance(e.value, str):
-        return e.value.lower() in answer.lower()
-    target, found = abs(e.value), [abs(n) for n in numbers(answer)]
-    if any(abs(n - target) <= e.tol + 1e-9 for n in found):
-        return True
-    if target <= 1.5:  # a probability may be given as a percentage
-        return any(abs(n - 100 * target) <= 100 * e.tol + 1e-9 for n in found)
-    if target >= 1e5:  # dollars may be given in millions
-        return any(abs(n * 1e6 - target) <= e.tol for n in found)
+        return e.value.lower() in text.lower()
+    if e.cue:
+        return any(near(e, float(m.group(1).replace(",", ""))) and re.search(e.cue.replace("{v}", re.escape(m.group(1))), text, re.I)
+                   for m in re.finditer(r"(\d[\d,]*(?:\.\d+)?)", text))
+    numeric = [o for o in siblings if o is not e and isinstance(o.value, (int, float))]
+    mine = label_terms(e.label)
+    other_terms = [t for o in numeric for t in label_terms(o.label)]
+    theirs = [t for t in other_terms if not shares(t, mine)]
+    distinct = [t for t in mine if not shares(t, other_terms)] or mine
+    for clause in CLAUSE.split(text):
+        for m in NUMBER.finditer(clause):
+            if not any(near(e, v) for v in numbers(m.group(0))):
+                continue
+            other = distance(theirs, clause, m)
+            if other is None:  # no other figure's term here: any term of its own label places it
+                if distance(mine, clause, m) is not None:
+                    return True
+            else:  # another figure's term is here too: only the terms that set this label apart decide
+                own = distance(distinct, clause, m)
+                if own is not None and own <= other:
+                    return True
     return False
 
 
@@ -428,7 +554,7 @@ def judge(case, expected, run):
     if not expected:
         reasons.append("the check found nothing to compare")
     for e in expected:
-        if not holds(answer, e):
+        if not holds(answer, e, expected):
             want = e.value if not isinstance(e.value, tuple) else e.value[0]
             reasons.append(f"missing {e.label}: {want}")
     for group in case["ontology"]:
@@ -510,6 +636,27 @@ def run_cases(numbers_wanted=None):
     return results
 
 
+# Use cases whose question changed after a recorded run: their recorded answer does not answer the README's question.
+CHANGED_SINCE_RUNS = {14: "the question was aligned with the README after the run (2026-10-29), so the recorded answer "
+                          "answers another question"}
+
+
+def rejudge(path):
+    """Judge a recorded run again with the current checks, with no new call: each recorded answer against the figures
+    the run recorded, the current agents and ontology terms, and each figure's cue."""
+    run = json.load(open(path))
+    cases = {c["n"]: c for c in CASES}
+    out = []
+    for r in run["results"]:
+        expected = [Expect(x["label"], tuple(x["value"]) if isinstance(x["value"], list) else x["value"], x["tol"],
+                           CUES.get(x["label"])) for x in r["expected"]]
+        verdict = judge(cases[r["n"]], expected, r)
+        if r["n"] in CHANGED_SINCE_RUNS:
+            verdict = {"passed": False, "reasons": [CHANGED_SINCE_RUNS[r["n"]]]}
+        out.append({**r, "original": {"passed": r["passed"], "reasons": r["reasons"]}, **verdict})
+    return {"run_at": run["run_at"], "rejudged_on": "2026-10-29", "results": out}
+
+
 def expected_only():
     from .databricks import connect, current_catalog
     conn, e = connect()
@@ -532,6 +679,14 @@ def main(argv):
             json.dump({"run_at": stamp, "results": results}, f, indent=2, default=str)
         passed = sum(r["passed"] for r in results)
         print(f"{passed} of {len(results)} passed; results in {RESULTS}")
+    elif command == "rejudge":
+        for path in argv[1:]:
+            result = rejudge(path)
+            target = path.replace(".json", "-rejudged.json")
+            with open(target, "w") as f:
+                json.dump(result, f, indent=2, default=str)
+            print(f"{path}: {sum(r['passed'] for r in result['results'])} of {len(result['results'])} pass when re-judged; "
+                  + ", ".join(str(r["n"]) for r in result["results"] if r["passed"]) + f"; written to {target}")
     else:
         raise SystemExit(__doc__)
 

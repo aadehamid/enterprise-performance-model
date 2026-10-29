@@ -1358,12 +1358,70 @@ def test_e7_judge_names_each_missing_agent_figure_and_ontology_term():
 
 def test_e7_figures_match_as_a_reader_would_round_them():
     e = acceptance.Expect
-    assert acceptance.holds("NYH ULSD $5.27/gal", e("ulsd", 5.265, acceptance.GAL))
-    assert acceptance.holds("NYH ULSD $5.26/gal", e("ulsd", 5.265, acceptance.GAL))
-    assert not acceptance.holds("NYH ULSD $5.28/gal", e("ulsd", 5.265, acceptance.GAL))
-    assert acceptance.holds("a 75% chance", e("p", 0.7486, 0.0051))
-    assert acceptance.holds("about $121.9 million", e("lost", 121.88, 0.05 * 121.88))
-    assert acceptance.holds("$121,884,420 lost", e("lost", 121884420.0, 0.05 * 121884420.0))
+    assert acceptance.holds("NYH ULSD $5.27/gal", e("NYH ULSD cash", 5.265, acceptance.GAL))
+    assert acceptance.holds("NYH ULSD $5.26/gal", e("NYH ULSD cash", 5.265, acceptance.GAL))
+    assert not acceptance.holds("NYH ULSD $5.28/gal", e("NYH ULSD cash", 5.265, acceptance.GAL))
+    assert acceptance.holds("a 75% chance of an adverse event", e("adverse-event probability", 0.7486, 0.0051))
+    assert acceptance.holds("about $121.9 million of lost margin", e("Robinson lost margin, $ million", 121.88, 0.05 * 121.88))
+    assert acceptance.holds("$121,884,420 of lost margin", e("Robinson lost margin", 121884420.0, 0.05 * 121884420.0))
     assert acceptance.holds("in Jan 2024", e("month", acceptance.months("2024-01-01"), None))
     assert acceptance.holds("weather (inferred)", e("label", "Inferred", None))
-    assert not acceptance.holds("no figure here", e("crack", 16.44, acceptance.USD))
+    assert not acceptance.holds("no figure here", e("USGC crack", 16.44, acceptance.USD))
+
+
+def test_e7_a_figure_counts_only_against_its_own_label():
+    # Codex, round 1 on E7: any number near the value used to pass, so swapped figures passed too.
+    e = acceptance.Expect
+    sep, oct_ = e("USGC crack 2026-09", 69.78, acceptance.USD), e("USGC crack 2026-10", 57.11, acceptance.USD)
+    right = "The USGC crack fell from $69.78 in September to $57.11 in October."
+    swapped = "The USGC crack fell from $57.11 in September to $69.78 in October."
+    assert all(acceptance.holds(right, x, [sep, oct_]) for x in (sep, oct_))
+    assert not any(acceptance.holds(swapped, x, [sep, oct_]) for x in (sep, oct_))
+    plan, actual = e("planned utilization", 93.2, acceptance.PCT), e("actual utilization", 95.1, acceptance.PCT)
+    assert acceptance.holds("The plan assumed 93.2% utilization and the refinery ran 95.1% actual.", plan, [plan, actual])
+    assert not acceptance.holds("Actual utilization was 93.2%; the plan had 95.1%.", plan, [plan, actual])
+    assert not acceptance.holds("Garyville ran 35.5%.", e("Gulf Coast distillate yield 2026-10", 35.497, acceptance.PCT))
+
+
+def test_e7_a_part_and_its_whole_are_placed_by_their_cues():
+    # Case 16's two counts share their words, so each is placed by its role in "4 out of 13".
+    beat, plans = (acceptance.Expect(label, value, 0.0, acceptance.CUES[label])
+                   for label, value in ((acceptance.BEAT, 4.0), (acceptance.PLANS, 13.0)))
+    for right in ("4 out of 13 refinery plans ran a higher distillate yield than planned.",
+                  "Out of **13 refineries with plans**, only **4 refineries** ran a higher distillate yield."):
+        assert acceptance.holds(right, beat, [beat, plans]) and acceptance.holds(right, plans, [beat, plans]), right
+    swapped = "13 out of 4 refinery plans ran a higher distillate yield than planned."
+    assert not acceptance.holds(swapped, beat, [beat, plans]) and not acceptance.holds(swapped, plans, [beat, plans])
+
+
+def test_e7_case_14_asks_the_readme_question_and_checks_the_trail_and_the_lesson():
+    readme = open(os.path.join(ROOT, "README.md")).read()
+    case = next(c for c in acceptance.CASES if c["n"] == 14)
+    assert "largest gap between expected and actual outcome" in case["question"] and "lesson" in case["question"]
+    assert "largest gap between expected and actual outcome" in readme
+    # each bound is the one its decision's expected outcome states, and names a figure its dossier records
+    expected = {d["DecisionId"]: d["ExpectedOutcome"] for d in rows("aspen_pims", "decision_log")}
+    stated = {"D01": "about 48%", "D02": "about 73%", "D03": "within 3 trading days", "D04": "under $25 million",
+              "D05": "under $25 million", "D06": "about 1.5 points", "D07": "under $1.00/bbl",
+              "D08": "at least $2.00/bbl lower", "D09": "at least 5 cents/gal lower"}
+    assert set(stated) == set(acceptance.EXPECTED_BOUNDS)
+    dossiers = {d["DecisionId"]: json.loads(d["ActualOutcomeData"]) for d in rows("decision_truth", "decision_dossier")}
+    for d, words in stated.items():
+        assert words in expected[d], (d, expected[d])
+        assert acceptance.EXPECTED_BOUNDS[d][0] in dossiers[d], d
+    assert acceptance.miss(121.88, 25.0, "max") == pytest.approx(3.8752)
+    assert acceptance.miss(10.32, -2.0, "max") == pytest.approx(6.16)
+    assert acceptance.miss(60.5, 48.0, "min") == 0.0
+    roles = acceptance.trail_roles()
+    assert roles["D08"] == {"crude oil trader", "crude planning and optimization director"}
+    assert roles["D04"] == {"refinery planner", "regional planning director"}
+    assert acceptance.holds("The records hold no lesson for either decision.", acceptance.Expect("lesson", acceptance.NO_LESSON, None))
+
+
+def test_e7_rejudged_runs_keep_their_original_verdicts_beside_the_new_ones():
+    for k, original, now in ((1, 3, 3), (2, 4, 4)):
+        path = os.path.join(ROOT, "data", "acceptance", f"2026-10-29-run{k}-rejudged.json")
+        results = json.load(open(path))["results"]
+        assert sum(r["original"]["passed"] for r in results) == original
+        assert sum(r["passed"] for r in results) == now
+        assert not next(r for r in results if r["n"] == 14)["passed"]
