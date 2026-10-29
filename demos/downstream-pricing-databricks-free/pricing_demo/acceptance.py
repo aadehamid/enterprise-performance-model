@@ -522,7 +522,8 @@ def near(e, value):
             or (target >= 1e5 and abs(v * 1e6 - target) <= e.tol))
 
 
-NEGATION = re.compile(r"\b(?:no|not|none|never|nor|neither|without)\b|n't\b", re.I)
+# a word that negates; "absent" and "missing" count, so "the lesson was not absent" holds two and fails
+NEGATION = re.compile(r"\b(?:no|not|none|never|nor|neither|without|absent|missing|lacks?|lacking)\b|n't\b", re.I)
 
 
 def shares(term, terms):
@@ -539,13 +540,15 @@ def distance(terms, clause, m):
 
 def holds(answer, e, siblings=()):
     """Whether the answer holds one expected figure. A string or tuple must appear. A number must appear in the same
-    clause as a term of its own label (a NoneRecorded value instead needs every clause that names it to deny it); where a term only another figure's label has (the other month, "actual" against
+    clause as a term of its own label (a NoneRecorded value instead needs every clause that names it to hold exactly one negating word, so a double
+    negative fails); where a term only another figure's label has (the other month, "actual" against
     "planned") is in the clause too, the number must be nearer to a term only its own label has, so a value stated
     against another figure's label does not count. A figure with a cue must match its cue instead."""
     text = answer or ""
     if isinstance(e.value, NoneRecorded):
-        named = [c for c in CLAUSE.split(text) if re.search(rf"\b{e.value}s?\b", c, re.I)]
-        return bool(named) and all(NEGATION.search(c) for c in named)
+        parts = [p for c in CLAUSE.split(text) for p in c.split(":")]  # a colon joins two statements here
+        named = [c for c in parts if re.search(rf"\b{e.value}s?\b", c, re.I)]
+        return bool(named) and all(len(NEGATION.findall(c)) == 1 for c in named)
     if isinstance(e.value, tuple):
         return any(alt.lower() in text.lower() for alt in e.value)
     if isinstance(e.value, str):

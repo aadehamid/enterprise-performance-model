@@ -1421,6 +1421,9 @@ def test_e7_case_14_asks_the_readme_question_and_checks_the_trail_and_the_lesson
     assert acceptance.holds("No lesson is recorded: the backcast doesn't record lessons.", none)
     # Codex, round 2 on E7: a denial next to a claim must fail, and so must an answer that never mentions a lesson
     assert not acceptance.holds("No lesson is recorded, but the backcast recorded a lesson.", none)
+    # a double negative claims a lesson; exactly one negating word per clause (Codex quick check)
+    assert not acceptance.holds("No lesson was not recorded.", none)
+    assert not acceptance.holds("The lesson was not absent.", none)
     assert not acceptance.holds("The backcast recorded the lesson: plan for longer turnarounds.", none)
     assert not acceptance.holds("D08 missed by $12.32/bbl.", none)
 
