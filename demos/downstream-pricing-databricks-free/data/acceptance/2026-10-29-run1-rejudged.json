@@ -595,7 +595,7 @@
       "passed": false,
       "reasons": [
         "error: OperationFailed: failed to reach COMPLETED, got MessageStatus.FAILED: current status: MessageStatus.FAILED",
-        "agents not called: Refinery Operations Analytics",
+        "agents not called: Refinery Operations Analytics, Crack Spread Price Analytics",
         "missing Galveston Bay hit: Galveston Bay",
         "missing Galveston Bay lowest utilization in the storm: 78.91",
         "missing Garyville hit: Garyville",
@@ -717,7 +717,7 @@
       ],
       "passed": false,
       "reasons": [
-        "agents not called: Crack Spread Price Analytics, Refinery Operations Analytics",
+        "agents not called: Crack Spread Price Analytics",
         "missing PADD 1 distillate stocks, week to 2026-10-02: 21687",
         "missing PADD 1 distillate stocks, week to 2026-10-16: 21016"
       ],
@@ -844,6 +844,7 @@
       ],
       "passed": false,
       "reasons": [
+        "agents not called: Crack Spread Price Analytics",
         "missing assumed crack: 58.4584",
         "missing actual crack: 69.7779",
         "missing planned utilization: 93.2",
@@ -897,7 +898,7 @@
       ],
       "passed": false,
       "reasons": [
-        "the question was aligned with the README after the run (2026-10-29), so the recorded answer answers another question"
+        "the question changed after the run (2026-10-29), so the recorded answer answers another question"
       ],
       "original": {
         "passed": false,
@@ -998,8 +999,10 @@
           "tol": 0.0
         }
       ],
-      "passed": true,
-      "reasons": [],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics"
+      ],
       "original": {
         "passed": true,
         "reasons": []

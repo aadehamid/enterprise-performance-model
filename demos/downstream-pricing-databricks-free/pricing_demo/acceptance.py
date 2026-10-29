@@ -397,6 +397,9 @@ def c21(ctx):
     return out + [Expect("label", "inferred", None)]
 
 
+# Each case's agents are the agents its README row names in "Agents and sources" (Crack Spread, Refinery operations,
+# Executive Summary, Pricing and Market Margin); a row that names none needs the agent that binds the tables it names
+# (Refinery Operations Analytics for the decision log, the backcast and the outside context, since E7).
 CASES = [
     {"n": 1, "mode": "graph", "agents": [], "check": c01,
      "question": "If the price reference feed is late today, which KPIs, metric views and Genie agents are affected, and who uses those measures?",
@@ -422,19 +425,19 @@ CASES = [
     {"n": 8, "agents": [PRICING, CRACK, REFINERY], "check": c08,
      "question": "On 2026-10-20, what was the Gulf Coast diesel netback to New York Harbor after freight (NYH ULSD cash less the USGC to New York Harbor tanker rate), what was the USGC to Northwest Europe rate, and how do they compare with the USGC 3-2-1 MEH crack and the Gulf Coast refineries' R&M margin per barrel that day?",
      "ontology": [["synthetic"], ["OPM-0018", "OPM-0024"]]},
-    {"n": 9, "agents": [REFINERY], "check": c09,
+    {"n": 9, "agents": [REFINERY, CRACK], "check": c09,
      "question": "Which refineries did Hurricane Isaias (2026-10-07 to 2026-10-15) hit, how far did their crude utilization fall, when did they recover, and which measures moved?",
      "ontology": [["OPM-0002", "Crude Utilization"], ["OPM-0024", "OPM-0025"]]},
     {"n": 10, "agents": [REFINERY, CRACK], "check": c10,
      "question": "How much margin did the autumn 2026 turnarounds at Robinson and Anacortes cost, valuing each day's crude runs below the refinery's average over the four weeks before its turnaround at the region's benchmark crack?",
      "ontology": [["OPM-0030", "Turnaround Lost Margin", "lost margin"]]},
-    {"n": 11, "agents": [EXEC, CRACK, REFINERY], "check": c11,
+    {"n": 11, "agents": [EXEC, CRACK], "check": c11,
      "question": "After the U.S. dyed-diesel order (2026-10-05) and China's expected export restart (2026-10-08), how did the NYH ULSD cash price, the USGC 3-2-1 MEH crack and PADD 1 East Coast distillate stocks move from 2026-10-02 (the week before the order) to the latest data?",
      "ontology": [["ULSD"], ["distillate"]]},
     {"n": 12, "agents": [CRACK, REFINERY], "check": c12,
      "question": "With distillate prices strong against gasoline in October 2026, did the 13 refineries shift yield toward distillate against the third quarter of 2026, and what did their R&M margin per barrel do?",
      "ontology": [["OPM-0004", "Distillate Yield"], ["OPM-0024", "R&M Margin per Barrel"]]},
-    {"n": 13, "agents": [REFINERY], "check": c13,
+    {"n": 13, "agents": [REFINERY, CRACK], "check": c13,
      "question": "For Garyville's September 2026 plan, what benchmark crack and crude utilization did the plan assume, what happened, and how much of the gap came from the market and how much from operations?",
      "ontology": [["backcast", "Regional Backcasting"]]},
     {"n": 14, "agents": [REFINERY], "check": c14,
@@ -443,7 +446,7 @@ CASES = [
     {"n": 15, "agents": [REFINERY, CRACK], "check": c15,
      "question": "When we cut runs at Garyville and Galveston Bay for Hurricane Isaias (decisions D01 and D02), how low did utilization go, and did cutting beat running through at the cracks that actually prevailed?",
      "ontology": [["OPM-0002", "OPM-0024"]]},
-    {"n": 16, "agents": [REFINERY], "check": c16,
+    {"n": 16, "agents": [REFINERY, CRACK], "check": c16,
      "question": "For October 2026, how many refineries ran a higher distillate yield than their plan version assumed, out of how many plans, and did the October shift toward distillate pay off against the plans' yields?",
      "ontology": [["OPM-0004", "Distillate Yield"]]},
     {"n": 17, "agents": [REFINERY], "check": c17,
@@ -658,36 +661,48 @@ def run_cases(numbers_wanted=None):
             expected = case["check"](ctx)
             try:
                 run = graph_answer() if case.get("mode") == "graph" else supervisor.orchestrate(w, described, ids, case["question"])
-            except (Exception, SystemExit) as err:  # a failed run is a failed case, recorded with its reason
-                run = {"agents_called": [], "answer": "", "error": f"{type(err).__name__}: {str(err)[:300]}"}
+            except (Exception, SystemExit) as err:  # a failed run is a failed case, recorded with its reason and
+                # the agents the orchestrator had already called
+                run = {"agents_called": getattr(err, "agents_called", []), "answer": "",
+                       "error": f"{type(err).__name__}: {str(err)[:300]}"}
             verdict = judge(case, expected, run)
             results.append({"n": case["n"], "question": case["question"], "mode": case.get("mode", "orchestrator"),
                             "agents_required": case["agents"],
                             "agents_called": [{k: c[k] for k in ("agent", "question", "status")} for c in run["agents_called"]],
                             "definitions_read": definitions_read(run), "answer": run["answer"], "error": run.get("error"),
-                            "expected": [{"label": x.label, "value": x.value, "tol": x.tol} for x in expected], **verdict})
+                            "expected": [recorded(x) for x in expected], **verdict})
             print(f"use case {case['n']}: {'pass' if verdict['passed'] else 'fail'}"
                   + ("" if verdict["passed"] else " - " + "; ".join(verdict["reasons"])), flush=True)
     return results
 
 
-# Use cases whose question changed after a recorded run: their recorded answer does not answer the README's question.
-CHANGED_SINCE_RUNS = {14: "the question was aligned with the README after the run (2026-10-29), so the recorded answer "
-                          "answers another question"}
+def recorded(e):
+    """One expected figure as a run records it; a NoneRecorded value keeps its kind, so rejudge can restore it."""
+    kind = {"kind": "none recorded"} if isinstance(e.value, NoneRecorded) else {}
+    return {"label": e.label, "value": e.value, "tol": e.tol, **kind}
+
+
+def restored(x):
+    """One expected figure as rejudge rebuilds it from a run's record."""
+    value = NoneRecorded(x["value"]) if x.get("kind") == "none recorded" else (
+        tuple(x["value"]) if isinstance(x["value"], list) else x["value"])
+    return Expect(x["label"], value, x["tol"], CUES.get(x["label"]))
 
 
 def rejudge(path):
     """Judge a recorded run again with the current checks, with no new call: each recorded answer against the figures
-    the run recorded, the current agents and ontology terms, and each figure's cue."""
+    the run recorded, the current agents and ontology terms, and each figure's cue. A case whose question has changed
+    since the run fails, since its recorded answer answers another question."""
     run = json.load(open(path))
     cases = {c["n"]: c for c in CASES}
     out = []
     for r in run["results"]:
-        expected = [Expect(x["label"], tuple(x["value"]) if isinstance(x["value"], list) else x["value"], x["tol"],
-                           CUES.get(x["label"])) for x in r["expected"]]
-        verdict = judge(cases[r["n"]], expected, r)
-        if r["n"] in CHANGED_SINCE_RUNS:
-            verdict = {"passed": False, "reasons": [CHANGED_SINCE_RUNS[r["n"]]]}
+        case = cases[r["n"]]
+        if r["question"] != case["question"]:  # the question changed after this run, so the answer is to another one
+            verdict = {"passed": False, "reasons": ["the question changed after the run (2026-10-29), so the recorded "
+                                                    "answer answers another question"]}
+        else:
+            verdict = judge(case, [restored(x) for x in r["expected"]], r)
         out.append({**r, "original": {"passed": r["passed"], "reasons": r["reasons"]}, **verdict})
     return {"run_at": run["run_at"], "rejudged_on": "2026-10-29", "results": out}
 

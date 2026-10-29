@@ -141,25 +141,36 @@ def chat(w, messages, tool_specs):
     return w.api_client.do("POST", f"/serving-endpoints/{MODEL}/invocations", body=body)["choices"][0]["message"]
 
 
+class OrchestrationError(SystemExit):
+    """The orchestrator stopped without an answer; agents_called holds the agents it had already called."""
+
+    def __init__(self, message, agents_called):
+        super().__init__(message)
+        self.agents_called = agents_called
+
+
 def orchestrate(w, described, ids, question):
     """Route a question through the orchestrator: each agent it called, with the agent's text and SQL, and the answer."""
     tool_specs = tools(described)
     by_tool = {tool_name(t): t for t in AGENTS}
     messages = [{"role": "system", "content": INSTRUCTIONS}, {"role": "user", "content": question}]
     called = []
-    for _ in range(MAX_ROUNDS):
-        reply = chat(w, messages, tool_specs)
-        calls = reply.get("tool_calls") or []
-        messages.append({k: v for k, v in reply.items() if k in ("role", "content", "tool_calls")})
-        if not calls:
-            return {"agents_called": called, "answer": reply.get("content") or ""}
-        for call in calls:
-            title = by_tool[call["function"]["name"]]
-            sub = json.loads(call["function"]["arguments"])["question"]
-            result = ask_genie(w, ids[title], sub)
-            called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"]})
-            messages.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, default=str)[:12000]})
-    raise SystemExit(f"no answer after {MAX_ROUNDS} rounds; agents called: {[c['agent'] for c in called]}")
+    try:
+        for _ in range(MAX_ROUNDS):
+            reply = chat(w, messages, tool_specs)
+            calls = reply.get("tool_calls") or []
+            messages.append({k: v for k, v in reply.items() if k in ("role", "content", "tool_calls")})
+            if not calls:
+                return {"agents_called": called, "answer": reply.get("content") or ""}
+            for call in calls:
+                title = by_tool[call["function"]["name"]]  # a tool name the model invents raises KeyError
+                sub = json.loads(call["function"]["arguments"])["question"]
+                result = ask_genie(w, ids[title], sub)
+                called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"]})
+                messages.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, default=str)[:12000]})
+    except Exception as err:  # keep the agents already called beside the reason it stopped
+        raise OrchestrationError(f"{type(err).__name__}: {err}; agents called: {[c['agent'] for c in called]}", called) from err
+    raise OrchestrationError(f"no answer after {MAX_ROUNDS} rounds; agents called: {[c['agent'] for c in called]}", called)
 
 
 def ask(question):

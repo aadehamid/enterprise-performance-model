@@ -1318,6 +1318,22 @@ def test_e7_one_case_per_use_case_naming_only_real_agents_and_identifiers():
         assert named <= known, (case["n"], named - known)
 
 
+def test_e7_each_case_needs_exactly_the_agents_its_row_names():
+    # Cursor on #408: a case's agents must be the agents its README row names in "Agents and sources"; a row that
+    # names none needs the agent that binds its tables (Refinery Operations, since E7).
+    names = {"Crack Spread": "Crack Spread Price Analytics", "Refinery operations": "Refinery Operations Analytics",
+             "Executive Summary": "Executive Summary KPIs Analytics",
+             "Pricing and Market Margin": "Pricing and Market Margin Analytics"}
+    readme = open(os.path.join(ROOT, "README.md")).read().split("## Use cases")[1].split("\n## ")[0]
+    rows = {int(m.group(1)): m.group(2) for m in re.finditer(r"(?m)^\| (\d+) \| [^|]*\| ([^|]*)\|", readme)}
+    for case in acceptance.CASES:
+        named = {agent for words, agent in names.items() if words in rows[case["n"]]}
+        if case.get("mode") == "graph":
+            assert case["agents"] == [], case["n"]
+        else:
+            assert set(case["agents"]) == (named or {"Refinery Operations Analytics"}), (case["n"], rows[case["n"]])
+
+
 def test_e7_every_table_a_check_reads_is_one_the_build_creates():
     created = {f"{schema}.{name}" for _, schema, name in databricks.created_objects()}
     source = open(os.path.join(ROOT, "pricing_demo", "acceptance.py")).read()
@@ -1446,8 +1462,46 @@ def test_e7_case_14_looks_for_lessons_in_every_store_before_expecting_none():
     assert "NoneRecorded(\"lesson\")" in source and "lesson_records(ctx)" in source
 
 
+def test_e7_rejudge_fails_only_a_changed_question_and_keeps_the_no_lesson_rule(tmp_path):
+    # Bugbot on #408: rejudge used to fail case 14 by number alone, and read a NoneRecorded figure back as a plain string.
+    case = next(c for c in acceptance.CASES if c["n"] == 14)
+    none = acceptance.Expect("the records hold no lesson", acceptance.NoneRecorded("lesson"), None)
+    record = acceptance.recorded(none)
+    assert record["kind"] == "none recorded" and isinstance(acceptance.restored(record).value, acceptance.NoneRecorded)
+    answers = {"denied": "The crude oil trader made D08. No lesson is recorded for it.",
+               "double negative": "The crude oil trader made D08. It is not true that no lesson was recorded."}
+    for name, answer in answers.items():
+        run = {"run_at": "2026-10-29T00:00:00+00:00", "results": [
+            {"n": 14, "question": case["question"], "agents_called": [{"agent": "Refinery Operations Analytics"}],
+             "answer": answer, "expected": [record], "passed": False, "reasons": []}]}
+        path = tmp_path / f"{name.replace(' ', '-')}.json"
+        path.write_text(json.dumps(run))
+        verdict = acceptance.rejudge(str(path))["results"][0]
+        assert verdict["passed"] == (name == "denied"), (name, verdict["reasons"])
+    run["results"][0]["question"] = "Which decision missed by the widest margin?"
+    path.write_text(json.dumps(run))
+    assert acceptance.rejudge(str(path))["results"][0]["reasons"][0].startswith("the question changed after the run")
+
+
+def test_e7_a_stopped_orchestrator_keeps_the_agents_it_called(monkeypatch):
+    # Bugbot on #408: a run that hit the round limit or an error recorded no agents, so every agent read as missing.
+    replies = iter([{"role": "assistant", "tool_calls": [{"id": "1", "function": {
+        "name": supervisor.tool_name("Refinery Operations Analytics"), "arguments": json.dumps({"question": "q"})}}]},
+        {"role": "assistant", "tool_calls": [{"id": "2", "function": {"name": "an_invented_tool", "arguments": "{}"}}]}])
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs: next(replies))
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
+    with pytest.raises(supervisor.OrchestrationError) as err:
+        supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert [c["agent"] for c in err.value.agents_called] == ["Refinery Operations Analytics"]
+    assert isinstance(err.value, SystemExit)  # `supervisor ask` still exits as before
+    run = {"agents_called": err.value.agents_called, "answer": "", "error": "KeyError"}
+    case = next(c for c in acceptance.CASES if c["n"] == 13)
+    reasons = acceptance.judge(case, [], run)["reasons"]
+    assert "agents not called: Crack Spread Price Analytics" in reasons
+
+
 def test_e7_rejudged_runs_keep_their_original_verdicts_beside_the_new_ones():
-    for k, original, now in ((1, 3, 3), (2, 4, 4)):
+    for k, original, now in ((1, 3, 2), (2, 4, 2)):
         path = os.path.join(ROOT, "data", "acceptance", f"2026-10-29-run{k}-rejudged.json")
         results = json.load(open(path))["results"]
         assert sum(r["original"]["passed"] for r in results) == original

@@ -619,7 +619,7 @@
       "passed": false,
       "reasons": [
         "error: OperationFailed: failed to reach COMPLETED, got MessageStatus.FAILED: current status: MessageStatus.FAILED",
-        "agents not called: Refinery Operations Analytics",
+        "agents not called: Refinery Operations Analytics, Crack Spread Price Analytics",
         "missing Galveston Bay hit: Galveston Bay",
         "missing Galveston Bay lowest utilization in the storm: 78.91",
         "missing Garyville hit: Garyville",
@@ -872,8 +872,10 @@
           "tol": 0.051
         }
       ],
-      "passed": true,
-      "reasons": [],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics"
+      ],
       "original": {
         "passed": true,
         "reasons": []
@@ -915,7 +917,7 @@
       ],
       "passed": false,
       "reasons": [
-        "the question was aligned with the README after the run (2026-10-29), so the recorded answer answers another question"
+        "the question changed after the run (2026-10-29), so the recorded answer answers another question"
       ],
       "original": {
         "passed": false,
@@ -1016,8 +1018,10 @@
           "tol": 0.0
         }
       ],
-      "passed": true,
-      "reasons": [],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics"
+      ],
       "original": {
         "passed": true,
         "reasons": []
