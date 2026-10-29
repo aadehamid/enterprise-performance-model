@@ -401,7 +401,7 @@ def test_finding_24_every_cached_series_matches_the_code_and_the_readme():
     assert set(meta) == set(public_data.EIA_SERIES) and len(meta) == 15
     for key, (series, role) in public_data.EIA_SERIES.items():
         assert meta[key]["series_id"] == series and meta[key]["demo_role"] == role, key
-        assert meta[key]["description"] and meta[key]["units"] and meta[key]["pulled_on"] == "2026-10-25", key
+        assert meta[key]["description"] and meta[key]["units"] and meta[key]["pulled_on"] == "2026-10-28", key
         assert series in readme, series
 
 
@@ -516,3 +516,85 @@ def test_purge_stops_at_a_schema_that_holds_something_else():
     except RuntimeError:
         pass
     assert not any(s.startswith("DROP SCHEMA") for s in cur.ran)
+
+
+# ---- The three-year extension (2026-10-28) ----
+
+def test_the_window_is_three_years_of_eia_trading_days():
+    assert (config.WINDOW_START, config.WINDOW_END) == (dt.date(2023, 10, 21), dt.date(2026, 10, 20))
+    batches = rows("price_assessment", "mips_pricebatch")
+    assert len(batches) == 748
+    assert min(b["EffectiveDate"].date() for b in batches) >= config.WINDOW_START
+    assert len(rows("price_reference", "pricedetail")) == 599148
+    assert len(rows("price_assessment", "mips_priceassessment")) == 266288
+    assert len(rows("production_accounting", "refinery_daily")) == 13 * 748 == 9724
+
+
+def test_the_holiday_rules_reproduce_the_2026_list_and_cover_the_window():
+    assert generate.exchange_holidays(dt.date(2026, 4, 1), dt.date(2026, 10, 20)) == [
+        dt.date(2026, 4, 3), dt.date(2026, 5, 25), dt.date(2026, 6, 19), dt.date(2026, 7, 3), dt.date(2026, 9, 7)]
+    holidays = rows("reference_data_hub", "holidaycalendar")
+    assert len(holidays) == 30 and dt.date(2024, 3, 29) in {h["HolidayDate"] for h in holidays}  # Good Friday 2024
+
+
+def test_unit_rows_match_the_refinery_runs_and_stay_within_capacity():
+    units = rows("production_accounting", "unit_daily")
+    assert len(units) == 76296 and {u["DemoProvenance"] for u in units} == {"synthesized"}
+    runs = {(r["RefineryCode"], r["ProductionDate"]): r["CrudeRunsMbpd"] for r in rows("production_accounting", "refinery_daily")}
+    for u in units:
+        assert u["UnitThroughputMbpd"] <= u["UnitCapacityMbpd"] + 1e-9, u
+        if u["UnitCode"] == "ATM":
+            assert u["UnitThroughputMbpd"] == runs[(u["RefineryCode"], u["ProductionDate"])], u
+    by_refinery = {}
+    for u in units:
+        by_refinery.setdefault(u["RefineryCode"], set()).add(u["UnitCode"])
+    assert "HCK" in by_refinery["GB"] and "HCK" not in by_refinery["DT"]  # hydrocracking only from 250 mbpcd
+    assert "CKR" in by_refinery["DT"] and "CKR" not in by_refinery["EP"]  # coking only from 140 mbpcd
+    assert len(by_refinery) == 13 and all({"ATM", "VAC", "FCC", "REF", "DHT", "NHT", "GHT"} <= s for s in by_refinery.values())
+
+
+def test_plan_targets_take_last_years_us_utilization_for_the_same_month():
+    plans = rows("aspen_pims", "plan_target")
+    assert len(plans) == 13 * 37 == 481  # October 2023 to October 2026
+    util = public_data.load("us_utilization")
+    gb_jan25 = next(p for p in plans if p["RefineryCode"] == "GB" and p["PlanMonth"] == dt.date(2025, 1, 1))
+    year_ago = [v for d, v in util.items() if d.year == 2024 and d.month == 1]
+    assert gb_jan25["PlannedUtilizationPct"] == round(min(sum(year_ago) / len(year_ago), 97.0), 1)
+    assert gb_jan25["PlannedDistillateYieldPct"] == 35.5 and gb_jan25["DemoProvenance"] == "synthesized"
+
+
+def test_freight_rises_fourfold_through_the_scenarios_spike_and_is_synthesized():
+    freight = rows("rightangle", "freight_rate")
+    assert len(freight) == 2 * 748 and {f["DemoProvenance"] for f in freight} == {"synthesized"}
+    nyh = [f for f in freight if f["RouteCode"] == "USGC-NYH"]
+    before = [f["RateUsdPerBbl"] for f in nyh if dt.date(2026, 7, 1) <= f["RateDate"] < dt.date(2026, 8, 15)]
+    after = [f["RateUsdPerBbl"] for f in nyh if f["RateDate"] >= dt.date(2026, 10, 9)]
+    assert sum(after) / len(after) > 3 * sum(before) / len(before)
+
+
+def test_the_event_table_holds_the_events_the_use_cases_name_from_their_sources():
+    events = rows("reference_data_hub", "market_event")
+    assert {e["EventKey"] for e in events} == {"diesel_scarcity", "g7_release", "hurricane_isaias", "freight_spike",
+                                               "turnaround_season", "dyed_diesel_order", "china_export_restart",
+                                               "turnaround_rb", "turnaround_an"}
+    scenario_text = open(os.path.join(ROOT, "SCENARIO.md")).read()
+    for e in events:
+        assert e["EvidenceStatus"] == "not checked" and e["EvidenceProbability"] is None and e["EvidenceCitations"] == "[]"
+        if e["SourceKind"] == "briefing":
+            assert "dyed diesel" in scenario_text and "resume refined-product exports" in scenario_text
+            assert "5. Pricing policy and global supply" in scenario_text
+    isaias = next(e for e in events if e["EventKey"] == "hurricane_isaias")
+    assert (isaias["StartDate"], isaias["Region"], isaias["Category"]) == (dt.date(2026, 10, 7), "Gulf Coast", "weather")
+
+
+def test_eia_weekly_holds_every_padd_series_six_years_back_all_real():
+    series = rows("eia_weekly", "series")
+    values = rows("eia_weekly", "weekly_value")
+    assert len(series) == 28 and len(values) == 8792
+    assert {v["DemoProvenance"] for v in values} == {"real"}
+    assert min(v["WeekEnding"] for v in values) >= config.WEEKLY_START
+    ids = {s["SeriesId"] for s in series}
+    assert {"PET.WDISTP11.W", "PET.WGTSTP31.W", "PET.W_NA_YUP_R30_PER.W", "PET.WCRRIP52.W", "PET.WDIEXUS2.W"} <= ids
+    data_md = open(os.path.join(ROOT, "DATA.md")).read()
+    for s in series:
+        assert s["SeriesId"] in data_md, s["SeriesId"]
