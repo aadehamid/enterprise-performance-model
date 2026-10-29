@@ -1,7 +1,7 @@
--- 06_definitions.sql (added for E3, EPM-DEC-001-0109, decision 4): what the ontology says about each measure the
--- metric views implement, read from the projection's triple table, ${epm_triples}, which the projection driver writes
--- from the Turtle in git. One view lists every measure with a KPI or OPM identifier; one view per subject area keeps
--- the measures its metric views carry. They live in their own schema, ontology_definitions: they are plain views of
+-- 06_definitions.sql (added for E3, EPM-DEC-001-0109, decision 4): what the ontology says about each measure with a
+-- KPI or OPM identifier, read from the projection's triple table, ${epm_triples}, which the projection driver writes
+-- from the Turtle in git. One view lists every such measure; one view per subject area keeps the identifiers its
+-- metric views carry, and the pricing one also OPM-0026, which its view does not compute. They live in their own schema, ontology_definitions: they are plain views of
 -- the ontology, not metric views, and the purge can drop them without touching the triple table, which the demo
 -- does not own.
 
