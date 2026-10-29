@@ -58,3 +58,12 @@ LEFT JOIN ${catalog}.silver_udm_core.refinery_plan_target_fact t
   ON t.Refinery_Code = p.Refinery_Code AND t.Plan_Month = DATE_TRUNC('MONTH', p.Production_Date)
 LEFT JOIN crack c ON c.Price_Date = p.Production_Date
   AND c.Price_Master_ID = CASE r.Region_Name WHEN 'Gulf Coast' THEN '43870' WHEN 'West Coast' THEN '36855' ELSE '37438' END;
+
+-- Process units (added 2026-10-28): each unit's throughput against its capacity, by refinery and day. Its grain is
+-- unit-day, finer than the refinery operations view's refinery-day, so it gets its own gold table.
+CREATE OR REPLACE TABLE ${catalog}.gold_commercial_core.refinery_unit_operations_daily_fact AS
+SELECT u.Refinery_Code, r.Refinery_Name, r.Region_Name, u.Unit_Code, u.Unit_Name, u.Production_Date,
+       u.Unit_Throughput_Mbpd, u.Unit_Capacity_Mbpd,
+       ROUND(100 * u.Unit_Throughput_Mbpd / u.Unit_Capacity_Mbpd, 2) AS Unit_Utilization_Pct, u.Demo_Provenance_Label
+FROM ${catalog}.silver_udm_core.refinery_unit_daily_fact u
+JOIN ${catalog}.silver_mdm_core.refinery_dim r ON r.Refinery_Code = u.Refinery_Code;

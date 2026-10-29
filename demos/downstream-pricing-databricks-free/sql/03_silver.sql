@@ -87,3 +87,35 @@ SELECT d.DealId AS Deal_Id, d.TradeDate AS Trade_Date, d.Direction AS Direction_
        CAST(m.FreightCostUsd AS DECIMAL(14,2)) AS Freight_Cost_Usd, m.LoadDate AS Load_Date,
        d.DemoProvenance AS Demo_Provenance_Label, d._change_ts AS Record_Update_Datetime
 FROM ${catalog}.replica_rightangle.deal d JOIN ${catalog}.replica_rightangle.movement m ON m.DealId = d.DealId;
+
+-- Added 2026-10-28 for the three-year extension: process units, product tanker freight, the scenario's event table
+-- and EIA's weekly series by PADD. These have no counterpart in the shared idp_sbx layer; the names follow its style.
+CREATE OR REPLACE TABLE ${catalog}.silver_udm_core.refinery_unit_daily_fact AS
+SELECT RefineryCode AS Refinery_Code, UnitCode AS Unit_Code, UnitName AS Unit_Name, ProductionDate AS Production_Date,
+       CAST(UnitThroughputMbpd AS DECIMAL(10,1)) AS Unit_Throughput_Mbpd, CAST(UnitCapacityMbpd AS DECIMAL(10,1)) AS Unit_Capacity_Mbpd,
+       DemoProvenance AS Demo_Provenance_Label, _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_production_accounting.unit_daily;
+
+CREATE OR REPLACE TABLE ${catalog}.silver_udm_core.freight_rate_fact AS
+SELECT RouteCode AS Route_Code, RouteName AS Route_Name, VesselClass AS Vessel_Class, RateDate AS Rate_Date,
+       CAST(RateUsdPerBbl AS DECIMAL(8,2)) AS Rate_Usd_Per_Bbl, DemoProvenance AS Demo_Provenance_Label,
+       _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_rightangle.freight_rate;
+
+CREATE OR REPLACE TABLE ${catalog}.silver_mdm_core.market_event_dim AS
+SELECT EventId AS Event_Id, EventKey AS Event_Key, Title AS Event_Title, Category AS Event_Category, Region AS Region_Name,
+       RefineryCode AS Refinery_Code, StartDate AS Event_Start_Date, EndDate AS Event_End_Date, Source AS Source_Text,
+       SourceKind AS Source_Kind, EvidenceStatus AS Evidence_Status, EvidenceProbability AS Evidence_Probability,
+       EvidenceCitations AS Evidence_Citations, _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_reference_data_hub.market_event;
+
+CREATE OR REPLACE TABLE ${catalog}.silver_mdm_core.eia_weekly_series_dim AS
+SELECT SeriesKey AS Series_Key, SeriesId AS Series_Id, Measure AS Measure_Name, Area AS Area_Name, Description AS Series_Description,
+       Units AS Unit_Code, PulledOn AS Pulled_On_Date, DemoProvenance AS Demo_Provenance_Label, _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_eia_weekly.series;
+
+CREATE OR REPLACE TABLE ${catalog}.silver_udm_core.eia_weekly_fact AS
+SELECT v.SeriesKey AS Series_Key, v.SeriesId AS Series_Id, s.Measure AS Measure_Name, s.Area AS Area_Name,
+       v.WeekEnding AS Week_Ending_Date, CAST(v.Value AS DECIMAL(14,2)) AS Value_Amount, s.Units AS Unit_Code,
+       v.DemoProvenance AS Demo_Provenance_Label, v._change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_eia_weekly.weekly_value v JOIN ${catalog}.replica_eia_weekly.series s ON s.SeriesKey = v.SeriesKey;

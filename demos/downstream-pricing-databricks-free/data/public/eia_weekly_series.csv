@@ -1,0 +1,29 @@
+key,series_id,measure,area,description,units,pulled_on
+distillate_stocks_r10,PET.WDISTP11.W,distillate_stocks,PADD 1 East Coast,East Coast (PADD 1) Ending Stocks of Distillate Fuel Oil (Thousand Barrels),MBBL,2026-10-28
+gasoline_stocks_r10,PET.WGTSTP11.W,gasoline_stocks,PADD 1 East Coast,East Coast (PADD 1) Ending Stocks of Total Gasoline (Thousand Barrels),MBBL,2026-10-28
+utilization_r10,PET.W_NA_YUP_R10_PER.W,refinery_utilization,PADD 1 East Coast,East Coast (PADD 1) Percent Utilization of Refinery Operable Capacity,%,2026-10-28
+crude_runs_r10,PET.WCRRIP12.W,crude_runs,PADD 1 East Coast,East Coast (PADD 1) Refiner Net Input of Crude Oil (Thousand Barrels per Day),MBBL/D,2026-10-28
+distillate_stocks_r20,PET.WDISTP21.W,distillate_stocks,PADD 2 Midwest,Midwest (PADD 2) Ending Stocks of Distillate Fuel Oil (Thousand Barrels),MBBL,2026-10-28
+gasoline_stocks_r20,PET.WGTSTP21.W,gasoline_stocks,PADD 2 Midwest,Midwest (PADD 2) Ending Stocks of Total Gasoline (Thousand Barrels),MBBL,2026-10-28
+utilization_r20,PET.W_NA_YUP_R20_PER.W,refinery_utilization,PADD 2 Midwest,Midwest (PADD 2) Percent Utilization of Refinery Operable Capacity,%,2026-10-28
+crude_runs_r20,PET.WCRRIP22.W,crude_runs,PADD 2 Midwest,Midwest (PADD 2) Refiner Net Input of Crude Oil (Thousand Barrels per Day),MBBL/D,2026-10-28
+distillate_stocks_r30,PET.WDISTP31.W,distillate_stocks,PADD 3 Gulf Coast,Gulf Coast (PADD 3) Ending Stocks of Distillate Fuel Oil (Thousand Barrels),MBBL,2026-10-28
+gasoline_stocks_r30,PET.WGTSTP31.W,gasoline_stocks,PADD 3 Gulf Coast,Gulf Coast (PADD 3) Ending Stocks of Total Gasoline (Thousand Barrels),MBBL,2026-10-28
+utilization_r30,PET.W_NA_YUP_R30_PER.W,refinery_utilization,PADD 3 Gulf Coast,Gulf Coast (PADD 3) Percent Utilization of Refinery Operable Capacity,%,2026-10-28
+crude_runs_r30,PET.WCRRIP32.W,crude_runs,PADD 3 Gulf Coast,Gulf Coast (PADD 3) Refiner Net Input of Crude Oil (Thousand Barrels per Day),MBBL/D,2026-10-28
+distillate_stocks_r40,PET.WDISTP41.W,distillate_stocks,PADD 4 Rocky Mountain,Rocky Mountain (PADD 4) Ending Stocks of Distillate Fuel Oil (Thousand Barrels),MBBL,2026-10-28
+gasoline_stocks_r40,PET.WGTSTP41.W,gasoline_stocks,PADD 4 Rocky Mountain,Rocky Mountain (PADD 4) Ending Stocks of Total Gasoline (Thousand Barrels),MBBL,2026-10-28
+utilization_r40,PET.W_NA_YUP_R40_PER.W,refinery_utilization,PADD 4 Rocky Mountain,Rocky Mountains (PADD 4) Percent Utilization of Refinery Operable Capacity,%,2026-10-28
+crude_runs_r40,PET.WCRRIP42.W,crude_runs,PADD 4 Rocky Mountain,Rocky Mountain (PADD 4) Refiner Net Input of Crude Oil (Thousand Barrels per Day),MBBL/D,2026-10-28
+distillate_stocks_r50,PET.WDISTP51.W,distillate_stocks,PADD 5 West Coast,West Coast (PADD 5) Ending Stocks of Distillate Fuel Oil (Thousand Barrels),MBBL,2026-10-28
+gasoline_stocks_r50,PET.WGTSTP51.W,gasoline_stocks,PADD 5 West Coast,West Coast (PADD 5) Ending Stocks of Total Gasoline (Thousand Barrels),MBBL,2026-10-28
+utilization_r50,PET.W_NA_YUP_R50_PER.W,refinery_utilization,PADD 5 West Coast,West Coast (PADD 5) Percent Utilization of Refinery Operable Capacity,%,2026-10-28
+crude_runs_r50,PET.WCRRIP52.W,crude_runs,PADD 5 West Coast,West Coast (PADD 5) Refiner Net Input of Crude Oil (Thousand Barrels per Day),MBBL/D,2026-10-28
+distillate_stocks_nus,PET.WDISTUS1.W,distillate_stocks,U.S.,U.S. Ending Stocks of Distillate Fuel Oil (Thousand Barrels),MBBL,2026-10-28
+gasoline_stocks_nus,PET.WGTSTUS1.W,gasoline_stocks,U.S.,U.S. Ending Stocks of Total Gasoline (Thousand Barrels),MBBL,2026-10-28
+utilization_nus,PET.WPULEUS3.W,refinery_utilization,U.S.,U.S. Percent Utilization of Refinery Operable Capacity,%,2026-10-28
+crude_runs_nus,PET.WCRRIUS2.W,crude_runs,U.S.,U.S. Refiner Net Input of Crude Oil (Thousand Barrels per Day),MBBL/D,2026-10-28
+distillate_supplied_nus,PET.WDIUPUS2.W,distillate_product_supplied,U.S.,U.S. Product Supplied of Distillate Fuel Oil (Thousand Barrels per Day),MBBL/D,2026-10-28
+gasoline_supplied_nus,PET.WGFUPUS2.W,gasoline_product_supplied,U.S.,U.S. Product Supplied of Finished Motor Gasoline (Thousand Barrels per Day),MBBL/D,2026-10-28
+distillate_exports_nus,PET.WDIEXUS2.W,distillate_exports,U.S.,U.S. Exports of Total Distillate (Thousand Barrels per Day),MBBL/D,2026-10-28
+gasoline_exports_nus,PET.W_EPM0F_EEX_NUS-Z00_MBBLD.W,gasoline_exports,U.S.,U.S. Exports of Total Motor Gasoline (Thousand Barrels per Day),MBBL/D,2026-10-28
