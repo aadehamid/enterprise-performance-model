@@ -9,7 +9,8 @@ definition, grain, basis, aliases and the processes it informs; personas.csv the
 roles; measure-identifiers.csv each measure's KPI or OPM identifier (kpi 1.3.0, EPM-DEC-001-0109).
 The build fails unless both measure tables list the same measures once each, every
 kind is on the measure-kind list, every persona and process named exists, every
-"not to be confused with" names another measure, and every identifier follows its kind.
+"not to be confused with" names another measure, and every identifier follows its kind, is used once,
+keeps the KPI-0001 exception and sits in its prefix's run in the classification table's order with no gap.
 """
 import argparse
 import csv
