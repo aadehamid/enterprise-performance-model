@@ -68,8 +68,9 @@ class Data:
 
 
 def plan_versions(d):
-    """One version per refinery and plan month: made on the 15th of the month before, assuming the average of the 20
-    trading days up to that date (never later), with the plan target's runs and yields."""
+    """One version per refinery and plan month: made on the 15th of the month before, assuming the average of up to 20
+    trading days up to that date (never later; 17 for the December 2023 versions, whose plan date has only 17 trading
+    days behind it), with the plan target's runs and yields."""
     rows, vid = [], 1
     for (code, month), plan in sorted(d.plans.items()):
         prior = dt.date(month.year - (month.month == 1), (month.month - 2) % 12 + 1, 15)
