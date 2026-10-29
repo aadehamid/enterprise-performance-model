@@ -298,7 +298,7 @@ td:first-child { font-weight: 600; }
   <rect class="node" x="36" y="638" width="300" height="46" rx="8"/><text class="t" x="46" y="658">Generator</text><text class="s" x="46" y="672">seeded, with a scenario timeline</text>
   
   <path class="e" d="M186 684V696" marker-end="url(#p)"/>
-  <rect class="node store" x="36" y="700" width="300" height="46" rx="8"/><text class="t" x="46" y="720">Local Postgres</text><text class="s" x="46" y="734">seven databases, pricing-demo-sources</text>
+  <rect class="node store" x="36" y="700" width="300" height="46" rx="8"/><text class="t" x="46" y="720">Local Postgres</text><text class="s" x="46" y="734">eight databases, pricing-demo-sources</text>
   
   <path class="e" d="M186 746V758" marker-end="url(#p)"/>
   <rect class="node" x="36" y="762" width="300" height="46" rx="8"/><text class="t" x="46" y="782">DuckDB</text><text class="s" x="46" y="796">to Parquet, then the idp_sbx volume</text>
@@ -489,7 +489,7 @@ echo "$state"; [ "$state" = ready ]</code></pre>
 
   <g><circle class="num-c" cx="34" cy="98" r="12"/><text class="num-t" x="30" y="102">1</text>
   <rect class="node store" x="54" y="70" width="150" height="62" rx="8"/>
-  <text class="t" x="66" y="94">Postgres</text><text class="s" x="66" y="112">seven databases</text></g>
+  <text class="t" x="66" y="94">Postgres</text><text class="s" x="66" y="112">eight databases</text></g>
   <g><circle class="num-c" cx="226" cy="98" r="12"/><text class="num-t" x="222" y="102">2</text>
   <rect class="node store" x="246" y="70" width="150" height="62" rx="8"/>
   <text class="t" x="258" y="94">Databricks demo</text><text class="s" x="258" y="112">idp_sbx, Genie</text></g>
@@ -513,7 +513,7 @@ echo "$state"; [ "$state" = ready ]</code></pre>
 <figcaption>Step 2 needs step 1's data. Steps 3 and 4 need only the releases, so either can run alone; this order is the one that ends with every store fresh.</figcaption>
 </figure>
 
-<h3>1. Postgres: the seven source databases</h3>
+<h3>1. Postgres: the seven source databases and decision_truth</h3>
 <pre><code>cd "$DEMO"
 docker compose -f docker/docker-compose.yml up -d
 uv run python -m pricing_demo.load_postgres</code></pre>
@@ -567,7 +567,7 @@ docker compose -p lpg-local --profile neo4j --profile fuseki down -v</code></pre
   </div>
   <div class="card">
     <h3>Local Postgres</h3>
-    <div class="warn"><strong>This deletes the volume <code>pricing-demo-pgdata</code>.</strong><code>down -v</code> removes the named volume that the compose file declares, and the seven databases go with it.</div>
+    <div class="warn"><strong>This deletes the volume <code>pricing-demo-pgdata</code>.</strong><code>down -v</code> removes the named volume that the compose file declares, and the eight databases go with it.</div>
 <pre><code>cd "$DEMO"
 docker compose -f docker/docker-compose.yml down -v</code></pre>
     <p>To remove the container but keep the data, run the same command without <code>-v</code>.</p>

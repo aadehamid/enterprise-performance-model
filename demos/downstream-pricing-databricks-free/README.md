@@ -23,7 +23,7 @@ You need Docker, [uv](https://docs.astral.sh/uv/), and a Databricks Free Edition
 
 ```bash
 cd demos/downstream-pricing-databricks-free
-docker compose -f docker/docker-compose.yml up -d          # the seven source databases
+docker compose -f docker/docker-compose.yml up -d          # the seven source databases and the hidden decision_truth
 # A volume created before 2026-10-28 holds the old database names. Rename them once: the postgres image runs
 # docker/init/ only on an empty data directory (hub.docker.com/_/postgres, "Initialization scripts", read 2026-10-28).
 #   for p in mips:price_assessment mpr:price_reference kittyhawk:reference_data_hub ctrm:rightangle planning:aspen_pims prodacct:production_accounting; do
@@ -198,7 +198,7 @@ The demo names each source database after a public product where one exists (Rig
 | `pricing_demo/` | `public_data.py` (EIA cache), `timeline.py` (scenario events), `catalog.py` (price masters, MIPS hierarchy), `generate.py` (every source table, seeded), `load_postgres.py`, `replicate.py` (DuckDB), `databricks.py` (setup, upload, build, counts, purge), `genie.py` |
 | `sql/` | The four Databricks layers |
 | `genie/` | The two agents' instructions |
-| `docker/` | The Postgres server and its seven databases |
+| `docker/` | The Postgres server, its seven source databases and the hidden `decision_truth` |
 | `data/public/` | Real public data, cited |
 | `tests/` | Determinism, shapes, labels, the scenario's relabelling |
 | `DATA.md` | Every table: its grain, its row count, how it is made and the script that makes it |
