@@ -160,7 +160,7 @@ td:first-child { font-weight: 600; }
   <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
   <span class="name">EPM</span><span class="scope">Stores runbook</span>
   <nav aria-label="Sections">
-    <a href="#flow">How it fits</a><a href="#stores">Stores</a><a href="#check">Check</a><a href="#stop">Stop and start</a><a href="#reload">Reload</a><a href="#purge">Purge</a><a href="#trouble">Fixes</a>
+    <a href="#flow">How it fits</a><a href="#stores">Stores</a><a href="#check">Check</a><a href="#stop">Stop and start</a><a href="#reload">Reload</a><a href="#sync">Keep in step</a><a href="#purge">Purge</a><a href="#trouble">Fixes</a>
   </nav>
 </header>
 
@@ -168,7 +168,7 @@ td:first-child { font-weight: 600; }
 <div class="title-row">
   <div>
     <h1>Stores runbook</h1>
-    <p class="sub">How the EPM ontology and the pricing demo's synthetic data reach six stores, and how to check, stop, start, purge and reload each one. Every command runs on this Mac. No password appears on this page: each login stays in its env file.</p>
+    <p class="sub">How the EPM ontology and the pricing demo's synthetic data reach six stores, and how to check, stop, start, purge, reload and keep in step each one. Every command runs on this Mac. No password appears on this page: each login stays in its env file.</p>
   </div>
   <a class="btn" href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">Open the Eraser diagram</a>
 </div>
@@ -562,6 +562,30 @@ uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anythi
 uv run --group graph python -m pricing_demo.tech_graph load      # both local Neo4j stores and AuraDB
 uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_sbx.tech_graph</code></pre>
 <p>The load stops if a store's <code>:Resource</code> counts change, or if an edge to the ontology finds no node.</p>
+
+<h2 id="sync">Keeping the stores in step</h2>
+<p class="lead">Since 2026-10-29 each ontology store says which release set it was loaded from, so a new release shows which stores are behind. <code>sync_stores.py</code>, in the projection folder, does the checking and the reloading with the commands above.</p>
+<h3>What each store records</h3>
+<p>A marker with the catalog's datasets (their count and a digest of their IRIs, from <code>releases/catalog.ttl</code>), the projection's input fingerprint (from <code>projection-manifest.json</code>), the counts the store held when it was marked, the time and the commit. In the three Neo4j stores the marker is a node labelled <code>EpmStoreMarker</code>, never <code>Resource</code>, so the projection's counts, hash and round trip do not see it. In Databricks it is a row in <code>epm_store_markers</code>, beside <code>epm_triples</code>.</p>
+<p>A store is marked only after a check against the repository: the pipeline's graph must give the committed report's hash and counts; the driver's Neo4j and AuraDB must hold the projection's nodes and the driver report's relationships; <code>epm_triples</code> must hold every module's newest release. A pipeline reload deletes every node, the marker with them, so a store reloaded by hand reads as unmarked until it is marked again.</p>
+<pre><code>cd "$EPM/business_architecture/ontology/projection"
+uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py mark --store pipeline --store driver --store aura --store databricks</code></pre>
+<h3>The drift check</h3>
+<p>It compares each marker with main's newest catalog and manifest (fetch main first; <code>--ref</code> names another ref) and each store's live count with its marker. Each store is current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or unreachable. It exits non-zero unless every store is current.</p>
+<pre><code>uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py check</code></pre>
+<p>On 2026-10-29, after the four markers were written, every store read as current at commit 4d1e675b: the pipeline graph with 4,193 nodes and 21,767 relationships and its hash unchanged, the driver's Neo4j and AuraDB with 4,193 and 22,142, and <code>epm_triples</code> with 40,169 rows.</p>
+<h3>sync_stores.py sync</h3>
+<p>It runs the drift check, then reloads what is not current: the pipeline graph with <code>run_local.sh --keep</code> (Reload, step 3), and the driver's Neo4j with a driver run that skips its <code>copy</code>, <code>databricks</code> and <code>rebuild</code> steps, so that graph comes from the repository rather than back from <code>epm_triples</code>. AuraDB and Databricks reload only with <code>--cloud</code>, through the full driver run (step 4), which reloads the driver's Neo4j too. Then it loads the technical graph back into each Neo4j store it reloaded (step 5) and marks those stores. <code>--dry-run</code> prints the commands and runs nothing. The driver is found in <code>$EPM_SKILLS</code>, by default <code>~/.agents/skills</code>.</p>
+<pre><code>uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py sync --dry-run
+uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py sync --cloud</code></pre>
+<h3>The release-tag workflow</h3>
+<p><code>.github/workflows/sync-stores.yml</code> runs on every release tag (<code>kpi-v1.3.0</code>, say) and by hand. It runs the full driver for AuraDB and Databricks on a GitHub runner and marks both. It is inactive until these repository secrets exist; without all of them its first step ends the job with a notice and nothing else runs:</p>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Secret</th><th>What it holds</th></tr></thead><tbody>
+<tr><td><code>EPM_AURA_URI</code>, <code>EPM_AURA_USERNAME</code>, <code>EPM_AURA_PASSWORD</code></td><td data-k="Holds">The AuraDB login, as in <code>~/.config/neo4j/aura.env</code></td></tr>
+<tr><td><code>EPM_DATABRICKS_HOST</code>, <code>EPM_DATABRICKS_TOKEN</code>, <code>EPM_DATABRICKS_HTTP_PATH</code></td><td data-k="Holds">The Databricks login, as in <code>~/.config/databricks/epm.env</code>; the workflow writes the catalog <code>workspace</code> and schema <code>epm_ontology</code> itself</td></tr>
+<tr><td><code>EPM_SKILLS_TOKEN</code></td><td data-k="Holds">A token that can read the skills repository, where the driver lives</td></tr>
+</tbody></table></div>
+<p>Add them under the repository's Settings, Secrets and variables, Actions. The workflow has not run with secrets yet, so its first run is its test.</p>
 
 <h2 id="purge">Purge</h2>
 <div class="warn"><strong>Read this first.</strong>A purge cannot be undone. The data comes back only by <a href="#reload">reloading</a>, which rebuilds what these commands remove from the repository. The local and Databricks commands below remove only what the demo or the projection created; the AuraDB command empties the whole Aura database, which holds only these test runs (<code>skill-run/README.md</code>). On 2026-10-26 the decision owner asked to keep these stores loaded. Purge only when you mean to.</div>

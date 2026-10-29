@@ -6,6 +6,8 @@ Since 2026-10-26 the stores below stay loaded after a run, so the decision owner
 
 *2026-10-29:* both local Neo4j stores and AuraDB also hold the pricing demo's technical graph and decision trail (E5): 134 nodes labelled `Tech`, never `Resource`, with edges only from them, so the projection's counts and hash, which read `:Resource` nodes and the edges between them, do not change. A pipeline reload, a driver run or a purge removes them; load them again with `uv run --group graph python -m pricing_demo.tech_graph load` from the demo's folder.
 
+*2026-10-29, later:* each of the four ontology stores holds a marker of the release set it was loaded from: a node labelled `EpmStoreMarker` (never `Resource`) in each Neo4j store, a row in `epm_store_markers` beside `epm_triples`. `sync_stores.py check` reports which stores are behind main's newest catalog, and `sync_stores.py sync` reloads them (AuraDB and Databricks only with `--cloud`). A pipeline reload, a driver run or a purge removes a Neo4j store's marker; mark it again with `sync_stores.py mark`. The runbook's "Keeping the stores in step" gives the commands and the release-tag workflow's secrets.
+
 | Store | What it holds | Refresh it with | Login |
 |---|---|---|---|
 | Local Neo4j, from the driver | The projection of every released package, as the driver's last step (`rebuild`) loads it back from `epm_triples` | `uv run --no-project --with rdflib python3 run_projection.py --config <this folder>/skill-run/epm-run.json`, from the skill's `scripts/` folder (`skill-run/README.md`, "Running it"); `keep_neo4j` is on, so the container stays up | Bolt `localhost:17711`; `~/lpg-out/epm-rebuild/neo4j-run/run.env` after a full run, because the rebuild replaces the first container; `~/lpg-out/epm/neo4j-run/run.env` only when the rebuild is skipped |
@@ -17,6 +19,6 @@ Since 2026-10-26 the stores below stay loaded after a run, so the decision owner
 
 The Postgres data sits in the named Docker volume `pricing-demo-pgdata`, so a reboot keeps it. The container has `restart: unless-stopped`; after a reboot, start all three local containers as `ontology-stores-runbook.html` says, whichever came back by itself. `replace_target` is on in `skill-run/epm-run.json`, so each driver run replaces what Aura holds.
 
-`ontology-stores-runbook.html`, beside this page, explains the end-to-end workflow with diagrams, and gives the commands to check, stop, start, restart after a reboot, purge and reload each store. Open it in a browser.
+`ontology-stores-runbook.html`, beside this page, explains the end-to-end workflow with diagrams, and gives the commands to check, stop, start, restart after a reboot, purge, reload and keep in step each store. Open it in a browser.
 
-The scripts that build and check these stores are in the repository: `pipeline.py`, `run_local.sh` and `skill-run/` here, and `pricing_demo/` and `tests/` in the demo.
+The scripts that build and check these stores are in the repository: `pipeline.py`, `run_local.sh`, `sync_stores.py` and `skill-run/` here, and `pricing_demo/` and `tests/` in the demo.

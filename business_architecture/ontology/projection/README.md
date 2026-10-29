@@ -10,8 +10,10 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
 | `run_local.sh` | Steps 4 to 7 below in one command; `--keep` leaves the Neo4j container running |
 | `LOCAL-STORES.md` | The stores kept loaded for exploration since 2026-10-26 (*2026-10-27:* the four ontology stores are empty since that day's purge and are reloaded at the start of Part 2; *2026-10-28:* reloaded, from that day's releases with `kpi` 1.3.0), how to refresh each, and where its login lives |
-| `ontology-stores-runbook.html` | A standalone page for a person: the end-to-end workflow with diagrams, and how to check, stop, start, purge and reload each store |
+| `ontology-stores-runbook.html` | A standalone page for a person: the end-to-end workflow with diagrams, and how to check, stop, start, purge and reload each store, and (since 2026-10-29) how to keep them in step with the releases |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, that the report is current and passed, and (since 2026-10-29) that the counts, the hash and the round trip read only `:Resource` nodes and the edges between them |
+| `sync_stores.py` | Since 2026-10-29: marks each ontology store with the release set it was loaded from (the catalog's datasets and the input fingerprint), after checking it against the repository; the drift check against main's newest catalog; and `sync`, which reloads what is behind with `run_local.sh` and the driver (AuraDB and Databricks only with `--cloud`), loads the demo's technical graph back, and marks what it reloaded. The runbook's "Keeping the stores in step" gives the commands |
+| `test_sync_stores.py` | The offline tests of `sync_stores.py` and of `.github/workflows/sync-stores.yml`, the release-tag workflow that runs the driver for AuraDB and Databricks, inactive until its repository secrets exist |
 
 `scripts/check.sh` runs `pipeline.py build --verify` and the tests. Step 2 needs Java, and Steps 4 and 5 need a Neo4j container in Docker, so they run on a workstation, not in CI.
 
