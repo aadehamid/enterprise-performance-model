@@ -459,8 +459,8 @@ def build():
         events.append((len(events) + 1, f"turnaround_{code.lower()}", f"Planned turnaround at the {code} refinery (scenario, not MPC's schedule)",
                        "operations", region, code, start, end, "pricing_demo/timeline.py: TURNAROUNDS",
                        "scenario timeline", "not checked", None, "[]", ts(WINDOW_END)))
-    # Until the outside-context step checks each event against public sources, the status reads "not checked", the
-    # probability is empty and the citations are an empty JSON array.
+    # Each event starts "not checked", with no probability and an empty JSON array of citations. At the end of build()
+    # outside.tables() puts in the evidence from the events step's cached call; an event with no cached call stays so.
     out["reference_data_hub"]["market_event"] = Table(
         ["EventId", "EventKey", "Title", "Category", "Region", "RefineryCode", "StartDate", "EndDate", "Source", "SourceKind",
          "EvidenceStatus", "EvidenceProbability", "EvidenceCitations", "updated_at"], events)

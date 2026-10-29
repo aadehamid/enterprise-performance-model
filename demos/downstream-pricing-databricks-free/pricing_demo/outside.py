@@ -7,7 +7,8 @@
 Four steps ask Parallel's Decisions API typed questions and keep every response in data/parallel/, so the tables are
 built from the cache and a rerun spends nothing (a cached request is never sent again):
 - events: whether each of the scenario's events in reference_data_hub.market_event happened, one call per event;
-- monthly: a scan of each MPC refining region for each full month of the window, one call per region and month;
+- monthly: a scan of each MPC refining region for each month from the window's first full one, November 2023, to
+  October 2026, one call per region and month;
 - diagnosis: what outside factor most affected each decision in the decision log in the 30 days after it, one call
   per decision, from the decision log's columns the agents see (never from decision_truth);
 - forward: the three months after the window, by region: announced maintenance, OPEC+ and policy dates, EIA's outlook
@@ -24,7 +25,7 @@ interpret() turns each answer into a value and a label:
 - unknown: a refusal, a noul between 0.3 and 0.7, or a choice below CHOICE_CONFIDENCE. These go to a person.
 The citations belong to the call, not to one question, so each answer row points to its call's citations.
 
-The key is PARALLEL_API_KEY, from the environment or ~/.config/parallel/api.env, and is never printed. The calls go
+The key is PARALLEL_API_KEY, from the environment, the demo's .env or ~/.config/parallel/api.env, and is never printed. The calls go
 through the parallel-web SDK's generic client.post, which keeps its authentication, retries and typed errors; the SDK
 has no Decisions resource of its own.
 """
@@ -117,8 +118,8 @@ def add_months(day, n):
 
 
 def full_months():
-    """The window's full calendar months: November 2023 to October 2026 (the window runs to the 20th of October 2026,
-    the last EIA spot date; October counts, since the scan asks about the month, not the window's days)."""
+    """The months the scan asks about: from the window's first full month, November 2023, to October 2026. The window
+    ends on 20 October 2026, the last EIA spot date; October still counts, since the scan asks about the month."""
     first = add_months(WINDOW_START, 1) if WINDOW_START.day > 1 else WINDOW_START.replace(day=1)
     months, m = [], first
     while m <= WINDOW_END:

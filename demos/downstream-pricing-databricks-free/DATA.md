@@ -218,7 +218,7 @@ E6 asks Parallel's Decisions API typed questions about real public events and ke
 | Step | Calls | Questions per call | What it asks | Rows |
 |---|---|---|---|---|
 | `events` | 9 | 1 (noul) | Whether each `market_event` row happened as described, within its dates | fills `market_event`'s evidence columns |
-| `monthly` | 108 | 3 | For each MPC refining region (Gulf Coast, Mid-Continent, West Coast) and each full month from November 2023 to October 2026: an unplanned outage or weather disruption (noul), what most drove refining margins (choice of six) and a government action on refined products (noul) | 324 in `external_event` |
+| `monthly` | 108 | 3 | For each MPC refining region (Gulf Coast, Mid-Continent, West Coast) and each month from November 2023 (the window's first full month) to October 2026 (36 months): an unplanned outage or weather disruption (noul), what most drove refining margins (choice of six) and a government action on refined products (noul) | 324 in `external_event` |
 | `diagnosis` | 10 | 2 | For each decision in the decision log, from its public columns only (statement, date, expected outcome, refineries, region): which outside factor most affected it in the 30 days after (choice of six) and whether a real event made its expected outcome less likely (noul) | 20 in `external_event` |
 | `forward` | 9 | 5 | For each region and November 2026, December 2026 and January 2027: announced maintenance, an OPEC+ meeting and a U.S. fuel-policy date (nouls), EIA's outlook for diesel prices and NOAA's for temperature (choices) | 45 in `forward_scan` |
 
