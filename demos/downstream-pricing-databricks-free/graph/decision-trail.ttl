@@ -1,0 +1,377 @@
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tv: <urn:pricing-demo:tech-vocab#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:pricing-demo:tech:decision/D01> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Cut crude runs at Garyville by up to 45 points of utilization at the storm's peak, ahead of Hurricane Isaias" ;
+    prov:startedAtTime "2026-10-06T08:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D01-1>,
+        <urn:pricing-demo:tech:evidence/EV-D01-2> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/refinery-scheduler>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-manager> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-garyville> ;
+    tv:concerns measure:crude-utilization,
+        measure:rm-margin-per-barrel ;
+    tv:domain "operations" ;
+    tv:name "D01" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Cut runs by up to 45 points at the storm's peak" .
+
+<urn:pricing-demo:tech:decision/D02> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Cut crude runs at Galveston Bay by up to 20 points of utilization at the storm's peak, ahead of Hurricane Isaias" ;
+    prov:startedAtTime "2026-10-06T08:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D02-1>,
+        <urn:pricing-demo:tech:evidence/EV-D02-2> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/refinery-scheduler>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-manager> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-galveston-bay> ;
+    tv:concerns measure:crude-utilization,
+        measure:rm-margin-per-barrel ;
+    tv:domain "operations" ;
+    tv:name "D02" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Cut runs by up to 20 points at the storm's peak" .
+
+<urn:pricing-demo:tech:decision/D03> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Restart Garyville's units as power returns, rather than wait for a full site inspection" ;
+    prov:startedAtTime "2026-10-14T09:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D03-1>,
+        <urn:pricing-demo:tech:evidence/EV-D03-2> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/refinery-econ-and-planning-supervisor>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/refinery-scheduler> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-garyville> ;
+    tv:concerns measure:crude-utilization ;
+    tv:domain "operations" ;
+    tv:name "D03" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Restart unit by unit as power returns" .
+
+<urn:pricing-demo:tech:decision/D07> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Ship a ULSD cargo to New York Harbor by Jones Act tanker rather than export it to Northwest Europe" ;
+    prov:startedAtTime "2026-10-09T09:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D07-1>,
+        <urn:pricing-demo:tech:evidence/EV-D07-2> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/commercial-scheduler>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/cpvc-scheduler> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-garyville> ;
+    tv:concerns measure:distillate-prices,
+        measure:distribution-cost-per-barrel ;
+    tv:domain "commercial" ;
+    tv:name "D07" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Ship to New York Harbor" .
+
+<urn:pricing-demo:tech:decision/D08> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Defer part of November's crude purchases after the G7 emergency-stock release" ;
+    prov:startedAtTime "2026-10-02T14:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D08-1>,
+        <urn:pricing-demo:tech:evidence/EV-D08-2> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/crude-oil-trader>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/crude-planning-and-optimization-director> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-galveston-bay>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-garyville> ;
+    tv:concerns measure:crude-prices ;
+    tv:domain "commercial" ;
+    tv:name "D08" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Defer part of the purchases" .
+
+<urn:pricing-demo:tech:decision/D10> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Hold Gulf Coast crude runs through a weak crack rather than cut them" ;
+    prov:startedAtTime "2024-09-25T15:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D10-1>,
+        <urn:pricing-demo:tech:evidence/EV-D10-2> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/e-and-p-manager>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-manager> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-galveston-bay>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-garyville> ;
+    tv:concerns measure:crack-spreads,
+        measure:crude-utilization ;
+    tv:domain "planning" ;
+    tv:name "D10" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Hold runs" .
+
+<urn:pricing-demo:tech:evidence/EV-D04-3> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Plan change: Robinson crude runs cut for the turnaround, 2026-09-21 to 2026-10-12." ;
+    prov:generatedAtTime "2026-08-21T10:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-planner> ;
+    prov:wasGeneratedBy <urn:pricing-demo:tech:decision/D04> ;
+    tv:kind "plan_change" ;
+    tv:name "EV-D04-3" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D05-3> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Plan change: Anacortes crude runs cut for the turnaround, 2026-10-01 to 2026-10-25." ;
+    prov:generatedAtTime "2026-09-02T10:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-planner> ;
+    prov:wasGeneratedBy <urn:pricing-demo:tech:decision/D05> ;
+    tv:kind "plan_change" ;
+    tv:name "EV-D05-3" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D06-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Plan change: distillate yield targets up about 1.5 points at every refinery from October 1." ;
+    prov:generatedAtTime "2026-09-25T12:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-planning-engineer> ;
+    prov:wasGeneratedBy <urn:pricing-demo:tech:decision/D06> ;
+    tv:kind "plan_change" ;
+    tv:name "EV-D06-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D09-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Nomination change: none. Gulf Coast ULSD export nominations for November held at the current level." ;
+    prov:generatedAtTime "2026-10-08T11:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/commercial-scheduler> ;
+    prov:wasGeneratedBy <urn:pricing-demo:tech:decision/D09> ;
+    tv:kind "plan_change" ;
+    tv:name "EV-D09-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:decision/D04> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Hold the Robinson turnaround on schedule from 2026-09-21, rather than defer it" ;
+    prov:startedAtTime "2026-08-20T10:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D04-1>,
+        <urn:pricing-demo:tech:evidence/EV-D04-2> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/refinery-planner>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-director> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-robinson> ;
+    tv:concerns measure:turnaround-cost-per-barrel,
+        measure:turnaround-lost-margin ;
+    tv:domain "planning" ;
+    tv:name "D04" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Hold the turnaround on schedule" .
+
+<urn:pricing-demo:tech:decision/D05> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Hold the Anacortes turnaround on schedule from 2026-10-01, rather than defer it" ;
+    prov:startedAtTime "2026-09-01T10:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D05-1>,
+        <urn:pricing-demo:tech:evidence/EV-D05-2> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/refinery-planner>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-director> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-anacortes> ;
+    tv:concerns measure:turnaround-cost-per-barrel,
+        measure:turnaround-lost-margin ;
+    tv:domain "planning" ;
+    tv:name "D05" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Hold the turnaround on schedule" .
+
+<urn:pricing-demo:tech:decision/D06> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Raise distillate yield targets across the system while diesel is scarce" ;
+    prov:startedAtTime "2026-09-25T11:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D06-1> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/e-and-p-manager>,
+        <https://w3id.org/lsc/ontology/modules/organization/role/refinery-planning-engineer> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-anacortes>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-canton>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-catlettsburg>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-detroit>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-el-paso>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-galveston-bay>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-garyville>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-kenai>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-los-angeles>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-mandan>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-robinson>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-salt-lake-city>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-st-paul-park> ;
+    tv:concerns measure:distillate-yield,
+        measure:gasoline-yield ;
+    tv:domain "planning" ;
+    tv:name "D06" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Raise distillate yield by about 1.5 points" .
+
+<urn:pricing-demo:tech:decision/D09> a prov:Activity,
+        tv:Decision ;
+    rdfs:label "Hold Gulf Coast ULSD export nominations flat as China restarts product exports" ;
+    prov:startedAtTime "2026-10-08T10:00:00"^^xsd:dateTime ;
+    prov:used <urn:pricing-demo:tech:evidence/EV-D09-1> ;
+    prov:wasAssociatedWith <https://w3id.org/lsc/ontology/modules/organization/role/commercial-scheduler> ;
+    tv:affects <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-galveston-bay>,
+        <https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-garyville> ;
+    tv:concerns measure:distillate-prices ;
+    tv:domain "commercial" ;
+    tv:name "D09" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tv:selectedOption "Hold nominations flat" .
+
+<urn:pricing-demo:tech:evidence/EV-D01-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Storm call: Isaias forecast to come ashore on the 7th. Garyville to plan a run cut; scheduling to confirm tankage." ;
+    prov:generatedAtTime "2026-10-05T16:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-manager> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D01-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D01-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Plan change: Garyville crude runs cut by up to 45 points of utilization from October 7 until the all-clear." ;
+    prov:generatedAtTime "2026-10-06T07:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-scheduler> ;
+    tv:kind "plan_change" ;
+    tv:name "EV-D01-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D02-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Storm call: Isaias forecast to come ashore on the 7th. Galveston Bay to plan a run cut; scheduling to confirm tankage." ;
+    prov:generatedAtTime "2026-10-05T16:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-manager> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D02-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D02-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Plan change: Galveston Bay crude runs cut by up to 20 points of utilization from October 7 until the all-clear." ;
+    prov:generatedAtTime "2026-10-06T07:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-scheduler> ;
+    tv:kind "plan_change" ;
+    tv:name "EV-D02-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D03-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Approved: restart unit by unit as power returns, each after its walk-down." ;
+    prov:generatedAtTime "2026-10-14T08:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-econ-and-planning-supervisor> ;
+    tv:kind "approval" ;
+    tv:name "EV-D03-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D03-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Power back at the site this morning. Crude unit first, then the FCC; products to stay in tankage until docks reopen." ;
+    prov:generatedAtTime "2026-10-14T07:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-scheduler> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D03-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D04-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Turnaround review for Robinson: crews booked; inspection intervals due this autumn." ;
+    prov:generatedAtTime "2026-08-18T10:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-planner> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D04-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D04-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Approved: Robinson turnaround stays on schedule." ;
+    prov:generatedAtTime "2026-08-20T10:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-director> ;
+    tv:kind "approval" ;
+    tv:name "EV-D04-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D05-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Turnaround review for Anacortes: crews booked; inspection intervals due this autumn." ;
+    prov:generatedAtTime "2026-08-30T10:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/refinery-planner> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D05-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D05-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Approved: Anacortes turnaround stays on schedule." ;
+    prov:generatedAtTime "2026-09-01T10:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-director> ;
+    tv:kind "approval" ;
+    tv:name "EV-D05-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D06-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Diesel cracks running well above gasoline. Planning to look at a yield shift across the system." ;
+    prov:generatedAtTime "2026-09-24T15:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/e-and-p-manager> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D06-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D07-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Cargo options for the ULSD barrel: East Coast stocks are low; Europe still open but freight moving fast." ;
+    prov:generatedAtTime "2026-10-08T16:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/commercial-scheduler> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D07-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D07-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Approved: ship to New York Harbor." ;
+    prov:generatedAtTime "2026-10-09T09:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/cpvc-scheduler> ;
+    tv:kind "approval" ;
+    tv:name "EV-D07-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D08-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "G7 release announced. Crude off about $2 intraday; worth waiting on part of November's barrels." ;
+    prov:generatedAtTime "2026-10-02T12:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/crude-oil-trader> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D08-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D08-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Approved: defer part of November's purchases." ;
+    prov:generatedAtTime "2026-10-02T14:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/crude-planning-and-optimization-director> ;
+    tv:kind "approval" ;
+    tv:name "EV-D08-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D09-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "China's holiday is over and export quotas are out. Keep November nominations where they are for now." ;
+    prov:generatedAtTime "2026-10-08T09:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/commercial-scheduler> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D09-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D10-1> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Gulf crack at the low end of its range. Planning to hold runs; term barrels already committed." ;
+    prov:generatedAtTime "2024-09-25T13:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/regional-planning-manager> ;
+    tv:kind "meeting_note" ;
+    tv:name "EV-D10-1" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+
+<urn:pricing-demo:tech:evidence/EV-D10-2> a prov:Entity,
+        tv:EvidenceItem ;
+    rdfs:label "Approved: Gulf Coast crude runs stay at plan." ;
+    prov:generatedAtTime "2024-09-25T15:00:00"^^xsd:dateTime ;
+    prov:wasAttributedTo <https://w3id.org/lsc/ontology/modules/organization/role/e-and-p-manager> ;
+    tv:kind "approval" ;
+    tv:name "EV-D10-2" ;
+    tv:recordedIn <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> .
+

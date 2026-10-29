@@ -2,7 +2,7 @@
 
     uv run python -m pricing_demo.databricks setup     # catalog, schemas, volume
     uv run python -m pricing_demo.databricks upload    # out/replica/*.parquet to the volume
-    uv run python -m pricing_demo.databricks build     # sql/02 to sql/06: replica, silver, gold, metric views, definitions
+    uv run python -m pricing_demo.databricks build     # sql/02 to sql/07: replica, silver, gold, metric views, definitions, tech_graph tables
     uv run python -m pricing_demo.databricks counts    # row counts of every table and view
     uv run python -m pricing_demo.databricks purge     # list what a purge drops; --yes drops it
 
@@ -24,8 +24,9 @@ from .config import OUT, SQL, SYSTEMS, databricks_env
 
 SCHEMAS = (("replica_landing",) + tuple(f"replica_{s}" for s in SYSTEMS)
            + ("silver_udm_core", "silver_mdm_core", "gold_commercial_core", "semantic_sem_commercial",
-              "ontology_definitions"))
+              "ontology_definitions", "tech_graph"))
 # What a complete build holds outside the replica layer: every silver and gold table, metric view and definitions view.
+# The tech_graph tables are not here: the build creates them empty, and tech_graph.py's sync fills them.
 BUILT = {
     "silver_mdm_core": {"mpr_price_master_dim", "mips_price_batch_dim", "mips_price_sheet_dim", "mips_price_group_dim",
                         "mips_price_assessment_group_dim", "refinery_dim", "market_event_dim", "eia_weekly_series_dim",

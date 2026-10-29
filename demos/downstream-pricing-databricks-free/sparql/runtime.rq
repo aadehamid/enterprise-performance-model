@@ -1,0 +1,50 @@
+# What the last run left: the host and the source databases with their row counts, each Databricks object's rows and
+# last refresh, the Genie agents and the views they bind, the orchestrator, and the data-quality checks with their last
+# result. SPARQL Anything reads out/tech/live.json, which `tech_graph collect` writes from Postgres and Databricks.
+PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
+PREFIX xyz: <http://sparql.xyz/facade-x/data/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX tv:  <urn:pricing-demo:tech-vocab#>
+
+CONSTRUCT {
+  ?host a tv:Host ; tv:name ?hostName ; tv:label ?hostKind .
+  ?db a tv:SourceDatabase ; tv:name ?dbName ; tv:hidden ?hidden ; tv:tables ?dbTables ; tv:rows ?dbRows ; tv:hostedOn ?host .
+  ?obj tv:rows ?rows ; tv:lastRefresh ?refresh .
+  <urn:pricing-demo:tech:triples/epm_triples> a tv:TripleTable ; tv:name ?triples .
+  ?agent a tv:GenieAgent ; tv:name ?agentTitle ; tv:binds ?bound .
+  <urn:pricing-demo:tech:orchestrator> a tv:Orchestrator ; tv:name "Orchestrator (pricing_demo/supervisor.py)" ; tv:routesTo ?agent .
+  ?check a tv:QualityCheck ; tv:name ?checkId ; tv:label ?checkLabel ; tv:result ?result ; tv:detail ?detail ;
+         tv:checkedAt ?checkedAt ; tv:checks ?covered .
+}
+WHERE {
+  SERVICE <x-sparql-anything:> {
+    fx:properties fx:location "%LIVE%" ; fx:media-type "application/json" .
+    ?root a fx:root ; xyz:catalog ?catalog ; xyz:triples ?triples ; xyz:host ?h .
+    ?h xyz:name ?hostName ; xyz:kind ?hostKind .
+    {
+      ?root xyz:databases ?dbs . ?dbs ?i ?d .
+      ?d xyz:name ?dbName ; xyz:hidden ?hidden ; xyz:tables ?dbTables ; xyz:rows ?dbRows .
+    } UNION {
+      ?root xyz:objects ?objs . ?objs ?j ?o .
+      ?o xyz:id ?objId ; xyz:rows ?rows ; xyz:last_refresh ?refreshText .
+    } UNION {
+      ?root xyz:agents ?ags . ?ags ?k ?a .
+      ?a xyz:slug ?agentSlug ; xyz:title ?agentTitle ; xyz:views ?views . ?views ?m ?view .
+    } UNION {
+      ?root xyz:checks ?cks . ?cks ?n ?c .
+      ?c xyz:id ?checkId ; xyz:label ?checkLabel ; xyz:result ?result ; xyz:detail ?detail ; xyz:checked_at ?checkedText .
+      OPTIONAL { ?c xyz:covers ?cov . ?cov ?p ?coveredId . }
+    }
+  }
+  BIND(IRI(CONCAT("urn:pricing-demo:tech:host/", ENCODE_FOR_URI(?hostName))) AS ?host)
+  BIND(IRI(CONCAT("urn:pricing-demo:tech:database/", ?dbName)) AS ?db)
+  BIND(IRI(CONCAT("urn:pricing-demo:tech:object/", ?objId)) AS ?obj)
+  BIND(STRDT(?refreshText, xsd:dateTime) AS ?refresh)
+  BIND(IRI(CONCAT("urn:pricing-demo:tech:agent/", ?agentSlug)) AS ?agent)
+  BIND(IRI(CONCAT("urn:pricing-demo:tech:object/", ?view)) AS ?bound)
+  BIND(IRI(CONCAT("urn:pricing-demo:tech:check/", ?checkId)) AS ?check)
+  BIND(STRDT(?checkedText, xsd:dateTime) AS ?checkedAt)
+  BIND(IF(STRSTARTS(?coveredId, "database:"), IRI(CONCAT("urn:pricing-demo:tech:database/", STRAFTER(?coveredId, "database:"))),
+       IF(?coveredId = "epm_triples", <urn:pricing-demo:tech:triples/epm_triples>,
+          IRI(CONCAT("urn:pricing-demo:tech:object/", ?coveredId)))) AS ?covered)
+}

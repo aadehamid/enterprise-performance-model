@@ -1,0 +1,31 @@
+# Run by rdflib over the graph the other queries built (plain SPARQL 1.1, no SPARQL Anything): each step points to the
+# next in the README's order, and each node points to the step that makes or fills it (sync fills the tech_graph tables).
+PREFIX tv: <urn:pricing-demo:tech-vocab#>
+
+CONSTRUCT {
+  ?step tv:next ?following .
+  ?made tv:producedBy ?maker .
+}
+WHERE {
+  {
+    ?step a tv:PipelineStep ; tv:order ?order .
+    ?following a tv:PipelineStep ; tv:order ?nextOrder .
+    FILTER(?nextOrder > ?order)
+    FILTER NOT EXISTS { ?between a tv:PipelineStep ; tv:order ?o . FILTER(?o > ?order && ?o < ?nextOrder) }
+  } UNION {
+    VALUES (?class ?maker) {
+      (tv:SourceDatabase <urn:pricing-demo:tech:step/load_postgres>)
+      (tv:ReplicaTable <urn:pricing-demo:tech:step/databricks-build>)
+      (tv:SilverTable <urn:pricing-demo:tech:step/databricks-build>)
+      (tv:GoldTable <urn:pricing-demo:tech:step/databricks-build>)
+      (tv:MetricView <urn:pricing-demo:tech:step/databricks-build>)
+      (tv:DefinitionsView <urn:pricing-demo:tech:step/databricks-build>)
+      (tv:TechGraphTable <urn:pricing-demo:tech:step/tech_graph-sync>)
+      (tv:GenieAgent <urn:pricing-demo:tech:step/genie>)
+      (tv:Orchestrator <urn:pricing-demo:tech:step/supervisor-ask>)
+      (tv:QualityCheck <urn:pricing-demo:tech:step/tech_graph-collect>)
+    }
+    ?made a ?class .
+    ?maker a tv:PipelineStep .
+  }
+}

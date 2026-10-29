@@ -1,0 +1,65 @@
+# The decision trail as PROV-O (EPM-DEC-001-0109; README.md, use cases 13 to 18), from the two tables the agents may
+# see, aspen_pims.decision_log and aspen_pims.decision_evidence, never from decision_truth. Each decision is a
+# prov:Activity associated with the organization roles that own it; each evidence item is a prov:Entity attributed to
+# its author's role. An item written before the decision is one the decision used; one written after it was generated
+# by it. A decision links to the ref-mpc refineries it names and to the kpi measures of its identifiers, joined in kpi's
+# measure-identifiers.csv. SPARQL Anything reads out/tech/live.json, where `tech_graph collect` puts both tables.
+PREFIX fx:   <http://sparql.xyz/facade-x/ns/>
+PREFIX xyz:  <http://sparql.xyz/facade-x/data/>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX tv:   <urn:pricing-demo:tech-vocab#>
+
+CONSTRUCT {
+  ?decision a prov:Activity, tv:Decision ; tv:name ?decisionId ; rdfs:label ?statement ; tv:domain ?domain ;
+            prov:startedAtTime ?decided ; tv:selectedOption ?selected ; tv:recordedIn ?log .
+  ?decision prov:wasAssociatedWith ?owner .
+  ?decision tv:affects ?refinery .
+  ?decision tv:concerns ?measure .
+  ?item a prov:Entity, tv:EvidenceItem ; tv:name ?evidenceId ; tv:kind ?kind ; rdfs:label ?text ;
+        prov:generatedAtTime ?authored ; prov:wasAttributedTo ?author ; tv:recordedIn ?evidenceTable .
+  ?decision prov:used ?usedItem .
+  ?laterItem prov:wasGeneratedBy ?decision .
+}
+WHERE {
+  {
+    SERVICE <x-sparql-anything:> {
+      fx:properties fx:location "%LIVE%" ; fx:media-type "application/json" .
+      ?root xyz:decisions ?ds . ?ds ?i ?d .
+      ?d xyz:DecisionId ?decisionId ; xyz:DecisionTime ?decidedText ; xyz:DecisionDomain ?domain ;
+         xyz:Statement ?statement ; xyz:SelectedOption ?selected .
+      OPTIONAL { ?d xyz:OwnerRoleSlugs ?owners . ?owners ?o ?ownerSlug . }
+      OPTIONAL { ?d xyz:RefineryIris ?refineries . ?refineries ?r ?refineryIri . }
+      OPTIONAL { ?d xyz:MeasureIdentifiers ?ids . ?ids ?m ?identifier . }
+    }
+    OPTIONAL {
+      SERVICE <x-sparql-anything:> {
+        fx:properties fx:location "%REPO%/business_architecture/ontology/kpi/measure-identifiers.csv" ;
+                      fx:csv.headers true .
+        ?row xyz:measure_id ?slug ; xyz:identifier ?csvIdentifier .
+      }
+      FILTER(?csvIdentifier = ?identifier)
+    }
+    BIND(STRDT(?decidedText, xsd:dateTime) AS ?decided)
+    BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/organization/role/", ?ownerSlug)) AS ?owner)
+    BIND(IRI(?refineryIri) AS ?refinery)
+    BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/kpi/measure/", ?slug)) AS ?measure)
+    BIND(<urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> AS ?log)
+  } UNION {
+    SERVICE <x-sparql-anything:> {
+      fx:properties fx:location "%LIVE%" ; fx:media-type "application/json" .
+      ?root xyz:evidence ?es . ?es ?j ?e .
+      ?e xyz:EvidenceId ?evidenceId ; xyz:DecisionId ?decisionId ; xyz:EvidenceKind ?kind ; xyz:AuthoredAt ?authoredText ;
+         xyz:AuthorRoleSlug ?authorSlug ; xyz:EvidenceText ?text .
+      ?root xyz:decisions ?ds2 . ?ds2 ?k ?d2 . ?d2 xyz:DecisionId ?decisionId ; xyz:DecisionTime ?decidedText2 .
+    }
+    BIND(STRDT(?authoredText, xsd:dateTime) AS ?authored)
+    BIND(IRI(CONCAT("urn:pricing-demo:tech:evidence/", ?evidenceId)) AS ?item)
+    BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/organization/role/", ?authorSlug)) AS ?author)
+    BIND(<urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> AS ?evidenceTable)
+    BIND(IF(?authored <= STRDT(?decidedText2, xsd:dateTime), ?item, ?none) AS ?usedItem)
+    BIND(IF(?authored > STRDT(?decidedText2, xsd:dateTime), ?item, ?none) AS ?laterItem)
+  }
+  BIND(IRI(CONCAT("urn:pricing-demo:tech:decision/", ?decisionId)) AS ?decision)
+}

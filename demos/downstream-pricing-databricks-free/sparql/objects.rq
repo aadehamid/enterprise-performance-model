@@ -1,0 +1,63 @@
+# Every table and view one sql/*.sql file creates, its layer, and what it reads (the technical graph, EPM-DEC-001-0109,
+# decision 6). SPARQL Anything's text triplifier reads the file with one regular expression that matches, in file
+# order, each CREATE OR REPLACE statement's name and each FROM, JOIN and metric-view source reference; a reference
+# belongs to the last CREATE before it, found by the matches' slot numbers (fx:cardinal). tech_graph.py runs this once
+# per file, filling in %SQL_FILE% and %SQL_NAME%. SPARQL Anything's documentation (v1.3.0, "Introduction") allows a
+# variable as an option's value, but in our runs a location or content bound to a variable returned nothing, so the
+# file's path is written into the query.
+PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX tv:  <urn:pricing-demo:tech-vocab#>
+
+CONSTRUCT {
+  ?obj a ?class ; tv:name ?name ; tv:layer ?layer ; tv:definedIn "%SQL_NAME%" .
+  ?obj tv:copies ?database .
+  ?obj tv:readsFrom ?upstream .
+}
+WHERE {
+  {
+    SELECT ?created (MIN(?n) AS ?ci) WHERE {
+      SERVICE <x-sparql-anything:> {
+        fx:properties fx:location "%SQL_FILE%" ; fx:media-type "text/plain" ;
+                      fx:txt.regex "CREATE OR REPLACE (?:TABLE|VIEW) \\$\\{catalog\\}\\.[a-z_]+\\.[a-z_0-9]+|(?:FROM|JOIN|source:) \\$\\{(?:catalog\\}\\.[a-z_]+\\.[a-z_0-9]+|epm_triples\\})" .
+        ?root ?slot ?created .
+        FILTER(STRSTARTS(STR(?slot), STR(rdf:_)) && STRSTARTS(?created, "CREATE"))
+      }
+      BIND(fx:cardinal(?slot) AS ?n)
+    } GROUP BY ?created
+  }
+  OPTIONAL {
+    SELECT ?ci ?reference WHERE {
+      {
+        SELECT ?ri ?reference (MAX(?k) AS ?ci) WHERE {
+          SERVICE <x-sparql-anything:> {
+            fx:properties fx:location "%SQL_FILE%" ; fx:media-type "text/plain" ;
+                          fx:txt.regex "CREATE OR REPLACE (?:TABLE|VIEW) \\$\\{catalog\\}\\.[a-z_]+\\.[a-z_0-9]+|(?:FROM|JOIN|source:) \\$\\{(?:catalog\\}\\.[a-z_]+\\.[a-z_0-9]+|epm_triples\\})" .
+            ?root2 ?slot2 ?reference . ?root2 ?slot3 ?earlier .
+            FILTER(STRSTARTS(STR(?slot2), STR(rdf:_)) && STRSTARTS(STR(?slot3), STR(rdf:_)))
+            FILTER(!STRSTARTS(?reference, "CREATE") && STRSTARTS(?earlier, "CREATE"))
+          }
+          BIND(fx:cardinal(?slot2) AS ?ri)
+          BIND(fx:cardinal(?slot3) AS ?k)
+          FILTER(?k < ?ri)
+        } GROUP BY ?ri ?reference
+      }
+    }
+  }
+  BIND(REPLACE(?created, "^CREATE OR REPLACE (TABLE|VIEW) \\$\\{catalog\\}\\.", "") AS ?name)
+  BIND(STRBEFORE(?name, ".") AS ?schema)
+  BIND(IF(STRSTARTS(?schema, "replica_"), "replica",
+       IF(STRSTARTS(?schema, "silver_"), "silver",
+       IF(STRSTARTS(?schema, "gold_"), "gold",
+       IF(?schema = "semantic_sem_commercial", "metric-view",
+       IF(?schema = "ontology_definitions", "definitions", "tech-graph"))))) AS ?layer)
+  VALUES (?layer ?class) {
+    ("replica" tv:ReplicaTable) ("silver" tv:SilverTable) ("gold" tv:GoldTable)
+    ("metric-view" tv:MetricView) ("definitions" tv:DefinitionsView) ("tech-graph" tv:TechGraphTable)
+  }
+  BIND(IRI(CONCAT("urn:pricing-demo:tech:object/", ?name)) AS ?obj)
+  BIND(IF(?layer = "replica", IRI(CONCAT("urn:pricing-demo:tech:database/", STRAFTER(?schema, "replica_"))), ?none) AS ?database)
+  BIND(REPLACE(?reference, "^(FROM|JOIN|source:) \\$\\{(catalog\\}\\.)?", "") AS ?target)
+  BIND(IF(?target = "epm_triples}", <urn:pricing-demo:tech:triples/epm_triples>,
+          IRI(CONCAT("urn:pricing-demo:tech:object/", ?target))) AS ?upstream)
+}

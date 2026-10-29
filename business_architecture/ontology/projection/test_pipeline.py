@@ -5,6 +5,7 @@ the committed Step 5 report describes the current inputs and passed.
 Run: python3 -m pytest test_pipeline.py (needs rdflib, pyshacl).
 """
 import json
+import types
 import unittest
 from unittest import mock
 
@@ -198,6 +199,39 @@ class RoundTripRules(unittest.TestCase):
         self.assertFalse(any(isinstance(m, Literal) for c in lists for m in c))
         party = URIRef("https://w3id.org/lsc/ontology/modules/party/Party")
         self.assertTrue(any(party in list(c) for c in lists))
+
+
+class OntologyLabelsOnly(unittest.TestCase):
+    """The pricing demo's technical graph shares the local Neo4j stores under the label Tech: its edges start at Tech
+    nodes and end at Tech or ontology nodes (EPM-DEC-001-0109, decision 6). The projection's counts and hash come from
+    graph_hash and its round trip from roundtrip; this pins the exact Cypher those two send, which reads :Resource
+    nodes and the edges between them, so Tech nodes change none of them. It says nothing of other queries."""
+
+    class Session:
+        def __init__(self):
+            self.queries = []
+
+        def run(self, query, **params):
+            self.queries.append(query)
+            return types.SimpleNamespace(data=lambda: [])
+
+    def queries(self, function):
+        session = self.Session()
+        function(session)
+        return session.queries
+
+    def test_the_counts_and_the_hash_read_resource_nodes_and_the_edges_between_them(self):
+        self.assertEqual(self.queries(pl.graph_hash), [
+            "MATCH (n:Resource) RETURN n.uri AS uri, labels(n) AS l, properties(n) AS p ORDER BY uri",
+            "MATCH (a:Resource)-[r]->(b:Resource) RETURN a.uri AS s, type(r) AS t, b.uri AS o, r.uri AS u ORDER BY s, t, o, u",
+        ])
+
+    def test_the_round_trip_reads_resource_nodes_and_the_edges_between_them(self):
+        self.assertEqual(self.queries(pl.roundtrip), [
+            "CALL n10s.rdf.export.cypher('MATCH (n:Resource) OPTIONAL MATCH (n)-[r]->(m:Resource) RETURN n, r, m') "
+            "YIELD subject, predicate, object, isLiteral, literalType, literalLang "
+            "RETURN subject, predicate, object, isLiteral, literalType, literalLang",
+        ])
 
 
 class Report(unittest.TestCase):
