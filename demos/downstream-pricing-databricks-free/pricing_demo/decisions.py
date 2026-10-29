@@ -22,7 +22,7 @@ SCENARIO_ID = "pricing-demo-2026-10-28"
 REGION_CRACK = {"Gulf Coast": 43870, "West Coast": 36855}
 DEFAULT_CRACK = 37438  # Mid-Continent: CHI 3-2-1 Crack WTI, ex-RIN
 WTI, NYH_ULSD, NYH_RBOB = 747, 752, 9471  # benchmark price masters (catalog.BENCHMARKS)
-ASSUMPTION_DAYS = 20  # a plan assumes the average of the last 20 trading days up to its plan date
+ASSUMPTION_DAYS = 20  # a plan assumes the average of the last 20 trading days up to its plan date (fewer where the data starts later)
 MIN_ASSUMPTION_DAYS = 10  # a plan whose plan date has fewer trading days behind it gets no version
 
 REFINERY_IRI = "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-"
@@ -190,7 +190,9 @@ def decisions(d):
              ("plan_change", when + dt.timedelta(days=1), "refinery-planner",
               f"Plan change: {name} crude runs cut for the turnaround, {start.isoformat()} to {end.isoformat()}.")])
 
-    # D06: shift yields toward distillate while diesel is scarce (timeline diesel_scarcity, from 2026-09-20).
+    # D06: shift yields toward distillate while diesel is scarce (timeline diesel_scarcity, from 2026-09-20). The
+    # baseline is September before the scarcity (1 to 19 September), so its own lift stays out of it; October runs to
+    # the window's end (20 October).
     sep = d.between(dt.date(2026, 9, 1), dt.date(2026, 9, 19))
     octo = d.between(dt.date(2026, 10, 1), WINDOW_END)
     codes = sorted(d.refinery)
@@ -203,8 +205,9 @@ def decisions(d):
         ["Hydrotreating capacity limits how far the yield can move"],
         ["Raise distillate yield by about 1.5 points", "Hold yields at plan"],
         "Raise distillate yield by about 1.5 points",
-        "System distillate yield in October about 1.5 points above September's",
-        f"Distillate yield {after:.2f}% in October against {before:.2f}% in September, a change of {after - before:+.2f} points",
+        "System distillate yield in October about 1.5 points above September's before the scarcity",
+        f"Distillate yield {after:.2f}% from 1 to 20 October (the window's end) against {before:.2f}% from 1 to 19 September, "
+        f"before the scarcity began, a change of {after - before:+.2f} points",
         {"september_distillate_yield_pct": before, "october_distillate_yield_pct": after,
          "change_points": round(after - before, 4)},
         "With distillate the scarce product, each barrel moved from gasoline to diesel earned the wider crack.",

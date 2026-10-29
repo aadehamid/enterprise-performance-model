@@ -195,7 +195,7 @@ The demo names each source database after a public product where one exists (Rig
 
 | Path | What |
 |---|---|
-| `pricing_demo/` | `public_data.py` (EIA cache), `timeline.py` (scenario events), `catalog.py` (price masters, MIPS hierarchy), `generate.py` (every source table, seeded), `load_postgres.py`, `replicate.py` (DuckDB), `databricks.py` (setup, upload, build, counts, purge), `genie.py` |
+| `pricing_demo/` | `public_data.py` (EIA cache), `timeline.py` (scenario events), `catalog.py` (price masters, MIPS hierarchy), `generate.py` (every source table, seeded), `decisions.py` (plan versions, the decision log, its evidence and the hidden dossiers), `load_postgres.py`, `replicate.py` (DuckDB), `databricks.py` (setup, upload, build, counts, purge), `genie.py` |
 | `sql/` | The four Databricks layers |
 | `genie/` | The two agents' instructions |
 | `docker/` | The Postgres server, its seven source databases and the hidden `decision_truth` |

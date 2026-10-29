@@ -633,7 +633,7 @@ def test_e2_no_plan_assumption_uses_a_price_after_its_plan_date():
     versions = rows("aspen_pims", "plan_version")
     for v in versions:
         assert v["AssumptionsFromDate"] <= v["AssumptionsThroughDate"] <= v["PlanDate"] < v["PlanMonth"], v
-    # Recompute two versions from the price detail: the 20 trading days up to the plan date, nothing later.
+    # Recompute two versions from the price detail: up to 20 trading days up to the plan date, nothing later.
     days = sorted({r["RateDate"] for r in rows("rightangle", "freight_rate")})
     for code, month in (("GB", dt.date(2026, 10, 1)), ("LA", dt.date(2024, 6, 1))):
         v = next(x for x in versions if x["RefineryCode"] == code and x["PlanMonth"] == month)
@@ -702,3 +702,6 @@ def test_e2_data_md_and_the_readme_describe_the_new_tables():
                  "refinery_plan_version_fact", "decision_dim", "decision_evidence_fact", "refinery_plan_backcast_fact",
                  "decision_evidence_detail_fact"):
         assert f"`{name}`" in data_md, name
+    readme = open(os.path.join(ROOT, "README.md")).read()
+    for name in ("decisions.py", "decision_truth"):
+        assert name in readme, name
