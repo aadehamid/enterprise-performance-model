@@ -791,8 +791,10 @@ def test_e3_every_measure_carries_kpi_identifiers_or_says_it_has_none():
                 assert ids <= set(m["synonyms"]) and len(m["synonyms"]) <= 10, (view, name)
             else:
                 assert m["comment"].startswith("No identifier: "), (view, name)
-            # No synonym names an identifier the measure does not implement (Pi, quick check of c0504444).
-            assert set(re.findall(ID_PATTERN, " ".join(m["synonyms"]))) == ids, (view, name)
+            # No synonym or display name names an identifier the measure does not implement, in any letter case
+            # (Pi, quick checks of c0504444 and its fix).
+            named = " ".join(m["synonyms"] + [m["display_name"] or ""])
+            assert {i.upper() for i in re.findall(ID_PATTERN, named, re.IGNORECASE)} == ids, (view, name)
             carried |= ids
         assert carried == VIEW_IDENTIFIERS[view], view
         assert spec["comment"].startswith("Implements ") and _leading_ids(spec["comment"]) == carried, view
