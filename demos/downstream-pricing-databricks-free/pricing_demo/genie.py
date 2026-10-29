@@ -1,9 +1,11 @@
-"""Create or update the two Genie agents, bound to the metric views, from the instructions in genie/.
+"""Create or update the four Genie agents, bound to the metric views and their definitions views, from the instructions in
+genie/.
 
     uv run python -m pricing_demo.genie
 
 An agent with the same title is updated in place, so a rerun does not make a second one. The SQL warehouse is the
-one in DATABRICKS_HTTP_PATH.
+one in DATABRICKS_HTTP_PATH. Each agent also binds its subject area's definitions view (sql/06_definitions.sql), the
+ontology's definitions of the measures it answers for (EPM-DEC-001-0109, decision 4).
 """
 import hashlib
 import json
@@ -19,12 +21,19 @@ def latest(view, date_dimension):
             f"FROM {{c}}.semantic_sem_commercial.{view} GROUP BY {date_dimension} ORDER BY {date_dimension} DESC LIMIT 1))")
 
 
+def definitions(view, area):
+    """The definitions view an agent binds: plain rows from epm_triples, read without MEASURE()."""
+    return (f"ontology_definitions.{view}", f"The ontology's definitions of the {area} measures, read from epm_triples: "
+            "identifier, label, definition, grain, basis and the measures not to confuse them with.")
+
+
 AGENTS = {
     "Crack Spread Price Analytics": {
         "file": "crack-spread-price-analytics.md",
         "description": "Published crack-spread series in $/bbl, including the 3-2-1 crack spread (KPI-0001). Synthetic demo data.",
         "tables": [("semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw",
-                    "Crack-spread metric view: 127 series in 44 MIPS groups, daily settles with forward periods 0 to 5.")],
+                    "Crack-spread metric view: 127 series in 44 MIPS groups, daily settles with forward periods 0 to 5."),
+                   definitions("crack_spread_definitions_vw", "crack-spread")],
         "questions": ["What is the latest published Chicago WTI 3-2-1 crack, ex-RIN?",
                       "What is the monthly average crack spread for each MIPS group?",
                       "What does the forward curve look like for the USGC 3-2-1 MEH crack?"],
@@ -32,13 +41,19 @@ AGENTS = {
                       "SELECT Price_Master_ID, Price_Master_Name, Relative_Period_Number, MEASURE(Avg_Crack_Spread) AS crack_usd_per_bbl "
                       "FROM {c}.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw "
                       "WHERE Price_Master_ID = '37438' AND Relative_Period_Number = 0 AND Effective_Start_Datetime = "
-                      + latest("mpr_mips_crack_spread_price_fact_metrics_vw", "Effective_Start_Datetime") + " GROUP BY ALL")],
+                      + latest("mpr_mips_crack_spread_price_fact_metrics_vw", "Effective_Start_Datetime") + " GROUP BY ALL"),
+                     ("What was the monthly average USGC 3-2-1 MEH crack, ex-RIN, prompt, in each month of 2026?",
+                      "SELECT Price_Master_ID, Price_Master_Name, Effective_Month, MEASURE(Avg_Crack_Spread) AS crack_usd_per_bbl "
+                      "FROM {c}.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw "
+                      "WHERE Price_Master_ID = '43870' AND Relative_Period_Number = 0 AND Effective_Month >= '2026-01-01' "
+                      "GROUP BY ALL ORDER BY Effective_Month")],
     },
     "Executive Summary KPIs Analytics": {
         "file": "executive-summary-kpis-analytics.md",
         "description": "Executive Summary pricing groups: current, previous, change and forward monthly averages. Synthetic demo data.",
         "tables": [("semantic_sem_commercial.mips_mpr_executive_summary_fact_vw", "Executive Summary metric view: MIPS assessments by sheet, group and blend."),
-                   ("semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw", "Benchmark metric view: five instruments, last 160 days, all scaled x100 (known defect).")],
+                   ("semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw", "Benchmark metric view: five instruments, last 160 days, all scaled x100 (known defect)."),
+                   definitions("executive_summary_definitions_vw", "Executive Summary")],
         "questions": ["What is the NYH ULSD cash price today, and how much did it change?",
                       "Show the Gasoline Basis prices for all blends on the latest date.",
                       "What is the ICE Brent front-month settle?"],
@@ -57,7 +72,52 @@ AGENTS = {
                       "MEASURE(assessment_amount) / MEASURE(Record_Count) AS avg_price_usd_per_gal "
                       "FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw WHERE Price_Group_Name = 'Cash' "
                       "AND Parent_Price_group_name = 'Diesel' AND MIPSDisplayName = 'NYH ULSD' AND effective_date = "
-                      + latest("mips_mpr_executive_summary_fact_vw", "effective_date") + " GROUP BY ALL ORDER BY 1")],
+                      + latest("mips_mpr_executive_summary_fact_vw", "effective_date") + " GROUP BY ALL ORDER BY 1"),
+                     ("What were the NGL prices on the latest date, in cents per gallon?",
+                      "SELECT MIPSDisplayName, MEASURE(assessment_amount) AS price_cents_per_gal "
+                      "FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw WHERE Price_Group_Name = 'NGL\\'s' "
+                      "AND SortColumns = 1 AND effective_date = "
+                      + latest("mips_mpr_executive_summary_fact_vw", "effective_date") + " GROUP BY ALL")],
+    },
+    "Pricing and Market Margin Analytics": {
+        "file": "pricing-and-market-margin-analytics.md",
+        "description": "Gasoline, distillate and crude market prices, price comparisons and renewable and NGL prices (OPM-0017, OPM-0018, OPM-0019, OPM-0020, OPM-0021). Synthetic demo data.",
+        "tables": [("semantic_sem_commercial.pricing_market_margin_metrics_vw",
+                    "Market-price metric view: prompt MIPS assessments by blend and day, one measure per market-price group."),
+                   definitions("pricing_market_margin_definitions_vw", "market-price")],
+        "questions": ["What were the Gasoline Cash prices by blend on the latest date?",
+                      "How did the Gulf Coast ULSD cash price compare with New York Harbor's last month?",
+                      "What is the R&M Margin Indicator, and why does this agent give no value for it?"],
+        "examples": [("What were the Gasoline Cash prices by blend on the latest date?",
+                      "SELECT Blend, Unit_Of_Measure, MEASURE(Gasoline_Market_Price) AS price "
+                      "FROM {c}.semantic_sem_commercial.pricing_market_margin_metrics_vw WHERE Effective_Date = "
+                      + latest("pricing_market_margin_metrics_vw", "Effective_Date") + " GROUP BY ALL ORDER BY Blend"),
+                     ("How did the Gulf Coast ULSD cash price compare with New York Harbor's on the latest date?",
+                      "SELECT Blend, Unit_Of_Measure, MEASURE(Distillate_Market_Price) AS cash_usd_per_gal, "
+                      "MEASURE(Price_Comparison) AS basis_to_nyh_usd_per_gal "
+                      "FROM {c}.semantic_sem_commercial.pricing_market_margin_metrics_vw WHERE Blend IN ('USGC ULSD', 'NYH ULSD') "
+                      "AND Effective_Date = " + latest("pricing_market_margin_metrics_vw", "Effective_Date") + " GROUP BY ALL")],
+    },
+    "Refinery Operations Analytics": {
+        "file": "refinery-operations-analytics.md",
+        "description": "MPC's 13 refineries and their process units: utilization against plan, yields, R&M margin, margin capture and opex (OPM-0001, OPM-0002, OPM-0004, OPM-0005, OPM-0024, OPM-0025, OPM-0027). Synthetic demo data.",
+        "tables": [("semantic_sem_commercial.refinery_operations_metrics_vw",
+                    "Refinery operations metric view: one row per refinery and day, with planned utilization."),
+                   ("semantic_sem_commercial.refinery_unit_operations_metrics_vw",
+                    "Process-unit metric view: one row per unit and day, throughput and capacity."),
+                   definitions("refinery_operations_definitions_vw", "refinery operations")],
+        "questions": ["Which refineries ran below plan utilization in the latest month?",
+                      "What were distillate and gasoline yields at the Gulf Coast refineries last quarter?",
+                      "What was each process unit's utilization at Garyville in the latest month?"],
+        "examples": [("Which refineries ran below plan utilization in the latest month?",
+                      "SELECT Refinery_Name, MEASURE(Utilization_Pct) AS utilization_pct, MEASURE(Planned_Utilization_Pct) AS planned_pct "
+                      "FROM {c}.semantic_sem_commercial.refinery_operations_metrics_vw WHERE Production_Month = "
+                      + latest("refinery_operations_metrics_vw", "Production_Month") + " GROUP BY ALL ORDER BY Refinery_Name"),
+                     ("What was each process unit's utilization at Garyville in the latest month?",
+                      "SELECT Unit_Code, Unit_Name, MEASURE(Unit_Utilization_Pct) AS unit_utilization_pct "
+                      "FROM {c}.semantic_sem_commercial.refinery_unit_operations_metrics_vw WHERE Refinery_Name = 'Garyville, LA' "
+                      "AND Production_Month = " + latest("refinery_unit_operations_metrics_vw", "Production_Month")
+                      + " GROUP BY ALL ORDER BY Unit_Code")],
     },
 }
 

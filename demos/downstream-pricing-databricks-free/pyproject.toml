@@ -1,7 +1,7 @@
 [project]
 name = "downstream-pricing-databricks-free"
 version = "0.1.0"
-description = "Synthetic downstream pricing demo for Databricks Free Edition: Postgres sources, DuckDB replication, replica, silver star schema, gold, metric views and two Genie agents."
+description = "Synthetic downstream pricing demo for Databricks Free Edition: Postgres sources, DuckDB replication, replica, silver star schema, gold, metric views, definitions views, four Genie agents and an orchestrator over them."
 requires-python = ">=3.12"
 dependencies = [
     "duckdb==1.4.1",
