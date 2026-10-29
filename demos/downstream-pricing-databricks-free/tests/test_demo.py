@@ -210,7 +210,7 @@ def test_finding_8_the_executive_summary_view_passes_every_gold_column_through()
 def test_findings_2_and_3_every_measure_an_agent_names_is_in_a_view_it_binds():
     views = metric_views()
     for title, spec in genie.AGENTS.items():
-        bound = {t.split(".")[-1] for t, _ in spec["tables"]}
+        bound = {t.split(".")[-1] for t, _ in spec["tables"] if t.startswith("semantic_sem_commercial.")}
         allowed = set().union(*(views[b][1] for b in bound))
         text = open(os.path.join(ROOT, "genie", spec["file"])).read() + " ".join(s for _, s in spec["examples"])
         named = set(re.findall(r"MEASURE\((\w+)\)", text))
@@ -896,3 +896,83 @@ def test_e3_statements_fill_in_the_catalog_and_the_triple_table():
     assert "FROM ws.onto.epm_triples" in sts[0] and sts[1].startswith("CREATE OR REPLACE VIEW cat.ontology_definitions.")
     views = databricks.statements(os.path.join(ROOT, "sql", "05_metric_views.sql"), "cat", "ws.onto.epm_triples")
     assert sum(s.startswith("ALTER VIEW cat.semantic_sem_commercial.") for s in views) == len(VIEW_IDENTIFIERS)
+
+
+# ---- E4 (2026-10-29): four Genie agents, each reading its definitions view, and the supervisor over them ----
+from pricing_demo import supervisor  # noqa: E402
+
+# Each agent's metric views and its definitions view (EPM-DEC-001-0109, decisions 3 and 4).
+AGENT_VIEWS = {
+    "Crack Spread Price Analytics": ({"mpr_mips_crack_spread_price_fact_metrics_vw"}, "crack_spread_definitions_vw"),
+    "Executive Summary KPIs Analytics": ({"mips_mpr_executive_summary_fact_vw", "mips_mpr_benchmark_prices_fact_vw"},
+                                         "executive_summary_definitions_vw"),
+    "Pricing and Market Margin Analytics": ({"pricing_market_margin_metrics_vw"}, "pricing_market_margin_definitions_vw"),
+    "Refinery Operations Analytics": ({"refinery_operations_metrics_vw", "refinery_unit_operations_metrics_vw"},
+                                      "refinery_operations_definitions_vw"),
+}
+
+
+def test_e4_each_agent_binds_its_metric_views_and_its_definitions_view():
+    assert set(genie.AGENTS) == set(AGENT_VIEWS)
+    for title, spec in genie.AGENTS.items():
+        views, definitions = AGENT_VIEWS[title]
+        bound = {t for t, _ in spec["tables"]}
+        assert bound == {f"semantic_sem_commercial.{v}" for v in views} | {f"ontology_definitions.{definitions}"}, title
+        # The definitions view is the one sql/06 builds for these metric views, and the instructions name it.
+        assert DEFINITIONS[definitions][0] == views, title
+        text = open(os.path.join(ROOT, "genie", spec["file"])).read()
+        assert f"${{catalog}}.ontology_definitions.{definitions}`" in text, title
+        assert "without `MEASURE()`" in text, title
+
+
+def test_e4_the_new_agents_name_exactly_the_identifiers_their_definitions_view_keeps():
+    for title in ("Pricing and Market Margin Analytics", "Refinery Operations Analytics"):
+        views, definitions = AGENT_VIEWS[title]
+        carried = set().union(*(VIEW_IDENTIFIERS[v] for v in views))
+        text = open(os.path.join(ROOT, "genie", genie.AGENTS[title]["file"])).read()
+        assert set(re.findall(ID_PATTERN, text)) == carried | DEFINITIONS[definitions][1], title
+        assert set(re.findall(ID_PATTERN, genie.AGENTS[title]["description"])) == carried, title
+
+
+def test_e4_no_genie_instruction_or_example_doubles_a_quote():
+    # Spark reads 'NGL''s' as two adjacent literals, 'NGLs', which matches nothing (found on E3's live run).
+    for spec in genie.AGENTS.values():
+        text = open(os.path.join(ROOT, "genie", spec["file"])).read()
+        assert "''" not in text and all("''" not in s for _, s in spec["examples"]), spec["file"]
+    exec_spec = genie.AGENTS["Executive Summary KPIs Analytics"]
+    assert r"'NGL\'s'" in open(os.path.join(ROOT, "genie", exec_spec["file"])).read()
+    assert any(r"Price_Group_Name = 'NGL\'s' AND SortColumns = 1" in s for _, s in exec_spec["examples"])
+
+
+def test_e4_supervisor_descriptions_come_from_the_definitions_rows_and_mark_what_no_view_computes():
+    spec = genie.AGENTS["Pricing and Market Margin Analytics"]
+    text = supervisor.description("Pricing and Market Margin Analytics", spec,
+                                  [("OPM-0017", "Gasoline Market Pricing"), ("OPM-0026", "R&M Margin Indicator")], {"OPM-0017"})
+    assert "pricing_market_margin_metrics_vw" in text and "ontology_definitions" not in text
+    assert "OPM-0017 Gasoline Market Pricing;" in text and "OPM-0026 R&M Margin Indicator (defined, not computed)" in text
+    # One tool per agent, with distinct names, each asking for one question.
+    tools = supervisor.tools({t: "d" for t in genie.AGENTS})
+    names = [t["function"]["name"] for t in tools]
+    assert len(set(names)) == len(genie.AGENTS) and all(re.fullmatch(r"[a-z0-9_]+", n) for n in names)
+    assert all(t["function"]["parameters"]["required"] == ["question"] for t in tools)
+    assert ({supervisor.definitions_view(s) for s in genie.AGENTS.values()}
+            == {f"ontology_definitions.{d}" for _, d in AGENT_VIEWS.values()})
+
+
+def test_e4_descriptions_refuse_a_metric_view_without_its_identifier_tag(monkeypatch):
+    # Without the tags every measure would read as "defined, not computed" (Pi, round 1): fail closed instead.
+    def run(cur, sql):
+        return [] if "table_tags" in sql else [("KPI-0001", "Crack Spreads Pricing")]
+    monkeypatch.setattr(supervisor, "run", run)
+    with pytest.raises(SystemExit, match="no epm_measure_identifiers tag"):
+        supervisor.descriptions(None, "idp_sbx")
+
+
+def test_e4_the_supervisor_names_the_regional_cracks_the_gold_margin_uses():
+    case = re.search(r"CASE r\.Region_Name (.*?) END", SQL_TEXT["04_gold.sql"]).group(1)
+    pairs = dict(re.findall(r"WHEN '([^']+)' THEN '(\d+)'", case)) | {"Mid-Continent": re.search(r"ELSE '(\d+)'", case).group(1)}
+    names = {pm: name for pm, name, *_ in catalog.NAMED_CRACKS}
+    for region, pm in pairs.items():
+        assert f"{region}, {names[pm]} ({pm})" in supervisor.INSTRUCTIONS, region
+    regions = {r["region"] for r in csv.DictReader(open(os.path.join(ROOT, "data", "public", "mpc_refineries.csv")))}
+    assert regions == set(pairs)

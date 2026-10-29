@@ -6,6 +6,7 @@ Answers questions about the Executive Summary pricing groups: current price, pre
 Always use `MEASURE()`, and use only the measures of the view you query:
 - Benchmark Prices: `${catalog}.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw`. Measures: `Avg_Settle_Price` and `Record_Count`. It has no `assessment_amount`, `Previous_amount` or `ChangeValue`.
 - Every other group: `${catalog}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw`. Measures: `assessment_amount` (current), `Previous_amount`, `ChangeValue` and `Record_Count`. All three value measures are sums.
+- Definitions: `${catalog}.ontology_definitions.executive_summary_definitions_vw`, the ontology's definition of each measure, read from `epm_triples`. It is a plain view: read it with a plain `SELECT ... WHERE Identifier = '...'`, without `MEASURE()`. Before answering, read the row for each identifier you use: say the measure by its label and identifier, follow its `Grain` and `Basis`, and keep it apart from every measure in `Not_To_Be_Confused_With`.
 
 ## The groups
 1. Benchmark: ICE Brent, NYMEX WTI (Cushing), NYMEX Natural Gas, NYMEX Heating Oil, NYMEX RBOB.
@@ -13,7 +14,7 @@ Always use `MEASURE()`, and use only the measures of the view you query:
 3. Gasoline Basis and Gasoline Cash: `Price_Group_Name` 'Basis' or 'Cash', with `Parent_Price_group_name = 'Gasoline'`.
 4. Distillate Basis and Distillate Cash: the same, with `Parent_Price_group_name = 'Diesel'` (distillate and diesel mean the same here).
 5. Crude: the two crude reporting sheets; values are differentials in $/bbl.
-6. Renewables and NGLs: `Price_Group_Name` 'Renewables' or 'NGL''s'.
+6. Renewables and NGLs: `Price_Group_Name` 'Renewables' or 'NGL\'s' (in Spark SQL the quote is escaped with a backslash; doubling it makes two literals, 'NGLs', which matches nothing).
 
 ## Rules
 - A blend appears in several groups, and the view sums: always filter `Price_Group_Name` (and the parent group for gasoline or distillate), defaulting to 'Cash', and `SortColumns = 1` for the prompt unless forward months are asked.
