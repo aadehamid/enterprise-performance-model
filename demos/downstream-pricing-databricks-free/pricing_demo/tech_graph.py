@@ -11,8 +11,8 @@ collect reads Postgres (SOURCE_PG_DSN: the exe.dev VM through its tunnel, or the
 the replica manifest, runs the data-quality checks, compares the ontology's designed lineage with Unity Catalog's
 observed lineage, and writes the facts as JSON. build runs the SPARQL Anything queries in sparql/ over the SQL files,
 the README's run commands, that JSON and the ontology's CSV tables, then wiring.rq over the result, and writes Turtle.
-load gives every node the label Tech and no Resource label, and points its edges only from Tech nodes to ontology
-nodes, so the projection's counts and hashes, which read :Resource nodes and the edges between them, do not change;
+load gives every node the label Tech and no Resource label, and starts every edge at a Tech node (ending at another
+Tech node or an ontology node), so the projection's counts and hashes, which read :Resource nodes and the edges between them, do not change;
 load checks that on each store. A pipeline reload or a driver run empties its store, so run load again after one.
 Logins come from the files LOCAL-STORES.md names; no secret is printed.
 Sources: SPARQL Anything documentation, v1.3.0 ("Introduction": Facade-X, fx:properties, the location and content
