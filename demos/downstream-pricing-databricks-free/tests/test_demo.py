@@ -721,3 +721,134 @@ def test_e2_data_md_and_the_readme_describe_the_new_tables():
     readme = open(os.path.join(ROOT, "README.md")).read()
     for name in ("decisions.py", "decision_truth"):
         assert name in readme, name
+
+
+# ---- E3 (2026-10-29): identifiers on every metric view, the market-price and unit views, the definitions views ----
+IDENTIFIERS = {r["measure_id"]: r["identifier"]
+               for r in csv.DictReader(open(os.path.join(ONTOLOGY, "kpi", "measure-identifiers.csv")))}
+ID_PATTERN = r"(?:KPI|OPM)-\d{4}"
+
+
+def _leading_ids(comment):
+    """The identifiers a comment starts with, before its first colon; none for "No identifier: ..."."""
+    head = comment.split(":", 1)[0]
+    return set() if head == "No identifier" else set(re.findall(ID_PATTERN, head))
+
+
+def metric_view_specs():
+    """{view: {"comment", "tag", "measures": {name: {"comment", "display_name", "synonyms"}}}} from 05_metric_views.sql."""
+    text = SQL_TEXT["05_metric_views.sql"]
+    specs = {}
+    for m in re.finditer(r"CREATE OR REPLACE VIEW \S+\.(\w+)\s+WITH METRICS.*?\$\$(.*?)\$\$", text, re.S):
+        view, body = m.group(1), m.group(2)
+        head, meas = body.split("\nmeasures:\n")
+        measures = {}
+        for chunk in meas.split("  - name: ")[1:]:
+            def field(key):
+                found = re.search(rf'^    {key}: "([^"]*)"', chunk, re.M)
+                return found.group(1) if found else None
+            synonyms = re.search(r"^    synonyms: \[(.*)\]", chunk, re.M)
+            measures[chunk.split("\n", 1)[0].strip()] = {
+                "comment": field("comment"), "display_name": field("display_name"),
+                "synonyms": re.findall(r'"([^"]*)"', synonyms.group(1)) if synonyms else []}
+        tag = re.search(rf"ALTER VIEW \S+\.{view}\s+SET TAGS \('epm_measure_identifiers' = '([^']*)'\)", text)
+        specs[view] = {"comment": re.search(r'^comment: "([^"]*)"', head, re.M).group(1),
+                       "tag": tag.group(1) if tag else "", "measures": measures}
+    return specs
+
+
+# Which identifiers each view's measures carry, written out by hand from kpi 1.3.0 and EPM-DEC-001-0109, decision 2.
+VIEW_IDENTIFIERS = {
+    "mpr_mips_crack_spread_price_fact_metrics_vw": {"KPI-0001"},
+    "mips_mpr_executive_summary_fact_vw": {"KPI-0001", "OPM-0017", "OPM-0018", "OPM-0019", "OPM-0020", "OPM-0021"},
+    "mips_mpr_benchmark_prices_fact_vw": {"OPM-0019"},
+    "pricing_market_margin_metrics_vw": {"OPM-0017", "OPM-0018", "OPM-0019", "OPM-0020", "OPM-0021"},
+    "refinery_operations_metrics_vw": {"OPM-0002", "OPM-0004", "OPM-0005", "OPM-0024", "OPM-0025", "OPM-0027"},
+    "refinery_unit_operations_metrics_vw": {"OPM-0001"},
+}
+# Each definitions view: the metric views whose comments point to it, and identifiers it keeps beyond theirs.
+DEFINITIONS = {
+    "crack_spread_definitions_vw": ({"mpr_mips_crack_spread_price_fact_metrics_vw"}, set()),
+    "executive_summary_definitions_vw": ({"mips_mpr_executive_summary_fact_vw", "mips_mpr_benchmark_prices_fact_vw"}, set()),
+    "pricing_market_margin_definitions_vw": ({"pricing_market_margin_metrics_vw"}, {"OPM-0026"}),  # defined, not computed
+    "refinery_operations_definitions_vw": ({"refinery_operations_metrics_vw", "refinery_unit_operations_metrics_vw"}, set()),
+}
+
+
+def test_e3_every_measure_carries_kpi_identifiers_or_says_it_has_none():
+    specs = metric_view_specs()
+    assert set(specs) == set(VIEW_IDENTIFIERS)
+    known = set(IDENTIFIERS.values())
+    for view, spec in specs.items():
+        carried = set()
+        for name, m in spec["measures"].items():
+            assert m["comment"], (view, name)
+            ids = _leading_ids(m["comment"])
+            assert ids <= known, (view, name, ids - known)
+            if ids:  # the display name and the synonyms carry them too, so Genie and BI tools can find the measure
+                shown = set(re.findall(ID_PATTERN, m["display_name"] or ""))
+                assert shown and shown <= ids, (view, name)
+                assert ids <= set(m["synonyms"]) and len(m["synonyms"]) <= 10, (view, name)
+            else:
+                assert m["comment"].startswith("No identifier: "), (view, name)
+            carried |= ids
+        assert carried == VIEW_IDENTIFIERS[view], view
+        assert spec["comment"].startswith("Implements ") and _leading_ids(spec["comment"]) == carried, view
+        assert set(spec["tag"].split(" ")) == carried, view
+
+
+def test_e3_kpi_0001_stays_crack_spreads_and_the_crack_agent_names_it():
+    assert IDENTIFIERS["crack-spreads"] == "KPI-0001"
+    crack = metric_view_specs()["mpr_mips_crack_spread_price_fact_metrics_vw"]["measures"]
+    assert _leading_ids(crack["Avg_Crack_Spread"]["comment"]) == {"KPI-0001"}
+    assert "KPI-0001" in open(os.path.join(ROOT, "genie", "crack-spread-price-analytics.md")).read()
+
+
+def test_e3_the_new_views_hold_their_measures_and_skip_the_rm_margin_indicator():
+    specs = metric_view_specs()
+    ids = {view: {n: _leading_ids(m["comment"]) for n, m in s["measures"].items()} for view, s in specs.items()}
+    assert ids["pricing_market_margin_metrics_vw"] == {
+        "Gasoline_Market_Price": {"OPM-0017"}, "Distillate_Market_Price": {"OPM-0018"}, "Crude_Market_Price": {"OPM-0019"},
+        "Price_Comparison": {"OPM-0020"}, "Additional_Market_Price": {"OPM-0021"}, "Record_Count": set()}
+    assert ids["refinery_unit_operations_metrics_vw"] == {
+        "Unit_Throughput_Mbpd": set(), "Unit_Capacity_Mbpd": set(), "Unit_Utilization_Pct": {"OPM-0001"}, "Record_Count": set()}
+    # The R&M Margin Indicator's basis is not published (kpi 1.3.0), so no view computes it and the pricing view says so.
+    assert IDENTIFIERS["rm-margin-indicator"] == "OPM-0026"
+    assert not any("OPM-0026" in i for view in ids.values() for i in view.values())
+    assert "OPM-0026 R&M Margin Indicator is not computed" in specs["pricing_market_margin_metrics_vw"]["comment"]
+    pricing = SQL_TEXT["05_metric_views.sql"].split("VIEW ${catalog}.semantic_sem_commercial.pricing_market_margin_metrics_vw")[1]
+    assert "source.SortColumns = 1" in pricing and "gold_commercial_core.mips_mpr_executive_summary_fact" in pricing
+    unit = SQL_TEXT["05_metric_views.sql"].split("VIEW ${catalog}.semantic_sem_commercial.refinery_unit_operations_metrics_vw")[1]
+    assert "gold_commercial_core.refinery_unit_operations_daily_fact" in unit
+    assert "100 * SUM(Unit_Throughput_Mbpd) / SUM(Unit_Capacity_Mbpd)" in unit
+
+
+def test_e3_definitions_views_read_epm_triples_and_keep_their_views_identifiers():
+    text = SQL_TEXT["06_definitions.sql"]
+    base = text.split("measure_definitions_vw AS")[1].split(";\n")[0]
+    assert "FROM ${epm_triples}" in base
+    select = base.split("\nSELECT ", 1)[1].split("\nFROM ")[0]
+    columns = [c.split()[-1].split(".")[-1] for c in select.replace("\n", " ").split(",")]  # each output column's name
+    assert columns == ["Identifier", "Label", "Definition", "Grain", "Basis", "Not_To_Be_Confused_With", "Kind",
+                       "Release_Graph", "Measure_Iri"]
+    for predicate in ("dc/terms/identifier", "skos/core#prefLabel", "skos/core#definition", "kpi/grain", "kpi/basis",
+                      "kpi/notToBeConfusedWith", "kpi/measureKind"):
+        assert predicate in base, predicate
+    specs = metric_view_specs()
+    for name, (views, extra) in DEFINITIONS.items():
+        kept = set(re.findall(ID_PATTERN, text.split(f"ontology_definitions.{name} AS")[1].split(";")[0]))
+        assert kept == set().union(*(VIEW_IDENTIFIERS[v] for v in views)) | extra, name
+        assert kept <= set(IDENTIFIERS.values()), name
+        for v in views:
+            assert specs[v]["comment"].endswith(f"Definitions: ontology_definitions.{name}."), v
+    assert "ontology_definitions" in databricks.SCHEMAS
+    assert databricks.BUILT["ontology_definitions"] == set(DEFINITIONS) | {"measure_definitions_vw"}
+    assert databricks.BUILT["semantic_sem_commercial"] == set(VIEW_IDENTIFIERS)
+
+
+def test_e3_statements_fill_in_the_catalog_and_the_triple_table():
+    sts = databricks.statements(os.path.join(ROOT, "sql", "06_definitions.sql"), "cat", "ws.onto.epm_triples")
+    assert len(sts) == 5 and all("${" not in s for s in sts)
+    assert "FROM ws.onto.epm_triples" in sts[0] and sts[1].startswith("CREATE OR REPLACE VIEW cat.ontology_definitions.")
+    views = databricks.statements(os.path.join(ROOT, "sql", "05_metric_views.sql"), "cat", "ws.onto.epm_triples")
+    assert sum(s.startswith("ALTER VIEW cat.semantic_sem_commercial.") for s in views) == len(VIEW_IDENTIFIERS)

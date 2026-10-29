@@ -2,7 +2,7 @@
 
     uv run python -m pricing_demo.databricks setup     # catalog, schemas, volume
     uv run python -m pricing_demo.databricks upload    # out/replica/*.parquet to the volume
-    uv run python -m pricing_demo.databricks build     # sql/02 to sql/05: replica, silver, gold, metric views
+    uv run python -m pricing_demo.databricks build     # sql/02 to sql/06: replica, silver, gold, metric views, definitions
     uv run python -m pricing_demo.databricks counts    # row counts of every table and view
     uv run python -m pricing_demo.databricks purge     # list what a purge drops; --yes drops it
 
@@ -23,8 +23,9 @@ from . import replicate
 from .config import OUT, SQL, SYSTEMS, databricks_env
 
 SCHEMAS = (("replica_landing",) + tuple(f"replica_{s}" for s in SYSTEMS)
-           + ("silver_udm_core", "silver_mdm_core", "gold_commercial_core", "semantic_sem_commercial"))
-# What a complete build holds outside the replica layer: every silver and gold table and metric view.
+           + ("silver_udm_core", "silver_mdm_core", "gold_commercial_core", "semantic_sem_commercial",
+              "ontology_definitions"))
+# What a complete build holds outside the replica layer: every silver and gold table, metric view and definitions view.
 BUILT = {
     "silver_mdm_core": {"mpr_price_master_dim", "mips_price_batch_dim", "mips_price_sheet_dim", "mips_price_group_dim",
                         "mips_price_assessment_group_dim", "refinery_dim", "market_event_dim", "eia_weekly_series_dim",
@@ -35,7 +36,10 @@ BUILT = {
     "gold_commercial_core": {"mpr_mips_crack_spread_price_fact", "mips_mpr_executive_summary_fact", "refinery_operations_daily_fact",
                              "refinery_unit_operations_daily_fact", "refinery_plan_backcast_fact", "decision_evidence_detail_fact"},
     "semantic_sem_commercial": {"mpr_mips_crack_spread_price_fact_metrics_vw", "mips_mpr_executive_summary_fact_vw",
-                                "mips_mpr_benchmark_prices_fact_vw", "refinery_operations_metrics_vw"},
+                                "mips_mpr_benchmark_prices_fact_vw", "refinery_operations_metrics_vw",
+                                "pricing_market_margin_metrics_vw", "refinery_unit_operations_metrics_vw"},
+    "ontology_definitions": {"measure_definitions_vw", "crack_spread_definitions_vw", "executive_summary_definitions_vw",
+                             "pricing_market_margin_definitions_vw", "refinery_operations_definitions_vw"},
 }
 VOLUME = "replica_landing.raw"
 DEMO_COMMENT = "Synthetic sandbox mirror for the pricing demo"
@@ -108,8 +112,9 @@ def upload():
     return len(files)
 
 
-def statements(path, cat):
-    text = open(path).read().replace("${catalog}", cat)
+def statements(path, cat, triples):
+    """The file's statements for catalog `cat`; `triples` names the ontology's triple table (sql/06_definitions.sql)."""
+    text = open(path).read().replace("${catalog}", cat).replace("${epm_triples}", triples)
     text = re.sub(r"^--.*$", "", text, flags=re.M)
     return [s.strip() for s in re.split(r";\s*\n", text) if s.strip()]
 
@@ -119,7 +124,7 @@ def build(files=None):
     with conn, conn.cursor() as cur:
         cat = current_catalog(cur, e)
         for path in files or sorted(glob.glob(os.path.join(SQL, "0[2-9]_*.sql"))):
-            for st in statements(path, cat):
+            for st in statements(path, cat, e["EPM_TRIPLES"]):
                 run(cur, st)
             print(f"ran {os.path.basename(path)}")
             if os.path.basename(path).startswith("02_"):
@@ -145,7 +150,8 @@ def check_replica_tables(cur, cat, manifest=None, taken=None):
 
 
 def check_built(cur, cat):
-    """Every silver and gold table and metric view of a complete build exists and holds rows (finding 5; Pi round 2)."""
+    """Every silver and gold table, metric view and definitions view of a complete build exists and holds rows
+    (finding 5; Pi round 2)."""
     for schema, names in BUILT.items():
         found = {r[1] for r in run(cur, f"SHOW TABLES IN {cat}.{schema}")}
         if names - found:
