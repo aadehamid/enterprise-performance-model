@@ -619,11 +619,11 @@ def test_e2_tables_hold_their_grains_and_counts():
     assert min(v["PlanMonth"] for v in versions) == dt.date(2023, 12, 1)
     assert len(rows("aspen_pims", "decision_log")) == len(rows("decision_truth", "decision_dossier")) == 10
     evidence = rows("aspen_pims", "decision_evidence")
-    assert len(evidence) == 20 and len({e["EvidenceId"] for e in evidence}) == 20
+    assert len(evidence) == 22 and len({e["EvidenceId"] for e in evidence}) == 22
     per_decision = {}
     for e in evidence:
         per_decision[e["DecisionId"]] = per_decision.get(e["DecisionId"], 0) + 1
-    assert set(per_decision.values()) <= {1, 2, 3} and set(per_decision) == {f"D{i:02d}" for i in range(1, 11)}
+    assert set(per_decision.values()) <= {2, 3} and set(per_decision) == {f"D{i:02d}" for i in range(1, 11)}
     for t in ("plan_version", "decision_log", "decision_evidence"):
         assert {r["DemoProvenance"] for r in rows("aspen_pims", t)} == {"synthesized"}
     assert all(r["Synthetic"] is True for r in rows("decision_truth", "decision_dossier"))

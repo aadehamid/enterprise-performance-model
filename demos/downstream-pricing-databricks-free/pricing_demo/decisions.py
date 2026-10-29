@@ -278,7 +278,9 @@ def decisions(d):
         "Chinese supply returning was expected to ease Atlantic diesel prices.",
         ["How much of the Chinese supply would reach the Atlantic basin"],
         [("meeting_note", dt.datetime(2026, 10, 8, 9), "commercial-scheduler",
-          "China's holiday is over and export quotas are out. Keep November nominations where they are for now.")])
+          "China's holiday is over and export quotas are out. Keep November nominations where they are for now."),
+         ("plan_change", dt.datetime(2026, 10, 8, 11), "commercial-scheduler",
+          "Nomination change: none. Gulf Coast ULSD export nominations for November held at the current level.")])
 
     # D10: hold runs through the weakest stretch of the Gulf Coast crack before the scenario's events.
     usgc = [(x, d.price[(43870, x)]) for x in d.days if x < dt.date(2026, 8, 1)]
@@ -301,7 +303,9 @@ def decisions(d):
         "Committed crude and contract supply made a cut costly, and the crack was expected to recover.",
         ["Whether weak demand would keep the crack low"],
         [("meeting_note", dt.datetime(day0.year, day0.month, day0.day, 13), "regional-planning-manager",
-          "Gulf crack at the low end of its range. Planning to hold runs; term barrels already committed.")])
+          "Gulf crack at the low end of its range. Planning to hold runs; term barrels already committed."),
+         ("approval", dt.datetime(day0.year, day0.month, day0.day, 15), "e-and-p-manager",
+          "Approved: Gulf Coast crude runs stay at plan.")])
     return out
 
 
