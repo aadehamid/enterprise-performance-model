@@ -8,9 +8,12 @@ DATA = os.path.join(ROOT, "data")
 SQL = os.path.join(ROOT, "sql")
 OUT = os.path.join(ROOT, "out")
 
-# The demo window: about six months of trading days, ending on the last EIA spot date pulled.
-WINDOW_START = dt.date(2026, 4, 1)
+# The demo window: three years of trading days, ending on the scenario's last EIA spot date (the decision owner,
+# 2026-10-28: "extedn it and use the current EIA key"). Until 2026-10-28 it began on 2026-04-01.
+WINDOW_START = dt.date(2023, 10, 21)
 WINDOW_END = dt.date(2026, 10, 20)
+# EIA's weekly data by PADD reaches six years back, so a five-year seasonal average exists for every week in the window.
+WEEKLY_START = dt.date(2020, 10, 16)
 SEED = 20261025
 
 # The names the demo uses for the source systems: a public product name where one exists (RightAngle, Aspen PIMS),
@@ -23,6 +26,9 @@ SYSTEMS = {
     "rightangle": "RightAngle, the Commodity Trading and Risk Management (CTRM) system",
     "aspen_pims": "Aspen PIMS, the refinery planning model",
     "production_accounting": "Refinery Production Accounting",
+    # Public data, not an MPC system: EIA's Weekly Petroleum Status Report series by PADD, landed as its own source
+    # database so the replication and the layers treat it like any other source (2026-10-28).
+    "eia_weekly": "EIA Weekly Petroleum Status Report, by PADD (public data)",
 }
 
 # Every price and operations row carries one of these: Claude's design under EPM-DEC-001-0028 (EPM-DEC-001-0102, item 2).
