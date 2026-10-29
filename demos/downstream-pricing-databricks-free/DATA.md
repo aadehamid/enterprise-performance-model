@@ -138,9 +138,49 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 | | `mips_mpr_executive_summary_fact_vw` | as the Executive Summary gold | 266,288 | |
 | | `mips_mpr_benchmark_prices_fact_vw` | price detail of the five benchmarks, periods 0 to 7 (Brent to 6), of the last 160 days | 4,134 when counted, with Databricks' `CURRENT_DATE()` at 2026-10-29 (UTC) | The window moves with `CURRENT_DATE()`, so the count changes from day to day |
 | | `refinery_operations_metrics_vw` | as the refinery operations gold | 9,724 | |
+| | `pricing_market_margin_metrics_vw` (E3) | one prompt assessment (`SortColumns` 1): blend x day, the crack sheets left out | 45,628 | The Executive Summary gold joined to each assessment group's unit; 61 blends x 748 days |
+| | `refinery_unit_operations_metrics_vw` (E3) | as the unit gold | 76,296 | |
+| Definitions views (`ontology_definitions`), E3 | `measure_definitions_vw` | one measure with a KPI or OPM identifier, per release graph | 33 | Read from the ontology's triple table, `workspace.epm_ontology.epm_triples`, which the projection driver writes from the Turtle source of truth ([`sql/06_definitions.sql`](sql/06_definitions.sql)) |
+| | `crack_spread_definitions_vw`, `executive_summary_definitions_vw`, `pricing_market_margin_definitions_vw`, `refinery_operations_definitions_vw` | as above, the measures one subject area's metric views carry | 1, 6, 6, 7 | Filters of `measure_definitions_vw` by identifier |
+
+## Measure identifiers and definitions (E3)
+
+Every metric-view measure's comment starts with the KPI or OPM identifiers it implements, from `kpi` 1.3.0 (`business_architecture/ontology/kpi/measure-identifiers.csv`), or with "No identifier" (row counts, and the sums a ratio is built from). Its display name and synonyms carry the identifiers too, and each view's comment and its `epm_measure_identifiers` tag list every identifier its measures carry (EPM-DEC-001-0109, decision 2). The fields are Databricks' metric view YAML 1.1 `comment`, `display_name` and `synonyms` ("Metric view YAML syntax reference", updated 2026-10-28) and Unity Catalog tags on views ("Apply tags to Unity Catalog securable objects", updated 2026-10-26).
+
+| Metric view | Identifiers |
+|---|---|
+| `mpr_mips_crack_spread_price_fact_metrics_vw` | KPI-0001 Crack Spreads Pricing |
+| `mips_mpr_executive_summary_fact_vw` | KPI-0001 and OPM-0017 to OPM-0021, by price group: a row's group says which measure it is |
+| `mips_mpr_benchmark_prices_fact_vw` | OPM-0019 Crude Market Pricing (the benchmark futures) |
+| `pricing_market_margin_metrics_vw` | OPM-0017 Gasoline Market Pricing (Gasoline Cash), OPM-0018 Distillate Market Pricing (Diesel Cash), OPM-0019 Crude Market Pricing (the two crude reporting sheets and Benchmark), OPM-0020 Price Comparison (Basis: each hub's cash price less New York Harbor's), OPM-0021 Additional Market Prices (Renewables and NGL's) |
+| `refinery_operations_metrics_vw` | OPM-0002 Crude Utilization (actual and planned), OPM-0004 Distillate Yield, OPM-0005 Gasoline Yield, OPM-0024 R&M Margin per Barrel, OPM-0025 Margin Capture, OPM-0027 Refining Operating Costs per Barrel |
+| `refinery_unit_operations_metrics_vw` | OPM-0001 Unit Utilization |
+
+What the demo cannot compute as `kpi` defines it, and what it does instead:
+
+- **OPM-0026 R&M Margin Indicator:** not computed. `kpi` gives its basis as "not published": MPC posts the indicator monthly but not how it is built. No view has the measure; the pricing view's comment says so, and its definition is in `pricing_market_margin_definitions_vw`.
+- **OPM-0024 R&M Margin per Barrel and OPM-0025 Margin Capture:** the demo's own formulas. R&M margin is the region's benchmark crack scaled by the clean-product yield, less opex ([`sql/04_gold.sql`](sql/04_gold.sql)); margin capture divides it by the benchmark crack, because the indicator it should divide by is not published.
+- **OPM-0001 Unit Utilization:** `kpi` divides by constrained unit capacity; the demo's unit capacity is its generated capacity, with no separate constrained figure.
+- **OPM-0020 Price Comparison** is the difference between any two markers; the view computes the basis pair, and another pair is one blend's price less the other's.
+
+Each definitions view has these columns: `Identifier`, `Label`, `Definition`, `Grain`, `Basis`, `Not_To_Be_Confused_With` (the other measures' labels), `Kind` (the measure kind's label), `Release_Graph` and `Measure_Iri`. Each value is the triple's literal, unshortened. `Grain` and `Basis` are empty for OPM-0023 Marketing Performance vs. Plan, which `kpi` gives neither. One row of `refinery_operations_definitions_vw`, from the run below:
+
+| Column | Value |
+|---|---|
+| `Identifier` | OPM-0001 |
+| `Label` | Unit Utilization |
+| `Definition` | A process unit's throughput as a share of its constrained capacity, for one refinery. |
+| `Grain` | hourly and daily, by unit and refinery |
+| `Basis` | unit throughput (bbl/d) / constrained unit capacity (bbl/d), averaged over the period |
+| `Not_To_Be_Confused_With` | Crude Utilization |
+| `Kind` | Operational metric |
+| `Release_Graph` | https://w3id.org/lsc/ontology/modules/kpi/1.3.0 |
+| `Measure_Iri` | https://w3id.org/lsc/ontology/modules/kpi/measure/unit-utilization |
 
 ## The runs
 
 Rows from `python -m pricing_demo.databricks counts` on 2026-10-28, after the generator, `load_postgres`, `replicate`, `setup`, `upload` and `build` ran on this code. The pipeline ran twice that day with the same counts in all 46 objects: from the local container (`127.0.0.1:55432`), then from the exe.dev VM `databases.exe.xyz` through the SSH tunnel (README.md, "Run it"), after `eia_weekly` was created there for the `demo` role. Every source table's count above is the generator's, which `load_postgres` checks after each load and the replica's manifest records; the build checks each replica table against that manifest.
 
 The decision trail ran later on 2026-10-28, again twice with the same counts, now in 54 objects: the 46 above, three replica tables (`plan_version` 455, `decision_log` 10, `decision_evidence` 22), `refinery_plan_version_fact` 455, `decision_evidence_fact` 22, `decision_dim` 10, `refinery_plan_backcast_fact` 455 and `decision_evidence_detail_fact` 22. The VM run came after `decision_truth` was created there for the `demo` role. `load_postgres` loaded `decision_dossier`'s 10 rows into `decision_truth` in both runs, and no Databricks object holds them. On 2026-10-29 the source databases were loaded again in both places after the review fixes (the dossiers' measures as `kpi` IRIs; D01 and D02 describing the cut as the generator applies it), with the same row counts.
+
+E3 ran on 2026-10-29 from the local container: the generator, `load_postgres`, `replicate`, `setup`, `upload`, `build` and `counts`, on this code. The 54 objects above kept their counts (the benchmark view's 4,134 by Databricks' `CURRENT_DATE()`, 2026-10-29 in UTC), and the seven new objects held the rows the table above gives: 61 objects in all. The build set each metric view's tag, and Unity Catalog's `information_schema.table_tags` listed all six. On 2026-10-20 the pricing view gave NYH CBOB at $2.897/gal with a basis of 0, USGC CBOB at $3.157/gal with a basis of $0.26, NYH ULSD at $5.265/gal and propane at 113.3 cents/gal.

@@ -109,7 +109,6 @@ svg .node.gone { fill: var(--pill-negative-bg); stroke: var(--negative); stroke-
 svg .lane { fill: var(--lane); stroke: var(--border); }
 svg .e { fill: none; stroke: var(--faint); stroke-width: 1.5; }
 svg .e.key { stroke: var(--accent); stroke-width: 2; }
-svg .e.plan { stroke: var(--faint); stroke-dasharray: 5 4; }
 svg .e.bad { stroke: var(--negative); }
 svg .el { font-size: 11.5px; fill: var(--muted); }
 svg .head { fill: var(--faint); }
@@ -183,7 +182,7 @@ td:first-child { font-weight: 600; }
 </div>
 
 <h2 id="flow">How it fits together</h2>
-<p class="lead">Two flows feed the stores. The ontology flow starts at the process map and ends in the graph stores and a Databricks table. The demo flow starts at public market data and ends in Databricks metric views and Genie agents. The dashed link is planned, not built.</p>
+<p class="lead">Two flows feed the stores. The ontology flow starts at the process map and ends in the graph stores and a Databricks table. The demo flow starts at public market data and ends in Databricks metric views and Genie agents. Since E3 (2026-10-29) the metric views carry the ontology's KPI and OPM identifiers, and definitions views read the measures' definitions from the Databricks table.</p>
 <figure>
 <div class="diagram wide" role="img" aria-labelledby="f1t">
 <svg viewBox="0 0 1040 560" xmlns="http://www.w3.org/2000/svg">
@@ -244,7 +243,7 @@ td:first-child { font-weight: 600; }
   <rect class="node store" x="716" y="440" width="146" height="64" rx="8"/>
   <text class="t" x="728" y="464">Databricks idp_sbx</text><text class="s" x="728" y="482">replica, silver,</text><text class="s" x="728" y="496">gold tables</text>
   <rect class="node" x="886" y="440" width="134" height="64" rx="8"/>
-  <text class="t" x="898" y="464">Metric views</text><text class="s" x="898" y="482">four, read by two</text><text class="s" x="898" y="496">Genie agents</text>
+  <text class="t" x="898" y="464">Metric views</text><text class="s" x="898" y="482">six, read by two</text><text class="s" x="898" y="496">Genie agents</text>
 
   <path class="e" d="M170 472H186" marker-end="url(#a)"/>
   <path class="e" d="M336 472H352" marker-end="url(#a)"/>
@@ -252,9 +251,9 @@ td:first-child { font-weight: 600; }
   <path class="e" d="M690 472H712" marker-end="url(#a)"/>
   <path class="e" d="M862 472H882" marker-end="url(#a)"/>
 
-  <!-- planned: Unity Catalog KPI IDs tie the metric views to the ontology's measures -->
-  <path class="e plan" d="M953 440V338H866" marker-end="url(#a)"/>
-  <text class="el" text-anchor="end" x="944" y="292">planned:</text><text class="el" text-anchor="end" x="944" y="306">Unity Catalog</text><text class="el" text-anchor="end" x="944" y="320">KPI IDs to the</text><text class="el" text-anchor="end" x="944" y="334">measures</text>
+  <!-- since E3: KPI and OPM IDs tie the metric views to the ontology's measures, and definitions views read epm_triples -->
+  <path class="e" d="M953 440V338H866" marker-end="url(#a)"/>
+  <text class="el" text-anchor="end" x="944" y="292">since E3:</text><text class="el" text-anchor="end" x="944" y="306">KPI and OPM IDs,</text><text class="el" text-anchor="end" x="944" y="320">definitions of the</text><text class="el" text-anchor="end" x="944" y="334">measures</text>
 </svg>
 </div>
 <div class="diagram tall" role="img" aria-labelledby="f1p">
@@ -307,13 +306,13 @@ td:first-child { font-weight: 600; }
   <rect class="node store" x="36" y="824" width="300" height="46" rx="8"/><text class="t" x="46" y="844">Databricks idp_sbx</text><text class="s" x="46" y="858">replica, silver and gold tables</text>
   
   <path class="e" d="M186 870V882" marker-end="url(#p)"/>
-  <rect class="node" x="36" y="886" width="300" height="46" rx="8"/><text class="t" x="46" y="906">Metric views</text><text class="s" x="46" y="920">four, read by two Genie agents</text>
+  <rect class="node" x="36" y="886" width="300" height="46" rx="8"/><text class="t" x="46" y="906">Metric views</text><text class="s" x="46" y="920">six, read by two Genie agents</text>
   
-  <path class="e plan" d="M36 918H14V486H20" marker-end="url(#p)"/>
-  <text class="el" x="36" y="950">dashed: planned Unity Catalog KPI IDs</text>
+  <path class="e" d="M36 918H14V486H20" marker-end="url(#p)"/>
+  <text class="el" x="36" y="950">since E3: KPI and OPM IDs, definitions</text>
 </svg>
 </div>
-<figcaption>Teal marks the ontology's main path and the stores. Grey arrows are the other built steps; the dashed arrow is planned, not built.</figcaption>
+<figcaption>Teal marks the ontology's main path and the stores. Grey arrows are the other built steps.</figcaption>
 </figure>
 
 <div class="two">
@@ -333,7 +332,7 @@ td:first-child { font-weight: 600; }
       <li>Real EIA spot prices and MPC's 10-K capacities anchor the numbers.</li>
       <li>A seeded generator writes the six source systems' rows, and EIA's weekly series, into local Postgres.</li>
       <li>DuckDB copies them to Parquet, and the Parquet files go to the <code>idp_sbx</code> volume.</li>
-      <li>Databricks builds the replica, silver and gold tables, then four metric views.</li>
+      <li>Databricks builds the replica, silver and gold tables, then six metric views and five definitions views of the ontology's measures.</li>
       <li>Two Genie agents answer questions from the metric views.</li>
     </ol>
   </div>
@@ -348,7 +347,7 @@ td:first-child { font-weight: 600; }
 <tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step. Empty since the purge of 2026-10-27; its last load, on the releases of 2026-10-26, had 4,146 nodes and 21,874 relationships</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> after a full run, <code>~/lpg-out/epm/neo4j-run/run.env</code> after <code>--skip rebuild</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
 <tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the driver's graph: the driver's copy step checks that both give the same graph hash. Empty since the purge of 2026-10-27; its last load, on the releases of 2026-10-26, had the driver's figures and an equal hash</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
 <tr><td>Databricks, <code>epm_triples</code></td><td data-k="Holds">The release triples as a Delta table. Dropped in the purge of 2026-10-27; it was last loaded on 2026-10-27, on the releases of 2026-10-26</td><td data-k="Where"><code>workspace.epm_ontology.epm_triples</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code></td></tr>
-<tr><td>Databricks, <code>idp_sbx</code></td><td data-k="Holds">The demo's replica, silver and gold tables, four metric views and two Genie agents</td><td data-k="Where">Catalog <code>idp_sbx</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code> or the demo's <code>.env</code></td></tr>
+<tr><td>Databricks, <code>idp_sbx</code></td><td data-k="Holds">The demo's replica, silver and gold tables, six metric views, five definitions views and two Genie agents</td><td data-k="Where">Catalog <code>idp_sbx</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code> or the demo's <code>.env</code></td></tr>
 <tr><td>Local Postgres</td><td data-k="Holds">The demo's seven source databases: price_assessment, price_reference, reference_data_hub, rightangle, aspen_pims, production_accounting (six synthetic, renamed on 2026-10-28) and eia_weekly (EIA's public weekly data by PADD, added 2026-10-28 for the three-year extension), with an eighth, decision_truth, holding the hidden decision dossiers, which the pipeline never replicates (added 2026-10-28). The same eight also run on the exe.dev VM <code>databases.exe.xyz</code>, which the demo now reads through an SSH tunnel</td><td data-k="Where">Container <code>pricing-demo-sources</code>, <code>127.0.0.1:55432</code>, volume <code>pricing-demo-pgdata</code></td><td data-k="Login">The local demo login in the demo's <code>docker/docker-compose.yml</code></td></tr>
 </tbody></table></div>
 <p class="note">Loaded from the same releases, the two local graphs hold the same nodes but count relationships differently, because they follow different versions of the projection guideline: the pipeline v2.2, the driver the skill's v2.3. Each passes its own checks. Their last loads before the purge were of different releases (the pipeline's of 2026-10-27, the driver's of 2026-10-26), so their node counts above differ.</p>
@@ -524,7 +523,7 @@ uv run python -m pricing_demo.load_postgres</code></pre>
 uv run python -m pricing_demo.replicate          # Postgres to Parquet, with DuckDB
 uv run python -m pricing_demo.databricks setup   # catalog idp_sbx (or DEMO_CATALOG), schemas, volume
 uv run python -m pricing_demo.databricks upload  # Parquet to the volume
-uv run python -m pricing_demo.databricks build   # replica, silver, gold, metric views
+uv run python -m pricing_demo.databricks build   # replica, silver, gold, metric views, definitions views
 uv run python -m pricing_demo.genie              # the two Genie agents
 uv run python -m pricing_demo.databricks counts  # check the row counts</code></pre>
 <p>The Genie step updates an agent that already exists by its title, so running it again makes no duplicates.</p>
@@ -582,7 +581,7 @@ docker compose -f docker/docker-compose.yml down -v</code></pre>
 <h3>Databricks</h3>
 <p>The ontology triples: run this in the Databricks SQL editor.</p>
 <pre><code>DROP TABLE IF EXISTS workspace.epm_ontology.epm_triples;</code></pre>
-<p>The demo: its own <code>purge</code> step drops exactly the tables and metric views its SQL files create, then its volume, then its eleven schemas without <code>CASCADE</code>. A schema that still holds anything the demo did not create is not dropped: without <code>CASCADE</code>, <code>DROP SCHEMA</code> runs as <code>RESTRICT</code>, which "restricts dropping a non-empty schema and is enabled by default" (<a href="https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-drop-schema">Databricks, "DROP SCHEMA"</a>, read 2026-10-26), so that statement fails and the step stops. Run it once without <code>--yes</code> to see the statements and the catalog it will use, then with <code>--yes</code> to drop:</p>
+<p>The demo: its own <code>purge</code> step drops exactly the tables and views its SQL files create, then its volume, then its thirteen schemas without <code>CASCADE</code>. A schema that still holds anything the demo did not create is not dropped: without <code>CASCADE</code>, <code>DROP SCHEMA</code> runs as <code>RESTRICT</code>, which "restricts dropping a non-empty schema and is enabled by default" (<a href="https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-drop-schema">Databricks, "DROP SCHEMA"</a>, read 2026-10-26), so that statement fails and the step stops. Run it once without <code>--yes</code> to see the statements and the catalog it will use, then with <code>--yes</code> to drop:</p>
 <pre><code>cd "$DEMO"
 uv run python -m pricing_demo.databricks purge         # lists the statements; drops nothing
 uv run python -m pricing_demo.databricks purge --yes   # drops them</code></pre>
