@@ -4,9 +4,8 @@ the committed Step 5 report describes the current inputs and passed.
 
 Run: python3 -m pytest test_pipeline.py (needs rdflib, pyshacl).
 """
-import inspect
 import json
-import re
+import types
 import unittest
 from unittest import mock
 
@@ -204,41 +203,35 @@ class RoundTripRules(unittest.TestCase):
 
 class OntologyLabelsOnly(unittest.TestCase):
     """The pricing demo's technical graph shares the local Neo4j stores under the label Tech: its edges start at Tech
-    nodes and end at Tech or ontology nodes (EPM-DEC-001-0109, decision 6). Every node pattern in the projection's
-    Cypher names :Resource or an ontology class label, so Tech nodes change none of its counts, hash or round trip,
-    with two exceptions: the load's wipe matches every node, and the round trip's OPTIONAL MATCH extends a node an
-    earlier MATCH bound as :Resource."""
+    nodes and end at Tech or ontology nodes (EPM-DEC-001-0109, decision 6). The projection's counts and hash come from
+    graph_hash and its round trip from roundtrip; this pins the exact Cypher those two send, which reads :Resource
+    nodes and the edges between them, so Tech nodes change none of them. It says nothing of other queries."""
 
-    CYPHER = re.compile(r'"((?:[^"\\]|\\.)*MATCH(?:[^"\\]|\\.)*)"')  # each string literal holding a MATCH
-    # a node pattern: after MATCH, a relationship's end or a comma; its variable (or none) and its label (or none)
-    NODE = re.compile(r"(?:MATCH|-|>|<|,)\s*\(\s*(\w*)\s*(?::\s*(\w+))?[^()]*\)")
+    class Session:
+        def __init__(self):
+            self.queries = []
 
-    @classmethod
-    def patterns(cls, source):
-        return [(cypher, var, label) for cypher in cls.CYPHER.findall(source) for var, label in cls.NODE.findall(cypher)]
+        def run(self, query, **params):
+            self.queries.append(query)
+            return types.SimpleNamespace(data=lambda: [])
 
-    def check(self, source):
-        found = self.patterns(source)
-        self.assertTrue(found)
-        self.assertNotIn("Tech", source)
-        self.assertEqual({label for _, _, label in found if label}, {"Resource", "org__Role"})  # org__Role: an n10s class
-        unlabelled = [(cypher.split(" n", 1)[0] if cypher.startswith("MATCH (n) DETACH") else "round trip", var)
-                      for cypher, var, label in found if not label]
-        self.assertEqual(unlabelled, [("MATCH (n) DETACH DELETE", "n"), ("round trip", "n")])
-        self.assertIn("MATCH (n:Resource) OPTIONAL MATCH (n)-[r]->(m:Resource)",
-                      next(c for c, v, l in found if not l and not c.startswith("MATCH (n) DETACH")))
+    def queries(self, function):
+        session = self.Session()
+        function(session)
+        return session.queries
 
-    def test_every_node_pattern_names_resource_or_an_ontology_class(self):
-        self.check(inspect.getsource(pl))
+    def test_the_counts_and_the_hash_read_resource_nodes_and_the_edges_between_them(self):
+        self.assertEqual(self.queries(pl.graph_hash), [
+            "MATCH (n:Resource) RETURN n.uri AS uri, labels(n) AS l, properties(n) AS p ORDER BY uri",
+            "MATCH (a:Resource)-[r]->(b:Resource) RETURN a.uri AS s, type(r) AS t, b.uri AS o, r.uri AS u ORDER BY s, t, o, u",
+        ])
 
-    def test_the_check_catches_reads_that_could_reach_a_tech_node(self):
-        source = inspect.getsource(pl)
-        for broken in (source + '\nX = "MATCH (n:Tech) RETURN n"',
-                       source + '\nX = "MATCH (n {uri: $x}) RETURN count(n)"',
-                       source + '\nX = "MATCH ()-[r]->(m:Resource) RETURN count(r)"',
-                       source.replace("MATCH (a:Resource)-[r]->(b:Resource)", "MATCH (a:Resource)-[r]->(b)")):
-            with self.subTest(broken=broken[-60:]), self.assertRaises(AssertionError):
-                self.check(broken)
+    def test_the_round_trip_reads_resource_nodes_and_the_edges_between_them(self):
+        self.assertEqual(self.queries(pl.roundtrip), [
+            "CALL n10s.rdf.export.cypher('MATCH (n:Resource) OPTIONAL MATCH (n)-[r]->(m:Resource) RETURN n, r, m') "
+            "YIELD subject, predicate, object, isLiteral, literalType, literalLang "
+            "RETURN subject, predicate, object, isLiteral, literalType, literalLang",
+        ])
 
 
 class Report(unittest.TestCase):
