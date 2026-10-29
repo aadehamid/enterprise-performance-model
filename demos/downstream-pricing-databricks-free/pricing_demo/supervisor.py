@@ -28,7 +28,11 @@ MODEL = "databricks-meta-llama-3-3-70b-instruct"
 SUPERVISOR_TITLE = "EPM Pricing Supervisor"
 INSTRUCTIONS = (
     "You route questions about the downstream pricing demo to its Genie agents. Call the agent whose measures the "
-    "question asks about; call several when it spans subject areas, then combine their answers. Keep each measure's "
+    "question asks about; call several when it spans subject areas, then combine their answers. Before answering, "
+    "name the subject areas the question touches (crack spreads; Executive Summary prices and benchmarks; market "
+    "prices and freight; refinery operations, plans, decisions, events, EIA's weekly data and the outside context) and "
+    "call the agent for each one, one call per agent, asking it only about its own subject area: never give a crack "
+    "figure the crack agent did not return, nor a refinery figure the refinery agent did not return. Keep each measure's "
     "identifier and label as the agent gives them, say which agent each figure came from, and say when a figure is "
     "the demo's own formula or synthetic data. Never compute a figure no agent returned. Cracks are published by "
     "market, not by refinery: for a refinery's crack, ask the crack agent for its region's benchmark crack, the one the "
@@ -49,12 +53,22 @@ def metric_views(spec):
     return [t.split(".")[-1] for t, _ in spec["tables"] if t.startswith("semantic_sem_commercial.")]
 
 
+def other_tables(spec):
+    """The plain tables an agent binds besides its metric views and its definitions view (E7)."""
+    return [(t, d) for t, d in spec["tables"] if not t.startswith(("semantic_sem_commercial.", "ontology_definitions."))]
+
+
 def description(title, spec, rows, computed):
     """A subagent's description: its views, and the identifiers and labels of the measures it answers for, as the
-    definitions view gives them from epm_triples. A measure none of its views computes is marked so (OPM-0026)."""
+    definitions view gives them from epm_triples. A measure none of its views computes is marked so (OPM-0026). The
+    plain tables the agent also binds are named with their descriptions, so a question about them reaches it."""
     measures = "; ".join(f"{i} {label}" + ("" if i in computed else " (defined, not computed)") for i, label in rows)
-    return (f"{title}: a Genie agent over {', '.join(metric_views(spec))}. It answers for these measures of the "
+    text = (f"{title}: a Genie agent over {', '.join(metric_views(spec))}. It answers for these measures of the "
             f"ontology's kpi module (read from epm_triples): {measures}.")
+    others = other_tables(spec)
+    if others:
+        text += " It also reads " + "; ".join(f"{t.split('.')[-1]} ({d})" for t, d in others)
+    return text
 
 
 def descriptions(cur, catalog):
@@ -127,10 +141,8 @@ def chat(w, messages, tool_specs):
     return w.api_client.do("POST", f"/serving-endpoints/{MODEL}/invocations", body=body)["choices"][0]["message"]
 
 
-def ask(question):
-    """Route a question through the orchestrator; print each agent it called and the final answer."""
-    w, described = client()
-    ids = spaces(w)
+def orchestrate(w, described, ids, question):
+    """Route a question through the orchestrator: each agent it called, with the agent's text and SQL, and the answer."""
     tool_specs = tools(described)
     by_tool = {tool_name(t): t for t in AGENTS}
     messages = [{"role": "system", "content": INSTRUCTIONS}, {"role": "user", "content": question}]
@@ -140,15 +152,22 @@ def ask(question):
         calls = reply.get("tool_calls") or []
         messages.append({k: v for k, v in reply.items() if k in ("role", "content", "tool_calls")})
         if not calls:
-            print(json.dumps({"agents_called": called, "answer": reply.get("content")}, indent=2))
-            return
+            return {"agents_called": called, "answer": reply.get("content") or ""}
         for call in calls:
             title = by_tool[call["function"]["name"]]
             sub = json.loads(call["function"]["arguments"])["question"]
             result = ask_genie(w, ids[title], sub)
-            called.append({"agent": title, "question": sub, "status": result["status"]})
+            called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"]})
             messages.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, default=str)[:12000]})
-    raise SystemExit(f"no answer after {MAX_ROUNDS} rounds; agents called: {called}")
+    raise SystemExit(f"no answer after {MAX_ROUNDS} rounds; agents called: {[c['agent'] for c in called]}")
+
+
+def ask(question):
+    """Route a question through the orchestrator; print each agent it called and the final answer."""
+    w, described = client()
+    result = orchestrate(w, described, spaces(w), question)
+    called = [{k: c[k] for k in ("agent", "question", "status")} for c in result["agents_called"]]
+    print(json.dumps({"agents_called": called, "answer": result["answer"]}, indent=2))
 
 
 def setup():

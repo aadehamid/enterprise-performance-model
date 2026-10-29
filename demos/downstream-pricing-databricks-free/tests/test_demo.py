@@ -915,12 +915,24 @@ AGENT_VIEWS = {
 }
 
 
+# The plain tables each agent also binds since E7 (README, "Use cases"; delegated under EPM-DEC-001-0028).
+AGENT_TABLES = {
+    "Crack Spread Price Analytics": set(),
+    "Executive Summary KPIs Analytics": set(),
+    "Pricing and Market Margin Analytics": {"silver_udm_core.freight_rate_fact"},
+    "Refinery Operations Analytics": {"gold_commercial_core.refinery_plan_backcast_fact", "gold_commercial_core.decision_evidence_detail_fact",
+                                      "silver_mdm_core.market_event_dim", "silver_udm_core.eia_weekly_fact",
+                                      "silver_udm_core.external_event_fact", "silver_udm_core.forward_scan_fact"},
+}
+
+
 def test_e4_each_agent_binds_its_metric_views_and_its_definitions_view():
     assert set(genie.AGENTS) == set(AGENT_VIEWS)
     for title, spec in genie.AGENTS.items():
         views, definitions = AGENT_VIEWS[title]
         bound = {t for t, _ in spec["tables"]}
-        assert bound == {f"semantic_sem_commercial.{v}" for v in views} | {f"ontology_definitions.{definitions}"}, title
+        assert bound == ({f"semantic_sem_commercial.{v}" for v in views} | {f"ontology_definitions.{definitions}"}
+                         | AGENT_TABLES[title]), title
         # The definitions view is the one sql/06 builds for these metric views, and the instructions name it.
         assert DEFINITIONS[definitions][0] == views, title
         text = open(os.path.join(ROOT, "genie", spec["file"])).read()
@@ -1276,3 +1288,77 @@ def test_e6_citation_titles_name_no_person():
         for c in json.load(open(path)).get("citations", []):
             assert not outside.BYLINE.search(c["title"] or ""), (path, c["title"])
             assert not outside.PROFILE.search(c["url"] or ""), (path, c["url"])
+
+
+# ---- E7 (2026-10-29): the acceptance tests of the 21 use cases ----
+from pricing_demo import acceptance  # noqa: E402
+
+E7_RUN = {"agents_called": [{"agent": "Refinery Operations Analytics", "question": "q", "status": "COMPLETED",
+                             "text": "SQL: SELECT * FROM idp_sbx.ontology_definitions.refinery_operations_definitions_vw"},
+                            {"agent": "Crack Spread Price Analytics", "question": "q", "status": "COMPLETED", "text": ""}],
+          "answer": "Garyville's margin capture (OPM-0025 Margin Capture, the demo's own formula) fell from 93.0% in "
+                    "September 2026 to 92.1% in October; the USGC crack fell from $69.78 to $57.11/bbl."}
+
+
+def test_e7_one_case_per_use_case_naming_only_real_agents_and_identifiers():
+    assert [c["n"] for c in acceptance.CASES] == list(range(1, 22))
+    readme = open(os.path.join(ROOT, "README.md")).read()
+    assert len(re.findall(r"(?m)^\| (\d+) \|", readme.split("## Use cases")[1].split("\n## ")[0])) == 21
+    known = set(IDENTIFIERS.values())
+    for case in acceptance.CASES:
+        assert case["question"] and callable(case["check"]) and case["ontology"], case["n"]
+        assert set(case["agents"]) <= set(genie.AGENTS), case["n"]
+        assert bool(case["agents"]) == (case.get("mode") != "graph"), case["n"]
+        named = set(re.findall(ID_PATTERN, " ".join(t for g in case["ontology"] for t in g)))
+        assert named <= known, (case["n"], named - known)
+
+
+def test_e7_every_table_a_check_reads_is_one_the_build_creates():
+    created = {f"{schema}.{name}" for _, schema, name in databricks.created_objects()}
+    source = open(os.path.join(ROOT, "pricing_demo", "acceptance.py")).read()
+    read = set(re.findall(r"\{c\}\.([a-z_]+\.[a-z_]+)", source))
+    assert read and read <= created, read - created
+
+
+def test_e7_planning_tables_are_built_and_the_supervisor_names_them():
+    created = {f"{schema}.{name}" for _, schema, name in databricks.created_objects()}
+    for title, tables in AGENT_TABLES.items():
+        assert tables <= created, title
+        spec = genie.AGENTS[title]
+        text = supervisor.description(title, spec, [("OPM-0002", "Crude Utilization")], {"OPM-0002"})
+        for t in tables:
+            assert t.split(".")[-1] in text, (title, t)
+        doc = open(os.path.join(ROOT, "genie", spec["file"])).read()
+        assert all(f"${{catalog}}.{t}`" in doc for t in tables), title
+
+
+def test_e7_judge_passes_an_answer_with_every_figure_agent_and_ontology_term():
+    case = acceptance.CASES[1]
+    expected = [acceptance.Expect("capture Sep", 93.0114, acceptance.PCT), acceptance.Expect("capture Oct", 92.136, acceptance.PCT),
+                acceptance.Expect("crack Sep", 69.78, acceptance.USD), acceptance.Expect("crack Oct", 57.11, acceptance.USD)]
+    assert acceptance.judge(case, expected, E7_RUN) == {"passed": True, "reasons": []}
+    assert acceptance.definitions_read(E7_RUN)
+
+
+def test_e7_judge_names_each_missing_agent_figure_and_ontology_term():
+    case = acceptance.CASES[1]
+    run = dict(E7_RUN, agents_called=E7_RUN["agents_called"][:1], answer="Capture fell to 91.0%.")
+    verdict = acceptance.judge(case, [acceptance.Expect("capture Oct", 92.136, acceptance.PCT)], run)
+    assert not verdict["passed"]
+    assert "agents not called: Crack Spread Price Analytics" in verdict["reasons"]
+    assert any(r.startswith("missing capture Oct") for r in verdict["reasons"])
+    assert any(r.startswith("no ontology term: OPM-0025") for r in verdict["reasons"])
+    assert acceptance.judge(case, [], dict(E7_RUN, error="boom"))["reasons"][:2] == ["error: boom", "the check found nothing to compare"]
+
+
+def test_e7_figures_match_as_a_reader_would_round_them():
+    e = acceptance.Expect
+    assert acceptance.holds("NYH ULSD $5.27/gal", e("ulsd", 5.265, acceptance.GAL))
+    assert acceptance.holds("NYH ULSD $5.26/gal", e("ulsd", 5.265, acceptance.GAL))
+    assert not acceptance.holds("NYH ULSD $5.28/gal", e("ulsd", 5.265, acceptance.GAL))
+    assert acceptance.holds("a 75% chance", e("p", 0.7486, 0.0051))
+    assert acceptance.holds("about $121.9 million", e("lost", 121.88, 0.05 * 121.88))
+    assert acceptance.holds("$121,884,420 lost", e("lost", 121884420.0, 0.05 * 121884420.0))
+    assert acceptance.holds("in Jan 2024", e("month", acceptance.months("2024-01-01"), None))
+    assert acceptance.holds("weather (inferred)", e("label", "Inferred", None))
+    assert not acceptance.holds("no figure here", e("crack", 16.44, acceptance.USD))
