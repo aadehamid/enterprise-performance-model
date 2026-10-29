@@ -825,25 +825,42 @@ def test_e3_the_new_views_hold_their_measures_and_skip_the_rm_margin_indicator()
     assert "100 * SUM(Unit_Throughput_Mbpd) / SUM(Unit_Capacity_Mbpd)" in unit
 
 
-def test_e3_the_older_views_keep_each_measures_identifiers():
-    # Pinned per measure, so a swapped identifier in a comment fails here, not only in review (Pi, round 1).
-    exec_ids = {"KPI-0001", "OPM-0017", "OPM-0018", "OPM-0019", "OPM-0020", "OPM-0021"}
+def test_e3_each_measure_carries_the_identifiers_kpi_gives_its_measures():
+    # Each measure is pinned to kpi measure slugs, and the identifiers come from measure-identifiers.csv, so a swapped
+    # identifier in a comment, or a renumbering in kpi, fails here and not only in review (Pi, round 1 and quick check).
+    prices = ["crack-spreads", "gasoline-prices", "distillate-prices", "crude-prices", "price-comparison",
+              "additional-market-prices"]
     expected = {
         "mpr_mips_crack_spread_price_fact_metrics_vw": {
-            "Avg_Crack_Spread": {"KPI-0001"}, "Max_Crack_Spread": {"KPI-0001"}, "Min_Crack_Spread": {"KPI-0001"},
-            "Spread_Range": {"KPI-0001"}, "Record_Count": set()},
+            "Avg_Crack_Spread": ["crack-spreads"], "Max_Crack_Spread": ["crack-spreads"],
+            "Min_Crack_Spread": ["crack-spreads"], "Spread_Range": ["crack-spreads"], "Record_Count": []},
         "mips_mpr_executive_summary_fact_vw": {
-            "assessment_amount": exec_ids, "Previous_amount": exec_ids, "ChangeValue": exec_ids, "Record_Count": set()},
-        "mips_mpr_benchmark_prices_fact_vw": {"Avg_Settle_Price": {"OPM-0019"}, "Record_Count": set()},
+            "assessment_amount": prices, "Previous_amount": prices, "ChangeValue": prices, "Record_Count": []},
+        "mips_mpr_benchmark_prices_fact_vw": {"Avg_Settle_Price": ["crude-prices"], "Record_Count": []},
+        "pricing_market_margin_metrics_vw": {
+            "Gasoline_Market_Price": ["gasoline-prices"], "Distillate_Market_Price": ["distillate-prices"],
+            "Crude_Market_Price": ["crude-prices"], "Price_Comparison": ["price-comparison"],
+            "Additional_Market_Price": ["additional-market-prices"], "Record_Count": []},
         "refinery_operations_metrics_vw": {
-            "Crude_Runs_Mbpd": set(), "Crude_Capacity_Mbpcd": set(), "Utilization_Pct": {"OPM-0002"},
-            "Planned_Utilization_Pct": {"OPM-0002"}, "Distillate_Yield_Pct": {"OPM-0004"}, "Gasoline_Yield_Pct": {"OPM-0005"},
-            "Rm_Margin_Usd_Per_Bbl": {"OPM-0024"}, "Margin_Capture_Pct": {"OPM-0025"}, "Opex_Usd_Per_Bbl": {"OPM-0027"},
-            "Record_Count": set()},
+            "Crude_Runs_Mbpd": [], "Crude_Capacity_Mbpcd": [], "Utilization_Pct": ["crude-utilization"],
+            "Planned_Utilization_Pct": ["crude-utilization"], "Distillate_Yield_Pct": ["distillate-yield"],
+            "Gasoline_Yield_Pct": ["gasoline-yield"], "Rm_Margin_Usd_Per_Bbl": ["rm-margin-per-barrel"],
+            "Margin_Capture_Pct": ["margin-capture"], "Opex_Usd_Per_Bbl": ["refining-opex-per-barrel"],
+            "Record_Count": []},
+        "refinery_unit_operations_metrics_vw": {
+            "Unit_Throughput_Mbpd": [], "Unit_Capacity_Mbpd": [], "Unit_Utilization_Pct": ["unit-utilization"],
+            "Record_Count": []},
     }
     specs = metric_view_specs()
+    assert set(expected) == set(specs)
     for view, measures in expected.items():
-        assert {n: _leading_ids(m["comment"]) for n, m in specs[view]["measures"].items()} == measures, view
+        want = {name: {IDENTIFIERS[slug] for slug in slugs} for name, slugs in measures.items()}
+        assert {n: _leading_ids(m["comment"]) for n, m in specs[view]["measures"].items()} == want, view
+    # The Executive Summary comment's body maps each assessment group to its measure; _leading_ids reads only the head.
+    groups = (f"the crack sheets {IDENTIFIERS['crack-spreads']}, Gasoline Cash {IDENTIFIERS['gasoline-prices']}, "
+              f"Diesel Cash {IDENTIFIERS['distillate-prices']}, the crude sheets and Benchmark {IDENTIFIERS['crude-prices']}, "
+              f"Basis {IDENTIFIERS['price-comparison']}, Renewables and NGL's {IDENTIFIERS['additional-market-prices']}.")
+    assert groups in specs["mips_mpr_executive_summary_fact_vw"]["measures"]["assessment_amount"]["comment"]
 
 
 def test_e3_definitions_views_read_epm_triples_and_keep_their_views_identifiers():

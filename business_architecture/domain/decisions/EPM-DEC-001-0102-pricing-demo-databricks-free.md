@@ -56,7 +56,7 @@ For the amendment of 2026-10-28, from `business_architecture/ontology/step4/revi
 
 ## Evidence
 
-- `demos/downstream-pricing-databricks-free/README.md`, "The last run (2026-10-25)" (*2026-10-28:* the section is now "The runs (2026-10-25 to 2026-10-28)"), the row counts and the agents' answers.
+- `demos/downstream-pricing-databricks-free/README.md`, "The last run (2026-10-25)" (*2026-10-28:* the section is now "The runs (2026-10-25 to 2026-10-28)"; *2026-10-29:* "The runs (2026-10-25 to 2026-10-29)"), the row counts and the agents' answers.
 - `demos/downstream-pricing-databricks-free/data/public/eia_series.csv` and `mpc_refineries.csv`.
 - EIA, NYMEX Futures Prices, https://www.eia.gov/dnav/pet/pet_pri_fut_s1_d.htm (release of 2026-10-21, read 2026-10-25): "Futures prices after April 5, 2024, are not available".
 - EIA, Spot Prices for Crude Oil and Petroleum Products, https://www.eia.gov/dnav/pet/pet_pri_spt_s1_d.htm (release of 2026-10-21, read 2026-10-25): RBOB regular gasoline only for Los Angeles; New York Harbor conventional regular gasoline.
