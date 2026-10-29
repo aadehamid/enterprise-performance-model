@@ -333,7 +333,7 @@ td:first-child { font-weight: 600; }
       <li>A seeded generator writes the six source systems' rows, and EIA's weekly series, into local Postgres.</li>
       <li>DuckDB copies them to Parquet, and the Parquet files go to the <code>idp_sbx</code> volume.</li>
       <li>Databricks builds the replica, silver and gold tables, then six metric views and five definitions views of the ontology's measures.</li>
-      <li>Four Genie agents answer questions from the metric views, each reading its definitions view; an orchestrator routes a question to one or more of them. SPARQL Anything then builds a technical graph of the pipeline, which goes into Neo4j and two Delta tables (E5).</li>
+      <li>Four Genie agents answer questions from the metric views, each reading its definitions view (since E7, 2026-10-29, two of them also read plain tables: the refinery plans, decisions, events, EIA data and outside context, and the freight rates); an orchestrator routes a question to one or more of them. SPARQL Anything then builds a technical graph of the pipeline, which goes into Neo4j and two Delta tables (E5).</li>
     </ol>
   </div>
 </div>
