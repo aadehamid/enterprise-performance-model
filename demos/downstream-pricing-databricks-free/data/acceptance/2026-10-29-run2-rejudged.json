@@ -42,7 +42,8 @@
       "reasons": [],
       "original": {
         "passed": true,
-        "reasons": []
+        "reasons": [],
+        "agents_required": []
       }
     },
     {
@@ -103,6 +104,10 @@
         "passed": false,
         "reasons": [
           "no ontology term: demo's own or demo formula or the demo's or synthetic"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics",
+          "Crack Spread Price Analytics"
         ]
       }
     },
@@ -160,7 +165,11 @@
       "reasons": [],
       "original": {
         "passed": true,
-        "reasons": []
+        "reasons": [],
+        "agents_required": [
+          "Refinery Operations Analytics",
+          "Crack Spread Price Analytics"
+        ]
       }
     },
     {
@@ -240,6 +249,10 @@
           "missing utilization: 87.48092185592185",
           "no ontology term: KPI-0001 or market indicator",
           "no ontology term: OPM-0024 or operational metric"
+        ],
+        "agents_required": [
+          "Crack Spread Price Analytics",
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -343,6 +356,12 @@
           "missing NYH ULSD 2026-10: 4.9678571429",
           "missing USGC crack 2026-09: 69.7779497273",
           "missing Gulf Coast distillate yield 2026-09: 34.5956360405721"
+        ],
+        "agents_required": [
+          "Executive Summary KPIs Analytics",
+          "Pricing and Market Margin Analytics",
+          "Crack Spread Price Analytics",
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -411,6 +430,10 @@
           "missing NYH ULSD forward 2026-10: 5.265",
           "missing NYH ULSD forward 2026-11: 5.236654",
           "missing NYH ULSD forward 2026-12: 5.180572"
+        ],
+        "agents_required": [
+          "Executive Summary KPIs Analytics",
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -498,6 +521,10 @@
           "missing Gulf Coast crude runs 2026-10: 1096.7",
           "no ontology term: PADD 3",
           "no ontology term: Gulf Coast"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics",
+          "Crack Spread Price Analytics"
         ]
       }
     },
@@ -580,6 +607,11 @@
           "missing Gulf Coast R&M margin per barrel: 37.589924",
           "no ontology term: synthetic",
           "no ontology term: OPM-0018 or OPM-0024"
+        ],
+        "agents_required": [
+          "Pricing and Market Margin Analytics",
+          "Crack Spread Price Analytics",
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -588,7 +620,8 @@
       "question": "Which refineries did Hurricane Isaias (2026-10-07 to 2026-10-15) hit, how far did their crude utilization fall, when did they recover, and which measures moved?",
       "mode": "orchestrator",
       "agents_required": [
-        "Refinery Operations Analytics"
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
       ],
       "agents_called": [],
       "definitions_read": false,
@@ -638,6 +671,9 @@
           "missing Garyville lowest utilization in the storm: 60.49",
           "no ontology term: OPM-0002 or Crude Utilization",
           "no ontology term: OPM-0024 or OPM-0025"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -685,6 +721,10 @@
           "missing Anacortes lost margin, $ million: 30.61805786939",
           "missing Robinson lost margin, $ million: 121.88441998992",
           "no ontology term: OPM-0030 or Turnaround Lost Margin or lost margin"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics",
+          "Crack Spread Price Analytics"
         ]
       }
     },
@@ -694,8 +734,7 @@
       "mode": "orchestrator",
       "agents_required": [
         "Executive Summary KPIs Analytics",
-        "Crack Spread Price Analytics",
-        "Refinery Operations Analytics"
+        "Crack Spread Price Analytics"
       ],
       "agents_called": [
         {
@@ -757,6 +796,11 @@
         "passed": false,
         "reasons": [
           "agents not called: Executive Summary KPIs Analytics"
+        ],
+        "agents_required": [
+          "Executive Summary KPIs Analytics",
+          "Crack Spread Price Analytics",
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -830,6 +874,10 @@
           "missing distillate yield October 2026: 35.3603957769297",
           "missing gasoline yield October 2026: 46.9401743212534",
           "missing R&M margin per barrel October 2026: 54.635786"
+        ],
+        "agents_required": [
+          "Crack Spread Price Analytics",
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -838,7 +886,8 @@
       "question": "For Garyville's September 2026 plan, what benchmark crack and crude utilization did the plan assume, what happened, and how much of the gap came from the market and how much from operations?",
       "mode": "orchestrator",
       "agents_required": [
-        "Refinery Operations Analytics"
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
       ],
       "agents_called": [
         {
@@ -878,7 +927,10 @@
       ],
       "original": {
         "passed": true,
-        "reasons": []
+        "reasons": [],
+        "agents_required": [
+          "Refinery Operations Analytics"
+        ]
       }
     },
     {
@@ -925,6 +977,9 @@
           "missing decision: D04",
           "missing owner role: regional planning director",
           "missing actual lost margin, $ million: 121.88"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -986,6 +1041,10 @@
           "missing Galveston Bay lowest utilization in the storm: 78.91",
           "missing Garyville lowest utilization in the storm: 60.49",
           "no ontology term: OPM-0002 or OPM-0024"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics",
+          "Crack Spread Price Analytics"
         ]
       }
     },
@@ -994,7 +1053,8 @@
       "question": "For October 2026, how many refineries ran a higher distillate yield than their plan version assumed, out of how many plans, and did the October shift toward distillate pay off against the plans' yields?",
       "mode": "orchestrator",
       "agents_required": [
-        "Refinery Operations Analytics"
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
       ],
       "agents_called": [
         {
@@ -1024,7 +1084,10 @@
       ],
       "original": {
         "passed": true,
-        "reasons": []
+        "reasons": [],
+        "agents_required": [
+          "Refinery Operations Analytics"
+        ]
       }
     },
     {
@@ -1094,6 +1157,9 @@
           "missing mean absolute utilization error 2025: 1.709679",
           "missing mean absolute crack error 2026: 10.19181308",
           "missing mean absolute utilization error 2026: 3.361769"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -1141,6 +1207,10 @@
           "missing decision D02: D02",
           "missing Galveston Bay lowest utilization in the storm: 78.91",
           "no ontology term: OPM-0002 or OPM-0024 or refinery-galveston-bay"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics",
+          "Crack Spread Price Analytics"
         ]
       }
     },
@@ -1252,6 +1322,10 @@
           "missing Gulf Coast utilization, 2025: 90.85123294044665",
           "missing Gulf Coast margin capture, 2025: 67.873743",
           "no ontology term: inferred or observed"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics",
+          "Crack Spread Price Analytics"
         ]
       }
     },
@@ -1310,6 +1384,9 @@
           "missing adverse-event probability: 0.7486",
           "missing its label: observed",
           "no ontology term: inferred or observed"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics"
         ]
       }
     },
@@ -1380,6 +1457,9 @@
         "reasons": [
           "missing label: inferred",
           "no ontology term: inferred"
+        ],
+        "agents_required": [
+          "Refinery Operations Analytics"
         ]
       }
     }

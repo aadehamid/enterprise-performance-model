@@ -1507,3 +1507,13 @@ def test_e7_rejudged_runs_keep_their_original_verdicts_beside_the_new_ones():
         assert sum(r["original"]["passed"] for r in results) == original
         assert sum(r["passed"] for r in results) == now
         assert not next(r for r in results if r["n"] == 14)["passed"]
+
+
+def test_e7_rejudged_files_record_the_agents_their_verdicts_required():
+    # Codex quick check on #408: the re-judged records carry the current required agents, the run's in "original".
+    from pricing_demo import acceptance
+    cases = {c["n"]: c for c in acceptance.CASES}
+    for name in ("2026-10-29-run1-rejudged.json", "2026-10-29-run2-rejudged.json"):
+        for r in json.load(open(os.path.join(ROOT, "data", "acceptance", name)))["results"]:
+            assert r["agents_required"] == list(cases[r["n"]]["agents"]), (name, r["n"])
+            assert "agents_required" in r["original"], (name, r["n"])

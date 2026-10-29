@@ -703,7 +703,9 @@ def rejudge(path):
                                                     "answer answers another question"]}
         else:
             verdict = judge(case, [restored(x) for x in r["expected"]], r)
-        out.append({**r, "original": {"passed": r["passed"], "reasons": r["reasons"]}, **verdict})
+        out.append({**r, "agents_required": list(case["agents"]),  # the agents this verdict required, not the run's
+                    "original": {"passed": r["passed"], "reasons": r["reasons"], "agents_required": r.get("agents_required")},
+                    **verdict})
     return {"run_at": run["run_at"], "rejudged_on": "2026-10-29", "results": out}
 
 
