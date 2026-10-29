@@ -374,7 +374,7 @@ DEMO="$EPM/demos/downstream-pricing-databricks-free"</code></pre>
 <pre><code>docker ps --format '{{.Names}}  {{.Status}}'</code></pre>
 <p>All three local stores are up when the list shows <code>epm-lpg</code>, <code>lpg-local-neo4j-1</code> and <code>pricing-demo-sources</code>.</p>
 <h3>Count what each store holds</h3>
-<p>Every count below reads <code>:Resource</code> nodes and the edges between them, the projection itself. The demo's technical graph (E5) is labelled <code>Tech</code>, has no edge pointing into it from the ontology, and so changes none of them; <code>MATCH (n:Tech) RETURN count(n)</code> counts it, 134 nodes after its load on 2026-10-29.</p>
+<p>Every count below reads <code>:Resource</code> nodes and the edges between them, the projection itself. The demo's technical graph (E5) is labelled <code>Tech</code>, has no edge pointing into it from the ontology, and so changes none of them; <code>MATCH (n:Tech) RETURN count(n)</code> counts it, 134 nodes after its load on 2026-10-29 and 142 since E6 the same day.</p>
 <p>Pipeline Neo4j. The password is read from its file into <code>NEO4J_PASSWORD</code>, which <code>docker exec -e</code> passes to <code>cypher-shell</code>, so it never appears on a command line or in the output:</p>
 <pre><code>set -a; . ~/epm-lpg/run.env; set +a
 docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j \

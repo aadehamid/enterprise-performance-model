@@ -1268,6 +1268,11 @@ def test_e6_citation_titles_name_no_person():
     from pricing_demo import outside
     assert outside.title_without_byline("The Diesel Forecast - by Dr. Jane Doe") == "The Diesel Forecast"
     assert outside.title_without_byline("Refinery outages rise by 5% in PADD 3") == "Refinery outages rise by 5% in PADD 3"
+    # a page about a person is kept only as its host (Bugbot on #407); an article URL stays whole
+    assert outside.kept_citation("https://muckrack.com/a-reporter/articles", "Articles by A Reporter") == {
+        "url": "https://muckrack.com", "title": "A person's profile page (not kept)"}
+    assert outside.kept_citation("https://www.energy.gov/articles/spr-exchange", "SPR exchange")["url"].endswith("/spr-exchange")
     for path in sorted(glob.glob(os.path.join(ROOT, "data", "parallel", "*.json"))):
         for c in json.load(open(path)).get("citations", []):
             assert not outside.BYLINE.search(c["title"] or ""), (path, c["title"])
+            assert not outside.PROFILE.search(c["url"] or ""), (path, c["url"])

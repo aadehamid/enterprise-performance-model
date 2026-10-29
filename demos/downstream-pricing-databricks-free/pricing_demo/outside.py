@@ -217,16 +217,27 @@ def api_key():
 BYLINE = re.compile(r"\s*[-|:]?\s*\bby\s+(?:Dr\.\s+|Prof\.\s+)?[A-Z][\w'.-]*(?:\s+[A-Z][\w'.-]*)+\s*$")
 
 
+# a page about a person (a journalist's profile, an author page): kept only as its host, under a neutral title
+PROFILE = re.compile(r"^https?://(?:[^/]*\.)?(?:muckrack\.com|linkedin\.com/in)/|/(?:authors?|people|profiles?)/", re.I)
+
+
 def title_without_byline(title):
     return BYLINE.sub("", title or "")
+
+
+def kept_citation(url, title):
+    """A citation as the demo keeps it: no author's byline in the title, and a page about a person reduced to its
+    host. Headlines that name public officials in their role are kept as their sources print them."""
+    if url and PROFILE.search(url):
+        return {"url": re.match(r"^https?://[^/]+", url).group(0), "title": "A person's profile page (not kept)"}
+    return {"url": url, "title": title_without_byline(title)}
 
 
 def call(client, request_id, body, now=None):
     """Send one request and cache the response, its request and the time it was retrieved. Excerpts are dropped:
     the demo keeps each citation's URL and title only, the title without an author's byline."""
     response = dict(client.post("/v1/decisions", body=body, cast_to=object))
-    citations = [{"url": c.get("url"), "title": title_without_byline(c.get("title"))}
-                 for c in response.get("citations", [])]
+    citations = [kept_citation(c.get("url"), c.get("title")) for c in response.get("citations", [])]
     saved = {"request_id": request_id, "request_key": request_key(body), "request": body,
              "retrieved_at": (now or dt.datetime.now(dt.timezone.utc)).isoformat(timespec="seconds"),
              "mode": response.get("mode"), "answers": response.get("answers", {}), "citations": citations,
@@ -298,7 +309,8 @@ def tables(out):
             continue
         retrieved = dt.datetime.fromisoformat(saved["retrieved_at"]).replace(tzinfo=None)
         for rank, c in enumerate(saved["citations"], 1):
-            citations.append((request_id, rank, c["url"], " ".join(title_without_byline(c["title"]).split()), retrieved, retrieved))
+            kept = kept_citation(c["url"], c["title"])
+            citations.append((request_id, rank, kept["url"], " ".join(kept["title"].split()), retrieved, retrieved))
         if step == "events":
             value, p, _, label, refusal = interpret(saved["answers"]["happened"])
             status = {"yes": "confirmed", "no": "not found", "uncertain": "uncertain"}.get(value, "unknown")
