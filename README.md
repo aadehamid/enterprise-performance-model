@@ -46,7 +46,7 @@ Intentionally mirrors EPM patterns. **Not a governed EPM artifact set.** Charter
 
 ### 3. Demos — runnable O2C unbilled exposure and downstream pricing
 
-Three packs: full Databricks/Metric Views, a learner variant with an empty ontology stub, and a dbt/DuckDB/MetricFlow pack. See [`demos/README.md`](demos/README.md). *2026-10-25:* a fourth pack rebuilds the pricing metric views and Genie agents in Databricks Free Edition from real EIA and MPC data where public ([`demos/downstream-pricing-databricks-free/`](demos/downstream-pricing-databricks-free/), EPM-DEC-001-0102).
+Three packs: full Databricks/Metric Views, a learner variant with an empty ontology stub, and a dbt/DuckDB/MetricFlow pack. See [`demos/README.md`](demos/README.md). *2026-10-25:* a fourth pack rebuilds the pricing metric views and Genie agents in Databricks Free Edition from real EIA and MPC data where public ([`demos/downstream-pricing-databricks-free/`](demos/downstream-pricing-databricks-free/), EPM-DEC-001-0102). *2026-10-29:* it now also carries the ontology's KPI and OPM identifiers on its metric views, views of the measures' definitions, four Genie agents and an orchestrator, a technical graph and a PROV-O decision trail in Neo4j, AuraDB and Delta, real outside events from Parallel's Decisions API, and acceptance tests for its 21 use cases (EPM-DEC-001-0109; the demo README gives each run).
 
 ## Canonical sources
 

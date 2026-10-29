@@ -210,7 +210,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
   <span class="name">EPM</span><span class="scope">Ontology guide</span>
   <nav aria-label="Sections">
-    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#stores">Stores</a><a href="#copy">Copy</a><a href="#open">Open</a>
+    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#stores">Stores</a><a href="#copy">Copy</a><a href="#tools">Tools</a><a href="#open">Open</a>
   </nav>
 </header>
 
@@ -236,6 +236,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <a class="sub-a" href="#m-integration">integration</a>
   <a href="#stores">How it reaches the stores</a>
   <a href="#copy">Copy the ontology</a>
+  <a href="#tools">The tools behind it</a>
   <a href="#open">What is still open</a>
   <a href="#sources">Sources</a>
 </aside>
@@ -686,6 +687,7 @@ ORDER BY ?hop ?label</code></pre>
 <ul>
 <li><a href="projection/ontology-stores-runbook.html">Stores runbook</a>: every store, and how to check, stop, start, purge, reload and keep it in step. <code>projection/LOCAL-STORES.md</code> is its short index.</li>
 <li><a href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">EPM integration</a>, the architecture diagram in Eraser.</li>
+<li><a href="https://app.eraser.io/workspace/ExGP7RTmttcIgifig1bG">EPM ontology and the pricing demo: data flow</a> (2026-10-29), in Eraser: the ontology, the stores and the demo end to end, with Parallel Decisions and SPARQL Anything.</li>
 <li><code>MODULES.md</code>: each link between modules, with a triple quoted from the releases.</li>
 <li><code>business-closeout.md</code>: the points only the business can settle.</li>
 </ul>
@@ -840,6 +842,48 @@ ORDER BY ?hop ?label</code></pre>
 <tr><td><code>business_architecture/ontology/trials/</code></td><td data-k="Why">Trial runs, not part of any release.</td></tr>
 <tr><td><code>business_architecture/ontology/lpg-projection/</code></td><td data-k="Why">The superseded v2.2 copy of the projection guideline; the projection playbook page is the current method.</td></tr>
 </tbody></table></div>
+
+<h2 id="tools">The tools behind it</h2>
+<p class="lead">Every tool used to build the ontology and the demo, with the version a file in this repository records, what it does here and where. A version marked "not pinned" is whatever the machine had.</p>
+<h3>Building the ontology</h3>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Tool</th><th>Version</th><th>Role here</th><th>Where</th><th>Licence or cost</th></tr></thead>
+<tbody>
+<tr><td>Python</td><td data-k="Version">3.12 (<code>.github/workflows/checks.yml</code>)</td><td data-k="Role here">The language of every builder, test and script</td><td data-k="Where">See python.org</td></tr>
+<tr><td>uv</td><td data-k="Version">Version not pinned</td><td data-k="Role here">Runs each script with its dependencies (<code>scripts/check.sh</code>, the demo's <code>pyproject.toml</code>)</td><td data-k="Where">Apache-2.0</td></tr>
+<tr><td>rdflib</td><td data-k="Version">7.1.4 in the demo; not pinned in <code>check.sh</code></td><td data-k="Role here">Reads and writes the Turtle; runs SPARQL in the builders and tests</td><td data-k="Where">BSD-3-Clause</td></tr>
+<tr><td>pySHACL</td><td data-k="Version">Not pinned (<code>check.sh</code>)</td><td data-k="Role here">Validates every module against its SHACL shapes</td><td data-k="Where">Apache-2.0</td></tr>
+<tr><td>ROBOT, with the ELK reasoner</td><td data-k="Version">1.9.10 (<code>projection/README.md</code>, checksum given)</td><td data-k="Role here">The reasoning step of the projection: what the ontology entails</td><td data-k="Where">BSD-3-Clause</td></tr>
+<tr><td>qSKOS checks</td><td data-k="Version">The <code>ontology</code> skill's <code>check_taxonomy.py</code> (personal-agent-skills #53)</td><td data-k="Role here">Taxonomy quality issues an offline build can check (EPM-DEC-001-0098)</td><td data-k="Where">Part of the skill</td></tr>
+<tr><td>The <code>ontology</code> skill</td><td data-k="Version">Its playbook in personal-agent-skills</td><td data-k="Role here">The gated method every module was built with: Steps 1 to 12, the evidence gate, releases</td><td data-k="Where">The decision owner's skills repository</td></tr>
+<tr><td><code>scripts/check.sh</code> and <code>scripts/epm_facts.py</code></td><td data-k="Version">This repository</td><td data-k="Role here">The checks before every push: the Step 4 gate, every test, counts, decision records, quotes, names; figures, sweeps and finds</td><td data-k="Where">This repository</td></tr>
+<tr><td>GitHub and GitHub Actions</td><td data-k="Version"><code>checks.yml</code> and <code>links.yml</code></td><td data-k="Role here">Every change goes through a pull request; CI runs <code>check.sh</code> and a link check</td><td data-k="Where">The decision owner's account</td></tr>
+<tr><td>Independent reviewers</td><td data-k="Version">Kimi K3.1 Pro, Pi, Codex on gpt-6-luna (<code>AGENTS.md</code>)</td><td data-k="Role here">The independent review of each pull request, first available in that order</td><td data-k="Where">The decision owner's subscriptions; Pi runs through Ollama, which has a weekly limit (EPM-DEC-001-0028)</td></tr>
+<tr><td>Cursor bot</td><td data-k="Version">The PR review automation (<code>AGENTS.md</code>)</td><td data-k="Role here">The MERGE or HOLD verdict on each pull request</td><td data-k="Where">The decision owner's subscription</td></tr>
+</tbody></table></div>
+<h3>The demo and the stores</h3>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Tool</th><th>Version</th><th>Role here</th><th>Where</th><th>Licence or cost</th></tr></thead>
+<tbody>
+<tr><td>Docker</td><td data-k="Version">Version not pinned</td><td data-k="Role here">Runs the local Postgres and Neo4j containers</td><td data-k="Where">Docker Desktop</td></tr>
+<tr><td>PostgreSQL</td><td data-k="Version">16.10 (<code>docker/docker-compose.yml</code>)</td><td data-k="Role here">The demo's seven source databases and the hidden <code>decision_truth</code>, locally and on the exe.dev VM</td><td data-k="Where">Open source; see postgresql.org/about/licence</td></tr>
+<tr><td>exe.dev VM</td><td data-k="Version"><code>databases.exe.xyz</code>, reached through an SSH tunnel</td><td data-k="Role here">A second home for the source databases (demo README, "The source systems")</td><td data-k="Where">The decision owner's account</td></tr>
+<tr><td>DuckDB</td><td data-k="Version">1.4.1 (<code>pyproject.toml</code>)</td><td data-k="Role here">Replicates each source table to Parquet with a manifest</td><td data-k="Where">MIT</td></tr>
+<tr><td>psycopg, PyArrow</td><td data-k="Version">3.3.4, 21.0.0 (<code>pyproject.toml</code>)</td><td data-k="Role here">Postgres access; the Parquet files</td><td data-k="Where">LGPL-3.0; Apache-2.0</td></tr>
+<tr><td>Databricks Free Edition</td><td data-k="Version">One serverless SQL warehouse (<code>store-tests-2026-10-25.md</code>)</td><td data-k="Role here">Unity Catalog, the replica, silver and gold layers, metric views, definitions views, <code>epm_triples</code>, Genie agents, a serverless job</td><td data-k="Where">Free Edition</td></tr>
+<tr><td>Databricks SDK and SQL connector</td><td data-k="Version">0.128.0 and 4.4.0 (<code>pyproject.toml</code>)</td><td data-k="Role here">Every call the demo makes to Databricks</td><td data-k="Where">Apache-2.0</td></tr>
+<tr><td>Databricks Foundation Model API</td><td data-k="Version"><code>databricks-meta-llama-3-3-70b-instruct</code> (<code>supervisor.py</code>)</td><td data-k="Role here">The orchestrator's model, which routes a question to the Genie agents</td><td data-k="Where">Free Edition</td></tr>
+<tr><td>Neo4j, with APOC</td><td data-k="Version">2025.06.2 (<code>run_local.sh</code>)</td><td data-k="Role here">The two local property-graph stores</td><td data-k="Where">GPL-3.0 (Community)</td></tr>
+<tr><td>neosemantics (n10s)</td><td data-k="Version">2025.06.1 (<code>projection/README.md</code>, checksum given)</td><td data-k="Role here">Loads the Turtle into Neo4j and exports it back for the round trip</td><td data-k="Where">Apache-2.0</td></tr>
+<tr><td>Neo4j AuraDB</td><td data-k="Version">Aura Free (<code>store-tests-2026-10-25.md</code>)</td><td data-k="Role here">The cloud copy of the driver's graph</td><td data-k="Where">Aura Free</td></tr>
+<tr><td>Neo4j Python driver</td><td data-k="Version">5.28.1 (<code>pyproject.toml</code>, group <code>graph</code>)</td><td data-k="Role here">The demo's technical graph loads and walks</td><td data-k="Where">See its repository</td></tr>
+<tr><td>Apache Jena Fuseki</td><td data-k="Version">6.2.0 (<code>store-tests-2026-10-25.md</code>)</td><td data-k="Role here">A transient triple store the driver loads and checks, then removes</td><td data-k="Where">Apache-2.0</td></tr>
+<tr><td>SPARQL Anything</td><td data-k="Version">1.3.0, through pysparql-anything 1.3.0.0, on Java 24 (demo README, E5)</td><td data-k="Role here">Builds the technical graph and the decision trail from the demo's own files</td><td data-k="Where">Apache-2.0</td></tr>
+<tr><td>Parallel Decisions API</td><td data-k="Version">Through parallel-web 1.3.7 (<code>pyproject.toml</code>, group <code>outside</code>)</td><td data-k="Role here">The outside context: event scan, decision diagnosis, forward look</td><td data-k="Where">137 calls cost $0.13 (demo README, E6); the SDK is MIT</td></tr>
+<tr><td>parallel-cli</td><td data-k="Version">Version not recorded in the repository</td><td data-k="Role here">Reads the account balance before and after a run (demo README, E6)</td><td data-k="Where">Comes with the Parallel account</td></tr>
+<tr><td>Eraser</td><td data-k="Version">The decision owner's folder</td><td data-k="Role here">The architecture and data-flow diagrams ("Where to read more" above)</td><td data-k="Where">The decision owner's account</td></tr>
+</tbody></table></div>
+<p class="note">Licences are as each project's GitHub repository records them (read 2026-10-29); the repositories of Python, PostgreSQL and the Neo4j Python driver record no standard licence identifier, so see their sites.</p>
 
 <h2 id="open">What is still open</h2>
 <p class="lead">The ontology is done (EPM-DEC-001-0107, 2026-10-26): MPC-P11 and MPC-P12 are accepted and released, and the deferred qSKOS fixes are released. The decision owner's customer inputs of 2026-10-27 then brought <code>party</code> 2.0.0 and three minor releases, and two gaps that stay open with the business (EPM-DEC-001-0108). What stays open is below. EPM-DEC-001-0107 lists four kinds: the business's close-out points, which the decision owner worked through on 2026-10-28 (EPM-DEC-001-0086), with points 1 and 2 kept open by the decision owner's choice; the next releases' small fixes; the items parked for other reasons; and usage and integration, a separate, later task. The table also carries the gaps the releases' changelogs record.</p>
