@@ -10,11 +10,14 @@ or three evidence items per decision, each showing part of the rationale. Every 
 demo's own tables after the decision, never written by hand, and every plan assumption uses only prices dated on or
 before the plan's date (as-of-date context).
 """
+import csv
 import datetime as dt
 import json
+import os
 import statistics
 
-from .config import WINDOW_END
+from . import timeline
+from .config import ROOT, WINDOW_END
 
 SCENARIO_ID = "pricing-demo-2026-10-28"
 
@@ -31,6 +34,14 @@ REFINERY_SLUG = {"GB": "galveston-bay", "GV": "garyville", "CB": "catlettsburg",
                  "LA": "los-angeles", "AN": "anacortes", "KN": "kenai"}
 ROLE_IRI = "https://w3id.org/lsc/ontology/modules/organization/role/"
 MEASURE_IRI = "https://w3id.org/lsc/ontology/modules/kpi/measure/"
+# kpi 1.3.0's identifiers, each to its measure, so the dossiers name measures by IRI (EPM-DEC-001-0109).
+IDENTIFIERS = os.path.join(ROOT, "..", "..", "business_architecture", "ontology", "kpi", "measure-identifiers.csv")
+
+
+def measure_iris(identifiers):
+    with open(IDENTIFIERS, newline="") as f:
+        slug = {r["identifier"]: r["measure_id"] for r in csv.DictReader(f)}
+    return [MEASURE_IRI + slug[i] for i in identifiers]
 
 
 def ts(day, hour=18):
@@ -118,20 +129,25 @@ def decisions(d):
                     "options": options, "selected": selected, "expected": expected, "actual": actual_text,
                     "actual_data": actual_data, "rationale": rationale, "uncertainties": uncertainties, "evidence": evidence})
 
-    # D01, D02: run cuts ahead of Hurricane Isaias (timeline.HURRICANE_RUN_CUTS: GV 45%, GB 20% at the peak).
-    for key, code, target in (("D01", "GV", 55), ("D02", "GB", 80)):
+    # D01, D02: run cuts ahead of Hurricane Isaias. The generator takes timeline.HURRICANE_RUN_CUTS (GV 0.45, GB 0.20)
+    # times the storm's intensity off utilization, so the decision is a cut of up to that many points at the storm's
+    # peak, and the floor it expects is the pre-storm utilization less the full cut.
+    for key, code in (("D01", "GV"), ("D02", "GB")):
+        cut = round(100 * timeline.HURRICANE_RUN_CUTS[code])
         base = pre_storm_util(d, code, dt.date(2026, 9, 22), dt.date(2026, 10, 6))
+        floor = round(base - cut)
         storm = d.between(dt.date(2026, 10, 7), dt.date(2026, 10, 15))
         low = min(100 * d.daily[(code, x)]["runs"] / d.refinery[code]["cap"] for x in storm)
         name = d.refinery[code]["name"].split(",")[0]
         add(key, dt.datetime(2026, 10, 6, 8), "operations",
-            f"Cut crude runs at {name} to about {target}% of capacity ahead of Hurricane Isaias",
+            f"Cut crude runs at {name} by up to {cut} points of utilization at the storm's peak, ahead of Hurricane Isaias",
             ["regional-planning-manager", "refinery-scheduler"], [code], ["OPM-0002", "OPM-0024"],
             ["Hurricane Isaias forecast to reach the Gulf Coast on October 7", "Power and dock outages expected at the site"],
             ["Crude tankage near its limit", "Product shipments by water suspended during the storm"],
-            [f"Cut runs to about {target}% of capacity", "Run through at planned rates", "Shut the crude unit down"],
-            f"Cut runs to about {target}% of capacity",
-            f"Crude utilization no lower than about {target}% during the storm (October 7 to 15)",
+            [f"Cut runs by up to {cut} points at the storm's peak", "Run through at planned rates", "Shut the crude unit down"],
+            f"Cut runs by up to {cut} points at the storm's peak",
+            f"Crude utilization no lower than about {floor}% during the storm (October 7 to 15), the pre-storm "
+            f"{base:.0f}% less the full cut",
             f"Lowest utilization during the storm {low:.1f}%, against {base:.1f}% before it",
             {"pre_storm_utilization_pct": base, "lowest_storm_utilization_pct": round(low, 4)},
             "A controlled cut kept the units warm for a fast restart while limiting storm exposure; a full shutdown would "
@@ -140,7 +156,7 @@ def decisions(d):
             [("meeting_note", dt.datetime(2026, 10, 5, 16), "regional-planning-manager",
               f"Storm call: Isaias forecast to come ashore on the 7th. {name} to plan a run cut; scheduling to confirm tankage."),
              ("plan_change", dt.datetime(2026, 10, 6, 7), "refinery-scheduler",
-              f"Plan change: {name} crude runs to about {target}% of capacity from October 7 until the all-clear.")])
+              f"Plan change: {name} crude runs cut by up to {cut} points of utilization from October 7 until the all-clear.")])
 
     # D03: restart Garyville as power returns.
     base = pre_storm_util(d, "GV", dt.date(2026, 9, 22), dt.date(2026, 10, 6))
@@ -321,7 +337,7 @@ def build(out):
         refineries = [REFINERY_IRI + REFINERY_SLUG[c] for c in x["refineries"]]
         log.append((x["id"], x["time"], x["domain"], x["statement"], ";".join(x["roles"]), ";".join(x["refineries"]),
                     ";".join(refineries), ";".join(x["measures"]), x["selected"], x["expected"], x["time"], "synthesized"))
-        entities = refineries + [ROLE_IRI + r for r in x["roles"]] + x["measures"]
+        entities = refineries + [ROLE_IRI + r for r in x["roles"]] + measure_iris(x["measures"])
         dossiers.append((x["id"], SCENARIO_ID, x["time"], x["domain"], x["statement"], json.dumps(x["roles"]),
                          json.dumps(entities), json.dumps(x["drivers"]), json.dumps(x["constraints"]), json.dumps(x["options"]),
                          x["selected"], "approved", x["expected"], x["actual"], json.dumps(x["actual_data"], sort_keys=True),

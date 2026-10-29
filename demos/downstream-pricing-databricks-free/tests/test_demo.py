@@ -660,6 +660,22 @@ def test_e2_hidden_truth_is_never_replicated_or_built():
         assert d["ActualOutcome"] not in e["EvidenceText"] and d["GroundTruthRationale"] not in e["EvidenceText"]
 
 
+def test_e2_every_dossier_entity_is_an_iri_the_ontology_holds():
+    slugs = {r["slug"] for r in csv.DictReader(open(os.path.join(ONTOLOGY, "organization", "roles.csv")))}
+    refineries = set(re.findall(r"refmpc:(refinery-[a-z-]+) a org:Site", open(os.path.join(ONTOLOGY, "ref-mpc", "ref-mpc.ttl")).read()))
+    measures = {r["measure_id"] for r in csv.DictReader(open(os.path.join(ONTOLOGY, "kpi", "measure-classification.csv")))}
+    for d in rows("decision_truth", "decision_dossier"):
+        for iri in json.loads(d["AffectedEntities"]):
+            assert iri.startswith("https://w3id.org/lsc/ontology/modules/"), (d["DecisionId"], iri)
+            tail = iri.rsplit("/", 1)[1]
+            if "/ref-mpc/" in iri:
+                assert tail in refineries, iri
+            elif "/organization/role/" in iri:
+                assert tail in slugs, iri
+            else:
+                assert "/kpi/measure/" in iri and tail in measures, iri
+
+
 def test_e2_every_role_refinery_and_measure_named_exists_in_the_ontology():
     slugs = {r["slug"] for r in csv.DictReader(open(os.path.join(ONTOLOGY, "organization", "roles.csv")))}
     refineries = set(re.findall(r"refmpc:(refinery-[a-z-]+) a org:Site", open(os.path.join(ONTOLOGY, "ref-mpc", "ref-mpc.ttl")).read()))
