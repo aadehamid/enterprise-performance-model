@@ -6,3 +6,4 @@ CREATE DATABASE rightangle;             -- RightAngle, the Commodity Trading and
 CREATE DATABASE aspen_pims;             -- Aspen PIMS, the refinery planning model
 CREATE DATABASE production_accounting;  -- Refinery Production Accounting
 CREATE DATABASE eia_weekly;             -- EIA Weekly Petroleum Status Report, by PADD (public data)
+CREATE DATABASE decision_truth;         -- the decision dossiers: hidden truth, loaded but never replicated

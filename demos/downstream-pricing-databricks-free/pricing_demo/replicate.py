@@ -20,8 +20,9 @@ REPLICA = os.path.join(OUT, "replica")
 
 
 def expected_tables():
-    """{system: [table, ...]} from the generator, the one registry of source tables (finding 22)."""
-    return {system: sorted(tables) for system, tables in generate.build().items()}
+    """{system: [table, ...]} from the generator, the one registry of source tables (finding 22). Only SYSTEMS: the
+    hidden decision dossiers (config.HIDDEN_SYSTEMS) are never replicated."""
+    return {system: sorted(tables) for system, tables in generate.build().items() if system in SYSTEMS}
 
 
 def replicate(replicated_at=None):

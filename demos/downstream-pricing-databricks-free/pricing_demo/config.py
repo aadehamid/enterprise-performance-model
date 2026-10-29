@@ -31,6 +31,12 @@ SYSTEMS = {
     "eia_weekly": "EIA Weekly Petroleum Status Report, by PADD (public data)",
 }
 
+# Databases the loader fills but the replication never reads: the decision dossiers, the hidden truth the tests check
+# the agents' answers against (README.md, "Use cases"; DATA.md, "decision_truth"). Nothing downstream may see them.
+HIDDEN_SYSTEMS = {
+    "decision_truth": "The decision dossiers: the whole of each synthetic decision, read only by the tests",
+}
+
 # Every price and operations row carries one of these: Claude's design under EPM-DEC-001-0028 (EPM-DEC-001-0102, item 2).
 PROVENANCE = ("real", "spot-anchored", "synthesized")
 

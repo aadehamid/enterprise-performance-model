@@ -119,3 +119,32 @@ SELECT v.SeriesKey AS Series_Key, v.SeriesId AS Series_Id, s.Measure AS Measure_
        v.WeekEnding AS Week_Ending_Date, CAST(v.Value AS DECIMAL(14,2)) AS Value_Amount, s.Units AS Unit_Code,
        v.DemoProvenance AS Demo_Provenance_Label, v._change_ts AS Record_Update_Datetime
 FROM ${catalog}.replica_eia_weekly.weekly_value v JOIN ${catalog}.replica_eia_weekly.series s ON s.SeriesKey = v.SeriesKey;
+
+-- Added for E2 (2026-10-28): plan versions with their assumptions, and the decision log and evidence items the agents
+-- may read. No counterpart in the shared idp_sbx layer; the names follow its style.
+CREATE OR REPLACE TABLE ${catalog}.silver_udm_core.refinery_plan_version_fact AS
+SELECT PlanVersionId AS Plan_Version_Id, RefineryCode AS Refinery_Code, PlanMonth AS Plan_Month, PlanDate AS Plan_Date,
+       VersionNum AS Version_Number, AssumptionsFromDate AS Assumptions_From_Date, AssumptionsThroughDate AS Assumptions_Through_Date,
+       CAST(AssumedBenchmarkCrackUsdPerBbl AS DECIMAL(10,4)) AS Assumed_Benchmark_Crack_Usd_Per_Bbl,
+       CAST(BenchmarkCrackPriceMasterId AS STRING) AS Benchmark_Crack_Price_Master_ID,
+       CAST(AssumedWtiUsdPerBbl AS DECIMAL(10,4)) AS Assumed_Wti_Usd_Per_Bbl,
+       CAST(AssumedNyhUlsdUsdPerGal AS DECIMAL(10,4)) AS Assumed_Nyh_Ulsd_Usd_Per_Gal,
+       CAST(AssumedNyhRbobUsdPerGal AS DECIMAL(10,4)) AS Assumed_Nyh_Rbob_Usd_Per_Gal,
+       CAST(PlannedCrudeRunsMbpd AS DECIMAL(10,1)) AS Planned_Crude_Runs_Mbpd, CAST(PlannedUtilizationPct AS DECIMAL(6,2)) AS Planned_Utilization_Pct,
+       CAST(PlannedGasolineYieldPct AS DECIMAL(6,2)) AS Planned_Gasoline_Yield_Pct,
+       CAST(PlannedDistillateYieldPct AS DECIMAL(6,2)) AS Planned_Distillate_Yield_Pct,
+       DemoProvenance AS Demo_Provenance_Label, _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_aspen_pims.plan_version;
+
+CREATE OR REPLACE TABLE ${catalog}.silver_mdm_core.decision_dim AS
+SELECT DecisionId AS Decision_Id, DecisionTime AS Decision_Datetime, DecisionDomain AS Decision_Domain, Statement AS Decision_Statement,
+       OwnerRoleSlugs AS Owner_Role_Slugs, RefineryCodes AS Refinery_Codes, RefineryIris AS Refinery_Iris,
+       MeasureIdentifiers AS Measure_Identifiers, SelectedOption AS Selected_Option, ExpectedOutcome AS Expected_Outcome,
+       DemoProvenance AS Demo_Provenance_Label, _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_aspen_pims.decision_log;
+
+CREATE OR REPLACE TABLE ${catalog}.silver_udm_core.decision_evidence_fact AS
+SELECT EvidenceId AS Evidence_Id, DecisionId AS Decision_Id, EvidenceKind AS Evidence_Kind, AuthoredAt AS Authored_Datetime,
+       AuthorRoleSlug AS Author_Role_Slug, EvidenceText AS Evidence_Text, Synthetic AS Synthetic_Flag,
+       DemoProvenance AS Demo_Provenance_Label, _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_aspen_pims.decision_evidence;

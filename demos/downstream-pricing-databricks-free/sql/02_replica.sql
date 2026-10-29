@@ -66,3 +66,14 @@ SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/eia_weekly/ser
 
 CREATE OR REPLACE TABLE ${catalog}.replica_eia_weekly.weekly_value AS
 SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/eia_weekly/weekly_value.parquet', format => 'parquet');
+
+-- Added for E2 (2026-10-28): plan versions, the decision log and its evidence items, from Aspen PIMS. The decision
+-- dossiers (database decision_truth) are hidden truth and never replicated (config.HIDDEN_SYSTEMS).
+CREATE OR REPLACE TABLE ${catalog}.replica_aspen_pims.plan_version AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/aspen_pims/plan_version.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_aspen_pims.decision_log AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/aspen_pims/decision_log.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_aspen_pims.decision_evidence AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/aspen_pims/decision_evidence.parquet', format => 'parquet');

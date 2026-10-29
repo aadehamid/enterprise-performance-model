@@ -21,7 +21,7 @@ Three years of trading days, from 2023-10-21 to 2026-10-20 (`WINDOW_START`, `WIN
 
 ## The source databases
 
-Seven Postgres databases, one per source (`SYSTEMS` in [`pricing_demo/config.py`](pricing_demo/config.py)). Six stand for MPC's source systems under public or generic names (README.md, "The source systems"); `eia_weekly` holds EIA's public weekly data, landed as its own source so the replication and the layers treat it like the others. Each section of [`generate.py`](pricing_demo/generate.py)'s `build()` makes one database's tables.
+Seven Postgres databases, one per source (`SYSTEMS` in [`pricing_demo/config.py`](pricing_demo/config.py)). Six stand for MPC's source systems under public or generic names (README.md, "The source systems"); `eia_weekly` holds EIA's public weekly data, landed as its own source so the replication and the layers treat it like the others. An eighth database, `decision_truth`, holds the hidden decision dossiers and is never replicated (`HIDDEN_SYSTEMS`; its section is below). Each section of [`generate.py`](pricing_demo/generate.py)'s `build()` makes one database's tables; the plan versions, decisions and evidence come from [`decisions.py`](pricing_demo/decisions.py), which reads the tables `build()` has already made.
 
 ### `price_reference` (Price Reference Master)
 
@@ -64,6 +64,11 @@ Seven Postgres databases, one per source (`SYSTEMS` in [`pricing_demo/config.py`
 | Table | Grain | Rows | How it is made |
 |---|---|---|---|
 | `plan_target` | refinery x month | 481 | 13 refineries x 37 months (October 2023 to October 2026). Planned utilization is the average of EIA's weekly U.S. utilization in the same month a year earlier (real input), capped at 97%; planned yields are fixed with a seasonal tilt: distillate 35.5% from October to February and 34.0% otherwise, gasoline 47.5% from May to August and 46.5% otherwise (synthesized) |
+| `plan_version` | refinery x plan month | 455 | One version per plan target, made on the 15th of the month before the plan month. Its assumptions are the averages of the 20 trading days up to and including that date, never later (17 for the 13 December 2023 versions, whose plan date of 2023-11-15 has only 17 trading days of data behind it; a plan date with fewer than 10 gets no version, which is why October and November 2023 have none): the region's benchmark crack (the price master the refinery operations gold table joins), WTI, NYH ULSD and NYH RBOB, from `pricedetail`; its runs and yields are the plan target's. October and November 2023 have no version, because no price data precedes their plan dates (synthesized; [`pricing_demo/decisions.py`](pricing_demo/decisions.py), `plan_versions()`) |
+| `decision_log` | decision | 10 | The public part of each synthetic decision: when, what, the owner roles (slugs from the ontology's `organization/roles.csv`), the refineries (with their `ref-mpc` IRIs), the measures (KPI and OPM identifiers from `kpi` 1.3.0), the option chosen and the outcome expected. No driver, constraint, option list, rationale or actual outcome (synthesized; `decisions.py`, `decisions()` and `build()`) |
+| `decision_evidence` | evidence item | 22 | Two or three short items per decision, a meeting note, an approval or a plan change, each written at the decision and showing only part of its rationale, with the author's role (synthesized; `decisions.py`, `decisions()`) |
+
+The decision log and its evidence live in the planning system because backcasting, the practice that compares decisions with outcomes (Regional Backcasting, CM 1.1.5, and Distribution Backcasting, CM 1.1.6, in the ontology's `core`), is the planning function's, and plan changes are its records.
 
 ### `production_accounting` (Refinery Production Accounting)
 
@@ -91,6 +96,25 @@ The 28 series, by measure; each is cited by its EIA series ID and was pulled on 
 
 Product supplied and exports are weekly for the U.S. only: distillate product supplied PET.WDIUPUS2.W, finished motor gasoline product supplied PET.WGFUPUS2.W, distillate exports PET.WDIEXUS2.W and motor gasoline exports PET.W_EPM0F_EEX_NUS-Z00_MBBLD.W (thousand barrels per day).
 
+### `decision_truth` (hidden: loaded, never replicated)
+
+| Table | Grain | Rows | How it is made |
+|---|---|---|---|
+| `decision_dossier` | decision | 10 | The whole of each decision, in the dossier shape of the decision owner's enterprise-context-engineering repository (README.md, "Use cases"): decision time, statement, owner roles, affected entities (refinery, role and measure identifiers), drivers, constraints, options, the selected option, approval status, the expected outcome, the actual outcome, the data behind it, the ground-truth rationale, known uncertainties and a synthetic flag. Every actual outcome is computed from the tables above after the decision, never written by hand (synthesized; `decisions.py`, `decisions()` and `build()`) |
+
+This database is the hidden truth the tests check the agents' answers against, so the agents must never see it. It is in `HIDDEN_SYSTEMS`, not `SYSTEMS` ([`pricing_demo/config.py`](pricing_demo/config.py)): `load_postgres` fills it, and the replication, the upload and the SQL never read it, which the tests check. The ten decisions:
+
+| Decision | What | Outcome against expectation |
+|---|---|---|
+| D01, D02 | Cut crude runs at Garyville and Galveston Bay ahead of Hurricane Isaias | The lowest utilization during the storm, computed from `refinery_daily` |
+| D03 | Restart Garyville unit by unit as power returns | The first day back above 90% of pre-storm runs |
+| D04, D05 | Hold the Robinson and Anacortes turnarounds on schedule | The throughput lost against the 28 days before, and its margin at the region's crack on each day |
+| D06 | Raise distillate yield targets while diesel is scarce | The system distillate yield from 1 to 20 October (the window's end) against 1 to 19 September, before the scarcity began on 20 September |
+| D07 | Ship a ULSD cargo to New York Harbor rather than export it | The domestic freight premium over the export route, from `freight_rate` |
+| D08 | Defer crude purchases after the G7 emergency-stock release | WTI ten trading days later, from EIA's spot in `pricedetail` |
+| D09 | Hold export nominations as China restarts product exports | NYH ULSD eight trading days later |
+| D10 | Hold Gulf Coast runs through the weakest 20-day crack before August 2026 | The USGC 3-2-1 crack twenty trading days later |
+
 ## The Databricks layers
 
 The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copies every source table to Parquet with DuckDB, adding `_change_ts` and `_replicated_at`; [`pricing_demo/databricks.py`](pricing_demo/databricks.py) uploads the files and runs the SQL in [`sql/`](sql/). The replica tables hold exactly the source rows ([`sql/02_replica.sql`](sql/02_replica.sql)).
@@ -102,10 +126,14 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 | Silver, facts (`silver_udm_core`) | `mpr_price_detail_fact`, `mips_price_assessment_fact` | as their source tables | 599,148, 266,288 | Renamed and typed |
 | | `refinery_production_daily_fact`, `refinery_plan_target_fact`, `ctrm_deal_fact` | refinery-day; refinery-month; deal | 9,724, 481, 2,673 | Renamed and typed; the deal fact joins each deal to its movement |
 | | `refinery_unit_daily_fact`, `freight_rate_fact`, `eia_weekly_fact` | unit-day; route-day; series-week | 76,296, 1,496, 8,792 | Renamed and typed; the EIA fact carries each series' measure, area and unit |
+| | `refinery_plan_version_fact`, `decision_evidence_fact` | plan version; evidence item | 455, 22 | Renamed and typed |
+| Silver, dimensions (`silver_mdm_core`), E2 | `decision_dim` | decision | 10 | The decision log's public columns, renamed |
 | Gold (`gold_commercial_core`) | `mpr_mips_crack_spread_price_fact` | crack series x day x forward period | 569,976 | The MPR settle price for the 127 crack series on the three crack sheets, unchanged, 748 days x 6 periods ([`sql/04_gold.sql`](sql/04_gold.sql)) |
 | | `mips_mpr_executive_summary_fact` | assessment | 266,288 | Each assessment joined to its group, parent group, sheet, batch and price master |
 | | `refinery_operations_daily_fact` | refinery-day | 9,724 | Utilization, yields, plan, the region's benchmark crack and the demo's R&M margin per barrel |
 | | `refinery_unit_operations_daily_fact` | unit-day | 76,296 | Each unit's throughput over its capacity: unit utilization. Its grain is finer than the refinery operations view's, so the view does not carry it |
+| | `refinery_plan_backcast_fact` | plan version | 455 | Each plan version against its month: the assumed crack, runs, utilization and yields beside the averages of the refinery operations gold table over the month's trading days, with the crack and utilization errors |
+| | `decision_evidence_detail_fact` | evidence item | 22 | Each evidence item with its decision's public columns: what the agents may read about a decision |
 | Metric views (`semantic_sem_commercial`) | `mpr_mips_crack_spread_price_fact_metrics_vw` | as the crack gold | 569,976 | [`sql/05_metric_views.sql`](sql/05_metric_views.sql) |
 | | `mips_mpr_executive_summary_fact_vw` | as the Executive Summary gold | 266,288 | |
 | | `mips_mpr_benchmark_prices_fact_vw` | price detail of the five benchmarks, periods 0 to 7 (Brent to 6), of the last 160 days | 4,134 when counted, with Databricks' `CURRENT_DATE()` at 2026-10-29 (UTC) | The window moves with `CURRENT_DATE()`, so the count changes from day to day |
@@ -114,3 +142,5 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 ## The runs
 
 Rows from `python -m pricing_demo.databricks counts` on 2026-10-28, after the generator, `load_postgres`, `replicate`, `setup`, `upload` and `build` ran on this code. The pipeline ran twice that day with the same counts in all 46 objects: from the local container (`127.0.0.1:55432`), then from the exe.dev VM `databases.exe.xyz` through the SSH tunnel (README.md, "Run it"), after `eia_weekly` was created there for the `demo` role. Every source table's count above is the generator's, which `load_postgres` checks after each load and the replica's manifest records; the build checks each replica table against that manifest.
+
+The decision trail ran later on 2026-10-28, again twice with the same counts, now in 54 objects: the 46 above, three replica tables (`plan_version` 455, `decision_log` 10, `decision_evidence` 22), `refinery_plan_version_fact` 455, `decision_evidence_fact` 22, `decision_dim` 10, `refinery_plan_backcast_fact` 455 and `decision_evidence_detail_fact` 22. The VM run came after `decision_truth` was created there for the `demo` role. `load_postgres` loaded `decision_dossier`'s 10 rows into `decision_truth` in both runs, and no Databricks object holds them. On 2026-10-29 the source databases were loaded again in both places after the review fixes (the dossiers' measures as `kpi` IRIs; D01 and D02 describing the cut as the generator applies it), with the same row counts.
