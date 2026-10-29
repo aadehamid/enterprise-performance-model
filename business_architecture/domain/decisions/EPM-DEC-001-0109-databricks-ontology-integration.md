@@ -14,7 +14,7 @@ The ontology is done (EPM-DEC-001-0107), and the pricing demo rebuilds the prici
 What Claude found first, from the repository:
 
 - Only one measure had an identifier: Crack Spreads Pricing carries KPI-0001, the crack-spread Genie agent's identifier (EPM-DEC-001-0097, item 3). The `kpi` module holds 41 measures in eight kinds, and classes Crack Spreads as a market indicator.
-- The demo has two Genie agents, each bound to one metric view, and a refinery operations metric view that already holds utilization, planned utilization, yields, R&M margin per barrel, margin capture and opex per barrel over 1,846 refinery-days.
+- The demo has two Genie agents: Crack Spread Price Analytics, bound to the crack-spread metric view, and Executive Summary KPIs Analytics, bound to the Executive Summary and benchmark-prices metric views. A refinery operations metric view already holds utilization, planned utilization, yields, R&M margin per barrel, margin capture and opex per barrel over 1,846 refinery-days.
 - The projection driver writes the whole ontology to Databricks as a Delta table of triples, `epm_triples`.
 
 What Claude found from primary sources, on 2026-10-28:

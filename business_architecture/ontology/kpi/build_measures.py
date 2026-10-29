@@ -112,6 +112,17 @@ def load():
         elif prefix and not re.fullmatch(prefix + r"-\d{4}", ident):
             problems.append(f"{m}: a {r['class']} needs a {prefix}-nnnn identifier, not {ident!r}")
         r["identifier"] = ident
+    # Each prefix numbers its measures from 1 in the classification table's order, with no gap (EPM-DEC-001-0109);
+    # KPI-0001 is the pricing assets' identifier, so the KPI run continues from it.
+    for prefix, start in (("KPI", 1), ("OPM", 1)):
+        run = [r for r in rows if r.get("identifier", "").startswith(prefix + "-")]
+        if prefix == "KPI":
+            run = [r for r in run if r["measure_id"] not in PREFIX_EXCEPTIONS]
+            start = 1 + sum(1 for v in PREFIX_EXCEPTIONS.values() if v.startswith("KPI-"))
+        for i, r in enumerate(run, start):
+            if r["identifier"] != f"{prefix}-{i:04d}":
+                problems.append(f"{r['measure_id']}: {r['identifier']} breaks the {prefix} run, which needs {prefix}-{i:04d} "
+                                "here (in the classification table's order, no gap)")
     for r in rows:
         m = r["measure_id"]
         if r["class"] not in KINDS:

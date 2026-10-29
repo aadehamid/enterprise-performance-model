@@ -1026,7 +1026,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### party 2.1.0 and integration 2.5.0 are released (2026-10-28)
 - The decision owner's close-out answers on points 11 and 15: Drop Tank, GasBuddy and the DTN File Server are
-  defined from their own public pages, each citing its source in tier 4 (Drop Tank from the 2018 press release on
+  defined from their vendors' own published words (Drop Tank's from a 2018 press release, its site being gone), each citing its source in tier 4 (Drop Tank from the 2018 press release on
   Marathon's MakeItCount program, because its own site now redirects to PDI Technologies); Federal Health stays
   undefined; Polaris gets a note with the decision owner's belief that it is bought. `integration` 2.5.0 tiers the
   three new sources and requires the current releases. Both are minors Claude approved under the delegation

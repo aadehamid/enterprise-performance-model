@@ -195,7 +195,8 @@ class Release130(unittest.TestCase):
         from unittest import mock
         with open(bm.IDENTIFIER_TABLE, newline="") as f:
             table = list(csv.DictReader(f))
-        cases = (("crude-utilization", "KPI-0099", "needs a OPM-nnnn identifier"),  # a KPI ID on an operational metric
+        cases = (("crude-utilization", "OPM-0003", "breaks the OPM run"),             # an allowed ID out of order
+                 ("crude-utilization", "KPI-0099", "needs a OPM-nnnn identifier"),  # a KPI ID on an operational metric
                  ("crack-spreads", "OPM-0099", "must stay KPI-0001"),                # the shared asset's ID changed
                  ("tar-activities-tracker", "OPM-0099", "has no identifier"))          # an ID on a tracker
         for measure, bad, message in cases:
