@@ -80,7 +80,8 @@ def exchange_holidays(start, end):
 # Process units at each refinery: code, name, capacity as a share of crude capacity, normal load as a share of crude
 # runs, and the smallest crude capacity (mbpcd) a refinery has for the unit to be present. The unit kinds are the ones
 # MPC's FY2025 Form 10-K, Item 1, names (atmospheric and vacuum distillation, fluid catalytic cracking, hydrocracking,
-# catalytic reforming, coking, desulfurization); which refinery has which unit, and every ratio, are generated:
+# catalytic reforming, coking, desulfurization, sulfur recovery), except sulfur recovery, which the demo leaves out, and
+# with desulfurization split by stream; which refinery has which unit, and every ratio, are generated:
 # the 10-K gives no per-refinery unit list.
 UNITS = (
     ("ATM", "Atmospheric distillation", 1.00, 1.00, 0),

@@ -71,7 +71,7 @@ Seven Postgres databases, one per source (`SYSTEMS` in [`pricing_demo/config.py`
 |---|---|---|---|
 | `refinery` | one refinery | 13 | MPC's 13 refineries and their FY2025 crude capacities (real) |
 | `refinery_daily` | refinery x trading day | 9,724 | Crude runs from EIA's weekly U.S. utilization with noise, cut by the scenario's hurricane and turnarounds (`HURRICANE_RUN_CUTS`, `TURNAROUNDS`); yields and opex generated (synthesized) |
-| `unit_daily` | refinery x process unit x trading day | 76,296 | Up to nine units per refinery (`UNITS` in `generate.py`). The unit kinds are the ones MPC's FY2025 Form 10-K, Item 1, names ("atmospheric and vacuum distillation, fluid catalytic cracking, hydrocracking, catalytic reforming, coking, desulfurization"), with desulfurization split by stream into distillate, naphtha and gasoline units, a split the demo makes; which refinery has which unit, and every capacity and load ratio, are generated, because the 10-K gives no per-refinery unit list. Hydrocracking appears only at refineries of 250 mbpcd or more and coking at 140 mbpcd or more. Atmospheric distillation runs exactly the refinery's crude runs; every other unit runs a share of them with noise, never above its capacity (synthesized, its own random stream) |
+| `unit_daily` | refinery x process unit x trading day | 76,296 | Up to nine units per refinery (`UNITS` in `generate.py`). The unit kinds are the ones MPC's FY2025 Form 10-K, Item 1, names ("atmospheric and vacuum distillation, fluid catalytic cracking, hydrocracking, catalytic reforming, coking, desulfurization, sulfur recovery"), except sulfur recovery, which the demo does not model, and with desulfurization split by stream into distillate, naphtha and gasoline units, a split the demo makes; which refinery has which unit, and every capacity and load ratio, are generated, because the 10-K gives no per-refinery unit list. Hydrocracking appears only at refineries of 250 mbpcd or more and coking at 140 mbpcd or more. Atmospheric distillation runs exactly the refinery's crude runs; every other unit runs a share of them with noise, never above its capacity (synthesized, its own random stream) |
 
 ### `eia_weekly` (EIA's Weekly Petroleum Status Report, by PADD)
 
@@ -108,7 +108,7 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 | | `refinery_unit_operations_daily_fact` | unit-day | 76,296 | Each unit's throughput over its capacity: unit utilization. Its grain is finer than the refinery operations view's, so the view does not carry it |
 | Metric views (`semantic_sem_commercial`) | `mpr_mips_crack_spread_price_fact_metrics_vw` | as the crack gold | 569,976 | [`sql/05_metric_views.sql`](sql/05_metric_views.sql) |
 | | `mips_mpr_executive_summary_fact_vw` | as the Executive Summary gold | 266,288 | |
-| | `mips_mpr_benchmark_prices_fact_vw` | price detail of the five benchmarks, periods 0 to 7 (Brent to 6), of the last 160 days | 4,134 on 2026-10-28 | The window moves with `CURRENT_DATE()`, so the count changes from day to day |
+| | `mips_mpr_benchmark_prices_fact_vw` | price detail of the five benchmarks, periods 0 to 7 (Brent to 6), of the last 160 days | 4,134 when counted, with Databricks' `CURRENT_DATE()` at 2026-10-29 (UTC) | The window moves with `CURRENT_DATE()`, so the count changes from day to day |
 | | `refinery_operations_metrics_vw` | as the refinery operations gold | 9,724 | |
 
 ## The runs

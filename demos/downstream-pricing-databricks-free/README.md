@@ -28,6 +28,7 @@ docker compose -f docker/docker-compose.yml up -d          # the seven source da
 # docker/init/ only on an empty data directory (hub.docker.com/_/postgres, "Initialization scripts", read 2026-10-28).
 #   for p in mips:price_assessment mpr:price_reference kittyhawk:reference_data_hub ctrm:rightangle planning:aspen_pims prodacct:production_accounting; do
 #     docker exec pricing-demo-sources psql -U demo -d postgres -c "ALTER DATABASE ${p%%:*} RENAME TO ${p##*:}"; done
+#   docker exec pricing-demo-sources psql -U demo -d postgres -c "CREATE DATABASE eia_weekly"   # the seventh, since E1
 uv sync
 uv run python -m pricing_demo.load_postgres                # generate and load the source tables
 uv run python -m pricing_demo.replicate                    # Postgres -> Parquet with DuckDB
@@ -80,7 +81,7 @@ The window now runs from 2023-10-21 to 2026-10-20: 748 trading days. The pipelin
 | `freight_rate` and its silver fact | 1,496 (2 routes, 748 days) |
 | `market_event` and its silver dimension | 9 |
 | `eia_weekly.weekly_value` and its silver fact | 8,792 (28 series from 2020-10-16) |
-| `mips_mpr_benchmark_prices_fact_vw` | 4,134 on 2026-10-28 (the last 160 days) |
+| `mips_mpr_benchmark_prices_fact_vw` | 4,134 when counted (the last 160 days by Databricks' `CURRENT_DATE()`, which was already 2026-10-29 in UTC while the local date was 2026-10-28) |
 
 The Genie agents were not asked again on the three-year data; their instructions and views are unchanged.
 
