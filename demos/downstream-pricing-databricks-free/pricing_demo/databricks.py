@@ -27,10 +27,12 @@ SCHEMAS = (("replica_landing",) + tuple(f"replica_{s}" for s in SYSTEMS)
 # What a complete build holds outside the replica layer: every silver and gold table and metric view.
 BUILT = {
     "silver_mdm_core": {"mpr_price_master_dim", "mips_price_batch_dim", "mips_price_sheet_dim", "mips_price_group_dim",
-                        "mips_price_assessment_group_dim", "refinery_dim"},
+                        "mips_price_assessment_group_dim", "refinery_dim", "market_event_dim", "eia_weekly_series_dim"},
     "silver_udm_core": {"mpr_price_detail_fact", "mips_price_assessment_fact", "refinery_production_daily_fact",
-                        "refinery_plan_target_fact", "ctrm_deal_fact"},
-    "gold_commercial_core": {"mpr_mips_crack_spread_price_fact", "mips_mpr_executive_summary_fact", "refinery_operations_daily_fact"},
+                        "refinery_plan_target_fact", "ctrm_deal_fact", "refinery_unit_daily_fact", "freight_rate_fact",
+                        "eia_weekly_fact"},
+    "gold_commercial_core": {"mpr_mips_crack_spread_price_fact", "mips_mpr_executive_summary_fact", "refinery_operations_daily_fact",
+                             "refinery_unit_operations_daily_fact"},
     "semantic_sem_commercial": {"mpr_mips_crack_spread_price_fact_metrics_vw", "mips_mpr_executive_summary_fact_vw",
                                 "mips_mpr_benchmark_prices_fact_vw", "refinery_operations_metrics_vw"},
 }

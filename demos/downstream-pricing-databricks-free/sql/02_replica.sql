@@ -51,3 +51,18 @@ SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/production_acc
 
 CREATE OR REPLACE TABLE ${catalog}.replica_production_accounting.refinery_daily AS
 SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/production_accounting/refinery_daily.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_reference_data_hub.market_event AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/reference_data_hub/market_event.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_rightangle.freight_rate AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/rightangle/freight_rate.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_production_accounting.unit_daily AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/production_accounting/unit_daily.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_eia_weekly.series AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/eia_weekly/series.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_eia_weekly.weekly_value AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/eia_weekly/weekly_value.parquet', format => 'parquet');
