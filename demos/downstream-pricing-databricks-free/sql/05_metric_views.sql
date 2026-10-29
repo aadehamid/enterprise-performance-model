@@ -5,8 +5,9 @@
 -- The benchmark view keeps its known defect on purpose: it multiplies all five instruments by 100, which is right only
 -- for NYMEX HO and RBOB, and keeps its 160-day window (EPM-DEC-001-0097, Known gaps).
 -- Identifiers (E3): each measure's comment starts with the KPI or OPM identifiers it implements (kpi 1.3.0,
--- measure-identifiers.csv), or with "No identifier"; its display name and synonyms carry them too, and the view's
--- comment and its epm_measure_identifiers tag list every identifier its measures carry. The measure names stay the
+-- measure-identifiers.csv), or with "No identifier". A measure with identifiers carries them in its display name and
+-- synonyms too; a measure with none has neither. The view's comment and its epm_measure_identifiers tag list every
+-- identifier its measures carry. The measure names stay the
 -- shared ones, which the Genie agents query. Fields: Databricks, "Metric view YAML syntax reference" (comment,
 -- display_name, synonyms; YAML 1.1), and "Apply tags to Unity Catalog securable objects" (tags on views).
 
