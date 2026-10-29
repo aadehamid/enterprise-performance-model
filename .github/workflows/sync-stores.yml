@@ -1,0 +1,81 @@
+name: Sync stores
+
+# On a release tag (<module>-v<version>, as the releases are tagged: kpi-v1.3.0), runs the ontology-to-lpg
+# driver against AuraDB and Databricks, then marks both (business_architecture/ontology/projection/sync_stores.py).
+# Inactive until the decision owner adds the logins below as repository secrets: the first step checks them, and
+# without all of them the job ends there with a notice and every later step is skipped. Secrets cannot be read in
+# an if: condition, so they pass through job-level environment variables ("Using secrets in GitHub Actions", GitHub
+# Docs, read 2026-10-29). The tag filter follows "Workflow syntax for GitHub Actions", on.<push>.<branches|tags>,
+# where a pattern that starts with * must be quoted (GitHub Docs, read 2026-10-29). Not yet run with secrets: its
+# first run is its test.
+
+on:
+  push:
+    tags: ['*-v*']
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      EPM_AURA_URI: ${{ secrets.EPM_AURA_URI }}
+      EPM_AURA_USERNAME: ${{ secrets.EPM_AURA_USERNAME }}
+      EPM_AURA_PASSWORD: ${{ secrets.EPM_AURA_PASSWORD }}
+      EPM_DATABRICKS_HOST: ${{ secrets.EPM_DATABRICKS_HOST }}
+      EPM_DATABRICKS_TOKEN: ${{ secrets.EPM_DATABRICKS_TOKEN }}
+      EPM_DATABRICKS_HTTP_PATH: ${{ secrets.EPM_DATABRICKS_HTTP_PATH }}
+      EPM_SKILLS_TOKEN: ${{ secrets.EPM_SKILLS_TOKEN }}
+    steps:
+      - name: Check the logins
+        id: logins
+        run: |
+          missing=""
+          for v in EPM_AURA_URI EPM_AURA_USERNAME EPM_AURA_PASSWORD EPM_DATABRICKS_HOST EPM_DATABRICKS_TOKEN \
+                   EPM_DATABRICKS_HTTP_PATH EPM_SKILLS_TOKEN; do
+            [ -n "${!v}" ] || missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then
+            echo "::notice::Store sync is inactive: add these repository secrets to turn it on:$missing"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.logins.outputs.ready == 'true'
+        uses: actions/checkout@v7
+      - if: steps.logins.outputs.ready == 'true'
+        name: Check out the skills repository (the ontology-to-lpg driver)
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ github.repository_owner }}/personal-agent-skills
+          ref: 6742df7aecc269d79d222e187dad35c4b2d3d002  # pinned: move it when the driver changes
+          token: ${{ secrets.EPM_SKILLS_TOKEN }}
+          path: personal-agent-skills
+      - if: steps.logins.outputs.ready == 'true'
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - if: steps.logins.outputs.ready == 'true'
+        uses: astral-sh/setup-uv@v10.2.0
+      - if: steps.logins.outputs.ready == 'true'
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "21"
+      - if: steps.logins.outputs.ready == 'true'
+        name: Write the login files and fetch ROBOT where epm-run.json expects them
+        run: |
+          umask 077
+          mkdir -p ~/.config/neo4j ~/.config/databricks ~/epm-lpg
+          printf 'NEO4J_URI=%s\nNEO4J_USERNAME=%s\nNEO4J_PASSWORD=%s\n' \
+            "$EPM_AURA_URI" "$EPM_AURA_USERNAME" "$EPM_AURA_PASSWORD" > ~/.config/neo4j/aura.env
+          printf 'DATABRICKS_HOST=%s\nDATABRICKS_TOKEN=%s\nDATABRICKS_HTTP_PATH=%s\nDATABRICKS_CATALOG=workspace\nDATABRICKS_SCHEMA=epm_ontology\n' \
+            "$EPM_DATABRICKS_HOST" "$EPM_DATABRICKS_TOKEN" "$EPM_DATABRICKS_HTTP_PATH" > ~/.config/databricks/epm.env
+          curl -fsSL -o ~/epm-lpg/robot.jar https://github.com/ontodev/robot/releases/download/v1.9.10/robot.jar
+      - if: steps.logins.outputs.ready == 'true'
+        name: Run the driver (its Neo4j, AuraDB and Databricks)
+        working-directory: personal-agent-skills/skills/data/ontology-to-lpg/scripts
+        run: uv run --no-project --with rdflib python3 run_projection.py --config "$GITHUB_WORKSPACE/business_architecture/ontology/projection/skill-run/epm-run.json"
+      - if: steps.logins.outputs.ready == 'true'
+        name: Mark AuraDB and Databricks
+        working-directory: business_architecture/ontology/projection
+        run: uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py mark --store aura --store databricks
