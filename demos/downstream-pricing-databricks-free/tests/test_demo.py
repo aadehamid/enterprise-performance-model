@@ -1,6 +1,7 @@
 """Offline tests of the demo's data: determinism, the shapes the shared assets have, the provenance labels, and the
 scenario's relabelling. Expected values are written out by hand from EPM-DEC-001-0097 and the EIA cache."""
 import csv
+import glob
 import datetime as dt
 import hashlib
 import os
@@ -1261,3 +1262,12 @@ def test_e6_the_outside_tables_flow_through_the_replica_and_silver_layers():
     assert {"external_event_fact", "forward_scan_fact"} <= databricks.BUILT["silver_udm_core"]
     assert "external_citation_dim" in databricks.BUILT["silver_mdm_core"]
 
+
+def test_e6_citation_titles_name_no_person():
+    # The repository names no person; a source's byline is dropped from its title (Pi, round 1 on E6).
+    from pricing_demo import outside
+    assert outside.title_without_byline("The Diesel Forecast - by Dr. Jane Doe") == "The Diesel Forecast"
+    assert outside.title_without_byline("Refinery outages rise by 5% in PADD 3") == "Refinery outages rise by 5% in PADD 3"
+    for path in sorted(glob.glob(os.path.join(ROOT, "data", "parallel", "*.json"))):
+        for c in json.load(open(path)).get("citations", []):
+            assert not outside.BYLINE.search(c["title"] or ""), (path, c["title"])

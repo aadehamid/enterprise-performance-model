@@ -34,6 +34,7 @@ import datetime as dt
 import hashlib
 import json
 import os
+import re
 
 from .config import DATA, WINDOW_END, WINDOW_START, env
 from .decisions import IDENTIFIERS, REFINERY_IRI, REFINERY_SLUG
@@ -208,15 +209,24 @@ def api_key():
             if line.strip().startswith("PARALLEL_API_KEY="):
                 key = line.split("=", 1)[1].strip().strip('"').strip("'")
     if not key:
-        raise SystemExit("PARALLEL_API_KEY is not set (environment or ~/.config/parallel/api.env)")
+        raise SystemExit("PARALLEL_API_KEY is not set (environment, the demo's .env or ~/.config/parallel/api.env)")
     return key
+
+
+# a trailing author byline ("... - by Dr. Jane Doe"): the repository names no person, so titles are kept without it
+BYLINE = re.compile(r"\s*[-|:]?\s*\bby\s+(?:Dr\.\s+|Prof\.\s+)?[A-Z][\w'.-]*(?:\s+[A-Z][\w'.-]*)+\s*$")
+
+
+def title_without_byline(title):
+    return BYLINE.sub("", title or "")
 
 
 def call(client, request_id, body, now=None):
     """Send one request and cache the response, its request and the time it was retrieved. Excerpts are dropped:
-    the demo keeps each citation's URL and title only."""
+    the demo keeps each citation's URL and title only, the title without an author's byline."""
     response = dict(client.post("/v1/decisions", body=body, cast_to=object))
-    citations = [{"url": c.get("url"), "title": c.get("title")} for c in response.get("citations", [])]
+    citations = [{"url": c.get("url"), "title": title_without_byline(c.get("title"))}
+                 for c in response.get("citations", [])]
     saved = {"request_id": request_id, "request_key": request_key(body), "request": body,
              "retrieved_at": (now or dt.datetime.now(dt.timezone.utc)).isoformat(timespec="seconds"),
              "mode": response.get("mode"), "answers": response.get("answers", {}), "citations": citations,
@@ -288,7 +298,7 @@ def tables(out):
             continue
         retrieved = dt.datetime.fromisoformat(saved["retrieved_at"]).replace(tzinfo=None)
         for rank, c in enumerate(saved["citations"], 1):
-            citations.append((request_id, rank, c["url"], " ".join((c["title"] or "").split()), retrieved, retrieved))
+            citations.append((request_id, rank, c["url"], " ".join(title_without_byline(c["title"]).split()), retrieved, retrieved))
         if step == "events":
             value, p, _, label, refusal = interpret(saved["answers"]["happened"])
             status = {"yes": "confirmed", "no": "not found", "uncertain": "uncertain"}.get(value, "unknown")
