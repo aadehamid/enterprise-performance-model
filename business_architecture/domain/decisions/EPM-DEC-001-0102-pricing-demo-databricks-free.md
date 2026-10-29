@@ -70,3 +70,4 @@ For the amendment of 2026-10-28, from `business_architecture/ontology/step4/revi
 - The demo's offline tests run in `scripts/check.sh`.
 - The five candidate measures are listed for the decision owner, with the sources searched.
 - *2026-10-28:* the source databases run on the exe.dev VM under public names, with the local container as the fallback (amendment of 2026-10-28 above).
+- *2026-10-28 (later):* the demo's window runs three years, from 2023-10-21 to 2026-10-20, and a seventh source database, `eia_weekly`, holds EIA's weekly series by PADD as public data (the decision owner: "extedn it and use the current EIA key"; `demos/downstream-pricing-databricks-free/DATA.md`).
