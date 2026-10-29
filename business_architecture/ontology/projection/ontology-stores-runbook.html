@@ -571,7 +571,7 @@ uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_
 <pre><code>cd "$EPM/business_architecture/ontology/projection"
 uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py mark --store pipeline --store driver --store aura --store databricks</code></pre>
 <h3>The drift check</h3>
-<p>It compares each marker with main's newest catalog and manifest (fetch main first; <code>--ref</code> names another ref) and each store's live count with its marker. Each store is current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or unreachable (the store could not be read: no connection, or the table it reads is missing). It exits non-zero unless every store is current.</p>
+<p>It compares each marker with main's newest catalog and manifest (fetch main first; <code>--ref</code> names another ref) and each store's live count with its marker. Each store is current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or unreachable (the store could not be read: no connection, no login file or a missing table, for example; the error's name follows the word). It exits non-zero unless every store is current.</p>
 <pre><code>uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py check</code></pre>
 <p>On 2026-10-29, after the four markers were written, every store read as current at commit 4d1e675b: the pipeline graph with 4,193 nodes and 21,767 relationships and its hash unchanged, the driver's Neo4j and AuraDB with 4,193 and 22,142, and <code>epm_triples</code> with 40,169 rows.</p>
 <h3>sync_stores.py sync</h3>
