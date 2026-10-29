@@ -52,10 +52,11 @@ WAS_DERIVED_FROM = PROV + "wasDerivedFrom"
 FULL_NAME = ONTOLOGY + "modules/data-product/fullName"
 TABLE = ONTOLOGY + "modules/data-product/table/"
 LINEAGE_WINDOW_MINUTES = 10  # observed edges count from a target's latest build: its statement's edges share one time
-STORES = {  # the stores LOCAL-STORES.md lists, with their login files
-    "pipeline": ("bolt://127.0.0.1:17687", "~/epm-lpg/run.env"),
-    "driver": ("bolt://127.0.0.1:17711", "~/lpg-out/epm-rebuild/neo4j-run/run.env"),
-    "aura": (None, "~/.config/neo4j/aura.env"),
+STORES = {  # the stores LOCAL-STORES.md lists, with their login files; the newest file that exists is the live one
+    "pipeline": ("bolt://127.0.0.1:17687", ("~/epm-lpg/run.env",)),
+    # a full driver run writes the rebuild's login; a run with --skip rebuild writes only the first container's
+    "driver": ("bolt://127.0.0.1:17711", ("~/lpg-out/epm-rebuild/neo4j-run/run.env", "~/lpg-out/epm/neo4j-run/run.env")),
+    "aura": (None, ("~/.config/neo4j/aura.env",)),
 }
 WALK = """MATCH (gold:Tech:GoldTable {name: $gold})<-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]->(m:Resource)
 OPTIONAL MATCH (agent:Tech:GenieAgent)-[:BINDS]->(view)
@@ -379,9 +380,17 @@ def graph_rows(g):
     return list(nodes.values()), edges
 
 
+def login_file(paths):
+    """The newest of a store's login files that exists: the one its running container wrote."""
+    found = [p for p in (os.path.expanduser(q) for q in paths) if os.path.exists(p)]
+    if not found:
+        raise SystemExit(f"no login file: {', '.join(paths)}")
+    return max(found, key=os.path.getmtime)
+
+
 def neo4j_login(store):
-    bolt, path = STORES[store]
-    values = read_env(os.path.expanduser(path))
+    bolt, paths = STORES[store]
+    values = read_env(login_file(paths))
     uri = bolt or values["NEO4J_URI"]
     return uri, values.get("NEO4J_USERNAME", "neo4j"), values.get("NEO4J_PASSWORD") or values["PASSWORD"]
 

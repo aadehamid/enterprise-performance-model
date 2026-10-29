@@ -1142,3 +1142,16 @@ def test_e5_the_tech_graph_tables_are_built_empty_and_purged_and_every_query_run
     assert "tech_graph" in databricks.SCHEMAS and "tech_graph" not in databricks.BUILT
     assert "''" not in SQL_TEXT["07_tech_graph.sql"]  # Spark reads '' as two literals (E3)
     assert set(os.listdir(tech_graph.SPARQL)) == set(tech_graph.GRAPH_QUERIES + tech_graph.TRAIL_QUERIES) | {"wiring.rq"}
+
+
+def test_e5_the_driver_login_is_the_newest_run_env(tmp_path):
+    # After a driver run with --skip rebuild only the first container's login is current (Bugbot on PR E5).
+    from pricing_demo import tech_graph
+    rebuild, first = tmp_path / "rebuild.env", tmp_path / "first.env"
+    rebuild.write_text("PASSWORD=old\n")
+    first.write_text("PASSWORD=new\n")
+    os.utime(rebuild, (1, 1))
+    assert tech_graph.login_file((str(rebuild), str(first))) == str(first)
+    assert tech_graph.login_file((str(rebuild), str(tmp_path / "missing.env"))) == str(rebuild)
+    with pytest.raises(SystemExit):
+        tech_graph.login_file((str(tmp_path / "missing.env"),))
