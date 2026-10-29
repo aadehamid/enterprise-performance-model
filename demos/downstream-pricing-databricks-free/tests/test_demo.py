@@ -216,8 +216,9 @@ def test_findings_2_and_3_every_measure_an_agent_names_is_in_a_view_it_binds():
         text = open(os.path.join(ROOT, "genie", spec["file"])).read() + " ".join(s for _, s in spec["examples"])
         named = set(re.findall(r"MEASURE\((\w+)\)", text))
         assert named and named <= allowed, (title, named - allowed)
-        # Examples read only the views the agent binds, never gold.
-        assert "gold_commercial_core" not in " ".join(s for _, s in spec["examples"])
+        # Examples read only what the agent binds: its views and, since E7, the plain tables it binds.
+        named_tables = set(re.findall(r"\{c\}\.([a-z_]+\.[a-z_]+)", " ".join(s for _, s in spec["examples"])))
+        assert named_tables <= {t for t, _ in spec["tables"]}, (title, named_tables - {t for t, _ in spec["tables"]})
     exec_text = open(os.path.join(ROOT, "genie", "executive-summary-kpis-analytics.md")).read()
     assert "MEASURE(assessment_amount) / MEASURE(Record_Count)" in exec_text
     benchmark_rules = exec_text.split("Benchmark Prices: ")[1].split("\n")[0]
@@ -427,6 +428,10 @@ def test_bugbot_380_the_eia_key_is_read_from_the_demos_env(tmp_path, monkeypatch
 def test_bugbot_380_every_example_reads_its_view_only_with_measure():
     for spec in genie.AGENTS.values():
         for _, sql in spec["examples"]:
+            if "semantic_sem_commercial." not in sql:
+                # A plain table the agent binds (E7) is read with plain SQL, never MEASURE().
+                assert "MEASURE(" not in sql, sql
+                continue
             assert "MAX(" not in sql and "gold_commercial_core" not in sql
             # Every read of a metric view (each "FROM {c}.semantic_sem_commercial.<view>") belongs to a SELECT that
             # names a MEASURE() and, when it groups, groups by dimensions: split the statement at each view read and
