@@ -141,7 +141,7 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 | | `pricing_market_margin_metrics_vw` (E3) | one prompt assessment (`SortColumns` 1): blend x day, the crack sheets left out | 45,628 | The Executive Summary gold joined to each assessment group's unit; 61 blends x 748 days |
 | | `refinery_unit_operations_metrics_vw` (E3) | as the unit gold | 76,296 | |
 | Definitions views (`ontology_definitions`), E3 | `measure_definitions_vw` | one measure with a KPI or OPM identifier, per release graph | 33 | Read from the ontology's triple table, `workspace.epm_ontology.epm_triples`, which the projection driver writes from the Turtle source of truth ([`sql/06_definitions.sql`](sql/06_definitions.sql)) |
-| | `crack_spread_definitions_vw`, `executive_summary_definitions_vw`, `pricing_market_margin_definitions_vw`, `refinery_operations_definitions_vw` | as above, the measures one subject area's metric views carry | 1, 6, 6, 7 | Filters of `measure_definitions_vw` by identifier |
+| | `crack_spread_definitions_vw`, `executive_summary_definitions_vw`, `pricing_market_margin_definitions_vw`, `refinery_operations_definitions_vw` | as above, the identified measures one subject area's metric views carry; the pricing and market margin view also keeps OPM-0026, the R&M Margin Indicator, which no metric view computes | 1, 6, 6, 7 | Filters of `measure_definitions_vw` by identifier |
 
 ## Measure identifiers and definitions (E3)
 
