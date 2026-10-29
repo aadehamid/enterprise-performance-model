@@ -145,7 +145,7 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 
 ## Measure identifiers and definitions (E3)
 
-Every metric-view measure's comment starts with the KPI or OPM identifiers it implements, from `kpi` 1.3.0 (`business_architecture/ontology/kpi/measure-identifiers.csv`), or with "No identifier" (row counts, and the sums a ratio is built from). Its display name and synonyms carry the identifiers too, and each view's comment and its `epm_measure_identifiers` tag list every identifier its measures carry (EPM-DEC-001-0109, decision 2). The fields are Databricks' metric view YAML 1.1 `comment`, `display_name` and `synonyms` ("Metric view YAML syntax reference", updated 2026-10-28) and Unity Catalog tags on views ("Apply tags to Unity Catalog securable objects", updated 2026-10-26).
+Every metric-view measure's comment starts with the KPI or OPM identifiers it implements, from `kpi` 1.3.0 (`business_architecture/ontology/kpi/measure-identifiers.csv`), or with "No identifier" (row counts, and the sums a ratio is built from). A measure with identifiers carries them in its display name and synonyms too; a measure with none has neither, and each view's comment and its `epm_measure_identifiers` tag list every identifier its measures carry (EPM-DEC-001-0109, decision 2). The fields are Databricks' metric view YAML 1.1 `comment`, `display_name` and `synonyms` ("Metric view YAML syntax reference", updated 2026-10-28) and Unity Catalog tags on views ("Apply tags to Unity Catalog securable objects", updated 2026-10-26).
 
 | Metric view | Identifiers |
 |---|---|
