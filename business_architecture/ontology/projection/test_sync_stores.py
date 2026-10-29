@@ -57,6 +57,21 @@ class Drift(unittest.TestCase):
         live = {s: [4193, 21767] for s in ss.STORES} | {"aura": "unreachable (ServiceUnavailable)"}
         self.assertEqual(self.statuses(markers, live)["aura"], "unreachable")
 
+    def test_a_missing_login_file_reads_as_unreachable_not_a_crash(self):
+        # Bugbot on #406: newest() used to raise SystemExit, which except Exception does not catch.
+        from unittest import mock
+        missing = (os.path.join(HERE, "no-such-run.env"),)
+        with self.assertRaises(FileNotFoundError):
+            ss.newest(missing)
+        def no_login(store):
+            ss.newest(missing)
+        def no_databricks():
+            raise ConnectionError("down")
+        with mock.patch.object(ss, "neo4j_session", no_login), mock.patch.object(ss, "databricks", no_databricks):
+            markers, live = ss.read_markers_and_counts()
+        self.assertEqual({s: live[s] for s in ss.NEO4J_STORES}, {s: "unreachable (FileNotFoundError)" for s in ss.NEO4J_STORES})
+        self.assertEqual(live["databricks"], "unreachable (ConnectionError)")
+
     def test_every_store_is_reported(self):
         self.assertEqual([s for s, _, _ in ss.drift({}, {}, self.want)], list(ss.STORES))
 

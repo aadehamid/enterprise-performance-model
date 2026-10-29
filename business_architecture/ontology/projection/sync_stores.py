@@ -113,7 +113,7 @@ def read_env(path):
 def newest(paths):
     found = [os.path.expanduser(p) for p in paths if os.path.exists(os.path.expanduser(p))]
     if not found:
-        raise SystemExit(f"none of {', '.join(paths)} exists")
+        raise FileNotFoundError(f"none of {', '.join(paths)} exists")  # an Exception, so a status check reports it
     return max(found, key=os.path.getmtime)
 
 
@@ -150,7 +150,7 @@ def read_markers_and_counts():
                 rec = session.run("MATCH (m:EpmStoreMarker {store: $s}) RETURN properties(m) AS p", s=store).single()
                 markers[store] = rec["p"] if rec else None
                 live[store] = list(resource_counts(session))
-        except Exception as err:  # a store that is down reads as unmarked, with the reason
+        except Exception as err:  # a store that can't be read (down, or no login file) reads as unreachable, with the reason
             markers[store], live[store] = None, f"unreachable ({type(err).__name__})"
     try:
         conn, schema = databricks()
