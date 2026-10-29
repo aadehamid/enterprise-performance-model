@@ -82,14 +82,18 @@ MODULES = {
         # 1.2.0 is a minor of item F's release plan, which the decision owner approved: KPI-0001 on Crack Spreads
         # Pricing, Additional Market Prices narrowed to renewables and NGLs, the duplicate alias dropped, top
         # concepts both ways; it requires core 2.3.0 (EPM-DEC-001-0097, 0098, 0100).
-        "version": "1.2.0", "stage": None, "issued": "2026-10-25",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Approve the plan (Recommended)"),
+        # 1.3.0 is a minor Claude approved under the delegation: a KPI or OPM identifier on every measure but the
+        # trackers, reports and non-measures, the scheme the decision owner chose; it still requires core 2.3.0
+        # (EPM-DEC-001-0109).
+        "version": "1.3.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-28",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl", "population/vocabulary.ttl", "population/population.ttl"],
         "shapes": ["kpi/shapes.ttl"],
         "depends_on": ["core"],
         "pins": {"core": "2.3.0"},
         "decisions": ["EPM-DEC-001-0040", "EPM-DEC-001-0042", "EPM-DEC-001-0043", "EPM-DEC-001-0062", "EPM-DEC-001-0079",
-                      "EPM-DEC-001-0088", "EPM-DEC-001-0093", "EPM-DEC-001-0097", "EPM-DEC-001-0098", "EPM-DEC-001-0100"],
+                      "EPM-DEC-001-0088", "EPM-DEC-001-0093", "EPM-DEC-001-0097", "EPM-DEC-001-0098", "EPM-DEC-001-0100",
+                      "EPM-DEC-001-0109"],
     },
     "party": {
         "title": "LSC Party Module",

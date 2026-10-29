@@ -6,13 +6,16 @@
 
 measure-classification.csv holds each measure's kind and why; measure-details.csv its
 definition, grain, basis, aliases and the processes it informs; personas.csv the planning
-roles. The build fails unless both measure tables list the same measures once each, every
-kind is on the measure-kind list, every persona and process named exists, and every
-"not to be confused with" names another measure.
+roles; measure-identifiers.csv each measure's KPI or OPM identifier (kpi 1.3.0, EPM-DEC-001-0109).
+The build fails unless both measure tables list the same measures once each, every
+kind is on the measure-kind list, every persona and process named exists, every
+"not to be confused with" names another measure, and every identifier follows its kind, is used once,
+keeps the KPI-0001 exception and sits in its prefix's run in the classification table's order with no gap.
 """
 import argparse
 import csv
 import os
+import re
 import sys
 from collections import Counter
 
@@ -24,6 +27,7 @@ REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 CLASSIFICATION = os.path.join(HERE, "measure-classification.csv")
 DETAILS = os.path.join(HERE, "measure-details.csv")
 PERSONAS = os.path.join(HERE, "personas.csv")
+IDENTIFIER_TABLE = os.path.join(HERE, "measure-identifiers.csv")
 CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
 OUTPUT = os.path.join(HERE, "measures.ttl")
 
@@ -48,14 +52,21 @@ SOURCE_TITLES = {
 }
 # Every measure also cites the classification evidence, which holds the rule it was sorted by.
 CLASSIFIED_BY = SOURCES["industry"]
-# Identifiers the decision owner's assets give a measure (EPM-DEC-001-0097, item 3), with the note that goes with each.
-IDENTIFIERS = {
-    "crack-spreads": ("KPI-0001", "KPI-0001 is the crack-spread Genie agent's identifier for this measure. The gold table "
-                                  "behind its metric view holds the constant KPI_ID value 'KPI Crack Spread 3-2-1' on every "
-                                  "one of its 127 series and all 1,090,423 rows of the gold table alike, so the identifier names the measure, "
-                                  "not a series "
-                                  "(EPM-DEC-001-0097, item 3)."),
+# The note on an identifier the decision owner's assets give a measure (EPM-DEC-001-0097, item 3). Every other
+# measure's identifier follows the rule in EPM-DEC-001-0109 and carries no note.
+IDENTIFIER_NOTES = {
+    "crack-spreads": "KPI-0001 is the crack-spread Genie agent's identifier for this measure. The gold table "
+                     "behind its metric view holds the constant KPI_ID value 'KPI Crack Spread 3-2-1' on every "
+                     "one of its 127 series and all 1,090,423 rows of the gold table alike, so the identifier names the measure, "
+                     "not a series "
+                     "(EPM-DEC-001-0097, item 3). It keeps KPI-0001 although the module classes it as a market indicator, "
+                     "because the pricing assets already use it (kpi 1.3.0, EPM-DEC-001-0109).",
 }
+# Which identifier prefix each kind takes (EPM-DEC-001-0109); a kind not listed takes none.
+PREFIX = {"kpi": "KPI", "operational-metric": "OPM", "market-indicator": "OPM", "plan-variance-diagnostic": "OPM",
+          "decision-support-indicator": "OPM", "alert": "OPM"}
+# The one measure whose identifier does not follow its kind: the pricing assets' KPI-0001 (EPM-DEC-001-0097).
+PREFIX_EXCEPTIONS = {"crack-spreads": "KPI-0001"}
 # What changed in a measure since an earlier release, kept on the measure (kpi 1.2.0).
 CHANGES = {
     "additional-market-prices": "kpi 1.2.0 (2026-10-25): narrowed to renewables and NGLs; the planner list's name was "
@@ -89,6 +100,30 @@ def load():
     labels = {p["label"]: p["slug"] for p in personas}
     by_detail = {d["measure_id"]: d for d in details}
     procs = process_index()
+    identifiers = {i["measure_id"]: i["identifier"] for i in read_csv(IDENTIFIER_TABLE)}
+    problems += [f"identifier {v!r} is used {n} times" for v, n in Counter(identifiers.values()).items() if n > 1]
+    problems += [f"identifier row {m!r} has no classification" for m in identifiers if m not in ids]
+    for r in rows:
+        m, ident, prefix = r["measure_id"], identifiers.get(r["measure_id"], ""), PREFIX.get(r["class"])
+        if m in PREFIX_EXCEPTIONS:
+            if ident != PREFIX_EXCEPTIONS[m]:
+                problems.append(f"{m}: its identifier must stay {PREFIX_EXCEPTIONS[m]}")
+        elif prefix is None and ident:
+            problems.append(f"{m}: a {r['class']} has no identifier")
+        elif prefix and not re.fullmatch(prefix + r"-\d{4}", ident):
+            problems.append(f"{m}: a {r['class']} needs a {prefix}-nnnn identifier, not {ident!r}")
+        r["identifier"] = ident
+    # Each prefix numbers its measures from 1 in the classification table's order, with no gap (EPM-DEC-001-0109);
+    # KPI-0001 is the pricing assets' identifier, so the KPI run continues from it.
+    for prefix, start in (("KPI", 1), ("OPM", 1)):
+        run = [r for r in rows if r.get("identifier", "").startswith(prefix + "-")]
+        if prefix == "KPI":
+            run = [r for r in run if r["measure_id"] not in PREFIX_EXCEPTIONS]
+            start = 1 + sum(1 for v in PREFIX_EXCEPTIONS.values() if v.startswith("KPI-"))
+        for i, r in enumerate(run, start):
+            if r["identifier"] != f"{prefix}-{i:04d}":
+                problems.append(f"{r['measure_id']}: {r['identifier']} breaks the {prefix} run, which needs {prefix}-{i:04d} "
+                                "here (in the classification table's order, no gap)")
     for r in rows:
         m = r["measure_id"]
         if r["class"] not in KINDS:
@@ -169,10 +204,10 @@ def build(rows, details, personas, labels, procs):
                             (KPI.basis, d["basis"]), (KPI.publicCounterpart, r["mpc_counterpart"])):
             if value:
                 g.add((iri, prop, Literal(value, datatype=XSD.string)))
-        if m in IDENTIFIERS:
-            ident, note = IDENTIFIERS[m]
-            g.add((iri, DCTERMS.identifier, Literal(ident, datatype=XSD.string)))
-            g.add((iri, SKOS.note, Literal(note, lang="en")))
+        if r["identifier"]:
+            g.add((iri, DCTERMS.identifier, Literal(r["identifier"], datatype=XSD.string)))
+        if m in IDENTIFIER_NOTES:
+            g.add((iri, SKOS.note, Literal(IDENTIFIER_NOTES[m], lang="en")))
         if m in CHANGES:
             g.add((iri, SKOS.changeNote, Literal(CHANGES[m], lang="en")))
         g.add((iri, DCTERMS.source, SOURCES[r["source"]]))
@@ -190,6 +225,8 @@ def figures(rows, details, personas):
         **{f"from {k}": v for k, v in sorted(sources.items())},
         **{k: kinds[k] for k in KINDS},
         "KPI candidates": sum(r["kpi_candidate"] == "yes" for r in rows),
+        "KPI identifiers": sum(r["identifier"].startswith("KPI-") for r in rows),
+        "OPM identifiers": sum(r["identifier"].startswith("OPM-") for r in rows),
         "personas": len(personas),
         "process links": sum(len(split(d["informs_process"])) for d in details.values()),
         "measures without a process link": sum(1 for d in details.values() if not d["informs_process"]),

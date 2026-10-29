@@ -138,7 +138,8 @@ class Release120(unittest.TestCase):
     def test_crack_spreads_carries_kpi_0001(self):
         self.assertEqual(str(MEASURES.value(MEASURE["crack-spreads"], self.DCT.identifier)), "KPI-0001")
         self.assertIn("KPI Crack Spread 3-2-1", str(MEASURES.value(MEASURE["crack-spreads"], SKOS.note)))
-        self.assertEqual(len(set(MEASURES.subjects(self.DCT.identifier, None))), 1)
+        # Since kpi 1.3.0 every measure but the trackers, reports and non-measures carries one (Release130).
+        self.assertEqual(len(set(MEASURES.subjects(self.DCT.identifier, None))), 33)
 
     def test_additional_market_prices_is_narrowed_to_renewables_and_ngls(self):
         m = MEASURE["additional-market-prices"]
@@ -155,6 +156,61 @@ class Release120(unittest.TestCase):
             tops = set(g.objects(scheme, SKOS.hasTopConcept))
             self.assertEqual(len(tops), n)
             self.assertEqual(tops, set(g.subjects(SKOS.topConceptOf, scheme)))
+
+
+class Release130(unittest.TestCase):
+    # kpi 1.3.0: the KPI and OPM identifiers (EPM-DEC-001-0109). Values written out by hand.
+    DCT = Namespace("http://purl.org/dc/terms/")
+
+    def ident(self, m):
+        v = MEASURES.value(MEASURE[m], self.DCT.identifier)
+        return str(v) if v is not None else None
+
+    def test_the_counts_by_prefix(self):
+        values = [str(o) for o in MEASURES.objects(None, self.DCT.identifier)]
+        self.assertEqual(sum(v.startswith("KPI-") for v in values), 3)
+        self.assertEqual(sum(v.startswith("OPM-") for v in values), 30)
+        self.assertEqual(len(values), len(set(values)))
+
+    def test_the_kpis_and_the_ends_of_the_opm_run(self):
+        self.assertEqual(self.ident("crack-spreads"), "KPI-0001")
+        self.assertEqual(self.ident("relative-refining-margin-by-region"), "KPI-0002")
+        self.assertEqual(self.ident("relative-adjusted-ebitda-per-barrel"), "KPI-0003")
+        self.assertEqual(self.ident("unit-utilization"), "OPM-0001")
+        self.assertEqual(self.ident("crude-utilization"), "OPM-0002")
+        self.assertEqual(self.ident("gasoline-prices"), "OPM-0017")
+        self.assertEqual(self.ident("turnaround-lost-margin"), "OPM-0030")
+
+    def test_trackers_reports_and_non_measures_have_none(self):
+        for m in ("plan-overview-key-changes", "tar-activities-tracker", "sales-purchase-status",
+                  "capital-project-evaluations", "mtp-submission-tracker", "key-activity-tracker",
+                  "regional-site-monitoring", "ad-hoc-plan-trends"):
+            self.assertIsNone(self.ident(m), m)
+
+    def test_a_crack_spreads_note_says_why_it_keeps_kpi_0001(self):
+        self.assertIn("market indicator", str(MEASURES.value(MEASURE["crack-spreads"], SKOS.note)))
+
+    def test_the_build_rejects_an_identifier_off_its_kind(self):
+        import tempfile
+        from unittest import mock
+        with open(bm.IDENTIFIER_TABLE, newline="") as f:
+            table = list(csv.DictReader(f))
+        cases = (("crude-utilization", "OPM-0003", "breaks the OPM run"),             # an allowed ID out of order
+                 ("crude-utilization", "KPI-0099", "needs a OPM-nnnn identifier"),  # a KPI ID on an operational metric
+                 ("crack-spreads", "OPM-0099", "must stay KPI-0001"),                # the shared asset's ID changed
+                 ("tar-activities-tracker", "OPM-0099", "has no identifier"))          # an ID on a tracker
+        for measure, bad, message in cases:
+            rows = [dict(r) for r in table if r["measure_id"] != measure] + [{"measure_id": measure, "identifier": bad}]
+            with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False, newline="") as t:
+                w = csv.DictWriter(t, fieldnames=list(table[0].keys()))
+                w.writeheader()
+                w.writerows([{k: r.get(k, "") for k in table[0].keys()} for r in rows])
+            try:
+                with mock.patch.object(bm, "IDENTIFIER_TABLE", t.name), self.assertRaises(SystemExit) as caught:
+                    bm.load()
+                self.assertIn(message, str(caught.exception), measure)
+            finally:
+                os.unlink(t.name)
 
 
 class Shapes(unittest.TestCase):
@@ -198,6 +254,28 @@ class Shapes(unittest.TestCase):
     def test_a_tracker_with_a_grain_fails(self):
         self.assertFalse(self.broken(lambda g: g.add((MEASURE["tar-activities-tracker"], KPI.grain,
                                                       Literal("daily")))))
+
+    def test_an_identifier_off_the_pattern_fails(self):
+        dct = URIRef("http://purl.org/dc/terms/identifier")
+        def edit(g):
+            g.remove((MEASURE["margin-capture"], dct, None))
+            g.add((MEASURE["margin-capture"], dct, Literal("OPM-25")))
+        self.assertFalse(self.broken(edit))
+
+    def test_a_tracker_with_an_identifier_fails(self):
+        self.assertFalse(self.broken(lambda g: g.add((MEASURE["tar-activities-tracker"],
+                                                      URIRef("http://purl.org/dc/terms/identifier"), Literal("OPM-0099")))))
+
+    def test_an_operational_metric_without_an_identifier_fails(self):
+        self.assertFalse(self.broken(lambda g: g.remove((MEASURE["margin-capture"],
+                                                         URIRef("http://purl.org/dc/terms/identifier"), None))))
+
+    def test_a_kpi_with_an_opm_identifier_fails(self):
+        dct = URIRef("http://purl.org/dc/terms/identifier")
+        def edit(g):
+            g.remove((MEASURE["relative-refining-margin-by-region"], dct, None))
+            g.add((MEASURE["relative-refining-margin-by-region"], dct, Literal("OPM-0099")))
+        self.assertFalse(self.broken(edit))
 
     def test_a_measure_without_a_definition_fails(self):
         self.assertFalse(self.broken(lambda g: g.remove((MEASURE["margin-capture"], SKOS.definition, None))))

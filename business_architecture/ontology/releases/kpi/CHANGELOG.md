@@ -1,5 +1,19 @@
 # kpi changelog
 
+## 1.3.0 (2026-10-28)
+
+A minor release: it adds an identifier to 32 measures, a note, a scope note and three shapes, and removes no IRI. Approved by Claude under the delegation, which lets it approve the queue's minor releases ("Yes, delegate as described (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0028, amendment of 2026-10-25, evening). The identifier scheme is the decision owner's (EPM-DEC-001-0109; their words in `step4/review-evidence/decision-owner-answers/answers-2026-10-28-databricks-grill.md`).
+
+- [minor] **KPI and OPM identifiers.** Every measure but the trackers, reports and non-measures carries a `dcterms:identifier`, four digits, numbered in the module's order: KPI-0002 and KPI-0003 for the two measures classed as KPIs (Relative Refining Margin per Barrel by Region, Relative Adjusted EBITDA per Barrel), and OPM-0001 to OPM-0030 for the 15 operational metrics, 6 market indicators, 6 plan-variance diagnostics, 1 decision-support indicator and 2 alerts. OPM means operational metric. Crack Spreads Pricing keeps KPI-0001, the pricing assets' identifier, although it is classed as a market indicator; its note now says so. The six trackers or reports and the two non-measures carry none. The identifiers are in `kpi/measure-identifiers.csv`, which the build checks against each measure's kind.
+- [minor] **Shapes:** an identifier is KPI or OPM, a hyphen and four digits; a tracker, report or non-measure carries none; every other measure carries one; a measure classed as a KPI carries a KPI identifier.
+- [minor] **The measure scheme's scope note** states the rule: a measure promoted to KPI later takes a new KPI identifier, and its OPM identifier is kept and never reused.
+- It still requires core 2.3.0. `data-product` 1.2.0, `value-stream` 1.2.0, `market-data` 1.1.0 and `integration` 2.5.0 still require kpi 1.2.0, which stays released as it is.
+
+### Known gaps
+
+- **Additional Market Prices' prices are named only as examples.** The full list of renewables and NGL prices is in the Executive Summary view, which `market-data` 1.1.0's enumeration names (EPM-DEC-001-0097, Known gaps).
+- **Crack Spreads Pricing's KPI ID has no silver source.** The gold table's `KPI_ID` is a constant that comes only from a legacy table left out of the record (EPM-DEC-001-0097, Known gaps).
+
 ## 1.2.0 (2026-10-25)
 
 A minor release: it adds an identifier, notes and top-concept statements, narrows one measure's definition and label, removes one alternative label, and removes no IRI. Approved by the decision owner with item F's release plan ("Approve the plan (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`; EPM-DEC-001-0097, 0100).

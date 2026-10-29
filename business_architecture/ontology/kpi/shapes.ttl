@@ -41,7 +41,10 @@ shp:Measure a sh:NodeShape ;
     sh:property [ sh:path dcterms:bibliographicCitation ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
     # kpi 1.2.0: an identifier an asset gives the measure, with its note; a change note; the scheme's top concept
     # (EPM-DEC-001-0097, item 3; EPM-DEC-001-0098).
-    sh:property [ sh:path dcterms:identifier ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    # kpi 1.3.0: every identifier is KPI-nnnn or OPM-nnnn (EPM-DEC-001-0109).
+    sh:property [ sh:path dcterms:identifier ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ;
+                  sh:pattern "^(KPI|OPM)-[0-9]{4}$" ;
+                  sh:message "A measure identifier is KPI or OPM, a hyphen and four digits." ] ;
     sh:property [ sh:path skos:note ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:changeNote ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:topConceptOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue kpi:Measures ] ;
@@ -86,6 +89,26 @@ shp:NoGrainWithoutAMeasure a sh:NodeShape ;
     sh:or ( [ sh:path kpi:grain ; sh:maxCount 0 ]
             [ sh:not [ sh:path kpi:measureKind ; sh:in ( kind:tracker-or-report kind:not-a-measure ) ] ] ) ;
     sh:message "A tracker, report or non-measure has no grain." .
+
+# kpi 1.3.0: a tracker, report or non-measure carries no identifier; a measure classed as a KPI carries a
+# KPI identifier; every other measure carries one (EPM-DEC-001-0109).
+shp:NoIdentifierWithoutAMeasure a sh:NodeShape ;
+    sh:targetClass kpi:MeasureDefinition ;
+    sh:or ( [ sh:path dcterms:identifier ; sh:maxCount 0 ]
+            [ sh:not [ sh:path kpi:measureKind ; sh:in ( kind:tracker-or-report kind:not-a-measure ) ] ] ) ;
+    sh:message "A tracker, report or non-measure has no identifier." .
+
+shp:MeasuresHaveIdentifiers a sh:NodeShape ;
+    sh:targetClass kpi:MeasureDefinition ;
+    sh:or ( [ sh:path dcterms:identifier ; sh:minCount 1 ]
+            [ sh:path kpi:measureKind ; sh:in ( kind:tracker-or-report kind:not-a-measure ) ] ) ;
+    sh:message "Every measure other than a tracker, report or non-measure has an identifier." .
+
+shp:KpiIdentifierOnKpis a sh:NodeShape ;
+    sh:targetClass kpi:MeasureDefinition ;
+    sh:or ( [ sh:not [ sh:path kpi:measureKind ; sh:hasValue kind:kpi ] ]
+            [ sh:path dcterms:identifier ; sh:pattern "^KPI-" ] ) ;
+    sh:message "A measure classed as a KPI has a KPI identifier." .
 
 shp:Persona a sh:NodeShape ;
     sh:targetSubjectsOf kpi:planType ;

@@ -22,7 +22,8 @@ kpi:MeasureDefinition a owl:Class ;
 kpi:Measures a skos:ConceptScheme ;
     rdfs:label "measures"@en ;
     skos:definition "The measures the kpi module defines: the planning team's measures and the measures MPC publishes."@en ;
-    dcterms:bibliographicCitation "EPM-DEC-001-0040, EPM-DEC-001-0042"@en .
+    skos:scopeNote "Since kpi 1.3.0 each measure carries a stable dcterms:identifier: KPI-nnnn for a measure classed as a KPI, and OPM-nnnn (operational metric) for an operational metric, market indicator, plan-variance diagnostic, decision-support indicator or alert, each numbered in order with four digits. A tracker, report or non-measure carries none. Crack Spreads keeps KPI-0001, the identifier of the pricing assets, although it is classed as a market indicator. A measure promoted to KPI later takes a new KPI identifier; its OPM identifier is kept and never reused (EPM-DEC-001-0109)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040, EPM-DEC-001-0042, EPM-DEC-001-0109"@en .
 
 kpi:measureKind a owl:ObjectProperty ;
     rdfs:label "measure kind"@en ;

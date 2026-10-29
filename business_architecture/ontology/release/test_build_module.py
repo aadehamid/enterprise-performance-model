@@ -65,6 +65,7 @@ BRANDS = (CUSTOMER_INPUTS[0], "yes those can be brand values. Others I cannot an
 APPROVALS["ref-mpc"] = BRANDS
 APPROVALS["party"] = DELEGATED  # party 2.1.0, EPM-DEC-001-0099, amendment of 2026-10-28
 APPROVALS["integration"] = DELEGATED  # integration 2.5.0, EPM-DEC-001-0099, amendment of 2026-10-28
+APPROVALS["kpi"] = DELEGATED  # kpi 1.3.0, the KPI and OPM identifiers, EPM-DEC-001-0109
 
 
 def approval_holds(name, m):
@@ -523,10 +524,13 @@ class EarlierReleases(unittest.TestCase):
 
     def test_the_item_f_releases_carry_their_approval(self):
         # EPM-DEC-001-0100: the decision owner approved the plan of the five.
-        for name, version in (("kpi", "1.2.0"), ("market-data", "1.1.0"), ("data-product", "1.2.0")):
+        for name, version in (("market-data", "1.1.0"), ("data-product", "1.2.0")):
             self.assertEqual(bm.MODULES[name]["approval"], ITEM_F)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-25"))
+        # Since kpi 1.3.0 (EPM-DEC-001-0109) the builder builds kpi 1.3.0; kpi 1.2.0's package keeps the approval it names.
+        with open(os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.2.0", "manifest.json")) as f:
+            self.assertEqual(json.load(f)["approved_by"]["recorded_in"], ITEM_F[0])
 
     def test_the_close_out_releases_carry_the_close_out_approval(self):
         # EPM-DEC-001-0088: the decision owner approved the six close-out releases together. Since value-stream 1.2.0

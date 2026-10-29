@@ -32,6 +32,7 @@ measure:ad-hoc-plan-trends a skos:Concept,
 measure:additional-market-prices a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
+    dcterms:identifier "OPM-0021"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:changeNote "kpi 1.2.0 (2026-10-25): narrowed to renewables and NGLs; the planner list's name was 'Additional Market Prices (Benchmark, Crude, Renewables, NGLs)'. Benchmark and crude prices are Crude Market Pricing's (EPM-DEC-001-0097, item 4)."@en ;
@@ -75,6 +76,7 @@ measure:capital-project-evaluations a skos:Concept,
 measure:clean-product-make a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 53; DP-01 p. 42"^^xsd:string ;
+    dcterms:identifier "OPM-0007"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "clean products production"@en ;
@@ -99,6 +101,7 @@ measure:clean-product-make a skos:Concept,
 measure:crude-prices a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 pp. 46, 51; KI-27"^^xsd:string ;
+    dcterms:identifier "OPM-0019"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "crude markers"@en ;
@@ -121,6 +124,7 @@ measure:crude-prices a skos:Concept,
 measure:crude-value-to-breakeven a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "VT-01; VT-02; VT-04; VT-09; VT-12; VT-20"^^xsd:string ;
+    dcterms:identifier "OPM-0016"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "V2Be"@en,
@@ -147,6 +151,7 @@ measure:crude-value-to-breakeven a skos:Concept,
 measure:demand-vs-forecast a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-25; KI-26; KI-23"^^xsd:string ;
+    dcterms:identifier "OPM-0012"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "sales vs forecast"@en ;
@@ -173,6 +178,7 @@ measure:demand-vs-forecast a skos:Concept,
 measure:distillate-prices a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
+    dcterms:identifier "OPM-0018"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "ULSD prices"@en ;
@@ -197,6 +203,7 @@ measure:distillate-prices a skos:Concept,
 measure:distillate-yield a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 53; KI-04"^^xsd:string ;
+    dcterms:identifier "OPM-0004"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "diesel yield"@en ;
@@ -223,6 +230,7 @@ measure:distillate-yield a skos:Concept,
 measure:distribution-cost-per-barrel a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 pp. 46, 51, 52"^^xsd:string ;
+    dcterms:identifier "OPM-0028"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:mpc-performance-measures-evidence ;
     skos:definition "Distribution costs, excluding depreciation and amortization, per barrel of net refinery throughput; mostly long-term agreements with MPLX."@en ;
@@ -244,6 +252,7 @@ measure:distribution-cost-per-barrel a skos:Concept,
 measure:dpo-input-variance-alert a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-31; KI-04"^^xsd:string ;
+    dcterms:identifier "OPM-0015"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:definition "An alert raised when a distribution-plan input table changes by more than a set share from the week before."@en ;
@@ -265,6 +274,7 @@ measure:dpo-input-variance-alert a skos:Concept,
 measure:gasoline-prices a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
+    dcterms:identifier "OPM-0017"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "CBOB prices"@en ;
@@ -289,6 +299,7 @@ measure:gasoline-prices a skos:Concept,
 measure:gasoline-yield a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 53; KI-04"^^xsd:string ;
+    dcterms:identifier "OPM-0005"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "gas yield"@en ;
@@ -315,6 +326,7 @@ measure:gasoline-yield a skos:Concept,
 measure:interregional-volumes a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-23"^^xsd:string ;
+    dcterms:identifier "OPM-0011"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "interregional movements"@en ;
@@ -359,6 +371,7 @@ measure:key-activity-tracker a skos:Concept,
 measure:marine-utilization a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPLX-S01 p. 56; KI-26"^^xsd:string ;
+    dcterms:identifier "OPM-0010"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:definition "Volume moved by barge and vessel as a share of available marine capacity."@en ;
@@ -383,6 +396,7 @@ measure:marine-utilization a skos:Concept,
 measure:marketing-performance-vs-plan a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26"^^xsd:string ;
+    dcterms:identifier "OPM-0023"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:definition "Marketing's results against the marketing plan."@en ;
@@ -423,6 +437,7 @@ measure:mtp-submission-tracker a skos:Concept,
 measure:ngl-balance a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26"^^xsd:string ;
+    dcterms:identifier "OPM-0008"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "NGL commodities"@en ;
@@ -445,6 +460,7 @@ measure:ngl-balance a skos:Concept,
 measure:opening-inventory-vs-plan a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26"^^xsd:string ;
+    dcterms:identifier "OPM-0014"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:definition "Actual opening inventory against the planned opening level for the next month."@en ;
@@ -466,6 +482,7 @@ measure:opening-inventory-vs-plan a skos:Concept,
 measure:pipeline-utilization a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 54; MPLX-S01 p. 56; KI-26"^^xsd:string ;
+    dcterms:identifier "OPM-0009"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "line utilization"@en ;
@@ -513,6 +530,7 @@ measure:plan-overview-key-changes a skos:Concept,
 measure:plan-vs-historical-averages a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26; KI-04"^^xsd:string ;
+    dcterms:identifier "OPM-0003"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "historical product make vs MTP"@en ;
@@ -535,6 +553,7 @@ measure:plan-vs-historical-averages a skos:Concept,
 measure:price-comparison a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 46; KI-27"^^xsd:string ;
+    dcterms:identifier "OPM-0020"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "spread"@en ;
@@ -557,6 +576,7 @@ measure:price-comparison a skos:Concept,
 measure:production-rate-record a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-31"^^xsd:string ;
+    dcterms:identifier "OPM-0022"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "rate records"@en ;
@@ -595,6 +615,7 @@ measure:regional-site-monitoring a skos:Concept,
 measure:relative-adjusted-ebitda-per-barrel a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S16 p. 49; MPC-S18"^^xsd:string ;
+    dcterms:identifier "KPI-0003"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:mpc-performance-measures-evidence ;
     skos:definition "MPC's annual cash bonus Adjusted EBITDA per barrel of total throughput, as a percentile against a peer group."@en ;
@@ -614,6 +635,7 @@ measure:relative-adjusted-ebitda-per-barrel a skos:Concept,
 measure:relative-refining-margin-by-region a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S16 p. 49; MPC-S18"^^xsd:string ;
+    dcterms:identifier "KPI-0002"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:mpc-performance-measures-evidence ;
     skos:definition "MPC's Refining EBITDA per barrel of total throughput for each region, ranked against the same regions of Phillips 66 and Valero."@en ;
@@ -654,6 +676,7 @@ measure:sales-purchase-status a skos:Concept,
 measure:supply-vs-forecast a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26; KI-23"^^xsd:string ;
+    dcterms:identifier "OPM-0013"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "purchases vs forecast"@en ;
@@ -679,6 +702,7 @@ measure:supply-vs-forecast a skos:Concept,
 measure:swing-stream-disposition a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-04"^^xsd:string ;
+    dcterms:identifier "OPM-0006"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:definition "The volume of swing streams and where they are routed, as they shift distillate and gasoline make."@en ;
@@ -723,6 +747,7 @@ measure:tar-activities-tracker a skos:Concept,
 measure:turnaround-lost-margin a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "VT-18; VT-26"^^xsd:string ;
+    dcterms:identifier "OPM-0030"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence ;
     skos:altLabel "lost profit opportunity"@en ;
     skos:definition "The margin given up because of planned turnaround downtime."@en ;
@@ -743,6 +768,7 @@ measure:turnaround-lost-margin a skos:Concept,
 measure:crude-utilization a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 53; MPC-S16; KI-13; KI-14; KI-16; DP-01"^^xsd:string ;
+    dcterms:identifier "OPM-0002"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "crude capacity utilization"@en,
@@ -769,6 +795,7 @@ measure:crude-utilization a skos:Concept,
 measure:refining-opex-per-barrel a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 51"^^xsd:string ;
+    dcterms:identifier "OPM-0027"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:mpc-performance-measures-evidence ;
     skos:altLabel "opex per barrel"@en ;
@@ -792,6 +819,7 @@ measure:refining-opex-per-barrel a skos:Concept,
 measure:turnaround-cost-per-barrel a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 85; VT-26; VT-28"^^xsd:string ;
+    dcterms:identifier "OPM-0029"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:mpc-performance-measures-evidence ;
     skos:altLabel "turnaround cost per barrel"@en ;
@@ -816,6 +844,7 @@ measure:turnaround-cost-per-barrel a skos:Concept,
 measure:unit-utilization a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-04; KI-26; KI-13; MPC-S01"^^xsd:string ;
+    dcterms:identifier "OPM-0001"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:planner-measure-list-2026-10-18 ;
     skos:altLabel "unit rates"@en ;
@@ -852,7 +881,7 @@ measure:crack-spreads a skos:Concept,
     skos:definition "Benchmark crack spreads: the market value of products made from a set ratio of crude, less the crude's price."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "crack-spreads"^^xsd:string ;
-    skos:note "KPI-0001 is the crack-spread Genie agent's identifier for this measure. The gold table behind its metric view holds the constant KPI_ID value 'KPI Crack Spread 3-2-1' on every one of its 127 series and all 1,090,423 rows of the gold table alike, so the identifier names the measure, not a series (EPM-DEC-001-0097, item 3)."@en ;
+    skos:note "KPI-0001 is the crack-spread Genie agent's identifier for this measure. The gold table behind its metric view holds the constant KPI_ID value 'KPI Crack Spread 3-2-1' on every one of its 127 series and all 1,090,423 rows of the gold table alike, so the identifier names the measure, not a series (EPM-DEC-001-0097, item 3). It keeps KPI-0001 although the module classes it as a market indicator, because the pricing assets already use it (kpi 1.3.0, EPM-DEC-001-0109)."@en ;
     skos:prefLabel "Crack Spreads Pricing"@en ;
     skos:scopeNote "Not realized refinery margin, not margin capture, and not MPC's R&M Margin Indicator. A 3-2-1 built from separate product and crude legs is not the published series."@en ;
     skos:topConceptOf kpi:Measures ;
@@ -875,6 +904,7 @@ measure:crack-spreads a skos:Concept,
 measure:margin-capture a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S07 p. 5; MPC-S16"^^xsd:string ;
+    dcterms:identifier "OPM-0025"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:mpc-performance-measures-evidence ;
     skos:altLabel "capture"@en,
@@ -901,6 +931,7 @@ measure:margin-capture a skos:Concept,
 measure:rm-margin-indicator a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S07 p. 5"^^xsd:string ;
+    dcterms:identifier "OPM-0026"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:mpc-performance-measures-evidence ;
     skos:definition "MPC's hypothetical R&M margin built from market data and operational guidance, posted monthly."@en ;
@@ -922,6 +953,7 @@ measure:rm-margin-indicator a skos:Concept,
 measure:rm-margin-per-barrel a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 51; MPC-S17; KI-01"^^xsd:string ;
+    dcterms:identifier "OPM-0024"^^xsd:string ;
     dcterms:source src:kpi-classification-evidence,
         src:mpc-performance-measures-evidence ;
     skos:altLabel "R&M margin per barrel"@en,
