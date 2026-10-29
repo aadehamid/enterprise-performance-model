@@ -825,6 +825,27 @@ def test_e3_the_new_views_hold_their_measures_and_skip_the_rm_margin_indicator()
     assert "100 * SUM(Unit_Throughput_Mbpd) / SUM(Unit_Capacity_Mbpd)" in unit
 
 
+def test_e3_the_older_views_keep_each_measures_identifiers():
+    # Pinned per measure, so a swapped identifier in a comment fails here, not only in review (Pi, round 1).
+    exec_ids = {"KPI-0001", "OPM-0017", "OPM-0018", "OPM-0019", "OPM-0020", "OPM-0021"}
+    expected = {
+        "mpr_mips_crack_spread_price_fact_metrics_vw": {
+            "Avg_Crack_Spread": {"KPI-0001"}, "Max_Crack_Spread": {"KPI-0001"}, "Min_Crack_Spread": {"KPI-0001"},
+            "Spread_Range": {"KPI-0001"}, "Record_Count": set()},
+        "mips_mpr_executive_summary_fact_vw": {
+            "assessment_amount": exec_ids, "Previous_amount": exec_ids, "ChangeValue": exec_ids, "Record_Count": set()},
+        "mips_mpr_benchmark_prices_fact_vw": {"Avg_Settle_Price": {"OPM-0019"}, "Record_Count": set()},
+        "refinery_operations_metrics_vw": {
+            "Crude_Runs_Mbpd": set(), "Crude_Capacity_Mbpcd": set(), "Utilization_Pct": {"OPM-0002"},
+            "Planned_Utilization_Pct": {"OPM-0002"}, "Distillate_Yield_Pct": {"OPM-0004"}, "Gasoline_Yield_Pct": {"OPM-0005"},
+            "Rm_Margin_Usd_Per_Bbl": {"OPM-0024"}, "Margin_Capture_Pct": {"OPM-0025"}, "Opex_Usd_Per_Bbl": {"OPM-0027"},
+            "Record_Count": set()},
+    }
+    specs = metric_view_specs()
+    for view, measures in expected.items():
+        assert {n: _leading_ids(m["comment"]) for n, m in specs[view]["measures"].items()} == measures, view
+
+
 def test_e3_definitions_views_read_epm_triples_and_keep_their_views_identifiers():
     text = SQL_TEXT["06_definitions.sql"]
     base = text.split("measure_definitions_vw AS")[1].split(";\n")[0]

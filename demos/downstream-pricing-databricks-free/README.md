@@ -47,7 +47,7 @@ Postgres listens only on this machine (127.0.0.1:55432), with the throwaway logi
 
 Every replication run is a full snapshot: the downstream layers replace their contents from it. The run writes `out/replica/manifest.json` with each table's rows only after every table is there and not empty; `upload` refuses a replica that does not match its manifest, and `build` checks each replica table's rows and its `_replicated_at` against the manifest, so a volume still holding an earlier run's files fails, and that every silver and gold table, metric view and definitions view exists and holds rows. Each source database loads in one transaction. Databricks Free Edition limits outbound internet to trusted domains, so the replication pushes from the machine that can reach Postgres rather than letting Databricks pull.
 
-## The runs (2026-10-25 to 2026-10-28)
+## The runs (2026-10-25 to 2026-10-29)
 
 The first window ran from 2026-04-01 to 2026-10-20, 142 trading days; the table and the paragraph after it are its runs. Since 2026-10-28 the window runs three years ("The three-year run" below).
 
