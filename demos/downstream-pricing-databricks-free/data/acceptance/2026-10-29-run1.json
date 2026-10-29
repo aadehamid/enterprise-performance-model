@@ -1,0 +1,1146 @@
+{
+  "run_at": "2026-10-29T18:45:04+00:00",
+  "results": [
+    {
+      "n": 1,
+      "question": "If the price reference feed is late today, which KPIs, metric views and Genie agents are affected, and who uses those measures?",
+      "mode": "graph",
+      "agents_required": [],
+      "agents_called": [],
+      "definitions_read": false,
+      "answer": "semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw: measures OPM-0019; used by Prompt Planner@en; agents Executive Summary KPIs Analytics\nsemantic_sem_commercial.mips_mpr_executive_summary_fact_vw: measures KPI-0001, OPM-0017, OPM-0018, OPM-0019, OPM-0020, OPM-0021; used by Distribution Planner@en, Prompt Planner@en, Short-Term Planner@en; agents Executive Summary KPIs Analytics\nsemantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw: measures KPI-0001; used by Distribution Planner@en, Prompt Planner@en, Short-Term Planner@en; agents Crack Spread Price Analytics\nsemantic_sem_commercial.pricing_market_margin_metrics_vw: measures OPM-0017, OPM-0018, OPM-0019, OPM-0020, OPM-0021; used by Distribution Planner@en, Prompt Planner@en, Short-Term Planner@en; agents Pricing and Market Margin Analytics\nsemantic_sem_commercial.refinery_operations_metrics_vw: measures OPM-0002, OPM-0004, OPM-0005, OPM-0024, OPM-0025, OPM-0027; used by Distribution Planner@en, Mid-Term Planner@en, Prompt Planner@en, Short-Term Planner@en; agents Refinery Operations Analytics",
+      "error": null,
+      "expected": [
+        {
+          "label": "metric view semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw",
+          "value": "semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw",
+          "tol": null
+        },
+        {
+          "label": "metric view semantic_sem_commercial.mips_mpr_executive_summary_fact_vw",
+          "value": "semantic_sem_commercial.mips_mpr_executive_summary_fact_vw",
+          "tol": null
+        },
+        {
+          "label": "metric view semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw",
+          "value": "semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw",
+          "tol": null
+        },
+        {
+          "label": "metric view semantic_sem_commercial.pricing_market_margin_metrics_vw",
+          "value": "semantic_sem_commercial.pricing_market_margin_metrics_vw",
+          "tol": null
+        },
+        {
+          "label": "metric view semantic_sem_commercial.refinery_operations_metrics_vw",
+          "value": "semantic_sem_commercial.refinery_operations_metrics_vw",
+          "tol": null
+        }
+      ],
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "n": 2,
+      "question": "Did margin capture drop at Garyville in October 2026 against September 2026, and was the crack spread the cause?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "Did margin capture drop at Garyville in October 2026 against September 2026, and was the crack spread the cause?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "At Garyville, margin capture decreased from 93.0% in September 2026 to 92.1% in October 2026. The region's margin per barrel, which is based on the benchmark crack and clean-product yield, also dropped from $64.77 to $52.35. This indicates that the margin capture decline was accompanied by a lower region margin, but the data does not directly show if the crack spread was the cause.",
+      "error": null,
+      "expected": [
+        {
+          "label": "Garyville margin capture 2026-09",
+          "value": 93.010954,
+          "tol": 0.051
+        },
+        {
+          "label": "Garyville margin capture 2026-10",
+          "value": 92.137404,
+          "tol": 0.051
+        },
+        {
+          "label": "USGC crack 2026-09",
+          "value": 69.7779497273,
+          "tol": 0.0051
+        },
+        {
+          "label": "USGC crack 2026-10",
+          "value": 57.1108218571,
+          "tol": 0.0051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics",
+        "missing USGC crack 2026-09: 69.7779497273",
+        "missing USGC crack 2026-10: 57.1108218571",
+        "no ontology term: demo's own or demo formula or the demo's or synthetic"
+      ]
+    },
+    {
+      "n": 3,
+      "question": "Which refineries ran below plan crude utilization in September 2026, did their margin capture fall from August to September 2026, and how did their region's benchmark crack move over the same weeks?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "Which refineries ran below plan crude utilization in September 2026, did their margin capture fall from August to September 2026, and how did their region's benchmark crack move over the same weeks?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "The Robinson, IL refinery in the Mid-Continent region ran below its planned crude utilization in September 2026, with actual utilization at 82.3% versus planned 93.2%. Its margin capture increased from 92.2% in August to 93.3% in September. Unfortunately, the region's benchmark crack values for August and September are not available in the provided data.",
+      "error": null,
+      "expected": [
+        {
+          "label": "Robinson below plan",
+          "value": "Robinson",
+          "tol": null
+        },
+        {
+          "label": "Robinson utilization",
+          "value": 82.27452389507725,
+          "tol": 0.051
+        },
+        {
+          "label": "Robinson planned",
+          "value": 93.20158102766798,
+          "tol": 0.051
+        },
+        {
+          "label": "Robinson margin capture 2026-08",
+          "value": 92.196381,
+          "tol": 0.051
+        },
+        {
+          "label": "Robinson margin capture 2026-09",
+          "value": 93.294855,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics"
+      ]
+    },
+    {
+      "n": 4,
+      "question": "Between November 2023 and September 2026, which month had the widest gap between the Gulf Coast benchmark crack (USGC 3-2-1 MEH Crack, ex-RIN, prompt) and the Gulf Coast refineries' R&M margin per barrel, and what were their crude utilization and distillate and gasoline yields that month?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Crack Spread Price Analytics",
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Pricing and Market Margin Analytics",
+          "question": "Between November 2023 and September 2026, which month had the widest gap between the Gulf Coast benchmark crack and the Gulf Coast refineries' R&M margin per barrel, and what were their crude utilization and distillate and gasoline yields that month?",
+          "status": "MessageStatus.COMPLETED"
+        },
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "Between November 2023 and September 2026, which month had the widest gap between the Gulf Coast benchmark crack and the Gulf Coast refineries' R&M margin per barrel, and what were their crude utilization and distillate and gasoline yields that month?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "The requested metrics\u2014benchmark crack, R&M margin per barrel, crude utilization, distillate and gasoline yields\u2014are not available in the provided tables for the Gulf Coast refineries between November 2023 and September 2026. The demo does not compute the R&M Margin Indicator, and there is no data for crude utilization or product yields, so this question cannot be answered with the current data. Additionally, no months between November 2023 and September 2026 had a recorded gap between the Gulf Coast benchmark crack and the Gulf Coast refineries' R&M margin per barrel.",
+      "error": null,
+      "expected": [
+        {
+          "label": "month",
+          "value": [
+            "January 2024",
+            "Jan 2024",
+            "2024-01"
+          ],
+          "tol": null
+        },
+        {
+          "label": "crack",
+          "value": 16.4379712381,
+          "tol": 0.0051
+        },
+        {
+          "label": "R&M margin per barrel",
+          "value": 11.040508,
+          "tol": 0.0051
+        },
+        {
+          "label": "utilization",
+          "value": 87.48092185592185,
+          "tol": 0.051
+        },
+        {
+          "label": "distillate yield",
+          "value": 34.4935881275352,
+          "tol": 0.051
+        },
+        {
+          "label": "gasoline yield",
+          "value": 46.9900041872029,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics",
+        "missing month: January 2024",
+        "missing crack: 16.4379712381",
+        "missing R&M margin per barrel: 11.040508",
+        "missing utilization: 87.48092185592185",
+        "missing distillate yield: 34.4935881275352",
+        "missing gasoline yield: 46.9900041872029",
+        "no ontology term: KPI-0001 or market indicator",
+        "no ontology term: OPM-0024 or operational metric"
+      ]
+    },
+    {
+      "n": 5,
+      "question": "In October 2026, when ICE Brent front-month averaged above $110/bbl, how did the NYH ULSD and NYH CBOB cash prices and the USGC 3-2-1 MEH crack compare with September 2026, and did the Gulf Coast refineries' distillate yield shift?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Executive Summary KPIs Analytics",
+        "Pricing and Market Margin Analytics",
+        "Crack Spread Price Analytics",
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Executive Summary KPIs Analytics",
+          "question": "Compare NYH ULSD and NYH CBOB cash prices and the USGC 3-2-1 MEH crack in October 2026 to September 2026, and describe any shift in distillate yield for Gulf Coast refineries when ICE Brent front-month averaged above $110/bbl.",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "In October 2026, when ICE Brent front-month averaged above $110/bbl, the NYH ULSD cash price averaged $4.40/gal, up from $4.08/gal in September, while the NYH CBOB cash price was $3.21/gal, slightly higher than September's $3.19/gal. The USGC 3-2-1 MEH crack spread decreased from $69.78/gal in September to $57.11/gal in October. Although the data does not provide direct information on Gulf Coast distillate yield shifts, the relative strengthening of distillate values, as indicated by the sharper rise in NYH ULSD prices compared to NYH CBOB, may suggest a potential shift in distillate yield. However, to confirm this, it would be preferable to analyze actual distillate yield volumes or refinery output data.",
+      "error": null,
+      "expected": [
+        {
+          "label": "Brent October average",
+          "value": 124.96357142857143,
+          "tol": 0.0051
+        },
+        {
+          "label": "NYH CBOB 2026-09",
+          "value": 3.4255,
+          "tol": 0.0051
+        },
+        {
+          "label": "NYH ULSD 2026-09",
+          "value": 4.9370454545,
+          "tol": 0.0051
+        },
+        {
+          "label": "NYH CBOB 2026-10",
+          "value": 3.1022857143,
+          "tol": 0.0051
+        },
+        {
+          "label": "NYH ULSD 2026-10",
+          "value": 4.9678571429,
+          "tol": 0.0051
+        },
+        {
+          "label": "USGC crack 2026-09",
+          "value": 69.7779497273,
+          "tol": 0.0051
+        },
+        {
+          "label": "USGC crack 2026-10",
+          "value": 57.1108218571,
+          "tol": 0.0051
+        },
+        {
+          "label": "Gulf Coast distillate yield 2026-09",
+          "value": 34.5956360405721,
+          "tol": 0.051
+        },
+        {
+          "label": "Gulf Coast distillate yield 2026-10",
+          "value": 35.4968120803184,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Pricing and Market Margin Analytics, Crack Spread Price Analytics, Refinery Operations Analytics",
+        "missing Brent October average: 124.96357142857143",
+        "missing NYH CBOB 2026-09: 3.4255",
+        "missing NYH ULSD 2026-09: 4.9370454545",
+        "missing NYH CBOB 2026-10: 3.1022857143",
+        "missing NYH ULSD 2026-10: 4.9678571429",
+        "missing Gulf Coast distillate yield 2026-09: 34.5956360405721",
+        "missing Gulf Coast distillate yield 2026-10: 35.4968120803184"
+      ]
+    },
+    {
+      "n": 6,
+      "question": "How does the NYH ULSD cash forward curve on 2026-10-20, for its first three forward months, compare with the distillate yield the Gulf Coast refineries ran in the third quarter of 2026?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Executive Summary KPIs Analytics",
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Pricing and Market Margin Analytics",
+          "question": "NYH ULSD cash forward curve on 2026-10-20, for its first three forward months, compared with the distillate yield the Gulf Coast refineries ran in the third quarter of 2026",
+          "status": "MessageStatus.COMPLETED"
+        },
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "Gulf Coast refinery distillate yield for the third quarter of 2026",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "There are no available NYH ULSD cash forward prices for the first three forward months after 2026-10-20 in the data provided, and as a result, a comparison with the Gulf Coast distillate yield for Q3 2026 cannot be made based on the current dataset. However, for the third quarter of 2026, the distillate yield at Gulf Coast refineries was around 34.5% for each facility, with the highest distillate yield at El Paso (34.5%) and the lowest at Galveston Bay (34.5%).",
+      "error": null,
+      "expected": [
+        {
+          "label": "NYH ULSD forward 2026-10",
+          "value": 5.265,
+          "tol": 0.0051
+        },
+        {
+          "label": "NYH ULSD forward 2026-11",
+          "value": 5.236654,
+          "tol": 0.0051
+        },
+        {
+          "label": "NYH ULSD forward 2026-12",
+          "value": 5.180572,
+          "tol": 0.0051
+        },
+        {
+          "label": "Gulf Coast distillate yield, Q3 2026",
+          "value": 34.485911515607,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Executive Summary KPIs Analytics",
+        "missing NYH ULSD forward 2026-10: 5.265",
+        "missing NYH ULSD forward 2026-11: 5.236654",
+        "missing NYH ULSD forward 2026-12: 5.180572"
+      ]
+    },
+    {
+      "n": 7,
+      "question": "In the latest EIA week, which PADDs had distillate stocks below their five-year average for that week, and how did the Gulf Coast refineries' average daily crude runs and the USGC 3-2-1 MEH crack move from September to October 2026?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Executive Summary KPIs Analytics",
+          "question": "In the latest EIA week, which PADDs had distillate stocks below their five-year average for that week, and how did the Gulf Coast refineries' average daily crude runs and the USGC 3-2-1 MEH crack move from September to October 2026?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "The average USGC 3-2-1 MEH crack spread decreased from $69.78 per barrel in September 2026 to $57.11 per barrel in October 2026. Unfortunately, the available data does not include information about distillate stocks or Gulf Coast refineries' crude runs, so only the crack spread movement can be addressed.",
+      "error": null,
+      "expected": [
+        {
+          "label": "PADD 1 East Coast below its five-year average",
+          "value": "PADD 1",
+          "tol": null
+        },
+        {
+          "label": "PADD 2 Midwest below its five-year average",
+          "value": "PADD 2",
+          "tol": null
+        },
+        {
+          "label": "PADD 4 Rocky Mountain below its five-year average",
+          "value": "PADD 4",
+          "tol": null
+        },
+        {
+          "label": "PADD 5 West Coast below its five-year average",
+          "value": "PADD 5",
+          "tol": null
+        },
+        {
+          "label": "USGC crack 2026-09",
+          "value": 69.7779497273,
+          "tol": 0.0051
+        },
+        {
+          "label": "USGC crack 2026-10",
+          "value": 57.1108218571,
+          "tol": 0.0051
+        },
+        {
+          "label": "Gulf Coast crude runs 2026-09",
+          "value": 1184.4,
+          "tol": 1.0
+        },
+        {
+          "label": "Gulf Coast crude runs 2026-10",
+          "value": 1096.7,
+          "tol": 1.0
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Refinery Operations Analytics, Crack Spread Price Analytics",
+        "missing PADD 1 East Coast below its five-year average: PADD 1",
+        "missing PADD 2 Midwest below its five-year average: PADD 2",
+        "missing PADD 4 Rocky Mountain below its five-year average: PADD 4",
+        "missing PADD 5 West Coast below its five-year average: PADD 5",
+        "missing Gulf Coast crude runs 2026-09: 1184.4",
+        "missing Gulf Coast crude runs 2026-10: 1096.7",
+        "no ontology term: PADD 3"
+      ]
+    },
+    {
+      "n": 8,
+      "question": "On 2026-10-20, what was the Gulf Coast diesel netback to New York Harbor after freight (NYH ULSD cash less the USGC to New York Harbor tanker rate), what was the USGC to Northwest Europe rate, and how do they compare with the USGC 3-2-1 MEH crack and the Gulf Coast refineries' R&M margin per barrel that day?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Pricing and Market Margin Analytics",
+        "Crack Spread Price Analytics",
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Pricing and Market Margin Analytics",
+          "question": "On 2026-10-20, what was the Gulf Coast diesel netback to New York Harbor after freight, the USGC to Northwest Europe rate, and how do they compare with the USGC 3-2-1 MEH crack and the Gulf Coast refineries' R&M margin per barrel that day?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": true,
+      "answer": "On 2026-10-20, the Gulf Coast diesel netback to New York Harbor after freight was $5.00/gal, and the USGC to Northwest Europe freight rate was $0.26/gal. The netback and freight values are based on a mix of real and synthesized demo data. \n\nThe R&M Margin Indicator (OPM-0026) is defined as \"MPC's hypothetical R&M margin built from market data and operational guidance, posted monthly,\" but its value and the USGC 3-2-1 MEH crack are not available in this demo. \n\nIf you would like to see the actual numeric values for the Gulf Coast refineries' R&M margin and the USGC 3-2-1 MEH crack on that date instead of just their definitions, please let me know.",
+      "error": null,
+      "expected": [
+        {
+          "label": "NYH ULSD cash",
+          "value": 5.265,
+          "tol": 0.0051
+        },
+        {
+          "label": "USGC-NYH freight",
+          "value": 11.23,
+          "tol": 0.0051
+        },
+        {
+          "label": "USGC-NWE freight",
+          "value": 10.92,
+          "tol": 0.0051
+        },
+        {
+          "label": "netback to NYH after freight",
+          "value": 4.997619047619048,
+          "tol": 0.011
+        },
+        {
+          "label": "USGC crack",
+          "value": 43.813183,
+          "tol": 0.0051
+        },
+        {
+          "label": "Gulf Coast R&M margin per barrel",
+          "value": 37.589924,
+          "tol": 0.0051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics, Refinery Operations Analytics",
+        "missing NYH ULSD cash: 5.265",
+        "missing USGC-NYH freight: 11.23",
+        "missing USGC-NWE freight: 10.92",
+        "missing USGC crack: 43.813183",
+        "missing Gulf Coast R&M margin per barrel: 37.589924",
+        "no ontology term: synthetic",
+        "no ontology term: OPM-0018 or OPM-0024"
+      ]
+    },
+    {
+      "n": 9,
+      "question": "Which refineries did Hurricane Isaias (2026-10-07 to 2026-10-15) hit, how far did their crude utilization fall, when did they recover, and which measures moved?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [],
+      "definitions_read": false,
+      "answer": "",
+      "error": "OperationFailed: failed to reach COMPLETED, got MessageStatus.FAILED: current status: MessageStatus.FAILED",
+      "expected": [
+        {
+          "label": "Galveston Bay hit",
+          "value": "Galveston Bay",
+          "tol": null
+        },
+        {
+          "label": "Galveston Bay lowest utilization in the storm",
+          "value": 78.91,
+          "tol": 0.051
+        },
+        {
+          "label": "Garyville hit",
+          "value": "Garyville",
+          "tol": null
+        },
+        {
+          "label": "Garyville lowest utilization in the storm",
+          "value": 60.49,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "error: OperationFailed: failed to reach COMPLETED, got MessageStatus.FAILED: current status: MessageStatus.FAILED",
+        "agents not called: Refinery Operations Analytics",
+        "missing Galveston Bay hit: Galveston Bay",
+        "missing Galveston Bay lowest utilization in the storm: 78.91",
+        "missing Garyville hit: Garyville",
+        "missing Garyville lowest utilization in the storm: 60.49",
+        "no ontology term: OPM-0002 or Crude Utilization",
+        "no ontology term: OPM-0024 or OPM-0025"
+      ]
+    },
+    {
+      "n": 10,
+      "question": "How much margin did the autumn 2026 turnarounds at Robinson and Anacortes cost, valuing each day's crude runs below the refinery's average over the four weeks before its turnaround at the region's benchmark crack?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "What was the margin impact of the autumn 2026 turnarounds at Robinson and Anacortes, considering each day's crude runs below the refinery's average over the four weeks before its turnaround at the region's benchmark crack?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "The autumn 2026 turnarounds at Robinson and Anacortes did not result in any days where crude runs were below the refinery's average over the four weeks before its turnaround at the region's benchmark crack. Therefore, there was no margin impact observed under these conditions.",
+      "error": null,
+      "expected": [
+        {
+          "label": "Anacortes lost margin, $ million",
+          "value": 30.61805786939,
+          "tol": 1.5309028934695001
+        },
+        {
+          "label": "Robinson lost margin, $ million",
+          "value": 121.88441998992,
+          "tol": 6.094220999496001
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics",
+        "missing Anacortes lost margin, $ million: 30.61805786939",
+        "missing Robinson lost margin, $ million: 121.88441998992",
+        "no ontology term: OPM-0030 or Turnaround Lost Margin or lost margin"
+      ]
+    },
+    {
+      "n": 11,
+      "question": "After the U.S. dyed-diesel order (2026-10-05) and China's expected export restart (2026-10-08), how did the NYH ULSD cash price, the USGC 3-2-1 MEH crack and PADD 1 East Coast distillate stocks move from 2026-10-02 (the week before the order) to the latest data?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Executive Summary KPIs Analytics",
+        "Crack Spread Price Analytics",
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Executive Summary KPIs Analytics",
+          "question": "NYH ULSD cash price, USGC 3-2-1 MEH crack and PADD 1 East Coast distillate stocks movement from 2026-10-02 to latest data after U.S. dyed-diesel order and China's expected export restart",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "From 2026-10-02 to the latest available date, the **NYH ULSD cash price** ranged from $4.63 to $5.31 per gallon, while the **USGC 3-2-1 MEH crack spread** moved between $43.81 and $64.21 per barrel. Notable data points include:\n\n- **2026-10-02:** NYH ULSD at $4.67 (down $0.08), USGC 3-2-1 MEH at $61.35 (down $1.00)\n- **2026-10-08:** NYH ULSD at $5.31 (up $0.31), USGC 3-2-1 MEH at $62.31 (down $0.08)\n- **2026-10-09:** NYH ULSD at $4.91 (down $0.40), USGC 3-2-1 MEH at $57.07 (down $5.25)\n- **2026-10-15:** NYH ULSD at $4.94 (down $0.12), USGC 3-2-1 MEH at $48.18 (down $16.03)\n- **2026-10-20:** NYH ULSD at $5.27 (up $0.09), USGC 3-2-1 MEH at $43.81 (down $0.61)\n\nThe data shows significant volatility in the crack spread, especially mid-October, while NYH ULSD prices generally trended upward after an initial dip. No information is provided on PADD 1 East Coast distillate stocks in this dataset.",
+      "error": null,
+      "expected": [
+        {
+          "label": "NYH ULSD 2026-10-02",
+          "value": 4.674,
+          "tol": 0.0051
+        },
+        {
+          "label": "NYH ULSD 2026-10-20",
+          "value": 5.265,
+          "tol": 0.0051
+        },
+        {
+          "label": "USGC crack 2026-10-02",
+          "value": 61.351198,
+          "tol": 0.0051
+        },
+        {
+          "label": "USGC crack 2026-10-20",
+          "value": 43.813183,
+          "tol": 0.0051
+        },
+        {
+          "label": "PADD 1 distillate stocks, week to 2026-10-02",
+          "value": 21687,
+          "tol": 11.4435
+        },
+        {
+          "label": "PADD 1 distillate stocks, week to 2026-10-16",
+          "value": 21016,
+          "tol": 11.108
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics, Refinery Operations Analytics",
+        "missing PADD 1 distillate stocks, week to 2026-10-02: 21687",
+        "missing PADD 1 distillate stocks, week to 2026-10-16: 21016"
+      ]
+    },
+    {
+      "n": 12,
+      "question": "With distillate prices strong against gasoline in October 2026, did the 13 refineries shift yield toward distillate against the third quarter of 2026, and what did their R&M margin per barrel do?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Crack Spread Price Analytics",
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "With distillate prices strong against gasoline in October 2026, did the 13 refineries shift yield toward distillate against the third quarter of 2026, and what did their R&M margin per barrel do?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "All 13 refineries increased their distillate yield percentage in October 2026 compared to each month in the third quarter, with values rising from around 34.4\u201334.9% in July\u2013September to 35.0\u201335.6% in October. However, their R&M margin per barrel, which is the demo's own formula, generally decreased in October, dropping from highs of $64.7\u2013$71.1 per barrel in September to $45.2\u2013$61.5 per barrel in October. Examples include:\n\n- **Anacortes, WA**: distillate yield rose from 34.7% (Sep) to 35.2% (Oct), margin fell from $64.7 to $45.3\n- **Canton, OH**: distillate yield rose from 34.6% to 35.3%, margin fell from $71.0 to $61.1\n- **Catlettsburg, KY**: distillate yield rose from 34.8% to 35.5%, margin fell from $71.1 to $61.5\n- **Galveston Bay, TX**: distillate yield rose from 34.6% to 35.5%, margin fell from $64.5 to $52.8\n- **Kenai, AK**: distillate yield rose from 34.7% to 35.6%, margin fell from $64.7 to $45.5\n\nThis pattern is consistent across all refineries, indicating a strategic shift toward distillate yield but a notable drop in margin per barrel in October.",
+      "error": null,
+      "expected": [
+        {
+          "label": "distillate yield Q3 2026",
+          "value": 34.5219088582266,
+          "tol": 0.051
+        },
+        {
+          "label": "gasoline yield Q3 2026",
+          "value": 47.0272025769771,
+          "tol": 0.051
+        },
+        {
+          "label": "R&M margin per barrel Q3 2026",
+          "value": 61.128238,
+          "tol": 0.0051
+        },
+        {
+          "label": "distillate yield October 2026",
+          "value": 35.3603957769297,
+          "tol": 0.051
+        },
+        {
+          "label": "gasoline yield October 2026",
+          "value": 46.9401743212534,
+          "tol": 0.051
+        },
+        {
+          "label": "R&M margin per barrel October 2026",
+          "value": 54.635786,
+          "tol": 0.0051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics",
+        "missing distillate yield Q3 2026: 34.5219088582266",
+        "missing gasoline yield Q3 2026: 47.0272025769771",
+        "missing R&M margin per barrel Q3 2026: 61.128238",
+        "missing distillate yield October 2026: 35.3603957769297",
+        "missing gasoline yield October 2026: 46.9401743212534",
+        "missing R&M margin per barrel October 2026: 54.635786"
+      ]
+    },
+    {
+      "n": 13,
+      "question": "For Garyville's September 2026 plan, what benchmark crack and crude utilization did the plan assume, what happened, and how much of the gap came from the market and how much from operations?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "For Garyville's September 2026 plan, what benchmark crack and crude utilization did the plan assume, what happened, and how much of the gap came from the market and how much from operations?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "There is no available data for Garyville's September 2026 plan regarding the assumed benchmark crack, crude utilization, actuals, or the breakdown of the gap between market and operations. As a result, the requested information cannot be provided at this time.",
+      "error": null,
+      "expected": [
+        {
+          "label": "assumed crack",
+          "value": 58.4584,
+          "tol": 0.0051
+        },
+        {
+          "label": "actual crack",
+          "value": 69.7779,
+          "tol": 0.0051
+        },
+        {
+          "label": "planned utilization",
+          "value": 93.2,
+          "tol": 0.051
+        },
+        {
+          "label": "actual utilization",
+          "value": 95.11,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "missing assumed crack: 58.4584",
+        "missing actual crack: 69.7779",
+        "missing planned utilization: 93.2",
+        "missing actual utilization: 95.11",
+        "no ontology term: backcast or Regional Backcasting"
+      ]
+    },
+    {
+      "n": 14,
+      "question": "Which decision in 2026 missed its expected outcome by the widest margin, which role made it, and what did it actually cost?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "Which decision in 2026 missed its expected outcome by the widest margin, which role made it, and what did it actually cost?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "The decision with ID **D01** was made on **2026-10-06** by the roles **regional-planning-manager** and **refinery-scheduler**. The expected outcome was \"Crude utilization no lower than about 48% during the storm (October 7 to 15), the pre-storm 93% less the full cut.\" Unfortunately, the actual cost is not provided in the data.",
+      "error": null,
+      "expected": [
+        {
+          "label": "decision",
+          "value": "D04",
+          "tol": null
+        },
+        {
+          "label": "owner role",
+          "value": "regional planning director",
+          "tol": null
+        },
+        {
+          "label": "actual lost margin, $ million",
+          "value": 121.88,
+          "tol": 6.094
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "missing decision: D04",
+        "missing owner role: regional planning director",
+        "missing actual lost margin, $ million: 121.88"
+      ]
+    },
+    {
+      "n": 15,
+      "question": "When we cut runs at Garyville and Galveston Bay for Hurricane Isaias (decisions D01 and D02), how low did utilization go, and did cutting beat running through at the cracks that actually prevailed?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "When we cut runs at Garyville and Galveston Bay for Hurricane Isaias (decisions D01 and D02), how low did utilization go, and did cutting beat running through at the cracks that actually prevailed?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "No data was found for Garyville or Galveston Bay during Hurricane Isaias, so there is no record of how low utilization went or whether cutting runs outperformed running through at the actual crack spreads. This means the requested comparison cannot be made based on the available data. \n\nHowever, it's possible to see utilization and crack spread data for each day during the hurricane event instead of aggregated by month. Would you like to explore that option?",
+      "error": null,
+      "expected": [
+        {
+          "label": "decision D01",
+          "value": "D01",
+          "tol": null
+        },
+        {
+          "label": "decision D02",
+          "value": "D02",
+          "tol": null
+        },
+        {
+          "label": "Galveston Bay lowest utilization in the storm",
+          "value": 78.91,
+          "tol": 0.051
+        },
+        {
+          "label": "Garyville lowest utilization in the storm",
+          "value": 60.49,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics",
+        "missing decision D01: D01",
+        "missing decision D02: D02",
+        "missing Galveston Bay lowest utilization in the storm: 78.91",
+        "missing Garyville lowest utilization in the storm: 60.49",
+        "no ontology term: OPM-0002 or OPM-0024"
+      ]
+    },
+    {
+      "n": 16,
+      "question": "For October 2026, how many refineries ran a higher distillate yield than their plan version assumed, out of how many plans, and did the October shift toward distillate pay off against the plans' yields?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "For October 2026, how many refineries ran a higher distillate yield than their plan version assumed, out of how many plans, and did the October shift toward distillate pay off against the plans' yields?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "For October 2026, out of **13 refineries with plans**, only **4 refineries** ran a higher distillate yield than their plan version assumed, with **4 plans** above plan out of **13 total plans**. The average actual distillate yield was **35.3%**, slightly below the average planned yield of **35.5%**, so the October shift toward distillate did **not** pay off against the plans' yields.",
+      "error": null,
+      "expected": [
+        {
+          "label": "refineries above their planned distillate yield",
+          "value": 4.0,
+          "tol": 0.0
+        },
+        {
+          "label": "refineries in October's plans",
+          "value": 13.0,
+          "tol": 0.0
+        }
+      ],
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "n": 17,
+      "question": "Is our forecasting improving: what was the mean absolute error between planned and actual benchmark crack, and between planned and actual crude utilization, for the plan months of 2024, 2025 and 2026?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "What was the mean absolute error between planned and actual benchmark crack, and between planned and actual crude utilization, for the plan months of 2024, 2025 and 2026?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "For the plan months of 2024, 2025, and 2026, the mean absolute error between planned and actual benchmark crack was $5.50 per barrel, and the mean absolute error between planned and actual crude utilization was 2.2 percentage points. These values reflect the average deviation from plan targets across all refineries and months included in the data.",
+      "error": null,
+      "expected": [
+        {
+          "label": "mean absolute crack error 2024",
+          "value": 3.33149551,
+          "tol": 0.0051
+        },
+        {
+          "label": "mean absolute utilization error 2024",
+          "value": 1.856026,
+          "tol": 0.051
+        },
+        {
+          "label": "mean absolute crack error 2025",
+          "value": 3.76746923,
+          "tol": 0.0051
+        },
+        {
+          "label": "mean absolute utilization error 2025",
+          "value": 1.709679,
+          "tol": 0.051
+        },
+        {
+          "label": "mean absolute crack error 2026",
+          "value": 10.19181308,
+          "tol": 0.0051
+        },
+        {
+          "label": "mean absolute utilization error 2026",
+          "value": 3.361769,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "missing mean absolute crack error 2024: 3.33149551",
+        "missing mean absolute utilization error 2024: 1.856026",
+        "missing mean absolute crack error 2025: 3.76746923",
+        "missing mean absolute utilization error 2025: 1.709679",
+        "missing mean absolute crack error 2026: 10.19181308",
+        "missing mean absolute utilization error 2026: 3.361769"
+      ]
+    },
+    {
+      "n": 18,
+      "question": "Why did we cut runs at Galveston Bay during Hurricane Isaias? Label what the records show, what is inferred and what we cannot know.",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "Why did we cut runs at Galveston Bay during Hurricane Isaias?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "The records show that there are no documented disruption events for Galveston Bay refinery during August 2020 related to Hurricane Isaias. It is inferred that the run cut at Galveston Bay during this period may not be directly related to Hurricane Isaias, or the evidence is not available in the market_event_dim table. What we cannot know is the actual reason for the run cut, as there is no documented evidence explaining it.",
+      "error": null,
+      "expected": [
+        {
+          "label": "decision D02",
+          "value": "D02",
+          "tol": null
+        },
+        {
+          "label": "Galveston Bay lowest utilization in the storm",
+          "value": 78.91,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics",
+        "missing decision D02: D02",
+        "missing Galveston Bay lowest utilization in the storm: 78.91",
+        "no ontology term: OPM-0002 or OPM-0024 or refinery-galveston-bay"
+      ]
+    },
+    {
+      "n": 19,
+      "question": "In 2025, in which months did the outside scan name weather as the main driver of Gulf Coast refining margins, with what evidence label, and did the Gulf Coast refineries' crude utilization and margin capture fall below their 2025 averages in those months?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics",
+        "Crack Spread Price Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "In 2025, in which months did the outside scan name weather as the main driver of Gulf Coast refining margins, with what evidence label, and did the Gulf Coast refineries' crude utilization and margin capture fall below their 2025 averages in those months?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "In 2025, the outside scan named weather as the main driver of Gulf Coast refining margins in January, February, March, July, September, and November. The evidence label was \"inferred\" for all months except November, which was \"unknown.\" Crude utilization and margin capture fell below their 2025 averages in January, February, and March, but not in July, September, or November. \n\nHere are the details for each month:\n- January: Evidence label - \"inferred\", utilization - 86.93%, margin capture - 47.17%, both below average.\n- February: Evidence label - \"inferred\", utilization - 85.54%, margin capture - 62.34%, both below average.\n- March: Evidence label - \"inferred\", utilization - 86.48%, margin capture - 63.95%, both below average.\n- July: Evidence label - \"inferred\", utilization - 95.18%, margin capture - 71.18%, both above average.\n- September: Evidence label - \"inferred\", utilization - 93.04%, margin capture - 73.92%, both above average.\n- November: Evidence label - \"unknown\", utilization - 91.37%, margin capture - 74.77%, both above average.",
+      "error": null,
+      "expected": [
+        {
+          "label": "weather month 2025-01",
+          "value": [
+            "January",
+            "Jan",
+            "2025-01"
+          ],
+          "tol": null
+        },
+        {
+          "label": "weather month 2025-02",
+          "value": [
+            "February",
+            "Feb",
+            "2025-02"
+          ],
+          "tol": null
+        },
+        {
+          "label": "weather month 2025-03",
+          "value": [
+            "March",
+            "Mar",
+            "2025-03"
+          ],
+          "tol": null
+        },
+        {
+          "label": "weather month 2025-07",
+          "value": [
+            "July",
+            "Jul",
+            "2025-07"
+          ],
+          "tol": null
+        },
+        {
+          "label": "weather month 2025-09",
+          "value": [
+            "September",
+            "Sep",
+            "2025-09"
+          ],
+          "tol": null
+        },
+        {
+          "label": "weather month 2025-11",
+          "value": [
+            "November",
+            "Nov",
+            "2025-11"
+          ],
+          "tol": null
+        },
+        {
+          "label": "Gulf Coast utilization, 2025",
+          "value": 90.85123294044665,
+          "tol": 0.051
+        },
+        {
+          "label": "Gulf Coast margin capture, 2025",
+          "value": 67.873743,
+          "tol": 0.051
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "agents not called: Crack Spread Price Analytics",
+        "missing Gulf Coast utilization, 2025: 90.85123294044665",
+        "missing Gulf Coast margin capture, 2025: 67.873743"
+      ]
+    },
+    {
+      "n": 20,
+      "question": "D08 deferred part of November 2026's crude purchases after the G7 release: did an outside factor bear on how it turned out, or was it the decision? Give the evidence labels.",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "D08 deferred part of November 2026's crude purchases after the G7 release: did an outside factor bear on how it turned out, or was it the decision? Give the evidence labels.",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "Both an outside factor and the decision itself influenced the outcome of D08's deferred crude purchases in November 2026. The evidence labels provided are **observed** for the impact of a real-world event and **inferred** for weather as the most significant outside factor.",
+      "error": null,
+      "expected": [
+        {
+          "label": "outside factor",
+          "value": "weather",
+          "tol": null
+        },
+        {
+          "label": "its label",
+          "value": "inferred",
+          "tol": null
+        },
+        {
+          "label": "adverse-event probability",
+          "value": 0.7486,
+          "tol": 0.011
+        },
+        {
+          "label": "its label",
+          "value": "observed",
+          "tol": null
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "missing adverse-event probability: 0.7486"
+      ]
+    },
+    {
+      "n": 21,
+      "question": "Looking three months ahead from October 2026, what is scheduled or forecast that touches a past decision, and what should someone review before planning?",
+      "mode": "orchestrator",
+      "agents_required": [
+        "Refinery Operations Analytics"
+      ],
+      "agents_called": [
+        {
+          "agent": "Refinery Operations Analytics",
+          "question": "Looking three months ahead from October 2026, what is scheduled or forecast that touches a past decision, and what should someone review before planning?",
+          "status": "MessageStatus.COMPLETED"
+        }
+      ],
+      "definitions_read": false,
+      "answer": "Within the three months ahead from October 2026, there are two forecasted events in the Gulf Coast region that reference past decisions and require review before planning: an OPEC+ meeting in November 2026 (linked to decision D08), and a lower distillate outlook in December 2026 (linked to decisions D07 and D09). Both are marked as \"inferred\" and are awaiting review by a person, with suggested actions to review the backcast of these past decisions at the region's refineries.",
+      "error": null,
+      "expected": [
+        {
+          "label": "opec_meeting in 2026-11",
+          "value": [
+            "November 2026",
+            "Nov 2026",
+            "2026-11"
+          ],
+          "tol": null
+        },
+        {
+          "label": "matched D08",
+          "value": "D08",
+          "tol": null
+        },
+        {
+          "label": "distillate_outlook in 2026-12",
+          "value": [
+            "December 2026",
+            "Dec 2026",
+            "2026-12"
+          ],
+          "tol": null
+        },
+        {
+          "label": "matched D07",
+          "value": "D07",
+          "tol": null
+        },
+        {
+          "label": "matched D09",
+          "value": "D09",
+          "tol": null
+        },
+        {
+          "label": "label",
+          "value": "inferred",
+          "tol": null
+        }
+      ],
+      "passed": true,
+      "reasons": []
+    }
+  ]
+}

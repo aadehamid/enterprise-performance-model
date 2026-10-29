@@ -148,7 +148,7 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 | Definitions views (`ontology_definitions`), E3 | `measure_definitions_vw` | one measure with a KPI or OPM identifier, per release graph | 33 | Read from the ontology's triple table, `workspace.epm_ontology.epm_triples`, which the projection driver writes from the Turtle source of truth ([`sql/06_definitions.sql`](sql/06_definitions.sql)) |
 | | `crack_spread_definitions_vw`, `executive_summary_definitions_vw`, `pricing_market_margin_definitions_vw`, `refinery_operations_definitions_vw` | as above, the identified measures one subject area's metric views carry; the pricing and market margin view also keeps OPM-0026, the R&M Margin Indicator, which no metric view computes | 1, 6, 6, 7 | Filters of `measure_definitions_vw` by identifier |
 | Technical graph (`tech_graph`), E5 | `tech_graph_nodes` | one node of the technical graph or the decision trail | 142 (134 until E6, 2026-10-29) | Created empty by [`sql/07_tech_graph.sql`](sql/07_tech_graph.sql); filled by `python -m pricing_demo.tech_graph sync` from the pipeline's Neo4j, the graph's source: the node's IRI, class, name and other properties as JSON |
-| | `tech_graph_edges` | one relationship | 533 (510 until E6) | The same sync: source and target IRIs, the relationship type, and whether the target is an ontology resource |
+| | `tech_graph_edges` | one relationship | 540 (533 until E7, 510 until E6) | The same sync: source and target IRIs, the relationship type, and whether the target is an ontology resource |
 
 ## Measure identifiers and definitions (E3)
 
@@ -196,6 +196,8 @@ E5, on 2026-10-29, ran `setup` and `sql/07_tech_graph.sql` alone, not the whole 
 
 E6, on 2026-10-29, ran the whole pipeline: the generator, `load_postgres` (local container and VM), `replicate` from the VM, `setup`, `upload`, `build` and `counts`. The 61 objects above kept their counts and the six new outside-context objects held the rows the table above gives; with E5's two `tech_graph` tables that makes 69 objects. The build recreates the two `tech_graph` tables empty; `tech_graph sync` refilled them (142 nodes and 533 edges) after the technical graph was collected, built and loaded again with the six new objects.
 
+E7, on 2026-10-29, changed no table or view. It bound seven more tables to two Genie agents (README, "The acceptance tests (E7, 2026-10-29)"), so the technical graph was collected, built, loaded and synced again: 110 nodes and 403 edges (7 more `BINDS`), and 142 nodes and 540 edges in the Delta copy.
+
 ## The technical graph and the decision trail (E5)
 
 Built by [`pricing_demo/tech_graph.py`](pricing_demo/tech_graph.py) with the SPARQL Anything queries in [`sparql/`](sparql/), and committed as Turtle in [`graph/`](graph/). Everything in them is about the demo's own pipeline and its synthetic decisions; the IRIs under `urn:pricing-demo:` are the demo's, and the links to `https://w3id.org/lsc/ontology/` are the ontology's resources.
@@ -209,7 +211,7 @@ Built by [`pricing_demo/tech_graph.py`](pricing_demo/tech_graph.py) with the SPA
 | `GenieAgent`, `Orchestrator`, `TripleTable` | 4, 1, 1 | `genie.AGENTS` and the triple table's name, through the live facts | the 2 original agents to their `data-product` designs |
 | `Decision` (`prov:Activity`), `EvidenceItem` (`prov:Entity`) | 10, 22 | `aspen_pims.decision_log` and `decision_evidence` (decisions.rq) | `organization` roles (owners and authors), `ref-mpc` refineries, `kpi` measures |
 
-Edges between nodes: `READS_FROM` (a table or view to what its SQL reads), `COPIES` (a replica table to its source database), `HOSTED_ON`, `PRODUCED_BY`, `NEXT`, `CHECKS`, `BINDS` (an agent to its views), `ROUTES_TO` (the orchestrator to the agents), `RECORDED_IN` (a decision or item to its replica table), and PROV-O's `USED` and `WAS_GENERATED_BY`. Edges to the ontology: `IMPLEMENTS`, `DESIGNED_AS`, `STANDS_FOR`, `WAS_ASSOCIATED_WITH`, `WAS_ATTRIBUTED_TO`, `AFFECTS` and `CONCERNS`. Every edge starts at a `Tech` node, and no ontology node gets the `Tech` label or points at one.
+Edges between nodes: `READS_FROM` (a table or view to what its SQL reads), `COPIES` (a replica table to its source database), `HOSTED_ON`, `PRODUCED_BY`, `NEXT`, `CHECKS`, `BINDS` (an agent to its views and, since E7, the plain tables it reads), `ROUTES_TO` (the orchestrator to the agents), `RECORDED_IN` (a decision or item to its replica table), and PROV-O's `USED` and `WAS_GENERATED_BY`. Edges to the ontology: `IMPLEMENTS`, `DESIGNED_AS`, `STANDS_FOR`, `WAS_ASSOCIATED_WITH`, `WAS_ATTRIBUTED_TO`, `AFFECTS` and `CONCERNS`. Every edge starts at a `Tech` node, and no ontology node gets the `Tech` label or points at one.
 
 ## The outside context (E6)
 

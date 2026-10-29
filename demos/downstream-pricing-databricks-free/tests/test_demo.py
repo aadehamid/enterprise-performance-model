@@ -216,8 +216,9 @@ def test_findings_2_and_3_every_measure_an_agent_names_is_in_a_view_it_binds():
         text = open(os.path.join(ROOT, "genie", spec["file"])).read() + " ".join(s for _, s in spec["examples"])
         named = set(re.findall(r"MEASURE\((\w+)\)", text))
         assert named and named <= allowed, (title, named - allowed)
-        # Examples read only the views the agent binds, never gold.
-        assert "gold_commercial_core" not in " ".join(s for _, s in spec["examples"])
+        # Examples read only what the agent binds: its views and, since E7, the plain tables it binds.
+        named_tables = set(re.findall(r"\{c\}\.([a-z_]+\.[a-z_]+)", " ".join(s for _, s in spec["examples"])))
+        assert named_tables <= {t for t, _ in spec["tables"]}, (title, named_tables - {t for t, _ in spec["tables"]})
     exec_text = open(os.path.join(ROOT, "genie", "executive-summary-kpis-analytics.md")).read()
     assert "MEASURE(assessment_amount) / MEASURE(Record_Count)" in exec_text
     benchmark_rules = exec_text.split("Benchmark Prices: ")[1].split("\n")[0]
@@ -427,6 +428,10 @@ def test_bugbot_380_the_eia_key_is_read_from_the_demos_env(tmp_path, monkeypatch
 def test_bugbot_380_every_example_reads_its_view_only_with_measure():
     for spec in genie.AGENTS.values():
         for _, sql in spec["examples"]:
+            if "semantic_sem_commercial." not in sql:
+                # A plain table the agent binds (E7) is read with plain SQL, never MEASURE().
+                assert "MEASURE(" not in sql, sql
+                continue
             assert "MAX(" not in sql and "gold_commercial_core" not in sql
             # Every read of a metric view (each "FROM {c}.semantic_sem_commercial.<view>") belongs to a SELECT that
             # names a MEASURE() and, when it groups, groups by dimensions: split the statement at each view read and
@@ -915,12 +920,24 @@ AGENT_VIEWS = {
 }
 
 
+# The plain tables each agent also binds since E7 (README, "Use cases"; delegated under EPM-DEC-001-0028).
+AGENT_TABLES = {
+    "Crack Spread Price Analytics": set(),
+    "Executive Summary KPIs Analytics": set(),
+    "Pricing and Market Margin Analytics": {"silver_udm_core.freight_rate_fact"},
+    "Refinery Operations Analytics": {"gold_commercial_core.refinery_plan_backcast_fact", "gold_commercial_core.decision_evidence_detail_fact",
+                                      "silver_mdm_core.market_event_dim", "silver_udm_core.eia_weekly_fact",
+                                      "silver_udm_core.external_event_fact", "silver_udm_core.forward_scan_fact"},
+}
+
+
 def test_e4_each_agent_binds_its_metric_views_and_its_definitions_view():
     assert set(genie.AGENTS) == set(AGENT_VIEWS)
     for title, spec in genie.AGENTS.items():
         views, definitions = AGENT_VIEWS[title]
         bound = {t for t, _ in spec["tables"]}
-        assert bound == {f"semantic_sem_commercial.{v}" for v in views} | {f"ontology_definitions.{definitions}"}, title
+        assert bound == ({f"semantic_sem_commercial.{v}" for v in views} | {f"ontology_definitions.{definitions}"}
+                         | AGENT_TABLES[title]), title
         # The definitions view is the one sql/06 builds for these metric views, and the instructions name it.
         assert DEFINITIONS[definitions][0] == views, title
         text = open(os.path.join(ROOT, "genie", spec["file"])).read()
@@ -1276,3 +1293,227 @@ def test_e6_citation_titles_name_no_person():
         for c in json.load(open(path)).get("citations", []):
             assert not outside.BYLINE.search(c["title"] or ""), (path, c["title"])
             assert not outside.PROFILE.search(c["url"] or ""), (path, c["url"])
+
+
+# ---- E7 (2026-10-29): the acceptance tests of the 21 use cases ----
+from pricing_demo import acceptance  # noqa: E402
+
+E7_RUN = {"agents_called": [{"agent": "Refinery Operations Analytics", "question": "q", "status": "COMPLETED",
+                             "text": "SQL: SELECT * FROM idp_sbx.ontology_definitions.refinery_operations_definitions_vw"},
+                            {"agent": "Crack Spread Price Analytics", "question": "q", "status": "COMPLETED", "text": ""}],
+          "answer": "Garyville's margin capture (OPM-0025 Margin Capture, the demo's own formula) fell from 93.0% in "
+                    "September 2026 to 92.1% in October; the USGC crack fell from $69.78 to $57.11/bbl."}
+
+
+def test_e7_one_case_per_use_case_naming_only_real_agents_and_identifiers():
+    assert [c["n"] for c in acceptance.CASES] == list(range(1, 22))
+    readme = open(os.path.join(ROOT, "README.md")).read()
+    assert len(re.findall(r"(?m)^\| (\d+) \|", readme.split("## Use cases")[1].split("\n## ")[0])) == 21
+    known = set(IDENTIFIERS.values())
+    for case in acceptance.CASES:
+        assert case["question"] and callable(case["check"]) and case["ontology"], case["n"]
+        assert set(case["agents"]) <= set(genie.AGENTS), case["n"]
+        assert bool(case["agents"]) == (case.get("mode") != "graph"), case["n"]
+        named = set(re.findall(ID_PATTERN, " ".join(t for g in case["ontology"] for t in g)))
+        assert named <= known, (case["n"], named - known)
+
+
+def test_e7_each_case_needs_exactly_the_agents_its_row_names():
+    # Cursor on #408: a case's agents must be the agents its README row names in "Agents and sources"; a row that
+    # names none needs the agent that binds its tables (Refinery Operations, since E7).
+    names = {"Crack Spread": "Crack Spread Price Analytics", "Refinery operations": "Refinery Operations Analytics",
+             "Executive Summary": "Executive Summary KPIs Analytics",
+             "Pricing and Market Margin": "Pricing and Market Margin Analytics"}
+    readme = open(os.path.join(ROOT, "README.md")).read().split("## Use cases")[1].split("\n## ")[0]
+    rows = {int(m.group(1)): m.group(2) for m in re.finditer(r"(?m)^\| (\d+) \| [^|]*\| ([^|]*)\|", readme)}
+    for case in acceptance.CASES:
+        named = {agent for words, agent in names.items() if words in rows[case["n"]]}
+        if case.get("mode") == "graph":
+            assert case["agents"] == [], case["n"]
+        else:
+            assert set(case["agents"]) == (named or {"Refinery Operations Analytics"}), (case["n"], rows[case["n"]])
+
+
+def test_e7_every_table_a_check_reads_is_one_the_build_creates():
+    created = {f"{schema}.{name}" for _, schema, name in databricks.created_objects()}
+    source = open(os.path.join(ROOT, "pricing_demo", "acceptance.py")).read()
+    # information_schema is the catalog's own description, which Databricks keeps, not a table the build creates
+    read = {t for t in re.findall(r"\{c\}\.([a-z_]+\.[a-z_]+)", source) if not t.startswith("information_schema.")}
+    assert read and read <= created, read - created
+
+
+def test_e7_planning_tables_are_built_and_the_supervisor_names_them():
+    created = {f"{schema}.{name}" for _, schema, name in databricks.created_objects()}
+    for title, tables in AGENT_TABLES.items():
+        assert tables <= created, title
+        spec = genie.AGENTS[title]
+        text = supervisor.description(title, spec, [("OPM-0002", "Crude Utilization")], {"OPM-0002"})
+        for t in tables:
+            assert t.split(".")[-1] in text, (title, t)
+        doc = open(os.path.join(ROOT, "genie", spec["file"])).read()
+        assert all(f"${{catalog}}.{t}`" in doc for t in tables), title
+
+
+def test_e7_judge_passes_an_answer_with_every_figure_agent_and_ontology_term():
+    case = acceptance.CASES[1]
+    expected = [acceptance.Expect("capture Sep", 93.0114, acceptance.PCT), acceptance.Expect("capture Oct", 92.136, acceptance.PCT),
+                acceptance.Expect("crack Sep", 69.78, acceptance.USD), acceptance.Expect("crack Oct", 57.11, acceptance.USD)]
+    assert acceptance.judge(case, expected, E7_RUN) == {"passed": True, "reasons": []}
+    assert acceptance.definitions_read(E7_RUN)
+
+
+def test_e7_judge_names_each_missing_agent_figure_and_ontology_term():
+    case = acceptance.CASES[1]
+    run = dict(E7_RUN, agents_called=E7_RUN["agents_called"][:1], answer="Capture fell to 91.0%.")
+    verdict = acceptance.judge(case, [acceptance.Expect("capture Oct", 92.136, acceptance.PCT)], run)
+    assert not verdict["passed"]
+    assert "agents not called: Crack Spread Price Analytics" in verdict["reasons"]
+    assert any(r.startswith("missing capture Oct") for r in verdict["reasons"])
+    assert any(r.startswith("no ontology term: OPM-0025") for r in verdict["reasons"])
+    assert acceptance.judge(case, [], dict(E7_RUN, error="boom"))["reasons"][:2] == ["error: boom", "the check found nothing to compare"]
+
+
+def test_e7_figures_match_as_a_reader_would_round_them():
+    e = acceptance.Expect
+    assert acceptance.holds("NYH ULSD $5.27/gal", e("NYH ULSD cash", 5.265, acceptance.GAL))
+    assert acceptance.holds("NYH ULSD $5.26/gal", e("NYH ULSD cash", 5.265, acceptance.GAL))
+    assert not acceptance.holds("NYH ULSD $5.28/gal", e("NYH ULSD cash", 5.265, acceptance.GAL))
+    assert acceptance.holds("a 75% chance of an adverse event", e("adverse-event probability", 0.7486, 0.0051))
+    assert acceptance.holds("about $121.9 million of lost margin", e("Robinson lost margin, $ million", 121.88, 0.05 * 121.88))
+    assert acceptance.holds("$121,884,420 of lost margin", e("Robinson lost margin", 121884420.0, 0.05 * 121884420.0))
+    assert acceptance.holds("in Jan 2024", e("month", acceptance.months("2024-01-01"), None))
+    assert acceptance.holds("weather (inferred)", e("label", "Inferred", None))
+    assert not acceptance.holds("no figure here", e("USGC crack", 16.44, acceptance.USD))
+
+
+def test_e7_a_figure_counts_only_against_its_own_label():
+    # Codex, round 1 on E7: any number near the value used to pass, so swapped figures passed too.
+    e = acceptance.Expect
+    sep, oct_ = e("USGC crack 2026-09", 69.78, acceptance.USD), e("USGC crack 2026-10", 57.11, acceptance.USD)
+    right = "The USGC crack fell from $69.78 in September to $57.11 in October."
+    swapped = "The USGC crack fell from $57.11 in September to $69.78 in October."
+    assert all(acceptance.holds(right, x, [sep, oct_]) for x in (sep, oct_))
+    assert not any(acceptance.holds(swapped, x, [sep, oct_]) for x in (sep, oct_))
+    plan, actual = e("planned utilization", 93.2, acceptance.PCT), e("actual utilization", 95.1, acceptance.PCT)
+    assert acceptance.holds("The plan assumed 93.2% utilization and the refinery ran 95.1% actual.", plan, [plan, actual])
+    assert not acceptance.holds("Actual utilization was 93.2%; the plan had 95.1%.", plan, [plan, actual])
+    assert not acceptance.holds("Garyville ran 35.5%.", e("Gulf Coast distillate yield 2026-10", 35.497, acceptance.PCT))
+
+
+def test_e7_a_part_and_its_whole_are_placed_by_their_cues():
+    # Case 16's two counts share their words, so each is placed by its role in "4 out of 13".
+    beat, plans = (acceptance.Expect(label, value, 0.0, acceptance.CUES[label])
+                   for label, value in ((acceptance.BEAT, 4.0), (acceptance.PLANS, 13.0)))
+    for right in ("4 out of 13 refinery plans ran a higher distillate yield than planned.",
+                  "Out of **13 refineries with plans**, only **4 refineries** ran a higher distillate yield."):
+        assert acceptance.holds(right, beat, [beat, plans]) and acceptance.holds(right, plans, [beat, plans]), right
+    swapped = "13 out of 4 refinery plans ran a higher distillate yield than planned."
+    assert not acceptance.holds(swapped, beat, [beat, plans]) and not acceptance.holds(swapped, plans, [beat, plans])
+
+
+def test_e7_case_14_asks_the_readme_question_and_checks_the_trail_and_the_lesson():
+    readme = open(os.path.join(ROOT, "README.md")).read()
+    case = next(c for c in acceptance.CASES if c["n"] == 14)
+    assert "largest gap between expected and actual outcome" in case["question"] and "lesson" in case["question"]
+    assert "largest gap between expected and actual outcome" in readme
+    # each bound is the one its decision's expected outcome states, and names a figure its dossier records
+    expected = {d["DecisionId"]: d["ExpectedOutcome"] for d in rows("aspen_pims", "decision_log")}
+    stated = {"D01": "about 48%", "D02": "about 73%", "D03": "within 3 trading days", "D04": "under $25 million",
+              "D05": "under $25 million", "D06": "about 1.5 points", "D07": "under $1.00/bbl",
+              "D08": "at least $2.00/bbl lower", "D09": "at least 5 cents/gal lower"}
+    assert set(stated) == set(acceptance.EXPECTED_BOUNDS)
+    dossiers = {d["DecisionId"]: json.loads(d["ActualOutcomeData"]) for d in rows("decision_truth", "decision_dossier")}
+    for d, words in stated.items():
+        assert words in expected[d], (d, expected[d])
+        assert acceptance.EXPECTED_BOUNDS[d][0] in dossiers[d], d
+    assert acceptance.miss(121.88, 25.0, "max") == pytest.approx(3.8752)
+    assert acceptance.miss(10.32, -2.0, "max") == pytest.approx(6.16)
+    assert acceptance.miss(60.5, 48.0, "min") == 0.0
+    roles = acceptance.trail_roles()
+    assert roles["D08"] == {"crude oil trader", "crude planning and optimization director"}
+    assert roles["D04"] == {"refinery planner", "regional planning director"}
+    none = acceptance.Expect("the records hold no lesson", acceptance.NoneRecorded("lesson"), None)
+    assert acceptance.holds("The records hold no lesson for either decision.", none)
+    assert acceptance.holds("No lesson is recorded: the backcast doesn't record lessons.", none)
+    # Codex, round 2 on E7: a denial next to a claim must fail, and so must an answer that never mentions a lesson
+    assert not acceptance.holds("No lesson is recorded, but the backcast recorded a lesson.", none)
+    # a double negative claims a lesson; exactly one negating word per clause (Codex quick check)
+    assert not acceptance.holds("No lesson was not recorded.", none)
+    assert not acceptance.holds("The lesson was not absent.", none)
+    assert not acceptance.holds("The backcast recorded the lesson: plan for longer turnarounds.", none)
+    assert not acceptance.holds("D08 missed by $12.32/bbl.", none)
+
+
+def test_e7_case_14_looks_for_lessons_in_every_store_before_expecting_none():
+    class Stores:  # the stores as the check sees them: one lesson column, one evidence item, one dossier field
+        def __init__(self, lesson):
+            self.lesson = lesson
+        def q(self, sql):
+            if "information_schema.columns" in sql:
+                return [{"s": "silver_mdm_core", "t": "decision_dim", "c": "Lesson_Text"}] if self.lesson else []
+            if "Lesson_Text IS NOT NULL" in sql:
+                return [{"Decision_Id": "D04", "Lesson_Text": "Book turnaround crews earlier."}]
+            return []
+        def pg(self, sql):
+            return [{"DecisionId": "D08", "GroundTruthRationale": "The release was expected to ease prices."}]
+    assert acceptance.lesson_records(Stores(False)) == []
+    assert acceptance.lesson_records(Stores(True)) == [("decision_dim.Lesson_Text", "D04", "Book turnaround crews earlier.")]
+    source = open(os.path.join(ROOT, "pricing_demo", "acceptance.py")).read()
+    assert "NoneRecorded(\"lesson\")" in source and "lesson_records(ctx)" in source
+
+
+def test_e7_rejudge_fails_only_a_changed_question_and_keeps_the_no_lesson_rule(tmp_path):
+    # Bugbot on #408: rejudge used to fail case 14 by number alone, and read a NoneRecorded figure back as a plain string.
+    case = next(c for c in acceptance.CASES if c["n"] == 14)
+    none = acceptance.Expect("the records hold no lesson", acceptance.NoneRecorded("lesson"), None)
+    record = acceptance.recorded(none)
+    assert record["kind"] == "none recorded" and isinstance(acceptance.restored(record).value, acceptance.NoneRecorded)
+    answers = {"denied": "The crude oil trader made D08. No lesson is recorded for it.",
+               "double negative": "The crude oil trader made D08. It is not true that no lesson was recorded."}
+    for name, answer in answers.items():
+        run = {"run_at": "2026-10-29T00:00:00+00:00", "results": [
+            {"n": 14, "question": case["question"], "agents_called": [{"agent": "Refinery Operations Analytics"}],
+             "answer": answer, "expected": [record], "passed": False, "reasons": []}]}
+        path = tmp_path / f"{name.replace(' ', '-')}.json"
+        path.write_text(json.dumps(run))
+        verdict = acceptance.rejudge(str(path))["results"][0]
+        assert verdict["passed"] == (name == "denied"), (name, verdict["reasons"])
+    run["results"][0]["question"] = "Which decision missed by the widest margin?"
+    path.write_text(json.dumps(run))
+    assert acceptance.rejudge(str(path))["results"][0]["reasons"][0].startswith("the question changed after the run")
+
+
+def test_e7_a_stopped_orchestrator_keeps_the_agents_it_called(monkeypatch):
+    # Bugbot on #408: a run that hit the round limit or an error recorded no agents, so every agent read as missing.
+    replies = iter([{"role": "assistant", "tool_calls": [{"id": "1", "function": {
+        "name": supervisor.tool_name("Refinery Operations Analytics"), "arguments": json.dumps({"question": "q"})}}]},
+        {"role": "assistant", "tool_calls": [{"id": "2", "function": {"name": "an_invented_tool", "arguments": "{}"}}]}])
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs: next(replies))
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
+    with pytest.raises(supervisor.OrchestrationError) as err:
+        supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert [c["agent"] for c in err.value.agents_called] == ["Refinery Operations Analytics"]
+    assert isinstance(err.value, SystemExit)  # `supervisor ask` still exits as before
+    run = {"agents_called": err.value.agents_called, "answer": "", "error": "KeyError"}
+    case = next(c for c in acceptance.CASES if c["n"] == 13)
+    reasons = acceptance.judge(case, [], run)["reasons"]
+    assert "agents not called: Crack Spread Price Analytics" in reasons
+
+
+def test_e7_rejudged_runs_keep_their_original_verdicts_beside_the_new_ones():
+    for k, original, now in ((1, 3, 2), (2, 4, 2)):
+        path = os.path.join(ROOT, "data", "acceptance", f"2026-10-29-run{k}-rejudged.json")
+        results = json.load(open(path))["results"]
+        assert sum(r["original"]["passed"] for r in results) == original
+        assert sum(r["passed"] for r in results) == now
+        assert not next(r for r in results if r["n"] == 14)["passed"]
+
+
+def test_e7_rejudged_files_record_the_agents_their_verdicts_required():
+    # Codex quick check on #408: the re-judged records carry the current required agents, the run's in "original".
+    from pricing_demo import acceptance
+    cases = {c["n"]: c for c in acceptance.CASES}
+    for name in ("2026-10-29-run1-rejudged.json", "2026-10-29-run2-rejudged.json"):
+        for r in json.load(open(os.path.join(ROOT, "data", "acceptance", name)))["results"]:
+            assert r["agents_required"] == list(cases[r["n"]]["agents"]), (name, r["n"])
+            assert "agents_required" in r["original"], (name, r["n"])

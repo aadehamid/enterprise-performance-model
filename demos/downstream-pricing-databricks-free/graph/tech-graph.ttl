@@ -4,7 +4,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <urn:pricing-demo:tech:check/built-objects-hold-rows> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T17:07:25+00:00"^^xsd:dateTime ;
+    tv:checkedAt "2026-10-29T19:05:37+00:00"^^xsd:dateTime ;
     tv:checks <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
@@ -60,7 +60,7 @@
     tv:result "pass" .
 
 <urn:pricing-demo:tech:check/decision-truth-hidden> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T17:07:32+00:00"^^xsd:dateTime ;
+    tv:checkedAt "2026-10-29T19:05:49+00:00"^^xsd:dateTime ;
     tv:checks <urn:pricing-demo:tech:database/decision_truth> ;
     tv:detail "no problem found" ;
     tv:label "No table of decision_truth reaches Databricks, and no SQL file names it" ;
@@ -69,7 +69,7 @@
     tv:result "pass" .
 
 <urn:pricing-demo:tech:check/designed-vs-observed-lineage> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T17:07:39+00:00"^^xsd:dateTime ;
+    tv:checkedAt "2026-10-29T19:05:59+00:00"^^xsd:dateTime ;
     tv:checks <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_currency>,
@@ -101,7 +101,7 @@
     tv:result "differs" .
 
 <urn:pricing-demo:tech:check/metric-views-tagged> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T17:07:25+00:00"^^xsd:dateTime ;
+    tv:checkedAt "2026-10-29T19:05:37+00:00"^^xsd:dateTime ;
     tv:checks <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_executive_summary_fact_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw>,
@@ -115,7 +115,7 @@
     tv:result "pass" .
 
 <urn:pricing-demo:tech:check/replica-matches-manifest> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T17:07:12+00:00"^^xsd:dateTime ;
+    tv:checkedAt "2026-10-29T19:05:26+00:00"^^xsd:dateTime ;
     tv:checks <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence>,
         <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log>,
         <urn:pricing-demo:tech:object/replica_aspen_pims.plan_target>,
@@ -151,7 +151,7 @@
     tv:result "pass" .
 
 <urn:pricing-demo:tech:check/rows-labelled> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T17:07:32+00:00"^^xsd:dateTime ;
+    tv:checkedAt "2026-10-29T19:05:48+00:00"^^xsd:dateTime ;
     tv:checks <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
@@ -188,19 +188,19 @@
 
 <urn:pricing-demo:tech:object/tech_graph.tech_graph_edges> a tv:TechGraphTable ;
     tv:definedIn "sql/07_tech_graph.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:57+00:00"^^xsd:dateTime ;
+    tv:lastRefresh "2026-10-29T17:08:23+00:00"^^xsd:dateTime ;
     tv:layer "tech-graph" ;
     tv:name "tech_graph.tech_graph_edges" ;
     tv:producedBy <urn:pricing-demo:tech:step/tech_graph-sync> ;
-    tv:rows 0.0 .
+    tv:rows 533.0 .
 
 <urn:pricing-demo:tech:object/tech_graph.tech_graph_nodes> a tv:TechGraphTable ;
     tv:definedIn "sql/07_tech_graph.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:55+00:00"^^xsd:dateTime ;
+    tv:lastRefresh "2026-10-29T17:08:13+00:00"^^xsd:dateTime ;
     tv:layer "tech-graph" ;
     tv:name "tech_graph.tech_graph_nodes" ;
     tv:producedBy <urn:pricing-demo:tech:step/tech_graph-sync> ;
-    tv:rows 0.0 .
+    tv:rows 142.0 .
 
 tech:orchestrator a tv:Orchestrator ;
     tv:name "Orchestrator (pricing_demo/supervisor.py)" ;
@@ -227,14 +227,21 @@ tech:orchestrator a tv:Orchestrator ;
 
 <urn:pricing-demo:tech:agent/pricing-and-market-margin-analytics> a tv:GenieAgent ;
     tv:binds <urn:pricing-demo:tech:object/ontology_definitions.pricing_market_margin_definitions_vw>,
-        <urn:pricing-demo:tech:object/semantic_sem_commercial.pricing_market_margin_metrics_vw> ;
+        <urn:pricing-demo:tech:object/semantic_sem_commercial.pricing_market_margin_metrics_vw>,
+        <urn:pricing-demo:tech:object/silver_udm_core.freight_rate_fact> ;
     tv:name "Pricing and Market Margin Analytics" ;
     tv:producedBy <urn:pricing-demo:tech:step/genie> .
 
 <urn:pricing-demo:tech:agent/refinery-operations-analytics> a tv:GenieAgent ;
-    tv:binds <urn:pricing-demo:tech:object/ontology_definitions.refinery_operations_definitions_vw>,
+    tv:binds <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
+        <urn:pricing-demo:tech:object/gold_commercial_core.refinery_plan_backcast_fact>,
+        <urn:pricing-demo:tech:object/ontology_definitions.refinery_operations_definitions_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_operations_metrics_vw>,
-        <urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_unit_operations_metrics_vw> ;
+        <urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_unit_operations_metrics_vw>,
+        <urn:pricing-demo:tech:object/silver_mdm_core.market_event_dim>,
+        <urn:pricing-demo:tech:object/silver_udm_core.eia_weekly_fact>,
+        <urn:pricing-demo:tech:object/silver_udm_core.external_event_fact>,
+        <urn:pricing-demo:tech:object/silver_udm_core.forward_scan_fact> ;
     tv:name "Refinery Operations Analytics" ;
     tv:producedBy <urn:pricing-demo:tech:step/genie> .
 
@@ -326,26 +333,6 @@ tech:orchestrator a tv:Orchestrator ;
     tv:rows 599280.0 ;
     tv:standsFor <https://w3id.org/lsc/ontology/modules/system/system/mpr> ;
     tv:tables 2.0 .
-
-<urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact> a tv:GoldTable ;
-    tv:definedIn "sql/04_gold.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:39+00:00"^^xsd:dateTime ;
-    tv:layer "gold" ;
-    tv:name "gold_commercial_core.decision_evidence_detail_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.decision_dim>,
-        <urn:pricing-demo:tech:object/silver_udm_core.decision_evidence_fact> ;
-    tv:rows 22.0 .
-
-<urn:pricing-demo:tech:object/gold_commercial_core.refinery_plan_backcast_fact> a tv:GoldTable ;
-    tv:definedIn "sql/04_gold.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:37+00:00"^^xsd:dateTime ;
-    tv:layer "gold" ;
-    tv:name "gold_commercial_core.refinery_plan_backcast_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact>,
-        <urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_version_fact> ;
-    tv:rows 455.0 .
 
 <urn:pricing-demo:tech:object/ontology_definitions.crack_spread_definitions_vw> a tv:DefinitionsView ;
     tv:definedIn "sql/06_definitions.sql" ;
@@ -566,15 +553,6 @@ tech:orchestrator a tv:Orchestrator ;
     tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.external_citation> ;
     tv:rows 1360.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.market_event_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:58+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.market_event_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.market_event> ;
-    tv:rows 9.0 .
-
 <urn:pricing-demo:tech:object/silver_udm_core.ctrm_deal_fact> a tv:SilverTable ;
     tv:definedIn "sql/03_silver.sql" ;
     tv:lastRefresh "2026-10-29T17:00:50+00:00"^^xsd:dateTime ;
@@ -584,43 +562,6 @@ tech:orchestrator a tv:Orchestrator ;
     tv:readsFrom <urn:pricing-demo:tech:object/replica_rightangle.deal>,
         <urn:pricing-demo:tech:object/replica_rightangle.movement> ;
     tv:rows 2673.0 .
-
-<urn:pricing-demo:tech:object/silver_udm_core.eia_weekly_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:03+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.eia_weekly_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_eia_weekly.series>,
-        <urn:pricing-demo:tech:object/replica_eia_weekly.weekly_value> ;
-    tv:rows 8792.0 .
-
-<urn:pricing-demo:tech:object/silver_udm_core.external_event_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:13+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.external_event_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.external_event> ;
-    tv:rows 344.0 .
-
-<urn:pricing-demo:tech:object/silver_udm_core.forward_scan_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:15+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.forward_scan_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.forward_scan> ;
-    tv:rows 45.0 .
-
-<urn:pricing-demo:tech:object/silver_udm_core.freight_rate_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:55+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.freight_rate_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_rightangle.freight_rate> ;
-    tv:rows 1496.0 .
 
 <urn:pricing-demo:tech:step/supervisor-ask> a tv:PipelineStep ;
     tv:name "pricing_demo.supervisor ask" ;
@@ -646,6 +587,26 @@ tech:orchestrator a tv:Orchestrator ;
     tv:rows 6842.0 ;
     tv:standsFor <https://w3id.org/lsc/ontology/modules/system/system/rightangle> ;
     tv:tables 3.0 .
+
+<urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact> a tv:GoldTable ;
+    tv:definedIn "sql/04_gold.sql" ;
+    tv:lastRefresh "2026-10-29T17:01:39+00:00"^^xsd:dateTime ;
+    tv:layer "gold" ;
+    tv:name "gold_commercial_core.decision_evidence_detail_fact" ;
+    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tv:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.decision_dim>,
+        <urn:pricing-demo:tech:object/silver_udm_core.decision_evidence_fact> ;
+    tv:rows 22.0 .
+
+<urn:pricing-demo:tech:object/gold_commercial_core.refinery_plan_backcast_fact> a tv:GoldTable ;
+    tv:definedIn "sql/04_gold.sql" ;
+    tv:lastRefresh "2026-10-29T17:01:37+00:00"^^xsd:dateTime ;
+    tv:layer "gold" ;
+    tv:name "gold_commercial_core.refinery_plan_backcast_fact" ;
+    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact>,
+        <urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_version_fact> ;
+    tv:rows 455.0 .
 
 <urn:pricing-demo:tech:object/gold_commercial_core.refinery_unit_operations_daily_fact> a tv:GoldTable ;
     tv:definedIn "sql/04_gold.sql" ;
@@ -785,6 +746,15 @@ tech:orchestrator a tv:Orchestrator ;
     tv:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
     tv:rows 10.0 .
 
+<urn:pricing-demo:tech:object/silver_mdm_core.market_event_dim> a tv:SilverTable ;
+    tv:definedIn "sql/03_silver.sql" ;
+    tv:lastRefresh "2026-10-29T17:00:58+00:00"^^xsd:dateTime ;
+    tv:layer "silver" ;
+    tv:name "silver_mdm_core.market_event_dim" ;
+    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.market_event> ;
+    tv:rows 9.0 .
+
 <urn:pricing-demo:tech:object/silver_udm_core.decision_evidence_fact> a tv:SilverTable ;
     tv:definedIn "sql/03_silver.sql" ;
     tv:lastRefresh "2026-10-29T17:01:10+00:00"^^xsd:dateTime ;
@@ -793,6 +763,43 @@ tech:orchestrator a tv:Orchestrator ;
     tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
     tv:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> ;
     tv:rows 22.0 .
+
+<urn:pricing-demo:tech:object/silver_udm_core.eia_weekly_fact> a tv:SilverTable ;
+    tv:definedIn "sql/03_silver.sql" ;
+    tv:lastRefresh "2026-10-29T17:01:03+00:00"^^xsd:dateTime ;
+    tv:layer "silver" ;
+    tv:name "silver_udm_core.eia_weekly_fact" ;
+    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tv:readsFrom <urn:pricing-demo:tech:object/replica_eia_weekly.series>,
+        <urn:pricing-demo:tech:object/replica_eia_weekly.weekly_value> ;
+    tv:rows 8792.0 .
+
+<urn:pricing-demo:tech:object/silver_udm_core.external_event_fact> a tv:SilverTable ;
+    tv:definedIn "sql/03_silver.sql" ;
+    tv:lastRefresh "2026-10-29T17:01:13+00:00"^^xsd:dateTime ;
+    tv:layer "silver" ;
+    tv:name "silver_udm_core.external_event_fact" ;
+    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.external_event> ;
+    tv:rows 344.0 .
+
+<urn:pricing-demo:tech:object/silver_udm_core.forward_scan_fact> a tv:SilverTable ;
+    tv:definedIn "sql/03_silver.sql" ;
+    tv:lastRefresh "2026-10-29T17:01:15+00:00"^^xsd:dateTime ;
+    tv:layer "silver" ;
+    tv:name "silver_udm_core.forward_scan_fact" ;
+    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.forward_scan> ;
+    tv:rows 45.0 .
+
+<urn:pricing-demo:tech:object/silver_udm_core.freight_rate_fact> a tv:SilverTable ;
+    tv:definedIn "sql/03_silver.sql" ;
+    tv:lastRefresh "2026-10-29T17:00:55+00:00"^^xsd:dateTime ;
+    tv:layer "silver" ;
+    tv:name "silver_udm_core.freight_rate_fact" ;
+    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tv:readsFrom <urn:pricing-demo:tech:object/replica_rightangle.freight_rate> ;
+    tv:rows 1496.0 .
 
 <urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_target_fact> a tv:SilverTable ;
     tv:definedIn "sql/03_silver.sql" ;
