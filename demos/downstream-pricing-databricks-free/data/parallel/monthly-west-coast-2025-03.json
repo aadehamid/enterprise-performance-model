@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.8665802169211477,
+   "probabilities": {
+    "crude_supply": 0.8888168474342898,
+    "demand": 0.026262039481543226,
+    "logistics": 0.016644428991852856,
+    "policy": 0.007529820908498029,
+    "product_inventories": 0.036747550396157826,
+    "weather": 0.02399931278765835
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.019829151661183854,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.4624730470903148,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Oil Market Report - March 2025 - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-march-2025"
+  },
+  {
+   "title": "Marathon Petroleum Refining Margins Fall Drags Q1 Profit - Marathon Petroleum (NYSE:MPC)",
+   "url": "https://www.benzinga.com/25/05/45231897/weaker-refining-margins-drag-down-marathon-petroleums-q1-earnings"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  },
+  {
+   "title": "\n\t\tMidwest refinery outage is affecting petroleum product markets -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=61403&quot"
+  },
+  {
+   "title": "GAO-08-14 Energy Markets: Increasing Globalization of Petroleum Products Markets, Tightening Refining Demand and Supply Balance, and Other Trends Have Implications for U.S. Energy Supply, Prices, and Price Volatility",
+   "url": "https://www.gao.gov/assets/gao-08-14.pdf"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during March 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during March 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during March 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "March 2025",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2025-03",
+ "request_key": "07dd9d07dbd61ac7",
+ "retrieved_at": "2026-10-29T16:52:49+00:00",
+ "usage": {
+  "input_tokens": 3879,
+  "output_tokens": 0
+ }
+}

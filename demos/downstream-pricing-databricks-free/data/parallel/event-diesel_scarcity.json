@@ -1,0 +1,72 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.879217677570026,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Government Extends Diesel Export Ban Until End of October",
+   "url": "https://www.themoscowtimes.com/2026/09/30/russia-extends-diesel-export-ban-until-end-of-october-a93823/pdf"
+  },
+  {
+   "title": "Russia Will Consider Partial Lifting of Diesel Export Ban in Case of Overproduction, Novak Says",
+   "url": "https://www.themoscowtimes.com/2026/10/02/russia-will-consider-partial-lifting-of-diesel-export-ban-in-case-of-overproduction-novak-says-a93853/pdf"
+  },
+  {
+   "title": "Government extends temporary fuel export ban for producers",
+   "url": "http://government.ru/en/news/59723"
+  },
+  {
+   "title": "Russia Extends Diesel-Export Ban by a Month Through October - Bloomberg",
+   "url": "https://www.bloomberg.com/news/articles/2026-09-30/russia-extends-diesel-export-ban-by-a-month-through-october"
+  },
+  {
+   "title": "Chinese refiners suspend October fuel exports, says report: Which other countries plan curbs amid Iran, Ukraine war | Today News",
+   "url": "https://www.livemint.com/news/world/chinese-refiners-suspend-october-fuel-exports-says-report-which-other-countries-plan-curbs-amid-iran-ukraine-war-11790838615645.html"
+  },
+  {
+   "title": "China's Fuel Export Halt: Is Beijing Turning Energy Security Into Geopolitical Leverage? - Modern Diplomacy",
+   "url": "https://moderndiplomacy.eu/2026/10/01/china-fuel-export-halt-energy-security-geopolitical-leverage"
+  },
+  {
+   "title": "Russia Extends Diesel Export Ban Through Oct. 31 | OilPrice.com",
+   "url": "https://oilprice.com/Latest-Energy-News/World-News/Russia-Extends-Diesel-Export-Ban-Through-Oct-31.amp.html"
+  },
+  {
+   "title": "Chinese Fuel Export Ban Lifts Brent Past $100 Despite Crude Recovery - Article | Crux Investor",
+   "url": "https://www.cruxinvestor.com/posts/chinese-fuel-export-ban-lifts-brent-past-100-despite-crude-recovery"
+  },
+  {
+   "title": "Russia Extends Diesel Export Ban through October | Rigzone",
+   "url": "https://www.rigzone.com/news/wire/russia_extends_diesel_export_ban_through_october-30-sep-2026-184733-article"
+  },
+  {
+   "title": "Russia extends temporary ban on diesel and marine fuel exports - Worldnews.com",
+   "url": "https://article.wn.com/view/2026/09/30/Russia_extends_temporary_ban_on_diesel_and_marine_fuel_expor"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "Distillate scarcity: Russia extends its export ban, China suspends October product exports",
+   "from": "2026-09-20",
+   "region": "International",
+   "to": "2026-10-20"
+  }
+ },
+ "request_id": "event-diesel_scarcity",
+ "request_key": "8daab3ce56deba2c",
+ "retrieved_at": "2026-10-29T16:51:36+00:00",
+ "usage": {
+  "input_tokens": 3723,
+  "output_tokens": 0
+ }
+}

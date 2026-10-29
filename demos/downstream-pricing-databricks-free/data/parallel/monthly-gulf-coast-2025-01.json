@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.4756015214430322,
+   "probabilities": {
+    "crude_supply": 0.12823579977798458,
+    "demand": 0.09754037178950624,
+    "logistics": 0.020821285802687956,
+    "policy": 0.014644324151228764,
+    "product_inventories": 0.17575695060939894,
+    "weather": 0.5630012678691935
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.07377188962726793,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.09623065588299878,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "MPC 1Q2025 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Slides.pdf"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://s29.q4cdn.com/948964180/files/doc_financials/2025/ar/MPLX_2025_AR_10-K.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights - The Globe and Mail",
+   "url": "https://www.theglobeandmail.com/investing/markets/stocks/MPC/pressreleases/1893018/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "[PDF] MPC 4Q2025 Slides - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Events_and_Presentations/2026/MPC_4Q_2025_Slides.pdf"
+  },
+  {
+   "title": "Trends and Effects of Changes in Business Cases for Petroleum ...",
+   "url": "https://www.pnnl.gov/sites/default/files/media/file/Petroleum%20Refineries%20Trends%20Report_PNNL-37597%20%281%29.pdf"
+  },
+  {
+   "title": "2025 MPC Sustainability Report",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2025_Sustainability_pd.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights \u2014 Actualit\u00e9s TradingView",
+   "url": "https://fr.tradingview.com/news/marketbeat%3Ae43b9f549094b%3A0-marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights",
+   "url": "https://www.barchart.com/story/news/1893017/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "MPC 2026 \u5e74\u7b2c 1 \u5b63\u5ea6\u4e1a\u7ee9\u7535\u8bdd\u4f1a - Alpha Spread",
+   "url": "https://www.alphaspread.com/zh-cn/security/nyse/mpc/investor-relations/earnings-call/q1-2026"
+  },
+  {
+   "title": "Feature article:",
+   "url": "https://www.opec.org/assets/assetdb/momr-august-2024.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during January 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during January 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during January 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "January 2025",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2025-01",
+ "request_key": "59805eb05636b469",
+ "retrieved_at": "2026-10-29T16:52:03+00:00",
+ "usage": {
+  "input_tokens": 5157,
+  "output_tokens": 0
+ }
+}

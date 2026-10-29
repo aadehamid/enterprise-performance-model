@@ -1,0 +1,72 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.8928864741384935,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Is the Tanker Orderbook Getting Too High? - The Maritime Executive",
+   "url": "https://maritime-executive.com/editorials/is-the-tanker-orderbook-getting-too-high"
+  },
+  {
+   "title": "Soaring freight rates threaten Asia\u2019s appetite for US crude | Duke FM | Playing the Legends of Country | Green Bay, WI",
+   "url": "https://duke.fm/2026/10/09/soaring-freight-rates-threaten-asias-appetite-for-us-crude-2/"
+  },
+  {
+   "title": "Tanker market Q4 outlook | Oct 25 Tanker Freight Outlook: Crude Surplus & Rate Pressures",
+   "url": "https://www.kpler.com/webinars/tanker-market-q4-outlook"
+  },
+  {
+   "title": "Crypto Academy,Learn Cryptocurrency trading strategies&Blockchain\uff5cBitget Academy",
+   "url": "https://www.bitget.com/academy?level=1%2C2%2C3&maxRead=30&minRead=1&pageNum=12"
+  },
+  {
+   "title": "Qatar Airways' Secret Jet Fuel Arbitrage Operation | Odd Lots",
+   "url": "https://www.thepodcastsummary.com/episodes/rss9fef75ed/qatar-airways-fuel-tankering-dubai-woqod-arbitrage.html"
+  },
+  {
+   "title": "The Geometry of Maritime Energy Disruption and Arbitrage Lim \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/geometry-maritime-energy-disruption-arbitrage-limits"
+  },
+  {
+   "title": "Dirty Tanker Index: Daily Freight Index & Time-Charter Earnings - The Maritime",
+   "url": "https://themaritime.net/market/freight-rates/dirty_tanker"
+  },
+  {
+   "title": "Canadian Energy Arbitrage and the Structural Diversification \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/canadian-energy-arbitrage-structural-diversification-north-american"
+  },
+  {
+   "title": "BPCL to Cut Russian Crude Oil Purchases in November 2026",
+   "url": "https://shubhtoday.in/blog/bpcl-russian-crude-oil-purchases-november-2026"
+  },
+  {
+   "title": "TSG - Weekly Tanker Market Monitor: Week 41 2026",
+   "url": "https://www.thesignalgroup.com/weekly-market-monitor/weekly-tanker-market-monitor-week-41-2026"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "Tanker freight up more than 300% since mid-August; arbitrage closing",
+   "from": "2026-09-01",
+   "region": "International",
+   "to": "2026-10-20"
+  }
+ },
+ "request_id": "event-freight_spike",
+ "request_key": "c7b2d78ce34d77ff",
+ "retrieved_at": "2026-10-29T16:51:38+00:00",
+ "usage": {
+  "input_tokens": 3702,
+  "output_tokens": 0
+ }
+}

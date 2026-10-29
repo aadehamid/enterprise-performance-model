@@ -148,3 +148,31 @@ SELECT EvidenceId AS Evidence_Id, DecisionId AS Decision_Id, EvidenceKind AS Evi
        AuthorRoleSlug AS Author_Role_Slug, EvidenceText AS Evidence_Text, Synthetic AS Synthetic_Flag,
        DemoProvenance AS Demo_Provenance_Label, _change_ts AS Record_Update_Datetime
 FROM ${catalog}.replica_aspen_pims.decision_evidence;
+
+-- Added for E6 (2026-10-29): the outside context from Parallel Decisions (pricing_demo/outside.py): the event scan and
+-- the decision diagnoses, the forward look with its matched decisions and suggested actions, and each call's citations.
+-- Real public evidence, labelled observed, inferred or unknown; no counterpart in the shared idp_sbx layer.
+CREATE OR REPLACE TABLE ${catalog}.silver_udm_core.external_event_fact AS
+SELECT ExternalEventId AS External_Event_Id, Step AS Scan_Step, Region AS Region_Name, PeriodStart AS Period_Start_Date, PeriodEnd AS Period_End_Date,
+       DecisionId AS Decision_Id, QuestionKey AS Question_Key, QuestionType AS Question_Type, Question AS Question_Text,
+       Answer AS Answer_Value, CAST(Probability AS DECIMAL(6,4)) AS Answer_Probability, CAST(Confidence AS DECIMAL(6,4)) AS Answer_Confidence,
+       EvidenceLabel AS Evidence_Label, Refusal AS Refusal_Text, CallId AS Call_Id, CitationCount AS Citation_Count,
+       RefineryIris AS Refinery_Iris, ProductIris AS Product_Iris, SeriesIri AS Series_Iri, MeasureIris AS Measure_Iris,
+       RetrievedAt AS Retrieved_Datetime, _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_reference_data_hub.external_event;
+
+CREATE OR REPLACE TABLE ${catalog}.silver_udm_core.forward_scan_fact AS
+SELECT ForwardSignalId AS Forward_Signal_Id, Step AS Scan_Step, Region AS Region_Name, PeriodStart AS Period_Start_Date, PeriodEnd AS Period_End_Date,
+       DecisionId AS Decision_Id, QuestionKey AS Question_Key, QuestionType AS Question_Type, Question AS Question_Text,
+       Answer AS Answer_Value, CAST(Probability AS DECIMAL(6,4)) AS Answer_Probability, CAST(Confidence AS DECIMAL(6,4)) AS Answer_Confidence,
+       EvidenceLabel AS Evidence_Label, Refusal AS Refusal_Text, CallId AS Call_Id, CitationCount AS Citation_Count,
+       RefineryIris AS Refinery_Iris, ProductIris AS Product_Iris, SeriesIri AS Series_Iri, MeasureIris AS Measure_Iris,
+       RetrievedAt AS Retrieved_Datetime,
+       MatchedDecisionIds AS Matched_Decision_Ids, SuggestedAction AS Suggested_Action, ApprovalStatus AS Approval_Status,
+       _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_reference_data_hub.forward_scan;
+
+CREATE OR REPLACE TABLE ${catalog}.silver_mdm_core.external_citation_dim AS
+SELECT CallId AS Call_Id, CitationRank AS Citation_Rank, Url AS Citation_Url, Title AS Citation_Title,
+       RetrievedAt AS Retrieved_Datetime, _change_ts AS Record_Update_Datetime
+FROM ${catalog}.replica_reference_data_hub.external_citation;

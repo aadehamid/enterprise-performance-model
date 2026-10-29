@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.7176710778574923,
+   "probabilities": {
+    "crude_supply": 0.038973819146941036,
+    "demand": 0.014188775548639431,
+    "logistics": 0.038884216540085864,
+    "policy": 0.006296813451710106,
+    "product_inventories": 0.13693047709804665,
+    "weather": 0.7647258982145769
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.10533386854554033,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.505529416676738,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Gulf coast refiners continue storm assessments: Update | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2586007-gulf-coast-refiners-continue-storm-assessments-update"
+  },
+  {
+   "title": "\n\t\tHurricane Harvey caused U.S. Gulf Coast refinery runs to drop, gasoline prices to rise -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=32852"
+  },
+  {
+   "title": "[PDF] 2024 Sustainability Report - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2024_SustainabilityReport.pdf"
+  },
+  {
+   "title": "Trends and Effects of Changes in Business Cases for Petroleum ...",
+   "url": "https://www.pnnl.gov/sites/default/files/media/file/Petroleum%20Refineries%20Trends%20Report_PNNL-37597%20%281%29.pdf"
+  },
+  {
+   "title": "Feature article:",
+   "url": "https://www.opec.org/assets/assetdb/momr-august-2024.pdf"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "MPC 1Q2025 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Slides.pdf"
+  },
+  {
+   "title": "U.S. Gulf Coast refiners pare output as pipeline outage continues",
+   "url": "https://finance.yahoo.com/news/u-gulf-coast-refiners-pare-210435200.html"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://s29.q4cdn.com/948964180/files/doc_financials/2025/ar/MPLX_2025_AR_10-K.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights",
+   "url": "https://www.barchart.com/story/news/1893017/marathon-petroleum-q1-earnings-call-highlights"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during September 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during September 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during September 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "September 2024",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2024-09",
+ "request_key": "adb819072f3c547e",
+ "retrieved_at": "2026-10-29T16:52:00+00:00",
+ "usage": {
+  "input_tokens": 4540,
+  "output_tokens": 0
+ }
+}

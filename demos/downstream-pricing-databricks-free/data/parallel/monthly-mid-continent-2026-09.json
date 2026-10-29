@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.4936051619670138,
+   "probabilities": {
+    "crude_supply": 0.5780043016391782,
+    "demand": 0.007451885129172536,
+    "logistics": 0.306356338310187,
+    "policy": 0.009246194024895469,
+    "product_inventories": 0.08082047615233882,
+    "weather": 0.01812080474422799
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.03382757414206147,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.5483277338733266,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Oil Market Report - September 2026 \u2013 Analysis - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-september-2026"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "A Diesel Export Ban Would Wreak Havoc at Home and Abroad. Here\u2019s Why. | American Petroleum Institute | API",
+   "url": "https://www.api.org/news-policy-and-issues/news/2026/09/22/a-diesel-export-ban-would-wreak-havoc-at-home-and-abroad-heres-why"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603/"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145/"
+  },
+  {
+   "title": "Market Talk | $5 Diesel Now Feels Inevitable: ULSD Blasts Past March Highs, No Resistance in Sight",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/usd5-diesel-now-feels-inevitable-ulsd-blasts-past-march-highs-no-resistance-in-sight"
+  },
+  {
+   "title": "Refinery Conflagration Dynamics and Infrastructure Fragility \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/refinery-conflagration-dynamics-infrastructure-fragility-metrics"
+  },
+  {
+   "title": "Tight product supplies lift US summer refinery utilization to highest level since 1998 | Oil & Gas Journal",
+   "url": "https://www.ogj.com/general-interest/economics-markets/news/55413722/tight-product-supplies-lift-us-summer-refinery-utilization-to-highest-since-1998"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during September 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during September 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during September 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "September 2026",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2026-09",
+ "request_key": "439564bdbadf29a7",
+ "retrieved_at": "2026-10-29T16:52:38+00:00",
+ "usage": {
+  "input_tokens": 3772,
+  "output_tokens": 0
+ }
+}

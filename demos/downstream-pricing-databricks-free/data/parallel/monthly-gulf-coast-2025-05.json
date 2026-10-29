@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "product_inventories",
+   "confidence": 0.8442952663404208,
+   "probabilities": {
+    "crude_supply": 0.008892662462789974,
+    "demand": 0.04199681175066693,
+    "logistics": 0.0034099902079775084,
+    "policy": 0.0040054131309499984,
+    "product_inventories": 0.870246055283684,
+    "weather": 0.07144906716393155
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.04228201351337644,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.17394689498553487,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tRefining industry risks from 2025 hurricane season -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65304"
+  },
+  {
+   "title": "Trends and Effects of Changes in Business Cases for Petroleum ...",
+   "url": "https://www.pnnl.gov/sites/default/files/media/file/Petroleum%20Refineries%20Trends%20Report_PNNL-37597%20%281%29.pdf"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://s29.q4cdn.com/948964180/files/doc_financials/2025/ar/MPLX_2025_AR_10-K.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights - The Globe and Mail",
+   "url": "https://www.theglobeandmail.com/investing/markets/stocks/MPC/pressreleases/1893018/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "MPC 1Q2025 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Slides.pdf"
+  },
+  {
+   "title": "[PDF] MPC 4Q2025 Slides - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Events_and_Presentations/2026/MPC_4Q_2025_Slides.pdf"
+  },
+  {
+   "title": "4 Refining & Marketing Stocks to Watch as Margins Stay Tight",
+   "url": "https://finance.yahoo.com/news/4-refining-marketing-stocks-watch-134700856.html"
+  },
+  {
+   "title": "2025 MPC Sustainability Report",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2025_Sustainability_pd.pdf"
+  },
+  {
+   "title": "Analysis-Global oil refiners see short-term boost from higher margins By Reuters",
+   "url": "https://za.investing.com/news/commodities-news/analysisglobal-oil-refiners-see-shortterm-boost-from-higher-margins-3739695"
+  },
+  {
+   "title": "Marathon Petroleum Q2 Earnings Call Highlights \u2014 TradingView News",
+   "url": "https://de.tradingview.com/news/marketbeat%3Af592aa6ee094b%3A0-marathon-petroleum-q2-earnings-call-highlights"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during May 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during May 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during May 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "May 2025",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2025-05",
+ "request_key": "e37efb7ff954715c",
+ "retrieved_at": "2026-10-29T16:52:05+00:00",
+ "usage": {
+  "input_tokens": 4632,
+  "output_tokens": 0
+ }
+}

@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "product_inventories",
+   "confidence": 0.42418762310297636,
+   "probabilities": {
+    "crude_supply": 0.054363436836619816,
+    "demand": 0.11251026141777098,
+    "logistics": 0.12004425040265072,
+    "policy": 0.15360755021973435,
+    "product_inventories": 0.5201563525858136,
+    "weather": 0.03931814853741047
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.37450671289428944,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.13471554221046347,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "3:2:1 Crack Spread Today | Refining Margin | Fuel Data Portal",
+   "url": "https://fueldataportal.com/data/3-2-1-crack-spread"
+  },
+  {
+   "title": "US Refiners Surge as Diesel Margins Hit Record on Hormuz Disruptions | StockTi",
+   "url": "https://stockti.com/us-refiners-surge-as-diesel-margins-hit-record-on-hormuz-disruptions"
+  },
+  {
+   "title": "The Structural Fragility of US Refining: Anatomy of a Run-Ra \u2014 Development",
+   "url": "https://development.everhem.com/structural-fragility-us-refining-anatomy-run-rate-bottleneck"
+  },
+  {
+   "title": "Marathon Petroleum Rose 55.1% as Refiners Led Q3 Energy Stocks",
+   "url": "https://www.karmactive.com/marathon-petroleum-q3-2026-refiner-returns"
+  },
+  {
+   "title": "Crack Spread Explained \u2014 Live 3:2:1 Refining Margin",
+   "url": "https://worldoilmonitor.com/crack-spread"
+  },
+  {
+   "title": "Trump-Putin Diesel Deal: What It Means For Refiner Stocks - Marathon Petroleum (NYSE:MPC), Phillips 66 (N",
+   "url": "https://www.benzinga.com/markets/commodities/26/10/62499797/trump-putin-diesel-deal-refiner-stocks-valero-pbf-marathon"
+  },
+  {
+   "title": "Marathon Petroleum (MPC) and Valero Energy (VLO): Two Refiners Riding Elevated Margins",
+   "url": "https://tickeron.com/blogs/marathon-petroleum-mpc-and-valero-energy-vlo-two-refiners-riding-elevated-margins-21796/"
+  },
+  {
+   "title": "Refining District Louisiana Gulf Coast Refinery Net Production of Distillate Fuel Oil, Greater Than 500 ppm Sulfur (Thousand Barrels per Day)",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=MDGRX_R3C_2&f=M"
+  },
+  {
+   "title": "US Crude Refiners Are Pushing Run Rates to Maximum Levels: Safety Concerns, Maintenance Trade-offs, Export Boom, and Investor Implications - Energy News Beat",
+   "url": "https://energynewsbeat.co/big-oil-companies/us-crude-refiners-are-pushing-run-rates-to-maximum-levels-safety-concerns-maintenance-trade-offs-export-boom-and-investor-implications/"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during July 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during July 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during July 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "July 2026",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2026-07",
+ "request_key": "8c04580cb040c622",
+ "retrieved_at": "2026-10-29T16:52:14+00:00",
+ "usage": {
+  "input_tokens": 5448,
+  "output_tokens": 0
+ }
+}

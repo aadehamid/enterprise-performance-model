@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "demand",
+   "confidence": 0.4416459602203675,
+   "probabilities": {
+    "crude_supply": 0.2800087005268449,
+    "demand": 0.5347049668503062,
+    "logistics": 0.026069082447891277,
+    "policy": 0.02152998852597457,
+    "product_inventories": 0.09446712058110257,
+    "weather": 0.043220141067880545
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.2217523402923551,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.529359383452247,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tWest Coast summer refinery margins decline despite reduced capacity -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=62463"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "GAO-08-14 Energy Markets: Increasing Globalization of Petroleum Products Markets, Tightening Refining Demand and Supply Balance, and Other Trends Have Implications for U.S. Energy Supply, Prices, and Price Volatility",
+   "url": "https://www.gao.gov/assets/gao-08-14.pdf"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "SB X1-2 and AB X2-1 Implementation | California Energy Commission",
+   "url": "https://www.energy.ca.gov/proceeding/sb-x1-2-and-ab-x2-1-implementation"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "\n\t\tGlobal refinery margins fall to multiyear seasonal lows in September -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=63447"
+  },
+  {
+   "title": "\n\t\tRefinery closures present risk for higher gasoline prices on the West Coast -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65704"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during July 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during July 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during July 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "July 2024",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2024-07",
+ "request_key": "425ee72640e17ee7",
+ "retrieved_at": "2026-10-29T16:52:44+00:00",
+ "usage": {
+  "input_tokens": 4068,
+  "output_tokens": 0
+ }
+}

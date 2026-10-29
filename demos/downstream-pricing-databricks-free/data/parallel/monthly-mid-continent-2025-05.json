@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.40053099931999636,
+   "probabilities": {
+    "crude_supply": 0.5004424994333303,
+    "demand": 0.252651365340801,
+    "logistics": 0.018933299324579076,
+    "policy": 0.024383095267698468,
+    "product_inventories": 0.13163977782999786,
+    "weather": 0.07194996280359323
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.06589915772634185,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.05345305571350365,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "MPC Q2 2025 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q2/MPC-Q2-2025-Press-Release.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Corp 8-K exhibit 99.1, filed May 6, 2025",
+   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029525000038/mpcq12025earningsrelease.htm"
+  },
+  {
+   "title": "[PDF] MPC 3Q2025 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_presentations/2025/MPC-Q3-2025-Slides.pdf"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Annual_Report/2025_MPC_Annual_Report_and_10K.pdf"
+  },
+  {
+   "title": "MPC 1Q2025 Slides",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Slides.pdf"
+  },
+  {
+   "title": "Reconciliation of Renewable Diesel Margin to Gross Margin & Segment Results*.............................. 1 7",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2026/q1/MPC-1Q-2026-IR-Packet.pdf"
+  },
+  {
+   "title": "MPC Q1 2025 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Earnings-Release.pdf"
+  },
+  {
+   "title": "MPC 2026 Investor Update",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Investor_Deck/2026_Investor_Deck.pdf"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "2025 MPC Sustainability Report",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2025_SustainabilityReport.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during May 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during May 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during May 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "May 2025",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2025-05",
+ "request_key": "8529f081675fa1b9",
+ "retrieved_at": "2026-10-29T16:52:28+00:00",
+ "usage": {
+  "input_tokens": 5759,
+  "output_tokens": 0
+ }
+}

@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.33649040276279607,
+   "probabilities": {
+    "crude_supply": 0.4470753356356634,
+    "demand": 0.01713441393585697,
+    "logistics": 0.037002763972400037,
+    "policy": 0.017989853082003387,
+    "product_inventories": 0.2229378329664233,
+    "weather": 0.25785980040765294
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.09393352972469292,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.39283486956982305,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tRefining industry risks from 2025 hurricane season -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65304&utm"
+  },
+  {
+   "title": "Gulf coast refiners continue storm damage assessments | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2585935-gulf-coast-refiners-continue-storm-damage-assessments"
+  },
+  {
+   "title": "Gulf coast refiners continue storm assessments: Update | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2586007-gulf-coast-refiners-continue-storm-assessments-update"
+  },
+  {
+   "title": "Gulf Coast refineries face margin squeeze as crude prices tumble - BIC Magazine",
+   "url": "https://www.bicmagazine.com/industry/refining-petrochem/gulf-coast-refineries-face-margin-squeeze"
+  },
+  {
+   "title": "US Gulf Coast fuel oil imports at record low as refiners opt for heavier crude | Reuters",
+   "url": "https://www.reuters.com/business/energy/us-gulf-coast-fuel-oil-imports-record-low-refiners-opt-heavier-crude-2025-07-07"
+  },
+  {
+   "title": "Gulf Coast Energy Outlook 2025",
+   "url": "https://www.lsu.edu/ces/publications/2024/gulf-coast-energy-outlook-2025-df-e-version.pdf"
+  },
+  {
+   "title": "Refining District Louisiana Gulf Coast Refinery and ...",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s=MGRRP3C2"
+  },
+  {
+   "title": "Refining District Louisiana Gulf Coast Refinery Net ...",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s=MD0RX_R3C_1"
+  },
+  {
+   "title": "Refining District Louisiana Gulf Coast Refinery Net ...",
+   "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=M&n=PET&s=MMNRX_R3C_1"
+  },
+  {
+   "title": "[PDF] \u00bc\u00f7\u0436\u0443\u00f7\u0441\u042f\u043d\u044e\u00f7\u041c\u00bf\u00ae\u044c\u00bc\u00d7\u00bd\u0417\u0417\u042d \u00bd\u0419\u0425\u00b8\u0417\u041e\u044c",
+   "url": "https://lawandadvisors.com/files/notice/b7cb1f820f36e5916d2314db20c705b8.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during June 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during June 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during June 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "June 2025",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2025-06",
+ "request_key": "267f1e0775c34a93",
+ "retrieved_at": "2026-10-29T16:52:06+00:00",
+ "usage": {
+  "input_tokens": 3523,
+  "output_tokens": 0
+ }
+}

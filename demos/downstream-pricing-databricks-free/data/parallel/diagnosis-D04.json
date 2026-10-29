@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.2710006651697143,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "none",
+   "confidence": 0.6320298796716246,
+   "probabilities": {
+    "crude_market": 0.11848404864739702,
+    "logistics": 0.07298602023586549,
+    "none": 0.6933582330596871,
+    "policy": 0.006835089226310379,
+    "product_market": 0.058329763903970634,
+    "weather": 0.050006844926769316
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Sodexo News Report - Newsmeter",
+   "url": "https://www.newsmeter.com/Sodexo-News"
+  },
+  {
+   "title": "C.H. Robinson (CHRW) Shares Fall -24% in 30 Days on Legal Verdict and Cautious Outlook",
+   "url": "https://tickeron.com/blogs/c-h-robinson-chrw-shares-fall-24-in-30-days-on-legal-verdict-and-cautious-outlook-15977/"
+  },
+  {
+   "title": "Freight Market Update: January 2026 | C.H. Robinson",
+   "url": "https://www.chrobinson.com/en-us/resources/insights-and-advisories/north-america-freight-insights/jan-2026-freight-market-update/"
+  },
+  {
+   "title": "Marathon Robinson Refinery \u2014 Supply Explorer | Thinking On Energy",
+   "url": "https://thinkingonenergy.com/supply/refinery/marathon-petroleum-co-lp-robinson-il"
+  },
+  {
+   "title": "Sarnia-Lambton Alerts - Notifications",
+   "url": "https://member.everbridge.net/892807736721815/notif"
+  },
+  {
+   "title": "Robinson News - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/Operations/Refining/Robinson-Refinery/Robinson-News"
+  },
+  {
+   "title": "Extending Turnaround Intervals: Benefits, Risks and Evaluation - BIC Magazine",
+   "url": "https://www.bicmagazine.com/resources/supplier-news/extending-turnaround-intervals-without-increasing-risk"
+  },
+  {
+   "title": "Which Companies Are Screaming 'Take Me Private'? These 3 Fit the Bill - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/29/which-companies-are-screaming-take-me-private-these-3-fit-the-bill/"
+  },
+  {
+   "title": "Saudi pipeline outage compounds supply and logistics risks, fueling PP, PE rally | ChemOrbis ",
+   "url": "https://www.chemorbis.com/en/free-news/Saudi-pipeline-outage-compounds-supply-and-logistics-risks-fueling-PP-PE-rally/2026/09/17/986117"
+  },
+  {
+   "title": "Deferred Maintenance Reduction Playbook: 24-Month FCI Turnaround",
+   "url": "https://oxmaint.com/industries/facility-management/deferred-maintenance-reduction-24-month-fci"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-08-20",
+   "decision": "Hold the Robinson turnaround on schedule from 2026-09-21, rather than defer it",
+   "expected_outcome": "Lost margin from the turnaround under $25 million at the crack expected for the season",
+   "refineries": "Robinson, IL",
+   "region": "Mid-Continent",
+   "window": "2026-08-20 to 2026-09-19"
+  }
+ },
+ "request_id": "diagnosis-D04",
+ "request_key": "34627b2ca59b35cd",
+ "retrieved_at": "2026-10-29T16:53:06+00:00",
+ "usage": {
+  "input_tokens": 4078,
+  "output_tokens": 0
+ }
+}

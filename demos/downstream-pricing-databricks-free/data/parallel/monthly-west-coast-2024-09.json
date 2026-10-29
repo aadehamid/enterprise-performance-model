@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "demand",
+   "confidence": 0.8239530467683953,
+   "probabilities": {
+    "crude_supply": 0.04893898658146882,
+    "demand": 0.8532942056403294,
+    "logistics": 0.010224263500502486,
+    "policy": 0.018178574118128527,
+    "product_inventories": 0.059797521433296454,
+    "weather": 0.00956644872627424
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.06531511651422621,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.8039580845053126,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "Global refinery margins fall to multiyear seasonal lows in September | Oil & Gas Journal",
+   "url": "https://www.ogj.com/general-interest/economics-markets/article/55235954/global-refinery-margins-fall-to-multiyear-seasonal-lows-in-september"
+  },
+  {
+   "title": "\n\t\tWest Coast summer refinery margins decline despite reduced capacity -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=62463"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "California gasoline demand elasticity estimated using refinery outages",
+   "url": "https://www.econstor.eu/bitstream/10419/322347/1/1922901822.pdf"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "SB X1-2 and AB X2-1 Implementation | California Energy Commission",
+   "url": "https://www.energy.ca.gov/proceeding/sb-x1-2-and-ab-x2-1-implementation"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during September 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during September 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during September 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "September 2024",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2024-09",
+ "request_key": "d3e9c01e9a4cc3ee",
+ "retrieved_at": "2026-10-29T16:52:45+00:00",
+ "usage": {
+  "input_tokens": 3831,
+  "output_tokens": 0
+ }
+}

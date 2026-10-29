@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "product_inventories",
+   "confidence": 0.671619270022517,
+   "probabilities": {
+    "crude_supply": 0.051142139195579014,
+    "demand": 0.13658507827171448,
+    "logistics": 0.019882574765896832,
+    "policy": 0.03911705673046848,
+    "product_inventories": 0.7263493916854308,
+    "weather": 0.026923759350910417
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.42566677986203777,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.743295588912442,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tWest Coast jet fuel margins fell in August because of high inventories -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=63164"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "A Fragile Thing \u2013 Fire at Chevron\u2019s El Segundo Refinery Shows Vulnerability of California Refining Sector | RBN Energy",
+   "url": "https://rbnenergy.com/daily-posts/blog/fire-chevrons-el-segundo-refinery-shows-vulnerability-california-refining-sector"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "\n\t\tWest Coast summer refinery margins decline despite reduced capacity -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=62463"
+  },
+  {
+   "title": "EIA: Refining Industry Risks for 2025 Hurricane Season",
+   "url": "https://inspectioneering.com/news/2025-05-21/11584/eia-strong-hurricane-season-poses-heightened-risks-for-us-refining-industry"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 Los Angeles | abc7.com - ABC7 Los Angeles",
+   "url": "https://abc7.com/archive/8845849"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "What do shifting product balances on the West\u00a0Coast mean for\u00a0future\u00a0fuel prices and refining margins?\u00a0 | Stillwater Associates",
+   "url": "https://stillwaterassociates.com/what-do-shifting-product-balances-on-the-west-coast-mean-for-future-fuel-prices-and-refining-margins"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during August 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during August 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during August 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "August 2025",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2025-08",
+ "request_key": "9700cf9579f9c04d",
+ "retrieved_at": "2026-10-29T16:52:52+00:00",
+ "usage": {
+  "input_tokens": 4186,
+  "output_tokens": 0
+ }
+}

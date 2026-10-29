@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.22323051996703278,
+   "probabilities": {
+    "crude_supply": 0.1649170502116872,
+    "demand": 0.111506917589619,
+    "logistics": 0.03640288325887338,
+    "policy": 0.04911875580012582,
+    "product_inventories": 0.28536229316716716,
+    "weather": 0.3526920999725273
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.06948277465675488,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.1137670521354691,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Feature article:",
+   "url": "https://www.opec.org/assets/assetdb/momr-august-2024.pdf"
+  },
+  {
+   "title": "Marathon Petroleum (MPC) Q4 2024 Earnings Call Transcript",
+   "url": "https://www.barchart.com/story/news/30764485/marathon-petroleum-mpc-q4-2024-earnings-call-transcript"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://s29.q4cdn.com/948964180/files/doc_financials/2025/ar/MPLX_2025_AR_10-K.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights - The Globe and Mail",
+   "url": "https://www.theglobeandmail.com/investing/markets/stocks/MPC/pressreleases/1893018/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Marathon Petroleum Q2 Earnings Call Highlights \u2014 TradingView News",
+   "url": "https://de.tradingview.com/news/marketbeat%3Af592aa6ee094b%3A0-marathon-petroleum-q2-earnings-call-highlights"
+  },
+  {
+   "title": "[PDF] 2024 Sustainability Report - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2024_SustainabilityReport.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights",
+   "url": "https://www.barchart.com/story/news/1893017/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "5 Energy Stocks Positioned for a Prolonged Iran War | OilPrice.com",
+   "url": "https://oilprice.com/Energy/Crude-Oil/5-Energy-Stocks-Positioned-for-a-Prolonged-Iran-War.html"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights \u2014 Actualit\u00e9s TradingView",
+   "url": "https://fr.tradingview.com/news/marketbeat%3Ae43b9f549094b%3A0-marathon-petroleum-q1-earnings-call-highlights"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during March 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during March 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during March 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "March 2024",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2024-03",
+ "request_key": "01e61b72abe25628",
+ "retrieved_at": "2026-10-29T16:51:57+00:00",
+ "usage": {
+  "input_tokens": 3851,
+  "output_tokens": 0
+ }
+}

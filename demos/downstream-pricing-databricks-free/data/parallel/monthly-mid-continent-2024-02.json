@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.542733785092206,
+   "probabilities": {
+    "crude_supply": 0.148166866770762,
+    "demand": 0.08542171182648017,
+    "logistics": 0.022099136974226143,
+    "policy": 0.044508894545589255,
+    "product_inventories": 0.0808585689727707,
+    "weather": 0.6189448209101717
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.1818347045119615,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.5113098400001834,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Reconciliation of Renewable Diesel Margin to Gross Margin & Segment Results*............................. 16",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2024/q4/IR_Packet/MPC-Q4-2024-IR-Packet.pdf"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "[PDF] 2024 ANNUAL REPORT - SEC.gov",
+   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029525000025/a2024mpcannualreportfinalp.pdf"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Cenovus Energy Boosts Production Despite Refinery Challenges, Shares Rise 7%",
+   "url": "https://pgjonline.com/news/2024/february/cenovus-energy-boosts-production-despite-refinery-challenges-shares-rise-7"
+  },
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  },
+  {
+   "title": "[PDF] Energy Argus Petroleum Coke",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/GEN-Sample-Report-Energy-Argus-Petroleum-Coke-(2025-07-09).pdf?version=0"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "MPC Q1 2025 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q1/MPC-1Q25-Earnings-Release.pdf"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during February 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during February 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during February 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "February 2024",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2024-02",
+ "request_key": "db1f45a9baa0b71c",
+ "retrieved_at": "2026-10-29T16:52:18+00:00",
+ "usage": {
+  "input_tokens": 4069,
+  "output_tokens": 0
+ }
+}

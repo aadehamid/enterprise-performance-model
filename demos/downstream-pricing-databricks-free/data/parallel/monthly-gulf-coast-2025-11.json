@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.19883655481198304,
+   "probabilities": {
+    "crude_supply": 0.2411365943175094,
+    "demand": 0.15599535264589784,
+    "logistics": 0.021012368704209784,
+    "policy": 0.028158270284235867,
+    "product_inventories": 0.2213336183714946,
+    "weather": 0.33236379567665253
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.034175831351601745,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.09366431976380908,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "[PDF] MPC 4Q2025 Slides - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Events_and_Presentations/2026/MPC_4Q_2025_Slides.pdf"
+  },
+  {
+   "title": "2025 MPC Sustainability Report",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2025_Sustainability_pd.pdf"
+  },
+  {
+   "title": "Trends and Effects of Changes in Business Cases for Petroleum ...",
+   "url": "https://www.pnnl.gov/sites/default/files/media/file/Petroleum%20Refineries%20Trends%20Report_PNNL-37597%20%281%29.pdf"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://s29.q4cdn.com/948964180/files/doc_financials/2025/ar/MPLX_2025_AR_10-K.pdf"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "US Crude Refiners Are Pushing Run Rates to Maximum Levels: Safety Concerns, Maintenance Trade-offs, Export Boom, and Investor Implications - Energy News Beat",
+   "url": "https://energynewsbeat.co/big-oil-companies/us-crude-refiners-are-pushing-run-rates-to-maximum-levels-safety-concerns-maintenance-trade-offs-export-boom-and-investor-implications/"
+  },
+  {
+   "title": "MPC 2026 \u5e74\u7b2c 1 \u5b63\u5ea6\u4e1a\u7ee9\u7535\u8bdd\u4f1a - Alpha Spread",
+   "url": "https://www.alphaspread.com/zh-cn/security/nyse/mpc/investor-relations/earnings-call/q1-2026"
+  },
+  {
+   "title": "Feature article:",
+   "url": "https://www.opec.org/assets/assetdb/momr-august-2024.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights - The Globe and Mail",
+   "url": "https://www.theglobeandmail.com/investing/markets/stocks/MPC/pressreleases/1893018/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "MPC\u2019s windfall quarter: when self-help meets a macro tailwind, the question is durability",
+   "url": "https://knowtrend.ai/dossier/MPC/2026-08-04"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during November 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during November 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during November 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "November 2025",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2025-11",
+ "request_key": "8320f60323203573",
+ "retrieved_at": "2026-10-29T16:52:09+00:00",
+ "usage": {
+  "input_tokens": 5112,
+  "output_tokens": 0
+ }
+}

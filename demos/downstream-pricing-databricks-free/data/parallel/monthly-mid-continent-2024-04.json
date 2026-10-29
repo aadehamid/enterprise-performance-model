@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "product_inventories",
+   "confidence": 0.16736784745052466,
+   "probabilities": {
+    "crude_supply": 0.2348906193900461,
+    "demand": 0.12795657247687073,
+    "logistics": 0.2040233816681251,
+    "policy": 0.063863164030367,
+    "product_inventories": 0.3061398728754372,
+    "weather": 0.0631263895591538
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.14329315287476646,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.15783914271676822,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tMidwest refinery outage is affecting petroleum product markets -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=61403"
+  },
+  {
+   "title": "BP Whiting Refinery Outage Affecting Petroleum Product Markets",
+   "url": "https://inspectioneering.com/news/2024-02-14/10961/midwest-refinery-outage-affecting-petroleum-product-markets"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "Tight product supplies lift US summer refinery utilization to highest level since 1998 | Oil & Gas Journal",
+   "url": "https://www.ogj.com/general-interest/economics-markets/news/55413722/tight-product-supplies-lift-us-summer-refinery-utilization-to-highest-since-1998"
+  },
+  {
+   "title": "Refinery outage sends prices higher in the upper Midwest - Oklahoma Energy Today",
+   "url": "https://archive.okenergytoday.com/2024/02/refinery-outage-sends-prices-higher-in-the-upper-midwest"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "rvp-petition-volatility-waiver-afpm-2024- ...",
+   "url": "https://www.epa.gov/system/files/documents/2024-11/rvp-petition-volatility-waiver-afpm-2024-11-07.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during April 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during April 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during April 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "April 2024",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2024-04",
+ "request_key": "171e3c808edf9137",
+ "retrieved_at": "2026-10-29T16:52:20+00:00",
+ "usage": {
+  "input_tokens": 3665,
+  "output_tokens": 0
+ }
+}

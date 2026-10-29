@@ -1,0 +1,124 @@
+{
+ "answers": {
+  "distillate_outlook": {
+   "choice": "higher",
+   "confidence": 0.5122796954487902,
+   "probabilities": {
+    "about_the_same": 0.22475172166454216,
+    "higher": 0.6748531302991935,
+    "lower": 0.1003951480362644
+   },
+   "type": "choice"
+  },
+  "maintenance_announced": {
+   "noul": 0.11136232806568326,
+   "type": "noul"
+  },
+  "opec_meeting": {
+   "noul": 0.9068853946623344,
+   "type": "noul"
+  },
+  "policy_deadline": {
+   "noul": 0.1783897878502423,
+   "type": "noul"
+  },
+  "weather_outlook": {
+   "choice": "near_normal",
+   "confidence": 0.21038046408817862,
+   "probabilities": {
+    "above_normal": 0.21874800871583824,
+    "below_normal": 0.3076650152253761,
+    "near_normal": 0.47358697605878575
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Gasoline and Diesel Fuel Update - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/gasdiesel/?quot"
+  },
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/report/us_oil.php"
+  },
+  {
+   "title": "OPEC+ Agrees to Keep Oil Output Targets Steady in November - Bloomberg",
+   "url": "https://www.bloomberg.com/news/articles/2026-10-04/opec-has-deal-outline-for-steady-november-quotas-delegates-say"
+  },
+  {
+   "title": "Regional gasoline price differences - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/energyexplained/gasoline/regional-price-differences.php"
+  },
+  {
+   "title": "Oil Market Deep Dive: Brent $106 as Gulf Attacks Meet Zero Spare Capacity \u2013 Oct 12, 2026 - The Closing Print",
+   "url": "https://www.theclosingprint.net/2026/10/oil-market-deep-dive-2026-10-12/"
+  },
+  {
+   "title": "Diesel Market Dashboard: Futures, Crack Spread, Stocks",
+   "url": "https://worldoilmonitor.com/diesel-market"
+  },
+  {
+   "title": "US-Russia Diesel Deal: What\u2019s in the Plan and Will Fuel Prices Fall? | EBC Financial Group",
+   "url": "https://www.ebc.com/forex/us-russia-diesel-deal-2026-fuel-prices"
+  },
+  {
+   "title": "Organization of the Petroleum Exporting Countries",
+   "url": "https://www.opec.org/pr-detail/616-4-october-2026.html"
+  },
+  {
+   "title": "West Coast fuel crisis deepens as remaining refiners threaten to follow Valero, Phillips   \u2013 NaturalNews.com",
+   "url": "https://www.naturalnews.com/2026-08-26-west-coast-fuel-crisis-refiners.html"
+  },
+  {
+   "title": "With Diesel Margins Stretched, Production Is Underway at Nevada's Only Crude Oil Refinery",
+   "url": "https://money.tmx.com/quote/MPC%3AUS/news/7480908760300212/With_Diesel_Margins_Stretched_Production_Is_Underway_at_Nevadas_Only_Crude_Oil_Refinery"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "distillate_outlook": {
+    "criteria": {
+     "about_the_same": "About the same",
+     "higher": "Higher than in October 2026",
+     "lower": "Lower than in October 2026"
+    },
+    "instructions": "According to the U.S. EIA's most recent Short-Term Energy Outlook, how are U.S. diesel prices expected to move in November 2026 compared with October 2026?",
+    "type": "choice"
+   },
+   "maintenance_announced": {
+    "instructions": "Has planned refinery maintenance (a turnaround) been announced or reported for refineries in the U.S. West Coast and Alaska (California, Washington and Alaska) during November 2026?",
+    "type": "noul"
+   },
+   "opec_meeting": {
+    "instructions": "Is an OPEC+ ministerial or monitoring committee meeting scheduled during November 2026?",
+    "type": "noul"
+   },
+   "policy_deadline": {
+    "instructions": "Is a U.S. federal fuel-policy deadline or effective date (renewable fuel rules, sanctions, export rules or fuel taxes) scheduled during November 2026?",
+    "type": "noul"
+   },
+   "weather_outlook": {
+    "criteria": {
+     "above_normal": "Above normal",
+     "below_normal": "Below normal",
+     "near_normal": "Near normal"
+    },
+    "instructions": "According to NOAA's latest seasonal outlook, how are temperatures expected to compare with normal in the U.S. West Coast and Alaska (California, Washington and Alaska) during November 2026?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "month": "November 2026",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "forward-west-coast-2026-11",
+ "request_key": "1361fd76093bfde7",
+ "retrieved_at": "2026-10-29T16:53:18+00:00",
+ "usage": {
+  "input_tokens": 4434,
+  "output_tokens": 0
+ }
+}

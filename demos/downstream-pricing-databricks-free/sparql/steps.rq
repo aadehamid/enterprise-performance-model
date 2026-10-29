@@ -1,5 +1,5 @@
 # The pipeline's steps, in the order the README's "Run it" block runs them: SPARQL Anything's text triplifier reads
-# each line that starts `uv run [--group graph] python -m pricing_demo.<module> [<step>]`, and the slot number of a
+# each line that starts `uv run [--group graph|outside] python -m pricing_demo.<module> [<step>]`, and the slot number of a
 # command's first line gives its order (wiring.rq links each step to the next). %DEMO% is the demo folder's absolute
 # path, filled in by tech_graph.py.
 PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
@@ -12,7 +12,7 @@ WHERE {
     SELECT ?command (MIN(?n) AS ?order) WHERE {
       SERVICE <x-sparql-anything:> {
         fx:properties fx:location "%DEMO%/README.md" ; fx:media-type "text/plain" ;
-                      fx:txt.regex "(?m)^uv run (--group graph )?python -m pricing_demo\\.[a-z_]+( [a-z]+(?= ))?" .
+                      fx:txt.regex "(?m)^uv run (--group (graph|outside) )?python -m pricing_demo\\.[a-z_]+( [a-z]+(?= ))?" .
         ?root ?slot ?line .
         FILTER(STRSTARTS(STR(?slot), STR(rdf:_)))
       }

@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.4895025422378725,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "weather",
+   "confidence": 0.3761040725159859,
+   "probabilities": {
+    "crude_market": 0.12189942440643106,
+    "logistics": 0.03831202281223525,
+    "none": 0.23899866283463347,
+    "policy": 0.056045424223327166,
+    "product_market": 0.06465773862671792,
+    "weather": 0.48008672709665495
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Hurricane Isaias could nudge fuel prices higher if Gulf of Mexico refineries lose power",
+   "url": "https://www.courant.com/2026/10/09/extreme-weather-isaias-energy"
+  },
+  {
+   "title": "America Has Little Fuel Cushion Left If A Hurricane Knocks Out Gulf Coast Refineries | ",
+   "url": "https://dailycallernewsfoundation.org/2026/10/10/hurricane-isaias-gulf-coast-refineries-fuel-inventories-strategic-petroleum-reserve-steve-milloy-ellen-wald/"
+  },
+  {
+   "title": "Hurricane Isaias shuts down nearly 63% of Gulf oil output, raising pump-price concerns",
+   "url": "https://abcnews4.com/news/nation-world/hurricane-isaias-shuts-in-nearly-63-of-gulf-oil-output-raising-pump-price-concerns-category-3-hurricane-strong-wind-speeds-aaa-gas-prices-florida-news"
+  },
+  {
+   "title": "How the oil industry is preparing for Hurricane Isaias",
+   "url": "https://www.kmxt.org/2026-10-09/how-the-oil-industry-is-preparing-for-hurricane-isaias"
+  },
+  {
+   "title": "US Crude Output Shows Storm Impacts | Energy Intelligence",
+   "url": "https://www.energyintel.com/000001a1-5ebb-d0fc-a3fb-feff7a4d0000"
+  },
+  {
+   "title": "REFINERY NEWS: Marathon Petroleum reports fire at Garyville ...",
+   "url": "https://www.spglobal.com/energy/en/news-research/latest-news/crude-oil/022122-refinery-news-marathon-petroleum-reports-fire-at-garyville-refinery"
+  },
+  {
+   "title": "Hurricane Isaias could nudge fuel prices higher if Gulf of Mexico refineries lose power",
+   "url": "https://www.dailybreeze.com/2026/10/09/extreme-weather-isaias-energy"
+  },
+  {
+   "title": "Gulf of Mexico Archives - SolarBuzz Jamaica",
+   "url": "https://solarbuzzjamaica.com/tag/gulf-of-mexico"
+  },
+  {
+   "title": "Hurricane Isaias Spares U.S. Energy Infrastructure",
+   "url": "https://www.industrialinfo.com/iirenergy/industry-news/article/hurricane-isaias-spares-us-energy-infrastructure--363625"
+  },
+  {
+   "title": "Hurricane Isaias: Refineries, Not Platforms, Are the Real Fuel Price Risk \u2013 Stock Moguls",
+   "url": "https://www.stockmoguls.com/2026/10/09/hurricane-isaias-refineries-not-platforms-are-the-real-fuel-price-risk"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-10-14",
+   "decision": "Restart Garyville's units as power returns, rather than wait for a full site inspection",
+   "expected_outcome": "Crude runs back above 90% of pre-storm runs within 3 trading days after October 15",
+   "refineries": "Garyville, LA",
+   "region": "Gulf Coast",
+   "window": "2026-10-14 to 2026-11-13"
+  }
+ },
+ "request_id": "diagnosis-D03",
+ "request_key": "733f883df030e39e",
+ "retrieved_at": "2026-10-29T16:53:06+00:00",
+ "usage": {
+  "input_tokens": 4110,
+  "output_tokens": 0
+ }
+}

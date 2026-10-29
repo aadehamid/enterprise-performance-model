@@ -14,7 +14,7 @@ import os
 import random
 from dataclasses import dataclass
 
-from . import catalog, decisions, public_data, timeline
+from . import catalog, decisions, outside, public_data, timeline
 from .config import DATA, HIDDEN_SYSTEMS, SEED, SYSTEMS, WEEKLY_START, WINDOW_END, WINDOW_START
 
 
@@ -489,6 +489,14 @@ def build():
     for system, tables in decisions.build(out).items():
         for name, (columns, rows_) in tables.items():
             out[system][name] = Table(columns, rows_)
+
+    # ---- Outside context from Parallel Decisions, built from its cache in data/parallel/ (outside.py): the checked
+    # evidence on market_event, and the event scan, the decision diagnoses and the forward look ----
+    evidence, outside_tables = outside.tables(out)
+    event = out["reference_data_hub"]["market_event"]
+    event.rows = [r[:10] + evidence.get(r[0], r[10:13]) + r[13:] for r in event.rows]
+    for name, (columns, rows_) in outside_tables.items():
+        out["reference_data_hub"][name] = Table(columns, rows_)
     return out
 
 

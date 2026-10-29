@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.10045281942361113,
+   "probabilities": {
+    "crude_supply": 0.11986417685266754,
+    "demand": 0.07813931006603825,
+    "logistics": 0.21607973366222233,
+    "policy": 0.20563762961413876,
+    "product_inventories": 0.1299018002852573,
+    "weather": 0.25037734951967594
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.18237560387715593,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.5345759795776757,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Oil Market Report - December 2025 - IEA",
+   "url": "https://www.iea.org/reports/oil-market-report-december-2025"
+  },
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145/"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "[PDF] Energy Argus Petroleum Coke",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/GEN-Sample-Report-Energy-Argus-Petroleum-Coke-(2025-07-09).pdf?version=0"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "California gasoline demand elasticity estimated using refinery outages",
+   "url": "https://www.econstor.eu/bitstream/10419/322347/1/1922901822.pdf"
+  },
+  {
+   "title": "Refinery Conflagration Dynamics and Infrastructure Fragility \u2014 Gamedatacrunch",
+   "url": "https://gamedatacrunch.com/refinery-conflagration-dynamics-infrastructure-fragility-metrics"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during December 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during December 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during December 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "December 2025",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2025-12",
+ "request_key": "b01703907a8693a4",
+ "retrieved_at": "2026-10-29T16:52:54+00:00",
+ "usage": {
+  "input_tokens": 4143,
+  "output_tokens": 0
+ }
+}

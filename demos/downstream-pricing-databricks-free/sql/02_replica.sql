@@ -55,6 +55,15 @@ SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/production_acc
 CREATE OR REPLACE TABLE ${catalog}.replica_reference_data_hub.market_event AS
 SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/reference_data_hub/market_event.parquet', format => 'parquet');
 
+CREATE OR REPLACE TABLE ${catalog}.replica_reference_data_hub.external_event AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/reference_data_hub/external_event.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_reference_data_hub.forward_scan AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/reference_data_hub/forward_scan.parquet', format => 'parquet');
+
+CREATE OR REPLACE TABLE ${catalog}.replica_reference_data_hub.external_citation AS
+SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/reference_data_hub/external_citation.parquet', format => 'parquet');
+
 CREATE OR REPLACE TABLE ${catalog}.replica_rightangle.freight_rate AS
 SELECT * FROM read_files('/Volumes/${catalog}/replica_landing/raw/rightangle/freight_rate.parquet', format => 'parquet');
 

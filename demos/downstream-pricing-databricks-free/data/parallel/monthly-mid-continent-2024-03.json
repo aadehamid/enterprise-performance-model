@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "product_inventories",
+   "confidence": 0.18721784717902742,
+   "probabilities": {
+    "crude_supply": 0.2438896206511536,
+    "demand": 0.12226230272998166,
+    "logistics": 0.04476937738551438,
+    "policy": 0.018543954021829685,
+    "product_inventories": 0.3226815393158562,
+    "weather": 0.24785320589566429
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.07142340612546462,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.7149659425812336,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "\n\t\tReduced refinery activity puts upward pressure on gasoline and diesel prices -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php/detail.php?id=61543"
+  },
+  {
+   "title": "\n\t\tMidwest refinery outage is affecting petroleum product markets -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=61403"
+  },
+  {
+   "title": "MNI US Refinery Maintenance Schedule (28 Mar 2024) - rbl.ms",
+   "url": "https://roar-assets-auto.rbl.ms/files/60585/MNI%20US%20Refinery%20Maintenance%20Schedule%20.pdf"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  },
+  {
+   "title": "\n\t\tMidwest refinery outages increase regional gasoline prices -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=62904"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "BP Whiting Refinery Outage Affecting Petroleum Product Markets",
+   "url": "https://inspectioneering.com/news/2024-02-14/10961/midwest-refinery-outage-affecting-petroleum-product-markets"
+  },
+  {
+   "title": "Refinery outage sends prices higher in the upper Midwest - Oklahoma Energy Today",
+   "url": "http://archive.okenergytoday.com/2024/02/refinery-outage-sends-prices-higher-in-the-upper-midwest"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during March 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during March 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during March 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "March 2024",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2024-03",
+ "request_key": "c45f74a341c9b7ad",
+ "retrieved_at": "2026-10-29T16:52:19+00:00",
+ "usage": {
+  "input_tokens": 3521,
+  "output_tokens": 0
+ }
+}

@@ -49,7 +49,10 @@ Seven Postgres databases, one per source (`SYSTEMS` in [`pricing_demo/config.py`
 | `priceservice` | one price service | 2 | Fixed |
 | `holidaycalendar` | one exchange holiday | 30 | `exchange_holidays()`: the common U.S. exchange holidays by rule, generated reference data, not a copy of NYMEX's schedule |
 | `deliveryperiodcategory` | one delivery-period kind | 3 | Fixed |
-| `market_event` | one disruption or policy event | 9 | `timeline.EVENTS` (5), `timeline.BRIEFING_EVENTS` (2: the dyed-diesel order and China's export restart) and `timeline.TURNAROUNDS` (2 scenario turnarounds, not MPC's schedule). Each names its source: a `SCENARIO.md` section or the timeline. `EvidenceStatus` reads "not checked", `EvidenceProbability` is empty and `EvidenceCitations` is an empty JSON array until the outside-context step checks each event against public sources |
+| `market_event` | one disruption or policy event | 9 | `timeline.EVENTS` (5), `timeline.BRIEFING_EVENTS` (2: the dyed-diesel order and China's export restart) and `timeline.TURNAROUNDS` (2 scenario turnarounds, not MPC's schedule). Each names its source: a `SCENARIO.md` section or the timeline. Until E6 `EvidenceStatus` read "not checked", `EvidenceProbability` was empty and `EvidenceCitations` an empty JSON array. *2026-10-29:* E6's events step asked Parallel Decisions whether each event happened as described ("The outside context (E6)", below): 6 confirmed (a noul of 0.7 or more), Hurricane Isaias uncertain (0.67, between 0.3 and 0.7), and the two scenario turnarounds not found (0.07 each), as expected, since they are not MPC's schedule. `EvidenceCitations` holds the call's URLs |
+| `external_event` | one answer: a question x a region-month (the event scan) or a question x a decision (the diagnosis) | 344 | [`pricing_demo/outside.py`](pricing_demo/outside.py) from its cache in `data/parallel/`: 108 scan calls of 3 questions (324 answers) and 10 diagnosis calls of 2 (20). Real public evidence, labelled observed, inferred or unknown; each row links to `ref-mpc` refineries, `party` products, a `market-data` series and `kpi` measures by IRI |
+| `forward_scan` | one answer: a question x a region x a month ahead (November 2026 to January 2027) | 45 | The same, from 9 forward calls of 5 questions. Every answer is inferred or unknown, never observed; a signal that matches a past decision through the ontology carries a suggested action, "awaiting a person" (2 do) |
+| `external_citation` | one citation of one call | 1,360 | Each of the 136 calls' citations (10 each): URL, title and retrieval time; Parallel's excerpts are not kept |
 
 ### `rightangle` (RightAngle, the CTRM system)
 
@@ -127,7 +130,9 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 | | `refinery_production_daily_fact`, `refinery_plan_target_fact`, `ctrm_deal_fact` | refinery-day; refinery-month; deal | 9,724, 481, 2,673 | Renamed and typed; the deal fact joins each deal to its movement |
 | | `refinery_unit_daily_fact`, `freight_rate_fact`, `eia_weekly_fact` | unit-day; route-day; series-week | 76,296, 1,496, 8,792 | Renamed and typed; the EIA fact carries each series' measure, area and unit |
 | | `refinery_plan_version_fact`, `decision_evidence_fact` | plan version; evidence item | 455, 22 | Renamed and typed |
+| | `external_event_fact`, `forward_scan_fact` (E6) | answer; forward answer | 344, 45 | Renamed and typed from `reference_data_hub`'s outside-context tables |
 | Silver, dimensions (`silver_mdm_core`), E2 | `decision_dim` | decision | 10 | The decision log's public columns, renamed |
+| Silver, dimensions (`silver_mdm_core`), E6 | `external_citation_dim` | citation | 1,360 | Renamed from the replica |
 | Gold (`gold_commercial_core`) | `mpr_mips_crack_spread_price_fact` | crack series x day x forward period | 569,976 | The MPR settle price for the 127 crack series on the three crack sheets, unchanged, 748 days x 6 periods ([`sql/04_gold.sql`](sql/04_gold.sql)) |
 | | `mips_mpr_executive_summary_fact` | assessment | 266,288 | Each assessment joined to its group, parent group, sheet, batch and price master |
 | | `refinery_operations_daily_fact` | refinery-day | 9,724 | Utilization, yields, plan, the region's benchmark crack and the demo's R&M margin per barrel |
@@ -142,8 +147,8 @@ The replication ([`pricing_demo/replicate.py`](pricing_demo/replicate.py)) copie
 | | `refinery_unit_operations_metrics_vw` (E3) | as the unit gold | 76,296 | |
 | Definitions views (`ontology_definitions`), E3 | `measure_definitions_vw` | one measure with a KPI or OPM identifier, per release graph | 33 | Read from the ontology's triple table, `workspace.epm_ontology.epm_triples`, which the projection driver writes from the Turtle source of truth ([`sql/06_definitions.sql`](sql/06_definitions.sql)) |
 | | `crack_spread_definitions_vw`, `executive_summary_definitions_vw`, `pricing_market_margin_definitions_vw`, `refinery_operations_definitions_vw` | as above, the identified measures one subject area's metric views carry; the pricing and market margin view also keeps OPM-0026, the R&M Margin Indicator, which no metric view computes | 1, 6, 6, 7 | Filters of `measure_definitions_vw` by identifier |
-| Technical graph (`tech_graph`), E5 | `tech_graph_nodes` | one node of the technical graph or the decision trail | 134 | Created empty by [`sql/07_tech_graph.sql`](sql/07_tech_graph.sql); filled by `python -m pricing_demo.tech_graph sync` from the pipeline's Neo4j, the graph's source: the node's IRI, class, name and other properties as JSON |
-| | `tech_graph_edges` | one relationship | 510 | The same sync: source and target IRIs, the relationship type, and whether the target is an ontology resource |
+| Technical graph (`tech_graph`), E5 | `tech_graph_nodes` | one node of the technical graph or the decision trail | 142 (134 until E6, 2026-10-29) | Created empty by [`sql/07_tech_graph.sql`](sql/07_tech_graph.sql); filled by `python -m pricing_demo.tech_graph sync` from the pipeline's Neo4j, the graph's source: the node's IRI, class, name and other properties as JSON |
+| | `tech_graph_edges` | one relationship | 533 (510 until E6) | The same sync: source and target IRIs, the relationship type, and whether the target is an ontology resource |
 
 ## Measure identifiers and definitions (E3)
 
@@ -189,17 +194,45 @@ E3 ran on 2026-10-29 from the local container: the generator, `load_postgres`, `
 
 E5, on 2026-10-29, ran `setup` and `sql/07_tech_graph.sql` alone, not the whole pipeline: the two `tech_graph` tables are new, and the 61 objects above were not rebuilt. `tech_graph collect` counted all 63 and read the source databases on the exe.dev VM: `price_assessment` 7 tables and 267,304 rows, `price_reference` 2 and 599,280, `reference_data_hub` 4 and 44, `rightangle` 3 and 6,842, `aspen_pims` 4 and 968, `production_accounting` 3 and 86,033, `eia_weekly` 2 and 8,820, and `decision_truth` 1 and 10. The sync then filled the two tables with 134 and 510 rows. The README's "The technical graph, the decision trail and the AuraDB test" gives the rest of the run.
 
+E6, on 2026-10-29, ran the whole pipeline: the generator, `load_postgres` (local container and VM), `replicate` from the VM, `setup`, `upload`, `build` and `counts`. The 61 objects above kept their counts and the six new outside-context objects held the rows the table above gives: 69 objects. The build recreates the two `tech_graph` tables empty; `tech_graph sync` refilled them (142 nodes and 533 edges) after the technical graph was collected, built and loaded again with the six new objects.
+
 ## The technical graph and the decision trail (E5)
 
 Built by [`pricing_demo/tech_graph.py`](pricing_demo/tech_graph.py) with the SPARQL Anything queries in [`sparql/`](sparql/), and committed as Turtle in [`graph/`](graph/). Everything in them is about the demo's own pipeline and its synthetic decisions; the IRIs under `urn:pricing-demo:` are the demo's, and the links to `https://w3id.org/lsc/ontology/` are the ontology's resources.
 
 | Node class | Count | Read from | Links to the ontology |
 |---|---|---|---|
-| `ReplicaTable`, `SilverTable`, `GoldTable`, `MetricView`, `DefinitionsView`, `TechGraphTable` | 25, 19, 6, 6, 5, 2 | The CREATE statements in `sql/*.sql` (objects.rq), with rows counted in Databricks and last refresh from its `information_schema.tables` | 24 tables to the `data-product` table they are designed as (links.rq, from `data-product/pricing/tables.csv`); each metric view to the `kpi` measures its `epm_measure_identifiers` tag lists (20 links, joined in `kpi/measure-identifiers.csv`) |
+| `ReplicaTable`, `SilverTable`, `GoldTable`, `MetricView`, `DefinitionsView`, `TechGraphTable` | 28, 22, 6, 6, 5, 2 (25 and 19 replica and silver until E6 added the outside-context tables, 2026-10-29) | The CREATE statements in `sql/*.sql` (objects.rq), with rows counted in Databricks and last refresh from its `information_schema.tables` | 24 tables to the `data-product` table they are designed as (links.rq, from `data-product/pricing/tables.csv`); each metric view to the `kpi` measures its `epm_measure_identifiers` tag lists (20 links, joined in `kpi/measure-identifiers.csv`) |
 | `SourceDatabase`, `Host` | 8, 1 | Postgres, through `SOURCE_PG_DSN` (runtime.rq) | 4 databases to the `system` module's MIPS, MPR, KittyHawk and RightAngle |
-| `PipelineStep` | 17 | The `uv run ... python -m pricing_demo.<module> [<step>]` lines of the README's "Run it" (steps.rq); `wiring.rq` links each to the next and each node to the step that makes or fills it (the two `tech_graph` tables point to `sync`, which fills them; the build creates them empty) | none |
+| `PipelineStep` | 19 (17 until E6 added the two `outside` commands) | The `uv run ... python -m pricing_demo.<module> [<step>]` lines of the README's "Run it" (steps.rq); `wiring.rq` links each to the next and each node to the step that makes or fills it (the two `tech_graph` tables point to `sync`, which fills them; the build creates them empty) | none |
 | `QualityCheck` | 7 | The checks `tech_graph collect` runs, with result, detail and time (runtime.rq) | none |
 | `GenieAgent`, `Orchestrator`, `TripleTable` | 4, 1, 1 | `genie.AGENTS` and the triple table's name, through the live facts | the 2 original agents to their `data-product` designs |
 | `Decision` (`prov:Activity`), `EvidenceItem` (`prov:Entity`) | 10, 22 | `aspen_pims.decision_log` and `decision_evidence` (decisions.rq) | `organization` roles (owners and authors), `ref-mpc` refineries, `kpi` measures |
 
 Edges between nodes: `READS_FROM` (a table or view to what its SQL reads), `COPIES` (a replica table to its source database), `HOSTED_ON`, `PRODUCED_BY`, `NEXT`, `CHECKS`, `BINDS` (an agent to its views), `ROUTES_TO` (the orchestrator to the agents), `RECORDED_IN` (a decision or item to its replica table), and PROV-O's `USED` and `WAS_GENERATED_BY`. Edges to the ontology: `IMPLEMENTS`, `DESIGNED_AS`, `STANDS_FOR`, `WAS_ASSOCIATED_WITH`, `WAS_ATTRIBUTED_TO`, `AFFECTS` and `CONCERNS`. Every edge starts at a `Tech` node, and no ontology node gets the `Tech` label or points at one.
+
+## The outside context (E6)
+
+E6 asks Parallel's Decisions API typed questions about real public events and keeps every response in [`data/parallel/`](data/parallel/), one JSON file per call with its request, its answers, its citations (URL and title) and the time it was retrieved. [`pricing_demo/outside.py`](pricing_demo/outside.py) builds the tables from that cache, so the generator needs no network and a rerun sends nothing; a request whose text changes is a new request, never the old answer. The calls ran on 2026-10-29.
+
+| Step | Calls | Questions per call | What it asks | Rows |
+|---|---|---|---|---|
+| `events` | 9 | 1 (noul) | Whether each `market_event` row happened as described, within its dates | fills `market_event`'s evidence columns |
+| `monthly` | 108 | 3 | For each MPC refining region (Gulf Coast, Mid-Continent, West Coast) and each full month from November 2023 to October 2026: an unplanned outage or weather disruption (noul), what most drove refining margins (choice of six) and a government action on refined products (noul) | 324 in `external_event` |
+| `diagnosis` | 10 | 2 | For each decision in the decision log, from its public columns only (statement, date, expected outcome, refineries, region): which outside factor most affected it in the 30 days after (choice of six) and whether a real event made its expected outcome less likely (noul) | 20 in `external_event` |
+| `forward` | 9 | 5 | For each region and November 2026, December 2026 and January 2027: announced maintenance, an OPEC+ meeting and a U.S. fuel-policy date (nouls), EIA's outlook for diesel prices and NOAA's for temperature (choices) | 45 in `forward_scan` |
+
+A smoke call came first (one question, cached in `data/parallel/smoke.json`, not in the tables): 137 calls in all.
+
+Each answer gets a value, a probability, a confidence for a choice, and a label:
+
+| Label | When | Event scan | Diagnosis | Forward look |
+|---|---|---|---|---|
+| observed | a noul about the past at 0.7 or more (yes) or 0.3 or less (no), Typesafe's suggested starting thresholds | 170 | 3 | never |
+| inferred | a choice about the past with a confidence of 0.3 or more (the demo's floor), and any forward answer not unknown | 56 | 10 | 32 |
+| unknown | a refusal, a noul between 0.3 and 0.7, or a choice below 0.3; these go to a person | 98 | 7 | 13 |
+
+A forward signal (a yes, or a directional choice: diesel higher or lower, temperatures above or below normal) that is inferred is matched to past decisions through the ontology: a decision matches when one of its refineries is in the signal's region (`ref-mpc`) and it names one of the signal's `kpi` measures. The match then suggests reviewing those decisions' backcast before planning the month, "awaiting a person". Two signals matched: an OPEC+ meeting in November 2026 (D08, Gulf Coast, Crude Market Pricing) and EIA's outlook of lower diesel prices in December 2026 (D07 and D09, Gulf Coast, Distillate Market Pricing).
+
+The citations belong to the call, not to one question (Parallel, "Decisions API quickstart", read 2026-10-28), so an answer row points to its call's citations by `CallId`. The real events explain the demo's synthetic outcomes only to show the method: the ten decisions and their outcomes are synthetic, and nothing here is advice.
+

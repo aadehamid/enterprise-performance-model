@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.41252483578813565,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "weather",
+   "confidence": 0.4023424394454944,
+   "probabilities": {
+    "crude_market": 0.10665630782013216,
+    "logistics": 0.01053642714915474,
+    "none": 0.347746395541721,
+    "policy": 0.004397177630563151,
+    "product_market": 0.028711658987183718,
+    "weather": 0.5019520328712453
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Shell Anacortes refinery starting maintenance-trade",
+   "url": "https://www.reuters.com/article/legal/government/shell-anacortes-refinery-starting-maintenance-trade-idUSS1E78M12N"
+  },
+  {
+   "title": "Hurricane Isaias could nudge fuel prices higher if Gulf of Mexico refineries lose power | The Seattle Times",
+   "url": "https://www.seattletimes.com/business/hurricane-isaias-could-nudge-fuel-prices-higher-if-gulf-of-mexico-refineries-lose-power"
+  },
+  {
+   "title": "US Crude Output Shows Storm Impacts | Energy Intelligence",
+   "url": "https://www.energyintel.com/000001a1-5ebb-d0fc-a3fb-feff7a4d0000"
+  },
+  {
+   "title": "Anacortes Refinery Status - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/Operations/Refining/Anacortes-Refinery/Refinery-Status"
+  },
+  {
+   "title": "2026 Gulf Coast Refinery Turnaround Schedule | ExecGraph",
+   "url": "https://execgraphenergy.com/turnarounds/2026"
+  },
+  {
+   "title": "\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/petroleum/supply/weekly/?_=2026101312"
+  },
+  {
+   "title": "US Fuel Supply Strained as Hurricane Isaias Threatens Gulf Coast Refineries | Energy",
+   "url": "https://in.headtopics.com/news/us-fuel-supply-strained-as-hurricane-isaias-threatens-gulf-88677758"
+  },
+  {
+   "title": "Noel v. Anadarko Petroleum Corp et al",
+   "url": "https://www.law360.com/cases/4ea1d7d45922cf2397000003/dockets"
+  },
+  {
+   "title": "Phillips 66 Market Indicators",
+   "url": "https://s22.q4cdn.com/128149789/files/content_files/Phillips-66-Market-Indicators-September-2026.pdf"
+  },
+  {
+   "title": "Northwest Petroleum Inc v. United States of America",
+   "url": "https://www.law360.com/cases/5f763e8311240207da682c3e/dockets"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-09-01",
+   "decision": "Hold the Anacortes turnaround on schedule from 2026-10-01, rather than defer it",
+   "expected_outcome": "Lost margin from the turnaround under $25 million at the crack expected for the season",
+   "refineries": "Anacortes, WA",
+   "region": "West Coast",
+   "window": "2026-09-01 to 2026-10-01"
+  }
+ },
+ "request_id": "diagnosis-D05",
+ "request_key": "5e963adeec6a9290",
+ "retrieved_at": "2026-10-29T16:53:07+00:00",
+ "usage": {
+  "input_tokens": 3858,
+  "output_tokens": 0
+ }
+}

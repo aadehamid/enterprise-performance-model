@@ -1,0 +1,73 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.06565723799752034,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Refinery Outages & Turnarounds | EuroOilWatch | EuroOilWatch",
+   "url": "https://eurooilwatch.com/refineries"
+  },
+  {
+   "title": "[PDF] MPC Q1 2026 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2026/q1/MPC-1Q-2026-Earnings-Release.pdf"
+  },
+  {
+   "title": "GRN Event: 18th Edition Chem / Petrochem and Refinery Shutdowns and Turnarounds",
+   "url": "https://globalrenewablenews.com/event/energy/74666/n/18th-edition-chem-petrochem-and-refinery-shutdowns-and-turnarounds.html"
+  },
+  {
+   "title": "Marathon Petroleum (MPC) - public.fidelityresearch.com",
+   "url": "https://public.fidelityresearch.com/NationalFinancialNet/Api/PDF?doctag=MPC_20260907&feedID=7127&versionTag=1"
+  },
+  {
+   "title": "2026 Gulf Coast Refinery Turnaround Schedule | ExecGraph",
+   "url": "https://execgraphenergy.com/turnarounds/2026"
+  },
+  {
+   "title": "Marathon Robinson Refinery \u2014 Supply Explorer | Thinking On Energy",
+   "url": "https://thinkingonenergy.com/supply/refinery/marathon-petroleum-co-lp-robinson-il"
+  },
+  {
+   "title": "Refinery Outages: Description and Potential Impact on Petroleum Product Prices - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/petroleum/articles/refoutagesindex.php"
+  },
+  {
+   "title": "\n      Neste to invest over EUR 400 million in Porvoo refinery turnaround\n  ",
+   "url": "https://chemxplore.com/news/neste-porvoo-refinery-maintenance-turnaround"
+  },
+  {
+   "title": "[Valero Energy Q3 2026 Earnings Call] Valero Posts $6.8 Billion Quarterly Profit, a Sixfold Surge, as Freight Dislocations Supercharge Gulf Coast Refining",
+   "url": "https://finance.biggo.com/news/US_VLO_2026-10-22"
+  },
+  {
+   "title": "MPC Stock Forecast 2026-2027 - Marathon Petroleum Corp. Price Targets & Predictions",
+   "url": "https://tickernerd.com/stock/mpc-forecast/"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "Planned turnaround at the RB refinery (scenario, not MPC's schedule)",
+   "from": "2026-09-21",
+   "refinery": "Robinson, IL",
+   "region": "Mid-Continent",
+   "to": "2026-10-12"
+  }
+ },
+ "request_id": "event-turnaround_rb",
+ "request_key": "f196ba174ac3f64e",
+ "retrieved_at": "2026-10-29T16:51:41+00:00",
+ "usage": {
+  "input_tokens": 4906,
+  "output_tokens": 0
+ }
+}

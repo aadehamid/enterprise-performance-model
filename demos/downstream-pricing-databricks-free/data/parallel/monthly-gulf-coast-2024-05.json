@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "product_inventories",
+   "confidence": 0.2183825234025564,
+   "probabilities": {
+    "crude_supply": 0.17604241769646375,
+    "demand": 0.10611649888353303,
+    "logistics": 0.02794609706049572,
+    "policy": 0.01634334021443538,
+    "product_inventories": 0.34865210283546366,
+    "weather": 0.3248995433096087
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.05199559479680955,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.13544121836971276,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Feature article:",
+   "url": "https://www.opec.org/assets/assetdb/momr-august-2024.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights - The Globe and Mail",
+   "url": "https://www.theglobeandmail.com/investing/markets/stocks/MPC/pressreleases/1893018/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "Marathon Petroleum (MPC) Q4 2024 Earnings Call Transcript | The Motley Fool",
+   "url": "https://www.fool.com/earnings/call-transcripts/2025/02/04/marathon-petroleum-mpc-q4-2024-earnings-call-trans?referring_guid=020a061c-32f2-4ec7-8ab2-3572a847d33d&source=financialcontent"
+  },
+  {
+   "title": "\n\t\tRefining industry risks from 2025 hurricane season -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65304"
+  },
+  {
+   "title": "Marathon Petroleum (MPC) Q4 2024 Earnings Call Transcript | The Motley Fool",
+   "url": "https://www.fool.com/earnings/call-transcripts/2025/02/04/marathon-petroleum-mpc-q4-2024-earnings-call-trans"
+  },
+  {
+   "title": "[PDF] 2024 Sustainability Report - Marathon Petroleum Corporation",
+   "url": "https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2024_SustainabilityReport.pdf"
+  },
+  {
+   "title": "2025 ANNUAL REPORT",
+   "url": "https://s29.q4cdn.com/948964180/files/doc_financials/2025/ar/MPLX_2025_AR_10-K.pdf"
+  },
+  {
+   "title": "Marathon Refinery Outage: A Catalyst for Gasoline Price Volatility and Refining Margin Shifts?",
+   "url": "https://www.ainvest.com/news/marathon-refinery-outage-catalyst-gasoline-price-volatility-refining-margin-shifts-2507/"
+  },
+  {
+   "title": "Marathon Petroleum Q2 Earnings Call Highlights \u2014 TradingView News",
+   "url": "https://de.tradingview.com/news/marketbeat%3Af592aa6ee094b%3A0-marathon-petroleum-q2-earnings-call-highlights"
+  },
+  {
+   "title": "MPN Q4 2024 Earnings Call Transcript - Alpha Spread",
+   "url": "https://www.alphaspread.com/security/f/mpn/investor-relations/earnings-call/q4-2024"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during May 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during May 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during May 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "May 2024",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2024-05",
+ "request_key": "8f8926a1dc29f758",
+ "retrieved_at": "2026-10-29T16:51:58+00:00",
+ "usage": {
+  "input_tokens": 4280,
+  "output_tokens": 0
+ }
+}

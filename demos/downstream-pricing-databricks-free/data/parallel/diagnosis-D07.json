@@ -1,0 +1,99 @@
+{
+ "answers": {
+  "adverse_event": {
+   "noul": 0.6539030148615095,
+   "type": "noul"
+  },
+  "outside_cause": {
+   "choice": "logistics",
+   "confidence": 0.6177292208707112,
+   "probabilities": {
+    "crude_market": 0.007334195396669306,
+    "logistics": 0.6814410173922594,
+    "none": 0.01498319035674921,
+    "policy": 0.10682234170449548,
+    "product_market": 0.16457581461620935,
+    "weather": 0.024843440533617155
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Market Talk | Refining Margins, Tanker Attacks, And OPEC Growth Shape Energy Outlook",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/refining-margins-tanker-attacks-and-opec-growth-shape-energy-outlook"
+  },
+  {
+   "title": "US diesel stocks low as export control threat wanes | Latest Market News",
+   "url": "https://www.argusmedia.com/en/news-and-insights/latest-market-news/2886625-us-diesel-stocks-low-as-export-control-threat-wanes"
+  },
+  {
+   "title": "Oil Slides on G7 Stockpile Release; ULSD Firms",
+   "url": "https://www.dtnpf.com/agriculture/web/ag/news/world-policy/article/2026/10/05/oil-slides-g7-stockpile-release-ulsd"
+  },
+  {
+   "title": "Marex analyst says oil stocks are too low to rebuild as first Russian diesel cargo of 300,000 barrels heads for New York \u2014 EnergyReader.io",
+   "url": "http://energyreader.io/brief/17052"
+  },
+  {
+   "title": "Argus Netback Methodology",
+   "url": "https://www.argusmedia.com/-/media/project/argusmedia/mainsite/english/documents-and-files/methodology/argus-refinery-gate-values.pdf?rev=3f5de72c3210465099754405baac84ef"
+  },
+  {
+   "title": "Market Talk | Diesel Leads Gains As Sanctions And Refinery Issues Tighten Global Supply",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/diesel-leads-gains-as-sanctions-and-refinery-issues-tighten-global-supply"
+  },
+  {
+   "title": "Diesel arbitrage to Europe: freight closes US Gulf window Diesel arbitrage: why freight has shut the Europe import window | Kpler - Oct 21, 2026",
+   "url": "https://www.kpler.com/blog/diesel-arbitrage-why-freight-has-shut-the-europe-import-window"
+  },
+  {
+   "title": "Alert: Rosneft Says Ukraine Refinery Strikes Now \u2018Unsustainable\u2019",
+   "url": "https://hamerintel.com/data/alerts/27702"
+  },
+  {
+   "title": "Multiple tankers seen shipping Russian diesel to United\u2026 - Alert",
+   "url": "https://hamerintel.com/data/alerts/27739"
+  },
+  {
+   "title": "Diesel relief is moving \u2014 but it is small against the winter gap | AmericasOilWatch | AmericasOilWatch",
+   "url": "https://americasoilwatch.com/briefings/2026-10-21_diesel-relief-is-moving"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "adverse_event": {
+    "instructions": "Did a real-world event in the 30 days after the decision make its expected outcome less likely?",
+    "type": "noul"
+   },
+   "outside_cause": {
+    "criteria": {
+     "crude_market": "Crude oil prices or supply",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "none": "No major outside factor",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_market": "Gasoline or diesel prices, inventories or demand",
+     "weather": "Weather, a hurricane or another natural event"
+    },
+    "instructions": "Which outside factor most affected how this decision turned out in the 30 days after it was made?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "decided_on": "2026-10-09",
+   "decision": "Ship a ULSD cargo to New York Harbor by Jones Act tanker rather than export it to Northwest Europe",
+   "expected_outcome": "The domestic freight premium over export freight stays under $1.00/bbl through loading",
+   "refineries": "Garyville, LA",
+   "region": "Gulf Coast",
+   "window": "2026-10-09 to 2026-11-08"
+  }
+ },
+ "request_id": "diagnosis-D07",
+ "request_key": "3e4661bcec6a4af4",
+ "retrieved_at": "2026-10-29T16:53:08+00:00",
+ "usage": {
+  "input_tokens": 4348,
+  "output_tokens": 0
+ }
+}

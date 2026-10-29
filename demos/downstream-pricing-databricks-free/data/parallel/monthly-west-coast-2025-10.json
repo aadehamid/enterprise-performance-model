@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.44032810513779874,
+   "probabilities": {
+    "crude_supply": 0.533606754281499,
+    "demand": 0.07125777224523637,
+    "logistics": 0.06198390812188989,
+    "policy": 0.027968940400041144,
+    "product_inventories": 0.18584916666958376,
+    "weather": 0.11933345828174992
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.4885831653496907,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.8937043250572174,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8845849/"
+  },
+  {
+   "title": "ExxonMobil Torrance refinery investigated for effect on spiking California gas prices | ABC7 Los Angeles | abc7.com - ABC7 Los Angeles",
+   "url": "https://abc7.com/archive/8845849"
+  },
+  {
+   "title": "\n\t\tToday in Energy -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/"
+  },
+  {
+   "title": "\n        West Coast gasoline imports hit five-year high after refineries went dark: CAS | S&P Global\n    ",
+   "url": "https://www.spglobal.com/energy/en/news-research/latest-news/refined-products/101626-west-coast-gasoline-imports-hit-five-year-high-after-refineries-went-dark-cas"
+  },
+  {
+   "title": "\n\t\tRefinery closures present risk for higher gasoline prices on the West Coast -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65704"
+  },
+  {
+   "title": "P66 Refinery Profit Takes a Hit Amid West Coast Market Squeeze",
+   "url": "https://www.industrialinfo.com/iirenergy/industry-news/article/p66-refinery-profit-takes-a-hit-amid-west-coast-market-squeeze--348293"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145"
+  },
+  {
+   "title": "FAQ California Gas Prices and the Impacts of the Iran War",
+   "url": "https://www.energy.ca.gov/programs-and-topics/topics/petroleum-fuels-transition/faq-california-gas-prices-and-impacts-iran"
+  },
+  {
+   "title": "\n\t\tRefining industry risks from 2025 hurricane season -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=65304"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. West Coast and Alaska (California, Washington and Alaska) during October 2025?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during October 2025?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. West Coast and Alaska (California, Washington and Alaska) during October 2025?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "October 2025",
+   "region": "MPC's West Coast refining region"
+  }
+ },
+ "request_id": "monthly-west-coast-2025-10",
+ "request_key": "f56bf5347049534a",
+ "retrieved_at": "2026-10-29T16:52:53+00:00",
+ "usage": {
+  "input_tokens": 4586,
+  "output_tokens": 0
+ }
+}

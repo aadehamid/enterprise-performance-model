@@ -1,0 +1,124 @@
+{
+ "answers": {
+  "distillate_outlook": {
+   "choice": "higher",
+   "confidence": 0.7120388759212922,
+   "probabilities": {
+    "about_the_same": 0.15859919783531182,
+    "higher": 0.8080259172808615,
+    "lower": 0.03337488488382669
+   },
+   "type": "choice"
+  },
+  "maintenance_announced": {
+   "noul": 0.5768679048796376,
+   "type": "noul"
+  },
+  "opec_meeting": {
+   "noul": 0.9785006930094723,
+   "type": "noul"
+  },
+  "policy_deadline": {
+   "noul": 0.025991328926748398,
+   "type": "noul"
+  },
+  "weather_outlook": {
+   "choice": "near_normal",
+   "confidence": 0.22857089155811716,
+   "probabilities": {
+    "above_normal": 0.20304651100584553,
+    "below_normal": 0.3112395612887431,
+    "near_normal": 0.48571392770541144
+   },
+   "type": "choice"
+  }
+ },
+ "citations": [
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/report/us_oil.php"
+  },
+  {
+   "title": "Short-Term Energy Outlook - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/outlooks/steo/?src=steo-fb"
+  },
+  {
+   "title": "Regional gasoline price differences - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/energyexplained/gasoline/regional-price-differences.php"
+  },
+  {
+   "title": "Organization of the Petroleum Exporting Countries",
+   "url": "https://www.opec.org/pr-detail/616-4-october-2026.html"
+  },
+  {
+   "title": "\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/petroleum/prices/"
+  },
+  {
+   "title": "Diesel Market Dashboard: Futures, Crack Spread, Stocks",
+   "url": "https://worldoilmonitor.com/diesel-market"
+  },
+  {
+   "title": "With Diesel Margins Stretched, Production Is Underway at Nevada's Only Crude Oil Refinery",
+   "url": "https://money.tmx.com/quote/MPC%3AUS/news/7480908760300212/With_Diesel_Margins_Stretched_Production_Is_Underway_at_Nevadas_Only_Crude_Oil_Refinery"
+  },
+  {
+   "title": "Oil Market Deep Dive: Brent $106 as Gulf Attacks Meet Zero Spare Capacity \u2013 Oct 12, 2026 - The Closing Print",
+   "url": "https://www.theclosingprint.net/2026/10/oil-market-deep-dive-2026-10-12/"
+  },
+  {
+   "title": "Slight Increase in Gas Prices as Seasonal Decline is Stalled",
+   "url": "https://gasprices.aaa.com/slight-increase-gas-prices-seasonal-decline-stalled"
+  },
+  {
+   "title": "Petroleum & Other Liquids Data - U.S. Energy Information Administration (EIA)",
+   "url": "https://www.eia.gov/dnav/pet//pet_move_top.asp"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "distillate_outlook": {
+    "criteria": {
+     "about_the_same": "About the same",
+     "higher": "Higher than in October 2026",
+     "lower": "Lower than in October 2026"
+    },
+    "instructions": "According to the U.S. EIA's most recent Short-Term Energy Outlook, how are U.S. diesel prices expected to move in November 2026 compared with October 2026?",
+    "type": "choice"
+   },
+   "maintenance_announced": {
+    "instructions": "Has planned refinery maintenance (a turnaround) been announced or reported for refineries in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during November 2026?",
+    "type": "noul"
+   },
+   "opec_meeting": {
+    "instructions": "Is an OPEC+ ministerial or monitoring committee meeting scheduled during November 2026?",
+    "type": "noul"
+   },
+   "policy_deadline": {
+    "instructions": "Is a U.S. federal fuel-policy deadline or effective date (renewable fuel rules, sanctions, export rules or fuel taxes) scheduled during November 2026?",
+    "type": "noul"
+   },
+   "weather_outlook": {
+    "criteria": {
+     "above_normal": "Above normal",
+     "below_normal": "Below normal",
+     "near_normal": "Near normal"
+    },
+    "instructions": "According to NOAA's latest seasonal outlook, how are temperatures expected to compare with normal in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during November 2026?",
+    "type": "choice"
+   }
+  },
+  "state": {
+   "month": "November 2026",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "forward-mid-continent-2026-11",
+ "request_key": "cd4ab867544c5cb4",
+ "retrieved_at": "2026-10-29T16:53:16+00:00",
+ "usage": {
+  "input_tokens": 4424,
+  "output_tokens": 0
+ }
+}

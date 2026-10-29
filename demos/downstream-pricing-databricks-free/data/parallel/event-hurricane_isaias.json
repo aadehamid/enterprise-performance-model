@@ -1,0 +1,72 @@
+{
+ "answers": {
+  "happened": {
+   "noul": 0.670214226312203,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Weather for Gulf Coast, United States",
+   "url": "https://weather.com/weather/monthly/l/5e42c5f6e5195cf3a5fc9bf922383d02ca8bf4d95a26e879da7462c10114d85c"
+  },
+  {
+   "title": "\n\t\tHurricane Isaias nears landfall, leading to production shut-ins -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68284"
+  },
+  {
+   "title": "Oil Platforms in the Gulf shut down in preparation for Hurricane Isaias : NPR",
+   "url": "https://www.npr.org/2026/10/09/nx-s1-5995573/oil-platforms-in-the-gulf-shut-down-in-preparation-for-hurricane-isaias"
+  },
+  {
+   "title": "Oil companies evacuate offshore facilities in preparation for Hurricane Isaias \u2013 Houston Public Media",
+   "url": "https://www.houstonpublicmedia.org/articles/news/energy-environment/2026/10/09/564005/oil-companies-evacuate-offshore-facilities-in-preparation-for-hurricane-isaias/"
+  },
+  {
+   "title": "Isaias to Menace US Oil, Gas Assets as Category 2 Hurricane - Bloomberg",
+   "url": "https://www.bloomberg.com/news/articles/2026-10-07/isaias-to-menace-us-oil-and-gas-assets-as-category-2-hurricane"
+  },
+  {
+   "title": "Oil companies evacuate offshore facilities in preparation for Hurricane Isaias | TPR",
+   "url": "https://www.tpr.org/environment/2026-10-09/oil-companies-evacuate-offshore-facilities-in-preparation-for-hurricane-isaias?_amp=true"
+  },
+  {
+   "title": "Hurricane Isaias Halts 72% of US Gulf Oil Output, Lifts Crude Prices - Bloomberg",
+   "url": "https://www.bloomberg.com/news/articles/2026-10-09/hurricane-isaias-shuts-almost-three-quarters-of-gulf-oil-output"
+  },
+  {
+   "title": "Hurricane Isaias shuts down nearly 63% of Gulf oil output, raising pump-price concerns",
+   "url": "https://abcnews4.com/news/nation-world/hurricane-isaias-shuts-in-nearly-63-of-gulf-oil-output-raising-pump-price-concerns-category-3-hurricane-strong-wind-speeds-aaa-gas-prices-florida-news"
+  },
+  {
+   "title": "Hurricane Activity Updates | Bureau of Safety and Environmental Enforcement",
+   "url": "https://www.bsee.gov/resources-tools/planning-preparedness/hurricane/hurricane-history"
+  },
+  {
+   "title": "Hurricane Isaias shuts down nearly 63% of Gulf oil output, raising pump-price concerns",
+   "url": "https://abcnews4.com/news/nation-world/hurricane-isaias-shuts-in-nearly-63-of-gulf-oil-output-raising-pump-price-concerns-category-3-hurricane-strong-wind-speeds-aaa-gas-prices-florida-news?teaserSource=trending"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "happened": {
+    "instructions": "Did this event happen as described, within these dates?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "event": "Hurricane Isaias: Gulf offshore shut-ins, Gulf Coast refinery and terminal disruption",
+   "from": "2026-10-07",
+   "region": "Gulf Coast",
+   "to": "2026-10-15"
+  }
+ },
+ "request_id": "event-hurricane_isaias",
+ "request_key": "5cbaca3b4ef74c3b",
+ "retrieved_at": "2026-10-29T16:51:38+00:00",
+ "usage": {
+  "input_tokens": 4647,
+  "output_tokens": 0
+ }
+}

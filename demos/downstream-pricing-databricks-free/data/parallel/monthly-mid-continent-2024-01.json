@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "weather",
+   "confidence": 0.29652608652012463,
+   "probabilities": {
+    "crude_supply": 0.2417731890046915,
+    "demand": 0.13405692768353822,
+    "logistics": 0.034881656182563316,
+    "policy": 0.06554997480307975,
+    "product_inventories": 0.10996651355935667,
+    "weather": 0.41377173876677054
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.15774713090487744,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.29102159587061516,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Reconciliation of Renewable Diesel Margin to Gross Margin & Segment Results*............................. 16",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2024/q4/IR_Packet/MPC-Q4-2024-IR-Packet.pdf"
+  },
+  {
+   "title": "[PDF] 2024 ANNUAL REPORT - SEC.gov",
+   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029525000025/a2024mpcannualreportfinalp.pdf"
+  },
+  {
+   "title": "Market Talk | Energy Complex Struggles To Rally As RBOB Leads, ULSD Lags",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/energy-complex-struggles-to-rally-as-rbob-leads-ulsd-lags"
+  },
+  {
+   "title": "Question 91: What are your top three causes of unit slowdowns, and what is the loss in onstream factor for",
+   "url": "https://afpm.org/print/pdf/node/42466"
+  },
+  {
+   "title": "Tesoro's Golden Eagle refinery incident still under investigation | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/7784145/"
+  },
+  {
+   "title": "Sunoco to idle Marcus Hook refinery in 90 days | ABC7 San Francisco | abc7news.com - ABC7 San Francisco",
+   "url": "https://abc7news.com/archive/8451603/"
+  },
+  {
+   "title": "2024 ANNUAL REPORT",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Annual_Report/2024_MPC_Annual_Report_and_10K.pdf"
+  },
+  {
+   "title": "Market Talk | Winter Storm Disrupts Energy Markets As Diesel Rallies And Refineries Struggle",
+   "url": "https://www.tacenergy.com/news-and-views/market-talk/winter-storm-disrupts-energy-markets-as-diesel-rallies-and-refineries-struggle"
+  },
+  {
+   "title": "Russia Bans Producers From Exporting Gasoline Until July 31 - The Moscow Times",
+   "url": "https://www.themoscowtimes.com/2026/04/02/russia-bans-producers-from-exporting-gasoline-until-july-31-a92412"
+  },
+  {
+   "title": "[PDF] Energy Argus Petroleum Coke",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/GEN-Sample-Report-Energy-Argus-Petroleum-Coke-(2025-07-09).pdf?version=0"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during January 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during January 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during January 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "January 2024",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2024-01",
+ "request_key": "19cd096a18f47619",
+ "retrieved_at": "2026-10-29T16:52:18+00:00",
+ "usage": {
+  "input_tokens": 3963,
+  "output_tokens": 0
+ }
+}

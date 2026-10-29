@@ -579,8 +579,10 @@ def test_the_event_table_holds_the_events_the_use_cases_name_from_their_sources(
                                                "turnaround_season", "dyed_diesel_order", "china_export_restart",
                                                "turnaround_rb", "turnaround_an"}
     scenario_text = open(os.path.join(ROOT, "SCENARIO.md")).read()
-    for e in events:
-        assert e["EvidenceStatus"] == "not checked" and e["EvidenceProbability"] is None and e["EvidenceCitations"] == "[]"
+    for e in events:  # since E6 each event's evidence comes from a Parallel Decisions call (outside.py, step events)
+        assert e["EvidenceStatus"] in {"confirmed", "not found", "uncertain", "unknown"}, e["EventKey"]
+        assert e["EvidenceStatus"] == "unknown" or 0 <= e["EvidenceProbability"] <= 1
+        assert all(u.startswith("http") for u in json.loads(e["EvidenceCitations"]))
         if e["SourceKind"] == "briefing":
             assert "dyed diesel" in scenario_text and "resume refined-product exports" in scenario_text
             assert "5. Pricing policy and global supply" in scenario_text
@@ -1101,7 +1103,7 @@ def test_e5_the_steps_follow_the_readme_run_block_and_each_points_to_the_next():
     ordered = [str(n) for _, n in sorted((int(o), g.value(s, URIRef(TV + "name")))
                                           for s, o in g.subject_objects(URIRef(TV + "order")))]
     readme = open(os.path.join(ROOT, "README.md")).read()
-    commands = re.findall(r"(?m)^uv run (?:--group graph )?python -m (pricing_demo\.[a-z_]+(?: [a-z]+(?= ))?)", readme)
+    commands = re.findall(r"(?m)^uv run (?:--group (?:graph|outside) )?python -m (pricing_demo\.[a-z_]+(?: [a-z]+(?= ))?)", readme)
     assert ordered == list(dict.fromkeys(commands))
     assert sum(len(v) for v in _pairs(g, "next").values()) == len(ordered) - 1
 
@@ -1155,3 +1157,107 @@ def test_e5_the_driver_login_is_the_newest_run_env(tmp_path):
     assert tech_graph.login_file((str(rebuild), str(tmp_path / "missing.env"))) == str(rebuild)
     with pytest.raises(SystemExit):
         tech_graph.login_file((str(tmp_path / "missing.env"),))
+
+
+# ---- E6 (2026-10-29): the outside context from Parallel Decisions (pricing_demo/outside.py) ----
+from pricing_demo import outside  # noqa: E402
+
+OUTSIDE = outside.requests(TABLES)
+
+
+def test_e6_interpret_follows_typesafe_thresholds_and_labels():
+    assert outside.interpret({"type": "noul", "noul": 0.7})[::3] == ("yes", "observed")
+    assert outside.interpret({"type": "noul", "noul": 0.3})[::3] == ("no", "observed")
+    assert outside.interpret({"type": "noul", "noul": 0.5})[::3] == ("uncertain", "unknown")
+    assert outside.interpret({"type": "noul", "noul": 0.9}, forward=True)[3] == "inferred"  # never observed ahead
+    choice = {"type": "choice", "choice": "weather", "probabilities": {"weather": 0.5, "policy": 0.5}, "confidence": 0.31}
+    assert outside.interpret(choice) == ("weather", 0.5, 0.31, "inferred", None)
+    assert outside.interpret({**choice, "confidence": 0.29})[3] == "unknown"
+    assert outside.interpret({"type": "refusal"})[3] == "unknown"
+
+
+def test_e6_the_requests_cover_each_region_month_decision_event_and_forward_month():
+    steps = Counter(step for step, *_ in OUTSIDE)
+    assert steps == {"smoke": 1, "events": 9, "monthly": 108, "diagnosis": 10, "forward": 9}
+    months = outside.full_months()
+    assert (months[0], months[-1], len(months)) == (dt.date(2023, 11, 1), dt.date(2026, 10, 1), 36)
+    assert outside.forward_months() == [dt.date(2026, 11, 1), dt.date(2026, 12, 1), dt.date(2027, 1, 1)]
+
+
+def test_e6_a_diagnosis_reads_only_the_decision_log_the_agents_see():
+    hidden = {"Drivers", "Constraints", "Options", "ActualOutcome", "ActualOutcomeData", "GroundTruthRationale",
+              "KnownUncertainties"}
+    dossiers = {d["DecisionId"]: d for d in rows("decision_truth", "decision_dossier")}
+    for step, request_id, body, ctx in OUTSIDE:
+        if step != "diagnosis":
+            continue
+        assert set(body["state"]) == {"decision", "decided_on", "expected_outcome", "refineries", "region", "window"}
+        text = json.dumps(body)
+        for field in hidden:  # no dossier-only text reaches the request
+            value = dossiers[ctx["decision_id"]][field]
+            assert value in (None, "", "[]", "{}") or str(value) not in text, (request_id, field)
+
+
+def test_e6_every_request_is_cached_and_no_cache_keeps_an_excerpt_or_a_key():
+    for step, request_id, body, _ in OUTSIDE:
+        saved = outside.cached(request_id, body)
+        assert saved is not None, request_id
+        raw = open(outside.cache_path(request_id)).read()
+        assert "excerpts" not in raw and "PARALLEL_API_KEY" not in raw and "x-api-key" not in raw
+        assert all(set(c) == {"url", "title"} for c in saved["citations"])
+
+
+def test_e6_a_call_caches_the_response_and_a_changed_request_is_not_answered_from_it(tmp_path, monkeypatch):
+    monkeypatch.setattr(outside, "CACHE", str(tmp_path))
+
+    class Client:
+        def post(self, path, body, cast_to):
+            assert path == "/v1/decisions" and cast_to is object
+            return {"mode": "fast", "answers": {"q": {"type": "noul", "noul": 0.8}},
+                    "citations": [{"url": "https://example.org/a", "title": "A", "excerpts": ["long text"]}]}
+
+    body = {"state": {"x": 1}, "questions": {"q": {"type": "noul", "instructions": "Is it?"}}}
+    saved = outside.call(Client(), "r1", body, now=dt.datetime(2026, 10, 29, tzinfo=dt.timezone.utc))
+    assert saved["citations"] == [{"url": "https://example.org/a", "title": "A"}]
+    assert outside.cached("r1", body)["answers"]["q"]["noul"] == 0.8
+    assert outside.cached("r1", {**body, "state": {"x": 2}}) is None
+
+
+def test_e6_the_tables_link_each_answer_to_iris_the_ontology_holds():
+    hub = TABLES["reference_data_hub"]
+    events, forward = hub["external_event"], hub["forward_scan"]
+    assert (len(events.rows), len(forward.rows), len(hub["external_citation"].rows)) == (344, 45, 1360)
+    refineries = set(re.findall(r"refmpc:(refinery-[a-z-]+) a org:Site", open(os.path.join(ONTOLOGY, "ref-mpc", "ref-mpc.ttl")).read()))
+    products = set(re.findall(r"modules/party/product/([a-z0-9-]+)", "".join(
+        open(os.path.join(ONTOLOGY, "party", f)).read() for f in os.listdir(os.path.join(ONTOLOGY, "party")) if f.endswith(".ttl"))))
+    series = {r["slug"] for r in csv.DictReader(open(os.path.join(ONTOLOGY, "market-data", "series.csv")))}
+    measures = {r["measure_id"] for r in csv.DictReader(open(os.path.join(ONTOLOGY, "kpi", "measure-classification.csv")))}
+    known = {"/ref-mpc/": refineries, "/party/product/": products, "/market-data/series/": series, "/kpi/measure/": measures}
+    for table in (events, forward):
+        c = table.columns
+        for r in table.rows:
+            for col in ("RefineryIris", "ProductIris", "SeriesIri", "MeasureIris"):
+                for iri in filter(None, (r[c.index(col)] or "").split(";")):
+                    part = next(k for k in known if k in iri)
+                    assert iri.rsplit("/", 1)[1] in known[part], iri
+
+
+def test_e6_forward_answers_are_never_observed_and_a_suggestion_waits_for_a_person():
+    forward = TABLES["reference_data_hub"]["forward_scan"]
+    c = forward.columns
+    assert {r[c.index("EvidenceLabel")] for r in forward.rows} <= {"inferred", "unknown"}
+    suggested = [r for r in forward.rows if r[c.index("SuggestedAction")]]
+    assert suggested
+    log = {r["DecisionId"] for r in rows("aspen_pims", "decision_log")}
+    for r in suggested:
+        assert r[c.index("EvidenceLabel")] == "inferred" and r[c.index("ApprovalStatus")] == "awaiting a person"
+        assert set(r[c.index("MatchedDecisionIds")].split(";")) <= log
+
+
+def test_e6_the_outside_tables_flow_through_the_replica_and_silver_layers():
+    replica, silver = SQL_TEXT["02_replica.sql"], SQL_TEXT["03_silver.sql"]
+    for t in ("external_event", "forward_scan", "external_citation"):
+        assert f"replica_reference_data_hub.{t} AS" in replica and f"replica_reference_data_hub.{t};" in silver
+    assert {"external_event_fact", "forward_scan_fact"} <= databricks.BUILT["silver_udm_core"]
+    assert "external_citation_dim" in databricks.BUILT["silver_mdm_core"]
+

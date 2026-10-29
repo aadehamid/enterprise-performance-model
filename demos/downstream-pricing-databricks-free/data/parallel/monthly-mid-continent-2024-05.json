@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "crude_supply",
+   "confidence": 0.25721014168149514,
+   "probabilities": {
+    "crude_supply": 0.38100845140124595,
+    "demand": 0.17708824971901077,
+    "logistics": 0.02569612825925933,
+    "policy": 0.021954479416620522,
+    "product_inventories": 0.2516809104802578,
+    "weather": 0.14257178072360557
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.04974792536153075,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.0873035263923958,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Reconciliation of Renewable Diesel Margin to Gross Margin & Segment Results*............................. 16",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2024/q4/IR_Packet/MPC-Q4-2024-IR-Packet.pdf"
+  },
+  {
+   "title": "[PDF] 2024 ANNUAL REPORT - SEC.gov",
+   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029525000025/a2024mpcannualreportfinalp.pdf"
+  },
+  {
+   "title": "Marathon Petroleum Corp 8-K exhibit 99.1, filed April 30, 2024",
+   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029524000045/mpcq12024earningsrelease.htm"
+  },
+  {
+   "title": "2024 ANNUAL REPORT",
+   "url": "https://www.marathonpetroleum.com/content/documents/Investors/Annual_Report/2024_MPC_Annual_Report_and_10K.pdf"
+  },
+  {
+   "title": "\n\t\tMidwest refinery outage is affecting petroleum product markets -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=61403&quot"
+  },
+  {
+   "title": "Global Markets Argus",
+   "url": "https://view.argusmedia.com/rs/584-BUW-606/images/CRU-Sample-Report-Argus%20Global%20Markets%20%282025-05-02%29.pdf"
+  },
+  {
+   "title": "\n\t\tMidwest refinery outages increase regional gasoline prices -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=62904"
+  },
+  {
+   "title": "MPC Q2 2025 Earnings Release",
+   "url": "https://s2.q4cdn.com/142437514/files/doc_financials/2025/q2/MPC-Q2-2025-Press-Release.pdf"
+  },
+  {
+   "title": "\n\t\tReduced refinery activity puts upward pressure on gasoline and diesel prices -\n\t\tU.S. Energy Information Administration (EIA)\t",
+   "url": "https://www.eia.gov/todayinenergy/detail.php/detail.php?id=61543"
+  },
+  {
+   "title": "GAO-09-87 Energy Markets: Refinery Outages Can Impact Petroleum Product Prices, but No Federal Requirements to Report Outages Exist",
+   "url": "https://www.gao.gov/assets/gao-09-87.pdf"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during May 2024?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during May 2024?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Mid-Continent (the Midwest, Rocky Mountains and West Texas) during May 2024?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "May 2024",
+   "region": "MPC's Mid-Continent refining region"
+  }
+ },
+ "request_id": "monthly-mid-continent-2024-05",
+ "request_key": "4a2f7c9282d5469a",
+ "retrieved_at": "2026-10-29T16:52:20+00:00",
+ "usage": {
+  "input_tokens": 4320,
+  "output_tokens": 0
+ }
+}

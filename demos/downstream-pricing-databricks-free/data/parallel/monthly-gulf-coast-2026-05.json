@@ -1,0 +1,103 @@
+{
+ "answers": {
+  "margin_driver": {
+   "choice": "demand",
+   "confidence": 0.17337488101218235,
+   "probabilities": {
+    "crude_supply": 0.21909130120003928,
+    "demand": 0.3111457341768186,
+    "logistics": 0.031827533966258266,
+    "policy": 0.15164176618494507,
+    "product_inventories": 0.257445067876702,
+    "weather": 0.028848596595236746
+   },
+   "type": "choice"
+  },
+  "policy_action": {
+   "noul": 0.027936627862217175,
+   "type": "noul"
+  },
+  "refinery_disruption": {
+   "noul": 0.20077979233767068,
+   "type": "noul"
+  }
+ },
+ "citations": [
+  {
+   "title": "Trump Wants to Ban Diesel Exports. Refiners Are Selling Off. - 24/7 Wall St.",
+   "url": "https://247wallst.com/investing/2026/09/24/trump-wants-to-ban-diesel-exports-refiners-are-selling-off/"
+  },
+  {
+   "title": "US pain at the pump worsens after more US-Iran fighting lifts oil prices | Reuters",
+   "url": "https://www.reuters.com/business/energy/us-pain-pump-worsens-after-more-us-iran-fighting-lifts-oil-prices-2026-07-10"
+  },
+  {
+   "title": "3:2:1 Crack Spread Today | Refining Margin | Fuel Data Portal",
+   "url": "https://fueldataportal.com/data/3-2-1-crack-spread"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights - The Globe and Mail",
+   "url": "https://www.theglobeandmail.com/investing/markets/stocks/MPC/pressreleases/1893018/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "Marathon Petroleum Corp. (MPN.SG) Q1 FY2026  earnings call transcript",
+   "url": "https://finance.yahoo.com/quote/MPN.SG/earnings/MPN.SG-Q1-2026-earnings_call-551053.html"
+  },
+  {
+   "title": "DOE Taps Gulf Coast Oil Reserve to Support Louisiana Refinery \u00b7 Big Energy",
+   "url": "https://bigenergynews.com/2026/10/doe-taps-gulf-coast-oil-reserve-to-support-louisiana-refinery/"
+  },
+  {
+   "title": "Marathon Petroleum Corporation (MPC) Q1 FY2026  earnings call transcript",
+   "url": "https://finance.yahoo.com/quote/MPC/earnings/MPC-Q1-2026-earnings_call-551053.html?fr=sycsrp_catchall"
+  },
+  {
+   "title": "Marathon Petroleum Q1 Earnings Call Highlights",
+   "url": "https://www.barchart.com/story/news/1893017/marathon-petroleum-q1-earnings-call-highlights"
+  },
+  {
+   "title": "Marathon Petroleum Corporation Q1 2026 Earnings Call Summary",
+   "url": "https://finance.yahoo.com/m/317a0846-3727-3e7b-a11a-231d63bd3b50/marathon-petroleum.html"
+  },
+  {
+   "title": "Trump-Putin Diesel Deal: What It Means For Refiner Stocks - Marathon Petroleum (NYSE:MPC), Phillips 66 (N",
+   "url": "https://www.benzinga.com/markets/commodities/26/10/62499797/trump-putin-diesel-deal-refiner-stocks-valero-pbf-marathon"
+  }
+ ],
+ "mode": "fast",
+ "request": {
+  "questions": {
+   "margin_driver": {
+    "criteria": {
+     "crude_supply": "Crude oil supply or crude price changes",
+     "demand": "Changes in fuel demand",
+     "logistics": "Freight, shipping or pipeline constraints",
+     "policy": "Government policy, export restrictions or emergency stock releases",
+     "product_inventories": "High or low gasoline and diesel inventories",
+     "weather": "Weather or storms disrupting refining or logistics"
+    },
+    "instructions": "What most drove refining margins for refiners in the U.S. Gulf Coast (Texas and Louisiana) during May 2026?",
+    "type": "choice"
+   },
+   "policy_action": {
+    "instructions": "Did a government action affecting U.S. refined products (an export restriction, a strategic reserve release, sanctions or a fuel-standard change) take effect during May 2026?",
+    "type": "noul"
+   },
+   "refinery_disruption": {
+    "instructions": "Did an unplanned refinery outage, fire, hurricane or other weather event disrupt refining in the U.S. Gulf Coast (Texas and Louisiana) during May 2026?",
+    "type": "noul"
+   }
+  },
+  "state": {
+   "period": "May 2026",
+   "region": "MPC's Gulf Coast refining region"
+  }
+ },
+ "request_id": "monthly-gulf-coast-2026-05",
+ "request_key": "c13944200e6d0b9a",
+ "retrieved_at": "2026-10-29T16:52:13+00:00",
+ "usage": {
+  "input_tokens": 4593,
+  "output_tokens": 0
+ }
+}
