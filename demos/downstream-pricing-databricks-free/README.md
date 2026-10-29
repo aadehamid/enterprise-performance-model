@@ -82,7 +82,12 @@ The window now runs from 2023-10-21 to 2026-10-20: 748 trading days. The pipelin
 | `freight_rate` and its silver fact | 1,496 (2 routes, 748 days) |
 | `market_event` and its silver dimension | 9 |
 | `eia_weekly.weekly_value` and its silver fact | 8,792 (28 series from 2020-10-16) |
+| `plan_version`, its silver fact and `refinery_plan_backcast_fact` | 455 (13 refineries, 35 plan months) |
+| `decision_log` and `decision_dim` | 10 |
+| `decision_evidence`, its silver fact and `decision_evidence_detail_fact` | 22 |
 | `mips_mpr_benchmark_prices_fact_vw` | 4,134 when counted (the last 160 days by Databricks' `CURRENT_DATE()`, which was already 2026-10-29 in UTC while the local date was 2026-10-28) |
+
+The decision-trail rows above come from a second pair of runs later that day, local and VM, with the same counts in 54 objects; the VM run came after `decision_truth` was created there for the `demo` role. The hidden `decision_dossier` table (10 rows) was loaded into `decision_truth` and reached no Databricks object.
 
 The Genie agents were not asked again on the three-year data; their instructions and views are unchanged.
 
