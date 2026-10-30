@@ -14,6 +14,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
+    python3 scripts/epm_facts.py citations         # words a document attributes to the decision owner are in a saved answer
     uv run --with rdflib python scripts/epm_facts.py modules    # each released module, its releases, what it requires
     uv run --with rdflib python scripts/epm_facts.py coverage --processes lifecycle   # which processes lack RACI, systems, KPIs ...
     add --json for machine-readable output
@@ -640,6 +641,8 @@ def _status_parts(status):
     return (lead.group(1) if lead else ""), amended
 
 
+RECORDED_WORDS = re.compile(r"^## The decision owner's recorded words\s*\n(.*?)(?=^## |\Z)", re.M | re.S)  # a record's quote section
+
 def decision_problems(folder=DECISIONS):
     """Return a list of problems in the EPM-DEC-001 records and their index."""
     problems = []
@@ -683,7 +686,7 @@ def decision_problems(folder=DECISIONS):
         # quotes and curly quotes included, against the saved answers); this simpler
         # presence rule covers the earlier records it skips.
         if lead == "Decided" and int(number) < FIRST_QUOTE_CHECKED_DECISION:
-            words = re.search(r"^## The decision owner's recorded words\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+            words = RECORDED_WORDS.search(text)
             if not words or not QUOTE.search(words.group(1)):
                 problems.append(f"{number}: Decided, but no quote under \"The decision owner's recorded words\"")
     return problems
@@ -1078,13 +1081,13 @@ COMMENT_ID = re.compile(r"comment \d{6,}")
 def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=None):
     """Words a tracked Markdown document attributes to the decision owner, outside the decision records and the saved
     answers. Every quote of three or more words after an attribution must be word for word in a saved answer, and the
-    paragraph must name a source that exists: an answers file that holds the words, a decision record, or the PR comment
-    the answer was given in. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
+    paragraph must name a source that exists: an answers file that holds the words, a decision record whose "The decision
+    owner's recorded words" section holds them, or the PR comment the answer was given in. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
     corpus = answer_corpus(answers)
     files_by_name = {os.path.basename(p): _flat(re.sub(r"<!--.*?-->", "", open(p).read(), flags=re.S))
                      for p in glob.glob(os.path.join(answers, "*.md"))}
     def recorded_words(path):
-        found = re.search(r"^## The decision owner's recorded words\s*\n(.*?)(?=^## |\Z)", open(path).read(), re.M | re.S)
+        found = RECORDED_WORDS.search(open(path).read())
         return _flat(found.group(1)) if found else ""
     record_texts = {m.group(1): recorded_words(p) for p in glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))
                     for m in [re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(p))] if m}
