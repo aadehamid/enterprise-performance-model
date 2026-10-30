@@ -12,6 +12,7 @@ ontology's definitions of the measures it answers for (EPM-DEC-001-0109, decisio
 import hashlib
 import json
 import os
+import sys
 
 from .config import ROOT, databricks_env
 from .databricks import connect, current_catalog
@@ -272,11 +273,9 @@ def check():
             for question, sql in spec["examples"]:
                 try:
                     cur.execute(sql.format(c=catalog))
-                    n = len(cur.fetchall())
+                    n, why = len(cur.fetchall()), "no rows"
                 except Exception as err:  # report every failing example, not only the first
                     n, why = 0, f"{type(err).__name__}: {str(err)[:200]}"
-                else:
-                    why = "no rows"
                 print(f"{'ok ' if n else 'BAD'} {title}: {question} ({n} rows)" + ("" if n else f"; {why}"))
                 if not n:
                     bad.append(question)
@@ -304,5 +303,7 @@ def main():
 
 
 if __name__ == "__main__":
-    import sys
-    check() if sys.argv[1:] == ["check"] else main()
+    if sys.argv[1:] == ["check"]:
+        check()
+    else:
+        main()

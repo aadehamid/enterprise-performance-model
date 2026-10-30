@@ -1822,7 +1822,8 @@ def test_after_e7_no_genie_example_repeats_an_acceptance_question():
     asked = {words(c["question"]) for c in acceptance.CASES}
     examples = [q for spec in genie.AGENTS.values() for q, _ in spec["examples"]]
     assert not [q for q in examples if words(q) in asked]
-    for q in examples:  # no test question is contained in an example either
+    for q in examples:  # no test question is contained in an example either; every question is longer than 40
+        # characters, so the length only keeps a stray short string from matching
         assert not any(a in words(q) for a in asked if len(a) > 40), q
 
 
