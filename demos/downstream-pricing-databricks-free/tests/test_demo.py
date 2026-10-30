@@ -1766,7 +1766,7 @@ def test_after_e7_a_case_asked_k_times_passes_only_when_every_attempt_does(tmp_p
                {"n": 11, "attempt": 1, "passed": True, "reasons": [], "agents_called": []}]
     assert acceptance.summarize(results)["passed"] == [11] and acceptance.summarize(results)["cases"] == 2
     path = tmp_path / "run.json"
-    path.write_text(json.dumps({"run_at": "x", "results": results}))
+    path.write_text(json.dumps({"run_at": "x", "repeat": 3, "results": results}))
     assert "use case 3: fail (2/3)" in acceptance.compare([str(path)])
 
 
@@ -1790,3 +1790,17 @@ def test_after_e7_a_case_missing_an_agent_on_several_attempts_counts_once():
     miss = {"passed": False, "reasons": ["agents not called: Crack Spread Price Analytics"], "agents_called": []}
     results = [dict(miss, n=12, attempt=k) for k in (1, 2, 3)]
     assert acceptance.summarize(results, 3)["agent_missed"] == [12]
+
+
+def test_after_e7_an_old_repeat_run_without_its_count_is_refused_until_given(tmp_path):
+    # Codex round 2 on step 3: inferring the count from the attempts present undercounts a run that stopped.
+    results = [{"n": 3, "attempt": k, "passed": True, "reasons": [], "agents_called": [], "expected": [], "answer": "",
+                "question": next(c["question"] for c in acceptance.CASES if c["n"] == 3)} for k in (1, 2)]
+    path = tmp_path / "old.json"
+    path.write_text(json.dumps({"run_at": "x", "results": results}))
+    with pytest.raises(SystemExit, match="rejudge it with --repeat K"):
+        acceptance.summary(str(path))
+    assert acceptance.rejudge(str(path), 3)["repeat"] == 3
+    plain = tmp_path / "plain.json"  # a run with no attempt numbers asked each case once
+    plain.write_text(json.dumps({"run_at": "x", "results": [{k: v for k, v in results[0].items() if k != "attempt"}]}))
+    assert acceptance.summary(str(plain))["passed"] == [3]

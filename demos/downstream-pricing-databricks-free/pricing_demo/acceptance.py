@@ -3,7 +3,7 @@
     uv run --group graph python -m pricing_demo.acceptance expected        # compute every check's figures; ask nothing
     uv run --group graph python -m pricing_demo.acceptance run [N ...]     # ask each question and judge the answer
     uv run --group graph python -m pricing_demo.acceptance run --repeat K [N ...]  # ask each K times; all must pass
-    uv run --group graph python -m pricing_demo.acceptance rejudge FILE ...  # judge a recorded run again; ask nothing
+    uv run --group graph python -m pricing_demo.acceptance rejudge [--repeat K] FILE ...  # judge a recorded run again
     uv run --group graph python -m pricing_demo.acceptance compare FILE ...  # compare recorded runs, case by case
 
 A use case passes when the orchestrator (supervisor.py) calls the agents its row names, its answer holds every figure
@@ -712,11 +712,13 @@ def restored(x):
     return Expect(x["label"], value, x["tol"], CUES.get(x["label"]))
 
 
-def rejudge(path):
+def rejudge(path, repeat=None):
     """Judge a recorded run again with the current checks, with no new call: each recorded answer against the figures
     the run recorded, the current agents and ontology terms, and each figure's cue. A case whose question has changed
     since the run fails, since its recorded answer answers another question."""
     run = json.load(open(path))
+    if repeat:
+        run["repeat"] = repeat
     cases = {c["n"]: c for c in CASES}
     out = []
     for r in run["results"]:
@@ -733,9 +735,14 @@ def rejudge(path):
 
 
 def repeat_of(run):
-    """The attempts a run asked per case: recorded since step 3's review; for a run recorded before, the most any case
-    has (a finished run asked each case that many times)."""
-    return run.get("repeat") or max((len(rs) for rs in by_case(run["results"]).values()), default=1)
+    """The attempts a run asked per case, as it records them since step 3's review. A run recorded before with no
+    attempt numbers asked each case once; one with attempt numbers but no count cannot say how many it asked, so it
+    is refused until `rejudge --repeat K` records the count (Codex on step 3)."""
+    if run.get("repeat"):
+        return run["repeat"]
+    if any("attempt" in r for r in run["results"]):
+        raise SystemExit("this run recorded attempts but not how many it asked per case: rejudge it with --repeat K")
+    return 1
 
 
 def load(path):
@@ -823,8 +830,13 @@ def main(argv):
         print(f"{len(s['passed'])} of {s['cases']} passed" + (f" on all {repeat} attempts" if repeat > 1 else "")
               + f"; results in {RESULTS}")
     elif command == "rejudge":
-        for path in argv[1:]:
-            result = rejudge(path)
+        args, repeat = argv[1:], None
+        if "--repeat" in args:
+            i = args.index("--repeat")
+            repeat = int(args[i + 1])
+            del args[i:i + 2]
+        for path in args:
+            result = rejudge(path, repeat)
             target = path.replace(".json", "-rejudged.json")
             with open(target, "w") as f:
                 json.dump(result, f, indent=2, default=str)
