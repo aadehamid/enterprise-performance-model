@@ -1892,5 +1892,22 @@ def test_after_e7_list_replies_keep_their_tool_calls_and_a_reply_of_reasoning_on
     assert result["answer"] == "the answer" and [c["agent"] for c in result["agents_called"]] == [refinery]
     assert all(b["max_tokens"] == 4000 for b in bodies) and supervisor.MAX_TOKENS == 4000
     w, _ = api(("length", [reasoning]))
-    with pytest.raises(supervisor.OrchestrationError, match="no answer text .finish_reason length"):
+    with pytest.raises(supervisor.OrchestrationError, match="final reply is empty .finish_reason length"):
         supervisor.orchestrate(w, *agents, "q")
+    w, _ = api(("length", [reasoning, {"type": "text", "text": "the answer is cut"}]))
+    with pytest.raises(supervisor.OrchestrationError, match="final reply is cut off"):
+        supervisor.orchestrate(w, *agents, "q")
+
+
+def test_after_e7_an_empty_reply_while_agents_remain_is_sent_back(monkeypatch):
+    # Codex round 2 on step 6: a blank reply before every required agent is called gets "Not yet", as any other.
+    crack, refinery = "Crack Spread Price Analytics", "Refinery Operations Analytics"
+    replies = iter([{"role": "assistant", "content": ""},
+                    {"role": "assistant", "tool_calls": [tool_call(crack, 1)]},
+                    {"role": "assistant", "content": "the answer", "finish_reason": "stop"}])
+    seen = []
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: seen.append(list(messages)) or next(replies))
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [crack])
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
+    result = supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert result["answer"] == "the answer" and seen[1][-1]["content"].startswith("Not yet")

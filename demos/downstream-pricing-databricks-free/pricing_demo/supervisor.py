@@ -317,12 +317,14 @@ def orchestrate(w, described, ids, question):
             messages.append({k: v for k, v in reply.items() if k in ("role", "content", "tool_calls")})
             if not calls:
                 answer = reply.get("content") or ""
-                if not answer.strip():  # a reply of reasoning only, often cut off by max_tokens, is no answer
-                    raise OrchestrationError(f"the model returned no answer text (finish_reason {reply.get('finish_reason')}); "
-                                             f"agents called: {[c['agent'] for c in called]}", called, plan)
                 required |= set(ruled(answer))
                 gaps = missing(required, called)
                 if not gaps:
+                    # a final reply that is empty (reasoning only) or cut off by max_tokens is no answer
+                    if not answer.strip() or reply.get("finish_reason") == "length":
+                        raise OrchestrationError(f"the model's final reply is {'cut off' if answer.strip() else 'empty'} "
+                                                 f"(finish_reason {reply.get('finish_reason')}); agents called: "
+                                                 f"{[c['agent'] for c in called]}", called, plan)
                     return {"agents_called": called, "answer": answer, "plan": plan}
                 messages.append({"role": "user", "content": "Not yet: call the " + names(gaps)
                                  + " agent before answering, asking it only about its own subject area, then answer again."})
