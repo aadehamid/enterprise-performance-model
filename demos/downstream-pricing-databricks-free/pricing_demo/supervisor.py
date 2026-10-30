@@ -38,7 +38,19 @@ INSTRUCTIONS = (
     "market, not by refinery: for a refinery's crack, ask the crack agent for its region's benchmark crack, the one the "
     "demo's R&M margin uses (sql/04_gold.sql): Gulf Coast, USGC 3-2-1 MEH Crack, ex-RIN (43870); West Coast, LA 3-2-1 "
     "Crack ANS, ex-RIN (36855); Mid-Continent, CHI 3-2-1 Crack WTI, ex-RIN (37438).")
-MAX_ROUNDS = 6
+MAX_ROUNDS = 8
+# Before the tool loop the orchestrator names the agents whose subject areas the question touches; an answer is
+# accepted only once each of them, and each agent RULES require, has been called (after E7, delegated under
+# EPM-DEC-001-0028).
+PLAN = ("Name the agents whose subject areas this question touches, one for each subject area, from these tools:\n"
+        "{tools}\nReply with JSON only: {{\"agents\": [\"<tool name>\", ...]}}.")
+# INSTRUCTIONS' own rule, enforced: a question or answer about a crack needs the crack agent, and one about a refinery's
+# runs, utilization, yields or margin needs the refinery agent.
+RULES = {
+    "Crack Spread Price Analytics": re.compile(r"\bcracks?\b", re.I),
+    "Refinery Operations Analytics": re.compile(r"\brefiner(?:y|ies)\b|\butili[sz]ation\b|\byields?\b|\bcrude runs\b|"
+                                                r"\bmargin capture\b|\bR&M margin\b", re.I),
+}
 
 
 def definitions_view(spec):
@@ -136,9 +148,38 @@ def ask_genie(w, space_id, question):
     return {"status": str(m.status), "text": "\n".join(parts), "rows": rows}
 
 
-def chat(w, messages, tool_specs):
-    body = {"messages": messages, "tools": tool_specs, "tool_choice": "auto", "max_tokens": 1500}
+def chat(w, messages, tool_specs=None):
+    body = {"messages": messages, "max_tokens": 1500, "temperature": 0}
+    if tool_specs:
+        body.update(tools=tool_specs, tool_choice="auto")
     return w.api_client.do("POST", f"/serving-endpoints/{MODEL}/invocations", body=body)["choices"][0]["message"]
+
+
+def names(titles):
+    """The tool names of these agents, in AGENTS' order."""
+    return ", ".join(tool_name(t) for t in AGENTS if t in titles)
+
+
+def ruled(text):
+    """The agents RULES require for a text."""
+    return [t for t, pattern in RULES.items() if pattern.search(text or "")]
+
+
+def planned(w, described, question):
+    """The agents the orchestrator names for the question before calling any; a name it invents is dropped."""
+    by_tool = {tool_name(t): t for t in AGENTS}
+    listing = "\n".join(f"- {tool_name(t)}: {text}" for t, text in described.items())
+    reply = chat(w, [{"role": "system", "content": PLAN.format(tools=listing)}, {"role": "user", "content": question}])
+    found = re.search(r"\{.*\}", reply.get("content") or "", re.S)
+    try:
+        names = json.loads(found.group(0))["agents"] if found else []
+    except (ValueError, KeyError, TypeError):
+        names = []
+    return [by_tool[n] for n in dict.fromkeys(names) if n in by_tool]
+
+
+def missing(required, called):
+    return [t for t in AGENTS if t in required and t not in {c["agent"] for c in called}]
 
 
 class OrchestrationError(SystemExit):
@@ -150,18 +191,30 @@ class OrchestrationError(SystemExit):
 
 
 def orchestrate(w, described, ids, question):
-    """Route a question through the orchestrator: each agent it called, with the agent's text and SQL, and the answer."""
+    """Route a question through the orchestrator: each agent it called, with the agent's text and SQL, and the answer.
+    An answer is sent back until every agent the plan named, or RULES require of the question or the answer, is called."""
     tool_specs = tools(described)
     by_tool = {tool_name(t): t for t in AGENTS}
-    messages = [{"role": "system", "content": INSTRUCTIONS}, {"role": "user", "content": question}]
     called = []
     try:
+        plan = planned(w, described, question)
+        required = set(plan) | set(ruled(question))
+        brief = names(required)
+        messages = [{"role": "system", "content": INSTRUCTIONS},
+                    {"role": "user", "content": question + (f"\n\n(Call at least these agents: {brief}.)" if brief else "")}]
         for _ in range(MAX_ROUNDS):
             reply = chat(w, messages, tool_specs)
             calls = reply.get("tool_calls") or []
             messages.append({k: v for k, v in reply.items() if k in ("role", "content", "tool_calls")})
             if not calls:
-                return {"agents_called": called, "answer": reply.get("content") or ""}
+                answer = reply.get("content") or ""
+                required |= set(ruled(answer))
+                gaps = missing(required, called)
+                if not gaps:
+                    return {"agents_called": called, "answer": answer, "plan": plan}
+                messages.append({"role": "user", "content": "Not yet: call the " + names(gaps)
+                                 + " agent before answering, asking it only about its own subject area, then answer again."})
+                continue
             for call in calls:
                 title = by_tool[call["function"]["name"]]  # a tool name the model invents raises KeyError
                 sub = json.loads(call["function"]["arguments"])["question"]
