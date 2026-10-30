@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided |
 | Date | 2026-10-12 |
-| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage, 2026-10-22 on the review rounds and the PR reviewer, and 2026-10-25 on the order of independent reviewers, later that day on reviewers inside Rex, and then on the work queue after the ontology closed, except major releases, Market Data accountability and Q17 (Claude approves the queue's other minor and patch releases; an item H measure needs an MPC or peer definition) |
+| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage, 2026-10-22 on the review rounds and the PR reviewer, and 2026-10-25 on the order of independent reviewers, later that day on reviewers inside Rex, and then on the work queue after the ontology closed, except major releases, Market Data accountability and Q17 (Claude approves the queue's other minor and patch releases; an item H measure needs an MPC or peer definition); amended 2026-10-30 on the Herdr app as a review host, the Cursor bot's 20 minutes and the stand-in that builds on its findings |
 | Source | Claude Code session, 2026-10-12; recorded on #207 comment 6137222677 |
 
 ## Context
@@ -33,7 +33,8 @@ On 2026-10-29 the decision owner moved to the new Herdr app, built on herdr-core
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **In the Herdr app, `herdr-review.sh` hands off to `hc-review.sh`,** so Kimi, Codex and the Cursor agent CLI are available there as in Herdr TUI and Rex. The order of the amendment of 2026-10-25 is unchanged. The Codex plugin is for a session outside all three.
 2. **The Cursor bot gets 20 minutes after each push.** Claude waits with `merge-on-verdict.sh <number> <head> --timeout 1200 --bot-check "Cursor Automation"`. The bot is not available when it has posted no verdict by then (exit 5), or sooner when its review check has finished without one (exit 7), since it is then no longer reviewing.
-3. **The stand-in builds on the bot's review.** Before the Cursor agent CLI reviews, Claude reads every finding the bot and Cursor Bugbot posted on the pull request, fixes or answers each, and gives the CLI that list with what became of each item. A Bugbot run still in progress is waited for first. The bot's later answers are read as comments. Stopping the bot's run would need Cursor's agents API, which this setup has no key for.
+3. **The stand-in is the Cursor agent CLI on Auto,** through `herdr-review.sh --kind cursor --model auto` where a host runs it, or headless with `cursor-agent -p --trust --model auto` anywhere: the decision owner's start prompt of 2026-10-29 named the headless form ("the headless `cursor-agent -p --trust --model auto` gives the verdict"). The headless form runs as Claude's own command, so it needs none of the three hosts.
+4. **The stand-in builds on the bot's review.** Before the Cursor agent CLI reviews, Claude reads every finding the bot and Cursor Bugbot posted on the pull request, fixes or answers each, and gives the CLI that list with what became of each item. A Bugbot run still in progress is waited for first. The bot's later answers are read as comments. Stopping the bot's run would need Cursor's agents API, which this setup has no key for.
 
 ## Amendment, 2026-10-25 (evening): the work queue after the ontology closed
 
@@ -52,7 +53,7 @@ On 2026-10-24 local time, two reviews ran through Rex by hand, and Claude recomm
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **Inside Rex, Kimi and the Cursor agent CLI are available** as the way-of-working skill's "Who reviews" section defines it, through `herdr-review.sh`, which hands off to `rex-review.sh` there. The order of the amendment of 2026-10-25 is unchanged: Kimi, then Pi, then Codex. The Cursor agent CLI's stand-in verdict (amendment of 2026-10-22) runs the same way.
-2. **Outside both Herdr and Rex,** Kimi and the Cursor agent CLI stay not available, and Codex runs through the Codex plugin, as before. *2026-10-30: the Herdr app is a third host; see the amendment of 2026-10-30.*
+2. **Outside both Herdr and Rex,** Kimi and the Cursor agent CLI stay not available, and Codex runs through the Codex plugin, as before. *2026-10-30: the Herdr app is a third host, and the headless Cursor agent CLI gives the PR verdict anywhere; see the amendment of 2026-10-30.*
 
 ## Amendment, 2026-10-25: the order of independent reviewers
 
@@ -137,7 +138,7 @@ On reviewers inside Rex, in the Claude Code session of 2026-10-24 local time (sa
 
 On the work queue after the ontology closed, in the Claude Code session of 2026-10-25 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md`): "continue working through the plan until done."; "you have my permision to run command and make decsision as long as you used all the high quality spurces from this repo to MPC publicly available info to peer info to gaerally available informato to guide you when things are ambigous"; then "I approve each release (Recommended)"; "Approve all three (Recommended)"; "Approve the plan (Recommended)"; "Ho w can i delegate thos to you . It should be good as log as you follow decision evidence and source tiers that will use to make a decsicion. What do you think. I dont want you to be blocked waitimg for me while I will be sleeping. You just need to leav me a good report of what was done in an HTML file that is easy to read. Thoughts?"; then "Yes, delegate as described (Recommended)".
 
-On the Herdr app and the Cursor bot's wait, in the Claude Code session of 2026-10-29 to 2026-10-30 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-30-review-hosts-and-wait.md`): "Can we make update to add a third option to be able to use the hc"; "the fact that Cursor did not get back in 9 mins does nt mean cursor bot stops reviewing it . Maybe we should increase the time to 20 mins if we dont hear back we can do somehting.. when we do do dsomething cursor bot should not continue to work. we should build on top of the review he has done".
+On the Herdr app and the Cursor bot's wait, in the Claude Code session of 2026-10-29 to 2026-10-30 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-30-review-hosts-and-wait.md`): "Can we make update to add a third option to be able to use the hc"; "the fact that Cursor did not get back in 9 mins does nt mean cursor bot stops reviewing it . Maybe we should increase the time to 20 mins if we dont hear back we can do somehting.. when we do do dsomething cursor bot should not continue to work. we should build on top of the review he has done". And on the stand-in, in the session's start prompt: "If Pi and Kimi are still out of quota, Codex on gpt-6-luna is the independent reviewer and the headless `cursor-agent -p --trust --model auto` gives the verdict."
 
 ## Consequences
 

@@ -69,11 +69,12 @@ Run these before you open a pull request, and again before you push a review fix
      finished without one, the Cursor agent CLI on Auto gives the verdict
      (`herdr-review.sh --kind cursor --model auto`, or headless `cursor-agent -p
      --trust --model auto`), starting from every finding the bot and Bugbot posted,
-     each with what became of it. Its verdict is posted on the PR word for word, and
-     it stays the PR reviewer for the rest of that PR (amendment of 2026-10-30). The
-     PR verdict always comes from Cursor here, so the Cursor agent CLI is never the
-     independent reviewer, and the merged commit's two reviews come from different
-     tools. For this repo this replaces the
+     each with what became of it, after any Bugbot run still in progress finishes.
+     Its verdict is posted on the PR word for word, it stays the PR reviewer for the
+     rest of that PR, and the bot's later answers are read as comments (amendment of
+     2026-10-30). The PR verdict always comes from Cursor here, so the Cursor agent
+     CLI is never the independent reviewer, and the merged commit's two reviews come
+     from different tools. For this repo this replaces the
      `way-of-working` skill's "Who reviews" table, which gives the verdict to Pi
      when the bot is not available.
    - **Rounds:** at most two full rounds per PR (EPM-DEC-001-0028). Round 1 reviews
