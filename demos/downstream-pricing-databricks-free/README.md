@@ -245,8 +245,11 @@ The plan in the handoff of 2026-10-29 takes the failures above in six steps, eac
 | 2 | E7, revised instructions | 2 of 21 (1, 3) | 30 | 12 cases |
 | 3 | step 1, before the review fix | 4 of 21 (1, 3, 11, 21) | 48 | 7 cases |
 | 4 | step 1 | 1 of 21 (1) | 49 | 6 cases |
+| 5 | step 2 | 4 of 21 (1, 6, 11, 21) | 54 | 7 cases |
 
 Runs 1 and 2 are the re-judged figures above. Runs 3 and 4 are `2026-10-29-run3.json` and `-run4.json`, with their re-judged copies. The routing did what it was for: the cases that missed an agent fell from 16 and 12 to 7 and 6, and on run 4 four of those six are Genie failures (step 3), not routing. The other misses are the crack agent on questions that never say "crack" (12, 16, 18 and 19 on run 3), where the plan left it out; no rule is written to fit those questions. Passes did not rise with it, and runs 3 and 4 show why: use cases 3, 11 and 21 passed on run 3 and failed on run 4, each on one figure or one label, because Genie wrote different SQL for the same question. The decision owner asked on 2026-10-30 that it not: "They cannot be giving different answers for the same question" (`answers-2026-10-30-consistent-answers.md` in the decision-owner answers folder). So from step 3 on each case is asked three times and passes only when all three do.
+
+**Step 2, whole rows.** A tool result kept the first 20 rows of an agent's query, and the tool message was then cut at 12,000 characters, which could split a row. A result now keeps up to 500 rows and stays whole JSON under 30,000 characters, dropping rows from the end to fit, and says how many rows the query returned and how many it shows. Run 5 (`2026-10-30-run5.json`, on step 2 over step 1 before its review fixes) passed 4 of 21 (use cases 1, 6, 11 and 21) with 54 agent calls; a required agent was missed in 7 cases, 3 of them on a failed Genie message. Use case 6, which needs three forward months, passed for the first time. Use case 4's month-by-month answer still names the wrong month: its SQL, not the row limit, is wrong there (step 4).
 
 ## Real, spot-anchored, synthesized
 
