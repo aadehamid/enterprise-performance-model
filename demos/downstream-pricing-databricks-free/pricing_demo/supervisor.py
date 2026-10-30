@@ -186,7 +186,7 @@ def planned(w, described, question):
             names = []
         if not isinstance(names, list):  # "agents": null or a string is no plan either (Bugbot on #411)
             names = []
-        plan = [by_tool[n] for n in dict.fromkeys(names) if isinstance(n, str) and n in by_tool]
+        plan = [by_tool[n] for n in dict.fromkeys(n for n in names if isinstance(n, str)) if n in by_tool]
         if plan:
             return plan
     raise ValueError(f"no plan naming a known agent after {PLAN_ATTEMPTS} attempts")

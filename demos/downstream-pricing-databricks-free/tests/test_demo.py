@@ -1582,7 +1582,7 @@ def test_after_e7_the_plan_keeps_known_agents_once_and_drops_invented_ones(monke
     monkeypatch.setattr(supervisor, "chat", chat)
     assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == ["Crack Spread Price Analytics"]
     assert bodies == [None]  # the plan is asked without tools
-    replies = iter([{"content": "no JSON"}, {"content": '{"agents": null}'},
+    replies = iter([{"content": "no JSON"}, {"content": '{"agents": [{"name": "x"}]}'},
                     {"content": '{"agents": ["refinery_operations_analytics"]}'}])
     monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: next(replies))
     assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == ["Refinery Operations Analytics"]
