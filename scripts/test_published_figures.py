@@ -8,7 +8,8 @@ purpose, both the document and the pinned values in test_epm_facts.py).
 Run: uv run --with pytest --with rdflib python -m pytest -q scripts/test_published_figures.py
 
 Checked: every total and summary figure these documents state about Step 4
-data, and that step4/README.md states no live ledger or gate figures at all. Deliberately not checked, because they are not data totals this tool
+data, and that step4/README.md states no live ledger or gate figures at all. The ontology guide's module
+versions, triple counts, total and module count are checked against the newest releases. Deliberately not checked, because they are not data totals this tool
 computes:
 - step4/README.md's "16/16 sections": signed-off sections of the mapping document.
 - The backlog's "All 96 Section B rows": the historic Section B population,
@@ -35,6 +36,7 @@ import epm_facts  # noqa: E402
 STEP4_README = os.path.join(ROOT, "business_architecture", "ontology", "step4", "README.md")
 ONTOLOGY_README = os.path.join(ROOT, "business_architecture", "ontology", "README.md")
 DEC_0025 = os.path.join(ROOT, "business_architecture", "domain", "decisions", "EPM-DEC-001-0025-phase1-scope.md")
+GUIDE = os.path.join(ROOT, "business_architecture", "ontology", "epm-ontology-guide.html")
 
 
 @pytest.fixture(scope="module")
@@ -310,3 +312,36 @@ def test_decision_0025_every_figure(facts_0025):
     m = re.search(r"Roughly ([\d.]+) times the Phase 1 work", text)
     assert m, "0025 workload multiplier not found"
     assert float(m.group(1)) == round(led["held"] / p1["rows"], 1), f"multiplier {m.group(1)} vs {led['held']}/{p1['rows']}"
+
+
+def guide_text():
+    """The ontology guide's displayed text: tags dropped, character references decoded, whitespace collapsed."""
+    with open(GUIDE) as f:
+        return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", f.read())))
+
+
+def test_guide_module_figures_match_the_newest_releases():
+    """The guide's snapshot of each module, its total and its module count, against the releases in the tree.
+
+    A release that is not reflected in the guide fails here, so the guide moves with the release (the retro of
+    2026-10-28 left this gate for later; six commits on main had moved the guide's figures by hand, one of them
+    after a Cursor HOLD). The total is the size of the eleven newest releases loaded into one graph, which is smaller than the
+    sum of the modules' counts because the modules share some triples. Not checked: the figures inside each
+    module card (processes, measures, systems, roles), the requires column, and the dated query output, which
+    states the graph of 2026-10-27 on purpose.
+    """
+    import rdflib
+    newest = {r["module"]: (r["newest"], r["triples"]) for r in epm_facts.module_releases()}
+    text = guide_text()
+    cards = re.findall(r"\b(" + "|".join(map(re.escape, newest)) + r") (\d+\.\d+\.\d+) ([\d,]+) triples", text)
+    assert sorted(m for m, _, _ in cards) == sorted(newest), "the guide needs one card per released module"
+    whole = rdflib.Graph()
+    for module, version, triples in cards:
+        assert (version, num(triples)) == newest[module], module
+        whole += epm_facts.newest_graph(module)
+    totals = [re.search(p, text) for p in (r"Triples ([\d,]+) in the \w+ newest releases together",
+                                           r"loaded together, ([\d,]+) triples since",
+                                           r"for the whole ontology \(([\d,]+) triples\)")]
+    assert all(totals), "a statement of the total moved; update this test with it"
+    assert {num(t.group(1)) for t in totals} == {len(whole)}
+    assert num(re.search(r"Modules (\d+) each released", text).group(1)) == len(newest)
