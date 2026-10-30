@@ -56,50 +56,18 @@ Both hold the same eight databases, with the same tables and row counts. These m
 
 Should not be there: databases under the source names used before 2026-10-28. None was found.
 
-**Databases on the VM that the demo did not create.** The VM's Postgres also holds three databases owned by other logins:
+**Databases on the VM that the demo did not create.** The VM's Postgres also holds two databases owned by other logins, which the demo never reads: "Enterprise Performance Model" (owner `epm_owner`, no tables) and `exedev` (no tables; the default database of the VM's own `exedev` login, so `psql` for that login connects to it). Both are kept at the decision owner's choice. A third, `sales` (a small sample schema owned by `sales`), was dropped on 2026-10-29 at the decision owner's word (`../step4/review-evidence/decision-owner-answers/answers-2026-10-29-store-cleanup.md`).
 
-- "Enterprise Performance Model", owned by `epm_owner`;
-- `exedev`, which has no tables;
-- `sales`, which the demo login cannot read.
-
-The demo never reads them. Decide whether to keep them.
-
-The Postgres data sits in the named volume `pricing-demo-pgdata`, so a reboot keeps it.
-
-## Databricks Free Edition
-
-| Catalog and schema | Objects | Where they come from |
-|---|---|---|
-| `workspace.epm_ontology` | `epm_triples`, `epm_store_markers` | The driver's `databricks` step; `sync_stores.py mark` |
-| `idp_sbx`, seven `replica_*` schemas | 28 tables | `pricing_demo.databricks build`, from the volume |
-| `idp_sbx.silver_mdm_core`, `idp_sbx.silver_udm_core` | 10 and 12 tables | The same build |
-| `idp_sbx.gold_commercial_core` | 6 tables | The same build |
-| `idp_sbx.semantic_sem_commercial` | 6 metric views | The same build |
-| `idp_sbx.ontology_definitions` | 5 views | The same build |
-| `idp_sbx.tech_graph` | `tech_graph_nodes` (142), `tech_graph_edges` (540) | Created empty by the build; filled by `pricing_demo.tech_graph sync` |
-| `idp_sbx.replica_landing`, volume `raw` | 28 Parquet files, one per source table, from the last upload | `pricing_demo.replicate` and `databricks upload` |
-
-The 69 objects in `idp_sbx` are exactly the ones the demo's SQL creates (`databricks.created_objects()`). Other items in the workspace:
-
-- **Genie spaces:** the demo's four agents (Crack Spread Price Analytics, Executive Summary KPIs Analytics, Pricing and Market Margin Analytics, Refinery Operations Analytics). The others belong to other work: two O2C spaces from the repo's `demos/o2c-unbilled-databricks-free-cv-map`, and two Databricks sample spaces.
-- **Secret scopes:** one, `epm-neo4j`, used by the demo's AuraDB test.
-- **Jobs and Supervisor Agents:** none.
-- **The schema `workspace.o2c_unbilled`:** 25 objects from the O2C demo, which this page does not cover.
 
 ## Docker on this Mac
 
-Three containers are in use: `epm-lpg`, `lpg-local-neo4j-1` and `pricing-demo-sources`. The rest is left over from earlier runs:
+Three containers are in use: `epm-lpg`, `lpg-local-neo4j-1` and `pricing-demo-sources`, each with its data volume. `lpg-local-n10s-jar-1` is stopped, as it should be: at the driver's start it downloads the n10s plugin into the plugins folder and checks its checksum. The images `lpg-fuseki:6.2.0` and `rdf-store-fuseki:6.2.0` serve the driver's transient Jena store, whose container is removed after each run; a driver run rebuilds them if they are missing.
 
-- **14 unnamed volumes not attached to any container.** Seven hold about 541 MB each: the data of Neo4j containers from earlier pipeline and driver runs, which later runs replaced. The other seven are small log volumes. No current store reads them.
-- **Stopped or unused containers:** `lpg-local-n10s-jar-1` (exited, as it should: at the driver's start it downloads the n10s plugin into the plugins folder and checks its checksum), `practical_edison` (Docker's tutorial, exited 21 months ago) and `pgadmin4_container` (created, never started).
-- **Images:** `lpg-fuseki:6.2.0` and `rdf-store-fuseki:6.2.0`, built for the driver's transient Jena store. Its container is removed after each run. A driver run rebuilds the images if they are missing.
-
-To remove the leftovers, check first. Removing an unnamed volume cannot be undone. Then run:
+Should not be there: an unnamed volume attached to no container, or a container no store uses. On 2026-10-29, at the decision owner's word (the same answers file), 14 such volumes (about 3.8 GB, the data of Neo4j containers that later runs replaced, and their log volumes) and two unused containers (`practical_edison`, Docker's tutorial, and `pgadmin4_container`, never started) were removed. To check that none has come back:
 
 ```bash
-docker volume ls -q --filter dangling=true                    # the 14 volumes no container uses
-docker volume prune                                           # removes exactly those
-docker rm practical_edison pgadmin4_container                 # optional
+docker volume ls -q --filter dangling=true                    # should print nothing
+docker ps -a --format '{{.Names}} {{.Status}}'                # the three stores and lpg-local-n10s-jar-1
 ```
 
 ## Check it yourself
