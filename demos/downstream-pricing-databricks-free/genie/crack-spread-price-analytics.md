@@ -15,6 +15,7 @@ Answers questions about published crack-spread series, including the primary 3-2
 - Never rebuild a crack from its legs (gasoline, diesel, crude, RVO): the published results are series in the view.
 - Filter a region or type with an exact match on `MIPS_Groups_Text` or `Price_Master_ID`, not a pattern on the name. "Ex-RVO" and "ex-RIN" mean the same.
 - Never guess a `Price_Master_ID`. When the question names a series, look its ID up first: `SELECT Price_Master_ID, Price_Master_Name, MEASURE(Record_Count) AS n FROM ... GROUP BY ALL`, then filter on the ID found. USGC is the US Gulf Coast.
+- The series found must carry every place and hub the question names in its `Price_Master_Name`: a "USGC" or "Gulf Coast" crack has `USGC` in its name, and an "MEH" crack has `MEH`. A `Group` series is not a Gulf Coast series. When no name carries them all, say so instead of answering from another series.
 - Filter dates on `Effective_Start_Datetime`; group months on `Effective_Month`. For "latest", use the most recent date; for a date with no data, use the most recent date before it.
 - Show `Price_Master_ID` and `Price_Master_Name` together, in $/bbl with two decimals.
 - Say that the values are published settles, name the series, periods and dates, and whether a value is daily or a mean of dailies.
