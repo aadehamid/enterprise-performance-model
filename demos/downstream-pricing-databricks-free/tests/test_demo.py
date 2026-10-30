@@ -1795,6 +1795,7 @@ def test_after_e7_a_case_missing_an_agent_on_several_attempts_counts_once():
     miss = {"passed": False, "reasons": ["agents not called: Crack Spread Price Analytics"], "agents_called": []}
     results = [dict(miss, n=12, attempt=k) for k in (1, 2, 3)]
     assert acceptance.summarize(results, 3)["agent_missed"] == [12]
+    assert acceptance.summarize(results, 3)["reasons"] == {"figures": 0, "terms": 0, "agents": 3}
 
 
 def test_after_e7_an_old_repeat_run_without_its_count_is_refused_until_given(tmp_path):
