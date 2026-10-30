@@ -1179,3 +1179,17 @@ def test_citations_know_every_saved_answer_and_match_whole_words(tmp_path):
     assert NAMED_MISS in _citation_fixture(tmp_path / "b", part)[0]
     stop = 'The decision owner said: "keep the old figures as they were recorded." (answers-x.md)\n'
     assert _citation_fixture(tmp_path / "c", stop) == []
+
+
+def test_citations_check_every_quote_in_a_list_after_one_verb(tmp_path):
+    # Bugbot on 2755510: 'said "A" and "B", then chose "C"' checked only "A".
+    for k, doc in enumerate(('The decision owner said "keep the old figures as they were recorded" and "a sentence nobody '
+                             'saved at all" (answers-x.md).\n',
+                             'The decision owner said "keep the old figures as they were recorded", "keep the old figures '
+                             'as they were recorded" and "keep the old figures as they were recorded", then chose "a '
+                             'sentence nobody saved at all" (answers-x.md).\n')):
+        assert [p for p in _citation_fixture(tmp_path / f"a{k}", doc) if "a sentence nobody saved" in p], k
+    # A quote after other words is not in the list: a title the reviewer then gives stays unchecked.
+    other = ('The decision owner said "keep the old figures as they were recorded" (answers-x.md), and the reviewer '
+             'gave "a sentence nobody saved at all".\n')
+    assert _citation_fixture(tmp_path / "b", other) == []

@@ -1078,6 +1078,7 @@ SAID = re.compile(r'(?:(?!' + SENTENCE_END + r')[^"”“]){0,160}?["“]([^"”
 CITE_TOKEN = r'(?:`?[\w-]+\.md`?|EPM-DEC-001-\d{4}|#\d+|comment \d{6,})'
 CONNECTIVE = re.compile(r'^\s*(?:\([\s,]*' + CITE_TOKEN + r'(?:[\s,]+' + CITE_TOKEN + r')*[\s,]*\))?\s*,?\s*'
                         r'(?:and\s+)?(?:then|later|and)\s+$', re.I)
+LISTED = re.compile(r'\s*(?:,\s*(?:(?:and|or)\s+)?|(?:and|or)\s+)["“]([^"”]+)["”]')  # 'said "A", "B" and "C"': one verb, three quotes
 ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")  # the usual name; a cited name that fits it must exist
 MD_NAME = re.compile(r"[\w-]+\.md")  # any saved answer counts by its own name, such as delegation.md
 RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")
@@ -1128,9 +1129,10 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
                     continue
                 near_owner = any(0 <= v.start() - o <= 120 and not re.search(r'["”“]|' + SENTENCE_END, flat[o:v.start()]) for o in owners)
                 chained = any(0 <= v.start() - e and CONNECTIVE.match(flat[e:v.start()]) for e in quotes_end)  # CONNECTIVE bounds the gap
-                if near_owner or chained:
+                while q and (near_owner or chained):
                     said.append(q)
                     quotes_end.append(q.end())
+                    q = LISTED.match(flat, q.end())
             if not said:
                 continue
             named = [n for n in MD_NAME.findall(flat) if n in files_by_name or ANSWERS_FILE.fullmatch(n)]
