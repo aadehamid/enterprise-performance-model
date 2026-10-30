@@ -1566,6 +1566,10 @@ def test_after_e7_the_rules_read_crack_and_refinery_figures():
     assert supervisor.ruled("Which refineries ran below plan utilization, and how did cracks move?") == [
         "Crack Spread Price Analytics", "Refinery Operations Analytics"]
     assert supervisor.ruled("What was the NYH ULSD cash price?") == []
+    assert supervisor.ruled("What was the USGC to NYH tanker freight, and the netback?") == ["Pricing and Market Margin Analytics"]
+    for text in ("Did an outside factor bear on D08?", "Which PADDs had distillate stocks below average?",
+                 "What did the backcast record?", "How much did the turnarounds cost?", "Which decisions missed?"):
+        assert supervisor.ruled(text) == ["Refinery Operations Analytics"], text
 
 
 def test_after_e7_the_plan_keeps_known_agents_once_and_drops_invented_ones(monkeypatch):
@@ -1578,8 +1582,21 @@ def test_after_e7_the_plan_keeps_known_agents_once_and_drops_invented_ones(monke
     monkeypatch.setattr(supervisor, "chat", chat)
     assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == ["Crack Spread Price Analytics"]
     assert bodies == [None]  # the plan is asked without tools
+    replies = iter([{"content": "no JSON"}, {"content": '{"agents": ["an_invented_tool", 7]}'},
+                    {"content": '{"agents": ["refinery_operations_analytics"]}'}])
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: next(replies))
+    assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == ["Refinery Operations Analytics"]
     monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: {"role": "assistant", "content": "no JSON"})
-    assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == []
+    with pytest.raises(ValueError, match="no plan naming a known agent after 3 attempts"):
+        supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q")
+
+
+def test_after_e7_a_question_with_no_valid_plan_stops_before_any_agent(monkeypatch):
+    # Codex on #411: a malformed or empty plan read as "no agent needed", so only RULES guarded the answer.
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: {"role": "assistant", "content": "{}"})
+    with pytest.raises(supervisor.OrchestrationError, match="no plan naming a known agent") as err:
+        supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert err.value.agents_called == []
 
 
 def test_after_e7_the_orchestrator_asks_at_temperature_zero():

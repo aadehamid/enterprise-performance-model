@@ -44,12 +44,18 @@ MAX_ROUNDS = 8
 # EPM-DEC-001-0028).
 PLAN = ("Name the agents whose subject areas this question touches, one for each subject area, from these tools:\n"
         "{tools}\nReply with JSON only: {{\"agents\": [\"<tool name>\", ...]}}.")
+PLAN_ATTEMPTS = 3
 # INSTRUCTIONS' own rule, enforced: a question or answer about a crack needs the crack agent, and one about a refinery's
-# runs, utilization, yields or margin needs the refinery agent.
+# runs, utilization, yields or margin needs the refinery agent. The rest follow each agent's plain tables (genie.py):
+# freight is the pricing agent's (FREIGHT_TABLE); plans, backcasts, decisions, events, EIA's weekly data and the
+# outside context are the refinery agent's (PLANNING_TABLES).
 RULES = {
     "Crack Spread Price Analytics": re.compile(r"\bcracks?\b", re.I),
-    "Refinery Operations Analytics": re.compile(r"\brefiner(?:y|ies)\b|\butili[sz]ation\b|\byields?\b|\bcrude runs\b|"
-                                                r"\bmargin capture\b|\bR&M margin\b", re.I),
+    "Pricing and Market Margin Analytics": re.compile(r"\bfreight\b|\btanker\b|\bnetbacks?\b", re.I),
+    "Refinery Operations Analytics": re.compile(
+        r"\brefiner(?:y|ies)\b|\butili[sz]ation\b|\byields?\b|\bcrude runs\b|\bmargin capture\b|\bR&M margin\b|"
+        r"\bplans?\b|\bbackcast|\bdecisions?\b|\bD\d{2}\b|\bturnarounds?\b|\bhurricane\b|\bstorm\b|\bEIA\b|\bPADDs?\b|"
+        r"\bdistillate stocks\b|\boutside (?:scan|context|factor)|\bforward look\b", re.I),
 }
 
 
@@ -166,16 +172,22 @@ def ruled(text):
 
 
 def planned(w, described, question):
-    """The agents the orchestrator names for the question before calling any; a name it invents is dropped."""
+    """The agents the orchestrator names for the question before calling any; a name it invents is dropped. A plan
+    that names no known agent is asked again, and after PLAN_ATTEMPTS the question stops: every question the
+    orchestrator gets needs an agent (Codex on #411)."""
     by_tool = {tool_name(t): t for t in AGENTS}
     listing = "\n".join(f"- {tool_name(t)}: {text}" for t, text in described.items())
-    reply = chat(w, [{"role": "system", "content": PLAN.format(tools=listing)}, {"role": "user", "content": question}])
-    found = re.search(r"\{.*\}", reply.get("content") or "", re.S)
-    try:
-        names = json.loads(found.group(0))["agents"] if found else []
-    except (ValueError, KeyError, TypeError):
-        names = []
-    return [by_tool[n] for n in dict.fromkeys(names) if n in by_tool]
+    for _ in range(PLAN_ATTEMPTS):
+        reply = chat(w, [{"role": "system", "content": PLAN.format(tools=listing)}, {"role": "user", "content": question}])
+        found = re.search(r"\{.*\}", reply.get("content") or "", re.S)
+        try:
+            names = json.loads(found.group(0))["agents"] if found else []
+        except (ValueError, KeyError, TypeError):
+            names = []
+        plan = [by_tool[n] for n in dict.fromkeys(names) if isinstance(n, str) and n in by_tool]
+        if plan:
+            return plan
+    raise ValueError(f"no plan naming a known agent after {PLAN_ATTEMPTS} attempts")
 
 
 def missing(required, called):
