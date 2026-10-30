@@ -23,9 +23,14 @@ from .config import completed, databricks_env
 from .databricks import connect, current_catalog, run
 from .genie import AGENTS
 
-# A Foundation Model API chat model the function-calling page lists and this workspace serves. The template's
-# databricks-claude-sonnet-4-5 is not served here.
-MODEL = "databricks-meta-llama-3-3-70b-instruct"
+# A Foundation Model API chat model this workspace serves (Free Edition). The template's databricks-claude-sonnet-4-5
+# is not served here. Until Plan 1, step 6, the orchestrator was databricks-meta-llama-3-3-70b-instruct; on
+# 2026-10-30 a probe gave each served chat model one tool-calling question twice, and Qwen3.5 122B was the only one
+# that called both agents the question needed, the same both times (delegated under EPM-DEC-001-0028). The probe's
+# output was not kept; run 10 (data/acceptance/2026-10-30-run10.json, README "Step 6") is the recorded measure.
+MODEL = "databricks-qwen35-122b-a10b"
+# Qwen3.5 reasons before it answers, and its reasoning counts against max_tokens.
+MAX_TOKENS = 4000
 SUPERVISOR_TITLE = "EPM Pricing Supervisor"
 INSTRUCTIONS = (
     "You route questions about the downstream pricing demo to its Genie agents. Call the agent whose measures the "
@@ -231,10 +236,21 @@ def fit(messages):
 
 
 def chat(w, messages, tool_specs=None):
-    body = {"messages": messages, "max_tokens": 1500, "temperature": 0}
+    body = {"messages": messages, "max_tokens": MAX_TOKENS, "temperature": 0}
     if tool_specs:
         body.update(tools=tool_specs, tool_choice="auto")
-    return w.api_client.do("POST", f"/serving-endpoints/{MODEL}/invocations", body=body)["choices"][0]["message"]
+    choice = w.api_client.do("POST", f"/serving-endpoints/{MODEL}/invocations", body=body)["choices"][0]
+    message = choice["message"]
+    # finish_reason says why a reply stopped ("length" when max_tokens ran out mid-reasoning)
+    return {**message, "content": text(message.get("content")), "finish_reason": choice.get("finish_reason")}
+
+
+def text(content):
+    """A reply's text. Qwen3.5 sends a list of parts, a reasoning summary and then the text; only the text is kept, so the
+    reasoning neither reaches the answer nor goes back to the model."""
+    if isinstance(content, list):
+        return "".join(p.get("text", "") for p in content if isinstance(p, dict) and p.get("type") == "text")
+    return content
 
 
 def names(titles):
@@ -304,6 +320,11 @@ def orchestrate(w, described, ids, question):
                 required |= set(ruled(answer))
                 gaps = missing(required, called)
                 if not gaps:
+                    # a final reply that is empty (reasoning only) or cut off by max_tokens is no answer
+                    if not answer.strip() or reply.get("finish_reason") == "length":
+                        raise OrchestrationError(f"the model's final reply is {'cut off' if answer.strip() else 'empty'} "
+                                                 f"(finish_reason {reply.get('finish_reason')}); agents called: "
+                                                 f"{[c['agent'] for c in called]}", called, plan)
                     return {"agents_called": called, "answer": answer, "plan": plan}
                 messages.append({"role": "user", "content": "Not yet: call the " + names(gaps)
                                  + " agent before answering, asking it only about its own subject area, then answer again."})

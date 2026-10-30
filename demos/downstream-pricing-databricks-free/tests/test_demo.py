@@ -1850,3 +1850,64 @@ def test_after_e7_genie_check_flags_an_example_that_returns_a_tested_value():
     assert genie.overlaps([("D02", "text"), ("D05", 1.25)], [5.265], {"D02"}) == ["D02"]
     assert genie.overlaps([("USGC ULSD", 5.2651)], [5.265], set()) == []  # a match is within a millionth, relative
     assert genie.overlaps([("NYH ULSD", 5.2650000001)], [5.265], set()) == [5.265]
+
+
+# ---- after E7, step 6: a stronger orchestrator ----
+
+def test_after_e7_a_reply_in_parts_keeps_only_its_text():
+    parts = [{"type": "reasoning", "summary": [{"type": "summary_text", "text": "Thinking..."}]},
+             {"type": "text", "text": '{"agents": ["crack_spread_price_analytics"]}'}]
+    assert supervisor.text(parts) == '{"agents": ["crack_spread_price_analytics"]}'
+    assert supervisor.text("plain") == "plain" and supervisor.text(None) is None
+
+    class Api:
+        def do(self, method, path, body):
+            self.body = body
+            return {"choices": [{"message": {"role": "assistant", "content": parts}}]}
+    w = type("W", (), {"api_client": Api()})()
+    assert supervisor.chat(w, [])["content"] == '{"agents": ["crack_spread_price_analytics"]}'
+    assert w.api_client.body["max_tokens"] == supervisor.MAX_TOKENS
+
+
+def test_after_e7_list_replies_keep_their_tool_calls_and_a_reply_of_reasoning_only_is_no_answer(monkeypatch):
+    # Codex round 1 on step 6: run the real chat() inside orchestrate(), with replies in parts as Qwen3.5 sends them.
+    refinery = "Refinery Operations Analytics"
+    reasoning = {"type": "reasoning", "summary": [{"type": "summary_text", "text": "Thinking..."}]}
+    def api(final):
+        replies = iter([
+            {"choices": [{"finish_reason": "tool_calls", "message": {"role": "assistant", "content": [reasoning],
+                                                                     "tool_calls": [tool_call(refinery, 1)]}}]},
+            {"choices": [{"finish_reason": final[0], "message": {"role": "assistant", "content": final[1]}}]}])
+        bodies = []
+        class Api:
+            def do(self, method, path, body):
+                bodies.append(body)
+                return next(replies)
+        return type("W", (), {"api_client": Api()})(), bodies
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [refinery])
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
+    agents = {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}
+    w, bodies = api(("stop", [reasoning, {"type": "text", "text": "the answer"}]))
+    result = supervisor.orchestrate(w, *agents, "q")
+    assert result["answer"] == "the answer" and [c["agent"] for c in result["agents_called"]] == [refinery]
+    assert all(b["max_tokens"] == 4000 for b in bodies) and supervisor.MAX_TOKENS == 4000
+    w, _ = api(("length", [reasoning]))
+    with pytest.raises(supervisor.OrchestrationError, match="final reply is empty .finish_reason length"):
+        supervisor.orchestrate(w, *agents, "q")
+    w, _ = api(("length", [reasoning, {"type": "text", "text": "the answer is cut"}]))
+    with pytest.raises(supervisor.OrchestrationError, match="final reply is cut off"):
+        supervisor.orchestrate(w, *agents, "q")
+
+
+def test_after_e7_an_empty_reply_while_agents_remain_is_sent_back(monkeypatch):
+    # Codex round 2 on step 6: a blank reply before every required agent is called gets "Not yet", as any other.
+    crack, refinery = "Crack Spread Price Analytics", "Refinery Operations Analytics"
+    replies = iter([{"role": "assistant", "content": ""},
+                    {"role": "assistant", "tool_calls": [tool_call(crack, 1)]},
+                    {"role": "assistant", "content": "the answer", "finish_reason": "stop"}])
+    seen = []
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: seen.append(list(messages)) or next(replies))
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [crack])
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
+    result = supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert result["answer"] == "the answer" and seen[1][-1]["content"].startswith("Not yet")
