@@ -70,7 +70,11 @@ PLAN_ATTEMPTS = 3
 # freight is the pricing agent's (FREIGHT_TABLE); plans, backcasts, decisions, events, EIA's weekly data and the
 # outside context are the refinery agent's (PLANNING_TABLES).
 RULES = {
-    "Crack Spread Price Analytics": re.compile(r"\bcracks?\b", re.I),
+    # A refining margin is the benchmark crack less costs (sql/04_gold.sql), and a storm moves it: a question about
+    # margins, a storm or whether a choice paid needs the crack agent too (run 10: cases 9, 16, 18 and 19 never called it).
+    # "Market Margin" is the pricing agent's name, not a margin.
+    "Crack Spread Price Analytics": re.compile(
+        r"\bcracks?\b|(?<!Market )\bmargins?\b|\bhurricanes?\b|\bstorms?\b|\bpa(?:y|id|ys|y off|id off)\b", re.I),
     "Pricing and Market Margin Analytics": re.compile(r"\bfreight\b|\btanker\b|\bnetbacks?\b", re.I),
     "Refinery Operations Analytics": re.compile(
         r"\brefiner(?:y|ies)\b|\butili[sz]ation\b|\byields?\b|\bcrude runs\b|\bmargin capture\b|\bR&M margin\b|"

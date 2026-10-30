@@ -1572,6 +1572,18 @@ def test_after_e7_the_rules_read_crack_and_refinery_figures():
         assert supervisor.ruled(text) == ["Refinery Operations Analytics"], text
 
 
+def test_after_run_10_margins_storms_and_payoffs_need_the_crack_agent():
+    # Run 10: cases 9, 16, 18 and 19 named no crack and never called the crack agent their figures need.
+    crack = "Crack Spread Price Analytics"
+    for text in ("In 2025, which months did the scan name weather as the main driver of Gulf Coast refining margins?",
+                 "Why did we cut runs at Galveston Bay during Hurricane Isaias?",
+                 "Did the October shift toward distillate pay?", "How did the storm move prices?"):
+        assert crack in supervisor.ruled(text), text
+    # The pricing agent's name is not a margin, and other questions are unchanged.
+    assert supervisor.ruled("Pricing and Market Margin Analytics gave the NYH ULSD cash price.") == []
+    assert supervisor.ruled("What did the backcast record?") == ["Refinery Operations Analytics"]
+
+
 def test_after_e7_the_plan_keeps_known_agents_once_and_drops_invented_ones(monkeypatch):
     content = 'Here: {"agents": ["crack_spread_price_analytics", "an_invented_tool", 7, "crack_spread_price_analytics"]}'
     bodies = []
