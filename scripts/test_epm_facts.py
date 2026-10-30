@@ -1065,6 +1065,20 @@ def test_citations_need_the_words_in_a_saved_answer_and_a_named_source(tmp_path)
         assert _citation_fixture(tmp_path / f"c{k}", cited) == []
 
 
+def test_citations_check_every_quote_a_verb_gives_and_the_named_source(tmp_path):
+    # Codex on the citation check: the second of two quotes went unchecked, and a made-up file passed as a source.
+    second = ('The decision owner asked: "keep the old figures as they were recorded" (answers-x.md), then chose '
+              '"an answer nobody saved anywhere at all".\n')
+    assert "not in a saved answer" in _citation_fixture(tmp_path / "a", second)[0]
+    made_up = 'The decision owner said: "keep the old figures as they were recorded" (answers-none.md).\n'
+    assert any("not a saved answer" in p for p in _citation_fixture(tmp_path / "b", made_up))
+    long_lead = ('The decision owner, after reading the whole package on the train home and thinking it over, '
+                 'said: "an answer nobody saved anywhere at all" (answers-x.md).\n')
+    assert "not in a saved answer" in _citation_fixture(tmp_path / "c", long_lead)[0]
+    other = 'The decision owner chose the plan. GitHub\'s documentation says that "the default copyright laws apply here".\n'
+    assert _citation_fixture(tmp_path / "d", other) == []  # another subject's quote, far from the role
+
+
 def test_citations_skip_a_quoted_title_and_short_terms(tmp_path):
     # "For the decision owner" is a section title: the asking is the record's, not the decision owner's words
     title = 'The record\'s "For the decision owner" item 3 asked you to "Choose where the files are hosted".\n'

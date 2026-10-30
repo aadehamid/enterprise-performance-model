@@ -1059,23 +1059,35 @@ def cmd_decisions(args):
     return 1 if problems else 0
 
 
-# Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): the
-# decision owner, a verb of saying within the same sentence, then a quote of three or more words.
-ATTRIBUTED = re.compile(r'decision owner[^.!?\n"”“]{0,80}?\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|'
-                        r'typed|told|decided|added)\b[^.!?\n]{0,40}?["“]([^"”]+)["”]', re.I)
-# a saved answer named by file, a decision record, or the PR comment the answer was given in (as EPM-DEC-001-0028 cites)
-CITED = re.compile(r"answers-[\w-]+\.md|decision-owner-answers|EPM-DEC-001-\d{4}|comment \d{6,}")
+# Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): each verb of
+# saying that follows "the decision owner" or "the owner", or a quote already attributed, closely (within 120 characters,
+# in the same sentence, no quote mark between), and the quote after it ("asked: ..., then chose ..." gives two). A quote another subject says ("GitHub's documentation says")
+# or one with no verb of saying before it, such as a process name, is not attributed.
+OWNER = re.compile(r'\b(?:decision owner|the owner)\b', re.I)
+SAYING = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added)\b'
+                    r'(?:(?![.!?]\s)[^"”“]){0,160}?["“]([^"”]+)["”]', re.I)  # the quote in the verb's own sentence
+ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")
+RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")
+COMMENT_ID = re.compile(r"comment \d{6,}")
 
 
 def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=None):
     """Words a tracked Markdown document attributes to the decision owner, outside the decision records and the saved
-    answers: each such quote must be word for word in a saved answer, and its paragraph must name the answers file or a
-    decision record. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
+    answers. Every quote of three or more words after an attribution must be word for word in a saved answer, and the
+    paragraph must name a source that exists: an answers file that holds the words, a decision record, or the PR comment
+    the answer was given in. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
     corpus = answer_corpus(answers)
+    files_by_name = {os.path.basename(p): _flat(re.sub(r"<!--.*?-->", "", open(p).read(), flags=re.S))
+                     for p in glob.glob(os.path.join(answers, "*.md"))}
+    record_texts = {m.group(1): _flat(open(p).read()) for p in glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))
+                    for m in [re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(p))] if m}
+    records = set(record_texts)
     if files is None:
         out = subprocess.run(["git", "ls-files", "-z", "*.md"], cwd=root, capture_output=True, text=True, check=True).stdout
         files = [f for f in out.split("\0") if f]
-    skip = (os.path.relpath(answers, root), os.path.relpath(decisions, root))
+    # the saved answers, the decision records (checked by `quotes`) and the rest of the review evidence: records kept as
+    # they were made, not documents to correct
+    skip = (os.path.relpath(answers, root), os.path.relpath(decisions, root), os.path.relpath(REVIEWS, root))
     problems = []
     for f in files:
         if f.startswith(skip):
@@ -1083,13 +1095,35 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
         with open(os.path.join(root, f), encoding="utf-8", errors="replace") as fh:
             paragraphs = re.split(r"\n\s*\n", fh.read())
         for para in paragraphs:
-            for m in ATTRIBUTED.finditer(para):
+            flat = _flat(para)
+            # a verb counts when it follows the role closely with no quote between, or follows a quote already
+            # theirs closely ("asked: ..., then chose ...")
+            anchors, said = [m.end() for m in OWNER.finditer(flat)], []
+            for m in SAYING.finditer(flat):
+                if any(0 <= m.start() - a <= 120 and not re.search(r'["”“]|[.!?]\s', flat[a:m.start()]) for a in anchors):
+                    said.append(m)
+                    anchors.append(m.end())
+            if not said:
+                continue
+            named = ANSWERS_FILE.findall(flat)
+            for name in named:
+                if name not in files_by_name:
+                    problems.append(f"{f}: cites {name}, which is not a saved answer")
+            for rid in RECORD_ID.findall(flat):
+                if rid not in records:
+                    problems.append(f"{f}: cites EPM-DEC-001-{rid}, which is not a decision record")
+            cited_records = "".join(record_texts.get(rid, "") for rid in RECORD_ID.findall(flat))
+            for m in said:
                 words = _flat(m.group(1))
                 if len(words.split()) < 3:
                     continue
+                if words in cited_records:  # the decision owner's words as a decision record it cites holds them
+                    continue
                 if words not in corpus:
                     problems.append(f"{f}: not in a saved answer: {words[:90]!r}")
-                elif not CITED.search(para):
+                elif named and not any(words in files_by_name.get(n, "") for n in named):
+                    problems.append(f"{f}: not in the answers file it names: {words[:90]!r}")
+                elif not (named or RECORD_ID.search(flat) or COMMENT_ID.search(flat)):
                     problems.append(f"{f}: names no answers file or decision record for: {words[:90]!r}")
     return problems
 
