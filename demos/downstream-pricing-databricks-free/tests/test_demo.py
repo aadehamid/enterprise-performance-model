@@ -1850,3 +1850,20 @@ def test_after_e7_genie_check_flags_an_example_that_returns_a_tested_value():
     assert genie.overlaps([("D02", "text"), ("D05", 1.25)], [5.265], {"D02"}) == ["D02"]
     assert genie.overlaps([("USGC ULSD", 5.2651)], [5.265], set()) == []  # a match is within a millionth, relative
     assert genie.overlaps([("NYH ULSD", 5.2650000001)], [5.265], set()) == [5.265]
+
+
+# ---- after E7, step 6: a stronger orchestrator ----
+
+def test_after_e7_a_reply_in_parts_keeps_only_its_text():
+    parts = [{"type": "reasoning", "summary": [{"type": "summary_text", "text": "Thinking..."}]},
+             {"type": "text", "text": '{"agents": ["crack_spread_price_analytics"]}'}]
+    assert supervisor.text(parts) == '{"agents": ["crack_spread_price_analytics"]}'
+    assert supervisor.text("plain") == "plain" and supervisor.text(None) is None
+
+    class Api:
+        def do(self, method, path, body):
+            self.body = body
+            return {"choices": [{"message": {"role": "assistant", "content": parts}}]}
+    w = type("W", (), {"api_client": Api()})()
+    assert supervisor.chat(w, [])["content"] == '{"agents": ["crack_spread_price_analytics"]}'
+    assert w.api_client.body["max_tokens"] == supervisor.MAX_TOKENS
