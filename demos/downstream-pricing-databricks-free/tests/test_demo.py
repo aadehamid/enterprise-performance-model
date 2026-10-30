@@ -1867,3 +1867,30 @@ def test_after_e7_a_reply_in_parts_keeps_only_its_text():
     w = type("W", (), {"api_client": Api()})()
     assert supervisor.chat(w, [])["content"] == '{"agents": ["crack_spread_price_analytics"]}'
     assert w.api_client.body["max_tokens"] == supervisor.MAX_TOKENS
+
+
+def test_after_e7_list_replies_keep_their_tool_calls_and_a_reply_of_reasoning_only_is_no_answer(monkeypatch):
+    # Codex round 1 on step 6: run the real chat() inside orchestrate(), with replies in parts as Qwen3.5 sends them.
+    refinery = "Refinery Operations Analytics"
+    reasoning = {"type": "reasoning", "summary": [{"type": "summary_text", "text": "Thinking..."}]}
+    def api(final):
+        replies = iter([
+            {"choices": [{"finish_reason": "tool_calls", "message": {"role": "assistant", "content": [reasoning],
+                                                                     "tool_calls": [tool_call(refinery, 1)]}}]},
+            {"choices": [{"finish_reason": final[0], "message": {"role": "assistant", "content": final[1]}}]}])
+        bodies = []
+        class Api:
+            def do(self, method, path, body):
+                bodies.append(body)
+                return next(replies)
+        return type("W", (), {"api_client": Api()})(), bodies
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [refinery])
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
+    agents = {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}
+    w, bodies = api(("stop", [reasoning, {"type": "text", "text": "the answer"}]))
+    result = supervisor.orchestrate(w, *agents, "q")
+    assert result["answer"] == "the answer" and [c["agent"] for c in result["agents_called"]] == [refinery]
+    assert all(b["max_tokens"] == 4000 for b in bodies) and supervisor.MAX_TOKENS == 4000
+    w, _ = api(("length", [reasoning]))
+    with pytest.raises(supervisor.OrchestrationError, match="no answer text .finish_reason length"):
+        supervisor.orchestrate(w, *agents, "q")

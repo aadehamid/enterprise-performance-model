@@ -26,7 +26,8 @@ from .genie import AGENTS
 # A Foundation Model API chat model this workspace serves (Free Edition). The template's databricks-claude-sonnet-4-5
 # is not served here. Until Plan 1, step 6, the orchestrator was databricks-meta-llama-3-3-70b-instruct; on
 # 2026-10-30 a probe gave each served chat model one tool-calling question twice, and Qwen3.5 122B was the only one
-# that called both agents the question needed, the same both times (delegated under EPM-DEC-001-0028).
+# that called both agents the question needed, the same both times (delegated under EPM-DEC-001-0028). The probe's
+# output was not kept; run 10 (data/acceptance/2026-10-30-run10.json, README "Step 6") is the recorded measure.
 MODEL = "databricks-qwen35-122b-a10b"
 # Qwen3.5 reasons before it answers, and its reasoning counts against max_tokens.
 MAX_TOKENS = 4000
@@ -238,8 +239,10 @@ def chat(w, messages, tool_specs=None):
     body = {"messages": messages, "max_tokens": MAX_TOKENS, "temperature": 0}
     if tool_specs:
         body.update(tools=tool_specs, tool_choice="auto")
-    message = w.api_client.do("POST", f"/serving-endpoints/{MODEL}/invocations", body=body)["choices"][0]["message"]
-    return {**message, "content": text(message.get("content"))}
+    choice = w.api_client.do("POST", f"/serving-endpoints/{MODEL}/invocations", body=body)["choices"][0]
+    message = choice["message"]
+    # finish_reason says why a reply stopped ("length" when max_tokens ran out mid-reasoning)
+    return {**message, "content": text(message.get("content")), "finish_reason": choice.get("finish_reason")}
 
 
 def text(content):
@@ -314,6 +317,9 @@ def orchestrate(w, described, ids, question):
             messages.append({k: v for k, v in reply.items() if k in ("role", "content", "tool_calls")})
             if not calls:
                 answer = reply.get("content") or ""
+                if not answer.strip():  # a reply of reasoning only, often cut off by max_tokens, is no answer
+                    raise OrchestrationError(f"the model returned no answer text (finish_reason {reply.get('finish_reason')}); "
+                                             f"agents called: {[c['agent'] for c in called]}", called, plan)
                 required |= set(ruled(answer))
                 gaps = missing(required, called)
                 if not gaps:
