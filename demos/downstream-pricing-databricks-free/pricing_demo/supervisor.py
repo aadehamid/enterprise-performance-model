@@ -38,7 +38,14 @@ INSTRUCTIONS = (
     "the demo's own formula or synthetic data. Never compute a figure no agent returned. Cracks are published by "
     "market, not by refinery: for a refinery's crack, ask the crack agent for its region's benchmark crack, the one the "
     "demo's R&M margin uses (sql/04_gold.sql): Gulf Coast, USGC 3-2-1 MEH Crack, ex-RIN (43870); West Coast, LA 3-2-1 "
-    "Crack ANS, ex-RIN (36855); Mid-Continent, CHI 3-2-1 Crack WTI, ex-RIN (37438).")
+    "Crack ANS, ex-RIN (36855); Mid-Continent, CHI 3-2-1 Crack WTI, ex-RIN (37438). Next to each figure in your answer, "
+    "copy the measure's identifier and label and the figure's provenance or evidence label exactly as the agent gave "
+    "them: real, spot-anchored or synthesized; observed, inferred or unknown.")
+# Every question to an agent asks for the ontology's terms with its figures, so the identifiers, labels and the
+# provenance and evidence labels reach the answer (Plan 1, step 5: on E7's runs one answer in 21 read a definitions view).
+AGENT_ASK = (" With each figure, give the measure's identifier and label from your definitions view (ontology_definitions), "
+             "and the figure's label: Demo_Provenance_Label (real, spot-anchored or synthesized) or Evidence_Label "
+             "(observed, inferred or unknown).")
 MAX_ROUNDS = 8
 # A tool result keeps up to MAX_ROWS of the agent's rows, and its JSON stays under TOOL_CHARS by dropping rows from
 # the end, never by cutting the JSON (step 2; until then 20 rows, then a 12,000-character cut that could split a row).
@@ -311,7 +318,7 @@ def orchestrate(w, described, ids, question):
             for call in calls:
                 title = by_tool[call["function"]["name"]]  # a tool name the model invents raises KeyError
                 sub = json.loads(call["function"]["arguments"])["question"]
-                result = ask_genie(w, ids[title], sub)
+                result = ask_genie(w, ids[title], sub + AGENT_ASK)
                 called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"],
                                "attempts": result.get("attempts", 1), "errors": result.get("errors", [])})
                 messages.append({"role": "tool", "tool_call_id": call["id"], "content": tool_content(result)})

@@ -1850,3 +1850,19 @@ def test_after_e7_genie_check_flags_an_example_that_returns_a_tested_value():
     assert genie.overlaps([("D02", "text"), ("D05", 1.25)], [5.265], {"D02"}) == ["D02"]
     assert genie.overlaps([("USGC ULSD", 5.2651)], [5.265], set()) == []  # a match is within a millionth, relative
     assert genie.overlaps([("NYH ULSD", 5.2650000001)], [5.265], set()) == [5.265]
+
+
+# ---- after E7, step 5: the ontology's terms reach the answer ----
+
+def test_after_e7_every_agent_question_asks_for_identifiers_and_labels(monkeypatch):
+    refinery = "Refinery Operations Analytics"
+    asked = []
+    replies = iter([{"role": "assistant", "tool_calls": [tool_call(refinery, 1)]}, {"role": "assistant", "content": "the answer"}])
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: next(replies))
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [refinery])
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: asked.append(q) or {"status": "COMPLETED", "text": "t"})
+    result = supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert asked == ["q" + supervisor.AGENT_ASK] and result["agents_called"][0]["question"] == "q"  # the trace keeps the model's words
+    for term in ("identifier", "ontology_definitions", "Demo_Provenance_Label", "Evidence_Label", "inferred"):
+        assert term in supervisor.AGENT_ASK, term
+    assert "copy the measure's identifier and label" in supervisor.INSTRUCTIONS
