@@ -147,6 +147,8 @@ run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # EPM-DEC-001-0049: the repo names the decision owner by role, never by name or account.
 run with_deps python scripts/epm_facts.py names
+# Words other documents attribute to the decision owner must be in a saved answer and name it (Plan 3, 2026-10-30).
+run with_deps python scripts/epm_facts.py citations
 # The ontology playbook moved into the ontology skill as its guide, with its neutrality test
 # (personal-agent-skills, skills/data/ontology/scripts/test_playbook_guide.py; EPM-DEC-001-0101).
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase

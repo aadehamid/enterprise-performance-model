@@ -1059,6 +1059,49 @@ def cmd_decisions(args):
     return 1 if problems else 0
 
 
+# Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): the
+# decision owner, a verb of saying within the same sentence, then a quote of three or more words.
+ATTRIBUTED = re.compile(r'decision owner[^.!?\n"”“]{0,80}?\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|'
+                        r'typed|told|decided|added)\b[^.!?\n]{0,40}?["“]([^"”]+)["”]', re.I)
+# a saved answer named by file, a decision record, or the PR comment the answer was given in (as EPM-DEC-001-0028 cites)
+CITED = re.compile(r"answers-[\w-]+\.md|decision-owner-answers|EPM-DEC-001-\d{4}|comment \d{6,}")
+
+
+def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=None):
+    """Words a tracked Markdown document attributes to the decision owner, outside the decision records and the saved
+    answers: each such quote must be word for word in a saved answer, and its paragraph must name the answers file or a
+    decision record. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
+    corpus = answer_corpus(answers)
+    if files is None:
+        out = subprocess.run(["git", "ls-files", "-z", "*.md"], cwd=root, capture_output=True, text=True, check=True).stdout
+        files = [f for f in out.split("\0") if f]
+    skip = (os.path.relpath(answers, root), os.path.relpath(decisions, root))
+    problems = []
+    for f in files:
+        if f.startswith(skip):
+            continue
+        with open(os.path.join(root, f), encoding="utf-8", errors="replace") as fh:
+            paragraphs = re.split(r"\n\s*\n", fh.read())
+        for para in paragraphs:
+            for m in ATTRIBUTED.finditer(para):
+                words = _flat(m.group(1))
+                if len(words.split()) < 3:
+                    continue
+                if words not in corpus:
+                    problems.append(f"{f}: not in a saved answer: {words[:90]!r}")
+                elif not CITED.search(para):
+                    problems.append(f"{f}: names no answers file or decision record for: {words[:90]!r}")
+    return problems
+
+
+def cmd_citations(args):
+    problems = citation_problems()
+    print(f"commit {commit()}: {len(problems)} citation problem(s) outside the decision records")
+    for p in problems:
+        print(f"  {p}")
+    return 1 if problems else 0
+
+
 # EPM-DEC-001-0049: the repo names the decision owner by role. These are the personal name,
 # the family name and the GitHub username, built from fragments so this file does not match itself.
 OWNER_NAMES = re.compile("|".join(["ha" + "mid", "ade" + "sokan", "aade" + "ha" + "mid"]), re.I)
@@ -1378,12 +1421,13 @@ def main(argv=None):
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
+    sub.add_parser("citations", help="check words other documents attribute to the decision owner against the saved answers (exit 1)")
     sub.add_parser("modules", help="each released module: newest and earlier releases, what it requires, triples, built from (manifest) or sources (builder today)")
     p = sub.add_parser("coverage", help="how many processes have a RACI assignment, system, KPI, lane, value-stream step, data product")
     p.add_argument("--processes", default="core", help="core (default), module:<name>, lifecycle or stage:<name>")
     args = parser.parse_args(argv)
     return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
-            "quotes": cmd_quotes, "names": cmd_names, "sweep": cmd_sweep,
+            "quotes": cmd_quotes, "names": cmd_names, "citations": cmd_citations, "sweep": cmd_sweep,
             "modules": cmd_modules, "coverage": cmd_coverage}[args.cmd](args)
 
 

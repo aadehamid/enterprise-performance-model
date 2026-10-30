@@ -1039,3 +1039,34 @@ def test_coverage_reads_each_link_from_its_newest_release(tmp_path):
     # A newer system release drops the link, so A no longer counts as having one.
     plant_release(releases, "system", "1.1.0", {"triples": 0}, "")
     assert epm_facts.coverage("core", str(releases))["links"]["system"]["with"] == 0
+
+
+# ---- citations: words other documents attribute to the decision owner (Plan 3, 2026-10-30) ----
+
+def _citation_fixture(tmp_path, doc):
+    answers, decisions = tmp_path / "answers", tmp_path / "decisions"
+    answers.mkdir(parents=True); decisions.mkdir()
+    (answers / "answers-x.md").write_text("<!-- context -->\nkeep the old figures as they were recorded\n")
+    (tmp_path / "doc.md").write_text(doc)
+    return epm_facts.citation_problems(root=str(tmp_path), answers=str(answers), decisions=str(decisions), files=["doc.md"])
+
+
+def test_citations_pass_on_the_repo():
+    assert epm_facts.citation_problems() == []
+
+
+def test_citations_need_the_words_in_a_saved_answer_and_a_named_source(tmp_path):
+    unsaved = 'The decision owner said: "keep the new figures as they were recorded" (answers-x.md).\n'
+    assert "not in a saved answer" in _citation_fixture(tmp_path / "a", unsaved)[0]
+    uncited = 'The decision owner said: "keep the old figures as they were recorded".\n'
+    assert "names no answers file" in _citation_fixture(tmp_path / "b", uncited)[0]
+    for cited in ('The decision owner said: "keep the old figures as they were recorded" (answers-x.md).\n',
+                  'The decision owner wrote on #225 (comment 6115615577): "keep the old figures as they were recorded".\n'):
+        assert _citation_fixture(tmp_path / "c", cited) == []
+
+
+def test_citations_skip_a_quoted_title_and_short_terms(tmp_path):
+    # "For the decision owner" is a section title: the asking is the record's, not the decision owner's words
+    title = 'The record\'s "For the decision owner" item 3 asked you to "Choose where the files are hosted".\n'
+    assert _citation_fixture(tmp_path / "a", title) == []
+    assert _citation_fixture(tmp_path / "b", 'The decision owner chose "Option A".\n') == []
