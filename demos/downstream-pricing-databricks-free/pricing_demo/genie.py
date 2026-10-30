@@ -259,15 +259,20 @@ def serialized(title, spec, catalog):
     })
 
 
+# Figures a check expects that are facts of the demo rather than results: an example may return them.
+NOT_RESULTS = {13.0: "the number of refineries (use case 16 counts plans, one per refinery)"}
+
+
 def tested_values(ctx):
-    """What the acceptance checks expect: each non-whole number and each decision ID (Dnn) their figures hold."""
+    """What the acceptance checks expect: each number (but NOT_RESULTS) and each decision ID (Dnn) their figures hold.
+    Examples compute at full precision (a test forbids ROUND in their SQL), so the same figure matches exactly."""
     from .acceptance import CASES
     numbers, ids = [], set()
     for case in CASES:
         if case.get("mode") == "graph":
             continue
         for e in case["check"](ctx):
-            if isinstance(e.value, (int, float)) and not float(e.value).is_integer():
+            if isinstance(e.value, (int, float)) and not isinstance(e.value, bool) and float(e.value) not in NOT_RESULTS:
                 numbers.append(float(e.value))
             elif isinstance(e.value, str) and re.fullmatch(r"D\d{2}", e.value):
                 ids.add(e.value)
@@ -286,14 +291,14 @@ def overlaps(rows, numbers, ids):
                 x = float(v)
             except (TypeError, ValueError):
                 continue
-            if not x.is_integer() and any(abs(x - n) <= 1e-6 * max(1.0, abs(n)) for n in numbers):
+            if any(abs(x - n) <= 1e-6 * max(1.0, abs(n)) for n in numbers):
                 hits.add(round(x, 6))
     return sorted(hits, key=str)
 
 
 def check():
     """Run every agent's example SQL once against the warehouse. Each must run, return at least one row, and return
-    no figure or decision ID an acceptance check expects (Plan 1, step 4)."""
+    no figure or decision ID an acceptance check expects, but NOT_RESULTS (Plan 1, step 4)."""
     from .acceptance import Context
     conn, e = connect()
     bad = []

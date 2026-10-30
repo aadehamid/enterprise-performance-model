@@ -1826,6 +1826,8 @@ def test_after_e7_no_genie_example_repeats_an_acceptance_question():
     # warehouse (genie.overlaps); offline, no example asks for the latest date, the acceptance data's last day
     sqls = " ".join(sql for spec in genie.AGENTS.values() for _, sql in spec["examples"])
     assert "2026-10-20" not in sqls
+    # full precision, so genie check's exact match finds the same figure: no example rounds (quick check on step 4)
+    assert "ROUND(" not in sqls.upper()
     for q in examples:  # no test question is contained in an example either; every question is longer than 40
         # characters, so the length only keeps a stray short string from matching
         assert not any(a in words(q) for a in asked if len(a) > 40), q
@@ -1843,7 +1845,8 @@ def test_after_e7_each_agent_has_an_example_for_the_patterns_the_runs_got_wrong(
 
 def test_after_e7_genie_check_flags_an_example_that_returns_a_tested_value():
     # Codex round 2 on step 4: examples returned figures and decision IDs the acceptance checks expect.
-    assert genie.overlaps([("NYH ULSD", 5.265), ("x", 3)], [5.265], {"D02"}) == [5.265]  # whole numbers are counts, not figures
+    assert genie.overlaps([("NYH ULSD", 5.265), ("x", 3)], [5.265], {"D02"}) == [5.265]
+    assert genie.overlaps([("plans beaten", 4)], [4.0], set()) == [4.0]  # a whole-number figure counts too (quick check)
     assert genie.overlaps([("D02", "text"), ("D05", 1.25)], [5.265], {"D02"}) == ["D02"]
     assert genie.overlaps([("USGC ULSD", 5.2651)], [5.265], set()) == []  # a match is within a millionth, relative
     assert genie.overlaps([("NYH ULSD", 5.2650000001)], [5.265], set()) == [5.265]
