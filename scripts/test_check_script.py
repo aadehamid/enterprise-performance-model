@@ -29,3 +29,32 @@ def test_the_guard_runs_before_the_first_check():
     guard = lines.index(_guard())
     first = next(i for i, line in enumerate(lines) if line.startswith('before="$(snapshot)"'))
     assert guard < first
+
+
+# Plan 2 (codebase architecture, 2026-10-30): check.sh lists its module verifies and test files by hand, and
+# nothing stopped a new module or test file from being left out. These tests make the lists complete.
+
+def _modules():
+    """The module names build_module.py's MODULES table declares, read without importing it."""
+    import ast
+    path = os.path.join(HERE, "..", "business_architecture", "ontology", "release", "build_module.py")
+    tree = ast.parse(open(path).read())
+    table = next(n.value for n in tree.body if isinstance(n, ast.Assign) and any(
+        isinstance(t, ast.Name) and t.id == "MODULES" for t in n.targets))
+    return [k.value for k in table.keys]
+
+
+def test_every_module_release_is_verified():
+    text = "\n".join(_lines())
+    missing = [m for m in _modules() if f"build_module.py {m} --verify" not in text]
+    assert _modules() and not missing, missing
+
+
+def test_every_tracked_test_file_is_run():
+    root = os.path.join(HERE, "..")
+    files = subprocess.run(["git", "ls-files", "*test_*.py"], cwd=root, capture_output=True, text=True,
+                           check=True).stdout.split()
+    text = "\n".join(_lines())
+    # a file is named by its path, or by its name inside a loop over its folder (the step 4 tests)
+    missing = [f for f in files if f not in text and os.path.basename(f) not in text]
+    assert files and not missing, missing
