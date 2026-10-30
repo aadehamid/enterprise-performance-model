@@ -1072,9 +1072,12 @@ OWNER = re.compile(r'\bdecision owner\b', re.I)  # the repo's one name for the r
 VERB = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added)\b', re.I)
 SENTENCE_END = r'[.!?][*_)\]]*\s'  # a sentence ends at a stop, even inside emphasis or brackets (".* (A" ends one)
 SAID = re.compile(r'(?:(?!' + SENTENCE_END + r')[^"”“]){0,160}?["“]([^"”]+)["”]')  # the quote in the verb's own sentence
-# "..." (answers-x.md), then chose": between a quote of theirs and the next verb, only a citation in brackets, a comma
-# and "then", "later" or "and". Any other word, such as a subject ("the reviewer replied"), ends the chain.
-CONNECTIVE = re.compile(r'^\s*(?:\([^()"”“]*\))?\s*[,;]?\s*(?:and\s+)?(?:then|later|and)\s+$', re.I)
+# "..." (answers-x.md), then chose": between a quote of theirs and the next verb, only a citation in brackets (answers
+# files, records, PR or comment numbers), a comma and "then", "later" or "and". Any other word, such as a subject
+# ("the reviewer replied", "(the reviewer) then replied"), ends the chain.
+CITE_TOKEN = r'(?:`?answers-[\w-]+\.md`?|EPM-DEC-001-\d{4}|#\d+|comment \d{6,})'
+CONNECTIVE = re.compile(r'^\s*(?:\([\s,]*' + CITE_TOKEN + r'(?:[\s,]+' + CITE_TOKEN + r')*[\s,]*\))?\s*,?\s*'
+                        r'(?:and\s+)?(?:then|later|and)\s+$', re.I)
 ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")
 RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")
 COMMENT_ID = re.compile(r"comment (\d{6,})")
@@ -1092,7 +1095,8 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
     for path in glob.glob(os.path.join(answers, "*.md")):
         raw = open(path).read()
         files_by_name[os.path.basename(path)] = _flat(re.sub(r"<!--.*?-->", "", raw, flags=re.S))
-        for comment in re.findall(r"comment:(\d{6,})", "".join(re.findall(r"<!--.*?-->", raw, flags=re.S))):
+        header = re.match(r"\s*<!--(.*?)-->", raw, re.S)  # the file's own header records its source, nothing later
+        for comment in re.findall(r"comment:(\d{6,})", header.group(1) if header else ""):
             files_by_comment[comment] = files_by_comment.get(comment, "") + files_by_name[os.path.basename(path)]
     def recorded_words(path):
         found = RECORDED_WORDS.search(open(path).read())

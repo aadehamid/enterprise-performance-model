@@ -1139,3 +1139,20 @@ def test_citations_need_the_quote_in_the_source_they_name(tmp_path):
     then = ('The decision owner asked: "keep the old figures as they were recorded" (answers-x.md), then chose '
             '"a sentence nobody saved at all".\n')
     assert NAMED_MISS in _citation_fixture(tmp_path / "f", then)[0]
+    # Codex quick check of 3d0c44ff: a subject in brackets, or a semicolon, ends the chain too.
+    for k, gap in enumerate(("(answers-x.md) (the reviewer) then", "(answers-x.md); then", "(answers-x.md, the reviewer) then")):
+        doc = f'The decision owner said: "keep the old figures as they were recorded" {gap} replied "a sentence nobody saved at all".\n'
+        assert _citation_fixture(tmp_path / f"g{k}", doc) == [], gap
+    # Only the header comment records a file's source comment.
+    (tmp_path / "h" / "answers").mkdir(parents=True)
+    (tmp_path / "h" / "answers" / "answers-z.md").write_text("<!-- verbatim, no comment -->\nsome later answer here\n"
+                                                         "<!-- comment:7000003 -->\n")
+    late = 'The decision owner wrote (comment 7000003): "some later answer here".\n'
+    assert NAMED_MISS not in "".join(_citation_fixture(tmp_path / "h", late))  # unrecorded: any saved answer will do
+    (tmp_path / "i" / "answers").mkdir(parents=True)
+    (tmp_path / "i" / "answers" / "answers-z.md").write_text("<!-- comment:7000004 -->\nthe header's own answer\n"
+                                                         "<!-- comment:7000005 -->\n")
+    wrong = 'The decision owner wrote (comment 7000005): "keep the old figures as they were recorded".\n'
+    assert _citation_fixture(tmp_path / "i", wrong) == []  # 7000005 is no file's header, so any saved answer counts
+    right = 'The decision owner wrote (comment 7000004): "keep the old figures as they were recorded".\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "i", right)[0]
