@@ -184,6 +184,8 @@ def planned(w, described, question):
             names = json.loads(found.group(0))["agents"] if found else []
         except (ValueError, KeyError, TypeError):
             names = []
+        if not isinstance(names, list):  # "agents": null or a string is no plan either (Bugbot on #411)
+            names = []
         plan = [by_tool[n] for n in dict.fromkeys(names) if isinstance(n, str) and n in by_tool]
         if plan:
             return plan
@@ -195,11 +197,12 @@ def missing(required, called):
 
 
 class OrchestrationError(SystemExit):
-    """The orchestrator stopped without an answer; agents_called holds the agents it had already called."""
+    """The orchestrator stopped without an answer; agents_called holds the agents it had already called, and plan
+    the agents it had planned, if it got that far (Bugbot on #411)."""
 
-    def __init__(self, message, agents_called):
+    def __init__(self, message, agents_called, plan=None):
         super().__init__(message)
-        self.agents_called = agents_called
+        self.agents_called, self.plan = agents_called, plan
 
 
 def orchestrate(w, described, ids, question):
@@ -207,7 +210,7 @@ def orchestrate(w, described, ids, question):
     An answer is sent back until every agent the plan named, or RULES require of the question or the answer, is called."""
     tool_specs = tools(described)
     by_tool = {tool_name(t): t for t in AGENTS}
-    called = []
+    called, plan = [], None
     try:
         plan = planned(w, described, question)
         required = set(plan) | set(ruled(question))
@@ -234,8 +237,8 @@ def orchestrate(w, described, ids, question):
                 called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"]})
                 messages.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, default=str)[:12000]})
     except Exception as err:  # keep the agents already called beside the reason it stopped
-        raise OrchestrationError(f"{type(err).__name__}: {err}; agents called: {[c['agent'] for c in called]}", called) from err
-    raise OrchestrationError(f"no answer after {MAX_ROUNDS} rounds; agents called: {[c['agent'] for c in called]}", called)
+        raise OrchestrationError(f"{type(err).__name__}: {err}; agents called: {[c['agent'] for c in called]}", called, plan) from err
+    raise OrchestrationError(f"no answer after {MAX_ROUNDS} rounds; agents called: {[c['agent'] for c in called]}", called, plan)
 
 
 def ask(question):

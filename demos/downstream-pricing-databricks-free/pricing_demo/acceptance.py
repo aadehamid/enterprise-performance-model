@@ -671,7 +671,7 @@ def run_cases(numbers_wanted=None, stamp=None):
                     run = graph_answer() if case.get("mode") == "graph" else supervisor.orchestrate(w, described, ids, case["question"])
                 except (Exception, SystemExit) as err:  # a failed run is a failed case, recorded with its reason and
                     # the agents the orchestrator had already called
-                    run = {"agents_called": getattr(err, "agents_called", []), "answer": "",
+                    run = {"agents_called": getattr(err, "agents_called", []), "plan": getattr(err, "plan", None), "answer": "",
                            "error": f"{type(err).__name__}: {str(err)[:300]}"}
             verdict = judge(case, expected, run)
             results.append({"n": case["n"], "question": case["question"], "mode": case.get("mode", "orchestrator"),

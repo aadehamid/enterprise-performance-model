@@ -1573,7 +1573,7 @@ def test_after_e7_the_rules_read_crack_and_refinery_figures():
 
 
 def test_after_e7_the_plan_keeps_known_agents_once_and_drops_invented_ones(monkeypatch):
-    content = 'Here: {"agents": ["crack_spread_price_analytics", "an_invented_tool", "crack_spread_price_analytics"]}'
+    content = 'Here: {"agents": ["crack_spread_price_analytics", "an_invented_tool", 7, "crack_spread_price_analytics"]}'
     bodies = []
 
     def chat(w, messages, specs=None):
@@ -1582,7 +1582,7 @@ def test_after_e7_the_plan_keeps_known_agents_once_and_drops_invented_ones(monke
     monkeypatch.setattr(supervisor, "chat", chat)
     assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == ["Crack Spread Price Analytics"]
     assert bodies == [None]  # the plan is asked without tools
-    replies = iter([{"content": "no JSON"}, {"content": '{"agents": ["an_invented_tool", 7]}'},
+    replies = iter([{"content": "no JSON"}, {"content": '{"agents": null}'},
                     {"content": '{"agents": ["refinery_operations_analytics"]}'}])
     monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: next(replies))
     assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == ["Refinery Operations Analytics"]
@@ -1642,3 +1642,14 @@ def test_after_e7_a_check_that_cannot_run_fails_its_case_and_the_run_keeps_what_
     assert [r["n"] for r in results] == [2, 14] and not results[1]["passed"]
     assert results[1]["error"] == "the check failed: OSError: connection refused"
     assert [r["n"] for r in json.load(open(tmp_path / "results.json"))["results"]] == [2, 14]
+
+
+def test_after_e7_a_stopped_orchestrator_keeps_its_plan(monkeypatch):
+    # Bugbot on #411: a run that stopped after planning recorded plan: null.
+    refinery = "Refinery Operations Analytics"
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [refinery])
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: {"role": "assistant", "tool_calls": [tool_call(refinery, 1)]})
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: (_ for _ in ()).throw(RuntimeError("FAILED")))
+    with pytest.raises(supervisor.OrchestrationError) as err:
+        supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert err.value.plan == [refinery]
