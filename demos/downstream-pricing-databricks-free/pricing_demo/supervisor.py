@@ -45,6 +45,10 @@ MAX_ROUNDS = 8
 # orchestrator's context.
 MAX_ROWS = 500
 TOOL_CHARS = 30000
+# The whole conversation sent to the model stays under CONTEXT_CHARS, about 40,000 tokens at four characters a token, so
+# eight rounds of results cannot grow without limit: before each request the oldest tool results give up their rows,
+# text and SQL kept, until it fits (Codex on step 2).
+CONTEXT_CHARS = 160000
 # Before the tool loop the orchestrator names the agents whose subject areas the question touches; an answer is
 # accepted only once each of them, and each agent RULES require, has been called (after E7, delegated under
 # EPM-DEC-001-0028).
@@ -168,10 +172,35 @@ def tool_content(result):
     keep = len(rows)
     while True:
         text = json.dumps({**result, "rows": rows[:keep], "rows_shown": keep}, default=str)
-        if len(text) <= TOOL_CHARS or keep == 0:
-            return text if len(text) <= TOOL_CHARS else json.dumps(
-                {**result, "text": result.get("text", "")[:TOOL_CHARS // 2], "rows": [], "rows_shown": 0}, default=str)
+        if len(text) <= TOOL_CHARS:
+            return text
+        if keep == 0:
+            break
         keep = min(keep - 1, keep * TOOL_CHARS // len(text))
+    body = result.get("text", "")  # no rows left and still too long: shorten the text until the JSON, escapes and all, fits
+    while True:
+        body = body[:len(body) // 2]
+        text = json.dumps({**result, "text": body + " [cut to fit]", "rows": [], "rows_shown": 0}, default=str)
+        if len(text) <= TOOL_CHARS or not body:
+            return text if len(text) <= TOOL_CHARS else json.dumps({"status": result.get("status"), "text": "[too long to show]",
+                                                                    "rows": [], "rows_shown": 0})
+
+
+def fit(messages):
+    """Keep the conversation under CONTEXT_CHARS: the oldest tool results with rows give them up first."""
+    def size():
+        return sum(len(json.dumps(m, default=str)) for m in messages)
+    for m in messages:
+        if size() <= CONTEXT_CHARS:
+            return
+        if m.get("role") != "tool":
+            continue
+        body = json.loads(m["content"])
+        if body.get("rows"):
+            m["content"] = json.dumps({**body, "rows": [], "rows_shown": 0,
+                                       "note": "rows dropped to keep the conversation within the model's context"}, default=str)
+    if size() > CONTEXT_CHARS:
+        raise ValueError(f"the conversation is over {CONTEXT_CHARS} characters even without tool rows")
 
 
 def chat(w, messages, tool_specs=None):
@@ -238,6 +267,7 @@ def orchestrate(w, described, ids, question):
         messages = [{"role": "system", "content": INSTRUCTIONS},
                     {"role": "user", "content": question + (f"\n\n(Call at least these agents: {brief}.)" if brief else "")}]
         for _ in range(MAX_ROUNDS):
+            fit(messages)
             reply = chat(w, messages, tool_specs)
             calls = reply.get("tool_calls") or []
             messages.append({k: v for k, v in reply.items() if k in ("role", "content", "tool_calls")})

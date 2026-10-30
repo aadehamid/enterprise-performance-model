@@ -1703,3 +1703,22 @@ def test_after_e7_a_tool_result_keeps_whole_rows_and_says_how_many_it_shows():
     assert body["rows"] == big[:body["rows_shown"]]
     huge = supervisor.tool_content({"status": "COMPLETED", "text": "y" * 100000, "rows": big, "row_count": 400})
     assert len(huge) <= supervisor.TOOL_CHARS and json.loads(huge)["rows_shown"] == 0
+
+
+def test_after_e7_the_fallback_fits_even_when_escaping_lengthens_the_text():
+    # Codex on step 2: a long text of control characters grows six-fold when escaped.
+    text = supervisor.tool_content({"status": "COMPLETED", "text": "\x00" * 100000, "rows": [{"a": 1}], "row_count": 1})
+    assert len(text) <= supervisor.TOOL_CHARS and json.loads(text)["rows_shown"] == 0
+
+
+def test_after_e7_the_conversation_stays_within_the_context_budget(monkeypatch):
+    # Codex on step 2: each result was capped, but eight rounds of them were not.
+    big = supervisor.tool_content({"status": "COMPLETED", "text": "t", "rows": [{"x": "y" * 200}] * 400, "row_count": 400})
+    messages = [{"role": "system", "content": "s"}] + [{"role": "tool", "tool_call_id": str(i), "content": big} for i in range(8)]
+    supervisor.fit(messages)
+    assert sum(len(json.dumps(m)) for m in messages) <= supervisor.CONTEXT_CHARS
+    kept = [json.loads(m["content"])["rows_shown"] for m in messages[1:]]
+    assert kept[0] == 0 and kept[-1] > 0  # the oldest results give up their rows first
+    monkeypatch.setattr(supervisor, "CONTEXT_CHARS", 10)
+    with pytest.raises(ValueError, match="even without tool rows"):
+        supervisor.fit(messages)
