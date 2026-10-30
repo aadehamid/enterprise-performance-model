@@ -28,7 +28,7 @@ Merging: The decision owner asked "how do i remove the merge bock. I am going to
 
 ## Amendment, 2026-10-30: the Herdr app, and the Cursor bot's 20 minutes
 
-On 2026-10-29 the decision owner moved to the new Herdr app, built on herdr-core and its `hc` command, which `herdr-review.sh` could not drive. They asked: "Can we make update to add a third option to be able to use the hc". personal-agent-skills #81 added `hc-review.sh` (merge commit `f279747`, 2026-10-29), to which `herdr-review.sh` hands off in the Herdr app. On 2026-10-30, after the Cursor bot gave no verdict on #411 within 9 minutes, they said: "the fact that Cursor did not get back in 9 mins does nt mean cursor bot stops reviewing it . Maybe we should increase the time to 20 mins if we dont hear back we can do somehting.. when we do do dsomething cursor bot should not continue to work. we should build on top of the review he has done". personal-agent-skills #82 (merge commit `ef649f7`, 2026-10-30) put that in the way-of-working skill and gave `merge-on-verdict.sh` a `--bot-check` option.
+On 2026-10-29 the decision owner moved to the new Herdr app, built on herdr-core and its `hc` command, which `herdr-review.sh` could not drive. They asked: "Can we make update to add a third option to be able to use the hc". personal-agent-skills #81 added `hc-review.sh` (merge commit `f279747`, 2026-10-30), to which `herdr-review.sh` hands off in the Herdr app. On 2026-10-30, after the Cursor bot gave no verdict on #411 within 9 minutes, they said: "the fact that Cursor did not get back in 9 mins does nt mean cursor bot stops reviewing it . Maybe we should increase the time to 20 mins if we dont hear back we can do somehting.. when we do do dsomething cursor bot should not continue to work. we should build on top of the review he has done". personal-agent-skills #82 (merge commit `ef649f7`, 2026-10-30) put that in the way-of-working skill and gave `merge-on-verdict.sh` a `--bot-check` option.
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **In the Herdr app, `herdr-review.sh` hands off to `hc-review.sh`,** so Kimi, Codex and the Cursor agent CLI are available there as in Herdr TUI and Rex. The order of the amendment of 2026-10-25 is unchanged. The Codex plugin is for a session outside all three.
@@ -53,7 +53,7 @@ On 2026-10-24 local time, two reviews ran through Rex by hand, and Claude recomm
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **Inside Rex, Kimi and the Cursor agent CLI are available** as the way-of-working skill's "Who reviews" section defines it, through `herdr-review.sh`, which hands off to `rex-review.sh` there. The order of the amendment of 2026-10-25 is unchanged: Kimi, then Pi, then Codex. The Cursor agent CLI's stand-in verdict (amendment of 2026-10-22) runs the same way.
-2. **Outside both Herdr and Rex,** Kimi and the Cursor agent CLI stay not available, and Codex runs through the Codex plugin, as before. *2026-10-30: the Herdr app is a third host, and the headless Cursor agent CLI gives the PR verdict anywhere; see the amendment of 2026-10-30.*
+2. **Outside both Herdr and Rex,** Kimi and the Cursor agent CLI stay not available, and Codex runs through the Codex plugin, as before. *2026-10-30: the Herdr app is a third host, and the headless Cursor agent CLI can give the stand-in's PR verdict anywhere; see the amendment of 2026-10-30.*
 
 ## Amendment, 2026-10-25: the order of independent reviewers
 
