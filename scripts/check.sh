@@ -2,7 +2,7 @@
 # Run the repo's automated checks: the Step 4 evidence gate, the scoped-sequence
 # build and SHACL check, the Step 11 competency regression, every test script, epm-facts counts, the decision-record
 # and quote checks, the check that no tracked file names the decision owner, the check that words a document
-# attributes to the decision owner are in a saved answer, and the Step 4 pin check. CI and the pre-push hook run this
+# attributes to the decision owner are in the answers file, record or comment it names, and the Step 4 pin check. CI and the pre-push hook run this
 # file; run it yourself before opening a pull request.
 #
 # Needs python3 and uv (https://docs.astral.sh/uv/) for the test dependencies.
@@ -147,7 +147,7 @@ run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # EPM-DEC-001-0049: the repo names the decision owner by role, never by name or account.
 run with_deps python scripts/epm_facts.py names
-# Words other documents attribute to the decision owner must be in a saved answer and name it (Plan 3, 2026-10-30).
+# Words other documents attribute to the decision owner must be in the answers file, record or comment they name (Plan 3, 2026-10-30).
 run with_deps python scripts/epm_facts.py citations
 # The ontology playbook moved into the ontology skill as its guide, with its neutrality test
 # (personal-agent-skills, skills/data/ontology/scripts/test_playbook_guide.py; EPM-DEC-001-0101).

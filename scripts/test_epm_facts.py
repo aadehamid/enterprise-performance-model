@@ -1139,6 +1139,9 @@ def test_citations_need_the_quote_in_the_source_they_name(tmp_path):
     then = ('The decision owner asked: "keep the old figures as they were recorded" (answers-x.md), then chose '
             '"a sentence nobody saved at all".\n')
     assert NAMED_MISS in _citation_fixture(tmp_path / "f", then)[0]
+    # Cursor's second HOLD on #419: an unrecorded comment no longer stands in for a named source that lacks the quote.
+    both = 'The decision owner said: "keep the old figures as they were recorded" (answers-y.md, comment 7000099).\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "j", both)[0]
     # Codex quick check of 3d0c44ff: a subject in brackets, or a semicolon, ends the chain too.
     for k, gap in enumerate(("(answers-x.md) (the reviewer) then", "(answers-x.md); then", "(answers-x.md, the reviewer) then")):
         doc = f'The decision owner said: "keep the old figures as they were recorded" {gap} replied "a sentence nobody saved at all".\n'

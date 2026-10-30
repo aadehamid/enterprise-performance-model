@@ -14,7 +14,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
-    python3 scripts/epm_facts.py citations         # words a document attributes to the decision owner are in a saved answer
+    python3 scripts/epm_facts.py citations         # words a document attributes to the decision owner are in the source it names
     uv run --with rdflib python scripts/epm_facts.py modules    # each released module, its releases, what it requires
     uv run --with rdflib python scripts/epm_facts.py coverage --processes lifecycle   # which processes lack RACI, systems, KPIs ...
     add --json for machine-readable output
@@ -1065,8 +1065,8 @@ def cmd_decisions(args):
 # Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): each verb of
 # saying that follows "the decision owner" closely (within 120 characters, in the same sentence, no quote mark between),
 # or follows a quote already theirs through a plain connective ("asked: ..., then chose ..." gives two), and the quote
-# after it. Only a decision record's "The decision owner's recorded words" section counts as their recorded words. A quote another subject says ("GitHub's documentation says")
-# or one with no verb of saying before it, such as a process name, is not attributed.
+# after it. A quote another subject says ("GitHub's documentation says") or one with no verb of saying before it, such
+# as a process name, is not attributed. citation_problems says which sources count.
 OWNER = re.compile(r'\bdecision owner\b', re.I)  # the repo's one name for the role (EPM-DEC-001-0049); "the owner" also
 # names owners of processes and data
 VERB = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added)\b', re.I)
@@ -1088,8 +1088,8 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
     answers and the review evidence (whose quotes `quotes` checks). Every quote of three or more words after an
     attribution must be word for word in a source its paragraph names: an answers file that exists, a decision record
     that exists (in its "The decision owner's recorded words" section), or a PR comment by number ("comment 6115615577").
-    A comment is looked up in the answers files' headers ("comment:6115615577"); when no answers file records it, its
-    quotes must be in some saved answer. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
+    A comment is looked up in the answers files' headers ("comment:6115615577"). Only when the paragraph names no other
+    source and no answers file records its comments must its quotes merely be in some saved answer. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
     corpus = answer_corpus(answers)
     files_by_name, files_by_comment = {}, {}
     for path in glob.glob(os.path.join(answers, "*.md")):
@@ -1141,7 +1141,9 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
                     problems.append(f"{f}: cites EPM-DEC-001-{rid}, which is not a decision record")
             cited, comments = RECORD_ID.findall(flat), COMMENT_ID.findall(flat)
             sources = ([files_by_name.get(n, "") for n in named] + [record_texts.get(rid, "") for rid in cited]
-                       + [files_by_comment.get(c, corpus) for c in comments])  # a comment no file records: any answer
+                       + [files_by_comment[c] for c in comments if c in files_by_comment])
+            if not sources and comments:
+                sources = [corpus]  # only comments no answers file records: the words must be in some saved answer
             for m in said:
                 words = _flat(m.group(1))
                 if len(words.split()) < 3 or any(words in text for text in sources):
@@ -1482,7 +1484,7 @@ def main(argv=None):
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
-    sub.add_parser("citations", help="check words other documents attribute to the decision owner against the saved answers (exit 1)")
+    sub.add_parser("citations", help="check words other documents attribute to the decision owner against the source each names (exit 1)")
     sub.add_parser("modules", help="each released module: newest and earlier releases, what it requires, triples, built from (manifest) or sources (builder today)")
     p = sub.add_parser("coverage", help="how many processes have a RACI assignment, system, KPI, lane, value-stream step, data product")
     p.add_argument("--processes", default="core", help="core (default), module:<name>, lifecycle or stage:<name>")
