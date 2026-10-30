@@ -44,8 +44,14 @@ def _modules():
     return [k.value for k in table.keys]
 
 
+def _commands():
+    """check.sh's executable text: comment lines dropped, and $step4 written out, so every path reads in full."""
+    code = [line for line in _lines() if not line.lstrip().startswith("#")]
+    return "\n".join(code).replace("$step4", "business_architecture/ontology/step4")
+
+
 def test_every_module_release_is_verified():
-    text = "\n".join(_lines())
+    text = _commands()
     missing = [m for m in _modules() if f"build_module.py {m} --verify" not in text]
     assert _modules() and not missing, missing
 
@@ -54,7 +60,6 @@ def test_every_tracked_test_file_is_run():
     root = os.path.join(HERE, "..")
     files = subprocess.run(["git", "ls-files", "*test_*.py"], cwd=root, capture_output=True, text=True,
                            check=True).stdout.split()
-    text = "\n".join(_lines())
-    # a file is named by its path, or by its name inside a loop over its folder (the step 4 tests)
-    missing = [f for f in files if f not in text and os.path.basename(f) not in text]
+    text = _commands()
+    missing = [f for f in files if f not in text]  # by its full path, in a command, not in a comment
     assert files and not missing, missing
