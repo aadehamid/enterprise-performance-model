@@ -12,6 +12,7 @@ ontology's definitions of the measures it answers for (EPM-DEC-001-0109, decisio
 import hashlib
 import json
 import os
+import re
 import sys
 
 from .config import ROOT, databricks_env
@@ -70,11 +71,12 @@ AGENTS = {
                       "FROM {c}.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw "
                       "WHERE Price_Master_ID = '37438' AND Relative_Period_Number = 0 AND Effective_Start_Datetime = "
                       + latest("mpr_mips_crack_spread_price_fact_metrics_vw", "Effective_Start_Datetime") + " GROUP BY ALL"),
-                     ("What was the monthly average USGC 3-2-1 MEH crack, ex-RIN, prompt, in each month of 2026?",
+                     # Plan 1, step 4 review: examples name no series, date or entity an acceptance check uses (genie check)
+                     ("What was the monthly average Chicago WTI 3-2-1 crack, ex-RIN, prompt, in each month of 2025?",
                       "SELECT Price_Master_ID, Price_Master_Name, Effective_Month, MEASURE(Avg_Crack_Spread) AS crack_usd_per_bbl "
                       "FROM {c}.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw "
-                      "WHERE Price_Master_ID = '43870' AND Relative_Period_Number = 0 AND Effective_Month >= '2026-01-01' "
-                      "GROUP BY ALL ORDER BY Effective_Month"),
+                      "WHERE Price_Master_ID = '37438' AND Relative_Period_Number = 0 AND Effective_Month BETWEEN '2025-01-01' "
+                      "AND '2025-12-01' GROUP BY ALL ORDER BY Effective_Month"),
                      # Plan 1, step 4: one value on a named date, the prompt only
                      ("What was the LA 3-2-1 crack, ANS, ex-RIN, prompt, on 2026-09-15?",
                       "SELECT Price_Master_ID, Price_Master_Name, MEASURE(Avg_Crack_Spread) AS crack_usd_per_bbl "
@@ -91,22 +93,16 @@ AGENTS = {
         "questions": ["What is the NYH ULSD cash price today, and how much did it change?",
                       "Show the Gasoline Basis prices for all blends on the latest date.",
                       "What is the ICE Brent front-month settle?"],
-        "examples": [("What is the NYH ULSD cash price on the latest date?",
+        "examples": [("What was the NYH ULSD cash price on 2026-08-14, and how much did it change that day?",
                       "SELECT MIPSDisplayName, MEASURE(assessment_amount) AS price_usd_per_gal, MEASURE(ChangeValue) AS change_usd_per_gal "
                       "FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw WHERE Price_Group_Name = 'Cash' "
-                      "AND Parent_Price_group_name = 'Diesel' AND MIPSDisplayName = 'NYH ULSD' AND SortColumns = 1 AND effective_date = "
-                      + latest("mips_mpr_executive_summary_fact_vw", "effective_date") + " GROUP BY ALL"),
+                      "AND Parent_Price_group_name = 'Diesel' AND MIPSDisplayName = 'NYH ULSD' AND SortColumns = 1 "
+                      "AND effective_date = '2026-08-14' GROUP BY ALL"),
                      ("What is the ICE Brent front-month settle on the latest date, in $/bbl?",
                       "SELECT Price_Master_ID, Blend, MEASURE(Avg_Settle_Price) / 100 AS settle_usd_per_bbl "
                       "FROM {c}.semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw WHERE Price_Master_ID = '572' "
                       "AND Relative_Period_Number = 1 AND Effective_Date = "
                       + latest("mips_mpr_benchmark_prices_fact_vw", "Effective_Date") + " GROUP BY ALL"),
-                     ("What is the monthly average NYH ULSD cash price for each forward month on the latest date?",
-                      "SELECT DATE_TRUNC('MONTH', Price_Period_Datetime) AS price_month, "
-                      "MEASURE(assessment_amount) / MEASURE(Record_Count) AS avg_price_usd_per_gal "
-                      "FROM {c}.semantic_sem_commercial.mips_mpr_executive_summary_fact_vw WHERE Price_Group_Name = 'Cash' "
-                      "AND Parent_Price_group_name = 'Diesel' AND MIPSDisplayName = 'NYH ULSD' AND effective_date = "
-                      + latest("mips_mpr_executive_summary_fact_vw", "effective_date") + " GROUP BY ALL ORDER BY 1"),
                      # Plan 1, step 4: a month's average is the front month (SortColumns = 1) averaged over the month's
                      # dates; summing the forward months gave $69.55/gal for a $4.97 price on E7's run 2
                      ("What was the average ICE Brent front-month price in July 2026?",
@@ -143,15 +139,15 @@ AGENTS = {
                       "SELECT Blend, Unit_Of_Measure, MEASURE(Gasoline_Market_Price) AS price "
                       "FROM {c}.semantic_sem_commercial.pricing_market_margin_metrics_vw WHERE Effective_Date = "
                       + latest("pricing_market_margin_metrics_vw", "Effective_Date") + " GROUP BY ALL ORDER BY Blend"),
-                     ("How did the Gulf Coast ULSD cash price compare with New York Harbor's on the latest date?",
+                     ("How did the Gulf Coast ULSD cash price compare with New York Harbor's on 2026-08-14?",
                       "SELECT Blend, Unit_Of_Measure, MEASURE(Distillate_Market_Price) AS cash_usd_per_gal, "
                       "MEASURE(Price_Comparison) AS basis_to_nyh_usd_per_gal "
                       "FROM {c}.semantic_sem_commercial.pricing_market_margin_metrics_vw WHERE Blend IN ('USGC ULSD', 'NYH ULSD') "
-                      "AND Effective_Date = " + latest("pricing_market_margin_metrics_vw", "Effective_Date") + " GROUP BY ALL"),
+                      "AND Effective_Date = '2026-08-14' GROUP BY ALL"),
                      # E7: the freight table, a plain SELECT (added after the first acceptance run)
-                     ("What were the two tanker freight rates on the latest date?",
+                     ("What were the two tanker freight rates on 2026-08-14?",
                       "SELECT Route_Code, Route_Name, Rate_Date, Rate_Usd_Per_Bbl, Demo_Provenance_Label FROM {c}.silver_udm_core.freight_rate_fact "
-                      "WHERE Rate_Date = (SELECT MAX(Rate_Date) FROM {c}.silver_udm_core.freight_rate_fact) ORDER BY Route_Code"),
+                      "WHERE Rate_Date = '2026-08-14' ORDER BY Route_Code"),
                      # Plan 1, step 4: a netback in $/gal takes the $/bbl freight over 42 gallons, and says freight is synthetic
                      ("What was the NYH ULSD netback after USGC to New York Harbor freight on 2026-09-15?",
                       "SELECT p.Blend, p.cash_usd_per_gal, f.Route_Code, f.Rate_Usd_Per_Bbl AS freight_usd_per_bbl, "
@@ -186,15 +182,14 @@ AGENTS = {
                       "AND Production_Month = " + latest("refinery_unit_operations_metrics_vw", "Production_Month")
                       + " GROUP BY ALL ORDER BY Unit_Code"),
                      # E7: one example per refinery-planning table, a plain SELECT (added after the first acceptance run)
-                     ("What did each refinery's plan assume for the crack and utilization in the latest plan month, against what happened?",
+                     ("What did each refinery's June 2025 plan assume for the crack and utilization, against what happened?",
                       "SELECT Refinery_Code, Plan_Month, Assumed_Benchmark_Crack_Usd_Per_Bbl, Actual_Benchmark_Crack_Usd_Per_Bbl, "
                       "Crack_Error_Usd_Per_Bbl, Planned_Utilization_Pct, Actual_Utilization_Pct, Utilization_Error_Pct "
-                      "FROM {c}.gold_commercial_core.refinery_plan_backcast_fact WHERE Plan_Month = "
-                      "(SELECT MAX(Plan_Month) FROM {c}.gold_commercial_core.refinery_plan_backcast_fact) ORDER BY Refinery_Code"),
-                     ("Which decisions concern Galveston Bay, and what evidence do we hold for each?",
+                      "FROM {c}.gold_commercial_core.refinery_plan_backcast_fact WHERE Plan_Month = '2025-06-01' ORDER BY Refinery_Code"),
+                     ("Which decisions concern Anacortes, and what evidence do we hold for each?",
                       "SELECT Decision_Id, Decision_Datetime, Decision_Statement, Owner_Role_Slugs, Measure_Identifiers, Expected_Outcome, "
                       "Evidence_Kind, Evidence_Text FROM {c}.gold_commercial_core.decision_evidence_detail_fact "
-                      "WHERE Refinery_Codes LIKE '%GB%' ORDER BY Decision_Datetime, Evidence_Id"),
+                      "WHERE Refinery_Codes = 'AN' ORDER BY Decision_Datetime, Evidence_Id"),
                      ("What disruption and policy events does the event table hold for the Gulf Coast?",
                       "SELECT Event_Title, Event_Category, Refinery_Code, Event_Start_Date, Event_End_Date FROM {c}.silver_mdm_core.market_event_dim "
                       "WHERE Region_Name = 'Gulf Coast' ORDER BY Event_Start_Date"),
@@ -264,22 +259,59 @@ def serialized(title, spec, catalog):
     })
 
 
+def tested_values(ctx):
+    """What the acceptance checks expect: each non-whole number and each decision ID (Dnn) their figures hold."""
+    from .acceptance import CASES
+    numbers, ids = [], set()
+    for case in CASES:
+        if case.get("mode") == "graph":
+            continue
+        for e in case["check"](ctx):
+            if isinstance(e.value, (int, float)) and not float(e.value).is_integer():
+                numbers.append(float(e.value))
+            elif isinstance(e.value, str) and re.fullmatch(r"D\d{2}", e.value):
+                ids.add(e.value)
+    return numbers, ids
+
+
+def overlaps(rows, numbers, ids):
+    """The values in an example's rows that an acceptance check expects: an example must teach a pattern, not hand
+    the agent a figure a test checks (Codex on step 4)."""
+    hits = set()
+    for row in rows:
+        for v in row:
+            if isinstance(v, str) and v in ids:
+                hits.add(v)
+            try:
+                x = float(v)
+            except (TypeError, ValueError):
+                continue
+            if not x.is_integer() and any(abs(x - n) <= 1e-6 * max(1.0, abs(n)) for n in numbers):
+                hits.add(round(x, 6))
+    return sorted(hits, key=str)
+
+
 def check():
-    """Run every agent's example SQL once against the warehouse; each must run and return at least one row, or the
-    agents would learn a query that fails (Plan 1, step 4)."""
+    """Run every agent's example SQL once against the warehouse. Each must run, return at least one row, and return
+    no figure or decision ID an acceptance check expects (Plan 1, step 4)."""
+    from .acceptance import Context
     conn, e = connect()
     bad = []
     with conn, conn.cursor() as cur:
         catalog = current_catalog(cur, e)
+        numbers, ids = tested_values(Context(cur, catalog))
         for title, spec in AGENTS.items():
             for question, sql in spec["examples"]:
                 try:
                     cur.execute(sql.format(c=catalog))
-                    n, why = len(cur.fetchall()), "no rows"
+                    rows = cur.fetchall()
+                    hits = overlaps(rows, numbers, ids)
+                    why = f"returns tested values {hits}" if hits else "no rows"
                 except Exception as err:  # report every failing example, not only the first
-                    n, why = 0, f"{type(err).__name__}: {str(err)[:200]}"
-                print(f"{'ok ' if n else 'BAD'} {title}: {question} ({n} rows)" + ("" if n else f"; {why}"))
-                if not n:
+                    rows, hits, why = [], [], f"{type(err).__name__}: {str(err)[:200]}"
+                good = bool(rows) and not hits
+                print(f"{'ok ' if good else 'BAD'} {title}: {question} ({len(rows)} rows)" + ("" if good else f"; {why}"))
+                if not good:
                     bad.append(question)
     if bad:
         raise SystemExit(f"{len(bad)} example(s) failed")
