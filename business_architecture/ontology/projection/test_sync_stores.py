@@ -130,10 +130,6 @@ class Workflow(unittest.TestCase):
             self.assertTrue(step.startswith("if: steps.logins.outputs.ready == 'true'"), step[:60])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class StoreTablesAgree(unittest.TestCase):
     """Plan 2 (codebase architecture, 2026-10-30): the Neo4j stores and their login files are listed twice, here and in
     the demo's tech_graph.py, which sync_stores runs as a separate program. The demo is its own project, so the two
@@ -146,3 +142,8 @@ class StoreTablesAgree(unittest.TestCase):
         node = next(n.value for n in tree.body if isinstance(n, ast.Assign) and any(
             isinstance(t, ast.Name) and t.id == "STORES" for t in n.targets))
         self.assertEqual(ast.literal_eval(node), ss.NEO4J_STORES)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
