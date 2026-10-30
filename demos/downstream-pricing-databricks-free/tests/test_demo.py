@@ -1653,3 +1653,38 @@ def test_after_e7_a_stopped_orchestrator_keeps_its_plan(monkeypatch):
     with pytest.raises(supervisor.OrchestrationError) as err:
         supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
     assert err.value.plan == [refinery]
+
+
+def test_after_e7_run_cases_saves_the_plan_of_a_stopped_run(monkeypatch, tmp_path):
+    # Codex quick check on #411: the plan must reach the saved results, not only the error.
+    import contextlib
+    from pricing_demo import databricks
+    refinery = "Refinery Operations Analytics"
+
+    def stopped(w, d, ids, q):
+        raise supervisor.OrchestrationError("FAILED", [{"agent": refinery, "question": "q", "status": "MessageStatus.COMPLETED"}], [refinery])
+
+    class Conn(contextlib.nullcontext):
+        def cursor(self):
+            return contextlib.nullcontext()
+    monkeypatch.setattr(acceptance, "CASES", [dict(acceptance.CASES[1], check=lambda ctx: [])])
+    monkeypatch.setattr(acceptance, "RESULTS", str(tmp_path / "results.json"))
+    monkeypatch.setattr(supervisor, "client", lambda: (None, {}))
+    monkeypatch.setattr(supervisor, "spaces", lambda w: {})
+    monkeypatch.setattr(supervisor, "orchestrate", stopped)
+    monkeypatch.setattr(databricks, "connect", lambda: (Conn(), {}))
+    monkeypatch.setattr(databricks, "current_catalog", lambda cur, e: "idp_sbx")
+    assert acceptance.run_cases()[0]["plan"] == [refinery]
+    assert json.load(open(tmp_path / "results.json"))["results"][0]["plan"] == [refinery]
+
+
+def test_after_e7_a_plan_of_null_three_times_stops_after_three_calls(monkeypatch):
+    calls = []
+
+    def chat(w, messages, specs=None):
+        calls.append(1)
+        return {"role": "assistant", "content": '{"agents": null}'}
+    monkeypatch.setattr(supervisor, "chat", chat)
+    with pytest.raises(ValueError, match="after 3 attempts"):
+        supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q")
+    assert len(calls) == 3
