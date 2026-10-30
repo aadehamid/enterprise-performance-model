@@ -2,7 +2,7 @@
 
 The judgement rules a reviewer applies to every pull request in this repo. Approval routing is in `APPROVAL_POLICY.md`.
 
-Mechanical rules live in `scripts/check.sh` (the Step 4 gate, tests, published figures, decision-record consistency, quotes of the decision owner against their saved answers, no tracked file naming the decision owner, and the Step 4 pin being in the branch's history), which CI runs. Read its CI result rather than re-checking those by hand. This file holds only what a script cannot judge.
+Mechanical rules live in `scripts/check.sh` (the Step 4 gate, tests, published figures, decision-record consistency, quotes of the decision owner against their saved answers, no tracked file naming the decision owner, words other documents attribute to the decision owner being in the answers file, decision record or PR comment they name, and the Step 4 pin being in the branch's history), which CI runs. Read its CI result rather than re-checking those by hand. This file holds only what a script cannot judge.
 
 Each rule says what to block on and where it came from. A rule earns its place by catching a real defect; delete a rule when the decision behind it changes.
 

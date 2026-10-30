@@ -2853,7 +2853,8 @@ Facts about the source material that are easy to get wrong:
 *2026-10-23.* The decision owner asked: "The ontology and projection
 playbooks should aloso be universally applicable." and "We probably should
 remove the evidence in the below", then chose "Strip evidence to worklog
-(Recommended)". The playbook (`business_architecture/ontology/ontology-playbook.md`)
+(Recommended)" (`answers-2026-10-23-closeout.md` in the decision-owner answers
+folder). The playbook (`business_architecture/ontology/ontology-playbook.md`)
 now states each rule and its reason alone, in neutral terms, with a public
 library's lending as its example domain. This section holds what the
 playbook cited from this build before that change: every EPM-DEC-001
