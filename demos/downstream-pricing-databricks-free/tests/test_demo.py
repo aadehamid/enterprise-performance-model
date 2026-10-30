@@ -1795,6 +1795,7 @@ def test_after_e7_a_case_missing_an_agent_on_several_attempts_counts_once():
     miss = {"passed": False, "reasons": ["agents not called: Crack Spread Price Analytics"], "agents_called": []}
     results = [dict(miss, n=12, attempt=k) for k in (1, 2, 3)]
     assert acceptance.summarize(results, 3)["agent_missed"] == [12]
+    assert acceptance.summarize(results, 3)["reasons"] == {"figures": 0, "terms": 0, "agents": 3}
 
 
 def test_after_e7_an_old_repeat_run_without_its_count_is_refused_until_given(tmp_path):
@@ -1809,3 +1810,43 @@ def test_after_e7_an_old_repeat_run_without_its_count_is_refused_until_given(tmp
     plain = tmp_path / "plain.json"  # a run with no attempt numbers asked each case once
     plain.write_text(json.dumps({"run_at": "x", "results": [{k: v for k, v in results[0].items() if k != "attempt"}]}))
     assert acceptance.summary(str(plain))["passed"] == [3]
+
+
+# ---- after E7, step 4: Genie example queries for the SQL patterns the runs got wrong ----
+
+def test_after_e7_no_genie_example_repeats_an_acceptance_question():
+    # An example that matches a test's question word for word would let the test pass on a memorised query
+    # (E7-FAILURE-DIAGNOSIS, "What not to do"). The step 4 examples name other refineries, regions, months and decisions.
+    def words(text):
+        return " ".join(re.findall(r"[a-z0-9&]+", text.lower()))
+    asked = {words(c["question"]) for c in acceptance.CASES}
+    examples = [q for spec in genie.AGENTS.values() for q, _ in spec["examples"]]
+    assert not [q for q in examples if words(q) in asked]
+    # whether an example returns a figure a test checks is a question of data: genie check answers it against the
+    # warehouse (genie.overlaps); offline, no example asks for the latest date, the acceptance data's last day
+    sqls = " ".join(sql for spec in genie.AGENTS.values() for _, sql in spec["examples"])
+    assert "2026-10-20" not in sqls
+    # full precision, so genie check's match within a millionth finds the same figure: no example rounds (quick check on step 4)
+    assert "ROUND(" not in sqls.upper()
+    for q in examples:  # no test question is contained in an example either; every question is longer than 40
+        # characters, so the length only keeps a stray short string from matching
+        assert not any(a in words(q) for a in asked if len(a) > 40), q
+
+
+def test_after_e7_each_agent_has_an_example_for_the_patterns_the_runs_got_wrong():
+    sqls = {t: " ".join(s for _, s in spec["examples"]) for t, spec in genie.AGENTS.items()}
+    assert "SortColumns = 1 AND effective_date BETWEEN" in sqls["Executive Summary KPIs Analytics"]  # a month's front month
+    assert "Rate_Usd_Per_Bbl / 42" in sqls["Pricing and Market Margin Analytics"]  # $/bbl freight in $/gal
+    refinery = sqls["Refinery Operations Analytics"]
+    for pattern in ("MIN_BY(Production_Date", "AVG(region_runs_mbpd)", "AVG(ABS(Actual_Gasoline_Yield_Pct",
+                    "Scan_Step = 'diagnosis'", "Question_Key = 'margin_driver'", "COUNT_IF("):
+        assert pattern in refinery, pattern
+
+
+def test_after_e7_genie_check_flags_an_example_that_returns_a_tested_value():
+    # Codex round 2 on step 4: examples returned figures and decision IDs the acceptance checks expect.
+    assert genie.overlaps([("NYH ULSD", 5.265), ("x", 3)], [5.265], {"D02"}) == [5.265]
+    assert genie.overlaps([("plans beaten", 4)], [4.0], set()) == [4.0]  # a whole-number figure counts too (quick check)
+    assert genie.overlaps([("D02", "text"), ("D05", 1.25)], [5.265], {"D02"}) == ["D02"]
+    assert genie.overlaps([("USGC ULSD", 5.2651)], [5.265], set()) == []  # a match is within a millionth, relative
+    assert genie.overlaps([("NYH ULSD", 5.2650000001)], [5.265], set()) == [5.265]
