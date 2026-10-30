@@ -1472,7 +1472,7 @@ def test_e7_rejudge_fails_only_a_changed_question_and_keeps_the_no_lesson_rule(t
                "double negative": "The crude oil trader made D08. It is not true that no lesson was recorded."}
     for name, answer in answers.items():
         run = {"run_at": "2026-10-29T00:00:00+00:00", "results": [
-            {"n": 14, "question": case["question"], "agents_called": [{"agent": "Refinery Operations Analytics"}],
+            {"n": 14, "question": case["question"], "agents_called": [{"agent": "Refinery Operations Analytics", "status": "MessageStatus.COMPLETED"}],
              "answer": answer, "expected": [record], "passed": False, "reasons": []}]}
         path = tmp_path / f"{name.replace(' ', '-')}.json"
         path.write_text(json.dumps(run))
@@ -1727,3 +1727,85 @@ def test_after_e7_the_conversation_stays_within_the_context_budget(monkeypatch):
     monkeypatch.setattr(supervisor, "CONTEXT_CHARS", 10)
     with pytest.raises(ValueError, match="even without tool rows"):
         supervisor.fit(messages)
+
+
+# ---- after E7, step 3: a failed Genie message is retried, and a case can be asked K times ----
+
+def test_after_e7_a_failed_genie_message_is_retried_and_every_failure_kept(monkeypatch):
+    import sys
+    import types
+
+    class OperationFailed(Exception):  # the SDK's error, stood in: check.sh runs without the Databricks SDK
+        pass
+    monkeypatch.setitem(sys.modules, "databricks.sdk.errors", types.SimpleNamespace(OperationFailed=OperationFailed))
+    tries = iter([OperationFailed("got MessageStatus.FAILED"), {"status": "MessageStatus.COMPLETED", "text": "t", "rows": [], "row_count": 0}])
+
+    def once(w, space, q):
+        x = next(tries)
+        if isinstance(x, Exception):
+            raise x
+        return x
+    monkeypatch.setattr(supervisor, "ask_once", once)
+    monkeypatch.setattr(supervisor, "GENIE_WAIT", 0)
+    result = supervisor.ask_genie(None, "id", "q")
+    assert result["attempts"] == 2 and result["errors"] == ["got MessageStatus.FAILED"] and supervisor.completed(result)
+    monkeypatch.setattr(supervisor, "ask_once", lambda w, space, q: (_ for _ in ()).throw(OperationFailed("FAILED")))
+    result = supervisor.ask_genie(None, "id", "q")
+    assert result["attempts"] == 3 and len(result["errors"]) == 3 and not supervisor.completed(result)
+
+
+def test_after_e7_an_agent_whose_every_attempt_failed_counts_as_not_called():
+    crack = "Crack Spread Price Analytics"
+    failed = [{"agent": crack, "status": "MessageStatus.FAILED"}]
+    assert supervisor.missing({crack}, failed) == [crack]
+    case = next(c for c in acceptance.CASES if c["n"] == 13)
+    reasons = acceptance.judge(case, [], {"agents_called": failed + [{"agent": "Refinery Operations Analytics",
+                                                                      "status": "MessageStatus.COMPLETED"}], "answer": ""})["reasons"]
+    assert "agents not called: Crack Spread Price Analytics" in reasons
+
+
+def test_after_e7_a_case_asked_k_times_passes_only_when_every_attempt_does(tmp_path):
+    results = [{"n": 3, "attempt": 1, "passed": True, "reasons": [], "agents_called": []},
+               {"n": 3, "attempt": 2, "passed": False, "reasons": ["missing x"], "agents_called": []},
+               {"n": 3, "attempt": 3, "passed": True, "reasons": [], "agents_called": []},
+               {"n": 11, "attempt": 1, "passed": True, "reasons": [], "agents_called": []}]
+    assert acceptance.summarize(results)["passed"] == [11] and acceptance.summarize(results)["cases"] == 2
+    path = tmp_path / "run.json"
+    path.write_text(json.dumps({"run_at": "x", "repeat": 3, "results": results}))
+    assert "use case 3: fail (2/3)" in acceptance.compare([str(path)])
+
+
+def test_after_e7_a_run_that_stopped_does_not_pass_a_case_on_fewer_attempts(tmp_path):
+    # Codex round 1 on step 3: a run asked 3 times that stopped after one passing attempt reported the case as passed.
+    one = [{"n": 3, "attempt": 1, "passed": True, "reasons": [], "agents_called": []}] + [
+        {"n": 11, "attempt": k, "passed": True, "reasons": [], "agents_called": []} for k in (1, 2, 3)]
+    s = acceptance.summarize(one, 3)
+    assert s["passed"] == [11] and s["incomplete"] == [3]
+    path = tmp_path / "run.json"
+    path.write_text(json.dumps({"run_at": "x", "repeat": 3, "results": one}))
+    lines = acceptance.compare([str(path)])
+    assert "incomplete: 3" in lines[0] and "use case 3: incomplete (1/1 of 3)" in lines
+    for r in one:  # rejudge needs what a recorded run holds
+        r.update(question=next(c["question"] for c in acceptance.CASES if c["n"] == r["n"]), expected=[], answer="")
+    path.write_text(json.dumps({"run_at": "x", "repeat": 3, "results": one}))
+    assert acceptance.rejudge(str(path))["repeat"] == 3
+
+
+def test_after_e7_a_case_missing_an_agent_on_several_attempts_counts_once():
+    miss = {"passed": False, "reasons": ["agents not called: Crack Spread Price Analytics"], "agents_called": []}
+    results = [dict(miss, n=12, attempt=k) for k in (1, 2, 3)]
+    assert acceptance.summarize(results, 3)["agent_missed"] == [12]
+
+
+def test_after_e7_an_old_repeat_run_without_its_count_is_refused_until_given(tmp_path):
+    # Codex round 2 on step 3: inferring the count from the attempts present undercounts a run that stopped.
+    results = [{"n": 3, "attempt": k, "passed": True, "reasons": [], "agents_called": [], "expected": [], "answer": "",
+                "question": next(c["question"] for c in acceptance.CASES if c["n"] == 3)} for k in (1, 2)]
+    path = tmp_path / "old.json"
+    path.write_text(json.dumps({"run_at": "x", "results": results}))
+    with pytest.raises(SystemExit, match="rejudge it with --repeat K"):
+        acceptance.summary(str(path))
+    assert acceptance.rejudge(str(path), 3)["repeat"] == 3
+    plain = tmp_path / "plain.json"  # a run with no attempt numbers asked each case once
+    plain.write_text(json.dumps({"run_at": "x", "results": [{k: v for k, v in results[0].items() if k != "attempt"}]}))
+    assert acceptance.summary(str(plain))["passed"] == [3]

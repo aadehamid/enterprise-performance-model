@@ -2,7 +2,8 @@
 
     uv run --group graph python -m pricing_demo.acceptance expected        # compute every check's figures; ask nothing
     uv run --group graph python -m pricing_demo.acceptance run [N ...]     # ask each question and judge the answer
-    uv run --group graph python -m pricing_demo.acceptance rejudge FILE ...  # judge a recorded run again; ask nothing
+    uv run --group graph python -m pricing_demo.acceptance run --repeat K [N ...]  # ask each K times; all must pass
+    uv run --group graph python -m pricing_demo.acceptance rejudge [--repeat K] FILE ...  # judge a recorded run again
     uv run --group graph python -m pricing_demo.acceptance compare FILE ...  # compare recorded runs, case by case
 
 A use case passes when the orchestrator (supervisor.py) calls the agents its row names, its answer holds every figure
@@ -21,7 +22,7 @@ import re
 import sys
 from collections import namedtuple
 
-from .config import OUT, ROOT, source_dsn
+from .config import OUT, ROOT, completed, source_dsn
 
 # A figure the answer must hold: a number within tol, a string, or a tuple of strings any one of which will do. A
 # number counts only where the answer ties it to its own label (see holds); cue, when given, is a regex in which {v}
@@ -586,7 +587,7 @@ def judge(case, expected, run):
     reasons = []
     if run.get("error"):
         reasons.append(f"error: {run['error']}")
-    called = {c["agent"] for c in run.get("agents_called", [])}
+    called = {c["agent"] for c in run.get("agents_called", []) if completed(c)}
     missed = [a for a in case["agents"] if a not in called]
     if missed:
         reasons.append("agents not called: " + ", ".join(missed))
@@ -647,7 +648,7 @@ def graph_answer():
     return {"agents_called": [], "answer": "\n".join(lines)}
 
 
-def run_cases(numbers_wanted=None, stamp=None):
+def run_cases(numbers_wanted=None, stamp=None, repeat=1):
     from .databricks import connect, current_catalog
     stamp = stamp or now()
     from . import supervisor
@@ -657,9 +658,8 @@ def run_cases(numbers_wanted=None, stamp=None):
     results = []
     with conn, conn.cursor() as cur:
         ctx = Context(cur, current_catalog(cur, e))
-        for case in CASES:
-            if numbers_wanted and case["n"] not in numbers_wanted:
-                continue
+        selected = [c for c in CASES if not numbers_wanted or c["n"] in numbers_wanted]
+        for case, attempt in [(c, k) for c in selected for k in range(1, repeat + 1)]:
             try:
                 expected = case["check"](ctx)
             except Exception as err:  # a check that cannot run fails its case, and the run goes on (after E7: a
@@ -674,15 +674,17 @@ def run_cases(numbers_wanted=None, stamp=None):
                     run = {"agents_called": getattr(err, "agents_called", []), "plan": getattr(err, "plan", None), "answer": "",
                            "error": f"{type(err).__name__}: {str(err)[:300]}"}
             verdict = judge(case, expected, run)
-            results.append({"n": case["n"], "question": case["question"], "mode": case.get("mode", "orchestrator"),
+            results.append({"n": case["n"], "attempt": attempt, "question": case["question"], "mode": case.get("mode", "orchestrator"),
                             "agents_required": case["agents"],
-                            "agents_called": [{k: c[k] for k in ("agent", "question", "status")} for c in run["agents_called"]],
+                            "agents_called": [{k: c[k] for k in ("agent", "question", "status", "attempts", "errors") if k in c}
+                                              for c in run["agents_called"]],
                             "plan": run.get("plan"), "definitions_read": definitions_read(run), "answer": run["answer"],
                             "error": run.get("error"),
                             "expected": [recorded(x) for x in expected], **verdict})
-            print(f"use case {case['n']}: {'pass' if verdict['passed'] else 'fail'}"
+            print(f"use case {case['n']}" + (f" (attempt {attempt} of {repeat})" if repeat > 1 else "")
+                  + f": {'pass' if verdict['passed'] else 'fail'}"
                   + ("" if verdict["passed"] else " - " + "; ".join(verdict["reasons"])), flush=True)
-            save(results, stamp)  # after every case, so a run that stops keeps the cases it finished
+            save(results, stamp, repeat)  # after every case, so a run that stops keeps the cases it finished
     return results
 
 
@@ -690,11 +692,11 @@ def now():
     return dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
 
 
-def save(results, stamp):
-    """Write a run's results so far to RESULTS, stamped with the time the run started."""
+def save(results, stamp, repeat=1):
+    """Write a run's results so far to RESULTS, stamped with the time the run started, with the attempts asked per case."""
     os.makedirs(os.path.dirname(RESULTS), exist_ok=True)
     with open(RESULTS, "w") as f:
-        json.dump({"run_at": stamp, "results": results}, f, indent=2, default=str)
+        json.dump({"run_at": stamp, "repeat": repeat, "results": results}, f, indent=2, default=str)
 
 
 def recorded(e):
@@ -710,11 +712,13 @@ def restored(x):
     return Expect(x["label"], value, x["tol"], CUES.get(x["label"]))
 
 
-def rejudge(path):
+def rejudge(path, repeat=None):
     """Judge a recorded run again with the current checks, with no new call: each recorded answer against the figures
     the run recorded, the current agents and ontology terms, and each figure's cue. A case whose question has changed
     since the run fails, since its recorded answer answers another question."""
     run = json.load(open(path))
+    if repeat:
+        run["repeat"] = repeat
     cases = {c["n"]: c for c in CASES}
     out = []
     for r in run["results"]:
@@ -727,39 +731,74 @@ def rejudge(path):
         out.append({**r, "agents_required": list(case["agents"]),  # the agents this verdict required, not the run's
                     "original": {"passed": r["passed"], "reasons": r["reasons"], "agents_required": r.get("agents_required")},
                     **verdict})
-    return {"run_at": run["run_at"], "rejudged_on": "2026-10-29", "results": out}
+    return {"run_at": run["run_at"], "repeat": repeat_of(run), "rejudged_on": dt.date.today().isoformat(), "results": out}
+
+
+def repeat_of(run):
+    """The attempts a run asked per case, as it records them since step 3's review. A run recorded before with no
+    attempt numbers asked each case once; one with attempt numbers but no count cannot say how many it asked, so it
+    is refused until `rejudge --repeat K` records the count (Codex on step 3)."""
+    if run.get("repeat"):
+        return run["repeat"]
+    if any("attempt" in r for r in run["results"]):
+        raise SystemExit("this run recorded attempts but not how many it asked per case: rejudge it with --repeat K")
+    return 1
 
 
 def load(path):
     with open(path) as f:
-        return json.load(f)["results"]
+        run = json.load(f)
+    return run["results"], repeat_of(run)
 
 
 def summary(path):
-    return summarize(load(path))
+    return summarize(*load(path))
 
 
-def summarize(results):
-    """One recorded run in figures: the cases passed, the agent calls, the cases whose agents' SQL read a definitions
-    view and the cases that missed a required agent."""
-    return {"passed": [r["n"] for r in results if r["passed"]], "cases": len(results),
+def by_case(results):
+    """Each case's attempts: one on a plain run, K on a run with --repeat K."""
+    out = {}
+    for r in results:
+        out.setdefault(r["n"], []).append(r)
+    return out
+
+
+def summarize(results, repeat=1):
+    """One recorded run in figures, each a list of case numbers but calls: the cases passed (a case asked K times passes
+    only when all K attempts are recorded and pass: the decision owner, 2026-10-30: "They cannot be giving different
+    answers for the same question"), the cases with fewer than K attempts (a run that stopped), the agent calls, and the
+    cases where an attempt's SQL read a definitions view or an attempt missed a required agent."""
+    cases = by_case(results)
+    return {"passed": [n for n, rs in cases.items() if len(rs) >= repeat and all(r["passed"] for r in rs)],
+            "incomplete": [n for n, rs in cases.items() if len(rs) < repeat], "cases": len(cases),
             "calls": sum(len(r["agents_called"]) for r in results),
-            "definitions_read": [r["n"] for r in results if r.get("definitions_read")],
-            "agent_missed": [r["n"] for r in results if any(x.startswith("agents not called") for x in r["reasons"])]}
+            "definitions_read": sorted({r["n"] for r in results if r.get("definitions_read")}),
+            "agent_missed": sorted({r["n"] for r in results if any(x.startswith("agents not called") for x in r["reasons"])})}
+
+
+def cell(attempts, repeat=1):
+    """A case's verdict on one run: pass or fail, with the count passed when it was asked more than once, or incomplete
+    when the run stopped before all its attempts."""
+    passed = sum(r["passed"] for r in attempts)
+    if len(attempts) < repeat:
+        return f"incomplete ({passed}/{len(attempts)} of {repeat})"
+    word = "pass" if passed == len(attempts) else "fail"
+    return word if len(attempts) == 1 else f"{word} ({passed}/{len(attempts)})"
 
 
 def compare(paths):
     """The lines `compare` prints: each run's summary, then each case's verdict on every run."""
     runs = [load(p) for p in paths]
     lines = []
-    for p, run in zip(paths, runs):
-        s = summarize(run)
+    for p, (run, repeat) in zip(paths, runs):
+        s = summarize(run, repeat)
         lines.append(f"{os.path.basename(p)}: {len(s['passed'])} of {s['cases']} passed ({', '.join(map(str, s['passed'])) or 'none'}); "
                      f"{s['calls']} agent calls; definitions read in {len(s['definitions_read'])}; "
-                     f"a required agent missed in {len(s['agent_missed'])}")
-    by_case = [{r["n"]: r for r in run} for run in runs]
-    for n in sorted({n for run in by_case for n in run}):
-        cells = [("pass" if run[n]["passed"] else "fail") if n in run else "-" for run in by_case]
+                     f"a required agent missed in {len(s['agent_missed'])}"
+                     + (f"; incomplete: {', '.join(map(str, s['incomplete']))}" if s["incomplete"] else ""))
+    indexed = [(by_case(run), repeat) for run, repeat in runs]
+    for n in sorted({n for run, _ in indexed for n in run}):
+        cells = [cell(run[n], repeat) if n in run else "-" for run, repeat in indexed]
         lines.append(f"use case {n}: " + " ".join(cells))
     return lines
 
@@ -778,20 +817,32 @@ def main(argv):
     if command == "expected":
         expected_only()
     elif command == "run":
-        wanted = {int(a) for a in argv[1:]}
+        args, repeat = argv[1:], 1
+        if "--repeat" in args:
+            i = args.index("--repeat")
+            repeat = int(args[i + 1])
+            del args[i:i + 2]
+        wanted = {int(a) for a in args}
         stamp = now()
-        results = run_cases(wanted, stamp)
-        save(results, stamp)  # also when no case matched
-        passed = sum(r["passed"] for r in results)
-        print(f"{passed} of {len(results)} passed; results in {RESULTS}")
+        results = run_cases(wanted, stamp, repeat)
+        save(results, stamp, repeat)  # also when no case matched
+        s = summarize(results, repeat)
+        print(f"{len(s['passed'])} of {s['cases']} passed" + (f" on all {repeat} attempts" if repeat > 1 else "")
+              + f"; results in {RESULTS}")
     elif command == "rejudge":
-        for path in argv[1:]:
-            result = rejudge(path)
+        args, repeat = argv[1:], None
+        if "--repeat" in args:
+            i = args.index("--repeat")
+            repeat = int(args[i + 1])
+            del args[i:i + 2]
+        for path in args:
+            result = rejudge(path, repeat)
             target = path.replace(".json", "-rejudged.json")
             with open(target, "w") as f:
                 json.dump(result, f, indent=2, default=str)
-            print(f"{path}: {sum(r['passed'] for r in result['results'])} of {len(result['results'])} pass when re-judged; "
-                  + ", ".join(str(r["n"]) for r in result["results"] if r["passed"]) + f"; written to {target}")
+            s = summarize(result["results"], result["repeat"])
+            print(f"{path}: {len(s['passed'])} of {s['cases']} pass when re-judged; "
+                  + ", ".join(map(str, s["passed"])) + f"; written to {target}")
     elif command == "compare":
         print("\n".join(compare(argv[1:])))
     else:

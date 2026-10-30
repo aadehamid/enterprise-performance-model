@@ -83,5 +83,10 @@ def databricks_env():
     return values
 
 
+def completed(call):
+    """Whether an agent call completed: the orchestrator and the acceptance judge count only these as called."""
+    return str(call.get("status", "")).endswith("COMPLETED")
+
+
 def source_dsn():
     return env("SOURCE_PG_DSN", "postgresql://demo:demo@localhost:55432")
