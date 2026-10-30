@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="scripts/build_docs_html.py">
+<title>What each store holds now</title>
+<style>
+/* Style: framed-sheet (tasteskill app sheet), screen "report", the same tokens as the stores runbook and the
+   ontology guide so the documents read as one set. Face: the frame tinted blue-grey, the accent teal on
+   links and the current contents entry. Generated from Markdown by scripts/build_docs_html.py: change the
+   Markdown or the template, never a generated page. */
+:root {
+  --ground: #f1f4f6;  --surface: #ffffff;  --raised: #f4f6f8;  --active: #ebedee;
+  --border: #e3e6e9;  --rule: #eef0f2;     --control: #cdced1;
+  --text: #131416;    --muted: #5d5f60;    --faint: #66686a;
+  --accent: #1b6c80;  --accent-soft: #e5f0f3;
+  --notice-bg: #fffbeb; --notice-line: #fde68a; --notice-ink: #92400e;
+  --code-bg: #f4f6f8;
+  --radius-card: 8px; --radius-control: 6px; --radius-sheet: 16px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fs-title: 24px; --fs-section: 19px; --fs-sub: 16px; --fs-body: 15.5px; --fs-small: 12.5px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0b0c0d; --surface: #141516; --raised: #1b1c1e; --active: #242628;
+    --border: #2a2c2f; --rule: #222426; --control: #44474b;
+    --text: #f2f3f3; --muted: #b4b6b8; --faint: #9a9c9e;
+    --accent: #5fb3c7; --accent-soft: #15292e;
+    --notice-bg: #261d0c; --notice-line: #3b2e14; --notice-ink: #f2cf94;
+    --code-bg: #1b1c1e;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--text); font: var(--fs-body)/1.65 var(--font); }
+.bar { height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 20px; border-bottom: 1px solid var(--border); background: var(--ground); position: sticky; top: 0; z-index: 3; }
+.bar .name { font-weight: 600; font-size: 14px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .scope { color: var(--muted); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar nav { margin-left: auto; display: flex; gap: 16px; }
+.bar nav a { color: var(--muted); font-size: 13.5px; text-decoration: none; white-space: nowrap; }
+.bar nav a:hover { color: var(--text); }
+
+.sheet { max-width: 1136px; margin: 24px auto 40px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sheet); padding: 32px 24px 56px; }
+.head { max-width: 1088px; margin: 0 auto; }
+h1 { font-size: var(--fs-title); font-weight: 600; margin: 0; line-height: 1.25; letter-spacing: -.01em; }
+.lead { color: var(--text); font-size: 16px; margin: 8px 0 0; max-width: 76ch; }
+.from-line { color: var(--muted); font-size: var(--fs-small); margin: 8px 0 0; max-width: 100ch; }
+.notice { margin: 18px 0 0; background: var(--notice-bg); border: 1px solid var(--notice-line); color: var(--notice-ink); border-radius: var(--radius-control); padding: 8px 12px; font-size: 13px; max-width: 1088px; }
+.notice code { background: transparent; color: inherit; }
+
+/* contents rail and the text: 248 + 32 + 808 = 1088 */
+.layout { max-width: 1088px; margin: 28px auto 0; display: grid; grid-template-columns: 248px minmax(0, 1fr); gap: 32px; align-items: start; }
+.toc { position: sticky; top: 72px; max-height: calc(100vh - 96px); overflow-y: auto; font-size: 13.5px; padding-right: 4px; }
+.toc p { margin: 0 0 8px; font-weight: 600; font-size: 13.5px; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li a { display: block; color: var(--muted); text-decoration: none; padding: 4px 8px; border-radius: var(--radius-control); line-height: 1.4; }
+.toc li.l3 a { padding-left: 20px; font-size: 13px; }
+.toc li a:hover { color: var(--text); background: var(--raised); }
+.toc li a.on { color: var(--text); background: var(--accent-soft); }
+article { min-width: 0; }
+
+h2, h3, h4, h5, h6 { scroll-margin-top: 64px; line-height: 1.35; position: relative; }
+h2 { font-size: var(--fs-section); font-weight: 600; margin: 44px 0 8px; }
+article > h2:first-child, section.src:first-child > h2 { margin-top: 0; }
+h3 { font-size: var(--fs-sub); font-weight: 600; margin: 32px 0 6px; }
+h4, h5, h6 { font-size: 15px; font-weight: 600; margin: 24px 0 4px; }
+.hl { margin-left: 8px; color: var(--faint); text-decoration: none; font-weight: 400; opacity: 0; }
+h2:hover .hl, h3:hover .hl, h4:hover .hl, .hl:focus { opacity: 1; }
+section.src { padding-top: 8px; }
+section.src + section.src { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+.from { color: var(--muted); font-size: var(--fs-small); margin: 0 0 14px; }
+p, li { max-width: 76ch; }
+p { margin: 10px 0; }
+ul, ol { padding-left: 24px; margin: 10px 0; }
+li { margin: 5px 0; }
+li > ul, li > ol { margin: 4px 0; }
+a { color: var(--accent); overflow-wrap: anywhere; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+strong { font-weight: 600; }
+code { font: 13.5px var(--mono); background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { position: relative; background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 14px 16px; overflow-x: auto; margin: 12px 0 16px; max-width: 100%; }
+pre code { background: none; padding: 0; font-size: 13px; line-height: 1.6; white-space: pre; overflow-wrap: normal; }
+.copy { position: absolute; top: 8px; right: 8px; font: 12px var(--font); background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-control); padding: 3px 8px; cursor: pointer; }
+.copy:hover { color: var(--text); }
+.tblwrap { overflow-x: auto; margin: 14px 0 12px; border: 1px solid var(--border); border-radius: var(--radius-card); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th.num, td.num { text-align: right; }
+th { text-align: left; font-weight: 600; font-size: 13px; color: var(--muted); padding: 9px 12px; border-bottom: 1px solid var(--border); background: var(--raised); vertical-align: bottom; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td p { margin: 0; }
+tr:last-child td { border-bottom: 0; }
+td code, th code { font-size: 12.5px; }
+td:first-child code { white-space: nowrap; overflow-wrap: normal; }
+blockquote { margin: 12px 0; padding: 4px 0 4px 16px; border-left: 3px solid var(--control); color: var(--text); }
+blockquote p { margin: 6px 0; }
+del { color: var(--muted); }
+section.rec { padding-top: 8px; }
+section.rec + section.rec { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
+table.index td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.toc li.l3 a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+figure.pic { margin: 16px 0 20px; }
+figure.pic img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius-card); background: #ffffff; }
+figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
+.end { color: var(--muted); font-size: var(--fs-small); margin-top: 48px; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+@media (max-width: 960px) {
+  .sheet { margin: 0; border-radius: 0; border-width: 0; padding: 20px 16px 40px; }
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 20px; }
+  .toc { position: static; max-height: none; border: 1px solid var(--border); border-radius: var(--radius-card); padding: 4px 8px; }
+  .toc details summary { cursor: pointer; font-weight: 600; padding: 8px 4px; list-style-position: inside; }
+  .toc ul { padding-bottom: 8px; }
+  .toc details > p { display: none; }
+}
+@media (min-width: 961px) {
+  .toc details > summary { display: none; }
+}
+@media (max-width: 640px) {
+  pre { padding-top: 40px; }
+  /* The records index stacks on a phone: number and decision on one line, status and date under it. */
+  table.index thead { display: none; }
+  table.index tr { display: grid; grid-template-columns: 52px minmax(0, 1fr); border-bottom: 1px solid var(--rule); padding: 8px 0; }
+  table.index td { border: 0; padding: 0 10px; }
+  table.index td:nth-child(3), table.index td:nth-child(4) { grid-column: 2; color: var(--muted); font-size: 13px; text-align: left; white-space: normal; }
+  table.index td:first-child { grid-row: span 3; }
+  .bar .scope { display: none; }
+  .bar nav { gap: 12px; flex: none; }
+  /* A file name in a table's first column wraps on a phone, so the text beside it keeps its width. */
+  td:first-child { min-width: 9em; }
+  td:first-child code { white-space: normal; overflow-wrap: anywhere; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body id="top">
+<header class="bar">
+  <span class="name">What each store holds now</span>
+  <span class="scope">EPM ontology</span>
+  <nav aria-label="Documents">
+    <a href="../epm-ontology-guide.html">Ontology guide</a>
+    <a href="../../domain/decisions/decisions.html">Decisions</a>
+    <a href="#top">Top</a>
+  </nav>
+</header>
+<div class="sheet">
+  <div class="head">
+    <h1>What each store holds now</h1>
+    <p class="lead">What each store holds now, what should not be in it, and how to check it yourself.</p>
+    <p class="from-line">Built from <code>STORE-INVENTORY.md</code>.</p>
+  </div>
+  <p class="notice">This page is generated from the Markdown beside it, which is the master copy. A change goes into the Markdown first; then <code>python3 scripts/build_docs_html.py</code> rebuilds this page.</p>
+  <div class="layout">
+    <nav class="toc" aria-label="Contents">
+      <details open>
+        <summary>Contents</summary>
+        <p>Contents</p>
+        <ul>
+<li class="l2"><a href="#local-neo4j-from-the-pipeline-container-epm-lpg">Local Neo4j, from the pipeline (container epm-lpg)</a></li>
+<li class="l2"><a href="#local-neo4j-from-the-driver-container-lpg-local-neo4j-1">Local Neo4j, from the driver (container lpg-local-neo4j-1)</a></li>
+<li class="l2"><a href="#neo4j-auradb">Neo4j AuraDB</a></li>
+<li class="l2"><a href="#local-postgres-container-pricing-demo-sources-and-the-exe-dev-vm">Local Postgres (container pricing-demo-sources) and the exe.dev VM</a></li>
+<li class="l2"><a href="#databricks-free-edition">Databricks Free Edition</a></li>
+<li class="l2"><a href="#docker-on-this-mac">Docker on this Mac</a></li>
+<li class="l2"><a href="#check-it-yourself">Check it yourself</a></li>
+        </ul>
+      </details>
+    </nav>
+    <article>
+<p>This page lists what each store held when it was last audited, what should not be in it, and the commands to check it yourself. <code>LOCAL-STORES.md</code> says where each store lives and how to refresh it, and <code>../../../demos/downstream-pricing-databricks-free/DATA.md</code> says how the demo's tables are generated. This page answers a different question: is the data in each store the latest, and is anything old left beside it?</p>
+<p><strong>Last audit: 2026-10-29, at main <code>0b5d6051</code>.</strong> It was read-only: nothing was changed or deleted. <code>sync_stores.py check</code> read all four ontology stores as current, each marked at 2026-10-29T14:23:14Z from the release set at commit <code>4d1e675b</code>.</p>
+<h2 id="local-neo4j-from-the-pipeline-container-epm-lpg">Local Neo4j, from the pipeline (container <code>epm-lpg</code>)<a class="hl" href="#local-neo4j-from-the-pipeline-container-epm-lpg" aria-label="Link to this section">#</a></h2>
+<div class="tblwrap"><table><thead><tr><th>What</th><th>Count</th><th>Where it comes from</th></tr></thead><tbody><tr><td>Nodes labelled <code>Resource</code> (the ontology)</td><td>4,193</td><td><code>pipeline.py</code>, on every released package</td></tr><tr><td>Relationships between <code>Resource</code> nodes</td><td>21,767</td><td>The same load</td></tr><tr><td>Nodes labelled <code>Tech</code> (the technical graph and decision trail)</td><td>142, each with its own <code>uri</code></td><td><code>pricing_demo.tech_graph load</code></td></tr><tr><td><code>EpmStoreMarker</code></td><td>1 (<code>store: pipeline</code>)</td><td><code>sync_stores.py mark</code></td></tr><tr><td>n10s configuration nodes (<code>_GraphConfig</code>, <code>_NsPrefDef</code>, <code>_n10sValidatorConfig</code>)</td><td>1 each</td><td>The n10s load</td></tr><tr><td>All nodes, all relationships</td><td>4,339, 22,307</td><td></td></tr></tbody></table></div>
+<p>Should not be there: nodes from an earlier release beside the current ones, a second copy of the Tech graph (two <code>Tech</code> nodes with the same <code>uri</code>), or any label not listed above.</p>
+<h2 id="local-neo4j-from-the-driver-container-lpg-local-neo4j-1">Local Neo4j, from the driver (container <code>lpg-local-neo4j-1</code>)<a class="hl" href="#local-neo4j-from-the-driver-container-lpg-local-neo4j-1" aria-label="Link to this section">#</a></h2>
+<div class="tblwrap"><table><thead><tr><th>What</th><th>Count</th><th>Where it comes from</th></tr></thead><tbody><tr><td>Nodes labelled <code>Resource</code></td><td>4,193</td><td>The driver's <code>rebuild</code> step, from <code>epm_triples</code></td></tr><tr><td>Relationships between <code>Resource</code> nodes</td><td>22,142</td><td>The same load; the driver counts more relationships than the pipeline from the same releases (see <code>ontology-stores-runbook.html</code>, Stores)</td></tr><tr><td>Nodes labelled <code>Tech</code></td><td>142, each with its own <code>uri</code></td><td><code>pricing_demo.tech_graph load</code></td></tr><tr><td>Nodes labelled <code>Module</code></td><td>11</td><td>The driver's module tags</td></tr><tr><td><code>EpmStoreMarker</code></td><td>1 (<code>store: driver</code>)</td><td><code>sync_stores.py mark</code></td></tr><tr><td>n10s configuration nodes</td><td>1 each</td><td>The n10s load</td></tr><tr><td>All nodes, all relationships</td><td>4,350, 22,706</td><td></td></tr></tbody></table></div>
+<h2 id="neo4j-auradb">Neo4j AuraDB<a class="hl" href="#neo4j-auradb" aria-label="Link to this section">#</a></h2>
+<p>AuraDB holds a copy of the driver's graph, in one database. Its counts match the driver's, without the n10s configuration nodes:</p>
+<ul><li>4,193 <code>Resource</code> nodes, with 22,142 relationships between them;</li><li>142 <code>Tech</code> nodes, each with its own <code>uri</code>;</li><li>11 <code>Module</code> nodes;</li><li>one <code>EpmStoreMarker</code> (<code>store: aura</code>);</li><li>4,347 nodes and 22,706 relationships in all.</li></ul>
+<h2 id="local-postgres-container-pricing-demo-sources-and-the-exe-dev-vm">Local Postgres (container <code>pricing-demo-sources</code>) and the exe.dev VM<a class="hl" href="#local-postgres-container-pricing-demo-sources-and-the-exe-dev-vm" aria-label="Link to this section">#</a></h2>
+<p>Both hold the same eight databases, with the same tables and row counts. These match <code>DATA.md</code>:</p>
+<div class="tblwrap"><table><thead><tr><th>Database</th><th>Tables (rows)</th></tr></thead><tbody><tr><td><code>price_assessment</code></td><td><code>mips_priceassessment</code> (266,288), <code>mips_pricebatch</code> (748), <code>mips_priceassessmentgroup</code> (188), <code>mips_pricegroup</code> (66), <code>mips_pricesheet</code> (7), <code>mips_unitofmeasure</code> (6), <code>mips_currency</code> (1)</td></tr><tr><td><code>price_reference</code></td><td><code>pricedetail</code> (599,148), <code>pricemaster</code> (132)</td></tr><tr><td><code>reference_data_hub</code></td><td><code>external_citation</code> (1,360), <code>external_event</code> (344), <code>forward_scan</code> (45), <code>holidaycalendar</code> (30), <code>market_event</code> (9), <code>deliveryperiodcategory</code> (3), <code>priceservice</code> (2)</td></tr><tr><td><code>rightangle</code></td><td><code>deal</code> (2,673), <code>movement</code> (2,673), <code>freight_rate</code> (1,496)</td></tr><tr><td><code>aspen_pims</code></td><td><code>plan_target</code> (481), <code>plan_version</code> (455), <code>decision_evidence</code> (22), <code>decision_log</code> (10)</td></tr><tr><td><code>production_accounting</code></td><td><code>unit_daily</code> (76,296), <code>refinery_daily</code> (9,724), <code>refinery</code> (13)</td></tr><tr><td><code>eia_weekly</code></td><td><code>weekly_value</code> (8,792), <code>series</code> (28)</td></tr><tr><td><code>decision_truth</code></td><td><code>decision_dossier</code> (10); hidden, never replicated</td></tr></tbody></table></div>
+<p>Should not be there: databases under the source names used before 2026-10-28. None was found.</p>
+<p><strong>Databases on the VM that the demo did not create.</strong> The VM's Postgres also holds three databases owned by other logins:</p>
+<ul><li>"Enterprise Performance Model", owned by <code>epm_owner</code>;</li><li><code>exedev</code>, which has no tables;</li><li><code>sales</code>, which the demo login cannot read.</li></ul>
+<p>The demo never reads them. Decide whether to keep them.</p>
+<p>The Postgres data sits in the named volume <code>pricing-demo-pgdata</code>, so a reboot keeps it.</p>
+<h2 id="databricks-free-edition">Databricks Free Edition<a class="hl" href="#databricks-free-edition" aria-label="Link to this section">#</a></h2>
+<div class="tblwrap"><table><thead><tr><th>Catalog and schema</th><th>Objects</th><th>Where they come from</th></tr></thead><tbody><tr><td><code>workspace.epm_ontology</code></td><td><code>epm_triples</code>, <code>epm_store_markers</code></td><td>The driver's <code>databricks</code> step; <code>sync_stores.py mark</code></td></tr><tr><td><code>idp_sbx</code>, seven <code>replica_*</code> schemas</td><td>28 tables</td><td><code>pricing_demo.databricks build</code>, from the volume</td></tr><tr><td><code>idp_sbx.silver_mdm_core</code>, <code>idp_sbx.silver_udm_core</code></td><td>10 and 12 tables</td><td>The same build</td></tr><tr><td><code>idp_sbx.gold_commercial_core</code></td><td>6 tables</td><td>The same build</td></tr><tr><td><code>idp_sbx.semantic_sem_commercial</code></td><td>6 metric views</td><td>The same build</td></tr><tr><td><code>idp_sbx.ontology_definitions</code></td><td>5 views</td><td>The same build</td></tr><tr><td><code>idp_sbx.tech_graph</code></td><td><code>tech_graph_nodes</code> (142), <code>tech_graph_edges</code> (540)</td><td>Created empty by the build; filled by <code>pricing_demo.tech_graph sync</code></td></tr><tr><td><code>idp_sbx.replica_landing</code>, volume <code>raw</code></td><td>28 Parquet files, one per source table, from the last upload</td><td><code>pricing_demo.replicate</code> and <code>databricks upload</code></td></tr></tbody></table></div>
+<p>The 69 objects in <code>idp_sbx</code> are exactly the ones the demo's SQL creates (<code>databricks.created_objects()</code>). Other items in the workspace:</p>
+<ul><li><strong>Genie spaces:</strong> the demo's four agents (Crack Spread Price Analytics, Executive Summary KPIs Analytics, Pricing and Market Margin Analytics, Refinery Operations Analytics). The others belong to other work: two O2C spaces from the repo's <code>demos/o2c-unbilled-databricks-free-cv-map</code>, and two Databricks sample spaces.</li><li><strong>Secret scopes:</strong> one, <code>epm-neo4j</code>, used by the demo's AuraDB test.</li><li><strong>Jobs and Supervisor Agents:</strong> none.</li><li><strong>The schema <code>workspace.o2c_unbilled</code>:</strong> 25 objects from the O2C demo, which this page does not cover.</li></ul>
+<h2 id="docker-on-this-mac">Docker on this Mac<a class="hl" href="#docker-on-this-mac" aria-label="Link to this section">#</a></h2>
+<p>Three containers are in use: <code>epm-lpg</code>, <code>lpg-local-neo4j-1</code> and <code>pricing-demo-sources</code>. The rest is left over from earlier runs:</p>
+<ul><li><strong>14 unnamed volumes not attached to any container.</strong> Seven hold about 541 MB each: the data of Neo4j containers from earlier pipeline and driver runs, which later runs replaced. The other seven are small log volumes. No current store reads them.</li><li><strong>Stopped or unused containers:</strong> <code>lpg-local-n10s-jar-1</code> (exited, as it should: at the driver's start it downloads the n10s plugin into the plugins folder and checks its checksum), <code>practical_edison</code> (Docker's tutorial, exited 21 months ago) and <code>pgadmin4_container</code> (created, never started).</li><li><strong>Images:</strong> <code>lpg-fuseki:6.2.0</code> and <code>rdf-store-fuseki:6.2.0</code>, built for the driver's transient Jena store. Its container is removed after each run. A driver run rebuilds the images if they are missing.</li></ul>
+<p>To remove the leftovers, check first. Removing an unnamed volume cannot be undone. Then run:</p>
+<pre><code class="lang-bash">docker volume ls -q --filter dangling=true                    # the 14 volumes no container uses
+docker volume prune                                           # removes exactly those
+docker rm practical_edison pgadmin4_container                 # optional</code></pre>
+<h2 id="check-it-yourself">Check it yourself<a class="hl" href="#check-it-yourself" aria-label="Link to this section">#</a></h2>
+<p>From this folder, with the logins <code>LOCAL-STORES.md</code> names:</p>
+<pre><code class="lang-bash">uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py check</code></pre>
+<p>Each Neo4j store: the counts above (the pipeline store shown; for the driver, use <code>lpg-local-neo4j-1</code> and its <code>run.env</code> as <code>ontology-stores-runbook.html</code>, Check, says):</p>
+<pre><code class="lang-bash">set -a; . ~/epm-lpg/run.env; set +a
+docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j \
+  "MATCH (n) UNWIND labels(n) AS l RETURN l, count(*) ORDER BY count(*) DESC; MATCH (t:Tech) RETURN count(t), count(DISTINCT t.uri);"</code></pre>
+<p>Postgres: the row-count loop in <code>ontology-stores-runbook.html</code>, Check. Databricks: <code>uv run python -m pricing_demo.databricks counts</code> from the demo's folder.</p>
+      <p class="end">Generated from <code>STORE-INVENTORY.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="../epm-ontology-guide.html">ontology guide</a>.</p>
+    </article>
+  </div>
+</div>
+<script>
+(function () {
+  if (navigator.clipboard) {
+    document.querySelectorAll("pre").forEach(function (pre) {
+      var b = document.createElement("button");
+      b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+      b.addEventListener("click", function () {
+        navigator.clipboard.writeText(pre.querySelector("code").innerText).then(function () {
+          b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500);
+        });
+      });
+      pre.appendChild(b);
+    });
+  }
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); })
+    .filter(Boolean);
+  if (!("IntersectionObserver" in window) || !heads.length) return;
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        if (current) current.classList.remove("on");
+        current = byId[e.target.id];
+        if (current) current.classList.add("on");
+      }
+    });
+  }, { rootMargin: "-60px 0px -75% 0px" });
+  heads.forEach(function (h) { io.observe(h); });
+  if (window.matchMedia("(max-width: 960px)").matches) {
+    var d = document.querySelector(".toc details");
+    if (d) d.removeAttribute("open");
+  }
+})();
+</script>
+</body>
+</html>

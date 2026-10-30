@@ -130,6 +130,8 @@ def pages():
                "How the released packages are projected into a Neo4j property graph and checked."),
         single(f"{ONT}/projection/LOCAL-STORES.md",
                "Where each store that holds the ontology or the demo data lives, and how to refresh it."),
+        single(f"{ONT}/projection/STORE-INVENTORY.md",
+               "What each store holds now, what should not be in it, and how to check it yourself."),
         single(f"{ONT}/projection/skill-run/README.md",
                "How the ontology-to-lpg skill's driver runs on these releases, with every store and check."),
         single("business_architecture/domain/business-glossary.md",
