@@ -773,7 +773,9 @@ def summarize(results, repeat=1):
             "incomplete": [n for n, rs in cases.items() if len(rs) < repeat], "cases": len(cases),
             "calls": sum(len(r["agents_called"]) for r in results),
             "definitions_read": sorted({r["n"] for r in results if r.get("definitions_read")}),
-            "agent_missed": sorted({r["n"] for r in results if any(x.startswith("agents not called") for x in r["reasons"])})}
+            "agent_missed": sorted({r["n"] for r in results if any(x.startswith("agents not called") for x in r["reasons"])}),
+            "reasons": {kind: sum(x.startswith(prefix) for r in results for x in r["reasons"])
+                        for kind, prefix in (("figures", "missing "), ("terms", "no ontology term"), ("agents", "agents not called"))}}
 
 
 def cell(attempts, repeat=1):
@@ -795,7 +797,8 @@ def compare(paths):
         lines.append(f"{os.path.basename(p)}: {len(s['passed'])} of {s['cases']} passed ({', '.join(map(str, s['passed'])) or 'none'}); "
                      f"{s['calls']} agent calls; definitions read in {len(s['definitions_read'])}; "
                      f"a required agent missed in {len(s['agent_missed'])}"
-                     + (f"; incomplete: {', '.join(map(str, s['incomplete']))}" if s["incomplete"] else ""))
+                     + (f"; incomplete: {', '.join(map(str, s['incomplete']))}" if s["incomplete"] else "")
+                     + "; failure reasons: " + ", ".join(f"{v} {k}" for k, v in s["reasons"].items()))
     indexed = [(by_case(run), repeat) for run, repeat in runs]
     for n in sorted({n for run, _ in indexed for n in run}):
         cells = [cell(run[n], repeat) if n in run else "-" for run, repeat in indexed]
