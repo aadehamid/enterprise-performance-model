@@ -1076,9 +1076,10 @@ SAID = re.compile(r'(?:(?!' + SENTENCE_END + r')[^"”“]){0,160}?["“]([^"”
 # files, records, PR or comment numbers), a comma and "then", "later" or "and". Any other word, such as a subject
 # ("the reviewer replied", "(the reviewer) then replied"), ends the chain.
 CITE_TOKEN = r'(?:`?[\w-]+\.md`?|EPM-DEC-001-\d{4}|#\d+|comment \d{6,})'
-CONNECTIVE = re.compile(r'^\s*(?:\([\s,]*' + CITE_TOKEN + r'(?:[\s,]+' + CITE_TOKEN + r')*[\s,]*\))?\s*,?\s*'
+CITED = r'(?:\([\s,]*' + CITE_TOKEN + r'(?:[\s,]+' + CITE_TOKEN + r')*[\s,]*\))?'  # an optional bracketed citation
+CONNECTIVE = re.compile(r'^\s*' + CITED + r'\s*,?\s*'
                         r'(?:and\s+)?(?:then|later|and)\s+$', re.I)
-LISTED = re.compile(r'\s*(?:,\s*(?:(?:and|or)\s+)?|(?:and|or)\s+)["“]([^"”]+)["”]')  # 'said "A", "B" and "C"': one verb, three quotes
+LISTED = re.compile(r'\s*' + CITED + r'\s*(?:,\s*(?:(?:and|or)\s+)?|(?:and|or)\s+)["“]([^"”]+)["”]')  # 'said "A", "B" and "C"': one verb, three quotes
 ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")  # the usual name; a cited name that fits it must exist
 MD_NAME = re.compile(r"[\w-]+\.md")  # any saved answer counts by its own name, such as delegation.md
 RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")

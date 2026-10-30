@@ -1189,6 +1189,13 @@ def test_citations_check_every_quote_in_a_list_after_one_verb(tmp_path):
                              'as they were recorded" and "keep the old figures as they were recorded", then chose "a '
                              'sentence nobody saved at all" (answers-x.md).\n')):
         assert [p for p in _citation_fixture(tmp_path / f"a{k}", doc) if "a sentence nobody saved" in p], k
+    # Cursor's HOLD on 0b1887af: a citation between the listed quotes does not end the list.
+    cited = ('The decision owner said "keep the old figures as they were recorded" (answers-x.md) and "a sentence nobody '
+             'saved at all", then chose "another sentence nobody saved here" (answers-x.md).\n')
+    found = _citation_fixture(tmp_path / "c", cited)
+    assert [p for p in found if "a sentence nobody saved" in p] and [p for p in found if "another sentence nobody" in p]
+    comma = 'The decision owner said "keep the old figures as they were recorded" (answers-x.md), and "a sentence nobody saved at all".\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "d", comma)[0]
     # A quote after other words is not in the list: a title the reviewer then gives stays unchecked.
     other = ('The decision owner said "keep the old figures as they were recorded" (answers-x.md), and the reviewer '
              'gave "a sentence nobody saved at all".\n')
