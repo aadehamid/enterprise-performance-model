@@ -45,10 +45,11 @@ def _modules():
 
 
 def _commands():
-    """check.sh's executable text: every comment dropped, whole-line or after a command (a # that starts a word; no
-    command in check.sh quotes one), and $step4 written out, so every path reads in full."""
+    """check.sh's executable text: every comment dropped, whole-line or after a command (a # that starts a word, as
+    after a space or a control operator such as ;, &, | or a bracket; no command in check.sh quotes one), and $step4
+    written out, so every path reads in full."""
     import re
-    code = [re.sub(r"(^|\s)#.*$", "", line) for line in _lines()]
+    code = [re.sub(r"(^|[\s;&|()<>])#.*$", r"\1", line) for line in _lines()]
     return "\n".join(code).replace("$step4", "business_architecture/ontology/step4")
 
 
