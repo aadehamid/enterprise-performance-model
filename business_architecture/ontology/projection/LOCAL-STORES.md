@@ -19,6 +19,6 @@ Since 2026-10-26 the stores below stay loaded after a run, so the decision owner
 
 The Postgres data sits in the named Docker volume `pricing-demo-pgdata`, so a reboot keeps it. The container has `restart: unless-stopped`; after a reboot, start all three local containers as `ontology-stores-runbook.html` says, whichever came back by itself. `replace_target` is on in `skill-run/epm-run.json`, so each driver run replaces what Aura holds.
 
-`ontology-stores-runbook.html`, beside this page, explains the end-to-end workflow with diagrams, and gives the commands to check, stop, start, restart after a reboot, purge, reload and keep in step each store. Open it in a browser.
+`STORE-INVENTORY.md`, beside this page, lists what each store holds now, what should not be in it, and how to check it (since 2026-10-29). `ontology-stores-runbook.html`, beside this page, explains the end-to-end workflow with diagrams, and gives the commands to check, stop, start, restart after a reboot, purge, reload and keep in step each store. Open it in a browser.
 
 The scripts that build and check these stores are in the repository: `pipeline.py`, `run_local.sh`, `sync_stores.py` and `skill-run/` here, and `pricing_demo/` and `tests/` in the demo.
