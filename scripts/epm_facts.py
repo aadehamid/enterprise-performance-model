@@ -1079,10 +1079,11 @@ COMMENT_ID = re.compile(r"comment \d{6,}")
 
 
 def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=None):
-    """Words a tracked Markdown document attributes to the decision owner, outside the decision records and the saved
-    answers. Every quote of three or more words after an attribution must be word for word in a saved answer, and the
-    paragraph must name a source that exists: an answers file that holds the words, a decision record whose "The decision
-    owner's recorded words" section holds them, or the PR comment the answer was given in. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
+    """Words a tracked Markdown document attributes to the decision owner, outside the decision records, the saved
+    answers and the review evidence (whose quotes `quotes` checks). Every quote of three or more words after an
+    attribution must be word for word in a saved answer, and the paragraph must name a source: an answers file that
+    exists and holds the words, a decision record that exists and whose "The decision owner's recorded words" section
+    holds them, or a PR comment by number (its number is not looked up). A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
     corpus = answer_corpus(answers)
     files_by_name = {os.path.basename(p): _flat(re.sub(r"<!--.*?-->", "", open(p).read(), flags=re.S))
                      for p in glob.glob(os.path.join(answers, "*.md"))}

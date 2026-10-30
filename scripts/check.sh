@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Run the repo's automated checks: the Step 4 evidence gate, the scoped-sequence
 # build and SHACL check, the Step 11 competency regression, every test script, epm-facts counts, the decision-record
-# and quote checks, the check that no tracked file names the decision owner, and the Step 4 pin
-# check. CI and the pre-push hook run this
+# and quote checks, the check that no tracked file names the decision owner, the check that words a document
+# attributes to the decision owner are in a saved answer, and the Step 4 pin check. CI and the pre-push hook run this
 # file; run it yourself before opening a pull request.
 #
 # Needs python3 and uv (https://docs.astral.sh/uv/) for the test dependencies.
