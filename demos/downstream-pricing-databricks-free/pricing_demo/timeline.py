@@ -76,6 +76,3 @@ TURNAROUNDS = (("RB", dt.date(2026, 9, 21), dt.date(2026, 10, 12)), ("AN", dt.da
 def intensity(key, day):
     return BY_KEY[key].ramp(day)
 
-
-def active_events(day):
-    return [e.key for e in EVENTS if e.active(day)]

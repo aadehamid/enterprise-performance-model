@@ -330,10 +330,6 @@ def jsonld(graph):
     return json.dumps(nodes, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
 
 
-def serialize(graph):
-    return graph.serialize(format="turtle")
-
-
 def catalog():
     """The DCAT record of this release: one dataset version with its distributions."""
     dcat = Namespace("http://www.w3.org/ns/dcat#")
@@ -361,7 +357,7 @@ def catalog():
 
 
 def package(graph, counts, rows):
-    files = {"core.ttl": serialize(graph), "core.jsonld": jsonld(graph)}
+    files = {"core.ttl": graph.serialize(format="turtle"), "core.jsonld": jsonld(graph)}
     with open(SHAPES) as f:
         files["shapes.ttl"] = f.read()
     files["catalog.ttl"] = catalog()
