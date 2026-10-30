@@ -1688,3 +1688,18 @@ def test_after_e7_a_plan_of_null_three_times_stops_after_three_calls(monkeypatch
     with pytest.raises(ValueError, match="after 3 attempts"):
         supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q")
     assert len(calls) == 3
+
+
+# ---- after E7, step 2: no 20-row cut ----
+
+def test_after_e7_a_tool_result_keeps_whole_rows_and_says_how_many_it_shows():
+    rows = [{"month": f"2024-{m:02d}-01", "value": m * 1.5} for m in range(1, 13)] * 3  # 36 monthly rows
+    text = supervisor.tool_content({"status": "COMPLETED", "text": "t", "rows": rows, "row_count": 36})
+    assert json.loads(text)["rows_shown"] == 36 and len(json.loads(text)["rows"]) == 36  # the old cut kept 20
+    big = [{"refinery": "Galveston Bay, Texas City, TX", "day": f"d{i}", "note": "x" * 200} for i in range(400)]
+    text = supervisor.tool_content({"status": "COMPLETED", "text": "t", "rows": big, "row_count": 400})
+    body = json.loads(text)  # still whole JSON: rows are dropped, never cut
+    assert len(text) <= supervisor.TOOL_CHARS and 0 < body["rows_shown"] < 400 and body["row_count"] == 400
+    assert body["rows"] == big[:body["rows_shown"]]
+    huge = supervisor.tool_content({"status": "COMPLETED", "text": "y" * 100000, "rows": big, "row_count": 400})
+    assert len(huge) <= supervisor.TOOL_CHARS and json.loads(huge)["rows_shown"] == 0

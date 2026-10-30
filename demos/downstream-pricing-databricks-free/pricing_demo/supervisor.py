@@ -39,6 +39,12 @@ INSTRUCTIONS = (
     "demo's R&M margin uses (sql/04_gold.sql): Gulf Coast, USGC 3-2-1 MEH Crack, ex-RIN (43870); West Coast, LA 3-2-1 "
     "Crack ANS, ex-RIN (36855); Mid-Continent, CHI 3-2-1 Crack WTI, ex-RIN (37438).")
 MAX_ROUNDS = 8
+# A tool result keeps up to MAX_ROWS of the agent's rows, and its JSON stays under TOOL_CHARS by dropping rows from
+# the end, never by cutting the JSON (step 2; until then 20 rows, then a 12,000-character cut that could split a row).
+# The result says how many rows the query returned and how many it shows. Four agents' results stay well inside the
+# orchestrator's context.
+MAX_ROWS = 500
+TOOL_CHARS = 30000
 # Before the tool loop the orchestrator names the agents whose subject areas the question touches; an answer is
 # accepted only once each of them, and each agent RULES require, has been called (after E7, delegated under
 # EPM-DEC-001-0028).
@@ -136,9 +142,9 @@ def spaces(w):
 
 
 def ask_genie(w, space_id, question):
-    """The agent's text and SQL, and the first rows of its result."""
+    """The agent's text and SQL, the first MAX_ROWS rows of its result, and how many rows the query returned."""
     m = w.genie.start_conversation_and_wait(space_id, question)
-    parts, rows = [], []
+    parts, rows, row_count = [], [], 0
     for a in m.attachments or []:
         if a.text and a.text.content:
             parts.append(a.text.content)
@@ -148,10 +154,24 @@ def ask_genie(w, space_id, question):
             sr = result.statement_response
             if sr and sr.result and sr.result.data_array:
                 cols = [c.name for c in sr.manifest.schema.columns]
-                rows = [dict(zip(cols, r)) for r in sr.result.data_array[:20]]
+                rows = [dict(zip(cols, r)) for r in sr.result.data_array[:MAX_ROWS]]
+                row_count = max(sr.manifest.total_row_count or 0, len(sr.result.data_array))
     if m.error:
         parts.append(f"error: {m.error.error}")
-    return {"status": str(m.status), "text": "\n".join(parts), "rows": rows}
+    return {"status": str(m.status), "text": "\n".join(parts), "rows": rows, "row_count": row_count}
+
+
+def tool_content(result):
+    """The tool message for one agent's result: whole JSON under TOOL_CHARS, rows dropped from the end to fit, with
+    the count of rows shown beside the count the query returned."""
+    rows = result.get("rows") or []
+    keep = len(rows)
+    while True:
+        text = json.dumps({**result, "rows": rows[:keep], "rows_shown": keep}, default=str)
+        if len(text) <= TOOL_CHARS or keep == 0:
+            return text if len(text) <= TOOL_CHARS else json.dumps(
+                {**result, "text": result.get("text", "")[:TOOL_CHARS // 2], "rows": [], "rows_shown": 0}, default=str)
+        keep = min(keep - 1, keep * TOOL_CHARS // len(text))
 
 
 def chat(w, messages, tool_specs=None):
@@ -235,7 +255,7 @@ def orchestrate(w, described, ids, question):
                 sub = json.loads(call["function"]["arguments"])["question"]
                 result = ask_genie(w, ids[title], sub)
                 called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"]})
-                messages.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, default=str)[:12000]})
+                messages.append({"role": "tool", "tool_call_id": call["id"], "content": tool_content(result)})
     except Exception as err:  # keep the agents already called beside the reason it stopped
         raise OrchestrationError(f"{type(err).__name__}: {err}; agents called: {[c['agent'] for c in called]}", called, plan) from err
     raise OrchestrationError(f"no answer after {MAX_ROUNDS} rounds; agents called: {[c['agent'] for c in called]}", called, plan)
