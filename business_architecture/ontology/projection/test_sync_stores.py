@@ -132,3 +132,17 @@ class Workflow(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StoreTablesAgree(unittest.TestCase):
+    """Plan 2 (codebase architecture, 2026-10-30): the Neo4j stores and their login files are listed twice, here and in
+    the demo's tech_graph.py, which sync_stores runs as a separate program. The demo is its own project, so the two
+    tables stay apart, and this test keeps them equal."""
+
+    def test_the_demo_lists_the_same_neo4j_stores(self):
+        import ast
+        path = os.path.join(ss.DEMO, "pricing_demo", "tech_graph.py")
+        tree = ast.parse(open(path).read())
+        node = next(n.value for n in tree.body if isinstance(n, ast.Assign) and any(
+            isinstance(t, ast.Name) and t.id == "STORES" for t in n.targets))
+        self.assertEqual(ast.literal_eval(node), ss.NEO4J_STORES)
