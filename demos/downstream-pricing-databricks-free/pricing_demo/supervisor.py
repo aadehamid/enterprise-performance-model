@@ -19,7 +19,7 @@ import re
 import sys
 import time
 
-from .config import databricks_env
+from .config import completed, databricks_env
 from .databricks import connect, current_catalog, run
 from .genie import AGENTS
 
@@ -148,10 +148,6 @@ def spaces(w):
     if missing:
         raise SystemExit(f"Genie agents not found: {missing}; run python -m pricing_demo.genie first")
     return {t: found[t] for t in AGENTS}
-
-
-def completed(call):
-    return str(call.get("status", "")).endswith("COMPLETED")
 
 
 def ask_genie(w, space_id, question):

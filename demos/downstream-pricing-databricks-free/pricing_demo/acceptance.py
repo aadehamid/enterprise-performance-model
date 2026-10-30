@@ -22,7 +22,7 @@ import re
 import sys
 from collections import namedtuple
 
-from .config import OUT, ROOT, source_dsn
+from .config import OUT, ROOT, completed, source_dsn
 
 # A figure the answer must hold: a number within tol, a string, or a tuple of strings any one of which will do. A
 # number counts only where the answer ties it to its own label (see holds); cue, when given, is a regex in which {v}
@@ -587,7 +587,7 @@ def judge(case, expected, run):
     reasons = []
     if run.get("error"):
         reasons.append(f"error: {run['error']}")
-    called = {c["agent"] for c in run.get("agents_called", []) if str(c.get("status", "")).endswith("COMPLETED")}
+    called = {c["agent"] for c in run.get("agents_called", []) if completed(c)}
     missed = [a for a in case["agents"] if a not in called]
     if missed:
         reasons.append("agents not called: " + ", ".join(missed))
@@ -658,7 +658,8 @@ def run_cases(numbers_wanted=None, stamp=None, repeat=1):
     results = []
     with conn, conn.cursor() as cur:
         ctx = Context(cur, current_catalog(cur, e))
-        for case in [c for c in CASES if not numbers_wanted or c["n"] in numbers_wanted for _ in range(repeat)]:
+        selected = [c for c in CASES if not numbers_wanted or c["n"] in numbers_wanted]
+        for case, attempt in [(c, k) for c in selected for k in range(1, repeat + 1)]:
             try:
                 expected = case["check"](ctx)
             except Exception as err:  # a check that cannot run fails its case, and the run goes on (after E7: a
@@ -673,7 +674,6 @@ def run_cases(numbers_wanted=None, stamp=None, repeat=1):
                     run = {"agents_called": getattr(err, "agents_called", []), "plan": getattr(err, "plan", None), "answer": "",
                            "error": f"{type(err).__name__}: {str(err)[:300]}"}
             verdict = judge(case, expected, run)
-            attempt = sum(r["n"] == case["n"] for r in results) + 1
             results.append({"n": case["n"], "attempt": attempt, "question": case["question"], "mode": case.get("mode", "orchestrator"),
                             "agents_required": case["agents"],
                             "agents_called": [{k: c[k] for k in ("agent", "question", "status", "attempts", "errors") if k in c}
@@ -797,9 +797,12 @@ def main(argv):
     if command == "expected":
         expected_only()
     elif command == "run":
-        args = argv[1:]
-        repeat = int(args[args.index("--repeat") + 1]) if "--repeat" in args else 1
-        wanted = {int(a) for i, a in enumerate(args) if a != "--repeat" and (i == 0 or args[i - 1] != "--repeat")}
+        args, repeat = argv[1:], 1
+        if "--repeat" in args:
+            i = args.index("--repeat")
+            repeat = int(args[i + 1])
+            del args[i:i + 2]
+        wanted = {int(a) for a in args}
         stamp = now()
         results = run_cases(wanted, stamp, repeat)
         save(results, stamp)  # also when no case matched
