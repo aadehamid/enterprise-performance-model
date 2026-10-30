@@ -265,7 +265,7 @@ NOT_RESULTS = {13.0: "the number of refineries (use case 16 counts plans, one pe
 
 def tested_values(ctx):
     """What the acceptance checks expect: each number (but NOT_RESULTS) and each decision ID (Dnn) their figures hold.
-    Examples compute at full precision (a test forbids ROUND in their SQL), so the same figure matches exactly."""
+    Examples compute at full precision (a test forbids ROUND in their SQL), so the same figure matches within a millionth."""
     from .acceptance import CASES
     numbers, ids = [], set()
     for case in CASES:

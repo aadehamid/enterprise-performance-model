@@ -1826,7 +1826,7 @@ def test_after_e7_no_genie_example_repeats_an_acceptance_question():
     # warehouse (genie.overlaps); offline, no example asks for the latest date, the acceptance data's last day
     sqls = " ".join(sql for spec in genie.AGENTS.values() for _, sql in spec["examples"])
     assert "2026-10-20" not in sqls
-    # full precision, so genie check's exact match finds the same figure: no example rounds (quick check on step 4)
+    # full precision, so genie check's match within a millionth finds the same figure: no example rounds (quick check on step 4)
     assert "ROUND(" not in sqls.upper()
     for q in examples:  # no test question is contained in an example either; every question is longer than 40
         # characters, so the length only keeps a stray short string from matching
