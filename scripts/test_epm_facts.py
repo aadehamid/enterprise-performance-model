@@ -1039,3 +1039,164 @@ def test_coverage_reads_each_link_from_its_newest_release(tmp_path):
     # A newer system release drops the link, so A no longer counts as having one.
     plant_release(releases, "system", "1.1.0", {"triples": 0}, "")
     assert epm_facts.coverage("core", str(releases))["links"]["system"]["with"] == 0
+
+
+# ---- citations: words other documents attribute to the decision owner (Plan 3, 2026-10-30) ----
+
+NAMED_MISS = "not in the answers file, record or comment it names"  # a quote its named source lacks
+
+
+def _citation_fixture(tmp_path, doc):
+    answers, decisions = tmp_path / "answers", tmp_path / "decisions"
+    answers.mkdir(parents=True, exist_ok=True); decisions.mkdir(exist_ok=True)
+    (answers / "answers-y.md").write_text("<!-- verbatim from urn:epm:pull:1:comment:7000001 -->\nship the ledger as it stands today\n")
+    (answers / "answers-x.md").write_text("<!-- context -->\nkeep the old figures as they were recorded\n")
+    (tmp_path / "doc.md").write_text(doc)
+    return epm_facts.citation_problems(root=str(tmp_path), answers=str(answers), decisions=str(decisions), files=["doc.md"])
+
+
+def test_citations_pass_on_the_repo():
+    assert epm_facts.citation_problems() == []
+
+
+def test_citations_need_the_words_in_a_saved_answer_and_a_named_source(tmp_path):
+    unsaved = 'The decision owner said: "keep the new figures as they were recorded" (answers-x.md).\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "a", unsaved)[0]
+    uncited = 'The decision owner said: "keep the old figures as they were recorded".\n'
+    assert "names no answers file" in _citation_fixture(tmp_path / "b", uncited)[0]
+    for k, cited in enumerate(('The decision owner said: "keep the old figures as they were recorded" (answers-x.md).\n',
+                               'The decision owner wrote on #225 (comment 6115615577): "keep the old figures as they were recorded".\n')):
+        assert _citation_fixture(tmp_path / f"c{k}", cited) == []
+
+
+def test_citations_check_every_quote_a_verb_gives_and_the_named_source(tmp_path):
+    # Codex on the citation check: the second of two quotes went unchecked, and a made-up file passed as a source.
+    second = ('The decision owner asked: "keep the old figures as they were recorded" (answers-x.md), then chose '
+              '"an answer nobody saved anywhere at all".\n')
+    assert NAMED_MISS in _citation_fixture(tmp_path / "a", second)[0]
+    made_up = 'The decision owner said: "keep the old figures as they were recorded" (answers-none.md).\n'
+    assert any("not a saved answer" in p for p in _citation_fixture(tmp_path / "b", made_up))
+    long_lead = ('The decision owner, after reading the whole package on the train home and thinking it over, '
+                 'said: "an answer nobody saved anywhere at all" (answers-x.md).\n')
+    assert NAMED_MISS in _citation_fixture(tmp_path / "c", long_lead)[0]
+    other = 'The decision owner chose the plan. GitHub\'s documentation says that "the default copyright laws apply here".\n'
+    assert _citation_fixture(tmp_path / "d", other) == []  # another subject's quote, far from the role
+
+
+def test_citations_skip_a_quoted_title_and_short_terms(tmp_path):
+    # "For the decision owner" is a section title: the asking is the record's, not the decision owner's words
+    title = 'The record\'s "For the decision owner" item 3 asked you to "Choose where the files are hosted".\n'
+    assert _citation_fixture(tmp_path / "a", title) == []
+    assert _citation_fixture(tmp_path / "b", 'The decision owner chose "Option A".\n') == []
+
+
+def test_citations_hold_each_edge_codex_found_in_round_2(tmp_path):
+    # A cited record counts only through its "The decision owner's recorded words" section, not its draft text.
+    record = tmp_path / "a" / "decisions" / "EPM-DEC-001-0001-x.md"
+    record.parent.mkdir(parents=True)
+    record.write_text("## Options\n\nkeep every draft figure we proposed\n\n## The decision owner's recorded words\n\n"
+                      "> keep the old figures as they were recorded\n")
+    drafted = 'The decision owner said: "keep every draft figure we proposed" (EPM-DEC-001-0001).\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "a", drafted)[0]
+    recorded = 'The decision owner said: "keep the old figures as they were recorded" (EPM-DEC-001-0001).\n'
+    assert _citation_fixture(tmp_path / "a", recorded) == []  # the fixture rewrites doc.md and keeps the record
+    # An earlier verb no longer hides a later one.
+    hidden = 'When asked, the decision owner said "an answer nobody saved anywhere at all" (answers-x.md).\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "b", hidden)[0]
+    # A quote chains to the next only through a plain connective, not through another named speaker.
+    chained = ('The decision owner said: "keep the old figures as they were recorded" (answers-x.md), and Codex '
+               'replied "a reviewer\'s words, not the owner\'s".\n')
+    assert _citation_fixture(tmp_path / "c", chained) == []
+    # "the owner" alone names owners of processes too; and a stop inside emphasis ends the sentence.
+    assert _citation_fixture(tmp_path / "d", 'The owner of the process wrote "a process step title".\n') == []
+    option = ('*Decided: The decision owner said to address the gap (answers-x.md); option A was applied.* (A) Add '
+              'one step, "a step the options list proposed".\n')
+    assert _citation_fixture(tmp_path / "e", option) == []
+
+
+def test_citations_need_the_quote_in_the_source_they_name(tmp_path):
+    # Cursor's HOLD on #419: a named record that lacks the quote passed when another answer held it.
+    record = tmp_path / "a" / "decisions" / "EPM-DEC-001-0001-x.md"
+    record.parent.mkdir(parents=True)
+    record.write_text("## The decision owner's recorded words\n\n> some other recorded sentence here\n")
+    elsewhere = 'The decision owner said: "keep the old figures as they were recorded" (EPM-DEC-001-0001).\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "a", elsewhere)[0]
+    # A named comment is looked up in the answers files' headers; one no file records falls back to any saved answer.
+    for k, (comment, ok) in enumerate((("7000001", True), ("7000002", False), ("7000099", True))):
+        doc = f'The decision owner wrote (comment {comment}): "ship the ledger as it stands today".\n'
+        if comment == "7000002":
+            doc = doc.replace("ship the ledger as it stands today", "keep the old figures as they were recorded")
+            (tmp_path / f"c{k}" / "answers").mkdir(parents=True)
+            (tmp_path / f"c{k}" / "answers" / "answers-z.md").write_text("<!-- comment:7000002 -->\nanother answer entirely\n")
+        assert (_citation_fixture(tmp_path / f"c{k}", doc) == []) is ok, comment
+    nothing = 'The decision owner said: "an answer nobody saved anywhere at all".\n'
+    assert "not in a saved answer" in _citation_fixture(tmp_path / "d", nothing)[0]
+    # A chain stops at any subject, capitalised or not.
+    for k, subject in enumerate(("the reviewer", "she", "Codex")):
+        chained = (f'The decision owner said: "keep the old figures as they were recorded" (answers-x.md), and {subject} '
+                   'replied "a sentence nobody saved at all".\n')
+        assert _citation_fixture(tmp_path / f"e{k}", chained) == [], subject
+    then = ('The decision owner asked: "keep the old figures as they were recorded" (answers-x.md), then chose '
+            '"a sentence nobody saved at all".\n')
+    assert NAMED_MISS in _citation_fixture(tmp_path / "f", then)[0]
+    # Cursor's second HOLD on #419: an unrecorded comment no longer stands in for a named source that lacks the quote.
+    both = 'The decision owner said: "keep the old figures as they were recorded" (answers-y.md, comment 7000099).\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "j", both)[0]
+    # Codex quick check of 3d0c44ff: a subject in brackets, or a semicolon, ends the chain too.
+    for k, gap in enumerate(("(answers-x.md) (the reviewer) then", "(answers-x.md); then", "(answers-x.md, the reviewer) then")):
+        doc = f'The decision owner said: "keep the old figures as they were recorded" {gap} replied "a sentence nobody saved at all".\n'
+        assert _citation_fixture(tmp_path / f"g{k}", doc) == [], gap
+    # Bugbot on fd004ff: a long citation between two quotes still chains them.
+    long_cite = ('The decision owner said: "keep the old figures as they were recorded" (answers-x.md, answers-y.md, '
+                 'comment 7000001, #4242, #4343), then chose "a sentence nobody saved at all".\n')
+    assert [p for p in _citation_fixture(tmp_path / "k", long_cite) if "a sentence nobody saved" in p]
+    # Only the header comment records a file's source comment.
+    (tmp_path / "h" / "answers").mkdir(parents=True)
+    (tmp_path / "h" / "answers" / "answers-z.md").write_text("<!-- verbatim, no comment -->\nsome later answer here\n"
+                                                         "<!-- comment:7000003 -->\n")
+    late = 'The decision owner wrote (comment 7000003): "some later answer here".\n'
+    assert NAMED_MISS not in "".join(_citation_fixture(tmp_path / "h", late))  # unrecorded: any saved answer will do
+    (tmp_path / "i" / "answers").mkdir(parents=True)
+    (tmp_path / "i" / "answers" / "answers-z.md").write_text("<!-- comment:7000004 -->\nthe header's own answer\n"
+                                                         "<!-- comment:7000005 -->\n")
+    wrong = 'The decision owner wrote (comment 7000005): "keep the old figures as they were recorded".\n'
+    assert _citation_fixture(tmp_path / "i", wrong) == []  # 7000005 is no file's header, so any saved answer counts
+    right = 'The decision owner wrote (comment 7000004): "keep the old figures as they were recorded".\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "i", right)[0]
+
+
+def test_citations_know_every_saved_answer_and_match_whole_words(tmp_path):
+    # Bugbot on 0ae3cbb: a saved answer with another name (delegation.md) went unrecognised as a source.
+    (tmp_path / "a" / "answers").mkdir(parents=True)
+    (tmp_path / "a" / "answers" / "delegation.md").write_text("<!-- context -->\nhand the open questions to the agent\n")
+    named = 'The decision owner said: "hand the open questions to the agent" (delegation.md).\n'
+    assert _citation_fixture(tmp_path / "a", named) == []
+    then = ('The decision owner said: "hand the open questions to the agent" (delegation.md), then chose '
+            '"a sentence nobody saved at all".\n')
+    assert NAMED_MISS in _citation_fixture(tmp_path / "a", then)[0]
+    # Bugbot on 0ae3cbb: a quote matches whole words, as `quotes` does, and a stop inside the quote marks is not a word.
+    part = 'The decision owner said: "eep the old figures as they were recorded" (answers-x.md).\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "b", part)[0]
+    stop = 'The decision owner said: "keep the old figures as they were recorded." (answers-x.md)\n'
+    assert _citation_fixture(tmp_path / "c", stop) == []
+
+
+def test_citations_check_every_quote_in_a_list_after_one_verb(tmp_path):
+    # Bugbot on 2755510: 'said "A" and "B", then chose "C"' checked only "A".
+    for k, doc in enumerate(('The decision owner said "keep the old figures as they were recorded" and "a sentence nobody '
+                             'saved at all" (answers-x.md).\n',
+                             'The decision owner said "keep the old figures as they were recorded", "keep the old figures '
+                             'as they were recorded" and "keep the old figures as they were recorded", then chose "a '
+                             'sentence nobody saved at all" (answers-x.md).\n')):
+        assert [p for p in _citation_fixture(tmp_path / f"a{k}", doc) if "a sentence nobody saved" in p], k
+    # Cursor's HOLD on 0b1887af: a citation between the listed quotes does not end the list.
+    cited = ('The decision owner said "keep the old figures as they were recorded" (answers-x.md) and "a sentence nobody '
+             'saved at all", then chose "another sentence nobody saved here" (answers-x.md).\n')
+    found = _citation_fixture(tmp_path / "c", cited)
+    assert [p for p in found if "a sentence nobody saved" in p] and [p for p in found if "another sentence nobody" in p]
+    comma = 'The decision owner said "keep the old figures as they were recorded" (answers-x.md), and "a sentence nobody saved at all".\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "d", comma)[0]
+    # A quote after other words is not in the list: a title the reviewer then gives stays unchecked.
+    other = ('The decision owner said "keep the old figures as they were recorded" (answers-x.md), and the reviewer '
+             'gave "a sentence nobody saved at all".\n')
+    assert _citation_fixture(tmp_path / "b", other) == []

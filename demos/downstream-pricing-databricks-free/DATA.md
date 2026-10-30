@@ -2,7 +2,7 @@
 
 Every table the demo creates, what one row is (its grain), how many rows a run makes, and how its values come about: real (an EIA value as published, or converted only in unit), spot-anchored (a formula of EIA values only, or an EIA value carried from an earlier date) or synthesized (anything with a generated part). The generator is seeded (`SEED` in [`pricing_demo/config.py`](pricing_demo/config.py)), so the same code always makes the same rows; it reads no clock and no network.
 
-The decision owner asked for this document on 2026-10-28: "also create data description document for this synthetic dataset, including the grains and how they were geretaed with links to scripts/notebook used to generate them". The demo has no notebook; every table comes from the scripts linked below.
+The decision owner asked for this document on 2026-10-28: "also create data description document for this synthetic dataset, including the grains and how they were geretaed with links to scripts/notebook used to generate them" (`answers-2026-10-28-databricks-grill.md` in the decision-owner answers folder). The demo has no notebook; every table comes from the scripts linked below.
 
 ## The window
 

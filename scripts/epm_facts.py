@@ -14,6 +14,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
+    python3 scripts/epm_facts.py citations         # words a document attributes to the decision owner are in the source it names
     uv run --with rdflib python scripts/epm_facts.py modules    # each released module, its releases, what it requires
     uv run --with rdflib python scripts/epm_facts.py coverage --processes lifecycle   # which processes lack RACI, systems, KPIs ...
     add --json for machine-readable output
@@ -640,6 +641,8 @@ def _status_parts(status):
     return (lead.group(1) if lead else ""), amended
 
 
+RECORDED_WORDS = re.compile(r"^## The decision owner's recorded words\s*\n(.*?)(?=^## |\Z)", re.M | re.S)  # a record's quote section
+
 def decision_problems(folder=DECISIONS):
     """Return a list of problems in the EPM-DEC-001 records and their index."""
     problems = []
@@ -683,7 +686,7 @@ def decision_problems(folder=DECISIONS):
         # quotes and curly quotes included, against the saved answers); this simpler
         # presence rule covers the earlier records it skips.
         if lead == "Decided" and int(number) < FIRST_QUOTE_CHECKED_DECISION:
-            words = re.search(r"^## The decision owner's recorded words\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+            words = RECORDED_WORDS.search(text)
             if not words or not QUOTE.search(words.group(1)):
                 problems.append(f"{number}: Decided, but no quote under \"The decision owner's recorded words\"")
     return problems
@@ -1059,6 +1062,113 @@ def cmd_decisions(args):
     return 1 if problems else 0
 
 
+# Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): each verb of
+# saying that follows "the decision owner" closely (within 120 characters, in the same sentence, no quote mark between),
+# or follows a quote already theirs through a plain connective ("asked: ..., then chose ..." gives two), and the quote
+# after it. A quote another subject says ("GitHub's documentation says") or one with no verb of saying before it, such
+# as a process name, is not attributed. citation_problems says which sources count.
+OWNER = re.compile(r'\bdecision owner\b', re.I)  # the repo's one name for the role (EPM-DEC-001-0049); "the owner" also
+# names owners of processes and data
+VERB = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added)\b', re.I)
+SENTENCE_END = r'[.!?][*_)\]]*\s'  # a sentence ends at a stop, even inside emphasis or brackets (".* (A" ends one)
+SAID = re.compile(r'(?:(?!' + SENTENCE_END + r')[^"”“]){0,160}?["“]([^"”]+)["”]')  # the quote in the verb's own sentence
+# "..." (answers-x.md), then chose": between a quote of theirs and the next verb, only a citation in brackets (answers
+# files, records, PR or comment numbers), a comma and "then", "later" or "and". Any other word, such as a subject
+# ("the reviewer replied", "(the reviewer) then replied"), ends the chain.
+CITE_TOKEN = r'(?:`?[\w-]+\.md`?|EPM-DEC-001-\d{4}|#\d+|comment \d{6,})'
+CITED = r'(?:\([\s,]*' + CITE_TOKEN + r'(?:[\s,]+' + CITE_TOKEN + r')*[\s,]*\))?'  # an optional bracketed citation
+CONNECTIVE = re.compile(r'^\s*' + CITED + r'\s*,?\s*'
+                        r'(?:and\s+)?(?:then|later|and)\s+$', re.I)
+LISTED = re.compile(r'\s*' + CITED + r'\s*(?:,\s*(?:(?:and|or)\s+)?|(?:and|or)\s+)["“]([^"”]+)["”]')  # 'said "A", "B" and "C"': one verb, three quotes
+ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")  # the usual name; a cited name that fits it must exist
+MD_NAME = re.compile(r"[\w-]+\.md")  # any saved answer counts by its own name, such as delegation.md
+RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")
+COMMENT_ID = re.compile(r"comment (\d{6,})")
+
+
+def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=None):
+    """Words a tracked Markdown document attributes to the decision owner, outside the decision records, the saved
+    answers and the review evidence (whose quotes `quotes` checks). Every quote of three or more words after an
+    attribution must be word for word in a source its paragraph names: an answers file that exists, a decision record
+    that exists (in its "The decision owner's recorded words" section), or a PR comment by number ("comment 6115615577").
+    A comment is looked up in the answers files' headers ("comment:6115615577"). Only when the paragraph names no other
+    source and no answers file records its comments must its quotes merely be in some saved answer. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
+    corpus = answer_corpus(answers)
+    files_by_name, files_by_comment = {}, {}
+    for path in glob.glob(os.path.join(answers, "*.md")):
+        raw = open(path).read()
+        files_by_name[os.path.basename(path)] = _flat(re.sub(r"<!--.*?-->", "", raw, flags=re.S))
+        header = re.match(r"\s*<!--(.*?)-->", raw, re.S)  # the file's own header records its source, nothing later
+        for comment in re.findall(r"comment:(\d{6,})", header.group(1) if header else ""):
+            files_by_comment[comment] = files_by_comment.get(comment, "") + files_by_name[os.path.basename(path)]
+    def recorded_words(path):
+        found = RECORDED_WORDS.search(open(path).read())
+        return _flat(found.group(1)) if found else ""
+    record_texts = {m.group(1): recorded_words(p) for p in glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))
+                    for m in [re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(p))] if m}
+    records = set(record_texts)
+    if files is None:
+        out = subprocess.run(["git", "ls-files", "-z", "*.md"], cwd=root, capture_output=True, text=True, check=True).stdout
+        files = [f for f in out.split("\0") if f]
+    # the saved answers, the decision records (checked by `quotes`) and the rest of the review evidence: records kept as
+    # they were made, not documents to correct
+    skip = (os.path.relpath(answers, root), os.path.relpath(decisions, root), os.path.relpath(REVIEWS, root))
+    problems = []
+    for f in files:
+        if f.startswith(skip):
+            continue
+        with open(os.path.join(root, f), encoding="utf-8", errors="replace") as fh:
+            paragraphs = re.split(r"\n\s*\n", fh.read())
+        for para in paragraphs:
+            flat = _flat(para)
+            # a verb counts when it follows the role closely with no quote between, or follows a quote already
+            # theirs closely ("asked: ..., then chose ...")
+            owners, quotes_end, said = [m.end() for m in OWNER.finditer(flat)], [], []
+            for v in VERB.finditer(flat):  # every verb in turn: an earlier one cannot hide a later one
+                q = SAID.match(flat, v.end())
+                if not q:
+                    continue
+                near_owner = any(0 <= v.start() - o <= 120 and not re.search(r'["”“]|' + SENTENCE_END, flat[o:v.start()]) for o in owners)
+                chained = any(0 <= v.start() - e and CONNECTIVE.match(flat[e:v.start()]) for e in quotes_end)  # CONNECTIVE bounds the gap
+                while q and (near_owner or chained):
+                    said.append(q)
+                    quotes_end.append(q.end())
+                    q = LISTED.match(flat, q.end())
+            if not said:
+                continue
+            named = [n for n in MD_NAME.findall(flat) if n in files_by_name or ANSWERS_FILE.fullmatch(n)]
+            for name in named:
+                if name not in files_by_name:
+                    problems.append(f"{f}: cites {name}, which is not a saved answer")
+            for rid in RECORD_ID.findall(flat):
+                if rid not in records:
+                    problems.append(f"{f}: cites EPM-DEC-001-{rid}, which is not a decision record")
+            cited, comments = RECORD_ID.findall(flat), COMMENT_ID.findall(flat)
+            sources = ([files_by_name.get(n, "") for n in named] + [record_texts.get(rid, "") for rid in cited]
+                       + [files_by_comment[c] for c in comments if c in files_by_comment])
+            if not sources and comments:
+                sources = [corpus]  # only comments no answers file records: the words must be in some saved answer
+            for m in said:
+                words = _flat(m.group(1)).rstrip(".,;:!?")  # a stop inside the quote marks is the writer's
+                if len(words.split()) < 3 or any(in_corpus_as_words(words, text) for text in sources):
+                    continue  # short terms are not checked; the rest must be in a source the paragraph names
+                if sources:
+                    problems.append(f"{f}: not in the answers file, record or comment it names: {words[:90]!r}")
+                elif not in_corpus_as_words(words, corpus):
+                    problems.append(f"{f}: not in a saved answer: {words[:90]!r}")
+                else:
+                    problems.append(f"{f}: names no answers file, decision record or comment for: {words[:90]!r}")
+    return problems
+
+
+def cmd_citations(args):
+    problems = citation_problems()
+    print(f"commit {commit()}: {len(problems)} citation problem(s) outside the decision records")
+    for p in problems:
+        print(f"  {p}")
+    return 1 if problems else 0
+
+
 # EPM-DEC-001-0049: the repo names the decision owner by role. These are the personal name,
 # the family name and the GitHub username, built from fragments so this file does not match itself.
 OWNER_NAMES = re.compile("|".join(["ha" + "mid", "ade" + "sokan", "aade" + "ha" + "mid"]), re.I)
@@ -1378,12 +1488,13 @@ def main(argv=None):
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
+    sub.add_parser("citations", help="check words other documents attribute to the decision owner against the source each names (exit 1)")
     sub.add_parser("modules", help="each released module: newest and earlier releases, what it requires, triples, built from (manifest) or sources (builder today)")
     p = sub.add_parser("coverage", help="how many processes have a RACI assignment, system, KPI, lane, value-stream step, data product")
     p.add_argument("--processes", default="core", help="core (default), module:<name>, lifecycle or stage:<name>")
     args = parser.parse_args(argv)
     return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
-            "quotes": cmd_quotes, "names": cmd_names, "sweep": cmd_sweep,
+            "quotes": cmd_quotes, "names": cmd_names, "citations": cmd_citations, "sweep": cmd_sweep,
             "modules": cmd_modules, "coverage": cmd_coverage}[args.cmd](args)
 
 
