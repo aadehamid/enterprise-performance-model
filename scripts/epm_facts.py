@@ -1072,21 +1072,28 @@ OWNER = re.compile(r'\bdecision owner\b', re.I)  # the repo's one name for the r
 VERB = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added)\b', re.I)
 SENTENCE_END = r'[.!?][*_)\]]*\s'  # a sentence ends at a stop, even inside emphasis or brackets (".* (A" ends one)
 SAID = re.compile(r'(?:(?!' + SENTENCE_END + r')[^"”“]){0,160}?["“]([^"”]+)["”]')  # the quote in the verb's own sentence
-CONNECTIVE = re.compile(r'^[^A-Z"”“]{0,40}\b(?:then|and|later)\b[^A-Z"”“]{0,20}$')  # "..., then chose": no named subject
+# "..." (answers-x.md), then chose": between a quote of theirs and the next verb, only a citation in brackets, a comma
+# and "then", "later" or "and". Any other word, such as a subject ("the reviewer replied"), ends the chain.
+CONNECTIVE = re.compile(r'^\s*(?:\([^()"”“]*\))?\s*[,;]?\s*(?:and\s+)?(?:then|later|and)\s+$', re.I)
 ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")
 RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")
-COMMENT_ID = re.compile(r"comment \d{6,}")
+COMMENT_ID = re.compile(r"comment (\d{6,})")
 
 
 def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=None):
     """Words a tracked Markdown document attributes to the decision owner, outside the decision records, the saved
     answers and the review evidence (whose quotes `quotes` checks). Every quote of three or more words after an
-    attribution must be word for word in a saved answer, and the paragraph must name a source: an answers file that
-    exists and holds the words, a decision record that exists and whose "The decision owner's recorded words" section
-    holds them, or a PR comment by number (its number is not looked up). A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
+    attribution must be word for word in a source its paragraph names: an answers file that exists, a decision record
+    that exists (in its "The decision owner's recorded words" section), or a PR comment by number ("comment 6115615577").
+    A comment is looked up in the answers files' headers ("comment:6115615577"); when no answers file records it, its
+    quotes must be in some saved answer. A citation with no recorded source cost a review round on #411 (retro of 2026-10-28)."""
     corpus = answer_corpus(answers)
-    files_by_name = {os.path.basename(p): _flat(re.sub(r"<!--.*?-->", "", open(p).read(), flags=re.S))
-                     for p in glob.glob(os.path.join(answers, "*.md"))}
+    files_by_name, files_by_comment = {}, {}
+    for path in glob.glob(os.path.join(answers, "*.md")):
+        raw = open(path).read()
+        files_by_name[os.path.basename(path)] = _flat(re.sub(r"<!--.*?-->", "", raw, flags=re.S))
+        for comment in re.findall(r"comment:(\d{6,})", "".join(re.findall(r"<!--.*?-->", raw, flags=re.S))):
+            files_by_comment[comment] = files_by_comment.get(comment, "") + files_by_name[os.path.basename(path)]
     def recorded_words(path):
         found = RECORDED_WORDS.search(open(path).read())
         return _flat(found.group(1)) if found else ""
@@ -1128,19 +1135,19 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
             for rid in RECORD_ID.findall(flat):
                 if rid not in records:
                     problems.append(f"{f}: cites EPM-DEC-001-{rid}, which is not a decision record")
-            cited_records = "".join(record_texts.get(rid, "") for rid in RECORD_ID.findall(flat))
+            cited, comments = RECORD_ID.findall(flat), COMMENT_ID.findall(flat)
+            sources = ([files_by_name.get(n, "") for n in named] + [record_texts.get(rid, "") for rid in cited]
+                       + [files_by_comment.get(c, corpus) for c in comments])  # a comment no file records: any answer
             for m in said:
                 words = _flat(m.group(1))
-                if len(words.split()) < 3:
-                    continue
-                if words in cited_records:  # the decision owner's words as a decision record it cites holds them
-                    continue
-                if words not in corpus:
+                if len(words.split()) < 3 or any(words in text for text in sources):
+                    continue  # short terms are not checked; the rest must be in a source the paragraph names
+                if sources:
+                    problems.append(f"{f}: not in the answers file, record or comment it names: {words[:90]!r}")
+                elif words not in corpus:
                     problems.append(f"{f}: not in a saved answer: {words[:90]!r}")
-                elif named and not any(words in files_by_name.get(n, "") for n in named):
-                    problems.append(f"{f}: not in the answers file it names: {words[:90]!r}")
-                elif not (named or RECORD_ID.search(flat) or COMMENT_ID.search(flat)):
-                    problems.append(f"{f}: names no answers file or decision record for: {words[:90]!r}")
+                else:
+                    problems.append(f"{f}: names no answers file, decision record or comment for: {words[:90]!r}")
     return problems
 
 
