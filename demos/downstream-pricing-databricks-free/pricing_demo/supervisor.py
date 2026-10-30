@@ -41,8 +41,7 @@ INSTRUCTIONS = (
 MAX_ROUNDS = 8
 # A tool result keeps up to MAX_ROWS of the agent's rows, and its JSON stays under TOOL_CHARS by dropping rows from
 # the end, never by cutting the JSON (step 2; until then 20 rows, then a 12,000-character cut that could split a row).
-# The result says how many rows the query returned and how many it shows. Four agents' results stay well inside the
-# orchestrator's context.
+# The result says how many rows the query returned and how many it shows; CONTEXT_CHARS bounds them all together.
 MAX_ROWS = 500
 TOOL_CHARS = 30000
 # The whole conversation sent to the model stays under CONTEXT_CHARS, about 40,000 tokens at four characters a token, so
@@ -165,6 +164,10 @@ def ask_genie(w, space_id, question):
     return {"status": str(m.status), "text": "\n".join(parts), "rows": rows, "row_count": row_count}
 
 
+def no_rows(result, **extra):
+    return {**result, "rows": [], "rows_shown": 0, **extra}
+
+
 def tool_content(result):
     """The tool message for one agent's result: whole JSON under TOOL_CHARS, rows dropped from the end to fit, with
     the count of rows shown beside the count the query returned."""
@@ -178,28 +181,31 @@ def tool_content(result):
             break
         keep = min(keep - 1, keep * TOOL_CHARS // len(text))
     body = result.get("text", "")  # no rows left and still too long: shorten the text until the JSON, escapes and all, fits
-    while True:
+    while body:
         body = body[:len(body) // 2]
-        text = json.dumps({**result, "text": body + " [cut to fit]", "rows": [], "rows_shown": 0}, default=str)
-        if len(text) <= TOOL_CHARS or not body:
-            return text if len(text) <= TOOL_CHARS else json.dumps({"status": result.get("status"), "text": "[too long to show]",
-                                                                    "rows": [], "rows_shown": 0})
+        text = json.dumps(no_rows(result, text=body + " [cut to fit]"), default=str)
+        if len(text) <= TOOL_CHARS:
+            return text
+    return json.dumps(no_rows({"status": result.get("status")}, text="[too long to show]"))
 
 
 def fit(messages):
     """Keep the conversation under CONTEXT_CHARS: the oldest tool results with rows give them up first."""
-    def size():
-        return sum(len(json.dumps(m, default=str)) for m in messages)
-    for m in messages:
-        if size() <= CONTEXT_CHARS:
+    sizes = [len(json.dumps(m, default=str)) for m in messages]
+    total = sum(sizes)
+    for k, m in enumerate(messages):
+        if total <= CONTEXT_CHARS:
             return
-        if m.get("role") != "tool":
+        if m.get("role") != "tool" or '"rows_shown": 0' in m["content"]:
             continue
         body = json.loads(m["content"])
         if body.get("rows"):
-            m["content"] = json.dumps({**body, "rows": [], "rows_shown": 0,
-                                       "note": "rows dropped to keep the conversation within the model's context"}, default=str)
-    if size() > CONTEXT_CHARS:
+            m["content"] = json.dumps(no_rows(body, note="rows dropped to keep the conversation within the model's context"),
+                                      default=str)
+            new = len(json.dumps(m, default=str))
+            total += new - sizes[k]
+            sizes[k] = new
+    if total > CONTEXT_CHARS:
         raise ValueError(f"the conversation is over {CONTEXT_CHARS} characters even without tool rows")
 
 
