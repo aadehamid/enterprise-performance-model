@@ -1822,6 +1822,9 @@ def test_after_e7_no_genie_example_repeats_an_acceptance_question():
     asked = {words(c["question"]) for c in acceptance.CASES}
     examples = [q for spec in genie.AGENTS.values() for q, _ in spec["examples"]]
     assert not [q for q in examples if words(q) in asked]
+    # nor teaches the figures a test checks: case 17's crack and utilization errors appear in no example's SQL
+    sqls = " ".join(sql for spec in genie.AGENTS.values() for _, sql in spec["examples"])
+    assert "Crack_Error_Usd_Per_Bbl)" not in sqls and "Utilization_Error_Pct)" not in sqls
     for q in examples:  # no test question is contained in an example either; every question is longer than 40
         # characters, so the length only keeps a stray short string from matching
         assert not any(a in words(q) for a in asked if len(a) > 40), q
@@ -1832,6 +1835,6 @@ def test_after_e7_each_agent_has_an_example_for_the_patterns_the_runs_got_wrong(
     assert "SortColumns = 1 AND effective_date BETWEEN" in sqls["Executive Summary KPIs Analytics"]  # a month's front month
     assert "Rate_Usd_Per_Bbl / 42" in sqls["Pricing and Market Margin Analytics"]  # $/bbl freight in $/gal
     refinery = sqls["Refinery Operations Analytics"]
-    for pattern in ("MIN_BY(Production_Date", "AVG(region_runs_mbpd)", "AVG(ABS(Crack_Error_Usd_Per_Bbl))",
+    for pattern in ("MIN_BY(Production_Date", "AVG(region_runs_mbpd)", "AVG(ABS(Actual_Gasoline_Yield_Pct",
                     "Scan_Step = 'diagnosis'", "Question_Key = 'margin_driver'", "COUNT_IF("):
         assert pattern in refinery, pattern

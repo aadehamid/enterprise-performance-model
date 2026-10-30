@@ -224,10 +224,12 @@ AGENTS = {
                       "SELECT Production_Month, AVG(region_runs_mbpd) AS avg_daily_crude_runs_mbpd FROM (SELECT Production_Month, Production_Date, "
                       "MEASURE(Crude_Runs_Mbpd) AS region_runs_mbpd FROM {c}.semantic_sem_commercial.refinery_operations_metrics_vw WHERE Region_Name = 'Mid-Continent' "
                       "AND Production_Date BETWEEN '2026-05-01' AND '2026-06-30' GROUP BY ALL) GROUP BY Production_Month ORDER BY Production_Month"),
-                     ("What was the West Coast plans' mean absolute crack error and utilization error in each plan year?",
-                      "SELECT YEAR(Plan_Month) AS plan_year, AVG(ABS(Crack_Error_Usd_Per_Bbl)) AS mean_abs_crack_error_usd_per_bbl, "
-                      "AVG(ABS(Utilization_Error_Pct)) AS mean_abs_utilization_error_pct, COUNT(*) AS plan_rows "
-                      "FROM {c}.gold_commercial_core.refinery_plan_backcast_fact WHERE Refinery_Code IN ('LA', 'AN', 'KE') GROUP BY 1 ORDER BY 1"),
+                     # a per-year error over another measure than any test asks about: case 17 asks for the crack and
+                     # utilization errors, so this example uses the gasoline yield (Codex on step 4)
+                     ("What was the mean absolute error between planned and actual gasoline yield in each plan year?",
+                      "SELECT YEAR(Plan_Month) AS plan_year, AVG(ABS(Actual_Gasoline_Yield_Pct - Planned_Gasoline_Yield_Pct)) "
+                      "AS mean_abs_gasoline_yield_error_pct, COUNT(*) AS plan_rows "
+                      "FROM {c}.gold_commercial_core.refinery_plan_backcast_fact GROUP BY 1 ORDER BY 1"),
                      ("In 2024, in which months did the outside scan name crude supply as the main driver of West Coast margins, with what label?",
                       "SELECT Period_Start_Date, Answer_Value, Answer_Probability, Evidence_Label FROM {c}.silver_udm_core.external_event_fact "
                       "WHERE Scan_Step = 'monthly' AND Region_Name = 'West Coast' AND Question_Key = 'margin_driver' AND Answer_Value = 'crude_supply' "
