@@ -1060,9 +1060,9 @@ def test_citations_need_the_words_in_a_saved_answer_and_a_named_source(tmp_path)
     assert "not in a saved answer" in _citation_fixture(tmp_path / "a", unsaved)[0]
     uncited = 'The decision owner said: "keep the old figures as they were recorded".\n'
     assert "names no answers file" in _citation_fixture(tmp_path / "b", uncited)[0]
-    for cited in ('The decision owner said: "keep the old figures as they were recorded" (answers-x.md).\n',
-                  'The decision owner wrote on #225 (comment 6115615577): "keep the old figures as they were recorded".\n'):
-        assert _citation_fixture(tmp_path / "c", cited) == []
+    for k, cited in enumerate(('The decision owner said: "keep the old figures as they were recorded" (answers-x.md).\n',
+                               'The decision owner wrote on #225 (comment 6115615577): "keep the old figures as they were recorded".\n')):
+        assert _citation_fixture(tmp_path / f"c{k}", cited) == []
 
 
 def test_citations_skip_a_quoted_title_and_short_terms(tmp_path):
