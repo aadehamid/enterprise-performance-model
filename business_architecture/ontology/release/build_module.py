@@ -202,7 +202,8 @@ MODULES = {
         "description": "The four office lanes as a code list, and the processes the process map places in them (Step 7).",
         # 1.1.0 is a minor Claude approved under the delegation: the four lanes stated as top concepts both ways, and a
         # shape message reworded without an apostrophe (ontology skill, SHACL rule 19); it requires core 2.3.0, the
-        # current release, which build_lanes.py already reads (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106).
+        # current release, which build_lanes.py already reads (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106). As of
+        # 2026-10-30 build_lanes.py reads core 2.4.0, the release after it; this entry records lane 1.1.0 as issued.
         "version": "1.1.0", "stage": None, "approver": "Claude, under the decision owner's delegation (EPM-DEC-001-0028, amendment of 2026-10-25, evening)", "issued": "2026-10-26",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-25-queue-delegation.md", "Yes, delegate as described (Recommended)"),
         "parts": ["lane/vocabulary.ttl", "lane/lanes.ttl"],

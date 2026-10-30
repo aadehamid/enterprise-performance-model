@@ -433,7 +433,7 @@ def load_verify(bolt, password, import_dir):
         "nodes": hash_sorted[1], "relationships": hash_sorted[2],
         "versions": VERSIONS,
         "samples": {"violations": violations[:5],
-                    "lost": sorted(t.n3() for t in [x for x in lost][:0]) or [" ".join(x.n3() for x in t) for t in list(lost)[:10]],
+                    "lost": [" ".join(x.n3() for x in t) for t in list(lost)[:10]],
                     "added": [" ".join(x.n3() for x in t) for t in list(added)[:10]]},
     }
     return report

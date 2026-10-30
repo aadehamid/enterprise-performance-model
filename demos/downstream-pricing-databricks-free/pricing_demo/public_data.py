@@ -144,11 +144,6 @@ def weekly():
     return values, meta
 
 
-def series_meta():
-    with open(os.path.join(DATA, "public", "eia_series.csv"), newline="") as f:
-        return {r["key"]: r for r in csv.DictReader(f)}
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--refresh", action="store_true")
