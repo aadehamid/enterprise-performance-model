@@ -17,6 +17,7 @@ updated 2026-10-23).
 import json
 import re
 import sys
+import time
 
 from .config import databricks_env
 from .databricks import connect, current_catalog, run
@@ -48,6 +49,11 @@ TOOL_CHARS = 30000
 # eight rounds of results cannot grow without limit: before each request the oldest tool results give up their rows,
 # text and SQL kept, until it fits (Codex on step 2).
 CONTEXT_CHARS = 160000
+# A Genie message that fails (MessageStatus.FAILED, as use cases 7 and 9 did on E7's runs) is sent again up to
+# GENIE_ATTEMPTS times in all, GENIE_WAIT seconds apart, and every failure is kept in the trace (step 3). If every attempt
+# fails, the orchestrator gets the failure as the tool result, and the agent still counts as not called.
+GENIE_ATTEMPTS = 3
+GENIE_WAIT = 10
 # Before the tool loop the orchestrator names the agents whose subject areas the question touches; an answer is
 # accepted only once each of them, and each agent RULES require, has been called (after E7, delegated under
 # EPM-DEC-001-0028).
@@ -144,7 +150,26 @@ def spaces(w):
     return {t: found[t] for t in AGENTS}
 
 
+def completed(call):
+    return str(call.get("status", "")).endswith("COMPLETED")
+
+
 def ask_genie(w, space_id, question):
+    """The agent's answer (ask_once), after up to GENIE_ATTEMPTS tries when its message fails, with each failure."""
+    from databricks.sdk.errors import OperationFailed
+    errors = []
+    for attempt in range(1, GENIE_ATTEMPTS + 1):
+        try:
+            return {**ask_once(w, space_id, question), "attempts": attempt, "errors": errors}
+        except OperationFailed as err:
+            errors.append(str(err)[:300])
+            if attempt < GENIE_ATTEMPTS:
+                time.sleep(GENIE_WAIT)
+    return {"status": "MessageStatus.FAILED", "text": f"error: the agent failed {GENIE_ATTEMPTS} times; ask it a narrower "
+            "question", "rows": [], "row_count": 0, "attempts": GENIE_ATTEMPTS, "errors": errors}
+
+
+def ask_once(w, space_id, question):
     """The agent's text and SQL, the first MAX_ROWS rows of its result, and how many rows the query returned."""
     m = w.genie.start_conversation_and_wait(space_id, question)
     parts, rows, row_count = [], [], 0
@@ -248,7 +273,8 @@ def planned(w, described, question):
 
 
 def missing(required, called):
-    return [t for t in AGENTS if t in required and t not in {c["agent"] for c in called}]
+    """The required agents with no completed call: a call whose every attempt failed does not count."""
+    return [t for t in AGENTS if t in required and t not in {c["agent"] for c in called if completed(c)}]
 
 
 class OrchestrationError(SystemExit):
@@ -290,7 +316,8 @@ def orchestrate(w, described, ids, question):
                 title = by_tool[call["function"]["name"]]  # a tool name the model invents raises KeyError
                 sub = json.loads(call["function"]["arguments"])["question"]
                 result = ask_genie(w, ids[title], sub)
-                called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"]})
+                called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"],
+                               "attempts": result.get("attempts", 1), "errors": result.get("errors", [])})
                 messages.append({"role": "tool", "tool_call_id": call["id"], "content": tool_content(result)})
     except Exception as err:  # keep the agents already called beside the reason it stopped
         raise OrchestrationError(f"{type(err).__name__}: {err}; agents called: {[c['agent'] for c in called]}", called, plan) from err

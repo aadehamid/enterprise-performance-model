@@ -1472,7 +1472,7 @@ def test_e7_rejudge_fails_only_a_changed_question_and_keeps_the_no_lesson_rule(t
                "double negative": "The crude oil trader made D08. It is not true that no lesson was recorded."}
     for name, answer in answers.items():
         run = {"run_at": "2026-10-29T00:00:00+00:00", "results": [
-            {"n": 14, "question": case["question"], "agents_called": [{"agent": "Refinery Operations Analytics"}],
+            {"n": 14, "question": case["question"], "agents_called": [{"agent": "Refinery Operations Analytics", "status": "MessageStatus.COMPLETED"}],
              "answer": answer, "expected": [record], "passed": False, "reasons": []}]}
         path = tmp_path / f"{name.replace(' ', '-')}.json"
         path.write_text(json.dumps(run))
@@ -1727,3 +1727,44 @@ def test_after_e7_the_conversation_stays_within_the_context_budget(monkeypatch):
     monkeypatch.setattr(supervisor, "CONTEXT_CHARS", 10)
     with pytest.raises(ValueError, match="even without tool rows"):
         supervisor.fit(messages)
+
+
+# ---- after E7, step 3: a failed Genie message is retried, and a case can be asked K times ----
+
+def test_after_e7_a_failed_genie_message_is_retried_and_every_failure_kept(monkeypatch):
+    from databricks.sdk.errors import OperationFailed
+    tries = iter([OperationFailed("got MessageStatus.FAILED"), {"status": "MessageStatus.COMPLETED", "text": "t", "rows": [], "row_count": 0}])
+
+    def once(w, space, q):
+        x = next(tries)
+        if isinstance(x, Exception):
+            raise x
+        return x
+    monkeypatch.setattr(supervisor, "ask_once", once)
+    monkeypatch.setattr(supervisor, "GENIE_WAIT", 0)
+    result = supervisor.ask_genie(None, "id", "q")
+    assert result["attempts"] == 2 and result["errors"] == ["got MessageStatus.FAILED"] and supervisor.completed(result)
+    monkeypatch.setattr(supervisor, "ask_once", lambda w, space, q: (_ for _ in ()).throw(OperationFailed("FAILED")))
+    result = supervisor.ask_genie(None, "id", "q")
+    assert result["attempts"] == 3 and len(result["errors"]) == 3 and not supervisor.completed(result)
+
+
+def test_after_e7_an_agent_whose_every_attempt_failed_counts_as_not_called():
+    crack = "Crack Spread Price Analytics"
+    failed = [{"agent": crack, "status": "MessageStatus.FAILED"}]
+    assert supervisor.missing({crack}, failed) == [crack]
+    case = next(c for c in acceptance.CASES if c["n"] == 13)
+    reasons = acceptance.judge(case, [], {"agents_called": failed + [{"agent": "Refinery Operations Analytics",
+                                                                      "status": "MessageStatus.COMPLETED"}], "answer": ""})["reasons"]
+    assert "agents not called: Crack Spread Price Analytics" in reasons
+
+
+def test_after_e7_a_case_asked_k_times_passes_only_when_every_attempt_does(tmp_path):
+    results = [{"n": 3, "attempt": 1, "passed": True, "reasons": [], "agents_called": []},
+               {"n": 3, "attempt": 2, "passed": False, "reasons": ["missing x"], "agents_called": []},
+               {"n": 3, "attempt": 3, "passed": True, "reasons": [], "agents_called": []},
+               {"n": 11, "attempt": 1, "passed": True, "reasons": [], "agents_called": []}]
+    assert acceptance.summarize(results)["passed"] == [11] and acceptance.summarize(results)["cases"] == 2
+    path = tmp_path / "run.json"
+    path.write_text(json.dumps({"run_at": "x", "results": results}))
+    assert "use case 3: fail (2/3)" in acceptance.compare([str(path)])
