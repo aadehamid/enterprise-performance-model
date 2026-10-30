@@ -1768,3 +1768,25 @@ def test_after_e7_a_case_asked_k_times_passes_only_when_every_attempt_does(tmp_p
     path = tmp_path / "run.json"
     path.write_text(json.dumps({"run_at": "x", "results": results}))
     assert "use case 3: fail (2/3)" in acceptance.compare([str(path)])
+
+
+def test_after_e7_a_run_that_stopped_does_not_pass_a_case_on_fewer_attempts(tmp_path):
+    # Codex round 1 on step 3: a run asked 3 times that stopped after one passing attempt reported the case as passed.
+    one = [{"n": 3, "attempt": 1, "passed": True, "reasons": [], "agents_called": []}] + [
+        {"n": 11, "attempt": k, "passed": True, "reasons": [], "agents_called": []} for k in (1, 2, 3)]
+    s = acceptance.summarize(one, 3)
+    assert s["passed"] == [11] and s["incomplete"] == [3]
+    path = tmp_path / "run.json"
+    path.write_text(json.dumps({"run_at": "x", "repeat": 3, "results": one}))
+    lines = acceptance.compare([str(path)])
+    assert "incomplete: 3" in lines[0] and "use case 3: incomplete (1/1 of 3)" in lines
+    for r in one:  # rejudge needs what a recorded run holds
+        r.update(question=next(c["question"] for c in acceptance.CASES if c["n"] == r["n"]), expected=[], answer="")
+    path.write_text(json.dumps({"run_at": "x", "repeat": 3, "results": one}))
+    assert acceptance.rejudge(str(path))["repeat"] == 3
+
+
+def test_after_e7_a_case_missing_an_agent_on_several_attempts_counts_once():
+    miss = {"passed": False, "reasons": ["agents not called: Crack Spread Price Analytics"], "agents_called": []}
+    results = [dict(miss, n=12, attempt=k) for k in (1, 2, 3)]
+    assert acceptance.summarize(results, 3)["agent_missed"] == [12]

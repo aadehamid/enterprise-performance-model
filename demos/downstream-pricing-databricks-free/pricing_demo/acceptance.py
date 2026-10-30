@@ -684,7 +684,7 @@ def run_cases(numbers_wanted=None, stamp=None, repeat=1):
             print(f"use case {case['n']}" + (f" (attempt {attempt} of {repeat})" if repeat > 1 else "")
                   + f": {'pass' if verdict['passed'] else 'fail'}"
                   + ("" if verdict["passed"] else " - " + "; ".join(verdict["reasons"])), flush=True)
-            save(results, stamp)  # after every case, so a run that stops keeps the cases it finished
+            save(results, stamp, repeat)  # after every case, so a run that stops keeps the cases it finished
     return results
 
 
@@ -692,11 +692,11 @@ def now():
     return dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
 
 
-def save(results, stamp):
-    """Write a run's results so far to RESULTS, stamped with the time the run started."""
+def save(results, stamp, repeat=1):
+    """Write a run's results so far to RESULTS, stamped with the time the run started, with the attempts asked per case."""
     os.makedirs(os.path.dirname(RESULTS), exist_ok=True)
     with open(RESULTS, "w") as f:
-        json.dump({"run_at": stamp, "results": results}, f, indent=2, default=str)
+        json.dump({"run_at": stamp, "repeat": repeat, "results": results}, f, indent=2, default=str)
 
 
 def recorded(e):
@@ -729,16 +729,23 @@ def rejudge(path):
         out.append({**r, "agents_required": list(case["agents"]),  # the agents this verdict required, not the run's
                     "original": {"passed": r["passed"], "reasons": r["reasons"], "agents_required": r.get("agents_required")},
                     **verdict})
-    return {"run_at": run["run_at"], "rejudged_on": dt.date.today().isoformat(), "results": out}
+    return {"run_at": run["run_at"], "repeat": repeat_of(run), "rejudged_on": dt.date.today().isoformat(), "results": out}
+
+
+def repeat_of(run):
+    """The attempts a run asked per case: recorded since step 3's review; for a run recorded before, the most any case
+    has (a finished run asked each case that many times)."""
+    return run.get("repeat") or max((len(rs) for rs in by_case(run["results"]).values()), default=1)
 
 
 def load(path):
     with open(path) as f:
-        return json.load(f)["results"]
+        run = json.load(f)
+    return run["results"], repeat_of(run)
 
 
 def summary(path):
-    return summarize(load(path))
+    return summarize(*load(path))
 
 
 def by_case(results):
@@ -749,20 +756,25 @@ def by_case(results):
     return out
 
 
-def summarize(results):
-    """One recorded run in figures: the cases passed (a case asked K times passes only when every attempt does: the
-    owner, 2026-10-29: "They cannot be giving different answers for the same question"), the agent calls, the cases
-    whose agents' SQL read a definitions view and the cases that missed a required agent."""
+def summarize(results, repeat=1):
+    """One recorded run in figures, each a list of case numbers but calls: the cases passed (a case asked K times passes
+    only when all K attempts are recorded and pass: the decision owner, 2026-10-30: "They cannot be giving different
+    answers for the same question"), the cases with fewer than K attempts (a run that stopped), the agent calls, and the
+    cases where an attempt's SQL read a definitions view or an attempt missed a required agent."""
     cases = by_case(results)
-    return {"passed": [n for n, rs in cases.items() if all(r["passed"] for r in rs)], "cases": len(cases),
+    return {"passed": [n for n, rs in cases.items() if len(rs) >= repeat and all(r["passed"] for r in rs)],
+            "incomplete": [n for n, rs in cases.items() if len(rs) < repeat], "cases": len(cases),
             "calls": sum(len(r["agents_called"]) for r in results),
-            "definitions_read": [r["n"] for r in results if r.get("definitions_read")],
-            "agent_missed": [r["n"] for r in results if any(x.startswith("agents not called") for x in r["reasons"])]}
+            "definitions_read": sorted({r["n"] for r in results if r.get("definitions_read")}),
+            "agent_missed": sorted({r["n"] for r in results if any(x.startswith("agents not called") for x in r["reasons"])})}
 
 
-def cell(attempts):
-    """A case's verdict on one run: pass or fail, with the count passed when it was asked more than once."""
+def cell(attempts, repeat=1):
+    """A case's verdict on one run: pass or fail, with the count passed when it was asked more than once, or incomplete
+    when the run stopped before all its attempts."""
     passed = sum(r["passed"] for r in attempts)
+    if len(attempts) < repeat:
+        return f"incomplete ({passed}/{len(attempts)} of {repeat})"
     word = "pass" if passed == len(attempts) else "fail"
     return word if len(attempts) == 1 else f"{word} ({passed}/{len(attempts)})"
 
@@ -771,14 +783,15 @@ def compare(paths):
     """The lines `compare` prints: each run's summary, then each case's verdict on every run."""
     runs = [load(p) for p in paths]
     lines = []
-    for p, run in zip(paths, runs):
-        s = summarize(run)
+    for p, (run, repeat) in zip(paths, runs):
+        s = summarize(run, repeat)
         lines.append(f"{os.path.basename(p)}: {len(s['passed'])} of {s['cases']} passed ({', '.join(map(str, s['passed'])) or 'none'}); "
                      f"{s['calls']} agent calls; definitions read in {len(s['definitions_read'])}; "
-                     f"a required agent missed in {len(s['agent_missed'])}")
-    indexed = [by_case(run) for run in runs]
-    for n in sorted({n for run in indexed for n in run}):
-        cells = [cell(run[n]) if n in run else "-" for run in indexed]
+                     f"a required agent missed in {len(s['agent_missed'])}"
+                     + (f"; incomplete: {', '.join(map(str, s['incomplete']))}" if s["incomplete"] else ""))
+    indexed = [(by_case(run), repeat) for run, repeat in runs]
+    for n in sorted({n for run, _ in indexed for n in run}):
+        cells = [cell(run[n], repeat) if n in run else "-" for run, repeat in indexed]
         lines.append(f"use case {n}: " + " ".join(cells))
     return lines
 
@@ -805,8 +818,8 @@ def main(argv):
         wanted = {int(a) for a in args}
         stamp = now()
         results = run_cases(wanted, stamp, repeat)
-        save(results, stamp)  # also when no case matched
-        s = summarize(results)
+        save(results, stamp, repeat)  # also when no case matched
+        s = summarize(results, repeat)
         print(f"{len(s['passed'])} of {s['cases']} passed" + (f" on all {repeat} attempts" if repeat > 1 else "")
               + f"; results in {RESULTS}")
     elif command == "rejudge":
@@ -815,7 +828,7 @@ def main(argv):
             target = path.replace(".json", "-rejudged.json")
             with open(target, "w") as f:
                 json.dump(result, f, indent=2, default=str)
-            s = summarize(result["results"])
+            s = summarize(result["results"], result["repeat"])
             print(f"{path}: {len(s['passed'])} of {s['cases']} pass when re-judged; "
                   + ", ".join(map(str, s["passed"])) + f"; written to {target}")
     elif command == "compare":
