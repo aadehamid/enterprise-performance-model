@@ -1732,7 +1732,12 @@ def test_after_e7_the_conversation_stays_within_the_context_budget(monkeypatch):
 # ---- after E7, step 3: a failed Genie message is retried, and a case can be asked K times ----
 
 def test_after_e7_a_failed_genie_message_is_retried_and_every_failure_kept(monkeypatch):
-    from databricks.sdk.errors import OperationFailed
+    import sys
+    import types
+
+    class OperationFailed(Exception):  # the SDK's error, stood in: check.sh runs without the Databricks SDK
+        pass
+    monkeypatch.setitem(sys.modules, "databricks.sdk.errors", types.SimpleNamespace(OperationFailed=OperationFailed))
     tries = iter([OperationFailed("got MessageStatus.FAILED"), {"status": "MessageStatus.COMPLETED", "text": "t", "rows": [], "row_count": 0}])
 
     def once(w, space, q):
