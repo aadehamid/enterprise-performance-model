@@ -1075,10 +1075,11 @@ SAID = re.compile(r'(?:(?!' + SENTENCE_END + r')[^"”“]){0,160}?["“]([^"”
 # "..." (answers-x.md), then chose": between a quote of theirs and the next verb, only a citation in brackets (answers
 # files, records, PR or comment numbers), a comma and "then", "later" or "and". Any other word, such as a subject
 # ("the reviewer replied", "(the reviewer) then replied"), ends the chain.
-CITE_TOKEN = r'(?:`?answers-[\w-]+\.md`?|EPM-DEC-001-\d{4}|#\d+|comment \d{6,})'
+CITE_TOKEN = r'(?:`?[\w-]+\.md`?|EPM-DEC-001-\d{4}|#\d+|comment \d{6,})'
 CONNECTIVE = re.compile(r'^\s*(?:\([\s,]*' + CITE_TOKEN + r'(?:[\s,]+' + CITE_TOKEN + r')*[\s,]*\))?\s*,?\s*'
                         r'(?:and\s+)?(?:then|later|and)\s+$', re.I)
-ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")
+ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")  # the usual name; a cited name that fits it must exist
+MD_NAME = re.compile(r"[\w-]+\.md")  # any saved answer counts by its own name, such as delegation.md
 RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")
 COMMENT_ID = re.compile(r"comment (\d{6,})")
 
@@ -1132,7 +1133,7 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
                     quotes_end.append(q.end())
             if not said:
                 continue
-            named = ANSWERS_FILE.findall(flat)
+            named = [n for n in MD_NAME.findall(flat) if n in files_by_name or ANSWERS_FILE.fullmatch(n)]
             for name in named:
                 if name not in files_by_name:
                     problems.append(f"{f}: cites {name}, which is not a saved answer")
@@ -1145,12 +1146,12 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
             if not sources and comments:
                 sources = [corpus]  # only comments no answers file records: the words must be in some saved answer
             for m in said:
-                words = _flat(m.group(1))
-                if len(words.split()) < 3 or any(words in text for text in sources):
+                words = _flat(m.group(1)).rstrip(".,;:!?")  # a stop inside the quote marks is the writer's
+                if len(words.split()) < 3 or any(in_corpus_as_words(words, text) for text in sources):
                     continue  # short terms are not checked; the rest must be in a source the paragraph names
                 if sources:
                     problems.append(f"{f}: not in the answers file, record or comment it names: {words[:90]!r}")
-                elif words not in corpus:
+                elif not in_corpus_as_words(words, corpus):
                     problems.append(f"{f}: not in a saved answer: {words[:90]!r}")
                 else:
                     problems.append(f"{f}: names no answers file, decision record or comment for: {words[:90]!r}")

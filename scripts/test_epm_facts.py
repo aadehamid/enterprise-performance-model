@@ -1163,3 +1163,19 @@ def test_citations_need_the_quote_in_the_source_they_name(tmp_path):
     assert _citation_fixture(tmp_path / "i", wrong) == []  # 7000005 is no file's header, so any saved answer counts
     right = 'The decision owner wrote (comment 7000004): "keep the old figures as they were recorded".\n'
     assert NAMED_MISS in _citation_fixture(tmp_path / "i", right)[0]
+
+
+def test_citations_know_every_saved_answer_and_match_whole_words(tmp_path):
+    # Bugbot on 0ae3cbb: a saved answer with another name (delegation.md) went unrecognised as a source.
+    (tmp_path / "a" / "answers").mkdir(parents=True)
+    (tmp_path / "a" / "answers" / "delegation.md").write_text("<!-- context -->\nhand the open questions to the agent\n")
+    named = 'The decision owner said: "hand the open questions to the agent" (delegation.md).\n'
+    assert _citation_fixture(tmp_path / "a", named) == []
+    then = ('The decision owner said: "hand the open questions to the agent" (delegation.md), then chose '
+            '"a sentence nobody saved at all".\n')
+    assert NAMED_MISS in _citation_fixture(tmp_path / "a", then)[0]
+    # Bugbot on 0ae3cbb: a quote matches whole words, as `quotes` does, and a stop inside the quote marks is not a word.
+    part = 'The decision owner said: "eep the old figures as they were recorded" (answers-x.md).\n'
+    assert NAMED_MISS in _citation_fixture(tmp_path / "b", part)[0]
+    stop = 'The decision owner said: "keep the old figures as they were recorded." (answers-x.md)\n'
+    assert _citation_fixture(tmp_path / "c", stop) == []
