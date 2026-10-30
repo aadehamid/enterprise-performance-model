@@ -1126,7 +1126,7 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
                 if not q:
                     continue
                 near_owner = any(0 <= v.start() - o <= 120 and not re.search(r'["”“]|' + SENTENCE_END, flat[o:v.start()]) for o in owners)
-                chained = any(0 <= v.start() - e <= 60 and CONNECTIVE.match(flat[e:v.start()]) for e in quotes_end)
+                chained = any(0 <= v.start() - e and CONNECTIVE.match(flat[e:v.start()]) for e in quotes_end)  # CONNECTIVE bounds the gap
                 if near_owner or chained:
                     said.append(q)
                     quotes_end.append(q.end())

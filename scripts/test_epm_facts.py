@@ -1146,6 +1146,10 @@ def test_citations_need_the_quote_in_the_source_they_name(tmp_path):
     for k, gap in enumerate(("(answers-x.md) (the reviewer) then", "(answers-x.md); then", "(answers-x.md, the reviewer) then")):
         doc = f'The decision owner said: "keep the old figures as they were recorded" {gap} replied "a sentence nobody saved at all".\n'
         assert _citation_fixture(tmp_path / f"g{k}", doc) == [], gap
+    # Bugbot on fd004ff: a long citation between two quotes still chains them.
+    long_cite = ('The decision owner said: "keep the old figures as they were recorded" (answers-x.md, answers-y.md, '
+                 'comment 7000001, #4242, #4343), then chose "a sentence nobody saved at all".\n')
+    assert [p for p in _citation_fixture(tmp_path / "k", long_cite) if "a sentence nobody saved" in p]
     # Only the header comment records a file's source comment.
     (tmp_path / "h" / "answers").mkdir(parents=True)
     (tmp_path / "h" / "answers" / "answers-z.md").write_text("<!-- verbatim, no comment -->\nsome later answer here\n"
