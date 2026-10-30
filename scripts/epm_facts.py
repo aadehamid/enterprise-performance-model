@@ -1060,12 +1060,16 @@ def cmd_decisions(args):
 
 
 # Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): each verb of
-# saying that follows "the decision owner" or "the owner", or a quote already attributed, closely (within 120 characters,
-# in the same sentence, no quote mark between), and the quote after it ("asked: ..., then chose ..." gives two). A quote another subject says ("GitHub's documentation says")
+# saying that follows "the decision owner" closely (within 120 characters, in the same sentence, no quote mark between),
+# or follows a quote already theirs through a plain connective ("asked: ..., then chose ..." gives two), and the quote
+# after it. Only a decision record's "The decision owner's recorded words" section counts as their recorded words. A quote another subject says ("GitHub's documentation says")
 # or one with no verb of saying before it, such as a process name, is not attributed.
-OWNER = re.compile(r'\b(?:decision owner|the owner)\b', re.I)
-SAYING = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added)\b'
-                    r'(?:(?![.!?]\s)[^"”“]){0,160}?["“]([^"”]+)["”]', re.I)  # the quote in the verb's own sentence
+OWNER = re.compile(r'\bdecision owner\b', re.I)  # the repo's one name for the role (EPM-DEC-001-0049); "the owner" also
+# names owners of processes and data
+VERB = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added)\b', re.I)
+SENTENCE_END = r'[.!?][*_)\]]*\s'  # a sentence ends at a stop, even inside emphasis or brackets (".* (A" ends one)
+SAID = re.compile(r'(?:(?!' + SENTENCE_END + r')[^"”“]){0,160}?["“]([^"”]+)["”]')  # the quote in the verb's own sentence
+CONNECTIVE = re.compile(r'^[^A-Z"”“]{0,40}\b(?:then|and|later)\b[^A-Z"”“]{0,20}$')  # "..., then chose": no named subject
 ANSWERS_FILE = re.compile(r"answers-[\w-]+\.md")
 RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")
 COMMENT_ID = re.compile(r"comment \d{6,}")
@@ -1079,7 +1083,10 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
     corpus = answer_corpus(answers)
     files_by_name = {os.path.basename(p): _flat(re.sub(r"<!--.*?-->", "", open(p).read(), flags=re.S))
                      for p in glob.glob(os.path.join(answers, "*.md"))}
-    record_texts = {m.group(1): _flat(open(p).read()) for p in glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))
+    def recorded_words(path):
+        found = re.search(r"^## The decision owner's recorded words\s*\n(.*?)(?=^## |\Z)", open(path).read(), re.M | re.S)
+        return _flat(found.group(1)) if found else ""
+    record_texts = {m.group(1): recorded_words(p) for p in glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))
                     for m in [re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(p))] if m}
     records = set(record_texts)
     if files is None:
@@ -1098,11 +1105,16 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
             flat = _flat(para)
             # a verb counts when it follows the role closely with no quote between, or follows a quote already
             # theirs closely ("asked: ..., then chose ...")
-            anchors, said = [m.end() for m in OWNER.finditer(flat)], []
-            for m in SAYING.finditer(flat):
-                if any(0 <= m.start() - a <= 120 and not re.search(r'["”“]|[.!?]\s', flat[a:m.start()]) for a in anchors):
-                    said.append(m)
-                    anchors.append(m.end())
+            owners, quotes_end, said = [m.end() for m in OWNER.finditer(flat)], [], []
+            for v in VERB.finditer(flat):  # every verb in turn: an earlier one cannot hide a later one
+                q = SAID.match(flat, v.end())
+                if not q:
+                    continue
+                near_owner = any(0 <= v.start() - o <= 120 and not re.search(r'["”“]|' + SENTENCE_END, flat[o:v.start()]) for o in owners)
+                chained = any(0 <= v.start() - e <= 60 and CONNECTIVE.match(flat[e:v.start()]) for e in quotes_end)
+                if near_owner or chained:
+                    said.append(q)
+                    quotes_end.append(q.end())
             if not said:
                 continue
             named = ANSWERS_FILE.findall(flat)

@@ -1045,7 +1045,7 @@ def test_coverage_reads_each_link_from_its_newest_release(tmp_path):
 
 def _citation_fixture(tmp_path, doc):
     answers, decisions = tmp_path / "answers", tmp_path / "decisions"
-    answers.mkdir(parents=True); decisions.mkdir()
+    answers.mkdir(parents=True, exist_ok=True); decisions.mkdir(exist_ok=True)
     (answers / "answers-x.md").write_text("<!-- context -->\nkeep the old figures as they were recorded\n")
     (tmp_path / "doc.md").write_text(doc)
     return epm_facts.citation_problems(root=str(tmp_path), answers=str(answers), decisions=str(decisions), files=["doc.md"])
@@ -1084,3 +1084,27 @@ def test_citations_skip_a_quoted_title_and_short_terms(tmp_path):
     title = 'The record\'s "For the decision owner" item 3 asked you to "Choose where the files are hosted".\n'
     assert _citation_fixture(tmp_path / "a", title) == []
     assert _citation_fixture(tmp_path / "b", 'The decision owner chose "Option A".\n') == []
+
+
+def test_citations_hold_each_edge_codex_found_in_round_2(tmp_path):
+    # A cited record counts only through its "The decision owner's recorded words" section, not its draft text.
+    record = tmp_path / "a" / "decisions" / "EPM-DEC-001-0001-x.md"
+    record.parent.mkdir(parents=True)
+    record.write_text("## Options\n\nkeep every draft figure we proposed\n\n## The decision owner's recorded words\n\n"
+                      "> keep the old figures as they were recorded\n")
+    drafted = 'The decision owner said: "keep every draft figure we proposed" (EPM-DEC-001-0001).\n'
+    assert "not in a saved answer" in _citation_fixture(tmp_path / "a", drafted)[0]
+    recorded = 'The decision owner said: "keep the old figures as they were recorded" (EPM-DEC-001-0001).\n'
+    assert _citation_fixture(tmp_path / "a", recorded) == []  # the fixture rewrites doc.md and keeps the record
+    # An earlier verb no longer hides a later one.
+    hidden = 'When asked, the decision owner said "an answer nobody saved anywhere at all" (answers-x.md).\n'
+    assert "not in a saved answer" in _citation_fixture(tmp_path / "b", hidden)[0]
+    # A quote chains to the next only through a plain connective, not through another named speaker.
+    chained = ('The decision owner said: "keep the old figures as they were recorded" (answers-x.md), and Codex '
+               'replied "a reviewer\'s words, not the owner\'s".\n')
+    assert _citation_fixture(tmp_path / "c", chained) == []
+    # "the owner" alone names owners of processes too; and a stop inside emphasis ends the sentence.
+    assert _citation_fixture(tmp_path / "d", 'The owner of the process wrote "a process step title".\n') == []
+    option = ('*Decided: The decision owner said to address the gap (answers-x.md); option A was applied.* (A) Add '
+              'one step, "a step the options list proposed".\n')
+    assert _citation_fixture(tmp_path / "e", option) == []
