@@ -196,7 +196,7 @@ def fit(messages):
     for k, m in enumerate(messages):
         if total <= CONTEXT_CHARS:
             return
-        if m.get("role") != "tool" or '"rows_shown": 0' in m["content"]:
+        if m.get("role") != "tool":
             continue
         body = json.loads(m["content"])
         if body.get("rows"):

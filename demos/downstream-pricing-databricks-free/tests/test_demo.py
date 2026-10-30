@@ -1719,6 +1719,11 @@ def test_after_e7_the_conversation_stays_within_the_context_budget(monkeypatch):
     assert sum(len(json.dumps(m)) for m in messages) <= supervisor.CONTEXT_CHARS
     kept = [json.loads(m["content"])["rows_shown"] for m in messages[1:]]
     assert kept[0] == 0 and kept[-1] > 0  # the oldest results give up their rows first
+    tricky = [{"role": "tool", "tool_call_id": "t", "content": supervisor.tool_content(
+        {"status": "COMPLETED", "text": "t", "rows": [{"rows_shown": 0, "x": "y" * 200}] * 400, "row_count": 400})}] * 8
+    tricky = [dict(m) for m in tricky]
+    supervisor.fit(tricky)  # a column named rows_shown is a row like any other (Codex quick check on step 2)
+    assert sum(len(json.dumps(m)) for m in tricky) <= supervisor.CONTEXT_CHARS
     monkeypatch.setattr(supervisor, "CONTEXT_CHARS", 10)
     with pytest.raises(ValueError, match="even without tool rows"):
         supervisor.fit(messages)
