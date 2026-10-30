@@ -1489,6 +1489,7 @@ def test_e7_a_stopped_orchestrator_keeps_the_agents_it_called(monkeypatch):
         "name": supervisor.tool_name("Refinery Operations Analytics"), "arguments": json.dumps({"question": "q"})}}]},
         {"role": "assistant", "tool_calls": [{"id": "2", "function": {"name": "an_invented_tool", "arguments": "{}"}}]}])
     monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs: next(replies))
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [])
     monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
     with pytest.raises(supervisor.OrchestrationError) as err:
         supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
@@ -1517,3 +1518,173 @@ def test_e7_rejudged_files_record_the_agents_their_verdicts_required():
         for r in json.load(open(os.path.join(ROOT, "data", "acceptance", name)))["results"]:
             assert r["agents_required"] == list(cases[r["n"]]["agents"]), (name, r["n"])
             assert "agents_required" in r["original"], (name, r["n"])
+
+
+# ---- after E7 (2026-10-29): the orchestrator's routing is enforced ----
+
+def tool_call(title, n):
+    return {"id": str(n), "function": {"name": supervisor.tool_name(title), "arguments": json.dumps({"question": "q"})}}
+
+
+def test_after_e7_an_answer_is_sent_back_until_every_planned_and_ruled_agent_is_called(monkeypatch):
+    crack, refinery, pricing = "Crack Spread Price Analytics", "Refinery Operations Analytics", "Pricing and Market Margin Analytics"
+    seen = []
+    replies = iter([{"role": "assistant", "tool_calls": [tool_call(refinery, 1)]},
+                    {"role": "assistant", "content": "Utilization fell while the crack widened."},  # no crack agent yet
+                    {"role": "assistant", "tool_calls": [tool_call(crack, 2)]},
+                    {"role": "assistant", "content": "Utilization fell while the crack widened."},  # no pricing agent yet
+                    {"role": "assistant", "tool_calls": [tool_call(pricing, 3)]},
+                    {"role": "assistant", "content": "the answer"}])
+
+    def chat(w, messages, specs=None):
+        seen.append(messages[-1]["content"] if messages[-1]["role"] == "user" else None)
+        return next(replies)
+    monkeypatch.setattr(supervisor, "chat", chat)
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [pricing])
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
+    result = supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS},
+                                    "How did Garyville's utilization move?")
+    assert [c["agent"] for c in result["agents_called"]] == [refinery, crack, pricing]
+    assert result["answer"] == "the answer" and result["plan"] == [pricing]
+    assert "pricing_and_market_margin_analytics" in seen[0] and "refinery_operations_analytics" in seen[0]
+    assert [s for s in seen if s and s.startswith("Not yet")] == [
+        "Not yet: call the crack_spread_price_analytics, pricing_and_market_margin_analytics agent before answering, "
+        "asking it only about its own subject area, then answer again.",
+        "Not yet: call the pricing_and_market_margin_analytics agent before answering, asking it only about its own "
+        "subject area, then answer again."]
+
+
+def test_after_e7_an_orchestrator_that_never_calls_a_required_agent_gives_no_answer(monkeypatch):
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: {"role": "assistant", "content": "The crack rose."})
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [])
+    with pytest.raises(supervisor.OrchestrationError, match="no answer after"):
+        supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+
+
+def test_after_e7_the_rules_read_crack_and_refinery_figures():
+    assert supervisor.ruled("How did the USGC 3-2-1 crack move?") == ["Crack Spread Price Analytics"]
+    assert supervisor.ruled("Which refineries ran below plan utilization, and how did cracks move?") == [
+        "Crack Spread Price Analytics", "Refinery Operations Analytics"]
+    assert supervisor.ruled("What was the NYH ULSD cash price?") == []
+    assert supervisor.ruled("What was the USGC to NYH tanker freight, and the netback?") == ["Pricing and Market Margin Analytics"]
+    for text in ("Did an outside factor bear on D08?", "Which PADDs had distillate stocks below average?",
+                 "What did the backcast record?", "How much did the turnarounds cost?", "Which decisions missed?"):
+        assert supervisor.ruled(text) == ["Refinery Operations Analytics"], text
+
+
+def test_after_e7_the_plan_keeps_known_agents_once_and_drops_invented_ones(monkeypatch):
+    content = 'Here: {"agents": ["crack_spread_price_analytics", "an_invented_tool", 7, "crack_spread_price_analytics"]}'
+    bodies = []
+
+    def chat(w, messages, specs=None):
+        bodies.append(specs)
+        return {"role": "assistant", "content": content}
+    monkeypatch.setattr(supervisor, "chat", chat)
+    assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == ["Crack Spread Price Analytics"]
+    assert bodies == [None]  # the plan is asked without tools
+    replies = iter([{"content": "no JSON"}, {"content": '{"agents": [{"name": "x"}]}'},
+                    {"content": '{"agents": ["refinery_operations_analytics"]}'}])
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: next(replies))
+    assert supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q") == ["Refinery Operations Analytics"]
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: {"role": "assistant", "content": "no JSON"})
+    with pytest.raises(ValueError, match="no plan naming a known agent after 3 attempts"):
+        supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q")
+
+
+def test_after_e7_a_question_with_no_valid_plan_stops_before_any_agent(monkeypatch):
+    # Codex on #411: a malformed or empty plan read as "no agent needed", so only RULES guarded the answer.
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: {"role": "assistant", "content": "{}"})
+    with pytest.raises(supervisor.OrchestrationError, match="no plan naming a known agent") as err:
+        supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert err.value.agents_called == []
+
+
+def test_after_e7_the_orchestrator_asks_at_temperature_zero():
+    class Api:
+        def do(self, method, path, body):
+            self.body = body
+            return {"choices": [{"message": {"role": "assistant", "content": "x"}}]}
+    w = type("W", (), {"api_client": Api()})()
+    supervisor.chat(w, [], [{"type": "function"}])
+    assert w.api_client.body["temperature"] == 0 and w.api_client.body["tool_choice"] == "auto"
+    supervisor.chat(w, [])
+    assert "tools" not in w.api_client.body
+
+
+def test_after_e7_compare_reads_the_recorded_runs():
+    paths = [os.path.join(ROOT, "data", "acceptance", f"2026-10-29-run{k}-rejudged.json") for k in (1, 2)]
+    assert acceptance.summary(paths[0])["passed"] == [1, 21]
+    assert acceptance.summary(paths[1])["passed"] == [1, 3]
+    lines = acceptance.compare(paths)
+    assert lines[0].startswith("2026-10-29-run1-rejudged.json: 2 of 21 passed (1, 21); ")
+    assert "use case 3: fail pass" in lines and "use case 21: pass fail" in lines
+
+
+def test_after_e7_a_check_that_cannot_run_fails_its_case_and_the_run_keeps_what_it_finished(monkeypatch, tmp_path):
+    # Run 3 (2026-10-29) stopped at use case 14 when the tunnel to decision_truth dropped, and kept no results.
+    import contextlib
+    from pricing_demo import databricks
+
+    def broken(ctx):
+        raise OSError("connection refused")
+    cases = [dict(acceptance.CASES[1], check=lambda ctx: []), dict(acceptance.CASES[13], check=broken)]
+    monkeypatch.setattr(acceptance, "CASES", cases)
+    monkeypatch.setattr(acceptance, "RESULTS", str(tmp_path / "results.json"))
+    monkeypatch.setattr(supervisor, "client", lambda: (None, {}))
+    monkeypatch.setattr(supervisor, "spaces", lambda w: {})
+    monkeypatch.setattr(supervisor, "orchestrate", lambda w, d, ids, q: {"agents_called": [], "answer": "a"})
+    class Conn(contextlib.nullcontext):
+        def cursor(self):
+            return contextlib.nullcontext()
+    monkeypatch.setattr(databricks, "connect", lambda: (Conn(), {}))
+    monkeypatch.setattr(databricks, "current_catalog", lambda cur, e: "idp_sbx")
+    results = acceptance.run_cases()
+    assert [r["n"] for r in results] == [2, 14] and not results[1]["passed"]
+    assert results[1]["error"] == "the check failed: OSError: connection refused"
+    assert [r["n"] for r in json.load(open(tmp_path / "results.json"))["results"]] == [2, 14]
+
+
+def test_after_e7_a_stopped_orchestrator_keeps_its_plan(monkeypatch):
+    # Bugbot on #411: a run that stopped after planning recorded plan: null.
+    refinery = "Refinery Operations Analytics"
+    monkeypatch.setattr(supervisor, "planned", lambda w, described, q: [refinery])
+    monkeypatch.setattr(supervisor, "chat", lambda w, messages, specs=None: {"role": "assistant", "tool_calls": [tool_call(refinery, 1)]})
+    monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: (_ for _ in ()).throw(RuntimeError("FAILED")))
+    with pytest.raises(supervisor.OrchestrationError) as err:
+        supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
+    assert err.value.plan == [refinery]
+
+
+def test_after_e7_run_cases_saves_the_plan_of_a_stopped_run(monkeypatch, tmp_path):
+    # Codex quick check on #411: the plan must reach the saved results, not only the error.
+    import contextlib
+    from pricing_demo import databricks
+    refinery = "Refinery Operations Analytics"
+
+    def stopped(w, d, ids, q):
+        raise supervisor.OrchestrationError("FAILED", [{"agent": refinery, "question": "q", "status": "MessageStatus.COMPLETED"}], [refinery])
+
+    class Conn(contextlib.nullcontext):
+        def cursor(self):
+            return contextlib.nullcontext()
+    monkeypatch.setattr(acceptance, "CASES", [dict(acceptance.CASES[1], check=lambda ctx: [])])
+    monkeypatch.setattr(acceptance, "RESULTS", str(tmp_path / "results.json"))
+    monkeypatch.setattr(supervisor, "client", lambda: (None, {}))
+    monkeypatch.setattr(supervisor, "spaces", lambda w: {})
+    monkeypatch.setattr(supervisor, "orchestrate", stopped)
+    monkeypatch.setattr(databricks, "connect", lambda: (Conn(), {}))
+    monkeypatch.setattr(databricks, "current_catalog", lambda cur, e: "idp_sbx")
+    assert acceptance.run_cases()[0]["plan"] == [refinery]
+    assert json.load(open(tmp_path / "results.json"))["results"][0]["plan"] == [refinery]
+
+
+def test_after_e7_a_plan_of_null_three_times_stops_after_three_calls(monkeypatch):
+    calls = []
+
+    def chat(w, messages, specs=None):
+        calls.append(1)
+        return {"role": "assistant", "content": '{"agents": null}'}
+    monkeypatch.setattr(supervisor, "chat", chat)
+    with pytest.raises(ValueError, match="after 3 attempts"):
+        supervisor.planned(None, {t: "d" for t in genie.AGENTS}, "q")
+    assert len(calls) == 3

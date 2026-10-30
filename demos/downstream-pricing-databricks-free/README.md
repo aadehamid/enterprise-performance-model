@@ -233,6 +233,21 @@ What the runs show:
 
 These are the baseline the tests exist to measure; the checks did not change between the runs, and after the reviews they were made stricter and both runs judged again (above).
 
+### Fixing the failures (Plan 1, after E7)
+
+The plan in the handoff of 2026-10-29 takes the failures above in six steps, each in its own pull request and each measured by a full run, saved in `data/acceptance/` beside the earlier runs and judged again with `rejudge`. `acceptance compare` prints every run's totals and each case's verdict side by side. The checks do not change to make a case pass.
+
+**Step 1, routing** (delegated under EPM-DEC-001-0028). Before calling any agent the orchestrator names the agents whose subject areas the question touches, from their descriptions; a plan that names no known agent is asked again, and after three tries the question stops. Fixed rules add the agents the orchestrator's instructions and the agents' bindings require: a crack figure needs the crack agent; freight and netbacks need the pricing agent, which binds the freight rates; a refinery's runs, utilization, yields or margins, and the plans, backcasts, decisions, events, EIA's weekly data and the outside context, need the refinery agent, which binds those tables. An answer goes back until every planned and required agent has been called. The orchestrator asks at temperature 0. The tests' own lists of required agents are never passed to it, so their agent check still tests the routing. The harness now fails only the case whose check cannot run (run 3's first attempt stopped at use case 14 when the tunnel to `decision_truth` dropped, and kept nothing), and saves the results after every case.
+
+| Run | Code | Passed | Agent calls | A required agent missed |
+|---|---|---|---|---|
+| 1 | E7 | 2 of 21 (1, 21) | 21 | 16 cases |
+| 2 | E7, revised instructions | 2 of 21 (1, 3) | 30 | 12 cases |
+| 3 | step 1, before the review fix | 4 of 21 (1, 3, 11, 21) | 48 | 7 cases |
+| 4 | step 1 | 1 of 21 (1) | 49 | 6 cases |
+
+Runs 1 and 2 are the re-judged figures above. Runs 3 and 4 are `2026-10-29-run3.json` and `-run4.json`, with their re-judged copies. The routing did what it was for: the cases that missed an agent fell from 16 and 12 to 7 and 6, and on run 4 four of those six are Genie failures (step 3), not routing. The other misses are the crack agent on questions that never say "crack" (12, 16, 18 and 19 on run 3), where the plan left it out; no rule is written to fit those questions. Passes did not rise with it, and runs 3 and 4 show why: use cases 3, 11 and 21 passed on run 3 and failed on run 4, each on one figure or one label, because Genie wrote different SQL for the same question. The decision owner asked on 2026-10-30 that it not: "They cannot be giving different answers for the same question" (`answers-2026-10-30-consistent-answers.md` in the decision-owner answers folder). So from step 3 on each case is asked three times and passes only when all three do.
+
 ## Real, spot-anchored, synthesized
 
 Every row in the price and operations tables carries `DemoProvenance` (in silver and gold, `Demo_Provenance_Label`), a column the shared tables do not have:

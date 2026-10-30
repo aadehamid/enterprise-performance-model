@@ -3,6 +3,7 @@
     uv run --group graph python -m pricing_demo.acceptance expected        # compute every check's figures; ask nothing
     uv run --group graph python -m pricing_demo.acceptance run [N ...]     # ask each question and judge the answer
     uv run --group graph python -m pricing_demo.acceptance rejudge FILE ...  # judge a recorded run again; ask nothing
+    uv run --group graph python -m pricing_demo.acceptance compare FILE ...  # compare recorded runs, case by case
 
 A use case passes when the orchestrator (supervisor.py) calls the agents its row names, its answer holds every figure
 a SQL check computes from the stores (within the rounding a reader would use, each number tied to its own label), and
@@ -646,8 +647,9 @@ def graph_answer():
     return {"agents_called": [], "answer": "\n".join(lines)}
 
 
-def run_cases(numbers_wanted=None):
+def run_cases(numbers_wanted=None, stamp=None):
     from .databricks import connect, current_catalog
+    stamp = stamp or now()
     from . import supervisor
     w, described = supervisor.client()
     ids = supervisor.spaces(w)
@@ -658,22 +660,41 @@ def run_cases(numbers_wanted=None):
         for case in CASES:
             if numbers_wanted and case["n"] not in numbers_wanted:
                 continue
-            expected = case["check"](ctx)
             try:
-                run = graph_answer() if case.get("mode") == "graph" else supervisor.orchestrate(w, described, ids, case["question"])
-            except (Exception, SystemExit) as err:  # a failed run is a failed case, recorded with its reason and
-                # the agents the orchestrator had already called
-                run = {"agents_called": getattr(err, "agents_called", []), "answer": "",
-                       "error": f"{type(err).__name__}: {str(err)[:300]}"}
+                expected = case["check"](ctx)
+            except Exception as err:  # a check that cannot run fails its case, and the run goes on (after E7: a
+                # dropped tunnel to decision_truth ended a whole run at use case 14)
+                expected, run = [], {"agents_called": [], "answer": "",
+                                     "error": f"the check failed: {type(err).__name__}: {str(err)[:300]}"}
+            else:
+                try:
+                    run = graph_answer() if case.get("mode") == "graph" else supervisor.orchestrate(w, described, ids, case["question"])
+                except (Exception, SystemExit) as err:  # a failed run is a failed case, recorded with its reason and
+                    # the agents the orchestrator had already called
+                    run = {"agents_called": getattr(err, "agents_called", []), "plan": getattr(err, "plan", None), "answer": "",
+                           "error": f"{type(err).__name__}: {str(err)[:300]}"}
             verdict = judge(case, expected, run)
             results.append({"n": case["n"], "question": case["question"], "mode": case.get("mode", "orchestrator"),
                             "agents_required": case["agents"],
                             "agents_called": [{k: c[k] for k in ("agent", "question", "status")} for c in run["agents_called"]],
-                            "definitions_read": definitions_read(run), "answer": run["answer"], "error": run.get("error"),
+                            "plan": run.get("plan"), "definitions_read": definitions_read(run), "answer": run["answer"],
+                            "error": run.get("error"),
                             "expected": [recorded(x) for x in expected], **verdict})
             print(f"use case {case['n']}: {'pass' if verdict['passed'] else 'fail'}"
                   + ("" if verdict["passed"] else " - " + "; ".join(verdict["reasons"])), flush=True)
+            save(results, stamp)  # after every case, so a run that stops keeps the cases it finished
     return results
+
+
+def now():
+    return dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+
+
+def save(results, stamp):
+    """Write a run's results so far to RESULTS, stamped with the time the run started."""
+    os.makedirs(os.path.dirname(RESULTS), exist_ok=True)
+    with open(RESULTS, "w") as f:
+        json.dump({"run_at": stamp, "results": results}, f, indent=2, default=str)
 
 
 def recorded(e):
@@ -709,6 +730,40 @@ def rejudge(path):
     return {"run_at": run["run_at"], "rejudged_on": "2026-10-29", "results": out}
 
 
+def load(path):
+    with open(path) as f:
+        return json.load(f)["results"]
+
+
+def summary(path):
+    return summarize(load(path))
+
+
+def summarize(results):
+    """One recorded run in figures: the cases passed, the agent calls, the cases whose agents' SQL read a definitions
+    view and the cases that missed a required agent."""
+    return {"passed": [r["n"] for r in results if r["passed"]], "cases": len(results),
+            "calls": sum(len(r["agents_called"]) for r in results),
+            "definitions_read": [r["n"] for r in results if r.get("definitions_read")],
+            "agent_missed": [r["n"] for r in results if any(x.startswith("agents not called") for x in r["reasons"])]}
+
+
+def compare(paths):
+    """The lines `compare` prints: each run's summary, then each case's verdict on every run."""
+    runs = [load(p) for p in paths]
+    lines = []
+    for p, run in zip(paths, runs):
+        s = summarize(run)
+        lines.append(f"{os.path.basename(p)}: {len(s['passed'])} of {s['cases']} passed ({', '.join(map(str, s['passed'])) or 'none'}); "
+                     f"{s['calls']} agent calls; definitions read in {len(s['definitions_read'])}; "
+                     f"a required agent missed in {len(s['agent_missed'])}")
+    by_case = [{r["n"]: r for r in run} for run in runs]
+    for n in sorted({n for run in by_case for n in run}):
+        cells = [("pass" if run[n]["passed"] else "fail") if n in run else "-" for run in by_case]
+        lines.append(f"use case {n}: " + " ".join(cells))
+    return lines
+
+
 def expected_only():
     from .databricks import connect, current_catalog
     conn, e = connect()
@@ -724,11 +779,9 @@ def main(argv):
         expected_only()
     elif command == "run":
         wanted = {int(a) for a in argv[1:]}
-        results = run_cases(wanted)
-        os.makedirs(os.path.dirname(RESULTS), exist_ok=True)
-        stamp = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
-        with open(RESULTS, "w") as f:
-            json.dump({"run_at": stamp, "results": results}, f, indent=2, default=str)
+        stamp = now()
+        results = run_cases(wanted, stamp)
+        save(results, stamp)  # also when no case matched
         passed = sum(r["passed"] for r in results)
         print(f"{passed} of {len(results)} passed; results in {RESULTS}")
     elif command == "rejudge":
@@ -739,6 +792,8 @@ def main(argv):
                 json.dump(result, f, indent=2, default=str)
             print(f"{path}: {sum(r['passed'] for r in result['results'])} of {len(result['results'])} pass when re-judged; "
                   + ", ".join(str(r["n"]) for r in result["results"] if r["passed"]) + f"; written to {target}")
+    elif command == "compare":
+        print("\n".join(compare(argv[1:])))
     else:
         raise SystemExit(__doc__)
 

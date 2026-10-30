@@ -38,7 +38,25 @@ INSTRUCTIONS = (
     "market, not by refinery: for a refinery's crack, ask the crack agent for its region's benchmark crack, the one the "
     "demo's R&M margin uses (sql/04_gold.sql): Gulf Coast, USGC 3-2-1 MEH Crack, ex-RIN (43870); West Coast, LA 3-2-1 "
     "Crack ANS, ex-RIN (36855); Mid-Continent, CHI 3-2-1 Crack WTI, ex-RIN (37438).")
-MAX_ROUNDS = 6
+MAX_ROUNDS = 8
+# Before the tool loop the orchestrator names the agents whose subject areas the question touches; an answer is
+# accepted only once each of them, and each agent RULES require, has been called (after E7, delegated under
+# EPM-DEC-001-0028).
+PLAN = ("Name the agents whose subject areas this question touches, one for each subject area, from these tools:\n"
+        "{tools}\nReply with JSON only: {{\"agents\": [\"<tool name>\", ...]}}.")
+PLAN_ATTEMPTS = 3
+# INSTRUCTIONS' own rule, enforced: a question or answer about a crack needs the crack agent, and one about a refinery's
+# runs, utilization, yields or margin needs the refinery agent. The rest follow each agent's plain tables (genie.py):
+# freight is the pricing agent's (FREIGHT_TABLE); plans, backcasts, decisions, events, EIA's weekly data and the
+# outside context are the refinery agent's (PLANNING_TABLES).
+RULES = {
+    "Crack Spread Price Analytics": re.compile(r"\bcracks?\b", re.I),
+    "Pricing and Market Margin Analytics": re.compile(r"\bfreight\b|\btanker\b|\bnetbacks?\b", re.I),
+    "Refinery Operations Analytics": re.compile(
+        r"\brefiner(?:y|ies)\b|\butili[sz]ation\b|\byields?\b|\bcrude runs\b|\bmargin capture\b|\bR&M margin\b|"
+        r"\bplans?\b|\bbackcast|\bdecisions?\b|\bD\d{2}\b|\bturnarounds?\b|\bhurricane\b|\bstorm\b|\bEIA\b|\bPADDs?\b|"
+        r"\bdistillate stocks\b|\boutside (?:scan|context|factor)|\bforward look\b", re.I),
+}
 
 
 def definitions_view(spec):
@@ -136,32 +154,82 @@ def ask_genie(w, space_id, question):
     return {"status": str(m.status), "text": "\n".join(parts), "rows": rows}
 
 
-def chat(w, messages, tool_specs):
-    body = {"messages": messages, "tools": tool_specs, "tool_choice": "auto", "max_tokens": 1500}
+def chat(w, messages, tool_specs=None):
+    body = {"messages": messages, "max_tokens": 1500, "temperature": 0}
+    if tool_specs:
+        body.update(tools=tool_specs, tool_choice="auto")
     return w.api_client.do("POST", f"/serving-endpoints/{MODEL}/invocations", body=body)["choices"][0]["message"]
 
 
-class OrchestrationError(SystemExit):
-    """The orchestrator stopped without an answer; agents_called holds the agents it had already called."""
+def names(titles):
+    """The tool names of these agents, in AGENTS' order."""
+    return ", ".join(tool_name(t) for t in AGENTS if t in titles)
 
-    def __init__(self, message, agents_called):
+
+def ruled(text):
+    """The agents RULES require for a text."""
+    return [t for t, pattern in RULES.items() if pattern.search(text or "")]
+
+
+def planned(w, described, question):
+    """The agents the orchestrator names for the question before calling any; a name it invents is dropped. A plan
+    that names no known agent is asked again, and after PLAN_ATTEMPTS the question stops: every question the
+    orchestrator gets needs an agent (Codex on #411)."""
+    by_tool = {tool_name(t): t for t in AGENTS}
+    listing = "\n".join(f"- {tool_name(t)}: {text}" for t, text in described.items())
+    for _ in range(PLAN_ATTEMPTS):
+        reply = chat(w, [{"role": "system", "content": PLAN.format(tools=listing)}, {"role": "user", "content": question}])
+        found = re.search(r"\{.*\}", reply.get("content") or "", re.S)
+        try:
+            names = json.loads(found.group(0))["agents"] if found else []
+        except (ValueError, KeyError, TypeError):
+            names = []
+        if not isinstance(names, list):  # "agents": null or a string is no plan either (Bugbot on #411)
+            names = []
+        plan = [by_tool[n] for n in dict.fromkeys(n for n in names if isinstance(n, str)) if n in by_tool]
+        if plan:
+            return plan
+    raise ValueError(f"no plan naming a known agent after {PLAN_ATTEMPTS} attempts")
+
+
+def missing(required, called):
+    return [t for t in AGENTS if t in required and t not in {c["agent"] for c in called}]
+
+
+class OrchestrationError(SystemExit):
+    """The orchestrator stopped without an answer; agents_called holds the agents it had already called, and plan
+    the agents it had planned, if it got that far (Bugbot on #411)."""
+
+    def __init__(self, message, agents_called, plan=None):
         super().__init__(message)
-        self.agents_called = agents_called
+        self.agents_called, self.plan = agents_called, plan
 
 
 def orchestrate(w, described, ids, question):
-    """Route a question through the orchestrator: each agent it called, with the agent's text and SQL, and the answer."""
+    """Route a question through the orchestrator: each agent it called, with the agent's text and SQL, and the answer.
+    An answer is sent back until every agent the plan named, or RULES require of the question or the answer, is called."""
     tool_specs = tools(described)
     by_tool = {tool_name(t): t for t in AGENTS}
-    messages = [{"role": "system", "content": INSTRUCTIONS}, {"role": "user", "content": question}]
-    called = []
+    called, plan = [], None
     try:
+        plan = planned(w, described, question)
+        required = set(plan) | set(ruled(question))
+        brief = names(required)
+        messages = [{"role": "system", "content": INSTRUCTIONS},
+                    {"role": "user", "content": question + (f"\n\n(Call at least these agents: {brief}.)" if brief else "")}]
         for _ in range(MAX_ROUNDS):
             reply = chat(w, messages, tool_specs)
             calls = reply.get("tool_calls") or []
             messages.append({k: v for k, v in reply.items() if k in ("role", "content", "tool_calls")})
             if not calls:
-                return {"agents_called": called, "answer": reply.get("content") or ""}
+                answer = reply.get("content") or ""
+                required |= set(ruled(answer))
+                gaps = missing(required, called)
+                if not gaps:
+                    return {"agents_called": called, "answer": answer, "plan": plan}
+                messages.append({"role": "user", "content": "Not yet: call the " + names(gaps)
+                                 + " agent before answering, asking it only about its own subject area, then answer again."})
+                continue
             for call in calls:
                 title = by_tool[call["function"]["name"]]  # a tool name the model invents raises KeyError
                 sub = json.loads(call["function"]["arguments"])["question"]
@@ -169,8 +237,8 @@ def orchestrate(w, described, ids, question):
                 called.append({"agent": title, "question": sub, "status": result["status"], "text": result["text"]})
                 messages.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, default=str)[:12000]})
     except Exception as err:  # keep the agents already called beside the reason it stopped
-        raise OrchestrationError(f"{type(err).__name__}: {err}; agents called: {[c['agent'] for c in called]}", called) from err
-    raise OrchestrationError(f"no answer after {MAX_ROUNDS} rounds; agents called: {[c['agent'] for c in called]}", called)
+        raise OrchestrationError(f"{type(err).__name__}: {err}; agents called: {[c['agent'] for c in called]}", called, plan) from err
+    raise OrchestrationError(f"no answer after {MAX_ROUNDS} rounds; agents called: {[c['agent'] for c in called]}", called, plan)
 
 
 def ask(question):
