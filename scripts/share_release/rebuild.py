@@ -98,7 +98,8 @@ class Rebuild:
         """The release's scripts/check.sh, from the template, with every test file in the release listed."""
         tests = sorted(os.path.relpath(os.path.join(root, f), self.release)
                        for root, dirs, files in os.walk(self.release) for f in files
-                       if f.startswith("test_") and f.endswith(".py") and "__pycache__" not in root)
+                       if f.startswith("test_") and f.endswith(".py") and "__pycache__" not in root
+                       and not os.path.relpath(root, self.release).startswith("skills"))  # the skills' tests run their own way
         with open(os.path.join(HERE, "templates", "check.sh")) as f:
             text = f.read().replace("{{TEST_FILES}}", " \\\n".join("  " + t for t in tests))
         out = os.path.join(self.release, "scripts", "check.sh")

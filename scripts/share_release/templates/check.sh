@@ -67,9 +67,16 @@ ONT=business_architecture/ontology
 (cd $ONT/party && run with_deps python build_party.py --verify)
 # The projection's checked, serialised inputs must match the manifest.
 (cd $ONT/projection && run with_deps python pipeline.py build --verify)
-# Every test file in the release, in parallel (the list is written at the cut; test_check_script.py checks it is complete).
+# Every test file of the ontology, the demo and the scripts, in parallel (the list is written at the cut;
+# test_check_script.py checks it is complete).
 run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load \
 {{TEST_FILES}}
+# The four skills' own tests, each with the dependencies its own check names.
+(cd skills/ontology/scripts && run uv run -q --no-project --with rdflib --with pyyaml --with pyshacl python3 -m unittest discover -q -p "test_*.py")
+(cd skills/ontology && run uv run -q --no-project --with pyyaml python3 scripts/check_sssom.py templates/mappings.sssom.tsv)
+(cd skills/ontology-to-lpg/scripts && run uv run -q --no-project --with rdflib --with pyshacl --with mcp-neo4j-data-modeling==0.8.2 python3 -m unittest -q test_projection test_engine_gate test_modeling test_explore test_run_projection)
+(cd skills/rdf-store/scripts && run uv run -q --no-project --with pyoxigraph python3 -m unittest -q test_rdf_store)
+(cd skills && run uv run -q --no-project --with "markdown-it-py>=4,<5" python3 scripts/test_playbook_html.py)
 # The module map and the coverage counts run from the release folders.
 run with_deps python scripts/epm_facts.py modules >/dev/null
 run with_deps python scripts/epm_facts.py coverage >/dev/null

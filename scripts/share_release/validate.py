@@ -98,19 +98,30 @@ def row_docs_links(tree, env):
 
 
 def row_skills_tests(tree, env):
-    """The skills' own tests: in the release, under skills/; on main, in the skills repository beside it."""
-    folder = os.path.join(tree, "skills") if is_release(tree) else env.get("SKILLS_REPO", "")
-    if not folder or not os.path.isdir(folder):
-        return {"ok": None, "reason": "no skills folder (give SKILLS_REPO in --env for main)"}
-    shipped = ("ontology", "ontology-to-lpg", "rdf-store", "clear-writing")  # the four skills the release carries
-    tests = sorted(glob.glob(os.path.join(folder, "**", "test_*.py"), recursive=True))
-    tests = [t for t in tests if "__pycache__" not in t and any(f"/{name}/" in t for name in shipped)]
-    r = uv(["-m", "pytest", "-q", "-p", "no:cacheprovider", "-n", "4", *tests], folder)
-    m = re.search(r"(\d+) passed", r["tail"])
-    r["passed"] = int(m.group(1)) if m else None
-    r["files"] = len(tests)
-    r["ok"] = r["returncode"] == 0
-    return r
+    """The four shipped skills' own tests, each with the dependencies its own check names: in the release under
+    skills/<name>/, on main in the skills repository's skills/<group>/<name>/."""
+    if is_release(tree):
+        base = {"ontology": os.path.join(tree, "skills", "ontology"), "ontology-to-lpg": os.path.join(tree, "skills", "ontology-to-lpg"),
+                "rdf-store": os.path.join(tree, "skills", "rdf-store")}
+    else:
+        repo = env.get("SKILLS_REPO", "")
+        if not repo:
+            return {"ok": None, "reason": "give SKILLS_REPO in --env for main"}
+        base = {"ontology": os.path.join(repo, "skills", "data", "ontology"), "ontology-to-lpg": os.path.join(repo, "skills", "data", "ontology-to-lpg"),
+                "rdf-store": os.path.join(repo, "skills", "data", "rdf-store")}
+    runs = [
+        ("ontology", ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "pyyaml", "--with", "pyshacl", "python3", "-m", "unittest", "discover", "-q", "-p", "test_*.py"], os.path.join(base["ontology"], "scripts")),
+        ("ontology-to-lpg", ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "pyshacl", "--with", "mcp-neo4j-data-modeling==0.8.2", "python3", "-m", "unittest", "-q", "test_projection", "test_engine_gate", "test_modeling", "test_explore", "test_run_projection"], os.path.join(base["ontology-to-lpg"], "scripts")),
+        ("rdf-store", ["uv", "run", "-q", "--no-project", "--with", "pyoxigraph", "python3", "-m", "unittest", "-q", "test_rdf_store"], os.path.join(base["rdf-store"], "scripts")),
+    ]
+    out = {"runs": {}}
+    for name, cmd, cwd in runs:
+        r = sh(cmd, cwd)
+        m = re.search(r"Ran (\d+) tests", r["tail"])
+        out["runs"][name] = {"returncode": r["returncode"], "tests": int(m.group(1)) if m else None, "tail": r["tail"][-400:]}
+    out["passed"] = sum(x["tests"] or 0 for x in out["runs"].values())
+    out["ok"] = all(x["returncode"] == 0 for x in out["runs"].values())
+    return out
 
 
 def row_iri_base(tree, env):
