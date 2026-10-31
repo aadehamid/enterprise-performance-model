@@ -1,6 +1,7 @@
 {
   "run_at": "2026-10-30T04:52:51+00:00",
-  "rejudged_on": "2026-10-29",
+  "repeat": 1,
+  "rejudged_on": "2026-10-30",
   "results": [
     {
       "n": 1,
@@ -170,10 +171,8 @@
           "tol": 0.051
         }
       ],
-      "passed": false,
-      "reasons": [
-        "missing Robinson planned: 93.20158102766798"
-      ],
+      "passed": true,
+      "reasons": [],
       "original": {
         "passed": false,
         "reasons": [

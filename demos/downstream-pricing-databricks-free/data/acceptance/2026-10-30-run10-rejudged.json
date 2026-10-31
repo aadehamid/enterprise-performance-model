@@ -429,10 +429,8 @@
           "tol": 0.051
         }
       ],
-      "passed": false,
-      "reasons": [
-        "missing Robinson planned: 93.20158102766798"
-      ],
+      "passed": true,
+      "reasons": [],
       "original": {
         "passed": false,
         "reasons": [
@@ -505,8 +503,8 @@
       ],
       "passed": false,
       "reasons": [
-        "missing Robinson utilization: 82.27452389507725",
-        "missing Robinson planned: 93.20158102766798"
+        "missing Robinson actual utilization: 82.27452389507725",
+        "missing Robinson planned utilization: 93.20158102766798"
       ],
       "original": {
         "passed": false,
@@ -581,8 +579,8 @@
       ],
       "passed": false,
       "reasons": [
-        "missing Robinson utilization: 82.27452389507725",
-        "missing Robinson planned: 93.20158102766798"
+        "missing Robinson actual utilization: 82.27452389507725",
+        "missing Robinson planned utilization: 93.20158102766798"
       ],
       "original": {
         "passed": false,

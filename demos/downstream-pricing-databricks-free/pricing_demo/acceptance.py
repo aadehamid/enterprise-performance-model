@@ -99,8 +99,8 @@ def c03(ctx):
     for r in below:
         name = r["r"].split(",")[0]
         cap = ops_by_month(ctx.q, ["2026-08-01", "2026-09-01"], f"Refinery_Name = '{r['r']}'", ["Margin_Capture_Pct"])
-        out += [Expect(f"{name} below plan", name, None), Expect(f"{name} utilization", float(r["u"]), PCT),
-                Expect(f"{name} planned", float(r["p"]), PCT)]
+        out += [Expect(f"{name} below plan", name, None), Expect(f"{name} actual utilization", float(r["u"]), PCT),
+                Expect(f"{name} planned utilization", float(r["p"]), PCT)]
         out += [Expect(f"{name} margin capture {m[:7]}", v["Margin_Capture_Pct"], PCT) for m, v in sorted(cap.items())]
     return out
 
@@ -705,11 +705,26 @@ def recorded(e):
     return {"label": e.label, "value": e.value, "tol": e.tol, **kind}
 
 
-def restored(x):
-    """One expected figure as rejudge rebuilds it from a run's record."""
+# Labels renamed on 2026-10-31 so that both figures of a pair name what sets them apart (#421): "planned utilization"
+# had tied 93.2% to the actual figure, whose label was only "Robinson utilization". Rejudge reads a recorded run's
+# figures under their current names; a current name matches none of the old ones.
+RENAMED = {3: [(r"^(.+?)(?<! actual)(?<! planned) utilization$", r"\1 actual utilization"),
+               (r"^(.+) planned$", r"\1 planned utilization")]}
+
+
+def current_label(n, label):
+    """A figure's label as use case n names it now."""
+    for old, new in RENAMED.get(n, []):
+        label = re.sub(old, new, label)
+    return label
+
+
+def restored(x, n=None):
+    """One expected figure as rejudge rebuilds it from a run's record of use case n."""
     value = NoneRecorded(x["value"]) if x.get("kind") == "none recorded" else (
         tuple(x["value"]) if isinstance(x["value"], list) else x["value"])
-    return Expect(x["label"], value, x["tol"], CUES.get(x["label"]))
+    label = current_label(n, x["label"])
+    return Expect(label, value, x["tol"], CUES.get(label))
 
 
 def rejudge(path, repeat=None):
@@ -727,7 +742,7 @@ def rejudge(path, repeat=None):
             verdict = {"passed": False, "reasons": ["the question changed after the run (2026-10-29), so the recorded "
                                                     "answer answers another question"]}
         else:
-            verdict = judge(case, [restored(x) for x in r["expected"]], r)
+            verdict = judge(case, [restored(x, r["n"]) for x in r["expected"]], r)
         out.append({**r, "agents_required": list(case["agents"]),  # the agents this verdict required, not the run's
                     "original": {"passed": r["passed"], "reasons": r["reasons"], "agents_required": r.get("agents_required")},
                     **verdict})
