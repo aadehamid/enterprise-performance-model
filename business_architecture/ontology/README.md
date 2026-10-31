@@ -13,7 +13,7 @@ roles, and a fourth to read first if you are new (`epm-ontology-guide.html`, bel
 | `step4/playbook/ontology-worklog.md` | **Worklog**: the build record | The plan table with current step statuses (§2), the per-step log (§3), the dated decision journal (§4), and the evidence map for the playbook, section by section (§8, *2026-10-23*) |
 | `MODULES.md` | **Module guide**: the released modules and how they connect | What each module holds, the three kinds of content, each link between modules with a real example from the releases, and one walk across modules |
 
-**Want the whole story?** The [walkthrough](https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9) tells it end to end: the business and its value streams, the gaps found in the processes and how each was filled, how the ontology was built from that, the stores, the technical graph, how the measures tie to both graphs, how they stay in step with Git, and the pricing demo, with 36 steps to rebuild it. It is a private page, so ask the decision owner for access. It sits above the documents here and points to them for depth:
+**Want the whole story?** The [walkthrough](https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9) tells it end to end: the business and its value streams, the gaps found in the processes and how each was filled or why it stays open, how the ontology was built from that, the stores, the technical graph, how the measures tie to both graphs, how they stay in step with Git, and the pricing demo, with 36 steps to rebuild it. It is a private page, so ask the decision owner for access. It sits above the documents here and points to them for depth:
 
 | Your question | Read |
 |---|---|
