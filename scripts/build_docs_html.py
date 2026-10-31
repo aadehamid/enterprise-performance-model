@@ -526,6 +526,8 @@ class Page:
                         for lvl, aid, text in self.toc)
         with open(TEMPLATE, encoding="utf-8") as f:
             page = f.read()
+        if not os.path.exists(os.path.join(ROOT, DECISIONS_DIR, "README.md")):  # no decisions page in this tree (the share release): no link to it
+            page = page.replace('    <a href="{{DECISIONS}}">Decisions</a>\n', "")
         values = {
             "{{GENERATOR}}": GENERATOR,
             "{{TITLE}}": self.inline_plain(self.spec["title"]),

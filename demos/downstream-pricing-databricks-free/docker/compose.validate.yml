@@ -1,0 +1,11 @@
+services:
+  sources:
+    container_name: pricing-validate-sources
+    ports: !override
+      - "127.0.0.1:55433:5432"
+    volumes: !override
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - pricing-validate-pgdata:/var/lib/postgresql/data
+volumes:
+  pricing-validate-pgdata:
+    name: pricing-validate-pgdata
