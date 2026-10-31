@@ -76,12 +76,24 @@ def neo4j_up(env):
     if r.returncode:
         raise RuntimeError(r.stderr[-500:])
     ledger(env, "container", name, f"Neo4j on 127.0.0.1:{port}")
+    with open(os.path.join(importdir, "validate-neo4j.env"), "w") as f:  # the later rows read the login back from here
+        f.write(f"NEO4J_URI=bolt://localhost:{port}\nNEO4J_USERNAME=neo4j\nNEO4J_PASSWORD={pw}\n")
+    os.chmod(os.path.join(importdir, "validate-neo4j.env"), 0o600)
     for _ in range(60):
         logs = subprocess.run(["docker", "logs", name], capture_output=True, text=True)
         if "Started." in logs.stdout + logs.stderr:
             return f"bolt://localhost:{port}", pw
         time.sleep(4)
     raise RuntimeError("the test Neo4j did not start")
+
+
+def test_password(env):
+    """The test Neo4j's password: from this run's neo4j_up, else from the login file an earlier run wrote."""
+    if not env.get("TEST_NEO4J_PASSWORD"):
+        path = os.path.join(expand(env["IMPORT_DIR"]), "validate-neo4j.env")
+        with open(path) as f:
+            env["TEST_NEO4J_PASSWORD"] = [l.split("=", 1)[1].strip() for l in f if l.startswith("NEO4J_PASSWORD=")][0]
+    return env["TEST_NEO4J_PASSWORD"]
 
 
 def cypher(bolt, pw, query):
@@ -126,7 +138,7 @@ def row_projection_pipeline(tree, env):
 
 def row_underscores(tree, env):
     """Every label, relationship type and property key in the test Neo4j; none holds the double separator in the release."""
-    bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", env["TEST_NEO4J_PASSWORD"]
+    bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", test_password(env)
     labels = cypher(bolt, pw, "MATCH (n) UNWIND labels(n) AS l RETURN collect(DISTINCT l) AS l")[0]["l"]
     rels = cypher(bolt, pw, "MATCH ()-[r]->() RETURN collect(DISTINCT type(r)) AS l")[0]["l"]
     keys = cypher(bolt, pw, "MATCH (n) UNWIND keys(n) AS k RETURN collect(DISTINCT k) AS l")[0]["l"]
@@ -231,9 +243,9 @@ ROWS = {
 COMPOSE_OVERRIDE = """services:
   sources:
     container_name: {name}
-    ports:
+    ports: !override
       - "127.0.0.1:{port}:5432"
-    volumes:
+    volumes: !override
       - ./init:/docker-entrypoint-initdb.d:ro
       - {volume}:/var/lib/postgresql/data
 volumes:
@@ -285,9 +297,7 @@ def row_demo_live(tree, env):
 def stores_json(env):
     """EPM_STORES_JSON for the tools that read stores: the test Neo4j as 'pipeline', the driver's test Neo4j as 'driver'."""
     test_env = expand(env["IMPORT_DIR"]) + "/validate-neo4j.env"
-    with open(test_env, "w") as f:
-        f.write(f"NEO4J_URI=bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}\nNEO4J_USERNAME=neo4j\nNEO4J_PASSWORD={env['TEST_NEO4J_PASSWORD']}\n")
-    os.chmod(test_env, 0o600)
+    test_password(env)  # written by neo4j_up
     driver_out = expand(env["DRIVER_OUT"])
     over = {"pipeline": {"bolt": f"bolt://127.0.0.1:{env.get('TEST_NEO4J_PORT', '17799')}", "env": [test_env]},
             "driver": {"bolt": f"bolt://127.0.0.1:{env.get('DRIVER_PORT', '17811')}",
@@ -328,7 +338,7 @@ def row_sync(tree, env):
     r = uv(["sync_stores.py", "mark", "--store", "pipeline", "--store", "driver"], proj, env=e); out["steps"].append(r)
     r = uv(["sync_stores.py", "check", *ref], proj, env=e); out["steps"].append(r)
     out["check_before"] = r["tail"][-800:]
-    bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", env["TEST_NEO4J_PASSWORD"]
+    bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", test_password(env)
     victim = cypher(bolt, pw, "MATCH (n:Resource) WHERE NOT (n)--() RETURN n.uri AS uri LIMIT 1")
     if victim:
         cypher(bolt, pw, f"MATCH (n:Resource {{uri: '{victim[0]['uri']}'}}) DETACH DELETE n")
@@ -343,7 +353,7 @@ def row_sync(tree, env):
 
 def row_store_map(tree, env):
     """What the test stores hold: node counts by label and relationship counts by type in the test Neo4j."""
-    bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", env["TEST_NEO4J_PASSWORD"]
+    bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", test_password(env)
     labels = cypher(bolt, pw, "MATCH (n) UNWIND labels(n) AS l RETURN l, count(*) AS n ORDER BY l")
     rels = cypher(bolt, pw, "MATCH ()-[r]->() RETURN type(r) AS t, count(*) AS n ORDER BY t")
     return {"labels": {x["l"]: x["n"] for x in labels}, "relationship_types": {x["t"]: x["n"] for x in rels},
