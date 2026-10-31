@@ -1400,6 +1400,43 @@ def test_e7_a_figure_counts_only_against_its_own_label():
     assert not acceptance.holds("Garyville ran 35.5%.", e("Gulf Coast distillate yield 2026-10", 35.497, acceptance.PCT))
 
 
+
+def test_e7_each_figure_of_a_pair_is_named_by_what_sets_it_apart():
+    # #421: "Robinson utilization" left "utilization" to the actual figure alone, so "a planned utilization of 93.2%"
+    # tied 93.2% to it and use case 3 failed with the figure right (run 4).
+    e = acceptance.Expect
+    actual, planned = e("Robinson actual utilization", 82.27, acceptance.PCT), e("Robinson planned utilization", 93.2, acceptance.PCT)
+    capture = e("Robinson margin capture 2026-09", 93.29, acceptance.PCT)
+    pair = [actual, planned, capture]
+    right = "Robinson ran below plan in September 2026, with an actual utilization of 82.3% compared to a planned utilization of 93.2%."
+    assert acceptance.holds(right, actual, pair) and acceptance.holds(right, planned, pair)
+    swapped = "Robinson had an actual utilization of 93.2% compared to a planned utilization of 82.3%."
+    assert not acceptance.holds(swapped, actual, pair) and not acceptance.holds(swapped, planned, pair)
+    # a figure stated without its qualifier binds to either label, but a swap still fails the case on its other figure
+    bare = "Robinson's utilization was 93.2% against a plan of 82.3%."
+    assert not (acceptance.holds(bare, actual, pair) and acceptance.holds(bare, planned, pair))
+    class Stores:  # the rows use case 3 reads, as its check sees them
+        def q(self, sql):
+            if "Margin_Capture_Pct" in sql:
+                return [{"m": "2026-08-01", "Margin_Capture_Pct": 92.2}, {"m": "2026-09-01", "Margin_Capture_Pct": 93.29}]
+            return [{"r": "Robinson, IL", "g": "Mid-Continent", "u": 82.27, "p": 93.2}]
+    labels = [x.label for x in acceptance.c03(Stores())]
+    assert labels[:3] == ["Robinson below plan", "Robinson actual utilization", "Robinson planned utilization"]
+
+
+def test_e7_rejudge_reads_a_recorded_figure_under_its_current_label():
+    # #421: runs 1 to 10 recorded the old labels, so rejudge renames them; a current label stays as it is.
+    old = ["Robinson utilization", "Robinson planned", "Robinson margin capture 2026-08", "Robinson below plan"]
+    new = ["Robinson actual utilization", "Robinson planned utilization", "Robinson margin capture 2026-08", "Robinson below plan"]
+    assert [acceptance.current_label(3, x) for x in old] == new
+    assert [acceptance.current_label(3, x) for x in new] == new
+    # another case's labels are left alone, though they end in "utilization" too
+    assert acceptance.current_label(13, "planned utilization") == "planned utilization"
+    assert acceptance.current_label(17, "mean absolute utilization error 2024") == "mean absolute utilization error 2024"
+    assert acceptance.current_label(19, "Gulf Coast utilization, 2025") == "Gulf Coast utilization, 2025"
+    record = acceptance.recorded(acceptance.Expect("Robinson planned", 93.2, acceptance.PCT))
+    assert acceptance.restored(record, 3).label == "Robinson planned utilization"
+
 def test_e7_a_part_and_its_whole_are_placed_by_their_cues():
     # Case 16's two counts share their words, so each is placed by its role in "4 out of 13".
     beat, plans = (acceptance.Expect(label, value, 0.0, acceptance.CUES[label])

@@ -1,6 +1,7 @@
 {
   "run_at": "2026-10-30T05:24:44+00:00",
-  "rejudged_on": "2026-10-29",
+  "repeat": 1,
+  "rejudged_on": "2026-10-30",
   "results": [
     {
       "n": 1,
@@ -162,8 +163,8 @@
         "error: OrchestrationError: OperationFailed: failed to reach COMPLETED, got MessageStatus.FAILED: current status: MessageStatus.FAILED; agents called: ['Refinery Operations Analytics']",
         "agents not called: Crack Spread Price Analytics",
         "missing Robinson below plan: Robinson",
-        "missing Robinson utilization: 82.27452389507725",
-        "missing Robinson planned: 93.20158102766798",
+        "missing Robinson actual utilization: 82.27452389507725",
+        "missing Robinson planned utilization: 93.20158102766798",
         "missing Robinson margin capture 2026-08: 92.196381",
         "missing Robinson margin capture 2026-09: 93.294855",
         "no ontology term: OPM-0002 or Crude Utilization"
