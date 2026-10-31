@@ -148,7 +148,7 @@ def dump(session):
 
 
 def rename_separator(session):
-    """Rename every label, relationship type and property key from prefix__name to prefix_name (SEP), with APOC,
+    """Rename every label, relationship type and property key from the n10s form to the SEP form, with APOC,
     and prove it lossless: the dump before, with the expected renames applied, equals the dump after. Returns the
     counts renamed and whether the comparison held."""
     labels, rels, keys = names_in_use(session)
