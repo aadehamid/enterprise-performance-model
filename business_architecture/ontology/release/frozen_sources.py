@@ -1,7 +1,7 @@
 """The process map at the commits the core builders read, as frozen files, so a tree without Git history
 (the share release, a zip of main) rebuilds the same packages byte for byte.
 
-    python3 frozen_sources.py --freeze     # write release/frozen/<commit>-downstream_process_map.json for every pinned commit
+    python3 frozen_sources.py --freeze [--repo <checkout with history>]   # write release/frozen/<commit>-downstream_process_map.json for every pinned commit
     python3 frozen_sources.py --list       # the pinned commits
 
 A builder asks `read(commit, path)`: the frozen file when it exists, else `git show commit:path`. On
@@ -68,12 +68,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--freeze", action="store_true")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--repo", default=REPO, help="the checkout whose Git holds the pinned commits (default: this one)")
     a = ap.parse_args()
     if a.list or not a.freeze:
         for commit, path in pinned():
             print(commit, path, "frozen" if is_frozen(commit, path) else "git")
     if a.freeze:
-        for p in freeze():
+        for p in freeze(a.repo):
             print("wrote", os.path.relpath(p, HERE))
 
 
