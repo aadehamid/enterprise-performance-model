@@ -176,6 +176,7 @@ def test_manifest_ships_the_two_versions_and_leaves_older_ones_out():
     assert manifest.disposition("business_architecture/ontology/step4/review-evidence/decision-owner-answers/a.md", r) == "out"
     assert manifest.disposition("business_architecture/ontology/step4/baseline/step3-taxonomy.ttl", r) == "ship"
     assert manifest.disposition("business_architecture/ontology/step4/target-report/test_context_pass.py", r) == "out"
+    assert manifest.disposition("business_architecture/ontology/step4/label-report/label-dispositions-v1.2.csv", r) == "ship"
     assert manifest.disposition("business_architecture/domain/decisions/EPM-DEC-001-0001-x.md", r) == "out"
     assert manifest.disposition("business_architecture/domain/decision-packages/2026-10-14/README.md", r) == "ship"
     assert manifest.disposition("business_architecture/ontology/README.html", r) == "out"

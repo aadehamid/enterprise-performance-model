@@ -32,7 +32,9 @@ EPM_RULES = [
     ("ship", f"{ONT}/step4/baseline/*"),
     ("ship", f"{ONT}/step4/canonical-facts.csv"),
     ("ship", f"{ONT}/step4/scoped-sequence/*"),
-    # step4/target-report and label-report are Step 4 review outputs; their tests import the gate's helpers, so they stay out.
+    # step4/target-report's tests import the gate's helpers, so it stays out; the label report is data core's first
+    # builder reads (build_core.py's LABELS), so it ships.
+    ("ship", f"{ONT}/step4/label-report/*"),
     ("ship", f"{ONT}/step4/playbook/ontology-worklog.md"),
     ("out", f"{ONT}/step3c-*.md"),
     ("out", f"{ONT}/lpg-projection/*"),
