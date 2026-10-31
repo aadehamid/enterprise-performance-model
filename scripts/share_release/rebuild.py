@@ -107,9 +107,20 @@ class Rebuild:
         os.chmod(out, 0o755)
         self.steps.append({"step": "check script", "tests": len(tests), "returncode": 0})
 
+    def run_config(self):
+        """The skill driver's run configuration asks for single underscores in the kept graph (EPM-DEC-001-0110)."""
+        path = os.path.join(self.release, ONT, "projection", "skill-run", "epm-run.json")
+        with open(path) as f:
+            cfg = json.load(f)
+        cfg["separator"] = "_"
+        with open(path, "w") as f:
+            f.write(json.dumps(cfg, indent=2) + "\n")
+        self.steps.append({"step": "run config: separator", "returncode": 0})
+
     def all(self):
         self.freeze()
         self.check_script()
+        self.run_config()
         # The history folder's hashes first: core 2.4.0's manifest records core 2.3.0's manifest hash.
         self.previous_hashes()
         for folder, script in SOURCE_BUILDERS:
