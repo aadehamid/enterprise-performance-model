@@ -148,8 +148,12 @@ ROWS = {
     "skills-tests": row_skills_tests,
     "iri-base": row_iri_base,
     "gate": row_gate,
-    # Store rows take their logins and ports from --env; see stores.py (plan step 7, the second half).
 }
+try:  # the rows that need stores (stores.py); each reads its logins and ports from --env
+    import stores
+    ROWS.update(stores.ROWS)
+except ImportError:
+    pass
 
 
 def read_env(path):
