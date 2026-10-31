@@ -117,10 +117,38 @@ class Rebuild:
             f.write(json.dumps(cfg, indent=2) + "\n")
         self.steps.append({"step": "run config: separator", "returncode": 0})
 
+    def documents(self):
+        """The newcomer's entry point (plan step 6): the root README, the known open items, the history folder's README,
+        and the glossary's one definition of "decision owner"."""
+        for name, dest in (("README.md", "README.md"), ("KNOWN-OPEN-ITEMS.md", "KNOWN-OPEN-ITEMS.md"),
+                           ("releases-previous-README.md", f"{ONT}/releases/previous/README.md")):
+            with open(os.path.join(HERE, "templates", name)) as f:
+                text = f.read()
+            out = os.path.join(self.release, dest)
+            os.makedirs(os.path.dirname(out), exist_ok=True)
+            with open(out, "w") as f:
+                f.write(text)
+        glossary = os.path.join(self.release, "business_architecture", "domain", "business-glossary.md")
+        with open(glossary) as f:
+            text = f.read()
+        header = "| Term | Definition | Avoid | Source | Status |\n|---|---|---|---|---|\n"
+        row = ("| Decision owner | The subject matter expert who reviewed the documents and recorded each decision the build "
+               "relied on; the sources and documents name the role, never the person. Words attributed to \"a subject matter "
+               "expert reviewing the documents\" are theirs. | \"the owner\" (also an owner of a process or of data) | "
+               "The release's README, \"Names, namespaces and terms\" | Draft |\n")
+        if header not in text:
+            raise SystemExit("the glossary's table header is not where this expects it")
+        if "| Decision owner |" not in text:
+            text = text.replace(header, header + row, 1)
+        with open(glossary, "w") as f:
+            f.write(text)
+        self.steps.append({"step": "documents", "returncode": 0})
+
     def all(self):
         self.freeze()
         self.check_script()
         self.run_config()
+        self.documents()
         # The history folder's hashes first: core 2.4.0's manifest records core 2.3.0's manifest hash.
         self.previous_hashes()
         for folder, script in SOURCE_BUILDERS:
