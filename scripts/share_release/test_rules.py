@@ -105,6 +105,11 @@ def test_issue_and_pr_numbers():
     assert out == "fixed in an earlier change; an earlier change is open; see an earlier comment; the earlier change pairs table"
 
 
+def test_numbers_in_a_page_are_prose_not_colours():
+    out, _ = run('<p>#455 holds the work; issues #430 to #448 are open.</p><td data-k="Issue">#455</td><style>a{color:#455;background:#fff}</style>', "guide.html")
+    assert out == '<p>an earlier change holds the work; earlier items are open.</p><td data-k="Issue">an earlier change</td><style>a{color:#455;background:#fff}</style>'
+
+
 def test_numbers_rule_leaves_code_and_css_alone():
     out, _ = run("h = hashlib.sha256()\ndef commit():\n    return x[:8]", "a.py")
     assert out == "h = hashlib.sha256()\ndef commit():\n    return x[:8]"
@@ -115,6 +120,13 @@ def test_numbers_rule_leaves_code_and_css_alone():
 def test_peer_names_and_lists():
     out, _ = run("against the same regions of Phillips 66 and Valero Energy; Chevron, Exxon Mobil, HF Sinclair and PBF Energy report it; Valero's target")
     assert out == "against the same regions of U.S. refining peers; U.S. refining peers report it; a U.S. refining peer's target"
+
+
+def test_peer_links_are_withheld_and_a_name_split_across_lines_is_found():
+    out, _ = run("| https://www.sec.gov/Archives/edgar/data/1534504/000153450426000010/pbf-20251231.htm | 2026-10-20 |\n\"url\": \"https://www.qcintel.com/article/delek-starts-maintenance\"\npeers (Par\nPacific) is here")
+    assert out == "| a public source naming a U.S. refining peer (link withheld) | 2026-10-20 |\n\"url\": \"a public source naming a U.S. refining peer (link withheld)\"\npeers (a U.S. refining peer) is here"
+    out, _ = run("[the 10-K](https://www.sec.gov/Archives/edgar/data/1510295/mpc-20251231.htm)")
+    assert out == "[the 10-K](https://www.sec.gov/Archives/edgar/data/1510295/mpc-20251231.htm)"
 
 
 def test_peer_source_wording_and_folder():

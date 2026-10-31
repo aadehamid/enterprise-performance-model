@@ -25,8 +25,10 @@ import re
 GRAPH_PREFIXES = ("core", "orgm", "kpi", "pop", "party", "dp", "vs", "sys", "lane", "mkt", "plc", "auth", "con",
                   "skos", "dcterms", "org", "rdfs", "owl", "rdf", "prov", "oeo", "n4sch", "sh", "tv", "tech")
 PEER_NAMES = [r"Valero Energy Corporation", r"Valero Energy", r"Valero", r"Phillips ?66", r"PBF Energy", r"PBF",
-              r"HF ?Sinclair", r"HollyFrontier", r"Par Pacific", r"Delek US", r"Delek", r"CVR Energy", r"CVR",
+              r"HF ?Sinclair", r"HollyFrontier", r"Par\s+Pacific", r"Delek US", r"Delek", r"CVR Energy", r"CVR",
               r"Chevron Corporation", r"Chevron", r"Exxon ?Mobil", r"ExxonMobil", r"Exxon"]
+# A link whose address names a peer (a filing on EDGAR, a news slug, an investor site) is withheld with the name.
+PEER_URL = re.compile(r"https?://[^\s)\]\"'<>]*(?:pbf|valero|phillips66|hfsinclair|hollyfrontier|parpacific|par-pacific|delek|cvrenergy|cvr-energy|chevron|exxon)[^\s)\]\"'<>]*", re.I)
 PEER_ALT = "|".join(PEER_NAMES)
 SME = "a subject matter expert reviewing the documents"
 PEER_SOURCE = "Industry standard, and analysis of publicly available filings from peers (U.S. refiners)"
@@ -169,8 +171,12 @@ def rule_numbers(text, ctx):
     text, k = _count(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+(?:(?:,\s*|\s+(?:to|and)\s+)#?\d+)*\b", "an earlier change", text, re.I); n += k
     text, k = _count(r"\s?\(#\d+(?:,\s*#\d+)*(?:\s+comment\s+\d+)?\)", "", text); n += k
     text, k = _count(r"(?<!\w)#\d{2,4}\s+comment\s+\d+", "an earlier comment", text); n += k
+    text, k = _count(r"(?<![\w-])#\d{2,4}\s+to\s+#\d{2,4}\b", "earlier items", text); n += k
     if not html:
         text, k = _count(r"(?<![&A-Za-z0-9_-])#(\d{2,4})(?!\d|[a-fA-F0-9]{2})(?![\w-])", "an earlier change", text); n += k
+    else:
+        # In a page, a number after a space, a tag or a bracket is prose; after a colon or an equals sign it is a colour.
+        text, k = _count(r"(?<=[\s>(,])#(\d{2,4})(?![\da-fA-F])(?![\w-])", "an earlier change", text); n += k
     text, k = _count(r"\b([Tt]he) an earlier change\b", r"\1 earlier change", text); n += k
     return text, n
 
@@ -187,6 +193,7 @@ def rule_peers(text, ctx):
     text, k = _count(r"downstream-peers", "industry-view", text); n += k
     # A list of peers, with commas and "and": "Chevron, Exxon Mobil, HF Sinclair and Valero Energy" -> "U.S. refining peers".
     text, k = _count(r"\b(?:" + PEER_ALT + r")(?:(?:,\s*|\s+and\s+|\s+or\s+)(?:" + PEER_ALT + r"))+(?:'s)?\b", "U.S. refining peers", text); n += k
+    text, k = _count(PEER_URL, "a public source naming a U.S. refining peer (link withheld)", text); n += k
     text, k = _count(r"\bthe Sinclair brand\b", "its brand", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")'s\b", "a U.S. refining peer's", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")\b", "a U.S. refining peer", text); n += k
