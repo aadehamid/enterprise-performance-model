@@ -181,6 +181,9 @@ class Rebuild:
                     f"package of each module it requires (its `manifest.json` says so). The notes above that name "
                     f"{was} describe the pins at the time of the original release.\n")
             path = os.path.join(self.release, ONT, "releases", name, "CHANGELOG.md")
+            with open(path, encoding="utf-8") as f:
+                if "*Share release, " in f.read():  # a rerun of the rebuild adds no second note
+                    continue
             with open(path, "a", encoding="utf-8") as f:
                 f.write(note)
         self.steps.append({"step": "changelog notes", "modules": moved, "returncode": 0})
@@ -200,7 +203,8 @@ class Rebuild:
             raise SystemExit("scenario pin: the demo test's pinned hash was not found")
         text = text.replace(m.group(0), m.group(1) + digest + m.group(3), 1)
         note = "    # Pinned on "
-        text = text.replace(note, "    # Re-pinned by the share release's rebuild for the rewritten body (the rules rename the peers and the "
+        if "Re-pinned by the share release" not in text:  # a rerun of the rebuild adds no second note
+            text = text.replace(note, "    # Re-pinned by the share release's rebuild for the rewritten body (the rules rename the peers and the "
                                   "records in it).\n" + note, 1)
         with open(test, "w", encoding="utf-8") as f:
             f.write(text)
