@@ -22,6 +22,7 @@ roles, and a fourth to read first if you are new (`epm-ontology-guide.html`, bel
 | How do you build an ontology, for any domain? | The `ontology` skill's guide |
 | How do you project an ontology into a graph store with nothing lost? | The `ontology-to-lpg` skill's playbook |
 | What did this build do at each step, and when? | `step4/playbook/ontology-worklog.md` |
+| What must the ontology be able to answer? | `competency-questions.md`, and the guide's list with each status |
 | What does the finished ontology hold, and why these modules? | `epm-ontology-guide.html`, then `MODULES.md` |
 | How do I load it into a store and query it? | `projection/ontology-stores-runbook.html` |
 | How do I change the ontology, or add a module? | `epm-walkthrough.html`, "How to change the ontology" |

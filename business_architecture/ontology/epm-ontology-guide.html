@@ -211,7 +211,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
   <span class="name">EPM</span><span class="scope">Ontology guide</span>
   <nav aria-label="Sections">
-    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#stores">Stores</a><a href="#graphs">Graphs</a><a href="#sync">In sync</a><a href="#where">Where things live</a><a href="#standards">Standards</a><a href="#copy">Copy</a><a href="#tools">Tools</a><a href="#open">Open</a>
+    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#questions">Questions</a><a href="#stores">Stores</a><a href="#graphs">Graphs</a><a href="#sync">In sync</a><a href="#where">Where things live</a><a href="#standards">Standards</a><a href="#copy">Copy</a><a href="#tools">Tools</a><a href="#open">Open</a>
   </nav>
 </header>
 
@@ -235,6 +235,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <a class="sub-a" href="#m-ref-mpc">ref-mpc</a>
   <a class="sub-a" href="#m-lane">lane</a>
   <a class="sub-a" href="#m-integration">integration</a>
+  <a href="#questions">The competency questions</a>
   <a href="#stores">How it reaches the stores</a>
   <a href="#graphs">Git, the two graphs and the measures</a>
   <a href="#sync">The in-sync strategy</a>
@@ -708,6 +709,87 @@ RETURN m.skos__prefLabel AS measure,
 </div>
 <p class="note">Requires core, organization, kpi, data-product, value-stream, system, lane, market-data and party; not ref-mpc, though its authority tiers cover ref-mpc's sources. No catalog row publishes the crack-spread measure yet; the binding is the view's <code>dp:servesMeasure</code> (EPM-DEC-001-0100, item 4).</p>
 </section>
+
+<h2 id="questions">The competency questions</h2>
+<p class="lead">These 44 questions are the ontology's acceptance test: if the model cannot answer one, the model is incomplete, and not the question. The decision owner locked them on 2026-09-18, before modelling. 43 are answerable today, and one, question 17, is parked until the business names who owns each concept's meaning.</p>
+<p>Each question has queries in <code>regression/queries/</code>, and <code>scripts/check.sh</code> runs them on every push. To ask one yourself, run this from <code>business_architecture/ontology/regression</code>:</p>
+<pre><code>uv run --with rdflib python ask.py                   # list the questions
+uv run --with rdflib python ask.py q36-the-crack     # ask one</code></pre>
+<h3>I. Process structure &amp; navigation</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>1</td><td data-k="Asks">What are the child processes of X, and what is the full root-to-leaf path of process P?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>2</td><td data-k="Asks">Which processes are orphans — no parent, or no children where children are expected?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>II. Responsibility (RACI)</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>3</td><td data-k="Asks">Who is Accountable / Responsible / Consulted / Informed for process P?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>4</td><td data-k="Asks">Which processes have no accountable owner?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>5</td><td data-k="Asks">Which roles participate in process P?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>III. Systems &amp; data products</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>6</td><td data-k="Asks">Which systems (XPIMS, DPO, RightAngle, …) support process P, and which processes depend on system S?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>7</td><td data-k="Asks">What data products does process P produce or consume? Which data products have no owning process? (cf. Loss Control)</td><td data-k="Status">Answerable</td></tr>
+<tr><td>8</td><td data-k="Asks">Which processes have empty <code>produces</code> / <code>consumes</code>?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>IV. Lanes, capabilities, value streams</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>9</td><td data-k="Asks">Which processes sit in each office lane, and which lanes are thin?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>10</td><td data-k="Asks">Which processes realize capability C or participate in value stream V?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>V. APQC alignment</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>11</td><td data-k="Asks">Which local processes reference APQC element E, and which APQC elements have no local counterpart?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>12</td><td data-k="Asks">Where did we deliberately diverge from APQC, and why? (boundary notes)</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>VI. Shared meaning — what kind of thing is this?</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>13</td><td data-k="Asks">What is a concept vs a named measure vs a report?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>14</td><td data-k="Asks">Which concepts are allowed to become a number, and which must never become one?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>15</td><td data-k="Asks">If two teams use the same English word, how do we tell whether they mean the same thing?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>16</td><td data-k="Asks">What is the official name, what are the aliases, and what is explicitly out?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>17</td><td data-k="Asks">Who owns the meaning of a concept, and who only stewards the data?</td><td data-k="Status">Parked</td></tr>
+<tr><td>18</td><td data-k="Asks">When a definition changes, what stays the same (the identity) and what gets a new version?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>VII. Customer / Party — first domain module</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>19</td><td data-k="Asks">What is a Party, and how is it different from a Customer Account?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>20</td><td data-k="Asks">Which roles can the same Party hold at the same time (Sold-to, Bill-to, Payer, …)?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>21</td><td data-k="Asks">Are those roles permanent types, or time-bounded holds? Is Ship-to a role or a location?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>22</td><td data-k="Asks">What is a Loading-Authorized Party, and how is that different from an Authorization object?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>23</td><td data-k="Asks">Where does credit sit — on the Party, the account, or the Payer?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>24</td><td data-k="Asks">Can the same organisation be a customer in one deal and a supplier / exchange counterparty in another? How is that modeled without a second "Customer" class?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>25</td><td data-k="Asks">Which concept should a customer-grained KPI bind to — Party, Account, Sold-to, Payer, or site — and why not the bare word "Customer"?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>26</td><td data-k="Asks">What questions about "who is the customer on this order?" must resolve to one role, not a blob?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>VIII. Named KPI — the bind to the Store</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>27</td><td data-k="Asks">What is a Named KPI, as a concept, before anyone computes it?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>28</td><td data-k="Asks">What population is in the Named KPI, and what is out (in business words)?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>29</td><td data-k="Asks">What grain is the thing we named (day × series × tenor vs a monthly roll-up)?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>30</td><td data-k="Asks">Is a monthly average a second Named KPI, or a way of asking for the same one?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>31</td><td data-k="Asks">When are two published series the same Named KPI vs two different ones (region, ratio, ex-RIN vs inc-RIN, blended vs regional)?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>32</td><td data-k="Asks">What is 3-2-1 Crack Spread not (realized refinery margin, capture, $MM R&amp;M, a homemade 3-2-1 from product and crude legs)?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>33</td><td data-k="Asks">Which process, decision, or capability does this Named KPI inform? What decisions does it support?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>34</td><td data-k="Asks">Which domain concepts does it quantify (region, product slate, crude marker) — without putting the formula in the ontology?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>35</td><td data-k="Asks">How does a catalog row point at this Named KPI, and what must already exist before that pointer is filled?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>36</td><td data-k="Asks">If an assistant asks for "the crack," which Named KPI is the official one, and which nearby series are related but not it?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>IX. Process placement — where the work sits</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>37</td><td data-k="Asks">What process (or capability) does a concept or Named KPI sit on?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>38</td><td data-k="Asks">Is that placement certification, or only context? (If two processes use the same name, are they the same meaning — or the same label on different meanings?)</td><td data-k="Status">Answerable</td></tr>
+<tr><td>39</td><td data-k="Asks">What breaks upstream or downstream if the meaning changes?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>X. Publication and agents — so the graph is usable</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>40</td><td data-k="Asks">Where is the official wording published for people (catalog / glossary), and what is only a copy?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>41</td><td data-k="Asks">What may a graph / meaning agent answer without reading a table or inventing a formula?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>42</td><td data-k="Asks">What must that agent refuse (calculate a crack from legs, treat a report column as the KPI, answer "who is the customer" without a role)?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>43</td><td data-k="Asks">How does in-platform assistance (Genie) get the same definition without becoming a second ontology?</td><td data-k="Status">Answerable</td></tr>
+<tr><td>44</td><td data-k="Asks">If two sources disagree, which definition is authoritative, and how is that marked?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<p class="note">The list comes from <code>competency-questions.md</code>, which holds the wording and sources, and each status from <code>regression/expected.csv</code>.</p>
 
 <h2 id="stores">How it reaches the stores</h2>
 <div class="two">
