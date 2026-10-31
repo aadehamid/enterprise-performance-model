@@ -32,8 +32,7 @@ EPM_RULES = [
     ("ship", f"{ONT}/step4/baseline/*"),
     ("ship", f"{ONT}/step4/canonical-facts.csv"),
     ("ship", f"{ONT}/step4/scoped-sequence/*"),
-    ("ship", f"{ONT}/step4/target-report/*"),
-    ("ship", f"{ONT}/step4/label-report/*"),
+    # step4/target-report and label-report are Step 4 review outputs; their tests import the gate's helpers, so they stay out.
     ("ship", f"{ONT}/step4/playbook/ontology-worklog.md"),
     ("out", f"{ONT}/step3c-*.md"),
     ("out", f"{ONT}/lpg-projection/*"),
