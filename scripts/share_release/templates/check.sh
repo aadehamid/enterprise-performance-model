@@ -78,6 +78,7 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
 (cd skills/rdf-store/scripts && run uv run -q --no-project --with pyoxigraph python3 -m unittest -q test_rdf_store)
 (cd skills && run uv run -q --no-project --with "markdown-it-py>=4,<5" python3 scripts/test_playbook_html.py)
 # The module map and the coverage counts run from the release folders.
+run with_deps python scripts/epm_facts.py counts >/dev/null
 run with_deps python scripts/epm_facts.py modules >/dev/null
 run with_deps python scripts/epm_facts.py coverage >/dev/null
 # The generated pages must equal a fresh build of their Markdown.

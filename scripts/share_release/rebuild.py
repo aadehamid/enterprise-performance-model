@@ -8,7 +8,7 @@ the release's release/frozen/); set EPM_SHARE_RELEASE so pins move to the newest
 source Turtle from its CSV; rebuild core 2.4.0 and each module's newest package; rebuild the catalog;
 recompute the previous packages' manifest hashes; rebuild the projection manifest; rebuild the generated
 pages; then verify each builder. First of all it writes release.json at the tree's root, and after the freeze it adds a
-dated note to the CHANGELOG of each module whose pins move. Writes `<release>-rebuild.json` beside the release with every step's
+dated note to the CHANGELOG of each module whose pins move, and re-pins the demo test's hash of the rewritten scenario. Writes `<release>-rebuild.json` beside the release with every step's
 command, exit code and output tail. Exit 1 when any step fails.
 """
 import argparse
@@ -16,6 +16,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -184,10 +185,32 @@ class Rebuild:
                 f.write(note)
         self.steps.append({"step": "changelog notes", "modules": moved, "returncode": 0})
 
+    def scenario_pin(self):
+        """The demo's test pins the hash of SCENARIO.md's body; the rules rewrite that body (peer names, record
+        references), so the pin is recomputed for the rewritten body and the test's note says so."""
+        demo = os.path.join(self.release, "demos", "downstream-pricing-databricks-free")
+        with open(os.path.join(demo, "SCENARIO.md"), encoding="utf-8") as f:
+            body = f.read().split("-->", 1)[1]
+        digest = hashlib.sha256(body.encode()).hexdigest()
+        test = os.path.join(demo, "tests", "test_demo.py")
+        with open(test, encoding="utf-8") as f:
+            text = f.read()
+        m = re.search(r'(    assert hashlib\.sha256\(body\.encode\(\)\)\.hexdigest\(\) == ")([0-9a-f]{64})(")', text)
+        if not m:
+            raise SystemExit("scenario pin: the demo test's pinned hash was not found")
+        text = text.replace(m.group(0), m.group(1) + digest + m.group(3), 1)
+        note = "    # Pinned on "
+        text = text.replace(note, "    # Re-pinned by the share release's rebuild for the rewritten body (the rules rename the peers and the "
+                                  "records in it).\n" + note, 1)
+        with open(test, "w", encoding="utf-8") as f:
+            f.write(text)
+        self.steps.append({"step": "scenario pin", "was": m.group(2), "now": digest, "returncode": 0})
+
     def all(self):
         self.release_marker()
         self.freeze()
         self.changelog_notes()
+        self.scenario_pin()
         self.check_script()
         self.run_config()
         self.documents()
