@@ -17,7 +17,9 @@ WEEKLY_START = dt.date(2020, 10, 16)
 SEED = 20261025
 # The ontology graph's names in Neo4j: prefix, separator, local name. n10s writes two underscores; the share
 # release renames them to one (EPM-DEC-001-0110), so a query builds its names with this separator.
-GRAPH_SEP = "_" if os.environ.get("EPM_SHARE_RELEASE") else "_" * 2
+# The share release (release.json at the tree's root, or EPM_SHARE_RELEASE set) names graph elements with one underscore.
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(ROOT, "..", "..", "release.json"))
+GRAPH_SEP = "_" if SHARE_RELEASE else "_" * 2
 
 # The names the demo uses for the source systems: a public product name where one exists (RightAngle, Aspen PIMS),
 # otherwise a generic one (the decision owner, 2026-10-28). The real names stay in the ontology; README.md maps

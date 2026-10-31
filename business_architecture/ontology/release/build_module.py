@@ -273,7 +273,19 @@ RELEASED = {"core": "1.0.0"}  # released modules this builder does not build
 # The share release rebuilds every newest package so that it names only the newest versions (EPM-DEC-001-0110,
 # "All links go through the latest release"). With EPM_SHARE_RELEASE set, a module's pins are ignored and core is
 # its newest package on disk; on main nothing changes.
-SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE"))
+# A release tree carries release.json at its root (the rebuild writes it), so its readers need no environment variable.
+ROOT = os.path.normpath(os.path.join(ONTOLOGY, "..", ".."))
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(ROOT, "release.json"))
+
+
+def package_folder(module, version):
+    """The released package's folder, in releases/<module>/<version>/ or, in the share release, in its history
+    folder releases/previous/<module>/<version>/; None when the package did not ship."""
+    for folder in (os.path.join(ONTOLOGY, "releases", module, version),
+                   os.path.join(ONTOLOGY, "releases", "previous", module, version)):
+        if os.path.isfile(os.path.join(folder, "manifest.json")):
+            return folder
+    return None
 
 
 def newest_on_disk(module):
@@ -336,7 +348,10 @@ def build(name):
 def released_requires(dep, version):
     """What a released package requires, read from its own manifest on disk, never from this builder's
     current table: a later release of that module must not change what an earlier package loads."""
-    with open(os.path.join(ONTOLOGY, "releases", dep, version, "manifest.json")) as f:
+    folder = package_folder(dep, version)
+    if folder is None:
+        raise FileNotFoundError(f"{dep} {version} is not on disk (releases/ or releases/previous/)")
+    with open(os.path.join(folder, "manifest.json")) as f:
         return json.load(f).get("depends_on") or {}
 
 

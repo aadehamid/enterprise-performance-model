@@ -103,6 +103,8 @@ def rel(path):
 
 def commit():
     try:
+        if not os.path.exists(os.path.join(ROOT, ".git")):
+            return "unknown (not a Git checkout)"
         sha = subprocess.check_output(["git", "-C", ROOT, "rev-parse", "--short", "HEAD"], text=True).strip()
         dirty = subprocess.call(["git", "-C", ROOT, "diff", "--quiet", "HEAD", "--", rel(STEP4)]) != 0
         return sha + (" (step4 has uncommitted changes)" if dirty else "")
@@ -1107,9 +1109,12 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
     record_texts = {m.group(1): recorded_words(p) for p in glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))
                     for m in [re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(p))] if m}
     records = set(record_texts)
-    if files is None:
+    if files is None and os.path.exists(os.path.join(root, ".git")):
         out = subprocess.run(["git", "ls-files", "-z", "*.md"], cwd=root, capture_output=True, text=True, check=True).stdout
         files = [f for f in out.split("\0") if f]
+    elif files is None:  # a tree without Git, such as the share release: every Markdown file in it
+        files = sorted(os.path.relpath(os.path.join(r, f), root) for r, ds, fs in os.walk(root)
+                       for f in fs if f.endswith(".md") and ".git" not in r.split(os.sep))
     # the saved answers, the decision records (checked by `quotes`) and the rest of the review evidence: records kept as
     # they were made, not documents to correct
     skip = (os.path.relpath(answers, root), os.path.relpath(decisions, root), os.path.relpath(REVIEWS, root))
@@ -1332,16 +1337,21 @@ def module_releases(releases=None, builder=None):
     out = []
     for module in sorted(os.listdir(releases)):
         folder = os.path.join(releases, module)
+        if module == "previous":  # the share release's history folder: each module's previous package
+            continue
         versions = sorted((v for v in os.listdir(folder) if os.path.isfile(os.path.join(folder, v, "manifest.json")))
                           if os.path.isdir(folder) else [], key=_version_key)
         if not versions:
             continue
         newest = os.path.join(folder, versions[-1])
+        previous = os.path.join(releases, "previous", module)
+        earlier = sorted((v for v in os.listdir(previous) if os.path.isfile(os.path.join(previous, v, "manifest.json")))
+                         if os.path.isdir(previous) else [], key=_version_key)
         manifest = json.load(open(os.path.join(newest, "manifest.json"), encoding="utf-8"))
         out.append({
             "module": module,
             "newest": versions[-1],
-            "earlier": versions[:-1],
+            "earlier": earlier + versions[:-1],
             "requires": manifest.get("depends_on", {}),
             "triples": _triples(newest, module, manifest),
             # A manifest that records what the release was built from wins; otherwise the folders are

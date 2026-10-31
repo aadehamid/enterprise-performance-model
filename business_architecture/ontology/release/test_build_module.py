@@ -84,6 +84,14 @@ def approval_holds(name, m):
     return words in body
 
 
+def shipped(tc, name, version):
+    """The package's folder in either layout (build_module.package_folder); a test of a package that did not ship skips."""
+    folder = bm.package_folder(name, version)
+    if folder is None:
+        tc.skipTest(f"{name} {version} did not ship (the share release holds each module's newest and previous packages only)")
+    return folder
+
+
 class Packages(unittest.TestCase):
     def test_each_written_package_equals_a_fresh_build(self):
         for name in bm.MODULES:
@@ -123,7 +131,7 @@ class Packages(unittest.TestCase):
             for dep, version in bm.dependencies(name).items():
                 with self.subTest(module=name, dep=dep):
                     # The dependency's package must be on disk, not only in the builder's own table.
-                    package = os.path.join(bm.ONTOLOGY, "releases", dep, version)
+                    package = os.path.join(shipped(self, dep, version))
                     self.assertTrue(os.path.isfile(os.path.join(package, "manifest.json")), f"{name} names {dep} {version}")
                     with open(os.path.join(package, "manifest.json")) as f:
                         self.assertEqual(json.load(f)["version"], version)
@@ -163,7 +171,7 @@ class EarlierReleases(unittest.TestCase):
         # The builder now builds organization 2.0.0 and ref-mpc 1.1.0; each released 1.0.0 package
         # must still match its own manifest.
         for name in ("organization", "ref-mpc", "kpi", "value-stream", "data-product", "party", "integration"):
-            out = os.path.join(bm.ONTOLOGY, "releases", name, "1.0.0")
+            out = os.path.join(shipped(self, name, "1.0.0"))
             if not os.path.isdir(out):
                 self.skipTest("the 1.0.0 packages did not ship (the share release holds the newest and previous packages only)")
             with open(os.path.join(out, "manifest.json")) as f:
@@ -345,7 +353,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_ref_mpc_1_1_0_is_untouched(self):
         # A later ref-mpc is built now; the released 1.1.0 package must still match its own manifest.
-        out = os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.1.0")
+        out = os.path.join(shipped(self, "ref-mpc", "1.1.0"))
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
         self.assertEqual(manifest["version"], "1.1.0")
@@ -355,7 +363,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_ref_mpc_1_2_0_is_untouched(self):
         # ref-mpc 1.3.0 is built now; the released 1.2.0 package must still match its own manifest.
-        out = os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.2.0")
+        out = os.path.join(shipped(self, "ref-mpc", "1.2.0"))
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
         self.assertEqual(manifest["version"], "1.2.0")
@@ -365,7 +373,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_ref_mpc_1_3_0_holds_the_companies_the_parties_and_the_brands(self):
         # EPM-DEC-001-0108, amendment of 2026-10-27: the brands join the two parts of 1.2.0.
-        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.3.0", "ref-mpc.ttl"))
+        released = Graph().parse(os.path.join(shipped(self, "ref-mpc", "1.3.0"), "ref-mpc.ttl"))
         header = URIRef(bm.MODULES_NS + "ref-mpc")
         released.remove((header, None, None))
         sources = Graph()
@@ -375,7 +383,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(set(released), set(sources))
         for slug in ("marathon", "arco", "tesoro"):
             self.assertIn((URIRef(bm.MODULES_NS + "ref-mpc/brand/" + slug), None, None), released)
-        with open(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.3.0", "manifest.json")) as f:
+        with open(os.path.join(shipped(self, "ref-mpc", "1.3.0"), "manifest.json")) as f:
             manifest = json.load(f)
         self.assertEqual(manifest["approved_by"]["recorded_in"], BRANDS[0])
 
@@ -388,7 +396,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_ref_mpc_1_2_0_holds_the_companies_and_the_parties(self):
         # EPM-DEC-001-0080: ref-mpc.ttl and the reference parties moved from party/ (EPM-DEC-001-0075).
-        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.2.0", "ref-mpc.ttl"))
+        released = Graph().parse(os.path.join(shipped(self, "ref-mpc", "1.2.0"), "ref-mpc.ttl"))
         header = URIRef(bm.MODULES_NS + "ref-mpc")
         released.remove((header, None, None))
         sources = Graph()
@@ -400,7 +408,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_kpi_1_0_1_is_untouched(self):
         # kpi 1.1.0 is built now; the released 1.0.1 package must still match its own manifest.
-        out = os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.0.1")
+        out = os.path.join(shipped(self, "kpi", "1.0.1"))
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
         self.assertEqual(manifest["version"], "1.0.1")
@@ -427,7 +435,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_kpi_1_1_0_is_untouched(self):
         # kpi 1.1.1 is built now; the released 1.1.0 package must still match its own manifest.
-        out = os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.1.0")
+        out = os.path.join(shipped(self, "kpi", "1.1.0"))
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
         for fname, digest in manifest["files"].items():
@@ -511,7 +519,7 @@ class EarlierReleases(unittest.TestCase):
         # EPM-DEC-001-0104: system 1.4.0 and party 1.4.0, minors Claude approved under the delegation and the brief.
         # Since system 1.5.0 and party 2.0.0 (EPM-DEC-001-0108) the builder builds neither; their packages keep it.
         for name in ("system", "party"):
-            with open(os.path.join(bm.ONTOLOGY, "releases", name, "1.4.0", "manifest.json")) as f:
+            with open(os.path.join(shipped(self, name, "1.4.0"), "manifest.json")) as f:
                 self.assertEqual(json.load(f)["approved_by"]["recorded_in"], NIGHT_BRIEF[0])
 
     def test_the_customer_inputs_releases_carry_the_alignment(self):
@@ -524,7 +532,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual((m["version"], m["stage"], m["issued"]), ("1.5.0", None, "2026-10-27"))
         self.assertIn("EPM-DEC-001-0108", m["decisions"])
         for name, version in (("party", "2.0.0"), ("integration", "2.4.0")):
-            with open(os.path.join(bm.ONTOLOGY, "releases", name, version, "manifest.json")) as f:
+            with open(os.path.join(shipped(self, name, version), "manifest.json")) as f:
                 self.assertEqual(json.load(f)["approved_by"]["recorded_in"], CUSTOMER_INPUTS[0])
         for name, version in (("party", "2.1.0"), ("integration", "2.5.0")):
             m = bm.MODULES[name]
@@ -541,13 +549,13 @@ class EarlierReleases(unittest.TestCase):
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-25"))
         # Since kpi 1.3.0 (EPM-DEC-001-0109) the builder builds kpi 1.3.0; kpi 1.2.0's package keeps the approval it names.
-        with open(os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.2.0", "manifest.json")) as f:
+        with open(os.path.join(shipped(self, "kpi", "1.2.0"), "manifest.json")) as f:
             self.assertEqual(json.load(f)["approved_by"]["recorded_in"], ITEM_F[0])
 
     def test_the_close_out_releases_carry_the_close_out_approval(self):
         # EPM-DEC-001-0088: the decision owner approved the six close-out releases together. Since value-stream 1.2.0
         # (EPM-DEC-001-0106) the builder builds none of them; value-stream 1.1.0's package keeps the approval it names.
-        with open(os.path.join(bm.ONTOLOGY, "releases", "value-stream", "1.1.0", "manifest.json")) as f:
+        with open(os.path.join(shipped(self, "value-stream", "1.1.0"), "manifest.json")) as f:
             self.assertEqual(json.load(f)["approved_by"]["recorded_in"], CLOSEOUT[0])
 
 

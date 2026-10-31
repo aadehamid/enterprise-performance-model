@@ -119,7 +119,8 @@ def sha(*texts):
 # (EPM-DEC-001-0110): after every check has passed on the n10s names, the load renames each label, type and key,
 # proves the rename lossless against a dump taken before it, and hashes the renamed graph.
 N10S_SEP = "_" * 2
-SEP = "_" if os.environ.get("EPM_SHARE_RELEASE") else N10S_SEP
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(ONTOLOGY, "..", "..", "release.json"))
+SEP = "_" if SHARE_RELEASE else N10S_SEP
 
 
 def lpg_name(iri, sep=None):

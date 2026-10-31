@@ -22,6 +22,8 @@ RECORD_TESTS = re.compile(r"quotes|decision|citations|recorded_words|saved_answe
 LEDGER_TESTS = re.compile(r"ledger|backlog|counts_break|phase1|readme_guard|step4_readme|row_reports|sweep")
 # Tests of test_docs_html.py that read the decision records or their index page.
 PAGE_RECORD_TESTS = re.compile(r"index_row|decision_record|decision_id")
+# ... and the facts test that expects the records' index page among the generated copies.
+RECORD_TESTS = re.compile(RECORD_TESTS.pattern + r"|repository_pages")
 
 
 def pytest_collection_modifyitems(config, items):

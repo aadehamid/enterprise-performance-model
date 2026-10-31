@@ -17,7 +17,21 @@ MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
 
 
 def package_folders():
-    return {tuple(p.rstrip(os.sep).split(os.sep)[-2:]) for p in glob.glob(os.path.join(bc.RELEASES, "*", "*", ""))}
+    found = {tuple(p.rstrip(os.sep).split(os.sep)[-2:]) for p in glob.glob(os.path.join(bc.RELEASES, "*", "*", ""))}
+    return {(m, v) for m, v in found if m != "previous"}  # the share release's history folder is not a package
+
+
+def distributions_on_disk():
+    """How many distributions the packages on disk describe in their own catalog.ttl files."""
+    n = 0
+    for m, v in package_folders():
+        g = Graph().parse(os.path.join(bc.RELEASES, m, v, "catalog.ttl"))
+        n += len(set(g.subjects(RDF.type, bc.DCAT.Distribution)))
+    return n
+
+
+def bm_share_release():
+    return bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(bc.RELEASES, "..", "..", "..", "release.json"))
 
 
 class Catalog(unittest.TestCase):
@@ -31,7 +45,7 @@ class Catalog(unittest.TestCase):
     def test_one_dataset_per_release_package(self):
         datasets = {str(d)[len(MODULES_NS):] for d in self.g.objects(bc.CATALOG, bc.DCAT.dataset)}
         # The share release's catalog lists its newest set only (EPM-DEC-001-0110): one dataset per package on disk.
-        self.assertEqual(len(datasets), len(package_folders()) if os.environ.get("EPM_SHARE_RELEASE") else 50)  # then kpi 1.3.0 (EPM-DEC-001-0109):  # 49, then party 2.1.0 and integration 2.5.0 (EPM-DEC-001-0099, amendment of 2026-10-28):  # 47, then organization 2.2.0 (EPM-DEC-001-0045, amendment of 2026-10-28):  # 46, then ref-mpc 1.3.0 (EPM-DEC-001-0108, amendment of 2026-10-27):  # 45, then party 2.0.0, system 1.5.0 and integration 2.4.0 (EPM-DEC-001-0108):  # 42, then system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104):  # 40, then core 2.4.0 (EPM-DEC-001-0105):  # 39, then three more (EPM-DEC-001-0103):  # 25, then item G's three (EPM-DEC-001-0099) and item F's five (0100)
+        self.assertEqual(len(datasets), len(package_folders()) if bm_share_release() else 50)  # then kpi 1.3.0 (EPM-DEC-001-0109):  # 49, then party 2.1.0 and integration 2.5.0 (EPM-DEC-001-0099, amendment of 2026-10-28):  # 47, then organization 2.2.0 (EPM-DEC-001-0045, amendment of 2026-10-28):  # 46, then ref-mpc 1.3.0 (EPM-DEC-001-0108, amendment of 2026-10-27):  # 45, then party 2.0.0, system 1.5.0 and integration 2.4.0 (EPM-DEC-001-0108):  # 42, then system 1.4.0 and party 1.4.0 (EPM-DEC-001-0104):  # 40, then core 2.4.0 (EPM-DEC-001-0105):  # 39, then three more (EPM-DEC-001-0103):  # 25, then item G's three (EPM-DEC-001-0099) and item F's five (0100)
         self.assertEqual({tuple(d.split("/")) for d in datasets}, package_folders())
         for d in self.g.objects(bc.CATALOG, bc.DCAT.dataset):
             self.assertIn((d, RDF.type, bc.DCAT.Dataset), self.g)
@@ -39,7 +53,7 @@ class Catalog(unittest.TestCase):
     def test_every_distribution_is_a_file_in_its_package(self):
         # Read from each dataset's dcat:distribution links, so a link to an undescribed distribution fails.
         linked = set(self.g.objects(None, bc.DCAT.distribution))
-        self.assertEqual(len(linked), 155)  # then kpi 1.3.0's three (0109):  # 152, then party 2.1.0's and integration 2.5.0's three each (0099, amendment of 2026-10-28):  # 146, then organization 2.2.0's three (0045, amendment of 2026-10-28):  # 143, then ref-mpc 1.3.0's three (0108, amendment):  # 140, then nine more, three packages of three (0108):  # 131, then six more (0104):  # 125, then core 2.4.0's four:  # 121, then nine more:  # 79, then eight packages of three distributions
+        self.assertEqual(len(linked), distributions_on_disk() if bm_share_release() else 155)  # then kpi 1.3.0's three (0109):  # 152, then party 2.1.0's and integration 2.5.0's three each (0099, amendment of 2026-10-28):  # 146, then organization 2.2.0's three (0045, amendment of 2026-10-28):  # 143, then ref-mpc 1.3.0's three (0108, amendment):  # 140, then nine more, three packages of three (0108):  # 131, then six more (0104):  # 125, then core 2.4.0's four:  # 121, then nine more:  # 79, then eight packages of three distributions
         for dist in linked:
             self.assertIn((dist, RDF.type, bc.DCAT.Distribution), self.g)
             self.assertEqual(list(self.g.objects(dist, bc.DCAT.downloadURL)), [dist])

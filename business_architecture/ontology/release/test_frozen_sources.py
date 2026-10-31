@@ -46,6 +46,8 @@ class Frozen(unittest.TestCase):
         self.assertTrue(all(p == "business_architecture/business_process/downstream_process_map.json" for _, p in pins))
 
     def test_freeze_writes_one_file_per_pinned_commit(self):
+        if not os.path.exists(os.path.join(fs.REPO, ".git")):
+            self.skipTest("not a Git checkout (the share release reads its frozen copies and never freezes)")
         with tempfile.TemporaryDirectory() as tmp:
             old = fs.FROZEN
             fs.FROZEN = tmp
@@ -80,7 +82,9 @@ class ReleaseMode(unittest.TestCase):
 
     def test_on_main_the_pins_stand(self):
         import build_module as bm
-        self.assertFalse(bm.SHARE_RELEASE)
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set (checked by test_build_module)")
+        self.assertFalse(os.path.isfile(os.path.join(bm.ROOT, "release.json")), "release.json marks a release tree, never main")
         self.assertEqual(bm.dependencies("kpi")["core"], "2.3.0")
 
 
