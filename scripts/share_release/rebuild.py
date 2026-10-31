@@ -110,13 +110,14 @@ class Rebuild:
     def all(self):
         self.freeze()
         self.check_script()
+        # The history folder's hashes first: core 2.4.0's manifest records core 2.3.0's manifest hash.
+        self.previous_hashes()
         for folder, script in SOURCE_BUILDERS:
             self.run(f"source {folder}/{script}", [script, "--write"], f"{ONT}/{folder}")
         self.run("core 2.4.0", ["build_core_2_4.py", "--write"], f"{ONT}/release")
         for m in MODULE_ORDER:
             self.run(f"module {m}", ["build_module.py", m, "--write"], f"{ONT}/release")
         self.run("catalog", ["build_catalog.py", "--write"], f"{ONT}/release")
-        self.previous_hashes()
         self.run("projection manifest", ["pipeline.py", "build"], f"{ONT}/projection")
         self.run("pages", ["scripts/build_docs_html.py"], ".")
         if os.path.exists(os.path.join(self.release, "skills", "scripts", "build_playbook_html.py")):
