@@ -10,7 +10,7 @@ The ontology playbook (since 2026-10-25 the `ontology` skill's guide, `skills/da
 
 **How to maintain it:** when a review batch merges, append its entry to §5 (Batch log) and move any new durable rule into §6 (Decision log). After the final batch, regenerate the traceability appendix (§8) and record completion here. Never rewrite history — correct with dated amendments.
 
-*2026-10-31:* This playbook covers how the definitions were decided. For the process map and value streams themselves, the gaps found in them and how each was filled, read the [walkthrough](https://spacesheep.dev/@aadehamid/epm-walkthrough), "The business, and how it is mapped" and "What was missing, and how it was filled". For what the ontology became, read `epm-ontology-guide.html`.
+*2026-10-31:* This playbook covers how the definitions were decided. For the process map and value streams themselves, the gaps found in them and how each was filled, read the [walkthrough](https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9), "The business, and how it is mapped" and "What was missing, and how it was filled". For what the ontology became, read `epm-ontology-guide.html`.
 
 **Companion files:**
 - `step3c-review-handoff.md` — the operational manual for running a review batch (the *how-to*; this document is the *what-and-why*)

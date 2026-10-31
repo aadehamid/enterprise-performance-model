@@ -210,7 +210,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
   <span class="name">EPM</span><span class="scope">Ontology guide</span>
   <nav aria-label="Sections">
-    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#stores">Stores</a><a href="#copy">Copy</a><a href="#tools">Tools</a><a href="#open">Open</a>
+    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#stores">Stores</a><a href="#graphs">Graphs</a><a href="#copy">Copy</a><a href="#tools">Tools</a><a href="#open">Open</a>
   </nav>
 </header>
 
@@ -235,6 +235,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <a class="sub-a" href="#m-lane">lane</a>
   <a class="sub-a" href="#m-integration">integration</a>
   <a href="#stores">How it reaches the stores</a>
+  <a href="#graphs">Git, the two graphs and the measures</a>
   <a href="#copy">Copy the ontology</a>
   <a href="#tools">The tools behind it</a>
   <a href="#open">What is still open</a>
@@ -251,7 +252,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <a class="btn" href="#copy">Copy the ontology</a>
 </div>
 
-<p class="notice">This guide covers the finished ontology. For the story behind it, from the business processes and their gaps through the build to the demo, read the <a href="https://spacesheep.dev/@aadehamid/epm-walkthrough">walkthrough</a> (a private page; ask the decision owner for access). For how the process definitions were decided, read <code>business_architecture/ontology/business-process-architecture-playbook.md</code>. For the method, read the <code>ontology</code> skill's guide.</p>
+<p class="notice">This guide covers the finished ontology. For the story behind it, from the business processes and their gaps through the build to the demo, read the <a href="https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9">walkthrough</a> (a private page; ask the decision owner for access). For how the process definitions were decided, read <code>business_architecture/ontology/business-process-architecture-playbook.md</code>. For the method, read the <code>ontology</code> skill's guide and, for the projection, the <code>ontology-to-lpg</code> skill's playbook.</p>
 
 <p class="notice">A snapshot: every figure is from the newest release of each module at commit <code>40b3082</code>, on the branch that releases kpi 1.3.0 (2026-10-28, EPM-DEC-001-0109), which follows party 2.1.0 and integration 2.5.0 (EPM-DEC-001-0099), organization 2.2.0 (EPM-DEC-001-0045) and the releases of 2026-10-27 that bring in the decision owner's customer inputs of that day (EPM-DEC-001-0108). Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
 
@@ -695,6 +696,57 @@ ORDER BY ?hop ?label</code></pre>
 </ul>
 </div>
 </div>
+
+<h2 id="graphs">Git, the two graphs and the measures</h2>
+<p class="lead">Git holds the truth, and every store is a copy that can be rebuilt. Checks prove the copies lost nothing, and measure identifiers tie the business meaning to the tables that compute it. The <a href="https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9">walkthrough</a> gives the commands and the steps to rebuild it, and the <code>ontology-to-lpg</code> skill's playbook gives the method.</p>
+
+<h3>The source of truth is Git</h3>
+<p>The master copy is the versioned Turtle in <code>business_architecture/ontology/releases/</code>. A change reaches it only through a pull request and a release. Neo4j, AuraDB and <code>epm_triples</code> are projections. The decision owner: "The pattern is the sourse of truth is the ontology serialized in turtle. This is then projected to consuming application. In this case Neo4J, AuraDB, and databricsk and those must be kept in sync with the source, which we plan to save in git." (EPM-DEC-001-0109, decision 3; <code>answers-2026-10-28-databricks-grill.md</code>).</p>
+
+<h3>Projecting without loss</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Check</th><th>What it proves</th><th>Last result</th></tr></thead><tbody>
+<tr><td>Rules and shapes, before the load</td><td data-k="Proves">Data the projection cannot map, or that the shapes reject, stops the build</td><td data-k="Result"><code>pipeline.py build</code> passes</td></tr>
+<tr><td>Round trip: export the graph as RDF and compare it with the input</td><td data-k="Proves">Nothing lost, nothing added</td><td data-k="Result">0 lost, 0 added, over 36,951 triples</td></tr>
+<tr><td>Two loads, one sorted and one shuffled</td><td data-k="Proves">The load does not depend on order</td><td data-k="Result">The same graph hash</td></tr>
+<tr><td>SHACL inside the graph, with a broken copy as a test</td><td data-k="Proves">The shapes hold in Neo4j, and the check can fail</td><td data-k="Result">766 constraints, 0 violations; the broken copy is caught</td></tr>
+<tr><td>Copy to AuraDB</td><td data-k="Proves">The cloud copy equals the driver's graph</td><td data-k="Result">The same graph hash; 4,193 nodes, 22,142 relationships</td></tr>
+<tr><td>Hash of <code>epm_triples</code></td><td data-k="Proves">The Delta table holds every release triple</td><td data-k="Result">40,169 quads in 33 graphs, the same RDFC-1.0 hash as the releases</td></tr>
+<tr><td>Rebuild Neo4j from <code>epm_triples</code></td><td data-k="Proves">The table alone can restore the graph</td><td data-k="Result">The same counts as the first load</td></tr>
+<tr><td>Saved walks in Neo4j and in Apache Jena</td><td data-k="Proves">A property graph and a triple store answer alike</td><td data-k="Result">All 14 walks equal</td></tr>
+</tbody></table></div>
+<p class="note">Results from the reload of 2026-10-28: <code>projection/projection-report.json</code> and the stores runbook. Neo4j does no OWL reasoning, so the axioms stay in the Turtle. The two local graphs hold the same nodes and count 21,767 and 22,142 relationships, because they follow the method's versions 2.2 and 2.3.</p>
+
+<h3>The technical graph</h3>
+<p>The ontology does not model the demo's pipeline, so a technical graph does, beside it (EPM-DEC-001-0109, decision 6). <code>demos/downstream-pricing-databricks-free/pricing_demo/tech_graph.py</code> reads the demo's databases and Databricks for live facts, then runs SPARQL Anything queries over the SQL files, the run commands, those facts and the ontology's CSV tables. That writes <code>graph/tech-graph.ttl</code> and <code>graph/decision-trail.ttl</code>, which load into Neo4j and AuraDB as 142 nodes labelled <code>Tech</code>, and copy to Delta.</p>
+
+<h3>How the two graphs link</h3>
+<p>They share IRIs, and the link runs one way. A technical node never has the label <code>Resource</code>, and every edge starts at a technical node, so the ontology's counts, hash and round trip cannot see it. Of the graph's 533 edges, 133 reach an ontology node.</p>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Technical node</th><th>Link</th><th>Ontology module</th><th>Comes from</th></tr></thead><tbody>
+<tr><td>Metric view</td><td data-k="Link"><code>IMPLEMENTS</code></td><td data-k="Module"><code>kpi</code> measure</td><td data-k="From">The view's tag as deployed, joined in <code>measure-identifiers.csv</code></td></tr>
+<tr><td>Table, Genie agent</td><td data-k="Link">Link to the design</td><td data-k="Module"><code>data-product</code> table or product</td><td data-k="From">24 tables and 2 agents</td></tr>
+<tr><td>Source database</td><td data-k="Link">Link to the system</td><td data-k="Module"><code>system</code> entry</td><td data-k="From">MIPS, MPR, KittyHawk, RightAngle</td></tr>
+<tr><td>Decision</td><td data-k="Link">Owner, refinery, measure</td><td data-k="Module"><code>organization</code>, <code>ref-mpc</code>, <code>kpi</code></td><td data-k="From">Decision trail, as PROV-O</td></tr>
+</tbody></table></div>
+
+<h3>The Databricks measures, tied to both graphs</h3>
+<p>The KPI or OPM identifier is the join key, such as <code>KPI-0001</code> for Crack Spreads Pricing.</p>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Where</th><th>How</th><th>What guards it</th></tr></thead><tbody>
+<tr><td>In Databricks</td><td data-k="How">Each metric-view measure carries its KPI or OPM identifier in its comment, display name and synonyms. Each view has an <code>epm_measure_identifiers</code> tag listing them.</td><td data-k="Guard">A demo test compares them with <code>kpi/measure-identifiers.csv</code>; a live check reads the tags</td></tr>
+<tr><td>To the projected ontology</td><td data-k="How">Definitions views in <code>ontology_definitions</code> read <code>epm_triples</code> directly: identifier, label, definition, grain, basis and the measures not to confuse it with. Each Genie agent binds its subject's view.</td><td data-k="Guard">The definition has one home; Databricks holds no second copy</td></tr>
+<tr><td>To the technical graph</td><td data-k="How"><code>tech_graph build</code> joins each deployed tag to the measure's IRI, which gives the view its <code>IMPLEMENTS</code> edge to the <code>:Resource</code> node. <code>tech_graph sync</code> copies the graph to <code>tech_graph_nodes</code> and <code>tech_graph_edges</code>.</td><td data-k="Guard"><code>tech_graph load</code> stops if an edge finds no ontology node</td></tr>
+</tbody></table></div>
+<p class="note">No Genie agent binds the <code>tech_graph</code> tables yet, and the agents seldom read their definitions views (#450).</p>
+
+<h3>Keeping them in step</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Guard</th><th>What it does</th><th>When</th><th>State</th></tr></thead><tbody>
+<tr><td><code>pipeline.py build --verify</code></td><td data-k="Does">The manifest no longer matches a fresh build</td><td data-k="When">In <code>scripts/check.sh</code>, so on every PR</td><td data-k="State">On</td></tr>
+<tr><td><code>sync_stores.py mark</code></td><td data-k="Does">A store that does not match the repository: it refuses to mark it</td><td data-k="When">After each load</td><td data-k="State">By hand, or by <code>sync</code></td></tr>
+<tr><td><code>sync_stores.py check</code></td><td data-k="Does">A store that is behind, changed, unmarked or unreachable; it exits non-zero</td><td data-k="When">When someone runs it</td><td data-k="State">By hand. On 2026-10-31, all four stores read current</td></tr>
+<tr><td><code>sync_stores.py sync</code></td><td data-k="Does">Reloads what is behind, then loads the technical graph back into each Neo4j store it reloaded</td><td data-k="When">When someone runs it</td><td data-k="State">By hand; the cloud stores only with <code>--cloud</code></td></tr>
+<tr><td><code>tech_graph load</code></td><td data-k="Does">The ontology's <code>:Resource</code> counts moved, or an edge found no ontology node: it stops</td><td data-k="When">Each technical-graph load</td><td data-k="State">On</td></tr>
+<tr><td><code>.github/workflows/sync-stores.yml</code></td><td data-k="Does">Reloads AuraDB and Databricks on each release tag</td><td data-k="When">On a release tag</td><td data-k="State"><strong>Off</strong> until its secrets exist (#426); never run with them</td></tr>
+</tbody></table></div>
+<p><strong>This does not yet guarantee "never out of sync".</strong> The stores can show that they have drifted, and one command repairs them, but nothing stops or repairs drift by itself. Nothing runs the drift check by itself, and the release-tag workflow is off. A new release leaves the stores behind until someone runs <code>sync</code>. The technical graph has no marker, so a change to the demo's SQL or run commands with no ontology release goes unnoticed. <code>sync</code> does not refresh the Delta copy of the technical graph; <code>tech_graph sync</code> does that, by hand. #455 holds the work and the options.</p>
 
 <h2 id="copy">Copy the ontology</h2>
 <p class="lead">To give a teammate 100% of the ontology and everything they need to understand and use it, copy the three groups below, keeping each repository path as it is. Every group is required. No scripts are needed: the ontology is the release files, and every document to read is an HTML page. In all: 370 files and three links. That is 329 release files, 34 pages and data files to understand it, and 7 files for using it.</p>
