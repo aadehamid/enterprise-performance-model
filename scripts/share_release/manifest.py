@@ -48,8 +48,8 @@ EPM_RULES = [
     ("ship", "business_architecture/domain/customer_domain_problem_statement_v0.1.md"),
     ("ship", "business_architecture/domain/market-data-and-commercial-risk-draft.md"),
     ("ship", "business_architecture/domain/decision-packages/*"),
-    # Demos.
-    ("ship", "demos/*"),
+    # The pricing demo (the owner, 2026-10-31: only the ontology and the pricing demo). The O2C demos stay out.
+    ("ship", "demos/downstream-pricing-databricks-free/*"),
     # Scripts that build or validate.
     ("ship", "scripts/check.sh"),
     ("ship", "scripts/epm_facts.py"),
@@ -60,9 +60,7 @@ EPM_RULES = [
     ("ship", "scripts/test_modules_guide.py"),
     ("ship", "scripts/test_check_script.py"),
     ("ship", "scripts/test_published_figures.py"),
-    # The one image the demos link, and the general guides the owner asked to keep.
-    ("ship", "architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg"),
-    ("ship", "architecture/EPM-ARCH-MEANING-vs-COMPUTE.svg"),
+    # The ontology guides the owner asked to keep.
     ("ship", "best-practices/*"),
     # Generated pages are rebuilt in the export, never copied.
     ("out", "*.html"),
@@ -70,7 +68,7 @@ EPM_RULES = [
     ("ship", f"{ONT}/epm-ontology-guide.html"),
     ("ship", f"{ONT}/projection/ontology-stores-runbook.html"),
     ("ship", "best-practices/*.html"),
-    ("ship", "demos/*.html"),
+    ("ship", "demos/downstream-pricing-databricks-free/*.html"),
 ]
 for m, (newest, previous) in MODULES.items():
     EPM_RULES.append(("ship", f"{ONT}/releases/{m}/{newest}/*"))

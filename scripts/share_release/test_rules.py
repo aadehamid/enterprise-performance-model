@@ -159,6 +159,10 @@ def test_manifest_ships_the_two_versions_and_leaves_older_ones_out():
     assert manifest.disposition("business_architecture/ontology/README.html", r) == "out"
     assert manifest.disposition("business_architecture/ontology/epm-walkthrough.html", r) == "ship"
     assert manifest.disposition("AGENTS.md", r) == "out"
+    assert manifest.disposition("demos/downstream-pricing-databricks-free/pricing_demo/genie.py", r) == "ship"
+    assert manifest.disposition("demos/o2c-unbilled-semantic-layer/README.md", r) == "out"
+    assert manifest.disposition("demos/README.md", r) == "out"
+    assert manifest.disposition("architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg", r) == "out"
     assert manifest.disposition("EPM_Homelab/00-x.md", r) == "out"
 
 
