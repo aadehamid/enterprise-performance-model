@@ -221,6 +221,8 @@ class EarlierReleases(unittest.TestCase):
             "value-stream": "1.2.0", "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.1.0"})  # 2.5.0
 
     def test_a_check_loads_one_release_of_each_module(self):
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set, so the pinned closures do not hold")
         # value-stream reaches core three times: directly, and through kpi 1.2.0 and data-product 1.2.0, each at 2.3.0;
         # data-product also reaches system 1.2.0. One release of each loads.
         self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0",
@@ -287,6 +289,8 @@ class EarlierReleases(unittest.TestCase):
             self.assertNotIn((URIRef("https://w3id.org/lsc/ontology/process/" + slug), decision, review), data)
 
     def test_check_hands_the_validator_one_core_release(self):
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set, so the pinned closures do not hold")
         # Codex round 2: observe the graph check() passes to SHACL itself, not only the helper's result.
         core = URIRef(bm.MODULES_NS + "core")
         review = URIRef(bm.MODULES_NS + "core/apqc-mapping-decision/review-link")
@@ -312,6 +316,8 @@ class EarlierReleases(unittest.TestCase):
             bm.validate = real
 
     def test_a_later_dependency_release_leaves_the_released_packages_unchanged(self):
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set, so the pinned closures do not hold")
         # Codex round 1: kpi 1.1.0 and a later data-product must not change value-stream or market-data 1.0.0,
         # nor what their checks load (closures come from each selected release's own manifest).
         saved = {n: dict(bm.MODULES[n]) for n in ("kpi", "data-product")}
@@ -446,6 +452,8 @@ class EarlierReleases(unittest.TestCase):
         # value-stream 1.0.0, market-data and integration were released against kpi 1.0.1 and keep naming it;
         # value-stream 1.1.0 requires kpi 1.1.0 (EPM-DEC-001-0090), and its 1.0.0 manifest is unchanged.
         # integration 2.0.0 requires kpi 1.1.1 (EPM-DEC-001-0094); its 1.0.0 manifest still names 1.0.1.
+        for name in ("market-data", "integration", "value-stream"):
+            shipped(self, name, "1.0.0")
         self.assertEqual(bm.released_requires("market-data", "1.0.0")["kpi"], "1.0.1")  # 1.1.0 requires kpi 1.2.0 (0100)
         self.assertEqual(bm.released_requires("integration", "1.0.0")["kpi"], "1.0.1")
         self.assertEqual(bm.released_requires("value-stream", "1.0.0")["kpi"], "1.0.1")

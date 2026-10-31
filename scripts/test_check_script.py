@@ -65,8 +65,10 @@ def test_every_tracked_test_file_is_run():
         files = subprocess.run(["git", "ls-files", "*test_*.py"], cwd=root, capture_output=True, text=True,
                                check=True).stdout.split()
     else:  # a tree without Git, such as the share release: every test file in it
+        # The skills' tests (skills/<name>/scripts/) run by module name in the script's own section, not by path.
         files = sorted(os.path.relpath(os.path.join(r, f), root) for r, ds, fs in os.walk(root) for f in fs
-                       if f.startswith("test_") and f.endswith(".py") and "__pycache__" not in r and ".venv" not in r)
+                       if f.startswith("test_") and f.endswith(".py") and "__pycache__" not in r and ".venv" not in r
+                       and not os.path.relpath(r, root).startswith("skills"))
     text = _commands()
     missing = [f for f in files if f not in text]  # by its full path, in a command, not in a comment
     assert files and not missing, missing

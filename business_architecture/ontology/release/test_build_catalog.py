@@ -66,7 +66,7 @@ class Catalog(unittest.TestCase):
             self.assertIn((d, RDF.type, bc.DCAT.Dataset), self.g)
 
     def test_a_link_to_an_undescribed_distribution_fails(self):
-        dataset = URIRef(MODULES_NS + "lane/1.0.0")
+        dataset = sorted(self.g.objects(bc.CATALOG, bc.DCAT.dataset))[0]  # any package of the catalog
         dist = next(self.g.objects(dataset, bc.DCAT.distribution))
         self.g.remove((dist, None, None))
         with self.assertRaises(AssertionError):

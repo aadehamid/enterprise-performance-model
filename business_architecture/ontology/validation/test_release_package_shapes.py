@@ -58,10 +58,16 @@ def package_graph(name, version):
     return Graph().parse(package_file(name, version, f"{name}.ttl"))
 
 
-def with_closure(name, version, g):
+def with_closure(name, version, g, tc=None):
     data = Graph()
     data += g
-    for dep, dep_version in sorted(build_module.closure(build_module.released_requires(name, version)).items()):
+    try:
+        closure = build_module.closure(build_module.released_requires(name, version))
+    except FileNotFoundError as e:
+        if tc is None:
+            raise
+        tc.skipTest(f"{e}: the share release holds each module's newest and previous packages only")
+    for dep, dep_version in sorted(closure.items()):
         data.parse(package_file(dep, dep_version, f"{dep}.ttl"))
     return data
 
@@ -78,6 +84,8 @@ class ReleasePackages(unittest.TestCase):
 
     def test_the_closure_is_loaded(self):
         # value-stream 1.0.0 links to data products and measures in other packages; alone, its shapes fail.
+        if build_module.package_folder("value-stream", "1.0.0") is None or build_module.package_folder("core", "2.2.0") is None:
+            self.skipTest("value-stream 1.0.0 or its closure did not ship (the share release holds the newest and previous packages only)")
         self.assertEqual(build_module.closure(build_module.released_requires("value-stream", "1.0.0")),
                          {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"})
         ok, text = conforms("value-stream", "1.0.0", package_graph("value-stream", "1.0.0"))
@@ -87,16 +95,17 @@ class ReleasePackages(unittest.TestCase):
     def test_a_broken_package_fails(self):
         # An office lane without its notation breaks the lane package's own shapes.
         lane = Namespace("https://w3id.org/lsc/ontology/modules/lane/lane/")
-        g = package_graph("lane", "1.0.0")
+        version = max((v for m, v in packages_on_disk() if m == "lane"), key=lambda v: tuple(int(x) for x in v.split(".")))
+        g = package_graph("lane", version)
         g.remove((lane["front-office"], SKOS.notation, None))
-        ok, text = conforms("lane", "1.0.0", with_closure("lane", "1.0.0", g))
+        ok, text = conforms("lane", version, with_closure("lane", version, g, self))
         self.assertFalse(ok)
         self.assertIn("front-office", text)
 
 
 def _package_test(name, version):
     def test(self):
-        ok, text = conforms(name, version, with_closure(name, version, package_graph(name, version)))
+        ok, text = conforms(name, version, with_closure(name, version, package_graph(name, version), self))
         self.assertTrue(ok, text[:3000])
     return test
 

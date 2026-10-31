@@ -114,7 +114,7 @@ def record_meta(rel, lines):
     return h1[0], rows["Status"][0], rows["Date"][0]
 
 
-def pages():
+def all_pages():
     """Every page: its output, its title, one sentence on what it is, and its sources."""
     out = [
         single(f"{ONT}/README.md",
@@ -558,11 +558,17 @@ def generated_map(specs):
     return {os.path.normpath(os.path.join(ROOT, s["sources"][0])): s["out"] for s in specs if not s.get("decisions")}
 
 
+def pages():
+    """The pages this tree can build: all_pages() minus those with a source that is not here (the share release
+    carries no decision records and leaves some documents out, EPM-DEC-001-0110)."""
+    return [s for s in all_pages() if all(os.path.exists(os.path.join(ROOT, rel)) for rel in s["sources"] + ([s["intro"]] if "intro" in s else []))]
+
+
 def build_all():
     """Every page's path -> its HTML. Refuses (ValueError) when a source holds Markdown the renderer does not cover."""
     # A page whose source is not in this tree is not built: the share release carries no decision records,
     # so its decisions page has no source (EPM-DEC-001-0110).
-    specs = [s for s in pages() if all(os.path.exists(os.path.join(ROOT, rel)) for rel in s["sources"] + ([s["intro"]] if "intro" in s else []))]
+    specs = pages()
     problems = []
     for spec in specs:
         for rel in spec["sources"] + ([spec["intro"]] if "intro" in spec else []):
