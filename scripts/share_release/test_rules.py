@@ -157,6 +157,7 @@ def test_manifest_ships_the_two_versions_and_leaves_older_ones_out():
     assert manifest.disposition("business_architecture/domain/decisions/EPM-DEC-001-0001-x.md", r) == "out"
     assert manifest.disposition("business_architecture/domain/decision-packages/2026-10-14/README.md", r) == "ship"
     assert manifest.disposition("business_architecture/ontology/README.html", r) == "out"
+    assert manifest.disposition("scripts/docs_template.html", r) == "ship"
     assert manifest.disposition("business_architecture/ontology/epm-walkthrough.html", r) == "ship"
     assert manifest.disposition("AGENTS.md", r) == "out"
     assert manifest.disposition("demos/downstream-pricing-databricks-free/pricing_demo/genie.py", r) == "ship"
