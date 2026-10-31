@@ -41,6 +41,29 @@ STORES = (*NEO4J_STORES, "databricks")
 MARKER_FIELDS = ("catalog_datasets", "catalog_digest", "input_fingerprint")
 
 
+def apply_store_overrides():
+    """EPM_STORES_JSON names other stores for a test run, so the test never points at the loaded ones (the share
+    release's validation): {"pipeline": {"bolt": ..., "env": [...]}, "driver": {...}, "aura": {"env": [...]},
+    "driver_reports": [...], "databricks_env": "..."}. Each key is optional."""
+    global DRIVER_REPORTS, DATABRICKS_ENV
+    raw = os.environ.get("EPM_STORES_JSON")
+    if not raw:
+        return
+    over = json.loads(raw)
+    for store in NEO4J_STORES:
+        if store in over:
+            bolt = over[store].get("bolt", NEO4J_STORES[store][0])
+            envs = tuple(over[store].get("env", NEO4J_STORES[store][1]))
+            NEO4J_STORES[store] = (bolt, envs)
+    if "driver_reports" in over:
+        DRIVER_REPORTS = tuple(over["driver_reports"])
+    if "databricks_env" in over:
+        DATABRICKS_ENV = over["databricks_env"]
+
+
+apply_store_overrides()
+
+
 # ---------- what a current store holds ----------
 
 def repo_file(path, ref=None):

@@ -148,3 +148,19 @@ class StoreTablesAgree(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
+
+
+class StoreOverrides(unittest.TestCase):
+    def test_the_env_json_replaces_only_what_it_names(self):
+        import importlib
+        os.environ["EPM_STORES_JSON"] = json.dumps({"pipeline": {"bolt": "bolt://127.0.0.1:17899", "env": ["/tmp/x.env"]},
+                                                    "driver_reports": ["/tmp/r.json"], "databricks_env": "/tmp/d.env"})
+        try:
+            mod = importlib.reload(ss)
+            self.assertEqual(mod.NEO4J_STORES["pipeline"], ("bolt://127.0.0.1:17899", ("/tmp/x.env",)))
+            self.assertEqual(mod.NEO4J_STORES["aura"], (None, ("~/.config/neo4j/aura.env",)))
+            self.assertEqual(mod.DRIVER_REPORTS, ("/tmp/r.json",))
+            self.assertEqual(mod.DATABRICKS_ENV, "/tmp/d.env")
+        finally:
+            del os.environ["EPM_STORES_JSON"]
+            importlib.reload(ss)

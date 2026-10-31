@@ -380,6 +380,21 @@ def graph_rows(g):
     return list(nodes.values()), edges
 
 
+def apply_store_overrides():
+    """EPM_STORES_JSON names other stores for a test run (as in projection/sync_stores.py): each of pipeline, driver and
+    aura may give {"bolt": ..., "env": [...]}."""
+    raw = os.environ.get("EPM_STORES_JSON")
+    if not raw:
+        return
+    over = json.loads(raw)
+    for store in list(STORES):
+        if store in over:
+            STORES[store] = (over[store].get("bolt", STORES[store][0]), tuple(over[store].get("env", STORES[store][1])))
+
+
+apply_store_overrides()
+
+
 def login_file(paths):
     """The newest of a store's login files that exists: the one its running container wrote."""
     found = [p for p in (os.path.expanduser(q) for q in paths) if os.path.exists(p)]
