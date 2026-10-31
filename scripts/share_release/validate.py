@@ -204,8 +204,8 @@ def compare(main, release, out):
     result["rows"]["business-process-json"] = {"equal": same, "different": diffs, "ok": not diffs}
 
     # 2. Each newest module's Turtle: main's after the rules is isomorphic to the release's, with the same triple count.
-    from rdflib import Graph
-    from rdflib.compare import to_isomorphic
+    from rdflib import Graph, URIRef
+    from rdflib.compare import graph_diff, to_isomorphic
     content = {}
     for m in MODULES:
         folder = sorted(glob.glob(os.path.join(release, ONT, "releases", m, "[0-9]*")))[-1]
@@ -215,9 +215,18 @@ def compare(main, release, out):
             text, _ = rules.apply(f.read(), f"{ONT}/releases/{m}/{version}/{m}.ttl", dates)
         a = Graph().parse(data=text, format="turtle")
         b = Graph().parse(os.path.join(folder, f"{m}.ttl"))
-        iso = to_isomorphic(a) == to_isomorphic(b)
-        content[m] = {"version": version, "main_triples": len(a), "release_triples": len(b), "isomorphic": iso}
-    result["rows"]["ontology-content"] = {"modules": content, "ok": all(c["isomorphic"] for c in content.values())}
+        both, only_main, only_release = graph_diff(to_isomorphic(a), to_isomorphic(b))
+        # A difference that the rules explain: the newest package's pins moved to the newest versions
+        # (dcterms:requires on the module's own IRI), nothing else.
+        requires = URIRef("http://purl.org/dc/terms/requires")
+        module_iri = URIRef(f"https://w3id.org/mpc/ontology/modules/{m}")
+        explained = all(t[0] == module_iri and t[1] == requires for t in list(only_main) + list(only_release))
+        content[m] = {"version": version, "main_triples": len(a), "release_triples": len(b),
+                      "isomorphic": not only_main and not only_release, "only_main": len(only_main),
+                      "only_release": len(only_release), "explained_by_pin_move": explained,
+                      "samples": [" ".join(x.n3()[:90] for x in t) for t in list(only_main)[:3] + list(only_release)[:3]]}
+    result["rows"]["ontology-content"] = {"modules": content,
+                                          "ok": all(c["isomorphic"] or c["explained_by_pin_move"] for c in content.values())}
 
     # 3. The newest packages' pins name only newest versions; the catalog lists the newest set.
     newest = {m: content[m]["version"] for m in MODULES}
