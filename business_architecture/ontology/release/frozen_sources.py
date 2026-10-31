@@ -18,6 +18,14 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
 FROZEN = os.path.join(HERE, "frozen")
 
 
+def package_dir(ontology, module, version):
+    """A released package's folder: releases/<module>/<version>/, or the share release's history folder
+    releases/previous/<module>/<version>/ when the package moved there (EPM-DEC-001-0110)."""
+    plain = os.path.join(ontology, "releases", module, version)
+    previous = os.path.join(ontology, "releases", "previous", module, version)
+    return previous if not os.path.isdir(plain) and os.path.isdir(previous) else plain
+
+
 def frozen_path(commit, path):
     return os.path.join(FROZEN, f"{commit[:12]}-{os.path.basename(path)}")
 

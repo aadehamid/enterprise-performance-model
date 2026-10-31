@@ -43,7 +43,7 @@ import frozen_sources
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.dirname(HERE)
 REPO = os.path.dirname(os.path.dirname(ONTOLOGY))
-BASE = os.path.join(ONTOLOGY, "releases", "core", "2.1.0")
+BASE = frozen_sources.package_dir(ONTOLOGY, "core", "2.1.0")
 SOURCE_PATH = "business_architecture/business_process/downstream_process_map.json"
 # The map as 2.0.0 and 2.1.0 were built from it, and the map as 2.2.0 is built from it: the merge of
 # #301, the last change to the map on main before this release. MPC-P10 is a proposal and not applied.
