@@ -2,7 +2,7 @@
 
 This page lists what each store held when it was last audited, what should not be in it, and the commands to check it yourself. `LOCAL-STORES.md` says where each store lives and how to refresh it, and `../../../demos/downstream-pricing-databricks-free/DATA.md` says how the demo's tables are generated. This page answers a different question: is the data in each store the latest, and is anything old left beside it?
 
-**Last audit: 2026-10-29, at main `0b5d6051`.** The audit itself was read-only; the leftovers it found were removed afterwards at the decision owner's word, as the Postgres and Docker sections say. `sync_stores.py check` read all four ontology stores as current, each marked at 2026-10-29T14:23:14Z from the release set at commit `4d1e675b`.
+**Last audit: 2026-10-29, at main `0b5d6051`.** The audit itself was read-only; the leftovers it found were removed afterwards at the decision owner's word, as the Postgres and Docker sections say. `sync_stores.py check` read all four ontology stores as current, each marked at 2026-10-29T14:23:14Z from the release set at commit `4d1e675b`. *2026-10-31:* the same check, run from main at `daf60fee`, read all four as current, with the same marks.
 
 ## Local Neo4j, from the pipeline (container `epm-lpg`)
 

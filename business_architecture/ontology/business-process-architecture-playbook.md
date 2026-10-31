@@ -1,6 +1,6 @@
 # Business Process Architecture Playbook — Downstream Process Definitions
 
-**Status:** Living document. Updated as each review batch completes; final update when Step 3c closes.
+**Status:** Step 3c closed on 2026-09-21 (§9). One item stays open: backfilling the log entries of batches 1 to 20.
 **Owner:** The decision owner
 **Started:** 2026-09-21 (covering work from 2026-09-17)
 
@@ -9,6 +9,8 @@
 The ontology playbook (since 2026-10-25 the `ontology` skill's guide, `skills/data/ontology/references/playbook.md` in personal-agent-skills, EPM-DEC-001-0101) records how the downstream process map becomes an ontology — the standards chosen and the build decisions. This playbook is its sibling: it records how the **process definitions themselves** were decided — the method that authored 477+ definitions across 39+ review batches, the durable architecture rules those batches locked, the ownership boundaries between functions, and the external sources that inform each part of the business process. Together the two playbooks make the whole business process architecture reproducible: the ontology playbook answers *how the structure was built*, this one answers *how the content was decided and why it can be trusted*.
 
 **How to maintain it:** when a review batch merges, append its entry to §5 (Batch log) and move any new durable rule into §6 (Decision log). After the final batch, regenerate the traceability appendix (§8) and record completion here. Never rewrite history — correct with dated amendments.
+
+*2026-10-31:* This playbook covers how the definitions were decided. For the process map and value streams themselves, the gaps found in them and how each was filled or why it stays open, read the [walkthrough](https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9), "The business, and how it is mapped" and "What was missing, and how it was filled". For what the ontology became, read `epm-ontology-guide.html`.
 
 **Companion files:**
 - `step3c-review-handoff.md` — the operational manual for running a review batch (the *how-to*; this document is the *what-and-why*)
