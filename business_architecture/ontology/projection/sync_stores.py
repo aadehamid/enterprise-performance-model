@@ -67,8 +67,9 @@ apply_store_overrides()
 # ---------- what a current store holds ----------
 
 def repo_file(path, ref=None):
-    """A file's text in the working tree, or at a git ref (main's newest catalog for the drift check)."""
-    if ref is None:
+    """A file's text in the working tree, or at a git ref (main's newest catalog for the drift check). The ref
+    `worktree` reads the tree itself, for a tree without Git such as the share release."""
+    if ref is None or ref == "worktree":
         return open(os.path.join(REPO, path)).read()
     return subprocess.run(["git", "-C", REPO, "show", f"{ref}:{path}"], check=True, capture_output=True, text=True).stdout
 
@@ -298,7 +299,7 @@ def sync(cloud, dry_run, ref, skills):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("command", choices=("expected", "mark", "check", "sync"))
-    ap.add_argument("--ref", default="origin/main", help="check, sync: the git ref whose catalog is newest (default origin/main)")
+    ap.add_argument("--ref", default="origin/main", help="check, sync: the git ref whose catalog is newest (default origin/main; worktree reads this tree)")
     ap.add_argument("--store", action="append", choices=STORES, help="mark: these stores")
     ap.add_argument("--cloud", action="store_true", help="sync: also reload AuraDB and Databricks (the full driver run)")
     ap.add_argument("--dry-run", action="store_true", help="sync: print the commands, run nothing")
