@@ -6,7 +6,7 @@ Reads the Step 3c workbook (Reference register + Review & authoring) and
 emits, for every registered source, the process areas and rows that cite it,
 alongside the source's permitted-use limits. Regenerate after every batch:
 
-    python3 business_architecture/ontology/build/scripts/step3c-source-traceability.py
+    uv run --with openpyxl python business_architecture/ontology/build/scripts/step3c-source-traceability.py
 
 Output: business_architecture/ontology/build/output/source-to-process-traceability.md
 Read-only over the workbook; deterministic; safe to re-run.
