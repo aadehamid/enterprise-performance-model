@@ -565,6 +565,7 @@ uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_
 <p>The load stops if a store's <code>:Resource</code> counts change, or if an edge to the ontology finds no node.</p>
 
 <h2 id="sync">Keeping the stores in step</h2>
+<p>The guide's "The plan to close it, not built yet" lists the work that would make these checks run by themselves (#455).</p>
 <p class="lead">Since 2026-10-29 each ontology store says which release set it was loaded from, so a new release shows which stores are behind. <code>sync_stores.py</code>, in the projection folder, does the checking and the reloading with the commands above.</p>
 <h3>What each store records</h3>
 <p>A marker with the catalog's datasets (their count and a digest of their IRIs, from <code>releases/catalog.ttl</code>), the projection's input fingerprint (from <code>projection-manifest.json</code>), the counts the store held when it was marked, the time and the commit. In the three Neo4j stores the marker is a node labelled <code>EpmStoreMarker</code>, never <code>Resource</code>, so the projection's counts, hash and round trip do not see it. In Databricks it is a row in <code>epm_store_markers</code>, beside <code>epm_triples</code>.</p>
