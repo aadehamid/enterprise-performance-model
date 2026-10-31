@@ -52,7 +52,7 @@ def sh(args, cwd, env=None, timeout=7200, input=None):
 
 def uv(args, cwd, extra=(), **kw):
     deps = ["--with", "rdflib", "--with", "pyshacl", "--with", "neo4j", "--with", "openpyxl", "--with", "jsonschema",
-            "--with", "pytest", "--with", "pytest-xdist", *extra]
+            "--with", "pytest", "--with", "pytest-xdist", "--with", "databricks-sql-connector", *extra]
     return sh(["uv", "run", "-q", "--no-project", *deps, "python3", *args], cwd, **kw)
 
 
@@ -339,7 +339,7 @@ def row_sync(tree, env):
     r = uv(["sync_stores.py", "check", *ref], proj, env=e); out["steps"].append(r)
     out["check_before"] = r["tail"][-800:]
     bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", test_password(env)
-    victim = cypher(bolt, pw, "MATCH (n:Resource) WHERE NOT (n)--() RETURN n.uri AS uri LIMIT 1")
+    victim = cypher(bolt, pw, "MATCH (n:Resource) WITH n ORDER BY n.uri LIMIT 1 RETURN n.uri AS uri")  # any one resource
     if victim:
         cypher(bolt, pw, f"MATCH (n:Resource {{uri: '{victim[0]['uri']}'}}) DETACH DELETE n")
         r = uv(["sync_stores.py", "check", *ref], proj, env=e); out["steps"].append(r)
