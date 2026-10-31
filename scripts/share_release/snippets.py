@@ -57,6 +57,9 @@ def kind_of(b):
     first2 = words[0] if words else first
     if b["lang"] in ("cypher",) or first2.upper() in ("MATCH", "CALL", "RETURN", "WITH", "UNWIND", "PROFILE", "EXPLAIN"):
         return "cypher"
+    body = "\n".join(l for l in b["text"].split("\n") if not l.strip().startswith("--"))
+    if first2.upper() == "SELECT" and (re.search(r"\bFROM\s+[a-z_]+\.[a-z_]+", body) or "MEASURE(" in body or "GROUP BY ALL" in body.upper()):
+        return "sql"  # Databricks SQL over a catalog table or a metric view
     if b["lang"] in ("sparql",) or first2.upper() in ("PREFIX", "SELECT", "ASK", "CONSTRUCT", "DESCRIBE"):
         return "sparql"
     if b["lang"] in ("bash", "sh", "shell", "console") or first2 in ("cd", "uv", "python3", "python", "docker", "./run_local.sh", "scripts/check.sh", "export", "set", "curl", "ls"):
@@ -92,15 +95,44 @@ def run_sparql(text, tree):
             folders = sorted(p for p in os.listdir(os.path.join(tree, ONT, "releases", m)) if p[0].isdigit())
             g.parse(os.path.join(tree, ONT, "releases", m, folders[-1], f"{m}.ttl"))
         _GRAPH["g"] = g
-    res = _GRAPH["g"].query(text)
+    query = "\n".join(l for l in text.split("\n") if not l.strip().startswith("#"))
+    res = _GRAPH["g"].query(query)
     return {"ran": True, "rows": len(list(res))}
 
 
-def run_shell(text, tree, env):
-    lines = [l.strip() for l in text.split("\n") if l.strip() and not l.strip().startswith("#")]
+ASSIGN = re.compile(r"^(?:export\s+)?([A-Z_][A-Z0-9_]*)=(\S*)$")
+
+
+def run_shell(text, tree, env, state=None):
+    """state carries the shell variables a document's earlier blocks set (PLUGINS=..., ROBOT=...), as a reader's
+    shell would; a block that opens with "# from <folder>" runs in that folder of the tree."""
+    state = state if state is not None else {}
+    variables = state.setdefault("vars", {})
+    raw = [l.strip() for l in text.split("\n") if l.strip()]
     cwd, results = tree, []
+    m = re.match(r"^#\s*from\s+(\S+)", raw[0]) if raw else None
+    if m:
+        target = os.path.normpath(os.path.join(tree, m.group(1).strip("`")))
+        if os.path.isdir(target):
+            cwd = target
+        else:
+            results.append({"line": raw[0], "ran": False, "reason": "folder not in the tree"})
+    lines = [l for l in raw if not l.startswith("#")]
     for line in lines:
         line = re.sub(r"\s+#.*$", "", line)
+        parts = [p.strip() for p in line.split(";")] if ";" in line and all(ASSIGN.match(p.strip()) or p.strip().startswith("mkdir ") for p in line.split(";")) else [line]
+        assigned = [ASSIGN.match(p) for p in parts]
+        if all(assigned) and parts:
+            for a in assigned:
+                variables[a.group(1)] = os.path.expanduser(os.path.expandvars(a.group(2).strip('"')))
+            results.append({"line": line, "ran": True, "set": [a.group(1) for a in assigned]})
+            continue
+        if any(a for a in assigned):  # assignments beside a mkdir: keep the variables, run nothing
+            for a in assigned:
+                if a:
+                    variables[a.group(1)] = os.path.expanduser(os.path.expandvars(a.group(2).strip('"')))
+            results.append({"line": line, "ran": False, "reason": "sets the reader's variables and makes folders"})
+            continue
         if line.startswith("cd "):
             target = os.path.normpath(os.path.join(cwd, os.path.expanduser(line[3:].strip().strip('"'))))
             if os.path.isdir(target):
@@ -113,6 +145,11 @@ def run_shell(text, tree, env):
             continue
         e = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
         e.update({"EPM_SHARE_RELEASE": "1"} if os.path.exists(os.path.join(tree, "KNOWN-OPEN-ITEMS.md")) else {})
+        e.update(variables)
+        unset = [v for v in re.findall(r"\$\{?([A-Z_][A-Z0-9_]*)\}?", line) if v not in e]
+        if unset:
+            results.append({"line": line, "ran": False, "reason": f"uses a variable no earlier block set: {', '.join(unset)}"})
+            continue
         try:
             r = subprocess.run(["bash", "-lc", line], cwd=cwd, env=e, capture_output=True, text=True, timeout=900)
             results.append({"line": line, "ran": True, "returncode": r.returncode, "tail": (r.stdout + r.stderr)[-300:]})
@@ -132,6 +169,7 @@ def main(argv=None):
         path = os.path.join(tree, rel)
         if not os.path.exists(path):
             continue
+        state = {}  # the shell variables this document's blocks set, in order
         for b in blocks_of(path, rel):
             kind = kind_of(b)
             entry = {"file": b["file"], "line": b["line"], "kind": kind, "first": b["text"].split("\n")[0][:100]}
@@ -141,7 +179,7 @@ def main(argv=None):
                 elif kind == "sparql":
                     entry.update(run_sparql(b["text"], tree))
                 elif kind == "shell":
-                    entry.update(run_shell(b["text"], tree, env))
+                    entry.update(run_shell(b["text"], tree, env, state))
                 else:
                     entry.update({"ran": False, "reason": {"turtle": "an example shown, not a command", "sql": "Databricks SQL; the demo's build runs it in the test catalog",
                                                            "text": "text, not a command", "cypher": "no test Neo4j in --env"}.get(kind, "not a command")})
