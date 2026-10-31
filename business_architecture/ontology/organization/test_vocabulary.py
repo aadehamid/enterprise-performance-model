@@ -12,6 +12,16 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS, XSD
 
+def released_path(module, version, fname=""):
+    """A released package's folder or file, in releases/<module>/<version>/ or, in the share release, in its
+    history folder releases/previous/<module>/<version>/; None when neither exists (the package did not ship)."""
+    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "releases")
+    for folder in (os.path.join(base, module, version), os.path.join(base, "previous", module, version)):
+        if os.path.isdir(folder):
+            return os.path.join(folder, fname) if fname else folder
+    return None
+
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
 RACI = Namespace("https://w3id.org/lsc/ontology/modules/organization/raci-level/")
@@ -160,8 +170,8 @@ class Vocabulary(unittest.TestCase):
         # label and loses its old preferred label; three editorial notes change; nothing else differs.
         releases = os.path.join(HERE, "..", "releases", "organization")
         header = URIRef("https://w3id.org/lsc/ontology/modules/organization")
-        old = Graph().parse(os.path.join(releases, "2.1.0", "organization.ttl"))
-        new = Graph().parse(os.path.join(releases, "2.2.0", "organization.ttl"))
+        old = Graph().parse(released_path("organization", "2.1.0", "organization.ttl"))
+        new = Graph().parse(released_path("organization", "2.2.0", "organization.ttl"))
         role = "https://w3id.org/lsc/ontology/modules/organization/role/"
         added = {(s, p, o) for s, p, o in new - old if s != header}
         removed = {(s, p, o) for s, p, o in old - new if s != header}

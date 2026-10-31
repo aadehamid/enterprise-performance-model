@@ -164,6 +164,8 @@ class EarlierReleases(unittest.TestCase):
         # must still match its own manifest.
         for name in ("organization", "ref-mpc", "kpi", "value-stream", "data-product", "party", "integration"):
             out = os.path.join(bm.ONTOLOGY, "releases", name, "1.0.0")
+            if not os.path.isdir(out):
+                self.skipTest("the 1.0.0 packages did not ship (the share release holds the newest and previous packages only)")
             with open(os.path.join(out, "manifest.json")) as f:
                 manifest = json.load(f)
             self.assertEqual(manifest["version"], "1.0.0")
@@ -187,6 +189,12 @@ class EarlierReleases(unittest.TestCase):
             self.assertFalse(set(outside) & set(released), path)
 
     def test_the_new_releases_require_the_current_ones(self):
+        if bm.SHARE_RELEASE:
+            # The share release rebuilds every newest package against the newest versions (EPM-DEC-001-0110).
+            for name in bm.MODULES:
+                for dep, version in bm.dependencies(name).items():
+                    self.assertEqual(version, bm.newest_on_disk("core") if dep == "core" else bm.label(bm.MODULES[dep]), (name, dep))
+            return
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.1.0", "party": "2.0.0"})  # 2.0.0 and 1.0.0 in 1.2.0 (0080); 1.3.0 (0108)
         self.assertEqual(bm.dependencies("organization"), {"core": "2.3.0"})  # 2.1.0 in 2.0.0; 2.3.0 since 2.1.0 (0106)
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0; 1.2.0 too

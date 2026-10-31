@@ -16,6 +16,16 @@ from rdflib.namespace import DCTERMS, OWL, RDF
 import build_assignments as ba
 import build_roles as br
 
+def released_path(module, version, fname=""):
+    """A released package's folder or file, in releases/<module>/<version>/ or, in the share release, in its
+    history folder releases/previous/<module>/<version>/; None when neither exists (the package did not ship)."""
+    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "releases")
+    for folder in (os.path.join(base, module, version), os.path.join(base, "previous", module, version)):
+        if os.path.isdir(folder):
+            return os.path.join(folder, fname) if fname else folder
+    return None
+
+
 ENTRIES, REGISTER, GRAPH = ba.build()
 ROLES_OF = {r["source_text"]: r["roles"].split(";") for r in REGISTER}
 # Organization 2.0.0 (EPM-DEC-001-0045): a deprecated role hands its assignments to its successor.
@@ -113,6 +123,10 @@ class RoleMerges(unittest.TestCase):
             ba.shacl(g)
 
     def test_the_merges_keep_every_released_iri(self):
+
+        if not (os.path.exists(self.RELEASED)):
+
+            self.skipTest('organization 1.0.0 is not here (the share release ships the newest and previous packages only)')
         # The same assignment IRIs as 1.0.0, and every 1.0.0 role still present.
         released = Graph().parse(self.RELEASED)
         self.assertEqual(set(GRAPH.subjects(RDF.type, O.ResponsibilityAssignment)),
@@ -121,6 +135,10 @@ class RoleMerges(unittest.TestCase):
         self.assertEqual(set(released.subjects(RDF.type, br.ORG.Role)), set(roles.subjects(RDF.type, br.ORG.Role)))
 
     def test_a_deprecated_role_keeps_its_triples_and_names_its_successor(self):
+
+        if not (os.path.exists(self.RELEASED)):
+
+            self.skipTest('organization 1.0.0 is not here (the share release ships the newest and previous packages only)')
         released = Graph().parse(self.RELEASED)
         roles = Graph().parse(br.OUTPUT)
         for slug, successor in ((s, r) for s, r in LIVE.items() if r != s):
@@ -130,6 +148,10 @@ class RoleMerges(unittest.TestCase):
                 self.assertEqual(roles.value(br.ROLE[slug], DCTERMS.isReplacedBy), br.ROLE[successor])
 
     def test_exactly_the_three_moved_assignments_changed_role(self):
+
+        if not (os.path.exists(self.RELEASED)):
+
+            self.skipTest('organization 1.0.0 is not here (the share release ships the newest and previous packages only)')
         released = Graph().parse(self.RELEASED)
         moved = {a for a in GRAPH.subjects(RDF.type, O.ResponsibilityAssignment)
                  if GRAPH.value(a, O.assignedRole) != released.value(a, O.assignedRole)}

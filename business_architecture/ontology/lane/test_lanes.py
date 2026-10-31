@@ -13,6 +13,16 @@ from pyshacl import validate
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, SKOS, XSD
 
+def released_path(module, version, fname=""):
+    """A released package's folder or file, in releases/<module>/<version>/ or, in the share release, in its
+    history folder releases/previous/<module>/<version>/; None when neither exists (the package did not ship)."""
+    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "releases")
+    for folder in (os.path.join(base, module, version), os.path.join(base, "previous", module, version)):
+        if os.path.isdir(folder):
+            return os.path.join(folder, fname) if fname else folder
+    return None
+
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import build_lanes as bl  # noqa: E402
@@ -57,8 +67,8 @@ class Build(unittest.TestCase):
         # subject of 1.1.0, and nothing is newly deprecated (EPM-DEC-001-0106).
         releases = os.path.join(HERE, "..", "releases", "lane")
         header = URIRef("https://w3id.org/lsc/ontology/modules/lane")
-        old = Graph().parse(os.path.join(releases, "1.0.0", "lane.ttl"))
-        new = Graph().parse(os.path.join(releases, "1.1.0", "lane.ttl"))
+        old = Graph().parse(released_path("lane", "1.0.0", "lane.ttl"))
+        new = Graph().parse(released_path("lane", "1.1.0", "lane.ttl"))
         self.assertEqual({s for s in old.subjects() if s != header} - set(new.subjects()), set())
         deprecated = URIRef("http://www.w3.org/2002/07/owl#deprecated")
         self.assertEqual(set(new.subjects(deprecated, None)), set(old.subjects(deprecated, None)))

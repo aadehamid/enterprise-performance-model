@@ -110,8 +110,9 @@ class Markers(unittest.TestCase):
         self.assertIn("raise SystemExit", inspect.getsource(ss.databricks_checked))
 
 
+@unittest.skipUnless(os.path.exists(WORKFLOW), "no workflow file here (the share release ships no GitHub workflow)")
 class Workflow(unittest.TestCase):
-    text = open(WORKFLOW).read()
+    text = open(WORKFLOW).read() if os.path.exists(WORKFLOW) else ""
 
     def test_it_runs_on_every_release_tag(self):
         self.assertIn("tags: ['*-v*']", self.text)

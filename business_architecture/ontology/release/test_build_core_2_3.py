@@ -15,6 +15,8 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF, SKOS, XSD
 
 import build_core_2_3 as b
+if not os.path.isdir(getattr(b, "RELEASE_DIR", "") or getattr(b, "OUT", "")):  # noqa: E402
+    raise unittest.SkipTest("this core package did not ship (the share release holds the newest and previous packages only)")
 
 G, COUNTS = b.build()
 BASE = Graph().parse(os.path.join(b.BASE, "core.ttl"))

@@ -13,6 +13,10 @@ from rdflib.namespace import RDF, SH, SKOS
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build  # noqa: E402
 
+# The build checks the governed table against the Step 4 review evidence, which the share release does not carry.
+pytestmark = pytest.mark.skipif(not os.path.exists(build.REVIEWS[0]),
+                                reason="the Step 4 review evidence is not here (the share release leaves the Step 4 gate out)")
+
 CORE = rdflib.Namespace(build.CORE)
 PROC = rdflib.Namespace(build.PROC)
 

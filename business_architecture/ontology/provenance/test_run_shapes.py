@@ -11,7 +11,16 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, PROV, RDF, SH, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CORE = Graph().parse(os.path.join(HERE, "..", "releases", "core", "1.0.0", "core.ttl"))
+def core_package():
+    """core 1.0.0 on main; in the share release, which holds the newest and previous packages only, the newest core."""
+    base = os.path.join(HERE, "..", "releases", "core")
+    if os.path.isdir(os.path.join(base, "1.0.0")):
+        return os.path.join(base, "1.0.0", "core.ttl")
+    newest = max((v for v in os.listdir(base) if v[0].isdigit()), key=lambda v: tuple(int(x) for x in v.split(".")))
+    return os.path.join(base, newest, "core.ttl")
+
+
+CORE = Graph().parse(core_package())
 SHAPES = Graph().parse(os.path.join(HERE, "run-shapes.ttl"))
 EXAMPLE = Graph().parse(os.path.join(HERE, "example-run.ttl"))
 EX = Namespace("https://example.org/consumer/")

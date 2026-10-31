@@ -14,6 +14,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 
 from pyshacl import validate
@@ -293,10 +294,19 @@ def dependencies(name):
     return {d: pins.get(d) or released.get(d) or label(MODULES[d]) for d in MODULES[name]["depends_on"]}
 
 
+def resolve(path):
+    """A path under releases/<module>/<version>/ names the newest package instead in release mode, where the
+    pinned version may not have shipped (the share release moves pins to the newest set)."""
+    m = re.match(r"releases/([a-z-]+)/(\d+\.\d+\.\d+)/(.*)", path)
+    if SHARE_RELEASE and m and m.group(1) in MODULES:
+        return f"releases/{m.group(1)}/{label(MODULES[m.group(1)])}/{m.group(3)}"
+    return path
+
+
 def parse(paths):
     g = Graph()
     for p in paths:
-        g.parse(os.path.join(ONTOLOGY, p))
+        g.parse(os.path.join(ONTOLOGY, resolve(p)))
     return g
 
 
