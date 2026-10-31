@@ -712,7 +712,8 @@ RETURN m.skos__prefLabel AS measure,
 <h2 id="questions">The competency questions</h2>
 <p class="lead">These 44 questions are the ontology's acceptance test: if the model cannot answer one, the model is incomplete, and not the question. The decision owner locked them on 2026-09-18, before modelling. 43 are answerable today, and one, question 17 (who owns each concept's meaning), is parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).</p>
 <p>Each answerable question has queries in <code>regression/queries/</code>, and <code>scripts/check.sh</code> runs them on every push. To ask one yourself, run this from <code>business_architecture/ontology/regression</code>:</p>
-<pre><code>uv run --with rdflib python ask.py                   # list the 66 queries, each named for its question
+<pre><code># from business_architecture/ontology/regression
+uv run --with rdflib python ask.py                   # list the 66 queries, each named for its question
 uv run --with rdflib python ask.py q36-the-crack     # ask one</code></pre>
 <h3>I. Process structure &amp; navigation</h3>
 <div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
