@@ -269,6 +269,16 @@ MODULES = {
 
 
 RELEASED = {"core": "1.0.0"}  # released modules this builder does not build
+# The share release rebuilds every newest package so that it names only the newest versions (EPM-DEC-001-0110,
+# "All links go through the latest release"). With EPM_SHARE_RELEASE set, a module's pins are ignored and core is
+# its newest package on disk; on main nothing changes.
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE"))
+
+
+def newest_on_disk(module):
+    folder = os.path.join(ONTOLOGY, "releases", module)
+    versions = [v for v in os.listdir(folder) if v[0].isdigit() and os.path.isfile(os.path.join(folder, v, "manifest.json"))]
+    return max(versions, key=lambda v: tuple(int(x) for x in v.split(".")))
 
 
 def label(m):
@@ -278,8 +288,9 @@ def label(m):
 def dependencies(name):
     """Each dependency with the version this package is built against: a released version, or the
     dependency's own current candidate, so a candidate never names a release that does not exist."""
-    pins = MODULES[name].get("pins", {})
-    return {d: pins.get(d) or RELEASED.get(d) or label(MODULES[d]) for d in MODULES[name]["depends_on"]}
+    pins = {} if SHARE_RELEASE else MODULES[name].get("pins", {})
+    released = {"core": newest_on_disk("core")} if SHARE_RELEASE else RELEASED
+    return {d: pins.get(d) or released.get(d) or label(MODULES[d]) for d in MODULES[name]["depends_on"]}
 
 
 def parse(paths):

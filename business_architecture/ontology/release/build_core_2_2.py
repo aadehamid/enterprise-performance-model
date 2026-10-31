@@ -38,6 +38,7 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF, SKOS, XSD
 
 import build_core_2_1 as prev
+import frozen_sources
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.dirname(HERE)
@@ -109,7 +110,7 @@ def en(text):
 
 def map_nodes(commit):
     """slug -> (node fields without children, parent slug), from the map at a commit."""
-    data = json.loads(subprocess.check_output(["git", "show", f"{commit}:{SOURCE_PATH}"], cwd=REPO))
+    data = json.loads(frozen_sources.read(commit, SOURCE_PATH, REPO))  # the frozen copy if there is one, else Git
     out = {}
 
     def walk(node, parent):

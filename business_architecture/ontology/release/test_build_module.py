@@ -74,6 +74,10 @@ def approval_holds(name, m):
     path, words = m["approval"]
     if (path, words) != APPROVALS[name]:
         return False
+    if not os.path.exists(os.path.join(bm.ONTOLOGY, path)):
+        # The share release carries no answers folder: its builders name the review comments of a subject matter
+        # expert instead of a file, and the words still travel with the package (EPM-DEC-001-0110).
+        return "subject matter expert" in path
     with open(os.path.join(bm.ONTOLOGY, path)) as f:
         # The decision owner's words sit in the body; Claude's context sits in HTML comments.
         body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)

@@ -146,6 +146,8 @@ class Build(unittest.TestCase):
         newest = {}
         for d in glob.glob(os.path.join(pl.ONTOLOGY, "releases", "*", "*", "")):
             module, version = d.rstrip(os.sep).split(os.sep)[-2:]
+            if module == "previous":
+                continue  # the share release keeps each module's previous package here; nothing loads it
             if module not in newest or tuple(map(int, version.split("."))) > tuple(map(int, newest[module].split("."))):
                 newest[module] = version
         self.assertEqual(dict(pl.PACKAGES), newest)
