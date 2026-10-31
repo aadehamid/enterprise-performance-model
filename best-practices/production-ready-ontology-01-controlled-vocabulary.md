@@ -336,7 +336,7 @@ SELECT term_id, preferred_label FROM workspace.o2c_unbilled.cv_lookup('CONS-4412
 SELECT local_system, field, local_key, term_id, map_ok, note
 FROM workspace.o2c_unbilled.cv_map
 ORDER BY local_system, field, local_key;
--- 19 rows; warehouse 1000123 has no term_id
+-- 22 rows; warehouse 1000123 has no term_id
 
 SELECT payer, MEASURE(unbilled_usd), MEASURE(unbilled_ticket_count)
 FROM workspace.o2c_unbilled.unbilled_usd

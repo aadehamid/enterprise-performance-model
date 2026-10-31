@@ -10,7 +10,7 @@ The ontology playbook (since 2026-10-25 the `ontology` skill's guide, `skills/da
 
 **How to maintain it:** when a review batch merges, append its entry to §5 (Batch log) and move any new durable rule into §6 (Decision log). After the final batch, regenerate the traceability appendix (§8) and record completion here. Never rewrite history — correct with dated amendments.
 
-*2026-10-31:* This playbook covers how the definitions were decided. For the process map and value streams themselves, the gaps found in them and how each was filled or why it stays open, read the [walkthrough](https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9), "The business, and how it is mapped" and "What was missing, and how it was filled". For what the ontology became, read `epm-ontology-guide.html`.
+*2026-10-31:* This playbook covers how the definitions were decided. For the process map and value streams themselves, the gaps found in them and how each was filled or why it stays open, read the walkthrough (`epm-walkthrough.html`), "The business, and how it is mapped" and "What was missing, and how it was filled". For what the ontology became, read `epm-ontology-guide.html`.
 
 **Companion files:**
 - `step3c-review-handoff.md` — the operational manual for running a review batch (the *how-to*; this document is the *what-and-why*)
@@ -148,7 +148,7 @@ These rules were locked by explicit review decisions and govern all content, pre
 The complete mapping of **every registered external source → the process areas and rows it informs**, with each source's permitted-use limits, is generated from the workbook itself so it can never drift:
 
 ```
-python3 business_architecture/ontology/build/scripts/step3c-source-traceability.py
+uv run --with openpyxl python business_architecture/ontology/build/scripts/step3c-source-traceability.py
 ```
 
 Output: [`build/output/source-to-process-traceability.md`](build/output/source-to-process-traceability.md). Regenerate after every batch and at completion. As of 2026-09-21 it maps 46 cited sources across 462 citing rows (4 registered sources currently uncited from workbook rows, retained as earlier-step evidence; zero citations without a register entry).

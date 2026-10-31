@@ -122,6 +122,8 @@ def pages():
                "from its release."),
         single(f"{ONT}/competency-questions.md",
                "The questions the ontology must answer, which decide what it holds."),
+        single(f"{ONT}/OPEN-ITEMS.md",
+               "What stays open on the ontology, who answers each item, and the record that holds it."),
         single(f"{ONT}/business-closeout.md",
                "The points about the ontology that only the business can settle, and the record each answer goes to."),
         single(f"{ONT}/release/CHANGELOG.md",

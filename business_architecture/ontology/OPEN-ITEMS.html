@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="scripts/build_docs_html.py">
+<title>What is open on the ontology</title>
+<style>
+/* Style: framed-sheet (tasteskill app sheet), screen "report", the same tokens as the stores runbook and the
+   ontology guide so the documents read as one set. Face: the frame tinted blue-grey, the accent teal on
+   links and the current contents entry. Generated from Markdown by scripts/build_docs_html.py: change the
+   Markdown or the template, never a generated page. */
+:root {
+  --ground: #f1f4f6;  --surface: #ffffff;  --raised: #f4f6f8;  --active: #ebedee;
+  --border: #e3e6e9;  --rule: #eef0f2;     --control: #cdced1;
+  --text: #131416;    --muted: #5d5f60;    --faint: #66686a;
+  --accent: #1b6c80;  --accent-soft: #e5f0f3;
+  --notice-bg: #fffbeb; --notice-line: #fde68a; --notice-ink: #92400e;
+  --code-bg: #f4f6f8;
+  --radius-card: 8px; --radius-control: 6px; --radius-sheet: 16px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fs-title: 24px; --fs-section: 19px; --fs-sub: 16px; --fs-body: 15.5px; --fs-small: 12.5px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0b0c0d; --surface: #141516; --raised: #1b1c1e; --active: #242628;
+    --border: #2a2c2f; --rule: #222426; --control: #44474b;
+    --text: #f2f3f3; --muted: #b4b6b8; --faint: #9a9c9e;
+    --accent: #5fb3c7; --accent-soft: #15292e;
+    --notice-bg: #261d0c; --notice-line: #3b2e14; --notice-ink: #f2cf94;
+    --code-bg: #1b1c1e;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--text); font: var(--fs-body)/1.65 var(--font); }
+.bar { height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 20px; border-bottom: 1px solid var(--border); background: var(--ground); position: sticky; top: 0; z-index: 3; }
+.bar .name { font-weight: 600; font-size: 14px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .scope { color: var(--muted); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar nav { margin-left: auto; display: flex; gap: 16px; }
+.bar nav a { color: var(--muted); font-size: 13.5px; text-decoration: none; white-space: nowrap; }
+.bar nav a:hover { color: var(--text); }
+
+.sheet { max-width: 1136px; margin: 24px auto 40px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sheet); padding: 32px 24px 56px; }
+.head { max-width: 1088px; margin: 0 auto; }
+h1 { font-size: var(--fs-title); font-weight: 600; margin: 0; line-height: 1.25; letter-spacing: -.01em; }
+.lead { color: var(--text); font-size: 16px; margin: 8px 0 0; max-width: 76ch; }
+.from-line { color: var(--muted); font-size: var(--fs-small); margin: 8px 0 0; max-width: 100ch; }
+.notice { margin: 18px 0 0; background: var(--notice-bg); border: 1px solid var(--notice-line); color: var(--notice-ink); border-radius: var(--radius-control); padding: 8px 12px; font-size: 13px; max-width: 1088px; }
+.notice code { background: transparent; color: inherit; }
+
+/* contents rail and the text: 248 + 32 + 808 = 1088 */
+.layout { max-width: 1088px; margin: 28px auto 0; display: grid; grid-template-columns: 248px minmax(0, 1fr); gap: 32px; align-items: start; }
+.toc { position: sticky; top: 72px; max-height: calc(100vh - 96px); overflow-y: auto; font-size: 13.5px; padding-right: 4px; }
+.toc p { margin: 0 0 8px; font-weight: 600; font-size: 13.5px; }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li a { display: block; color: var(--muted); text-decoration: none; padding: 4px 8px; border-radius: var(--radius-control); line-height: 1.4; }
+.toc li.l3 a { padding-left: 20px; font-size: 13px; }
+.toc li a:hover { color: var(--text); background: var(--raised); }
+.toc li a.on { color: var(--text); background: var(--accent-soft); }
+article { min-width: 0; }
+
+h2, h3, h4, h5, h6 { scroll-margin-top: 64px; line-height: 1.35; position: relative; }
+h2 { font-size: var(--fs-section); font-weight: 600; margin: 44px 0 8px; }
+article > h2:first-child, section.src:first-child > h2 { margin-top: 0; }
+h3 { font-size: var(--fs-sub); font-weight: 600; margin: 32px 0 6px; }
+h4, h5, h6 { font-size: 15px; font-weight: 600; margin: 24px 0 4px; }
+.hl { margin-left: 8px; color: var(--faint); text-decoration: none; font-weight: 400; opacity: 0; }
+h2:hover .hl, h3:hover .hl, h4:hover .hl, .hl:focus { opacity: 1; }
+section.src { padding-top: 8px; }
+section.src + section.src { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+.from { color: var(--muted); font-size: var(--fs-small); margin: 0 0 14px; }
+p, li { max-width: 76ch; }
+p { margin: 10px 0; }
+ul, ol { padding-left: 24px; margin: 10px 0; }
+li { margin: 5px 0; }
+li > ul, li > ol { margin: 4px 0; }
+a { color: var(--accent); overflow-wrap: anywhere; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+strong { font-weight: 600; }
+code { font: 13.5px var(--mono); background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { position: relative; background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 14px 16px; overflow-x: auto; margin: 12px 0 16px; max-width: 100%; }
+pre code { background: none; padding: 0; font-size: 13px; line-height: 1.6; white-space: pre; overflow-wrap: normal; }
+.copy { position: absolute; top: 8px; right: 8px; font: 12px var(--font); background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-control); padding: 3px 8px; cursor: pointer; }
+.copy:hover { color: var(--text); }
+.tblwrap { overflow-x: auto; margin: 14px 0 12px; border: 1px solid var(--border); border-radius: var(--radius-card); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th.num, td.num { text-align: right; }
+th { text-align: left; font-weight: 600; font-size: 13px; color: var(--muted); padding: 9px 12px; border-bottom: 1px solid var(--border); background: var(--raised); vertical-align: bottom; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td p { margin: 0; }
+tr:last-child td { border-bottom: 0; }
+td code, th code { font-size: 12.5px; }
+td:first-child code { white-space: nowrap; overflow-wrap: normal; }
+blockquote { margin: 12px 0; padding: 4px 0 4px 16px; border-left: 3px solid var(--control); color: var(--text); }
+blockquote p { margin: 6px 0; }
+del { color: var(--muted); }
+section.rec { padding-top: 8px; }
+section.rec + section.rec { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
+table.index td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.toc li.l3 a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+figure.pic { margin: 16px 0 20px; }
+figure.pic img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius-card); background: #ffffff; }
+figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
+.end { color: var(--muted); font-size: var(--fs-small); margin-top: 48px; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+@media (max-width: 960px) {
+  .sheet { margin: 0; border-radius: 0; border-width: 0; padding: 20px 16px 40px; }
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 20px; }
+  .toc { position: static; max-height: none; border: 1px solid var(--border); border-radius: var(--radius-card); padding: 4px 8px; }
+  .toc details summary { cursor: pointer; font-weight: 600; padding: 8px 4px; list-style-position: inside; }
+  .toc ul { padding-bottom: 8px; }
+  .toc details > p { display: none; }
+}
+@media (min-width: 961px) {
+  .toc details > summary { display: none; }
+}
+@media (max-width: 640px) {
+  pre { padding-top: 40px; }
+  /* The records index stacks on a phone: number and decision on one line, status and date under it. */
+  table.index thead { display: none; }
+  table.index tr { display: grid; grid-template-columns: 52px minmax(0, 1fr); border-bottom: 1px solid var(--rule); padding: 8px 0; }
+  table.index td { border: 0; padding: 0 10px; }
+  table.index td:nth-child(3), table.index td:nth-child(4) { grid-column: 2; color: var(--muted); font-size: 13px; text-align: left; white-space: normal; }
+  table.index td:first-child { grid-row: span 3; }
+  .bar .scope { display: none; }
+  .bar nav { gap: 12px; flex: none; }
+  /* A file name in a table's first column wraps on a phone, so the text beside it keeps its width. */
+  td:first-child { min-width: 9em; }
+  td:first-child code { white-space: normal; overflow-wrap: anywhere; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body id="top">
+<header class="bar">
+  <span class="name">What is open on the ontology</span>
+  <span class="scope">EPM ontology</span>
+  <nav aria-label="Documents">
+    <a href="epm-ontology-guide.html">Ontology guide</a>
+    <a href="../domain/decisions/decisions.html">Decisions</a>
+    <a href="#top">Top</a>
+  </nav>
+</header>
+<div class="sheet">
+  <div class="head">
+    <h1>What is open on the ontology</h1>
+    <p class="lead">What stays open on the ontology, who answers each item, and the record that holds it.</p>
+    <p class="from-line">Built from <code>OPEN-ITEMS.md</code>.</p>
+  </div>
+  <p class="notice">This page is generated from the Markdown beside it, which is the master copy. A change goes into the Markdown first; then <code>python3 scripts/build_docs_html.py</code> rebuilds this page.</p>
+  <div class="layout">
+    <nav class="toc" aria-label="Contents">
+      <details open>
+        <summary>Contents</summary>
+        <p>Contents</p>
+        <ul>
+<li class="l2"><a href="#decisions-for-the-decision-owner">Decisions for the decision owner</a></li>
+<li class="l2"><a href="#what-we-need-from-the-business">What we need from the business</a></li>
+<li class="l2"><a href="#gaps-the-process-map-and-value-streams-still-record">Gaps the process map and value streams still record</a></li>
+<li class="l2"><a href="#work-we-can-do-without-the-business">Work we can do without the business</a></li>
+<li class="l2"><a href="#parked-each-until-its-trigger">Parked, each until its trigger</a></li>
+        </ul>
+      </details>
+    </nav>
+    <article>
+<p>The ontology is done (<a href="../domain/decisions/decisions.html#EPM-DEC-001-0107">EPM-DEC-001-0107</a>), and this page lists what stays open on it. Each row points to the record that holds the detail; where they differ, the record wins. It leaves out the pricing demo's work and the repository's own tooling. Last checked on 2026-10-31.</p>
+<h2 id="decisions-for-the-decision-owner">Decisions for the decision owner<a class="hl" href="#decisions-for-the-decision-owner" aria-label="Link to this section">#</a></h2>
+<div class="tblwrap"><table><thead><tr><th>Item</th><th>What is needed</th><th>Record</th></tr></thead><tbody><tr><td>Turning on the release-tag store sync</td><td>Add its seven repository secrets, or keep syncing by hand</td><td>#426</td></tr></tbody></table></div>
+<h2 id="what-we-need-from-the-business">What we need from the business<a class="hl" href="#what-we-need-from-the-business" aria-label="Link to this section">#</a></h2>
+<p>Each answer goes into the named record and that module's next release. <code>business-closeout.md</code> gives the full wording of each point.</p>
+<div class="tblwrap"><table><thead><tr><th class="num">Point</th><th>What the business needs to say</th><th>Who</th><th>Module</th></tr></thead><tbody><tr><td class="num">1</td><td>Who owns the meaning of each module or concept scheme, who stewards its data and who keeps its systems (competency question 17; stays with the decision owner, who convenes the business leads)</td><td>Business leads per domain</td><td><code>organization</code></td></tr><tr><td class="num">2</td><td>Confirm the Risk Group's mandate for Market Data, or name the accountable group (stays with the decision owner)</td><td>The Risk Group, or whoever sets its mandate</td><td><code>market-data</code></td></tr><tr><td class="num">5</td><td>Confirm the PIDX family letters with PIDX, or give the PIDX codes MPC trades</td><td>Commercial product owners, with PIDX</td><td><code>party</code></td></tr><tr><td class="num">6</td><td>Whether the Forecaster in the backcasting activities is the Local Refinery Forecaster; merging them is a major release</td><td>The refinery Economics and Planning process owner</td><td><code>organization</code></td></tr><tr><td class="num">9</td><td>Confirm or replace three working role definitions</td><td>The managers of those roles</td><td><code>organization</code></td></tr><tr><td class="num">10</td><td>What is in and out for each of 33 measures, in business words</td><td>Each measure's owner</td><td><code>kpi</code></td></tr><tr><td class="num">11</td><td>What Federal Health is, and what MPC sends each of Drop Tank, GasBuddy, DTN and Federal Health</td><td>The customer-data owner</td><td><code>party</code></td></tr><tr><td class="num">12</td><td>What TopDay and VALT do</td><td>Their owners</td><td><code>system</code></td></tr><tr><td class="num">13</td><td>Fuller descriptions of CargoTracker and Allocation Manager, and whether Allocation Manager also allocates product</td><td>Their owners</td><td><code>system</code>, <code>party</code></td></tr><tr><td class="num">14</td><td>Which Oracle Hyperion product and which Quorum product</td><td>The owners of the backcast's actual-data steps; the customer</td><td><code>system</code>, <code>party</code></td></tr><tr><td class="num">15</td><td>Polaris's vendor and what it does</td><td>Marathon Pipeline LLC's scheduling owners</td><td><code>party</code></td></tr><tr><td class="num">16</td><td>Confirm or correct the descriptions drafted for the internal systems</td><td>Each system's owner</td><td><code>system</code>, <code>party</code></td></tr><tr><td class="num">17</td><td>Whether Dealer Master's billing customer number is the SAP customer number, maps to it, or is separate</td><td>Dealer Master's owners</td><td><code>party</code></td></tr><tr><td class="num">18</td><td>Whether Dealer Master's fuel volumes reach the Enterprise Data Lake, and by which flow</td><td>Dealer Master's owners, with the Enterprise Data Lake's owners</td><td><code>party</code></td></tr></tbody></table></div>
+<p>These also wait on the business, and their changelogs hold the detail:</p>
+<div class="tblwrap"><table><thead><tr><th>Module</th><th>What is needed</th><th>Record</th></tr></thead><tbody><tr><td><code>kpi</code></td><td>The full list of Additional Market Prices; a silver source for the crack spread's KPI ID</td><td><code>kpi</code> 1.2.0 changelog</td></tr><tr><td><code>market-data</code></td><td>Definitions for the unnamed series; source wording for the 40 market prices; the legs of four series</td><td><code>market-data</code> 1.1.0 changelog</td></tr><tr><td><code>data-product</code></td><td>The benchmark view's scaling and 160-day window, KPI ID lineage, joins read from code, lineage reach, production names and fresh data</td><td><code>data-product</code> 1.2.0 changelog</td></tr><tr><td><code>data-product</code></td><td>Definitions for 33 portfolio data products</td><td><code>data-product</code> 1.1.0 changelog</td></tr><tr><td><code>system</code></td><td>Fuller MIPS and MPR descriptions, MPR's expansion and XPIMS's meaning</td><td><code>system</code> changelogs</td></tr><tr><td><code>system</code></td><td>Owners to confirm three weak links: Allocation Manager for CM 1.3.7.4.3, SAP S/4HANA for CM 1.3.7.4.5, and Data Products IDP for CM 1.3.7.4.4</td><td><a href="../domain/decisions/decisions.html#EPM-DEC-001-0104">EPM-DEC-001-0104</a>, item 3</td></tr></tbody></table></div>
+<h2 id="gaps-the-process-map-and-value-streams-still-record">Gaps the process map and value streams still record<a class="hl" href="#gaps-the-process-map-and-value-streams-still-record" aria-label="Link to this section">#</a></h2>
+<div class="tblwrap"><table><thead><tr><th>Gap</th><th>Where it stands</th><th>Record</th></tr></thead><tbody><tr><td>Six enabling functions have no processes: Supply Chain, Shared Services, Process Excellence &amp; IT, Human Resources, Legal &amp; Corporate Communications, and EHS &amp; Government Reporting</td><td>Human Resources and EHS would hold deferred areas listed below. No ruling asks for depth in the others</td><td><code>downstream_process_map.json</code>; #454</td></tr><tr><td>Loss Control is produced by <code>CM 1.1.3.7.13</code> but is not linked to a stage of the commercial value stream</td><td>Partly filled</td><td><code>value_stream_commercial_lifecycle.json</code>, <code>gapAnalysis</code></td></tr><tr><td>Retail transaction capture and payment processing are not broken down</td><td>Open</td><td>The same list</td></tr><tr><td>Blending operations may span Refining and are not broken down</td><td>Open</td><td>The same list</td></tr><tr><td>No data products for customer credit, receivables or collections</td><td>Open</td><td><code>value_stream_order_to_cash.json</code>, <code>gapAnalysis</code></td></tr><tr><td>Collection and dispute steps collapse into one process each, Close AR Sub Ledger has no named process, and Process Bad Debt carries another name</td><td>Recorded, not changed</td><td>The same list</td></tr><tr><td>No buyer-side procure-to-pay processes for intercompany fees</td><td>Open</td><td>MPC-P08 ruling, <code>reference/mpc/process-map-suggestions.md</code></td></tr></tbody></table></div>
+<h2 id="work-we-can-do-without-the-business">Work we can do without the business<a class="hl" href="#work-we-can-do-without-the-business" aria-label="Link to this section">#</a></h2>
+<div class="tblwrap"><table><thead><tr><th>Item</th><th>What is needed</th><th>Record</th></tr></thead><tbody><tr><td>Keeping the stores in step with Git</td><td>Automatic checks, a drift check for the technical graph, and content comparison. The plan is in the guide and the walkthrough</td><td>#455</td></tr><tr><td>A small fix in the next <code>market-data</code> release</td><td>Reword its one shape message that holds an apostrophe</td><td><a href="../domain/decisions/decisions.html#EPM-DEC-001-0106">EPM-DEC-001-0106</a></td></tr><tr><td>The process playbook's log</td><td>Backfill the entries of batches 1 to 20</td><td><code>business-process-architecture-playbook.md</code>, §9</td></tr></tbody></table></div>
+<h2 id="parked-each-until-its-trigger">Parked, each until its trigger<a class="hl" href="#parked-each-until-its-trigger" aria-label="Link to this section">#</a></h2>
+<div class="tblwrap"><table><thead><tr><th>Item</th><th>What would reopen it</th><th>Record</th></tr></thead><tbody><tr><td>Held process-map rows</td><td>A corrected source; each row is then judged again</td><td><a href="../domain/decisions/decisions.html#EPM-DEC-001-0025">EPM-DEC-001-0025</a>, 0083</td></tr><tr><td>Refinery operating execution: unit operations, line-ups, blend execution and process control</td><td>The trigger each item names</td><td><a href="../domain/decisions/decisions.html#EPM-DEC-001-0063">EPM-DEC-001-0063</a></td></tr><tr><td>Product recalls and regulatory audits, human capital, data and analytics governance, and remediation: ruled in scope on 2026-09-17, deferred on 2026-10-31</td><td>A new decision by the decision owner; the deferral records no trigger</td><td><code>apqc-scope-decisions.md</code>; #454</td></tr><tr><td>Physical maintenance execution</td><td>A separate approval</td><td>MPC-P02b ruling</td></tr><tr><td>Renewable diesel production</td><td>A ruling to bring it in</td><td>MPC-P04 ruling</td></tr><tr><td>IOF Supply Chain mapping</td><td>A concept layer for logistics assets or movements, or a consumer that needs IOF terms</td><td><a href="../domain/decisions/decisions.html#EPM-DEC-001-0064">EPM-DEC-001-0064</a></td></tr><tr><td>IRIs that resolve</td><td>A registered, hosted namespace in place of the w3id placeholder</td><td><a href="../domain/decisions/decisions.html#EPM-DEC-001-0039">EPM-DEC-001-0039</a></td></tr><tr><td>Usage and integration</td><td>A separate, later task</td><td><a href="../domain/decisions/decisions.html#EPM-DEC-001-0107">EPM-DEC-001-0107</a></td></tr></tbody></table></div>
+      <p class="end">Generated from <code>OPEN-ITEMS.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="epm-ontology-guide.html">ontology guide</a>.</p>
+    </article>
+  </div>
+</div>
+<script>
+(function () {
+  if (navigator.clipboard) {
+    document.querySelectorAll("pre").forEach(function (pre) {
+      var b = document.createElement("button");
+      b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+      b.addEventListener("click", function () {
+        navigator.clipboard.writeText(pre.querySelector("code").innerText).then(function () {
+          b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500);
+        });
+      });
+      pre.appendChild(b);
+    });
+  }
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); })
+    .filter(Boolean);
+  if (!("IntersectionObserver" in window) || !heads.length) return;
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        if (current) current.classList.remove("on");
+        current = byId[e.target.id];
+        if (current) current.classList.add("on");
+      }
+    });
+  }, { rootMargin: "-60px 0px -75% 0px" });
+  heads.forEach(function (h) { io.observe(h); });
+  if (window.matchMedia("(max-width: 960px)").matches) {
+    var d = document.querySelector(".toc details");
+    if (d) d.removeAttribute("open");
+  }
+})();
+</script>
+</body>
+</html>

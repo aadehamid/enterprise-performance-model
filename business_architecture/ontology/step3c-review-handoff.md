@@ -123,7 +123,7 @@ Conventions: list fields pipe-separated (` | `); terminology_notes open with `Ba
 ## 6. The validation gate
 
 ```
-python3 business_architecture/ontology/build/scripts/step3c-workbook-validate.py \
+uv run --with openpyxl python business_architecture/ontology/build/scripts/step3c-workbook-validate.py \
   --workbook business_architecture/ontology/build/output/step3c-definition-authoring-workbook.xlsx
 ```
 
