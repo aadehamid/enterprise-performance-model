@@ -73,8 +73,13 @@ def rule_company(text, ctx):
 
 
 def rule_records(text, ctx):
-    dates = ctx.get("record_dates", {})
     n = 0
+    # The ontology skill's own test lists the record ID pattern as a term its guide must not hold; its fixture "see
+    # EPM-DEC-001-0001" becomes "see the decision of <date>" below, so the pattern names that wording instead.
+    skill_term = '("a project decision record", r"EPM-DEC|\\bEPM\\b")'
+    if skill_term in text:
+        text = text.replace(skill_term, '("a project decision record", r"the decision of \\d{4}-\\d{2}-\\d{2}|\\bEPM\\b")'); n += 1
+    dates = ctx.get("record_dates", {})
 
     def date_of(rec):
         return dates.get(rec, "an earlier date")

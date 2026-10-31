@@ -216,3 +216,10 @@ def test_the_two_store_notes_stay_out():
     assert manifest.disposition("business_architecture/ontology/projection/LOCAL-STORES.md", r) == "out"
     assert manifest.disposition("business_architecture/ontology/projection/STORE-INVENTORY.md", r) == "out"
     assert manifest.disposition("business_architecture/ontology/projection/README.md", r) == "ship"
+
+
+def test_the_guide_tests_record_term_follows_its_fixture():
+    src = '    ("a project decision record", r"EPM-DEC|\\bEPM\\b"),\n    ("see EPM-DEC-001-0001", "a project decision record"),\n'
+    out, _ = rules.apply(src, "skills/ontology/scripts/test_playbook_guide.py", {"EPM-DEC-001-0001": "2026-10-05"})
+    assert '("a project decision record", r"the decision of \\d{4}-\\d{2}-\\d{2}|\\bEPM\\b")' in out
+    assert '("see the decision of 2026-10-05", "a project decision record")' in out
