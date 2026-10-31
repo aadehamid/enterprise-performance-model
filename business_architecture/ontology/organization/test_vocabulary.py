@@ -156,12 +156,13 @@ class Vocabulary(unittest.TestCase):
         # A minor release removes no IRI: every subject of the earlier package, the ontology header aside, is still a
         # subject of the next, and nothing is newly deprecated (EPM-DEC-001-0106; 2.2.0, EPM-DEC-001-0045, amendment
         # of 2026-10-28).
-        releases = os.path.join(HERE, "..", "releases", "organization")
         header = URIRef("https://w3id.org/lsc/ontology/modules/organization")
         deprecated = URIRef("http://www.w3.org/2002/07/owl#deprecated")
         for before, after in (("2.0.0", "2.1.0"), ("2.1.0", "2.2.0")):
-            old = Graph().parse(os.path.join(releases, before, "organization.ttl"))
-            new = Graph().parse(os.path.join(releases, after, "organization.ttl"))
+            if released_path("organization", before) is None:
+                self.skipTest(f"organization {before} did not ship here")
+            old = Graph().parse(released_path("organization", before, "organization.ttl"))
+            new = Graph().parse(released_path("organization", after, "organization.ttl"))
             self.assertEqual({s for s in old.subjects() if s != header} - set(new.subjects()), set(), after)
             self.assertEqual(set(new.subjects(deprecated, None)), set(old.subjects(deprecated, None)), after)
 

@@ -296,6 +296,7 @@ class Shapes(unittest.TestCase):
 def name_tokens(text):
     """Lower-case word tokens, with accents removed and CamelCase split, so a name written
     "Name", "NAME", "name-surname", "NameSurname" or with an accent still matches."""
+    text = re.sub(r"base64,[A-Za-z0-9+/=]{64,}", " ", text)  # an embedded font or image, not words
     text = unicodedata.normalize("NFKD", text)
     text = "".join(c for c in text if not unicodedata.combining(c))
     text = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", text)
