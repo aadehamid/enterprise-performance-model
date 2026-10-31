@@ -38,8 +38,10 @@ def sh(args, cwd, env=None, timeout=3600):
     env = {**{k: v for k, v in os.environ.items() if not k.startswith("GIT_")}, "PYTHONDONTWRITEBYTECODE": "1", **(env or {})}
     t = time.time()
     r = subprocess.run(args, cwd=cwd, env=env, capture_output=True, text=True, timeout=timeout)
-    return {"command": " ".join(args), "cwd": os.path.relpath(cwd, cwd) if False else cwd, "returncode": r.returncode,
-            "seconds": round(time.time() - t, 1), "tail": (r.stdout + r.stderr)[-3000:]}
+    text = r.stdout + r.stderr
+    m = re.search(r"\d+ passed[^\n]*", text)
+    return {"command": " ".join(args), "cwd": cwd, "returncode": r.returncode, "seconds": round(time.time() - t, 1),
+            "tail": text[-3000:], "pytest_summary": m.group(0) if m else None}
 
 
 def uv(args, cwd, **kw):
@@ -54,7 +56,7 @@ def is_release(tree):
 
 def row_checks(tree, env):
     r = sh(["bash", "scripts/check.sh"], tree, env={"EPM_SHARE_RELEASE": "1"} if is_release(tree) else {})
-    m = re.search(r"(\d+) passed(?:, (\d+) skipped)?", r["tail"])
+    m = re.search(r"(\d+) passed(?:, (\d+) skipped)?", r.get("pytest_summary") or "")
     r["passed"] = int(m.group(1)) if m else None
     r["skipped"] = int(m.group(2)) if m and m.group(2) else 0
     r["ok"] = r["returncode"] == 0
@@ -76,8 +78,8 @@ def row_docs_links(tree, env):
     for root, dirs, files in os.walk(tree):
         dirs[:] = [d for d in dirs if d not in (".git", "__pycache__", ".venv", "node_modules", "release-cut")]
         for f in files:
-            if not f.endswith((".md", ".html")):
-                continue
+            if not f.endswith((".md", ".html")) or f == "docs_template.html":
+                continue  # the page template holds placeholders, not links
             path = os.path.join(root, f)
             with open(path, encoding="utf-8", errors="replace") as fh:
                 text = fh.read()
@@ -100,8 +102,9 @@ def row_skills_tests(tree, env):
     folder = os.path.join(tree, "skills") if is_release(tree) else env.get("SKILLS_REPO", "")
     if not folder or not os.path.isdir(folder):
         return {"ok": None, "reason": "no skills folder (give SKILLS_REPO in --env for main)"}
+    shipped = ("ontology", "ontology-to-lpg", "rdf-store", "clear-writing")  # the four skills the release carries
     tests = sorted(glob.glob(os.path.join(folder, "**", "test_*.py"), recursive=True))
-    tests = [t for t in tests if "__pycache__" not in t]
+    tests = [t for t in tests if "__pycache__" not in t and any(f"/{name}/" in t for name in shipped)]
     r = uv(["-m", "pytest", "-q", "-p", "no:cacheprovider", "-n", "4", *tests], folder)
     m = re.search(r"(\d+) passed", r["tail"])
     r["passed"] = int(m.group(1)) if m else None
