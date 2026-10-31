@@ -698,7 +698,7 @@ ORDER BY ?hop ?label</code></pre>
 </div>
 
 <h2 id="graphs">Git, the two graphs and the measures</h2>
-<p class="lead">Git holds the truth, and every store is a copy that can be rebuilt. Checks prove the copies lost nothing, and measure identifiers tie the business meaning to the tables that compute it. The <a href="https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9">walkthrough</a> gives the commands and the steps to rebuild it, and the <code>ontology-to-lpg</code> skill's playbook gives the method.</p>
+<p class="lead">Git holds the truth, and each store's copy of the ontology can be rebuilt from it. Checks prove those copies lost none of the ontology, and measure identifiers tie the business meaning to the tables that compute it. The <a href="https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9">walkthrough</a> tells this story with the steps to rebuild it, the stores runbook gives the running commands, and the <code>ontology-to-lpg</code> skill's playbook gives the method.</p>
 
 <h3>The source of truth is Git</h3>
 <p>The master copy is the versioned Turtle in <code>business_architecture/ontology/releases/</code>. A change reaches it only through a pull request and a release. Neo4j, AuraDB and <code>epm_triples</code> are projections. The decision owner: "The pattern is the sourse of truth is the ontology serialized in turtle. This is then projected to consuming application. In this case Neo4J, AuraDB, and databricsk and those must be kept in sync with the source, which we plan to save in git." (EPM-DEC-001-0109, decision 3; <code>answers-2026-10-28-databricks-grill.md</code>).</p>
