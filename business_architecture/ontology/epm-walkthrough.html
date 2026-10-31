@@ -224,6 +224,7 @@ details.fm:not([open])>:not(summary){display:none}
         <li><a href="#projections">Projections and stores</a></li>
         <li><a href="#demo">The pricing demo, file by file</a></li>
         <li><a href="#graphs">Git, the two graphs and the measures</a></li>
+        <li><a href="#change">How to change the ontology</a></li>
         <li><a href="#hands-on">Each store, hands on</a></li>
         <li><a href="#glossary">Glossary</a></li>
         <li><a href="#build">Part 2: Build it yourself</a></li>
@@ -481,6 +482,7 @@ details.fm:not([open])>:not(summary){display:none}
 <tr><td>What is still open on the ontology, and what do we need from the business?</td><td><code>business_architecture/ontology/OPEN-ITEMS.md</code></td><td>Every open item, with who answers it and its record</td></tr>
 <tr><td>What does the finished ontology hold, and why these modules?</td><td><code>business_architecture/ontology/epm-ontology-guide.html</code>, then <code>MODULES.md</code></td><td>The result, with one measure traced through every module</td></tr>
 <tr><td>How do I load it into a store and query it?</td><td><code>business_architecture/ontology/projection/ontology-stores-runbook.html</code></td><td>The running instructions</td></tr>
+<tr><td>How do I change the ontology, or add a module?</td><td>This walkthrough, "How to change the ontology"</td><td>The steps for this ontology; the skills hold the method</td></tr>
 <tr><td>Why is something the way it is?</td><td><code>business_architecture/domain/decisions/</code></td><td>The decision records, with the decision owner's words</td></tr>
 <tr><td>What is still open on the demo?</td><td>The GitHub issues</td><td>Each failing use case and its fixes</td></tr>
 </tbody></table></div>
@@ -1047,6 +1049,51 @@ RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos__pr
 </tbody></table></div>
   <p class="rise" data-ss-id="plan-done">Done when a new release, or a change to the demo's files, cannot leave a store or the technical graph behind without a failed check that someone sees.</p>
   <p class="xref rise" data-ss-id="graphs-built"><strong>Built in Part 2:</strong> steps <a href="#s-24">24</a>, <a href="#s-25">25</a>, <a href="#s-33">33</a>.</p>
+</section>
+
+<section id="change" data-ss-id="section-change" data-ss-section>
+  <h2 class="rise" data-ss-id="how-to-change-the-ontology">How to change the ontology</h2>
+  <p class="section-lede rise" data-ss-id="change-lede">A released package never changes. A change is a proposal, a decision, a pull request and a new release, and the stores follow from Git.</p>
+  <h3 class="rise" data-ss-id="change-rules">Rules that apply to every change</h3>
+  <ul class="rise">
+    <li data-ss-id="change-rule-test"><strong>Minor or major.</strong> Ask whether every query, report and answer made under the old meaning would still be correct. If yes, it is a patch or a minor. If no, or if unsure, it is a major (the <code>ontology</code> skill, <code>references/release.md</code>, rule 4).</li>
+    <li data-ss-id="change-rule-delete"><strong>Never delete a term.</strong> Mark it <code>owl:deprecated</code>, point to its successor, and do this only in a major (rule 5).</li>
+    <li data-ss-id="change-rule-approve"><strong>Who approves.</strong> The decision owner approves every major and every module's first release. Under EPM-DEC-001-0028, Claude approves the queue's other minors and patches.</li>
+    <li data-ss-id="change-rule-evidence"><strong>Evidence.</strong> Marathon's public filings first, then U.S. refining peers, then downstream sources. Cite every fact (<code>AGENTS.md</code>).</li>
+  </ul>
+
+  <h3 class="rise" data-ss-id="change-a-process">Add or change a process</h3>
+  <p class="rise" data-ss-id="change-process-example">The worked example is <code>CM 1.3.7.1.7</code> Coordinate Customer Onboarding: proposal MPC-P10.1, decision EPM-DEC-001-0087, <code>core</code> 2.3.0, then <code>party</code> 1.1.0.</p>
+  <div class="tbl rise" data-ss-id="change-process-table"><table class="gapt"><thead><tr><th>Do this</th><th>Where</th><th>Done when</th></tr></thead><tbody>
+<tr><td>Propose it: the gap, options and a recommendation</td><td data-k="Where"><code>business_architecture/business_process/proposals/</code></td><td data-k="Done when">The proposal is merged, with no edit to the map</td></tr>
+<tr><td>Record the decision</td><td data-k="Where"><code>business_architecture/domain/decisions/</code>, with the words in <code>decision-owner-answers/</code></td><td data-k="Done when"><code>scripts/check.sh</code> passes its quote checks</td></tr>
+<tr><td>Change the map in its own pull request</td><td data-k="Where"><code>downstream_process_map.json</code>, and the curated Step 2 identity map</td><td data-k="Done when">The node has a level, name, ID and identity row</td></tr>
+<tr><td>Build the next <code>core</code></td><td data-k="Where">Copy the newest <code>release/build_core_*.py</code>, starting from the last release and reading the map at a pinned commit. Add its test, and add both to <code>scripts/check.sh</code></td><td data-k="Done when"><code>--write</code> and then <code>--verify</code> pass, and no earlier release changed</td></tr>
+<tr><td>Release each module the change reaches</td><td data-k="Where">Rebuild the module's parts, then add its version and pins to <code>release/build_module.py</code> and run <code>python3 build_module.py &lt;module&gt; --write</code></td><td data-k="Done when">Each <code>--verify</code> passes</td></tr>
+<tr><td>Rebuild the catalog</td><td data-k="Where"><code>python3 release/build_catalog.py --write</code></td><td data-k="Done when"><code>--verify</code> passes</td></tr>
+<tr><td>Run the regression</td><td data-k="Where"><code>regression/run.py</code>; a new question goes in <code>regression/expected.csv</code> and <code>queries/</code></td><td data-k="Done when">Every question has its expected status</td></tr>
+<tr><td>Project it</td><td data-k="Where">Update <code>PACKAGES</code> in <code>projection/pipeline.py</code> and <code>skill-run/epm-config.json</code>, then run <code>pipeline.py build</code>, <code>reason</code>, <code>load-verify</code> and <code>build</code></td><td data-k="Done when">0 lost, 0 added, equal hashes, 0 violations; the manifest and report are committed</td></tr>
+<tr><td>Update the documents</td><td data-k="Where"><code>MODULES.md</code>, the guide, this page, <code>OPEN-ITEMS.md</code>, the worklog; run <code>epm_facts.py sweep main</code></td><td data-k="Done when"><code>scripts/check.sh</code>, the independent review and the Cursor verdict pass</td></tr>
+<tr><td>After the merge, tag and sync</td><td data-k="Where">Tag <code>&lt;module&gt;-v&lt;version&gt;</code>, then run <code>sync_stores.py sync --cloud</code> and <code>check</code></td><td data-k="Done when">All four stores read current</td></tr>
+</tbody></table></div>
+
+  <h3 class="rise" data-ss-id="change-a-measure">Add or change a measure</h3>
+  <p class="rise" data-ss-id="change-measure-text">The same route, starting in <code>business_architecture/ontology/kpi/</code>, with these differences. Edit the tables <code>measure-classification.csv</code>, <code>measure-details.csv</code> and, for an identifier, <code>measure-identifiers.csv</code>. Build with <code>build_measures.py</code>, and release with <code>build_module.py kpi</code>. A KPI is a designation with a target and an owner (EPM-DEC-001-0042), and other measures take an OPM identifier. If Databricks computes the measure, also change <code>sql/05_metric_views.sql</code> in the demo (the comment, display name, synonyms and <code>epm_measure_identifiers</code> tag), rebuild, and run <code>tech_graph collect</code>, <code>build</code>, <code>load</code> and <code>sync</code>, so its <code>IMPLEMENTS</code> edge exists. The demo's E3 tests list each view's identifiers by hand, so update them too.</p>
+
+  <h3 class="rise" data-ss-id="add-a-module">Add a twelfth module</h3>
+  <p class="rise" data-ss-id="add-module-intro">Copy <code>business_architecture/ontology/lane/</code>, the smallest module: a README, <code>vocabulary.ttl</code>, <code>shapes.ttl</code>, a build script, its output and its test. Start from a competency question the eleven modules cannot answer, and decide what the module holds and what it depends on, with no cycles. Then register it in each place below. A place you miss may stay silent, so check every row.</p>
+  <div class="tbl rise" data-ss-id="add-module-table"><table class="gapt"><thead><tr><th>Place</th><th>What to add</th></tr></thead><tbody>
+<tr><td><code>release/build_module.py</code></td><td data-k="What to add">An entry: title, description, version, stage, approver, approval, parts, shapes, <code>depends_on</code>, pins and decisions. The first release is a major, so build it as a candidate until the decision owner approves it</td></tr>
+<tr><td><code>scripts/check.sh</code></td><td data-k="What to add">The builder's <code>--verify</code>, <code>build_module.py &lt;module&gt; --verify</code>, and the test file</td></tr>
+<tr><td><code>projection/pipeline.py</code></td><td data-k="What to add"><code>PACKAGES</code>, <code>OWN</code> and <code>PREFIXES</code>, with the projection's rules met from the start</td></tr>
+<tr><td><code>projection/skill-run/epm-config.json</code></td><td data-k="What to add">The namespace, prefix and version</td></tr>
+<tr><td><code>regression/</code></td><td data-k="What to add">Its questions in <code>expected.csv</code>, its queries, and the module's files in <code>run.py</code></td></tr>
+<tr><td><code>release/build_catalog.py</code></td><td data-k="What to add">Nothing to edit: run <code>--write</code>, since it reads the packages on disk</td></tr>
+<tr><td><code>integration</code> in <code>build_module.py</code></td><td data-k="What to add"><code>depends_on</code> and pins, in its next release, if the module links to the others</td></tr>
+<tr><td><code>scripts/epm_facts.py</code></td><td data-k="What to add">The <code>coverage</code> entry, if processes link to it</td></tr>
+<tr><td><code>MODULES.md</code>, the guide, this page</td><td data-k="What to add">A section on the module, and every figure that says eleven. <code>scripts/test_modules_guide.py</code> and <code>test_published_figures.py</code> check part of this</td></tr>
+</tbody></table></div>
+  <p class="rise" data-ss-id="add-module-method">The <code>ontology</code> skill holds the method for each step, starting at <code>references/governance.md</code>, "Before modelling".</p>
 </section>
 
 <section id="hands-on" data-ss-id="section-hands-on" data-ss-section>
