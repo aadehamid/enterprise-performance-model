@@ -373,7 +373,7 @@ details.fm:not([open])>:not(summary){display:none}
 <tr><td data-k="What was missing">Customer processes named no systems; 25 processes shared seven names</td><td data-k="Found by">MPC-P11, MPC-P12</td><td data-k="What was done">12 processes name their systems, in 21 links. Each of the 25 now names its parent's subject (EPM-DEC-001-0103, 0105)</td><td data-k="State"><strong>Filled</strong></td></tr>
 <tr><td data-k="What was missing">Order to Cash detail: collection and dispute steps collapse into one process, and Close AR Sub Ledger has no named process</td><td data-k="Found by">O2C gap list</td><td data-k="What was done">Recorded with the closest process for each</td><td data-k="State"><strong>Recorded</strong>, not changed</td></tr>
 <tr><td data-k="What was missing">Data products for customer credit and receivables; retail transaction depth; blending operations</td><td data-k="Found by">Both gap lists</td><td data-k="What was done">Recorded with the closest process for each</td><td data-k="State"><strong>Open</strong></td></tr>
-<tr><td data-k="What was missing">Product recalls and regulatory audits, human capital, data and analytics governance, remediation</td><td data-k="Found by">APQC, ruled in scope on 2026-09-17</td><td data-k="What was done">No process in the map. The decision owner deferred them on 2026-10-31, until a consumer or competency question needs one</td><td data-k="State"><strong>Deferred</strong> (#454)</td></tr>
+<tr><td data-k="What was missing">Product recalls and regulatory audits, human capital, data and analytics governance, remediation</td><td data-k="Found by">APQC, ruled in scope on 2026-09-17</td><td data-k="What was done">No process in the map. The decision owner deferred them on 2026-10-31, and bringing one in takes a new decision</td><td data-k="State"><strong>Deferred</strong> (#454)</td></tr>
 <tr><td data-k="What was missing">Fixed-asset project accounting; government, board and public relations</td><td data-k="Found by">APQC</td><td data-k="What was done">Boundary notes: nothing in the ontology depends on them</td><td data-k="State"><strong>Out of scope</strong></td></tr>
 </tbody></table></div>
   <p class="rise" data-ss-id="gaps-sources">Sources: <code>value_stream_*.json</code>, <code>apqc-scope-decisions.md</code>, <code>process-map-suggestions.md</code>, <code>proposals/MPC-P*.md</code>, and the worklog, compared with the map on <code>main</code> at <code>daf60fee</code>.</p>
@@ -2040,7 +2040,7 @@ python3 scripts/epm_facts.py sweep main</code></pre></dd>
       <h3 data-ss-id="open-items">Open items</h3>
       <p data-ss-id="next-open-list"><code>business_architecture/ontology/OPEN-ITEMS.md</code> lists everything open on the ontology. The main ones:</p>
       <ul>
-        <li data-ss-id="next-apqc">Four process areas ruled in scope and deferred on 2026-10-31, until a consumer needs them (#454).</li>
+        <li data-ss-id="next-apqc">Four process areas ruled in scope and deferred on 2026-10-31; bringing one in takes a new decision (#454).</li>
         <li data-ss-id="next-closeout">The business close-out points in <code>business_architecture/ontology/business-closeout.md</code> (#427).</li>
         <li data-ss-id="next-drift">The drift check does not run by itself, and the technical graph has no marker (#455).</li>
         <li data-ss-id="next-secrets">The repository secrets that switch on the release-tag store sync (#426).</li>
