@@ -187,17 +187,22 @@ def row_demo_offline(tree, env):
             if not name.endswith(".json") or name.endswith("-rejudged.json"):
                 continue
             shutil.copy(os.path.join(acceptance, name), os.path.join(tmp, name))
-            rr = sh(["uv", "run", "--group", "graph", "python", "-m", "pricing_demo.acceptance", "rejudge", os.path.join(tmp, name)],
+            recorded = os.path.join(acceptance, name.replace(".json", "-rejudged.json"))
+            repeat = []
+            if os.path.exists(recorded):
+                with open(recorded) as f:
+                    k = json.load(f).get("repeat")
+                repeat = ["--repeat", str(k)] if k else []
+            rr = sh(["uv", "run", "--group", "graph", "python", "-m", "pricing_demo.acceptance", "rejudge", *repeat, os.path.join(tmp, name)],
                     demo, env=release_env(tree))
             entry = {"run": name, "returncode": rr["returncode"], "tail": rr["tail"][-300:]}
             new_path = os.path.join(tmp, name.replace(".json", "-rejudged.json"))
-            recorded = os.path.join(acceptance, name.replace(".json", "-rejudged.json"))
             if os.path.exists(new_path) and os.path.exists(recorded):
                 with open(new_path) as f:
                     a = json.load(f)
                 with open(recorded) as f:
                     b = json.load(f)
-                verdicts = lambda j: {str(x.get("case", i)): x.get("verdict", x.get("status")) for i, x in enumerate(j.get("results", []))}
+                verdicts = lambda j: {str(x.get("n", i)): x.get("passed") for i, x in enumerate(j.get("results", []))}
                 va, vb = verdicts(a), verdicts(b)
                 entry["cases"] = len(va)
                 entry["differences"] = sorted(k for k in set(va) | set(vb) if va.get(k) != vb.get(k))
@@ -213,3 +218,131 @@ ROWS = {
     "projection-driver": row_projection_driver,
     "demo-offline": row_demo_offline,
 }
+
+
+# ---------- the demo and the technical graph ----------
+
+COMPOSE_OVERRIDE = """services:
+  sources:
+    container_name: {name}
+    ports:
+      - "127.0.0.1:{port}:5432"
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - {volume}:/var/lib/postgresql/data
+volumes:
+  {volume}:
+    name: {volume}
+"""
+
+
+def demo_env(tree, env):
+    """The demo's environment for the test: its own Postgres, catalog and triple table."""
+    e = {**release_env(tree), "SOURCE_PG_DSN": f"postgresql://demo:demo@localhost:{env.get('DEMO_PG_PORT', '55433')}",
+         "DEMO_CATALOG": env.get("DEMO_CATALOG", "epm_validate")}
+    if env.get("DATABRICKS_TRIPLES_TABLE_FULL"):
+        e["EPM_TRIPLES"] = env["DATABRICKS_TRIPLES_TABLE_FULL"]
+    return e
+
+
+def row_demo_live(tree, env):
+    """The demo's pipeline on test stores: its own Postgres, the replica, the Databricks build in the test catalog, the
+    counts. The Genie agents and the orchestrator are not run: the agents are workspace objects found by title, so a
+    test run would repoint the shared ones; the live acceptance run is skipped by the owner's decision."""
+    demo = os.path.join(tree, DEMO)
+    project, port = env.get("DEMO_PROJECT", "pricing-validate"), env.get("DEMO_PG_PORT", "55433")
+    name, volume = f"{project}-sources", f"{project}-pgdata"
+    override = os.path.join(demo, "docker", "compose.validate.yml")
+    with open(override, "w") as f:
+        f.write(COMPOSE_OVERRIDE.format(name=name, port=port, volume=volume))
+    compose = ["docker", "compose", "-p", project, "-f", "docker/docker-compose.yml", "-f", "docker/compose.validate.yml"]
+    out = {"steps": []}
+    r = sh([*compose, "up", "-d"], demo); out["steps"].append(r)
+    ledger(env, "compose-project", project, f"the demo's test Postgres {name} on {port}, volume {volume}; override {override}")
+    if r["returncode"]:
+        return {**out, "ok": False}
+    time.sleep(8)
+    e = demo_env(tree, env)
+    ledger(env, "databricks-catalog", e["DEMO_CATALOG"], "the demo's test catalog (purge with pricing_demo.databricks purge --yes --catalog)")
+    for step in (["python", "-m", "pricing_demo.load_postgres"], ["python", "-m", "pricing_demo.replicate"],
+                 ["python", "-m", "pricing_demo.databricks", "setup"], ["python", "-m", "pricing_demo.databricks", "upload"],
+                 ["python", "-m", "pricing_demo.databricks", "build"], ["python", "-m", "pricing_demo.databricks", "counts"]):
+        r = sh(["uv", "run", *step], demo, env=e, timeout=7200); out["steps"].append(r)
+        if r["returncode"]:
+            return {**out, "ok": False}
+    out["counts"] = r["tail"][-2500:]
+    out["genie_and_orchestrator"] = "not run: the Genie agents are found by title in the shared workspace; the live acceptance run is skipped (the owner, 2026-10-31)"
+    out["ok"] = True
+    return out
+
+
+def stores_json(env):
+    """EPM_STORES_JSON for the tools that read stores: the test Neo4j as 'pipeline', the driver's test Neo4j as 'driver'."""
+    test_env = expand(env["IMPORT_DIR"]) + "/validate-neo4j.env"
+    with open(test_env, "w") as f:
+        f.write(f"NEO4J_URI=bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}\nNEO4J_USERNAME=neo4j\nNEO4J_PASSWORD={env['TEST_NEO4J_PASSWORD']}\n")
+    os.chmod(test_env, 0o600)
+    driver_out = expand(env["DRIVER_OUT"])
+    over = {"pipeline": {"bolt": f"bolt://127.0.0.1:{env.get('TEST_NEO4J_PORT', '17799')}", "env": [test_env]},
+            "driver": {"bolt": f"bolt://127.0.0.1:{env.get('DRIVER_PORT', '17811')}",
+                       "env": [driver_out + "-rebuild/neo4j-run/run.env", driver_out + "/neo4j-run/run.env"]},
+            "driver_reports": [driver_out + "-rebuild/projection-report.json", driver_out + "/projection-report.json"]}
+    if env.get("AURA_ENV"):
+        over["aura"] = {"env": [expand(env["AURA_ENV"])]}
+    if env.get("DATABRICKS_ENV"):
+        over["databricks_env"] = expand(env["DATABRICKS_ENV"])
+    return json.dumps(over)
+
+
+def row_tech_graph(tree, env):
+    """tech_graph collect, build, load, sync, walk on the test stores, after the demo's live row."""
+    demo = os.path.join(tree, DEMO)
+    e = {**demo_env(tree, env), "EPM_STORES_JSON": stores_json(env)}
+    out = {"steps": []}
+    stores = ["--store", "pipeline", "--store", "driver"] + (["--store", "aura"] if env.get("AURA_ENV") else [])
+    for step in (["collect"], ["build"], ["load", *stores], ["sync"], ["walk"]):
+        r = sh(["uv", "run", "--group", "graph", "python", "-m", "pricing_demo.tech_graph", *step], demo, env=e, timeout=3600)
+        out["steps"].append(r)
+        if r["returncode"]:
+            return {**out, "ok": False}
+    out["walk_rows"] = r["tail"].count("\n")
+    m = re.search(r"(\d+) nodes.*?(\d+) (?:edges|relationships)", "".join(s["tail"] for s in out["steps"]), re.S)
+    if m:
+        out["nodes"], out["edges"] = int(m.group(1)), int(m.group(2))
+    out["ok"] = True
+    return out
+
+
+def row_sync(tree, env):
+    """sync_stores.py mark and check on the test stores; then one node removed on purpose, and check reports it."""
+    proj = os.path.join(tree, ONT, "projection")
+    e = {**release_env(tree), "EPM_STORES_JSON": stores_json(env)}
+    ref = ["--ref", "worktree"]
+    out = {"steps": []}
+    r = uv(["sync_stores.py", "mark", "--store", "pipeline", "--store", "driver"], proj, env=e); out["steps"].append(r)
+    r = uv(["sync_stores.py", "check", *ref], proj, env=e); out["steps"].append(r)
+    out["check_before"] = r["tail"][-800:]
+    bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", env["TEST_NEO4J_PASSWORD"]
+    victim = cypher(bolt, pw, "MATCH (n:Resource) WHERE NOT (n)--() RETURN n.uri AS uri LIMIT 1")
+    if victim:
+        cypher(bolt, pw, f"MATCH (n:Resource {{uri: '{victim[0]['uri']}'}}) DETACH DELETE n")
+        r = uv(["sync_stores.py", "check", *ref], proj, env=e); out["steps"].append(r)
+        out["check_after_drift"] = r["tail"][-800:]
+        out["drift_caught"] = "pipeline" in r["tail"] and ("changed" in r["tail"] or "behind" in r["tail"])
+        out["removed"] = victim[0]["uri"]
+    out["repair"] = "the test repairs by reloading the pipeline row's load-verify (sync's reload is bound to the loaded container names)"
+    out["ok"] = out["steps"][1]["returncode"] == 0 and out.get("drift_caught", False)
+    return out
+
+
+def row_store_map(tree, env):
+    """What the test stores hold: node counts by label and relationship counts by type in the test Neo4j."""
+    bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", env["TEST_NEO4J_PASSWORD"]
+    labels = cypher(bolt, pw, "MATCH (n) UNWIND labels(n) AS l RETURN l, count(*) AS n ORDER BY l")
+    rels = cypher(bolt, pw, "MATCH ()-[r]->() RETURN type(r) AS t, count(*) AS n ORDER BY t")
+    return {"labels": {x["l"]: x["n"] for x in labels}, "relationship_types": {x["t"]: x["n"] for x in rels},
+            "resources": cypher(bolt, pw, "MATCH (n:Resource) RETURN count(n) AS n")[0]["n"],
+            "tech": cypher(bolt, pw, "MATCH (n:Tech) RETURN count(n) AS n")[0]["n"], "ok": True}
+
+
+ROWS.update({"demo-live": row_demo_live, "tech-graph": row_tech_graph, "sync": row_sync, "store-map": row_store_map})
