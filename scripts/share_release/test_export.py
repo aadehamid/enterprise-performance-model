@@ -39,7 +39,7 @@ def test_export_rewrites_copies_and_reports(tmp_path):
     assert (out / "business_architecture/ontology/releases/core/2.4.0/core.ttl").read_text().startswith("<https://w3id.org/mpc/")
     assert (out / "business_architecture/ontology/releases/previous/core/2.3.0/core.ttl").exists()
     assert not (out / "business_architecture/ontology/releases/core/1.0.0").exists()
-    assert (out / "business_architecture/reference/industry-view/kpi.md").read_text() == "a U.S. refining peer reports it.\n"
+    assert (out / "business_architecture/reference/industry-view/kpi.md").read_text() == "A U.S. refining peer reports it.\n"
     assert (out / "business_architecture/reference/APQC.xlsx").read_bytes() == b"PK\x03\x04binary"
     assert not (out / "business_architecture/domain/decisions").exists()
     assert not (out / "AGENTS.md").exists()

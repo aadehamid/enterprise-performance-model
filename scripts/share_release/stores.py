@@ -22,6 +22,7 @@ Each row runs against test stores named in the --env file, never the loaded ones
 Every container, folder, catalog and table a row creates is written to the ledger (LEDGER_FILE), so the deletion
 step can remove exactly those.
 """
+import datetime
 import json
 import os
 import re
@@ -131,9 +132,37 @@ def row_projection_pipeline(tree, env):
                                              "roundtrip_lost", "roundtrip_added", "determinism_hash_sorted", "separator",
                                              "renamed", "rename_lossless")})
         out["hashes_equal"] = rep.get("determinism_hash_sorted") == rep.get("determinism_hash_shuffled")
+        if r["returncode"] == 0 and release_env(tree):
+            out["readme_note"] = note_projection_figures(tree, rep)
     out["ok"] = r["returncode"] == 0
     # The broken copy: a graph with one triple removed must fail the round trip (the plan's "the broken copy caught").
     return out
+
+
+def note_projection_figures(tree, rep):
+    """The release's own load-verify figures, written at the head of the projection README's run paragraph (the
+    paragraph's figures are main's), then the page rebuilt. Returns the sentence written, or what stood in its way."""
+    path = os.path.join(tree, ONT, "projection", "README.md")
+    with open(path, encoding="utf-8") as f:
+        text = f.read()
+    marker = "The last run, on every released package with"
+    if marker not in text or "*This release's own run" in text:
+        return "not written: the run paragraph was not found, or the note is already there"
+    renamed = rep.get("renamed") or {}
+    renamed_txt = ", ".join(f"{v:,} {k.replace('_', ' ')}" for k, v in renamed.items()) if isinstance(renamed, dict) else str(renamed)
+    note = (f"*This release's own run ({datetime.date.today().isoformat()}):* {rep['nodes']:,} nodes and {rep['relationships']:,} "
+            f"relationships, {rep['shacl_violations_in_graph']} SHACL violations in the graph over "
+            f"{rep.get('in_graph_shape_constraints', 0):,} in-graph constraints, the deliberate mutant caught, a round trip that lost "
+            f"{rep['roundtrip_lost']} and added {rep['roundtrip_added']} triples, equal hashes for the sorted and shuffled loads, and "
+            f"every name renamed to one underscore without loss ({renamed_txt}). The nodes are fewer than main's because the "
+            f"pins moved to the newest packages, which drop the older versions' IRIs. *Before the release, on main:* the last run, "
+            f"on every released package with")
+    text = text.replace(marker, note, 1)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+    r = sh(["uv", "run", "-q", "--no-project", "--with", "markdown-it-py>=4,<5", "python3", "scripts/build_docs_html.py"], tree,
+           env=release_env(tree))
+    return note if r["returncode"] == 0 else f"written, but the page rebuild failed: {r.get('stderr', '')[-300:]}"
 
 
 def row_underscores(tree, env):

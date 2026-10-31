@@ -7,10 +7,12 @@ In order: freeze the process map at the commits the core builders read (from the
 the release's release/frozen/); set EPM_SHARE_RELEASE so pins move to the newest set; rebuild every module's
 source Turtle from its CSV; rebuild core 2.4.0 and each module's newest package; rebuild the catalog;
 recompute the previous packages' manifest hashes; rebuild the projection manifest; rebuild the generated
-pages; then verify each builder. Writes `<release>-rebuild.json` beside the release with every step's
+pages; then verify each builder. First of all it writes release.json at the tree's root, and after the freeze it adds a
+dated note to the CHANGELOG of each module whose pins move. Writes `<release>-rebuild.json` beside the release with every step's
 command, exit code and output tail. Exit 1 when any step fails.
 """
 import argparse
+import datetime
 import hashlib
 import json
 import os
@@ -145,8 +147,47 @@ class Rebuild:
             f.write(text)
         self.steps.append({"step": "documents", "returncode": 0})
 
+    def release_marker(self):
+        """release.json at the tree's root: what this tree is. The builders, the projection and the demo read release
+        mode from it (build_module.SHARE_RELEASE), so no environment variable is needed to use the release."""
+        marker = {
+            "release": "EPM 1.0",
+            "built": datetime.date.today().isoformat(),
+            "mode": "share release: each module's builder builds against the newest package of every module it requires; "
+                    "the Neo4j projection names labels, relationship types and property keys with one underscore",
+            "from": {"epm": os.path.basename(self.epm)},
+        }
+        with open(os.path.join(self.release, "release.json"), "w") as f:
+            f.write(json.dumps(marker, indent=2) + "\n")
+        self.steps.append({"step": "release.json", "returncode": 0})
+
+    def changelog_notes(self):
+        """Each module whose pins move to the newest set gets a dated note at the end of its CHANGELOG (the source the
+        package copies), so the package's text and its manifest agree on what it was built against."""
+        code = ("import json, build_module as bm\n"
+                "out = {}\n"
+                "for name, m in bm.MODULES.items():\n"
+                "    moved = {d: [v, bm.newest_on_disk(d)] for d, v in m.get('pins', {}).items() if bm.newest_on_disk(d) != v}\n"
+                "    if moved: out[name] = moved\n"
+                "print(json.dumps(out))\n")
+        r = self.run("moved pins", ["-c", code], f"{ONT}/release")
+        moved = json.loads(r.stdout.strip().splitlines()[-1])
+        today = datetime.date.today().isoformat()
+        for name, deps in sorted(moved.items()):
+            built = ", ".join(f"{d} {new}" for d, (old, new) in sorted(deps.items()))
+            was = ", ".join(f"{d} {old}" for d, (old, new) in sorted(deps.items()))
+            note = (f"\n*Share release, {today}:* in this release the newest package is built against {built}, the newest "
+                    f"package of each module it requires (its `manifest.json` says so). The notes above that name "
+                    f"{was} describe the pins at the time of the original release.\n")
+            path = os.path.join(self.release, ONT, "releases", name, "CHANGELOG.md")
+            with open(path, "a", encoding="utf-8") as f:
+                f.write(note)
+        self.steps.append({"step": "changelog notes", "modules": moved, "returncode": 0})
+
     def all(self):
+        self.release_marker()
         self.freeze()
+        self.changelog_notes()
         self.check_script()
         self.run_config()
         self.documents()

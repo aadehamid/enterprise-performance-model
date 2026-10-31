@@ -196,3 +196,23 @@ def test_release_paths():
     assert manifest.release_path("scripts/build_playbook_html.py", "skills") == "skills/scripts/build_playbook_html.py"
     assert manifest.disposition("skills/writing/clear-writing/calibration.md", manifest.SKILLS_RULES) == "out"
     assert manifest.disposition("skills/engineering/way-of-working/SKILL.md", manifest.SKILLS_RULES) == "out"
+
+
+def test_a_peer_phrase_that_starts_a_sentence_is_capitalised():
+    out, _ = rules.apply("Valero reported a margin. Then Valero said more.\n- Valero also did.\n### 3. Risk: Valero shows it\nShell, Chevron and BP cut.", "x.md")
+    assert out == ("A U.S. refining peer reported a margin. Then a U.S. refining peer said more.\n- A U.S. refining peer also did.\n"
+                   "### 3. Risk: A U.S. refining peer shows it\nShell, a U.S. refining peer and BP cut.")
+
+
+def test_rows_and_sentences_that_point_at_left_out_documents():
+    out, _ = rules.apply("| `README.md` | here |\n| `LOCAL-STORES.md` | the stores |\n| `STORE-INVENTORY.md` | what |\n| `x.md` | y |\n", "a/README.md")
+    assert out == "| `README.md` | here |\n| `x.md` | y |\n"
+    out, _ = rules.apply("following the guideline in `../lpg-projection/` (v2.2) with Rule 4a, and `../lpg-projection/` keeps the v2.2 copy as superseded evidence; this stays", "a.md")
+    assert out == "following the projection guideline, version 2.2, with Rule 4a (the v2.2 copy is not part of this release); this stays"
+
+
+def test_the_two_store_notes_stay_out():
+    r = manifest.EPM_RULES
+    assert manifest.disposition("business_architecture/ontology/projection/LOCAL-STORES.md", r) == "out"
+    assert manifest.disposition("business_architecture/ontology/projection/STORE-INVENTORY.md", r) == "out"
+    assert manifest.disposition("business_architecture/ontology/projection/README.md", r) == "ship"

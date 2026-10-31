@@ -30,16 +30,16 @@ Logins go in `~/.config/databricks/epm.env`, `~/.config/neo4j/aura.env` and the 
 ## Run the checks
 
 ```sh
-scripts/check.sh
+bash scripts/check.sh
 ```
 
 It verifies that every released package equals a fresh build from its sources, runs the competency-question regression, every test file, and the page check. The script's header says which four checks of the original build are not here and why.
 
 ## Rebuild, load and query
 
-- **Rebuild a module:** `business_architecture/ontology/<module>/build_<module>.py --write`, then `release/build_module.py <module> --write`; `MODULES.md` and each module's README say what each holds.
+- **Rebuild a module:** from `business_architecture/ontology/`, `uv run --no-project --with rdflib --with pyshacl python3 -B <module>/build_<module>.py --write`, then `uv run --no-project --with rdflib --with pyshacl python3 -B release/build_module.py <module> --write`; `MODULES.md` and each module's README say what each holds. The builders read `release.json` at this folder's root and build against the newest package of each module.
 - **Project into Neo4j:** `business_architecture/ontology/projection/README.md`, and `projection/ontology-stores-runbook.html` for every store, hands on.
-- **Ask a competency question:** `business_architecture/ontology/regression/ask.py`, and `competency-questions.md` for the list.
+- **Ask a competency question:** from `business_architecture/ontology/regression/`, `uv run --no-project --with rdflib python3 -B ask.py <question-id>`, and `../competency-questions.md` for the list.
 - **Run the pricing demo:** `demos/downstream-pricing-databricks-free/README.md`.
 - **Add a module:** `skills/ontology/references/new-module.md`, and the walkthrough's "How to change the ontology".
 

@@ -38,6 +38,8 @@ EPM_RULES = [
     ("out", f"{ONT}/lpg-projection/*"),
     ("out", f"{ONT}/trials/*"),
     ("out", f"{ONT}/projection/skill-run/store-tests-*.md"),
+    ("out", f"{ONT}/projection/LOCAL-STORES.md"),  # the stores on the author's machine, with their login files
+    ("out", f"{ONT}/projection/STORE-INVENTORY.md"),  # what those stores held when last audited
     # Business process, schema, reference, domain.
     ("ship", "business_architecture/business_process/*"),
     ("ship", "business_architecture/schema/*.schema.json"),

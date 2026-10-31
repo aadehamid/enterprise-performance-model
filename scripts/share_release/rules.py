@@ -18,6 +18,8 @@ The rules, in order:
                    the peer-tier wording -> the agreed source wording.
  11. underscores:  prefix__name -> prefix_name for the graph's prefixes, outside Python's own names.
  12. names:        the owner's name and handle in the skills -> the author.
+ 13. left-out:     the rows and sentences that point at documents the release leaves out (the store notes, the
+                   superseded projection guideline).
 """
 import re
 
@@ -199,6 +201,17 @@ def rule_peers(text, ctx):
     text, k = _count(r"\b(?:" + PEER_ALT + r")'s\b", "a U.S. refining peer's", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")\b", "a U.S. refining peer", text); n += k
     text, k = _count(r"\b(?:a|the) a U\.S\. refining peer\b", "a U.S. refining peer", text); n += k
+    # At the start of a sentence, a line, a list item or a heading's clause, the phrase is capitalised.
+    text, k = _count(r"(^|[.!?:]\s+|^\s*(?:[-*]|\d+\.)\s+(?:\*\*)?)a U\.S\. refining peer", r"\1A U.S. refining peer", text, re.M); n += k
+    return text, n
+
+
+def rule_left_out(text, ctx):
+    """Sentences and table rows that point at documents the release leaves out (rule 13)."""
+    n = 0
+    text, k = _count(r"^\| `(?:LOCAL-STORES|STORE-INVENTORY)\.md` \|.*\n", "", text, re.M); n += k
+    text, k = _count(r"following the guideline in `\.\./lpg-projection/` \(v2\.2\)", "following the projection guideline, version 2.2,", text); n += k
+    text, k = _count(r", and `\.\./lpg-projection/` keeps the v2\.2 copy as superseded evidence;", " (the v2.2 copy is not part of this release);", text); n += k
     return text, n
 
 
@@ -236,7 +249,7 @@ RULES = [
     ("skills_layout", rule_skills_layout),
     ("iri", rule_iri), ("company", rule_company), ("records", rule_records), ("answers", rule_answers),
     ("attribution", rule_attribution), ("approvals", rule_approvals), ("hosts", rule_hosts),
-    ("repository", rule_repository), ("numbers", rule_numbers), ("peers", rule_peers),
+    ("repository", rule_repository), ("numbers", rule_numbers), ("peers", rule_peers), ("left-out", rule_left_out),
     ("underscores", rule_underscores), ("names", rule_names),
 ]
 
