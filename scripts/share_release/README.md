@@ -5,6 +5,17 @@ skills repository's `main` (the decision of 2026-10-31, EPM-DEC-001-0110, and it
 the tool; it never ships.
 
 ```sh
+scripts/share_release/cut.sh --epm . --skills ../personal-agent-skills --out /tmp/release --env <stores env> \
+    [--baseline <main's validate json>] [--no-cleanroom]
+```
+
+`cut.sh` runs the steps below in order and stops at the first failure: export, rebuild, gate, the store rows on
+the test stores (`--env` names them; the projection's load-verify writes the release's own report and figures),
+the release's `check.sh`, the tree rows, the comparison with main, every snippet, the gate again, the zip, the
+clean room, and with `--baseline` the validation report. Each step writes beside the output folder. The export
+alone is:
+
+```sh
 python3 scripts/share_release/export.py --epm . --skills ../personal-agent-skills --out /tmp/release
 ```
 
