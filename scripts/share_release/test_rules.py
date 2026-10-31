@@ -14,9 +14,9 @@ def run(text, path="doc.md"):
 
 
 def test_iri_base_becomes_mpc():
-    out, counts = run("<https://w3id.org/lsc/ontology/modules/core/Process> and `w3id.org/lsc`")
-    assert out == "<https://w3id.org/mpc/ontology/modules/core/Process> and `w3id.org/mpc`"
-    assert counts["iri"] == 2
+    out, counts = run("<https://w3id.org/lsc/ontology/modules/core/Process> and `w3id.org/lsc`; r\"w3id\\.org/lsc\"; sh:pattern \"^https://w3id\\\\.org/lsc/ontology/process/\"")
+    assert out == "<https://w3id.org/mpc/ontology/modules/core/Process> and `w3id.org/mpc`; r\"w3id\\.org/mpc\"; sh:pattern \"^https://w3id\\\\.org/mpc/ontology/process/\""
+    assert counts["iri"] == 4
 
 
 def test_company_name_and_lsc_become_mpc():
@@ -56,8 +56,8 @@ def test_answers_folder_citations():
 
 
 def test_answers_source_iris_are_renamed():
-    out, _ = run("dcterms:source src:decision-owner-answers-2026-10-27-systems ; <https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-27-item-g>")
-    assert out == "dcterms:source src:sme-review-2026-10-27-systems ; <https://w3id.org/mpc/ontology/source/sme-review-2026-10-27-item-g>"
+    out, _ = run("dcterms:source src:decision-owner-answers-2026-10-27-systems ; <https://w3id.org/lsc/ontology/source/decision-owner-answers-2026-10-27-item-g>; csv cell decision-owner-answers-2026-10-24-systems")
+    assert out == "dcterms:source src:sme-review-2026-10-27-systems ; <https://w3id.org/mpc/ontology/source/sme-review-2026-10-27-item-g>; csv cell sme-review-2026-10-24-systems"
 
 
 def test_attribution_of_quotes():

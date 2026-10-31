@@ -52,7 +52,9 @@ def _count(pattern, repl, text, flags=0):
 
 
 def rule_iri(text, ctx):
-    return _count(r"w3id\.org/lsc\b", "w3id.org/mpc", text)
+    # The base as an IRI, and as a regular expression in SHACL patterns and tests (w3id\.org/lsc).
+    # Any run of backslashes before the dot survives: none in an IRI, one in a Python regex, two in a Turtle string.
+    return _count(r"w3id(\\*)\.org/lsc\b", r"w3id\1.org/mpc", text)
 
 
 def rule_company(text, ctx):
@@ -94,8 +96,9 @@ def rule_records(text, ctx):
 
 def rule_answers(text, ctx):
     n = 0
-    text, k = _count(r"source/decision-owner-answers-", "source/sme-review-", text); n += k
-    text, k = _count(r"\bsrc:decision-owner-answers-", "src:sme-review-", text); n += k
+    # The party module's source individuals are named after answers files: the local name is renamed everywhere
+    # it appears (Turtle, JSON-LD, the CSV column the builder reads it from).
+    text, k = _count(r"\bdecision-owner-answers-(\d{4}-\d{2}-\d{2}[a-z0-9-]*)", r"sme-review-\1", text); n += k
     text, k = _count(r"the decision owner's (?:recorded )?words in (?:`)?" + ANSWERS_DIR_RE + ANSWERS_FILE + r"(?:`)?",
                      f"the words of {SME}", text); n += k
     text, k = _count(r"\(?(?:`)?" + ANSWERS_DIR_RE + ANSWERS_FILE + r"(?:`)?\)?",
