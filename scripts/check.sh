@@ -116,6 +116,7 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
   business_architecture/ontology/release/test_build_core_2_3.py \
   business_architecture/ontology/release/test_build_core_2_4.py \
   business_architecture/ontology/release/test_build_catalog.py \
+  business_architecture/ontology/release/test_frozen_sources.py \
   business_architecture/ontology/regression/test_run.py business_architecture/ontology/organization/test_vocabulary.py \
   business_architecture/ontology/organization/test_roles.py \
   business_architecture/ontology/organization/test_assignments.py \

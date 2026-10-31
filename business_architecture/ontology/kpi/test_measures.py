@@ -307,7 +307,7 @@ class Privacy(unittest.TestCase):
         # EPM-DEC-001-0040: personas stay, the people's names do not. Every tracked file is
         # read, whatever its extension, and so is every file in this folder before it is
         # committed. A file holding a NUL byte is binary and skipped.
-        if os.path.isdir(os.path.join(bm.REPO, ".git")):
+        if os.path.exists(os.path.join(bm.REPO, ".git")):  # a folder, or a file in a worktree
             tracked = subprocess.run(["git", "ls-files", "-z"], cwd=bm.REPO, capture_output=True, check=True).stdout
             paths = {os.path.join(bm.REPO, os.fsdecode(n)) for n in tracked.split(b"\0") if n}
         else:  # a tree without Git, such as the share release: every file in it
