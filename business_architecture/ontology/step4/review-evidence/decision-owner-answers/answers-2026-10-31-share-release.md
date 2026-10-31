@@ -71,3 +71,49 @@ when we have completed the full release of the ontology we should use https://gi
 The veiwer is where most people will go to review the ontology
 
 The viewer should be built on one ontology release only.
+
+<!-- Later on 2026-10-31, the grill of what the step 1 inventory found that the plan did not settle. Context (Claude's words). Claude asked whether to run the rest of the plan as one goal; the decision owner asked for the grill first and added that the 21 use cases need not be tested (block 12). The questions and options, as put (Markdown stripped), with the recommended option first:
+Block 13. Open point 1 of 11. "Every release manifest has an approval block naming an answers file and quoting you, and each core module's Turtle cites the answers file. The answers folder does not ship. What should the release's packages say?" Options: 1 "SME attribution, file out, words kept (Recommended)": approval.who becomes "a subject matter expert reviewing the documents", the file name comes out, your words stay; core's citations read "EPM-DEC-001-0044; approved by a subject matter expert reviewing the documents on 2026-10-18". 2 "Drop the approval block entirely". 3 "Keep words and file name". The decision owner typed block 13.
+Block 14. Open point 2. "Tool names (Claude, Codex, Cursor, Kimi) appear in 88 release files, 110 records and 11 demo code files, mostly in approval lines, worklog notes and review provenance. The leak gate does not fail on them today. What stays?" Options: 1 "Keep where they name the tool that did the work (Recommended)": the walkthrough's tools table and the worklog keep them; approval lines lose them, since the SME attribution replaces those. 2 "Remove every tool name". 3 "Keep all as they are".
+Block 15. Open point 3. "68 records quote working instructions, such as "yes, extend the delegation to steps 5 to 12." (46 records), "yes, keep it private" (7) and "go ahead with the item F decision record." Decision 3 says you reattribute or drop each. How?" Options: 1 "Reattribute all, same as other quotes (Recommended)": each reads as from "a subject matter expert reviewing the documents"; no per-quote list. 2 "Drop the working-instruction quotes". 3 "List all 68 for me to answer one by one".
+Block 16. Open point 4. "19 of the 137 cached Parallel answers are third-party market reports that name peers. Rewriting them changes the text the re-judge reads, so re-judged verdicts may differ from main's. What should the release do?" Options: 1 "Rewrite them, report any verdict change under this rule (Recommended)". 2 "Keep peer names inside third-party quotations only". 3 "Drop those 19 cached answers".
+Block 17. Follow-up on point 1. "You said references like "EPM-DEC-001-0044" must not show up anywhere, because readers are not aware of these documents. Decision 3 in the plan ships the decision records themselves, with quotes reattributed. The record numbers are cited in 486 other files (9,305 places), among them the ontology's Turtle, where a term's dcterms:source names the record that decided it. Which do you mean?" Options: 1 "Records do not ship; every citation comes out (Recommended)": the 110 records and decisions page stay out; in the ontology, a term's record citation becomes a plain provenance note ("decided on 2026-10-18 by a subject matter expert reviewing the documents"); in docs, the number is dropped or replaced by a date; the glossary and READMEs lose their record links. 2 "Records ship under a neutral name, citations kept". 3 "Records ship as they are; only the manifests and citations in packages lose the numbers".
+Block 18. Open point 5. "Chevron and Exxon Mobil are not in the seven-peer evidence folder, but MPC's own 10-K names them as the comparators of its benchmark measure, and the kpi module carries that text (8 release files, 2 population files). Are they peers for the rewrite?" Options: 1 "Yes, treat them as peers (Recommended)": no company but MPC and MPLX is named in any comparison. 2 "No, keep them".
+Block 19. Open point 6, first asked as "The Step 4 evidence gate reads the review evidence and the answers, which do not ship, and the Git pin. The release's check script drops the gate, its ledger and its tests; the taxonomy ships as the frozen baseline the builders read. Confirm?" The decision owner typed block 19. Asked again with the explanation (the gate is step4/evidence-gate.py, which checks the review's bookkeeping: that each evidence CSV cites the pinned commit, that the 1,318 mentions add up, that canonical-facts.csv holds 640 facts with no contradictions, and that the reviewer verdicts and label decisions are present; it needs the review evidence, the reviewer answers and the Git pin, none of which ship), options: 1 "Yes, drop it; the check script says why (Recommended)". 2 "No, ship the review evidence so it can run". The decision owner chose block 20.
+Block 21. Open point 7, first asked as "These stay out under Decision 5 unless you want them: the 2026-10-14 decision packages (written to you as "you"), the Step 3c reviewer notes, the old lpg-projection guideline (now the skill), the open-ontologies trial notes, the O2C research files, and best-practices. Which should ship after all?" (several allowed). Options: "None; leave all out (Recommended)", "best-practices (7 files)", "O2C research files (3 files)", "Decision packages (6 files)". The decision owner chose "None; leave all out (Recommended)", "O2C research files (3 files)" and "Decision packages (6 files)" and typed block 21. Asked again with best-practices described (seven general guides written early in the project: a production-ready ontology guide, a controlled-vocabulary practice guide in Markdown and HTML, two pages on 100 enterprise KPIs, and two images; no shipped file links them) and asked to confirm what ships from the group, options: "O2C research files (3)", "Decision packages (6)", "best-practices (7)", "Nothing from this group". The decision owner chose blocks 22 and 23; this second answer is the one applied.
+Block 24. Open point 8. "The clear-writing skill holds calibration.md, your personal rule weights, and every skill has a SOURCES.md that names where its content came from (two name you). What ships?" Options: 1 "SOURCES rewritten, calibration.md out (Recommended)". 2 "Both out". 3 "Both in, rewritten".
+Block 25. Open point 9. "Decision 6 ships the way-of-working skill only if recipients should adopt the working method (pull requests, the check script, independent and PR reviews). Its README and sources name you and the repositories and would be rewritten. Should it ship?" Options: 1 "No, leave it out (Recommended)". 2 "Yes, ship it rewritten".
+Block 26. Open point 10. "The release before the latest goes under its own folder, releases/previous/, with a README saying it is history only: nothing loads it, and its pins may name versions the release does not ship (for example system 1.2.0). Confirm the folder and that rule?" Options: 1 "Confirm (Recommended)". 2 "Different folder name". 3 "Rebuild the previous set's pins too".
+Block 27. Point 11. "You said the 21 use cases need not be tested in this release, and that they alone used the Databricks daily limit. The plan has two acceptance checks: the live run (acceptance run --repeat 3, the one that uses the limit) and the offline re-judge of the ten recorded runs, which reads the recorded answers and judges them again. Which is skipped?" Options: 1 "Skip the live run only (Recommended)": the offline re-judge still runs if it needs no Databricks; the recorded runs ship as they are; the acceptance code ships and the README says it was not run on the release. 2 "Skip both". 3 "Skip both and leave the recorded runs out". -->
+
+yes, grill me now. In this release we do not have to test the 21 use cases that we were validating in main by the way. That is the only think that contributed to Databrick daily limit.
+
+O like Option 1. In addition I do not want refrences like ""EPM-DEC-001-0044;" shows up anywhere. The people that will consume the release are not aware of these documents
+
+Keep where they name the tool that did the work (Recommended)
+
+Reattribute all, same as other quotes (Recommended)
+
+Rewrite them, report any verdict change under this rule (Recommended)
+
+Records do not ship; every citation comes out (Recommended)
+
+Yes, treat them as peers (Recommended)
+
+what is this gate
+
+Yes, drop it; the check script says why (Recommended)
+
+what do we mean by this best practices?
+
+Decision packages (6)
+
+best-practices (7)
+
+SOURCES rewritten, calibration.md out (Recommended)
+
+No, leave it out (Recommended)
+
+Confirm (Recommended)
+
+Skip the live run only (Recommended)

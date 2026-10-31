@@ -5,7 +5,7 @@
 | Status | Decided (the decision owner, 2026-10-31, for the release's scope, the rewrites, the validation, the order of the releases and the work after them; the build choices delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-31 |
 | Questions | The decision owner asked for a release to share with colleagues who were not part of the build. What it holds; whether it may name the repository, the decision owner or a peer; what "decision owner" means to a reader; whether internal documents stay; what LSC becomes; how the graph's names are written; how the decision owner's quotes read; which release the links go through; how the cut is validated; and what work follows the first release |
-| Source | Claude Code session of 2026-10-31; `answers-2026-10-31-share-release.md`, blocks 1 to 11 |
+| Source | Claude Code session of 2026-10-31; `answers-2026-10-31-share-release.md`, blocks 1 to 27 |
 
 ## Context
 
@@ -54,6 +54,32 @@ What Claude found, from the repository on 2026-10-31 (`git grep`, `git ls-files`
 9. **After the first release,** on `main` through its own pull requests: a vocabulary module for the technical graph (the first use of `references/new-module.md`), lineage from Databricks (#457), and the in-sync plan (#455, #426). The technical graph is not projected into the ontology's Databricks table: Databricks already holds it as the Delta copy EPM-DEC-001-0109 (decision 7) records, `tech_graph_nodes` and `tech_graph_edges`, and that copy stays as it is. A second release, the full version, is then cut with the same command and validated against a new baseline; that is the version shared with colleagues. The viewer starts only after it.
 10. **Question 17:** sharing the full version with business consumers meets EPM-DEC-001-0086's trigger. Claude asks the decision owner before the zip is shared and records the answer.
 
+## Amendment, 2026-10-31 (later): the grill of what the inventory found
+
+Step 1's inventory of every tracked path found eleven points the plan did not settle. Claude put each to the decision owner with a recommendation (`answers-2026-10-31-share-release.md`, blocks 12 to 27). The decisions:
+
+1. **Approval provenance in the packages:** "O like Option 1. In addition I do not want refrences like ""EPM-DEC-001-0044;" shows up anywhere. The people that will consume the release are not aware of these documents". Asked whether that means the decision records do not ship, since their numbers are cited in 486 other files: "Records do not ship; every citation comes out (Recommended)". This supersedes Decision 3's "shipping the records with those quotes reattributed" in decision 12 above.
+2. **Tool names:** "Keep where they name the tool that did the work (Recommended)".
+3. **Quotes that are working instructions:** "Reattribute all, same as other quotes (Recommended)".
+4. **Peer names inside the cached Parallel answers:** "Rewrite them, report any verdict change under this rule (Recommended)".
+5. **Chevron and Exxon Mobil:** "Yes, treat them as peers (Recommended)".
+6. **The Step 4 gate:** asked "what is this gate", then, with the explanation: "Yes, drop it; the check script says why (Recommended)".
+7. **Folders the plan left out:** asked "what do we mean by this best practices?", then, with the folder described: "Decision packages (6)" and "best-practices (7)" ship; the Step 3c reviewer notes, the old `lpg-projection` guideline, the trial notes and the O2C research files stay out.
+8. **The skills' personal files:** "SOURCES rewritten, calibration.md out (Recommended)".
+9. **`way-of-working`:** "No, leave it out (Recommended)".
+10. **The previous set's folder:** "Confirm (Recommended)".
+11. **The 21 use cases:** "In this release we do not have to test the 21 use cases that we were validating in main by the way. That is the only think that contributed to Databrick daily limit." Asked which of the two acceptance checks is skipped: "Skip the live run only (Recommended)".
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+- **No decision record ships, and no record number appears in the release.** The 110 records, their index and page, and the record numbers in 486 other files (9,305 places on 2026-10-31) come out. In the ontology a term's record citation becomes a provenance note with the date and "a subject matter expert reviewing the documents"; in documents the number is dropped or replaced by the date; the manifests' `decisions` and `approval.file` fields come out and `approval.who` reads "a subject matter expert reviewing the documents". The leak gate fails on `EPM-DEC-001`. The six decision packages ship rewritten the same way.
+- **Tool names** stay where a sentence says which tool did the work (the walkthrough's tools table, the worklog) and come out of approval lines. The gate does not fail on them.
+- **Every quote** of the decision owner outside the records, working instructions included, is attributed to "a subject matter expert reviewing the documents".
+- **Peers** are the seven companies the evidence cites plus Chevron and Exxon Mobil: no company but MPC and MPLX is named in a comparison, in the cached Parallel answers included. A re-judged verdict that changes after that rewrite is reported as explained by it.
+- **The release's check script** drops the Step 4 gate, its ledger, its tests and the pin check, and says why; the taxonomy ships as the frozen `baseline/` the builders read.
+- **The skills** ship without `calibration.md` and without `way-of-working`; each `SOURCES.md` is rewritten.
+- **The acceptance tests:** the live run is skipped on the release and its README says so; the offline re-judge of the ten recorded runs runs if it needs no Databricks; the code and the recorded runs ship. With the live run out, the validation no longer depends on Databricks Free Edition's daily limit.
+
 ## Alternatives considered
 
 - **An ordinary branch merged from `main`.** Not chosen: rewritten text conflicts on every merge, and the branch's history carries author names, PR numbers and peer mentions.
@@ -83,6 +109,11 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 - "By the way when I finish with (1) I will not share with coleague until I complete all of theother tasks and do another release to update the previous one to a full version. It is then that I will share with colleague as a complete picture."
 - "the technical graph should not be projected to Databricks since databrick already have technical graph in delta table"
 - "The viewer should be built on one ontology release only."
+- "In this release we do not have to test the 21 use cases that we were validating in main by the way. That is the only think that contributed to Databrick daily limit."
+- "The people that will consume the release are not aware of these documents"
+- "Records do not ship; every citation comes out (Recommended)"
+- "Yes, drop it; the check script says why (Recommended)"
+- "Skip the live run only (Recommended)"
 
 ## Evidence
 
