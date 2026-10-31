@@ -33,6 +33,9 @@ PATTERNS = [
 ]
 # Third-party syntax that carries two underscores and is not a graph name (the owner's rule names the graph's separator).
 ALLOWED_DOUBLE = re.compile(r"metric_time__day|__init__|__main__|__pycache__|__file__|__name__|__doc__")
+# The skill's own test fixtures describe what n10s writes before the rename step; they are a third-party tool's format,
+# not a name in any graph, query, document or page of the release (the night log of 2026-11-01, 00:45).
+ALLOWED_FILES_DOUBLE = re.compile(r"^skills/[^/]+/scripts/test_[^/]+\.py$")
 TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".sql", ".sh", ".yml", ".yaml", ".txt",
             ".nt", ".toml", ".example", ".cypher", ".jsonl", ".css", ".svg", ".cfg", ".ini", ".lock"}
 OFFICE_EXT = {".xlsx", ".docx", ".pptx"}
@@ -85,7 +88,8 @@ def scan(release):
                     if pattern is None or (label.endswith(" (binary)") and reason in SHORT_PATTERNS):
                         continue
                     for m in pattern.finditer(text):
-                        if reason.startswith("the graph's") and ALLOWED_DOUBLE.search(text[max(0, m.start() - 12):m.end() + 12]):
+                        if reason.startswith("the graph's") and (ALLOWED_DOUBLE.search(text[max(0, m.start() - 12):m.end() + 12])
+                                                                 or ALLOWED_FILES_DOUBLE.match(rel)):
                             continue
                         line = text.count("\n", 0, m.start()) + 1
                         shown = label.replace(" (binary)", "")

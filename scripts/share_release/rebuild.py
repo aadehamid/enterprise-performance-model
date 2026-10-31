@@ -78,7 +78,7 @@ class Rebuild:
         """The history folder's manifests name the files' hashes as rewritten; nothing else in them changes."""
         base = os.path.join(self.release, ONT, "releases", "previous")
         done = []
-        for module in sorted(os.listdir(base)):
+        for module in sorted(d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d))):
             for version in sorted(os.listdir(os.path.join(base, module))):
                 folder = os.path.join(base, module, version)
                 mpath = os.path.join(folder, "manifest.json")

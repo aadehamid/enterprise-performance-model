@@ -92,3 +92,12 @@ def test_a_databricks_workspace_path_is_not_the_owners_machine(tmp_path):
     clean(tmp_path)
     (tmp_path / "a.py").write_text('folder = f"/Workspace/Users/{name}/pricing-demo"\n')
     assert gate.scan(str(tmp_path)) == []
+
+
+def test_the_skills_test_fixtures_may_describe_n10s_names(tmp_path):
+    clean(tmp_path)
+    (tmp_path / "skills" / "ontology-to-lpg" / "scripts").mkdir(parents=True)
+    (tmp_path / "skills" / "ontology-to-lpg" / "scripts" / "test_modeling.py").write_text('row("lib__Copy", "lib__barcode")\n')
+    assert gate.scan(str(tmp_path)) == []
+    (tmp_path / "skills" / "ontology-to-lpg" / "scripts" / "load_verify.py").write_text('# always prefix__local\n')
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the graph's double-underscore separator"]
