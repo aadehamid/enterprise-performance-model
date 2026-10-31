@@ -25,7 +25,7 @@ PATTERNS = [
     ("the saved answers folder", re.compile(r"decision-owner-answers|answers-20\d\d-\d\d-\d\d")),
     ("the old IRI base or company name", re.compile(r"w3id\\*\.org/lsc|\bLSC\b|Lagos Specialty", re.I)),
     ("a host of the build", re.compile(r"exe\.dev|exe\.xyz|spacesheep\.dev|app\.eraser\.io", re.I)),
-    ("a path on the owner's machine", re.compile(r"/Users/|Dropbox|~/\.claude/handoffs|~/\.claude/plugins|~/\.agents/skills")),
+    ("a path on the owner's machine", re.compile(r"(?<!/Workspace)/Users/|Dropbox|~/\.claude/handoffs|~/\.claude/plugins|~/\.agents/skills")),
     ("a peer named", re.compile(PEERS, re.I)),
     ("an issue or pull request number", re.compile(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+|(?<![&\w-])#\d{3}\b(?![\da-fA-F])")),
     ("the graph's double-underscore separator", re.compile(r"\b[a-z][a-z0-9]*__[A-Za-z]")),
@@ -37,6 +37,8 @@ TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".
             ".nt", ".toml", ".example", ".cypher", ".jsonl", ".css", ".svg", ".cfg", ".ini", ".lock"}
 OFFICE_EXT = {".xlsx", ".docx", ".pptx"}
 DATA_URI = re.compile(r"data:[a-z]+/[a-z0-9.+-]+;base64,[A-Za-z0-9+/=\s]+")
+CSS_COLOUR = re.compile(r"(?<=[:\s(,])#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b(?=[;\s)}\],!])")
+SHORT_PATTERNS = ("a peer named", "an issue or pull request number", "the graph's double-underscore separator")
 NAMESPACE_NOTE = "Data, Analytics and Insight"
 
 
@@ -57,9 +59,12 @@ def texts(path):
         data = f.read()
     if ext in TEXT_EXT or b"\0" not in data[:4096]:
         text = data.decode("utf-8", "replace")
+        if ext in (".html", ".css", ".svg"):
+            text = CSS_COLOUR.sub("#colour", text)  # #fff, #111 and #1a2b3c are colours, not numbers
         yield path, DATA_URI.sub("data:image-removed", text)
     else:
-        yield path, data.decode("latin-1")
+        # Bytes decoded loosely hold every three-letter word by chance, so only the long patterns run on them.
+        yield path + " (binary)", data.decode("latin-1")
 
 
 def scan(release):
@@ -77,13 +82,14 @@ def scan(release):
                 if NAMESPACE_NOTE in text and rel == "README.md":
                     note_found = True
                 for reason, pattern in PATTERNS:
-                    if pattern is None:
+                    if pattern is None or (label.endswith(" (binary)") and reason in SHORT_PATTERNS):
                         continue
                     for m in pattern.finditer(text):
                         if reason.startswith("the graph's") and ALLOWED_DOUBLE.search(text[max(0, m.start() - 12):m.end() + 12]):
                             continue
                         line = text.count("\n", 0, m.start()) + 1
-                        hits.append({"file": os.path.relpath(label, release) if label.startswith(release) else label,
+                        shown = label.replace(" (binary)", "")
+                        hits.append({"file": os.path.relpath(shown, release) if shown.startswith(release) else shown,
                                      "line": line, "reason": reason, "match": m.group(0)[:60]})
                         if sum(1 for h in hits if h["file"] == rel and h["reason"] == reason) >= 5:
                             break

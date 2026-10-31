@@ -53,7 +53,26 @@ class Rebuild:
         return r
 
     def freeze(self):
+        """The process map at each pinned commit, frozen from main's Git, then rewritten by the same rules as the rest."""
         self.run("freeze", ["frozen_sources.py", "--freeze", "--repo", self.epm], f"{ONT}/release")
+        sys.path.insert(0, HERE)
+        import export as ex
+        import rules
+        dates = ex.record_dates(self.epm)
+        folder = os.path.join(self.release, ONT, "release", "frozen")
+        counts = {}
+        for name in sorted(os.listdir(folder)):
+            if not name.endswith(".json"):
+                continue
+            path = os.path.join(folder, name)
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            new, c = rules.apply(text, f"{ONT}/release/frozen/{name}", dates)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(new)
+            for k, v in c.items():
+                counts[k] = counts.get(k, 0) + v
+        self.steps.append({"step": "rewrite frozen", "rules": counts, "returncode": 0})
 
     def previous_hashes(self):
         """The history folder's manifests name the files' hashes as rewritten; nothing else in them changes."""

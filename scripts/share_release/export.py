@@ -41,6 +41,28 @@ def tracked(tree):
     return sorted(paths)
 
 
+OFFICE_EXT = {".xlsx", ".docx", ".pptx"}
+
+
+def rewrite_office(src, dest, dest_rel, dates):
+    """An Office file is a zip of XML parts: each text part takes the same rules, the rest is copied as is."""
+    import zipfile
+    counts = {}
+    if not zipfile.is_zipfile(src):
+        shutil.copy2(src, dest)
+        return None
+    with zipfile.ZipFile(src) as zin, zipfile.ZipFile(dest, "w", zipfile.ZIP_DEFLATED) as zout:
+        for info in zin.infolist():
+            data = zin.read(info.filename)
+            if info.filename.endswith((".xml", ".rels", ".txt")):
+                new, c = rules.apply(data.decode("utf-8", "surrogateescape"), dest_rel + "/" + info.filename, dates)
+                data = new.encode("utf-8", "surrogateescape")
+                for k, v in c.items():
+                    counts[k] = counts.get(k, 0) + v
+            zout.writestr(info, data)
+    return counts
+
+
 def is_text(path):
     base = os.path.basename(path)
     return os.path.splitext(path)[1].lower() in TEXT_EXT or base in TEXT_NAMES
@@ -92,6 +114,14 @@ def export(epm, skills, out, remove_internal=False):
                 entry["rules"] = counts
                 for k, v in counts.items():
                     report["rule_totals"][k] = report["rule_totals"].get(k, 0) + v
+            elif os.path.splitext(path)[1].lower() in OFFICE_EXT:
+                counts = rewrite_office(src, dest, dest_rel, dates)
+                if counts is None:
+                    entry["binary"] = True
+                else:
+                    entry["rules"] = counts
+                    for k, v in counts.items():
+                        report["rule_totals"][k] = report["rule_totals"].get(k, 0) + v
             else:
                 shutil.copy2(src, dest)
                 entry["binary"] = True

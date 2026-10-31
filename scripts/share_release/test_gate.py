@@ -62,3 +62,33 @@ def test_base64_page_data_is_not_scanned(tmp_path):
 def test_the_namespace_note_must_be_in_the_readme(tmp_path):
     (tmp_path / "README.md").write_text("no note\n")
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the namespace note is missing"]
+
+
+def test_colours_in_a_page_and_short_words_in_a_binary_are_not_leaks(tmp_path):
+    clean(tmp_path)
+    (tmp_path / "page.html").write_text("<style>a{color:#111;background:#fff} b{border:1px solid #1a2b3c}</style>\n")
+    (tmp_path / "img.png").write_bytes(b"\x89PNG\r\n\x1a\n\0\0pbf cvr #123 skos__x\0\0")
+    assert gate.scan(str(tmp_path)) == []
+    (tmp_path / "img.png").write_bytes(b"\x89PNG\0\0EPM-DEC-001-0001\0")
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a decision record number"]
+
+
+def test_an_office_file_is_rewritten_by_the_export(tmp_path):
+    import zipfile
+    import export
+    epm = tmp_path / "epm"
+    (epm / "business_architecture" / "reference").mkdir(parents=True)
+    with zipfile.ZipFile(epm / "business_architecture" / "reference" / "book.xlsx", "w") as z:
+        z.writestr("xl/sharedStrings.xml", "<sst><si><t>LSC Core (EPM-DEC-001-0001)</t></si></sst>")
+        z.writestr("xl/media/image1.png", b"\x89PNG\0\0")
+    out = tmp_path / "rel"
+    export.export(str(epm), "", str(out))
+    with zipfile.ZipFile(out / "business_architecture" / "reference" / "book.xlsx") as z:
+        assert z.read("xl/sharedStrings.xml") == b"<sst><si><t>MPC Core (the decision of an earlier date)</t></si></sst>"
+        assert z.read("xl/media/image1.png") == b"\x89PNG\0\0"
+
+
+def test_a_databricks_workspace_path_is_not_the_owners_machine(tmp_path):
+    clean(tmp_path)
+    (tmp_path / "a.py").write_text('folder = f"/Workspace/Users/{name}/pricing-demo"\n')
+    assert gate.scan(str(tmp_path)) == []

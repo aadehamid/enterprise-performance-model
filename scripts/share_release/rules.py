@@ -64,6 +64,7 @@ def rule_company(text, ctx):
     text, k = _count(r"© LSC\. All rights reserved\. Proprietary \(EPM-DEC-001-\d{4}\)\.", "All rights reserved. Proprietary.", text); n += k
     text, k = _count(r"\bLSC's\b", "MPC's", text); n += k
     text, k = _count(r"\bLSC\b", "MPC", text); n += k
+    text, k = _count(r"\blsc\b", "mpc", text); n += k
     return text, n
 
 
