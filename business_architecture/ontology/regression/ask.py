@@ -1,7 +1,7 @@
 """Ask the ontology one competency question, with the regression's queries and the same graph.
 
 Run from this folder:
-    python3 ask.py                     # list the questions
+    python3 ask.py                     # list the queries, each named for its question
     python3 ask.py q36-the-crack       # run one, showing each IRI's label
     python3 ask.py q06a-systems-for-process --limit 5
 """
