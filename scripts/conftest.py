@@ -37,8 +37,9 @@ def pytest_collection_modifyitems(config, items):
             continue
         if not item.fspath.basename in ("test_epm_facts.py", "test_published_figures.py"):
             continue
-        if no_gate and "facts" in getattr(item, "fixturenames", ()):
-            item.add_marker(pytest.mark.skip(reason="no Step 4 gate here, so `epm_facts.py counts` cannot run (the share release leaves it out)"))
+        if no_gate and "facts" in getattr(item, "fixturenames", ()) and "taxonomy" not in item.name:
+            # `epm_facts.py counts` gives the taxonomy figures only without the gate, so the taxonomy test still runs.
+            item.add_marker(pytest.mark.skip(reason="no Step 4 gate here, so `epm_facts.py counts` has no ledger figures (the share release leaves it out)"))
         elif no_records and RECORD_TESTS.search(item.name):
             item.add_marker(pytest.mark.skip(reason="no decision records or saved answers here (the share release carries none)"))
         elif no_ledger and LEDGER_TESTS.search(item.name):

@@ -321,6 +321,17 @@ def taxonomy():
 # ---------- commands ----------
 
 def cmd_counts(args):
+    if not os.path.isfile(os.path.join(STEP4, "mapping_v2.py")):
+        # A tree without the Step 4 gate (the share release): the taxonomy figures only.
+        out = {"commit": commit(), "step4_gate": "not in this tree", "taxonomy": taxonomy(), "sources": [rel(TAXONOMY)]}
+        if args.json:
+            print(json.dumps(out, indent=2))
+            return 0
+        print(f"commit {out['commit']}")
+        print("the Step 4 gate is not in this tree: no ledger, evidence-gate or Phase 1 figures")
+        print("taxonomy: " + ", ".join(f"{k} {v}" for k, v in out["taxonomy"].items()))
+        print("sources: " + "; ".join(out["sources"]))
+        return 0
     mapping, gate, gate_green, gate_text = run_pipeline()
     gate_lines = gate_text.splitlines()
     led, held, emitting = ledger(mapping)
