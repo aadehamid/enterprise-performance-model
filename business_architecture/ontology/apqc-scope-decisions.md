@@ -5,7 +5,7 @@ Decisions accumulate here; they are applied to the model in a single pass later
 (Step 3/4 of the ontology plan), followed by one consolidated proposal to update
 `downstream_process_map.json` in the repo — not one edit per decision.
 
-*2026-10-31:* Deferred. The decision owner accepted the recommendation to record the in-scope areas of decisions 1, 2, 3 and 5 as deferred: "I like all your recommendations. Let us go ahead and implement them" (`answers-2026-10-31-release-and-open-items.md`, #454). They have no process in `downstream_process_map.json`. Revive one when a consumer or a competency question needs it, through a process-map proposal. Decision 7's turnarounds are covered by RF 1.2.1 to RF 1.2.5 (MPC-P02b).
+*2026-10-31:* Deferred. The decision owner accepted the recommendation to record the in-scope areas of decisions 1, 2, 3 and 5 as deferred: "I like all your recommendations. Let us go ahead and implement them" (`answers-2026-10-31-release-and-open-items.md`, #454). They have no process in `downstream_process_map.json`. The deferral records no trigger, so bringing one in takes a new decision. Decision 7's turnarounds are covered by RF 1.2.1 to RF 1.2.5 (MPC-P02b).
 
 ## Decision 1 — APQC 6.4 Manage product recalls and regulatory audits → IN SCOPE
 

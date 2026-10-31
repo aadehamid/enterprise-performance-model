@@ -11,14 +11,18 @@ import os
 import sys
 
 from rdflib import URIRef
-from rdflib.namespace import SKOS
+from rdflib.namespace import RDFS, SKOS
 
 import run
 
 
 def label(graph, value):
-    """A term's preferred label if it has one, else the value as written."""
-    return str(graph.value(value, SKOS.prefLabel) or value) if isinstance(value, URIRef) else str(value)
+    """A term's preferred label or label if it has one, else the value as written; an unbound value shows as a dash."""
+    if value is None:
+        return "-"
+    if isinstance(value, URIRef):
+        return str(graph.value(value, SKOS.prefLabel) or graph.value(value, RDFS.label) or value)
+    return str(value)
 
 
 def questions():

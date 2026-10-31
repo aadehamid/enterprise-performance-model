@@ -209,6 +209,12 @@ class Ask(unittest.TestCase):
         self.assertEqual({r[0] for r in rows}, {"Crack Spreads Pricing"})
         self.assertIn("Margin Capture", {r[1] for r in rows})
 
+    def test_an_unbound_value_is_a_dash_and_a_predicate_shows_its_label(self):
+        import ask
+        self.assertEqual(ask.label(GRAPH, None), "-")
+        _, _, rows = ask.ask(GRAPH, ask.questions()["q39-downstream"], limit=500)
+        self.assertFalse([c for r in rows for c in r if c.startswith("https://w3id.org/lsc/ontology/modules/core/")])
+
 
 if __name__ == "__main__":
     unittest.main()
