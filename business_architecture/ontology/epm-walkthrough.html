@@ -216,6 +216,7 @@ details.fm:not([open])>:not(summary){display:none}
         <li><a href="#business">The business, and how it is mapped</a></li>
         <li><a href="#gaps">What was missing, and how it was filled</a></li>
         <li><a href="#map-to-ontology">From the process map to the ontology</a></li>
+        <li><a href="#limits">What this does not do</a></li>
         <li><a href="#big-picture">The big picture and a reading order</a></li>
         <li><a href="#how-built">How the ontology was built, from zero to done</a></li>
         <li><a href="#setup">Set up to run things yourself</a></li>
@@ -224,6 +225,7 @@ details.fm:not([open])>:not(summary){display:none}
         <li><a href="#projections">Projections and stores</a></li>
         <li><a href="#demo">The pricing demo, file by file</a></li>
         <li><a href="#graphs">Git, the two graphs and the measures</a></li>
+        <li><a href="#ask">Ask the ontology a question</a></li>
         <li><a href="#change">How to change the ontology</a></li>
         <li><a href="#hands-on">Each store, hands on</a></li>
         <li><a href="#glossary">Glossary</a></li>
@@ -327,7 +329,7 @@ details.fm:not([open])>:not(summary){display:none}
 
 <section id="gaps" data-ss-id="section-gaps" data-ss-section>
   <h2 class="rise" data-ss-id="what-was-missing-and-how-it-was-filled">What was missing, and how it was filled</h2>
-  <p class="section-lede rise" data-ss-id="gaps-lede">The first map was deep in one branch and empty in the others, and most of it had no definitions. Five separate checks found the gaps. Most are filled, and the rest are on record.</p>
+  <p class="section-lede rise" data-ss-id="gaps-lede">The first map was deep in one branch and empty in the others, and most of it had no definitions. Five separate checks found the gaps. Most are filled, and the rest are on record, as open or deferred.</p>
   <div class="split rise">
     <div>
       <h3 style="margin-top:0" data-ss-id="the-map-at-the-start">The map at the start</h3>
@@ -368,7 +370,7 @@ details.fm:not([open])>:not(summary){display:none}
 <tr><td data-k="What was missing">Customer processes named no systems; 25 processes shared seven names</td><td data-k="Found by">MPC-P11, MPC-P12</td><td data-k="What was done">12 processes name their systems, in 21 links. Each of the 25 now names its parent's subject (EPM-DEC-001-0103, 0105)</td><td data-k="State"><strong>Filled</strong></td></tr>
 <tr><td data-k="What was missing">Order to Cash detail: collection and dispute steps collapse into one process, and Close AR Sub Ledger has no named process</td><td data-k="Found by">O2C gap list</td><td data-k="What was done">Recorded with the closest process for each</td><td data-k="State"><strong>Recorded</strong>, not changed</td></tr>
 <tr><td data-k="What was missing">Data products for customer credit and receivables; retail transaction depth; blending operations</td><td data-k="Found by">Both gap lists</td><td data-k="What was done">Recorded with the closest process for each</td><td data-k="State"><strong>Open</strong></td></tr>
-<tr><td data-k="What was missing">Product recalls and regulatory audits, human capital, data and analytics governance, remediation</td><td data-k="Found by">APQC, ruled in scope on 2026-09-17</td><td data-k="What was done">No process in the map today. The issue gives the options, and the decision is the decision owner's</td><td data-k="State"><strong>Open</strong>, #454</td></tr>
+<tr><td data-k="What was missing">Product recalls and regulatory audits, human capital, data and analytics governance, remediation</td><td data-k="Found by">APQC, ruled in scope on 2026-09-17</td><td data-k="What was done">No process in the map. The decision owner deferred them on 2026-10-31, until a consumer or competency question needs one</td><td data-k="State"><strong>Deferred</strong> (#454)</td></tr>
 <tr><td data-k="What was missing">Fixed-asset project accounting; government, board and public relations</td><td data-k="Found by">APQC</td><td data-k="What was done">Boundary notes: nothing in the ontology depends on them</td><td data-k="State"><strong>Out of scope</strong></td></tr>
 </tbody></table></div>
   <p class="rise" data-ss-id="gaps-sources">Sources: <code>value_stream_*.json</code>, <code>apqc-scope-decisions.md</code>, <code>process-map-suggestions.md</code>, <code>proposals/MPC-P*.md</code>, and the worklog, compared with the map on <code>main</code> at <code>daf60fee</code>.</p>
@@ -411,6 +413,36 @@ details.fm:not([open])>:not(summary){display:none}
   </div>
   <p class="rise" data-ss-id="bridge-rules">The review also produced 18 named rules that govern the definitions. The Billing Integrity Rule, for one, says every correction is a controlled successor document, and nothing is edited in place. <code>business_architecture/ontology/business-process-architecture-playbook.md</code> records the whole method, with each rule citing the batch that locked it. "How the ontology was built" below takes the story from here.</p>
   <p class="xref rise" data-ss-id="bridge-built"><strong>Built in Part 2:</strong> steps <a href="#s-1">1</a>, <a href="#s-2">2</a>, <a href="#s-3">3</a>, <a href="#s-4">4</a>.</p>
+</section>
+
+<section id="limits" data-ss-id="section-limits" data-ss-section>
+  <h2 class="rise" data-ss-id="what-this-does-not-do">What this does not do</h2>
+  <p class="section-lede rise" data-ss-id="limits-lede">Read this before you form expectations. The ontology defines the business; it does not run it.</p>
+  <div class="split rise">
+    <div>
+      <h3 style="margin-top:0" data-ss-id="limits-ontology">The ontology</h3>
+      <ul>
+        <li data-ss-id="limit-values"><strong>It calculates nothing.</strong> It defines what a measure means. Values stay in the business systems and the KPI Store.</li>
+        <li data-ss-id="limit-records"><strong>It holds no records.</strong> Customers, invoices and transactions stay in their systems ("define, don't record").</li>
+        <li data-ss-id="limit-replace"><strong>It runs no process and replaces no system.</strong> It does not replace the ERP, the KPI Store or Genie.</li>
+        <li data-ss-id="limit-business"><strong>The business has not signed it off.</strong> <code>OPEN-ITEMS.md</code> lists what the business still needs to answer, including who owns each concept's meaning.</li>
+        <li data-ss-id="limit-coverage"><strong>It does not cover the whole company.</strong> Most enabling functions have no processes, and four areas are deferred.</li>
+        <li data-ss-id="limit-iri"><strong>Its IRIs do not resolve.</strong> They identify terms; nothing is hosted at those addresses.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:0" data-ss-id="limits-demo">The pricing demo</h3>
+      <ul>
+        <li data-ss-id="limit-synthetic"><strong>Much of its data is synthetic.</strong> Every row is labelled real, spot-anchored or synthesized, and the ten decisions and their outcomes are made up. Nothing in it is advice.</li>
+        <li data-ss-id="limit-tests"><strong>It did not reach its target.</strong> The latest run passes 2 of 21 use cases, and the best on three attempts passes 3.</li>
+        <li data-ss-id="limit-free"><strong>It runs on Databricks Free Edition.</strong> It says nothing about performance at scale, and the daily limit stops long runs.</li>
+      </ul>
+      <h3 data-ss-id="limits-stores">The stores</h3>
+      <ul>
+        <li data-ss-id="limit-sync"><strong>They do not keep themselves in step with Git.</strong> "Keeping them in step" below says what runs today and what is planned.</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <section id="big-picture" data-ss-id="section-big-picture" data-ss-section>
@@ -465,6 +497,7 @@ details.fm:not([open])>:not(summary){display:none}
     <li><code>business_architecture/ontology/README.md</code> and <code>MODULES.md</code>: what the modules are and how they connect.</li>
     <li><code>business_architecture/ontology/epm-ontology-guide.html</code> in a browser: the crack-spread measure traced through every module.</li>
     <li><code>business_architecture/ontology/business-process-architecture-playbook.md</code>: how the process definitions were decided.</li>
+    <li><code>business_architecture/ontology/OPEN-ITEMS.md</code>: what is still open, and what we need from the business.</li>
     <li>One module end to end: <code>business_architecture/ontology/kpi/</code> (its CSV tables, <code>build_measures.py</code>, <code>measures.ttl</code>, <code>shapes.ttl</code>, <code>test_measures.py</code>), then its release in <code>releases/kpi/1.3.0/</code>.</li>
     <li><code>scripts/check.sh</code> and <code>scripts/epm_facts.py</code>: how the repository checks itself.</li>
     <li><code>business_architecture/ontology/projection/</code>: <code>README.md</code>, <code>pipeline.py</code>, <code>run_local.sh</code>, <code>LOCAL-STORES.md</code>, <code>sync_stores.py</code>, and the runbook <code>ontology-stores-runbook.html</code>.</li>
@@ -1051,6 +1084,27 @@ RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos__pr
   <p class="xref rise" data-ss-id="graphs-built"><strong>Built in Part 2:</strong> steps <a href="#s-24">24</a>, <a href="#s-25">25</a>, <a href="#s-33">33</a>.</p>
 </section>
 
+<section id="ask" data-ss-id="section-ask" data-ss-section>
+  <h2 class="rise" data-ss-id="ask-the-ontology-a-question">Ask the ontology a question</h2>
+  <p class="section-lede rise" data-ss-id="ask-lede">Here is what it is for, in the business's own questions. Each answer below comes from the released ontology, by running the query named beside it.</p>
+  <div class="tbl rise" data-ss-id="ask-table"><table class="gapt"><thead><tr><th>Question</th><th>What it answers</th><th>Query</th></tr></thead><tbody>
+<tr><td>Which measure is "the crack", and which are not it?</td><td data-k="Answer">Crack Spreads Pricing is the official one. It is not Margin Capture, R&amp;M Margin Indicator or R&amp;M Margin per Barrel.</td><td data-k="Query"><code>q36-the-crack</code></td></tr>
+<tr><td>What is the crack spread not?</td><td data-k="Answer">"Not realized refinery margin, not margin capture, and not MPC's R&amp;M Margin Indicator."</td><td data-k="Query"><code>q32-crack-is-not</code></td></tr>
+<tr><td>What is a measure, before anyone computes it?</td><td data-k="Answer">41 definitions, each with a name, a definition and a kind, and no value.</td><td data-k="Query"><code>q27-measure-definitions</code></td></tr>
+<tr><td>Who is accountable for a process?</td><td data-k="Answer">935 assignments. Model and System Maintenance: IT Data Owner accountable, Business Analyst responsible, IT Data Custodian consulted.</td><td data-k="Query"><code>q03a-raci</code></td></tr>
+<tr><td>Which systems support a process?</td><td data-k="Answer">306 links. Establish Credit Limit &amp; Risk Code: Salesforce and SAP S/4HANA.</td><td data-k="Query"><code>q06a-systems-for-process</code></td></tr>
+<tr><td>What breaks downstream if a process changes?</td><td data-k="Answer">309 links between processes. Manage Financial Information Documentation and Reporting depends on the output of Reconcile Economic PNL to Accounting PNL.</td><td data-k="Query"><code>q39-downstream</code></td></tr>
+<tr><td>Which processes make up a value stream?</td><td data-k="Answer">64 links: 40 processes in Order to Cash and 24 in the Commercial Hydrocarbon Lifecycle.</td><td data-k="Query"><code>q10b-value-stream-processes</code></td></tr>
+<tr><td>Which data products does a process produce?</td><td data-k="Answer">90 rows. Deal Negotiation &amp; Capture produces Physical Trading.</td><td data-k="Query"><code>q07a-produces-consumes</code></td></tr>
+<tr><td>Which processes sit in each office lane?</td><td data-k="Answer">7: 4 in Operations, and 1 each in Front, Middle and Back Office.</td><td data-k="Query"><code>q09a-lane-processes</code></td></tr>
+<tr><td>Where does credit sit?</td><td data-k="Answer">"Credit sits on the account; a credit roll-up relationship counts one role's exposure under another's."</td><td data-k="Query"><code>q23-where-credit-sits</code></td></tr>
+</tbody></table></div>
+  <p class="rise" data-ss-id="ask-source">These come from the 44 competency questions, which <code>regression/run.py</code> runs on every check. Run one yourself, or list them all:</p>
+  <pre class="rise" data-ss-id="ask-command"><code># from business_architecture/ontology/regression
+uv run --with rdflib python ask.py                   # list the questions
+uv run --with rdflib python ask.py q36-the-crack     # ask one</code></pre>
+</section>
+
 <section id="change" data-ss-id="section-change" data-ss-section>
   <h2 class="rise" data-ss-id="how-to-change-the-ontology">How to change the ontology</h2>
   <p class="section-lede rise" data-ss-id="change-lede">A released package never changes. A change is a proposal, a decision, a pull request and a new release, and the stores follow from Git.</p>
@@ -1093,7 +1147,7 @@ RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos__pr
 <tr><td><code>scripts/epm_facts.py</code></td><td data-k="What to add">The <code>coverage</code> entry, if processes link to it</td></tr>
 <tr><td><code>MODULES.md</code>, the guide, this page</td><td data-k="What to add">A section on the module, and every figure that says eleven. <code>scripts/test_modules_guide.py</code> and <code>test_published_figures.py</code> check part of this</td></tr>
 </tbody></table></div>
-  <p class="rise" data-ss-id="add-module-method">The <code>ontology</code> skill holds the method for each step, starting at <code>references/governance.md</code>, "Before modelling".</p>
+  <p class="rise" data-ss-id="add-module-method">The <code>ontology</code> skill holds the method for each step, in <code>references/new-module.md</code>: whether it should be a new module, and what each step covers for it.</p>
 </section>
 
 <section id="hands-on" data-ss-id="section-hands-on" data-ss-section>
@@ -1190,7 +1244,7 @@ uv run --with pytest --with jsonschema python -m pytest -q business_architecture
 <dt>What it enables next</dt><dd>Every later step reads these files.</dd>
 <dt>Explained in</dt><dd><a href="#business">The business, and how it is mapped</a>; <a href="#gaps">What was missing</a>; <a href="#how-built">How the ontology was built</a></dd>
 <dt>Files in the File map</dt><dd><a href="#fm-method">Ontology method, Step 4 and inputs</a></dd>
-</dl><p class="unv"><strong>Not confirmed:</strong> The exact pytest dependencies this test needs.</p>
+</dl><p class="unv">Run on 2026-10-31: 10 passed, with those two dependencies.</p>
 </li>
 <li class="stepcard rise" id="s-2">
 <h4>Align with APQC and settle the scope (method Steps 0 and 8)</h4>
@@ -1228,13 +1282,13 @@ uv run --with rdflib --with pyshacl --with openpyxl python build_apqc_elements.p
 <dt>Prerequisites</dt><dd>Build step 1's process map.</dd>
 <dt>Files to open, in this order</dt><dd><ol class="files"><li><code>business_architecture/ontology/build/step2-identity-map.py</code>: derives a slug for every node, for example &quot;CM 1.2.1.3&quot; becomes CM-1-2-1-3, and mints IDs for nodes without one</li><li><code>business_architecture/ontology/build/output/step2-identity-map.json, step2-identity-report.md</code>: the map and its report</li></ol></dd>
 <dt>Commands</dt><dd><pre><code># from repository root
-python3 business_architecture/ontology/build/step2-identity-map.py</code></pre></dd>
+uv run --with rdflib python business_architecture/ontology/build/step2-identity-map.py</code></pre></dd>
 <dt>What you should see</dt><dd>The worklog records 680 nodes, IDs kept as notations, and 11 minted IDs for ID-less stubs; done 2026-09-18.</dd>
 <dt>How to check it worked</dt><dd>The pinned baseline in <code>step4/baseline/step2-identity-map.json</code> is what the core release reads.</dd>
 <dt>What it enables next</dt><dd>URIs for the taxonomy.</dd>
 <dt>Explained in</dt><dd><a href="#how-built">How the ontology was built</a></dd>
 <dt>Files in the File map</dt><dd><a href="#fm-method">Ontology method, Step 4 and inputs</a></dd>
-</dl><p class="unv"><strong>Not confirmed:</strong> The script's command-line options (read its docstring).</p>
+</dl><p class="unv">The script takes no options. It rewrites <code>build/output/step2-identity-map.json</code> and its report from today's map: 707 nodes and 10 minted stubs on 2026-10-31. Use the committed output as it is, unless you are rerunning this step.</p>
 </li>
 <li class="stepcard rise" id="s-5">
 <h4>Build the SKOS taxonomy and its definitions (method Step 3)</h4>
@@ -1243,13 +1297,17 @@ python3 business_architecture/ontology/build/step2-identity-map.py</code></pre><
 <dt>Prerequisites</dt><dd>Build step 4's identity map.</dd>
 <dt>Files to open, in this order</dt><dd><ol class="files"><li><code>business_architecture/ontology/build/step3-skos-taxonomy.py</code>: emits the Turtle; its --workbook overlay adds approved definitions</li><li><code>business_architecture/ontology/build/step3b-definition-triangulation.py</code>: finds APQC candidates for the 503 of 680 nodes that had no description</li><li><code>business_architecture/ontology/build/output/step3c-definition-authoring-workbook.xlsx</code>: the authored definitions</li><li><code>business_architecture/ontology/build/output/step3-taxonomy.ttl, step3-taxonomy-report.md</code>: the taxonomy and its report</li><li><code>business_architecture/ontology/step4/label-report/</code>: the label dispositions (prior names, historical aliases)</li><li><code>business_architecture/domain/decisions/EPM-DEC-001-0098-qskos-findings-dispositions.md</code>: later qSKOS findings and their dispositions</li></ol></dd>
 <dt>Commands</dt><dd><pre><code># from repository root
-python3 business_architecture/ontology/build/step3-skos-taxonomy.py</code></pre></dd>
+uv run --with rdflib --with openpyxl python business_architecture/ontology/build/step3-skos-taxonomy.py \
+  --identity-map business_architecture/ontology/build/output/step2-identity-map.json \
+  --src business_architecture/business_process/downstream_process_map.json \
+  --workbook business_architecture/ontology/build/output/step3c-definition-authoring-workbook.xlsx \
+  --out-dir /tmp/step3-out</code></pre></dd>
 <dt>What you should see</dt><dd><code>step3-taxonomy.ttl</code>; the worklog marks Step 3 done on 2026-09-18.</dd>
 <dt>How to check it worked</dt><dd>The step-3c tests in <code>build/scripts/</code>, run by <code>scripts/check.sh</code>.</dd>
 <dt>What it enables next</dt><dd>The processes the relationship layer links.</dd>
 <dt>Explained in</dt><dd><a href="#how-built">How the ontology was built</a></dd>
 <dt>Files in the File map</dt><dd><a href="#fm-method">Ontology method, Step 4 and inputs</a></dd>
-</dl><p class="unv"><strong>Not confirmed:</strong> The overlay options to pass for a full rebuild.</p>
+</dl><p class="unv">Run on 2026-10-31, writing to a separate folder: 707 concepts, 14,659 triples and 704 definitions. <code>--authored</code> and <code>--adoptions</code> add earlier overlays. The releases do not read this output, since <code>core</code> builds from its pinned baseline in <code>step4/baseline/</code>.</p>
 </li>
 <li class="stepcard rise" id="s-6">
 <h4>Map the relationships through the evidence gate (method Step 4)</h4>
@@ -1524,7 +1582,7 @@ git tag kpi-v1.3.0</code></pre></dd>
 <dt>What it enables next</dt><dd>Versioned inputs the projections read.</dd>
 <dt>Explained in</dt><dd><a href="#machinery">The build and release machinery</a></dd>
 <dt>Files in the File map</dt><dd><a href="#fm-checks">Build and checks</a>, <a href="#fm-modules">Ontology modules and releases</a></dd>
-</dl><div class="ex"><p><strong>Try it: List the modules.</strong> <code>uv run --with rdflib python scripts/epm_facts.py modules</code>. Expect eleven modules, newest core 2.4.0 and kpi 1.3.0. Teaches: releases and requirements.</p></div><p class="unv"><strong>Not confirmed:</strong> Run <code>--write</code> only for a new version; it rewrites the package.</p>
+</dl><div class="ex"><p><strong>Try it: List the modules.</strong> <code>uv run --with rdflib python scripts/epm_facts.py modules</code>. Expect eleven modules, newest core 2.4.0 and kpi 1.3.0. Teaches: releases and requirements.</p></div><p class="unv">Run <code>--write</code> only for a new version. It overwrites the package folder of the version the module's entry names, with no prompt, and a released package must never change. Use <code>--verify</code> to check.</p>
 </li>
 <li class="stepcard rise" id="s-22">
 <h4>Run the competency regression (method Step 11)</h4>
@@ -1798,7 +1856,7 @@ python3 scripts/build_docs_html.py
 python3 scripts/epm_facts.py sweep main</code></pre></dd>
 <dt>What you should see</dt><dd>Generated pages equal fresh builds; the sweep lists replaced wording still in use.</dd>
 <dt>How to check it worked</dt><dd><code>scripts/test_docs_html.py</code>; CI.</dd>
-<dt>What it enables next</dt><dd>The GitHub issues that hold the remaining work.</dd>
+<dt>What it enables next</dt><dd><code>business_architecture/ontology/OPEN-ITEMS.md</code> for the ontology, and the GitHub issues for the demo.</dd>
 <dt>Explained in</dt><dd><a href="#next">Where to go next</a></dd>
 <dt>Files in the File map</dt><dd><a href="#fm-decisions">Decisions and evidence</a></dd>
 </dl>
@@ -1819,7 +1877,7 @@ python3 scripts/epm_facts.py sweep main</code></pre></dd>
       <h3 data-ss-id="open-items">Open items</h3>
       <p data-ss-id="next-open-list"><code>business_architecture/ontology/OPEN-ITEMS.md</code> lists everything open on the ontology. The main ones:</p>
       <ul>
-        <li data-ss-id="next-apqc">Four process areas ruled in scope with no process in the map (#454).</li>
+        <li data-ss-id="next-apqc">Four process areas ruled in scope and deferred on 2026-10-31, until a consumer needs them (#454).</li>
         <li data-ss-id="next-closeout">The business close-out points in <code>business_architecture/ontology/business-closeout.md</code> (#427).</li>
         <li data-ss-id="next-drift">The drift check does not run by itself, and the technical graph has no marker (#455).</li>
         <li data-ss-id="next-secrets">The repository secrets that switch on the release-tag store sync (#426).</li>
@@ -1834,7 +1892,7 @@ python3 scripts/epm_facts.py sweep main</code></pre></dd>
 
 <section id="file-map" data-ss-id="section-file-map" data-ss-section>
   <h2 class="rise" data-ss-id="appendix-file-map">Appendix: File map</h2>
-  <p class="section-lede rise">Every script, ontology module, utility and agent skill used to build this, by path, from the two repositories' main branches on 2026-10-29, with later changes noted where they matter. Each line says what the file is for, from its own docstring, header comment or heading; "purpose not documented" means it has none. Families of many files are shown as one pattern with a count. Paths are relative to <code>~/Dropbox/1_PROJECTS/Enterprise Performance Model</code> unless marked.</p>
+  <p class="section-lede rise">Every script, ontology module, utility and agent skill used to build this, by path, from the two repositories' main branches on 2026-10-29, with later additions listed where they belong. Each line says what the file is for, from its own docstring, header comment or heading; "purpose not documented" means it has none. Families of many files are shown as one pattern with a count. Paths are relative to <code>~/Dropbox/1_PROJECTS/Enterprise Performance Model</code> unless marked.</p>
   <h3 id="fm-checks" class="rise" data-ss-id="file-map-fm-checks">Build and checks <span class="cnt">(21 entries)</span></h3>
   <p class="rise"><strong>Where to start:</strong> Start with <code>scripts/check.sh</code>, then <code>scripts/epm_facts.py</code> and <code>AGENTS.md</code>.</p>
 <div class="tbl fm-tbl"><table><thead><tr><th>Path</th><th>What it is</th></tr></thead><tbody>
@@ -1860,7 +1918,7 @@ python3 scripts/epm_facts.py sweep main</code></pre></dd>
 <tr><td><code>scripts/test_pre_push_hook.py</code></td><td>Tests for scripts/hooks/pre-push: a push that only deletes remote refs skips the checks; any other push, and a run with no ref lines (git hook run…</td></tr>
 <tr><td><code>scripts/test_published_figures.py</code></td><td>Check that figures stated in governed documents match epm-facts.</td></tr>
 </tbody></table></div>
-  <h3 id="fm-method" class="rise" data-ss-id="file-map-fm-method">Ontology method, Step 4 and inputs <span class="cnt">(127 entries)</span></h3>
+  <h3 id="fm-method" class="rise" data-ss-id="file-map-fm-method">Ontology method, Step 4 and inputs <span class="cnt">(131 entries)</span></h3>
   <p class="rise"><strong>Where to start:</strong> Start with <code>business_architecture/ontology/README.md</code>, the process map <code>business_architecture/business_process/downstream_process_map.json</code>, then <code>step4/evidence-gate.py</code> and <code>step4/playbook/ontology-worklog.md</code>.</p>
   <details class="fm rise"><summary>Show all 126 entries</summary>
 <div class="tbl fm-tbl"><table><thead><tr><th>Path</th><th>What it is</th></tr></thead><tbody>
@@ -1988,6 +2046,10 @@ python3 scripts/epm_facts.py sweep main</code></pre></dd>
 <tr><td><code>business_architecture/ontology/business-closeout.md</code></td><td>Business close-out package: This package lists the points about the ontology that only the business can settle.</td></tr>
 <tr><td><code>business_architecture/ontology/business-process-architecture-playbook.md</code></td><td>Business Process Architecture Playbook — Downstream Process Definitions: The ontology playbook (since 2026-10-25 the ontology skill&#x27;s guide,…</td></tr>
 <tr><td><code>business_architecture/reference/mpc/process-map-suggestions.md</code></td><td>Process-map suggestions from MPC's public material, with the decision owner's ruling on each</td></tr>
+<tr><td><code>business_architecture/ontology/OPEN-ITEMS.md</code></td><td>What stays open on the ontology, who answers each item, and the record that holds it</td></tr>
+<tr><td><code>business_architecture/ontology/epm-walkthrough.html</code></td><td>This page</td></tr>
+<tr><td><code>business_architecture/ontology/regression/ask.py</code></td><td>Asks the ontology one competency question, showing labels</td></tr>
+<tr><td><code>skills/data/ontology/references/new-module.md</code> (personal-agent-skills)</td><td>The method for adding a module to an ontology that already has releases</td></tr>
 <tr><td><code>business_architecture/ontology/competency-questions.md</code></td><td>Competency Questions — Baseline: answer a question here, the model is incomplete — not the question.</td></tr>
 <tr><td><code>business_architecture/ontology/step3c-naming-pass-queue.md</code></td><td>Step 3c Taxonomy Naming Normalization Queue: ID: EPM-BA-NAMING-QUEUE-001 Title: Step 3c Taxonomy Naming Normalization Queue Version: 0.1 Status:…</td></tr>
 <tr><td><code>business_architecture/ontology/step3c-parked-tree-changes.md</code></td><td>Parked Tree Changes — Downstream Process Ontology: Structural changes that were identified during definition authoring, accepted in principle, and…</td></tr>

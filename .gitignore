@@ -31,3 +31,6 @@ business_architecture/ontology/step4/proposal/
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Local plan for cutting the outside release; never committed
+/release-cut/

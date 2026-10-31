@@ -199,5 +199,16 @@ class Release(unittest.TestCase):
         self.assertIn("Q17: parked but lists queries", failures)
 
 
+
+class Ask(unittest.TestCase):
+    def test_a_question_answers_with_labels(self):
+        import ask
+        question, count, rows = ask.ask(GRAPH, ask.questions()["q36-the-crack"])
+        self.assertIn("the crack", question)
+        self.assertEqual(count, 3)
+        self.assertEqual({r[0] for r in rows}, {"Crack Spreads Pricing"})
+        self.assertIn("Margin Capture", {r[1] for r in rows})
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -6,7 +6,6 @@ The ontology is done (EPM-DEC-001-0107), and this page lists what stays open on 
 
 | Item | What is needed | Record |
 |---|---|---|
-| Four process areas ruled in scope on 2026-09-17 have no process in the map: product recalls and regulatory audits, human capital, data and analytics governance, and remediation | Defer them on the record, or model them through process-map proposals | #454; `apqc-scope-decisions.md` |
 | Turning on the release-tag store sync | Add its seven repository secrets, or keep syncing by hand | #426 |
 
 ## What we need from the business
@@ -45,7 +44,7 @@ These also wait on the business, and their changelogs hold the detail:
 
 | Gap | Where it stands | Record |
 |---|---|---|
-| Six enabling functions have no processes: Supply Chain, Shared Services, Process Excellence & IT, Human Resources, Legal & Corporate Communications, and EHS & Government Reporting | Four of the areas in #454 would sit here. The others have no ruling that they need depth | `downstream_process_map.json`; #454 |
+| Six enabling functions have no processes: Supply Chain, Shared Services, Process Excellence & IT, Human Resources, Legal & Corporate Communications, and EHS & Government Reporting | No ruling says they need depth; the deferred areas below would sit here | `downstream_process_map.json`; #454 |
 | Loss Control is produced by `CM 1.1.3.7.13` but is not linked to a stage of the commercial value stream | Partly filled | `value_stream_commercial_lifecycle.json`, `gapAnalysis` |
 | Retail transaction capture and payment processing are not broken down | Open | The same list |
 | Blending operations may span Refining and are not broken down | Open | The same list |
@@ -67,6 +66,7 @@ These also wait on the business, and their changelogs hold the detail:
 |---|---|---|
 | Held process-map rows | A corrected source; each row is then judged again | EPM-DEC-001-0025, 0083 |
 | Refinery operating execution: unit operations, line-ups, blend execution and process control | The trigger each item names | EPM-DEC-001-0063 |
+| Product recalls and regulatory audits, human capital, data and analytics governance, and remediation: ruled in scope on 2026-09-17, deferred on 2026-10-31 | A consumer or competency question that needs them, through a process-map proposal | `apqc-scope-decisions.md`; #454 |
 | Physical maintenance execution | A separate approval | MPC-P02b ruling |
 | Renewable diesel production | A ruling to bring it in | MPC-P04 ruling |
 | IOF Supply Chain mapping | A concept layer for logistics assets or movements, or a consumer that needs IOF terms | EPM-DEC-001-0064 |
