@@ -135,7 +135,8 @@ def row_gate(tree, env):
     if not is_release(tree):
         return {"ok": None, "reason": "the gate runs on the release only"}
     r = sh([sys.executable, os.path.join(HERE, "gate.py"), tree], tree)
-    r["leaks"] = int(re.search(r"(\d+) leak", r["tail"]).group(1)) if "leak" in r["tail"] else 0
+    m = re.search(r"(\d+) leak", r["tail"])
+    r["leaks"] = int(m.group(1)) if m else 0
     r["ok"] = r["returncode"] == 0
     return r
 
