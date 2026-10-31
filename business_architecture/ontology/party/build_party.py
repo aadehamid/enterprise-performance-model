@@ -449,7 +449,8 @@ def add_change_notes(graphs):
         where = [g for g in graphs if (term, None, None) in g]
         if not where:
             problems.append(f"change-notes.csv: {r['term']} is not a term the module builds")
-        elif not re.match(r"\d{4}-\d{2}-\d{2}: .*\(EPM-DEC-001-\d{4}\)\.$", r["note"]):
+        elif not re.match(r"\d{4}-\d{2}-\d{2}: .*\((?:EPM-DEC-001-\d{4}|the decision of \d{4}-\d{2}-\d{2})\)\.$", r["note"]):
+            # A note ends with its record; in the share release a record reads "the decision of <date>" (EPM-DEC-001-0110).
             problems.append(f"change-notes.csv: {r['term']}: the note must start with its date and end with its record")
         else:
             where[0].add((term, SKOS.changeNote, Literal(r["note"], lang="en")))
