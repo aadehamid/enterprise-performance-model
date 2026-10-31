@@ -222,7 +222,11 @@ def row_demo_offline(tree, env):
     """The demo's generators and the re-judge of every recorded run (no store, no model)."""
     demo = os.path.join(tree, DEMO)
     out = {"steps": []}
-    r = sh(["uv", "run", "python", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_demo.py"], demo, env=release_env(tree)); out["steps"].append(r)
+    # uv's environment for the demo's project goes outside the tree: a .venv inside the release would be a defect.
+    import tempfile as _tf
+    venv = os.path.join(_tf.gettempdir(), "epm-share-release-demo-venv")
+    r = sh(["uv", "run", "python", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_demo.py"], demo,
+           env={**release_env(tree), "UV_PROJECT_ENVIRONMENT": venv}); out["steps"].append(r)
     m = re.search(r"(\d+) passed", r["tail"]); out["tests_passed"] = int(m.group(1)) if m else None
     # Re-judge each recorded run from a copy in a scratch folder (rejudge writes <run>-rejudged.json beside its input),
     # and compare the verdicts with the tree's recorded re-judgement, case by case.

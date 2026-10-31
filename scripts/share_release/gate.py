@@ -74,7 +74,7 @@ def scan(release):
     hits = []
     note_found = False
     for root, dirs, files in os.walk(release):
-        dirs[:] = sorted(d for d in dirs if d not in (".git", "__pycache__"))
+        dirs[:] = sorted(d for d in dirs if d not in (".git", "__pycache__", ".pytest_cache"))
         for f in sorted(files):
             path = os.path.join(root, f)
             rel = os.path.relpath(path, release)
