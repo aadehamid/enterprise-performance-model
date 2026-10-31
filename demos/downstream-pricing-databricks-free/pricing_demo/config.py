@@ -15,6 +15,9 @@ WINDOW_END = dt.date(2026, 10, 20)
 # EIA's weekly data by PADD reaches six years back, so a five-year seasonal average exists for every week in the window.
 WEEKLY_START = dt.date(2020, 10, 16)
 SEED = 20261025
+# The ontology graph's names in Neo4j: prefix, separator, local name. n10s writes two underscores; the share
+# release renames them to one (EPM-DEC-001-0110), so a query builds its names with this separator.
+GRAPH_SEP = "_" if os.environ.get("EPM_SHARE_RELEASE") else "_" * 2
 
 # The names the demo uses for the source systems: a public product name where one exists (RightAngle, Aspen PIMS),
 # otherwise a generic one (the decision owner, 2026-10-28). The real names stay in the ontology; README.md maps

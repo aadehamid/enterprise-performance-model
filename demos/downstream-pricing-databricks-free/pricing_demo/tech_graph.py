@@ -29,7 +29,7 @@ import re
 from decimal import Decimal
 
 from .aura_test import read_env
-from .config import HIDDEN_SYSTEMS, OUT, PROVENANCE, ROOT, SYSTEMS, source_dsn
+from .config import GRAPH_SEP, HIDDEN_SYSTEMS, OUT, PROVENANCE, ROOT, SYSTEMS, source_dsn
 
 REPO = os.path.abspath(os.path.join(ROOT, "..", ".."))
 SPARQL = os.path.join(ROOT, "sparql")
@@ -58,9 +58,9 @@ STORES = {  # the stores LOCAL-STORES.md lists, with their login files; the newe
     "driver": ("bolt://127.0.0.1:17711", ("~/lpg-out/epm-rebuild/neo4j-run/run.env", "~/lpg-out/epm/neo4j-run/run.env")),
     "aura": (None, ("~/.config/neo4j/aura.env",)),
 }
-WALK = """MATCH (gold:Tech:GoldTable {name: $gold})<-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]->(m:Resource)
+WALK = f"""MATCH (gold:Tech:GoldTable {{name: $gold}})<-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]->(m:Resource)
 OPTIONAL MATCH (agent:Tech:GenieAgent)-[:BINDS]->(view)
-RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos__prefLabel AS label,
+RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos{GRAPH_SEP}prefLabel AS label,
        collect(DISTINCT agent.name) AS agents ORDER BY metric_view, measure"""
 
 

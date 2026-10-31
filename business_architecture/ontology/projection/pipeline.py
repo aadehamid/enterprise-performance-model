@@ -114,13 +114,65 @@ def sha(*texts):
     return h.hexdigest()
 
 
-def lpg_name(iri):
-    """The name n10s gives a term in SHORTEN mode: the fixed prefix, two underscores, the local name."""
+# n10s writes every label, relationship type and property key as the fixed prefix, two underscores and the local
+# name (its SHORTEN setting). The graph keeps that on main. In the share release the separator is one underscore
+# (EPM-DEC-001-0110): after every check has passed on the n10s names, the load renames each label, type and key,
+# proves the rename lossless against a dump taken before it, and hashes the renamed graph.
+N10S_SEP = "_" * 2
+SEP = "_" if os.environ.get("EPM_SHARE_RELEASE") else N10S_SEP
+
+
+def lpg_name(iri, sep=None):
+    """The name a term has in the graph: the fixed prefix, the separator, the local name."""
+    sep = SEP if sep is None else sep
     s = str(iri)
     for prefix, ns in PREFIXES.items():
         if s.startswith(ns) and "/" not in s[len(ns):] and "#" not in s[len(ns):]:
-            return f"{prefix}__{s[len(ns):]}"
+            return f"{prefix}{sep}{s[len(ns):]}"
     return None
+
+
+def names_in_use(session):
+    """Every label, relationship type and property key the data holds (not the token tables, which keep deleted names)."""
+    labels = session.run("MATCH (n) UNWIND labels(n) AS l RETURN collect(DISTINCT l) AS l").single()["l"]
+    rels = session.run("MATCH ()-[r]->() RETURN collect(DISTINCT type(r)) AS l").single()["l"]
+    keys = session.run("MATCH (n) UNWIND keys(n) AS k RETURN collect(DISTINCT k) AS l").single()["l"]
+    keys += [k for k in session.run("MATCH ()-[r]->() UNWIND keys(r) AS k RETURN collect(DISTINCT k) AS l").single()["l"] if k not in keys]
+    return labels, rels, keys
+
+
+def dump(session):
+    nodes = session.run("MATCH (n:Resource) RETURN n.uri AS uri, labels(n) AS l, properties(n) AS p ORDER BY uri").data()
+    edges = session.run("MATCH (a:Resource)-[r]->(b:Resource) RETURN a.uri AS s, type(r) AS t, b.uri AS o, properties(r) AS p ORDER BY s, t, o").data()
+    return nodes, edges
+
+
+def rename_separator(session):
+    """Rename every label, relationship type and property key from prefix__name to prefix_name (SEP), with APOC,
+    and prove it lossless: the dump before, with the expected renames applied, equals the dump after. Returns the
+    counts renamed and whether the comparison held."""
+    labels, rels, keys = names_in_use(session)
+    plan = {kind: {x: x.replace(N10S_SEP, SEP, 1) for x in names if N10S_SEP in x}
+            for kind, names in (("labels", labels), ("rels", rels), ("keys", keys))}
+    for kind, existing in (("labels", labels), ("rels", rels), ("keys", keys)):
+        new = list(plan[kind].values())
+        if len(set(new)) != len(new) or set(new) & set(existing):
+            raise RuntimeError(f"the single-underscore rename collides in {kind}")
+    before = dump(session)
+    for old, new in plan["labels"].items():
+        session.run("CALL apoc.refactor.rename.label($o, $n)", o=old, n=new).consume()
+    for old, new in plan["rels"].items():
+        session.run("CALL apoc.refactor.rename.type($o, $n)", o=old, n=new).consume()
+    for old, new in plan["keys"].items():
+        session.run("CALL apoc.refactor.rename.nodeProperty($o, $n)", o=old, n=new).consume()
+        session.run("CALL apoc.refactor.rename.typeProperty($o, $n)", o=old, n=new).consume()
+    L, R, K = plan["labels"], plan["rels"], plan["keys"]
+    expected = ([{"uri": n["uri"], "l": sorted(L.get(x, x) for x in n["l"]), "p": {K.get(k, k): v for k, v in n["p"].items()}} for n in before[0]],
+                [{"s": e["s"], "t": R.get(e["t"], e["t"]), "o": e["o"], "p": {K.get(k, k): v for k, v in e["p"].items()}} for e in before[1]])
+    after = dump(session)
+    got = ([{**n, "l": sorted(n["l"])} for n in after[0]], after[1])
+    lossless = json.dumps(expected, sort_keys=True, default=str) == json.dumps(got, sort_keys=True, default=str)
+    return {k: len(v) for k, v in plan.items()}, lossless
 
 
 def shapes_fingerprint():
@@ -397,9 +449,10 @@ def load_verify(bolt, password, import_dir):
     driver = GraphDatabase.driver(bolt, auth=("neo4j", password))
     with driver.session() as s:
         load(s, "shuffled.nt", setup)
+        if SEP != N10S_SEP:
+            rename_separator(s)
         hash_shuffled = graph_hash(s)
         load(s, "loadable.nt", setup)
-        hash_sorted = graph_hash(s)
         s.run("CALL n10s.validation.shacl.import.fetch('file:///import/shapes.ttl','Turtle')").consume()
         violations = s.run("CALL n10s.validation.shacl.validate() YIELD focusNode, propertyShape, resultMessage "
                            "RETURN focusNode, propertyShape, resultMessage").data()
@@ -407,11 +460,14 @@ def load_verify(bolt, password, import_dir):
         # The in-graph check must be able to fail: remove one role's name, which every role must
         # have exactly once (the organization package's shapes.ttl), and count the violations n10s reports.
         shapes_loaded = s.run("CALL n10s.validation.shacl.listShapes() YIELD target RETURN count(*) AS n").single()["n"]
-        probe = s.run("MATCH (r:org__Role) WITH r ORDER BY r.uri LIMIT 1 WITH r, r.skos__prefLabel AS label "
-                      "REMOVE r.skos__prefLabel RETURN r.uri AS uri, label").single()
+        role, pref = f"org{N10S_SEP}Role", f"skos{N10S_SEP}prefLabel"  # the n10s names, before any rename
+        probe = s.run(f"MATCH (r:{role}) WITH r ORDER BY r.uri LIMIT 1 WITH r, r.{pref} AS label "
+                      f"REMOVE r.{pref} RETURN r.uri AS uri, label").single()
         caught = len(s.run("CALL n10s.validation.shacl.validate() YIELD focusNode RETURN focusNode").data())
         # Put the name back, so a graph kept after the run (run_local.sh --keep) is the projection itself.
-        s.run("MATCH (r:org__Role {uri: $uri}) SET r.skos__prefLabel = $label", uri=probe["uri"], label=probe["label"]).consume()
+        s.run(f"MATCH (r:{role} {{uri: $uri}}) SET r.{pref} = $label", uri=probe["uri"], label=probe["label"]).consume()
+        renamed, lossless = ({}, True) if SEP == N10S_SEP else rename_separator(s)
+        hash_sorted = graph_hash(s)  # the hash of the graph as it is kept: renamed in the share release
     driver.close()
     src = Graph().parse(data=loadable + inferred, format="nt")
     inexact = [o for o in src.objects() if isinstance(o, Literal) and o.datatype == XSD.decimal
@@ -431,6 +487,7 @@ def load_verify(bolt, password, import_dir):
         "roundtrip_lost": len(lost), "roundtrip_added": len(added),
         "determinism_hash_sorted": hash_sorted[0], "determinism_hash_shuffled": hash_shuffled[0],
         "nodes": hash_sorted[1], "relationships": hash_sorted[2],
+        "separator": SEP, "renamed": renamed, "rename_lossless": lossless,
         "versions": VERSIONS,
         "samples": {"violations": violations[:5],
                     "lost": [" ".join(x.n3() for x in t) for t in list(lost)[:10]],
@@ -470,7 +527,8 @@ def main():
             f.write(json.dumps(report, indent=2, sort_keys=True, default=str) + "\n")
         ok = (report["shacl_violations_in_graph"] == 0 and report["in_graph_mutant_violations"] > 0
               and report["roundtrip_lost"] == 0 and report["roundtrip_added"] == 0
-              and report["determinism_hash_sorted"] == report["determinism_hash_shuffled"])
+              and report["determinism_hash_sorted"] == report["determinism_hash_shuffled"]
+              and report["rename_lossless"])
         print(json.dumps({k: v for k, v in report.items() if k not in ("samples", "versions")}, indent=1))
         if not ok:
             sys.exit("Step 5 failed; see projection-report.json samples")

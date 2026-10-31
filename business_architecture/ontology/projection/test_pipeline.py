@@ -88,9 +88,9 @@ class Rules(unittest.TestCase):
         # In SHORTEN mode the prefix keeps org:identifier and dcterms:identifier apart; a term whose
         # local part has a slash gets no name, and check_rules reports it.
         self.assertIsNone(pl.lpg_name("https://w3id.org/lsc/ontology/modules/core/a/b"))
-        self.assertEqual(pl.lpg_name(str(RDFS.label)), "rdfs__label")
-        self.assertEqual(pl.lpg_name("http://www.w3.org/ns/org#identifier"), "org__identifier")
-        self.assertEqual(pl.lpg_name("http://purl.org/dc/terms/identifier"), "dcterms__identifier")
+        self.assertEqual(pl.lpg_name(str(RDFS.label)), "rdfs" + pl.SEP + "label")
+        self.assertEqual(pl.lpg_name("http://www.w3.org/ns/org#identifier"), "org" + pl.SEP + "identifier")
+        self.assertEqual(pl.lpg_name("http://purl.org/dc/terms/identifier"), "dcterms" + pl.SEP + "identifier")
 
     def test_a_term_without_an_lpg_name_fails_rule_5(self):
         # In the core namespace (so Rule 3 passes) but with a slash in the local part, so SHORTEN

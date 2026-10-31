@@ -22,7 +22,7 @@ import re
 import sys
 from collections import namedtuple
 
-from .config import OUT, ROOT, completed, source_dsn
+from .config import GRAPH_SEP, OUT, ROOT, completed, source_dsn
 
 # A figure the answer must hold: a number within tol, a string, or a tuple of strings any one of which will do. A
 # number counts only where the answer ties it to its own label (see holds); cue, when given, is a regex in which {v}
@@ -627,12 +627,12 @@ class Context:
             return [dict(zip(cols, r)) for r in cur.fetchall()]
 
 
-GRAPH_WALK = """MATCH (db:Tech:SourceDatabase {name: 'price_reference'})<-[:COPIES]-(:Tech)<-[:READS_FROM*1..6]-(v:Tech:MetricView)
+GRAPH_WALK = f"""MATCH (db:Tech:SourceDatabase {{name: 'price_reference'}})<-[:COPIES]-(:Tech)<-[:READS_FROM*1..6]-(v:Tech:MetricView)
 OPTIONAL MATCH (v)-[:IMPLEMENTS]->(m:Resource)
-OPTIONAL MATCH (m)-[:kpi__usedBy]->(role:Resource)
+OPTIONAL MATCH (m)-[:kpi{GRAPH_SEP}usedBy]->(role:Resource)
 OPTIONAL MATCH (a:Tech:GenieAgent)-[:BINDS]->(v)
-RETURN v.name AS view, collect(DISTINCT m.dcterms__identifier) AS identifiers,
-       collect(DISTINCT role.skos__prefLabel) AS roles, collect(DISTINCT a.name) AS agents ORDER BY view"""
+RETURN v.name AS view, collect(DISTINCT m.dcterms{GRAPH_SEP}identifier) AS identifiers,
+       collect(DISTINCT role.skos{GRAPH_SEP}prefLabel) AS roles, collect(DISTINCT a.name) AS agents ORDER BY view"""
 
 
 def graph_answer():
