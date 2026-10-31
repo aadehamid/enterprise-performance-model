@@ -69,16 +69,15 @@ def kind_of(b):
 
 
 def run_cypher(text, env):
-    from neo4j import GraphDatabase
+    from stores import cypher
     bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", env.get("TEST_NEO4J_PASSWORD", "")
     stmts = [s.strip() for s in re.split(r";\s*\n", text) if s.strip() and not s.strip().startswith("//")]
     rows = 0
-    with GraphDatabase.driver(bolt, auth=("neo4j", pw)) as d, d.session() as s:
-        for st in stmts:
-            st = re.sub(r"\$[a-zA-Z_]+", "''", st) if "$" in st and "SET" not in st.upper() else st
-            if re.search(r"\b(DELETE|DETACH|SET|CREATE|MERGE|DROP|REMOVE)\b", st.upper()) and not st.upper().startswith("MATCH (n:Resource) RETURN"):
-                return {"ran": False, "reason": "writes data; run in the test store by the store rows"}
-            rows += len(s.run(st).data())
+    for st in stmts:
+        st = re.sub(r"\$[a-zA-Z_]+", "''", st) if "$" in st and "SET" not in st.upper() else st
+        if re.search(r"\b(DELETE|DETACH|SET|CREATE|MERGE|DROP|REMOVE)\b", st.upper()):
+            return {"ran": False, "reason": "writes data; run in the test store by the store rows"}
+        rows += len(cypher(bolt, pw, st))
     return {"ran": True, "rows": rows}
 
 

@@ -85,9 +85,15 @@ def neo4j_up(env):
 
 
 def cypher(bolt, pw, query):
-    from neo4j import GraphDatabase
-    with GraphDatabase.driver(bolt, auth=("neo4j", pw)) as d, d.session() as s:
-        return s.run(query).data()
+    """Run one Cypher statement through the neo4j driver in a uv environment (this script runs under the system Python)."""
+    code = ("import json, os, sys\nfrom neo4j import GraphDatabase\n"
+            "with GraphDatabase.driver(sys.argv[1], auth=('neo4j', os.environ['NEO4J_PASSWORD'])) as d, d.session() as s:\n"
+            "    print(json.dumps(s.run(sys.argv[2]).data(), default=str))\n")
+    r = subprocess.run(["uv", "run", "-q", "--no-project", "--with", "neo4j", "python3", "-c", code, bolt, query],
+                       capture_output=True, text=True, env={**os.environ, "NEO4J_PASSWORD": pw})
+    if r.returncode:
+        raise RuntimeError(r.stderr[-500:])
+    return json.loads(r.stdout)
 
 
 # ---------- rows ----------
