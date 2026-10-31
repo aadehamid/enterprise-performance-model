@@ -168,10 +168,11 @@ def rule_repository(text, ctx):
 def rule_numbers(text, ctx):
     n = 0
     html = ctx.get("path", "").endswith((".html", ".css"))
-    text, k = _count(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+(?:(?:,\s*|\s+(?:to|and)\s+)#?\d+)*\b", "an earlier change", text, re.I); n += k
+    text, k = _count(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+(?:(?:,\s*|\s+(?:to|and)\s+)#?\d+)*\b",
+                     lambda m: "earlier items" if re.search(r"\d\D+\d", m.group(0)) else "an earlier change", text, re.I); n += k
     text, k = _count(r"\s?\(#\d+(?:,\s*#\d+)*(?:\s+comment\s+\d+)?\)", "", text); n += k
     text, k = _count(r"(?<!\w)#\d{2,4}\s+comment\s+\d+", "an earlier comment", text); n += k
-    text, k = _count(r"(?<![\w-])#\d{2,4}\s+to\s+#\d{2,4}\b", "earlier items", text); n += k
+    text, k = _count(r"(?<![\w-])#\d{2,4}\s*(?:\s+to\s+|[–-])\s*#\d{2,4}\b", "earlier items", text); n += k
     if not html:
         text, k = _count(r"(?<![&A-Za-z0-9_-])#(\d{2,4})(?!\d|[a-fA-F0-9]{2})(?![\w-])", "an earlier change", text); n += k
     else:

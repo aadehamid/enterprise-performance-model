@@ -103,6 +103,8 @@ def test_public_github_links_stay():
 def test_issue_and_pr_numbers():
     out, _ = run("fixed in PR #231 (#454); issue #457 is open; see #226 comment 613; the #226 pairs table")
     assert out == "fixed in an earlier change; an earlier change is open; see an earlier comment; the earlier change pairs table"
+    out, _ = run("the five PRs (#108–#115) and #430-#448")
+    assert out == "the five PRs (earlier items) and earlier items"
 
 
 def test_numbers_in_a_page_are_prose_not_colours():
