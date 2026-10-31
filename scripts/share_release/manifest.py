@@ -51,6 +51,7 @@ EPM_RULES = [
     ("ship", "demos/downstream-pricing-databricks-free/*"),
     # Scripts that build or validate.
     ("ship", "scripts/check.sh"),
+    ("ship", "scripts/conftest.py"),  # skips the tests of checks whose inputs do not ship
     ("ship", "scripts/epm_facts.py"),
     ("ship", "scripts/test_epm_facts.py"),
     ("ship", "scripts/build_docs_html.py"),
