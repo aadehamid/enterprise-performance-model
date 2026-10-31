@@ -274,6 +274,8 @@ class EarlierReleases(unittest.TestCase):
             bm.released_requires = real
 
     def test_the_validated_graph_holds_one_core_release(self):
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set, so the pinned closures do not hold")
         # Codex round 1 on EPM-DEC-001-0077, item 3: the graph the shapes see, not only the version table.
         core = URIRef(bm.MODULES_NS + "core")
         expected = {"value-stream": "2.3.0", "market-data": "2.3.0", "ref-mpc": "2.4.0"}  # market-data 1.1.0 (0100); ref-mpc 1.3.0 (0108)
