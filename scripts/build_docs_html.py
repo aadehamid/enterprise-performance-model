@@ -53,7 +53,9 @@ MODULE_READMES = ["kpi", "lane", "market-data", "organization", "party", "ref-mp
 
 def single(src, lead, scope="EPM ontology"):
     """A page for one Markdown source; its title is the source's own H1, word for word."""
-    return {"out": src[:-3] + ".html", "title": source_title(src), "scope": scope, "lead": lead, "sources": [src]}
+    # A source that is not in this tree (the share release leaves some documents out) makes no page: build_all drops it.
+    title = source_title(src) if os.path.exists(os.path.join(ROOT, src)) else None
+    return {"out": src[:-3] + ".html", "title": title, "scope": scope, "lead": lead, "sources": [src]}
 
 
 def source_title(rel):
