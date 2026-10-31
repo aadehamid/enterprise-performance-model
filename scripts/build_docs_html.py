@@ -148,6 +148,8 @@ def pages():
         out.append(single(rel, "A proposed change to the process map. A proposal is not applied until it is accepted.",
                           scope="Process-map proposal"))
     records = sorted(glob.glob(os.path.join(ROOT, DECISIONS_DIR, "EPM-DEC-001-*.md")))
+    if not records or not os.path.exists(os.path.join(ROOT, DECISIONS_DIR, "README.md")):
+        return out  # no decision records in this tree (the share release carries none, EPM-DEC-001-0110): no decisions page
     numbers = [record_id(p) for p in records]
     twice = sorted({n for n in numbers if numbers.count(n) > 1})
     if twice:
@@ -554,7 +556,9 @@ def generated_map(specs):
 
 def build_all():
     """Every page's path -> its HTML. Refuses (ValueError) when a source holds Markdown the renderer does not cover."""
-    specs = pages()
+    # A page whose source is not in this tree is not built: the share release carries no decision records,
+    # so its decisions page has no source (EPM-DEC-001-0110).
+    specs = [s for s in pages() if all(os.path.exists(os.path.join(ROOT, rel)) for rel in s["sources"] + ([s["intro"]] if "intro" in s else []))]
     problems = []
     for spec in specs:
         for rel in spec["sources"] + ([spec["intro"]] if "intro" in spec else []):
@@ -568,7 +572,11 @@ def build_all():
 def marked_pages(root=ROOT):
     """Every tracked .html file that carries the generator's mark, as a path from the repository root."""
     env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
-    names = subprocess.check_output(["git", "-C", root, "ls-files", "-z", "*.html"], env=env).decode().split("\0")
+    if os.path.exists(os.path.join(root, ".git")):
+        names = subprocess.check_output(["git", "-C", root, "ls-files", "-z", "*.html"], env=env).decode().split("\0")
+    else:  # a tree without Git, such as the share release: every .html file in it
+        names = [os.path.relpath(os.path.join(r, f), root) for r, ds, fs in os.walk(root) for f in fs
+                 if f.endswith(".html") and "__pycache__" not in r]
     marked = []
     for name in filter(None, names):
         try:
