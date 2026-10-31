@@ -15,6 +15,7 @@ A widely used calculation is not automatically a KPI. Appearance in a register m
 | If you want… | Open |
 |---|---|
 | GitHub orientation (this page) | [README.md](README.md) |
+| The whole story, from the business processes and their gaps to the ontology and the demo | [Walkthrough](https://spacesheep.dev/@aadehamid/epm-walkthrough) (private page; ask the decision owner for access) |
 | Live Master Index — architecture map, artifact register, decisions, remapping | [EPM-FOUND-000.md](EPM-FOUND-000.md) (v2.4) |
 | MEANING vs COMPUTE target picture | [architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg) |
 | Foundation architecture set (FOUND-001–006) | [EPM Foundation v2](EPM_Foundation_v2_Markdown_HTML/README.md) |

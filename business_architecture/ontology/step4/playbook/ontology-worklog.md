@@ -161,6 +161,7 @@ they are *not* applied to `downstream_process_map.json` one at a time.
 After the modeling pass, one consolidated proposal (new nodes with parent
 and level) goes to the repo. Every new process gets an L0–L6 level from
 the existing hierarchy — no level-less nodes.
+*2026-10-31:* Rows 1, 2, 3 and 5 have no process in the map today, and no consolidated proposal for them was found; row 7's turnarounds are covered by RF 1.2.1 to RF 1.2.5 (MPC-P02b). #454 holds the question and the options.
 
 ### Step 1 — Foundations ✅ (complete)
 

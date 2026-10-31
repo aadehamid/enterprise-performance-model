@@ -13,6 +13,21 @@ roles, and a fourth to read first if you are new (`epm-ontology-guide.html`, bel
 | `step4/playbook/ontology-worklog.md` | **Worklog**: the build record | The plan table with current step statuses (§2), the per-step log (§3), the dated decision journal (§4), and the evidence map for the playbook, section by section (§8, *2026-10-23*) |
 | `MODULES.md` | **Module guide**: the released modules and how they connect | What each module holds, the three kinds of content, each link between modules with a real example from the releases, and one walk across modules |
 
+**Want the whole story?** The [walkthrough](https://spacesheep.dev/@aadehamid/epm-walkthrough) tells it end to end: the business and its value streams, the gaps found in the processes and how each was filled, how the ontology was built from that, the stores, and the pricing demo, with 36 steps to rebuild it. It is a private page, so ask the decision owner for access. It sits above the documents here and points to them for depth:
+
+| Your question | Read |
+|---|---|
+| What did we build, and how, end to end? | The walkthrough |
+| How were the process definitions decided? | `business-process-architecture-playbook.md` |
+| How do you build an ontology, for any domain? | The `ontology` skill's guide |
+| What did this build do at each step, and when? | `step4/playbook/ontology-worklog.md` |
+| What does the finished ontology hold, and why these modules? | `epm-ontology-guide.html`, then `MODULES.md` |
+| How do I load it into a store and query it? | `projection/ontology-stores-runbook.html` |
+| Why is something the way it is? | `../domain/decisions/` |
+| What is still open? | `business-closeout.md` and the GitHub issues |
+
+The `ontology` skill's guide stays company-neutral, so it does not point back to these EPM documents.
+
 **New to the ontology?** Open `epm-ontology-guide.html` in a browser. It explains what the ontology is for, why it is split into modules, what each module holds and why, and follows one pricing measure, the crack spread, through every module, with diagrams and a query you can run. Its figures are a dated snapshot; `MODULES.md` and `scripts/epm_facts.py` stay the current reference.
 
 Check the playbook's §2 Policies and this project's decision records
