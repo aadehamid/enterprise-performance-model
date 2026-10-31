@@ -30,7 +30,7 @@ TEXT_NAMES = {".python-version", ".gitignore", ".env.example", "pre-push", "VERI
 
 def tracked(tree):
     """Every file under the tree, repository-relative, as git lists it when the tree is a checkout, else a walk."""
-    if os.path.isdir(os.path.join(tree, ".git")):
+    if os.path.exists(os.path.join(tree, ".git")):  # a folder, or a file in a git worktree: tracked files only
         out = subprocess.run(["git", "-C", tree, "ls-files", "-z"], capture_output=True, check=True).stdout
         return sorted(p for p in out.decode().split("\0") if p)
     paths = []
