@@ -213,7 +213,19 @@ def rule_names(text, ctx):
     return text, n
 
 
+def rule_skills_layout(text, ctx):
+    """The skills land under skills/<name>/ in the release, not skills/<group>/<name>/: the playbook builder's
+    page list and its test name the release's layout."""
+    if not ctx.get("path", "").startswith("skills/scripts/"):
+        return text, 0
+    n = 0
+    for group in ("data", "writing", "engineering", "planning", "research"):
+        text, k = _count(rf"skills/{group}/", "", text); n += k
+    return text, n
+
+
 RULES = [
+    ("skills_layout", rule_skills_layout),
     ("iri", rule_iri), ("company", rule_company), ("records", rule_records), ("answers", rule_answers),
     ("attribution", rule_attribution), ("approvals", rule_approvals), ("hosts", rule_hosts),
     ("repository", rule_repository), ("numbers", rule_numbers), ("peers", rule_peers),

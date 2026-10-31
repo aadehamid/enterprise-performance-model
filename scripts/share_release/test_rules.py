@@ -142,6 +142,13 @@ def test_a_peer_brand_inside_a_quoted_filing():
     assert out == "licensing fees for the use of its brand"
 
 
+def test_the_playbook_builder_names_the_release_layout():
+    out, _ = run('"out": "skills/data/ontology/references/ontology-build-playbook.html", "sources": ["skills/data/ontology/references/playbook.md"]', "skills/scripts/build_playbook_html.py")
+    assert out == '"out": "ontology/references/ontology-build-playbook.html", "sources": ["ontology/references/playbook.md"]'
+    out, _ = run("see skills/data/ontology/SKILL.md", "skills/ontology/README.md")
+    assert out == "see skills/data/ontology/SKILL.md"
+
+
 def test_owner_name_in_skills():
     out, _ = run("Ha" + "mid Ade" + "sokan's guideline, by Ha" + "mid (aade" + "ha" + "mid)")
     assert out == "the author's guideline, by the author (the author)"
