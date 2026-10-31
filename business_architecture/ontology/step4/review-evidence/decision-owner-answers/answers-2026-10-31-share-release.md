@@ -117,3 +117,13 @@ No, leave it out (Recommended)
 Confirm (Recommended)
 
 Skip the live run only (Recommended)
+
+<!-- Later on 2026-10-31. Block 28: asked which fallback to use for AuraDB in the test, since a second free instance may not be available: 1 "Skip the Aura copy step in the test and report it as untested (Recommended)"; 2 "Point the test at main's Aura, then reload main's data afterwards and prove it with the sync check". The decision owner typed block 28, and in the same message started the night run. Blocks 29 and 30: the decision owner restated the scope, in two messages. -->
+
+2. clean out Aura... then load with data you want to test. When you are done clean out the data in Aura again and load data from main. let us start /night-run
+
+all the playbooks (ontology, projection, guides, walkthrough should also be included. and all the scripts we use anywhere to create, validate, load and so on the ontology. A copy of all of the bsuienss json processes needs to be part of the release cut as well. Basically everything that wil have in main, but with deep cleaning done and rewritten to taylot=r to someone that have dont know this repo exists and that dont know what we went through to build this out.
+
+only things that ontology related and the pricing demo.
+
+all other files no related to any of this should not be part of the release.
