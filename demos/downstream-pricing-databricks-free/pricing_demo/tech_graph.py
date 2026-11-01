@@ -13,7 +13,7 @@ observed lineage, and writes the facts as JSON. build runs the SPARQL Anything q
 the README's run commands, that JSON and the ontology's CSV tables, then wiring.rq over the result, and writes Turtle.
 load gives every node the label Tech and no Resource label, and starts every edge at a Tech node (ending at another
 Tech node or an ontology node), so the projection's counts and hashes, which read :Resource nodes and the edges between them, do not change;
-load checks that on each store. A pipeline reload or a driver run empties its store, so run load again after one.
+load checks that on each store. A driver run empties its store, so run load again after one.
 Logins come from the files LOCAL-STORES.md names; no secret is printed.
 Sources: SPARQL Anything documentation, v1.3.0 ("Introduction": Facade-X, fx:properties, the location and content
 options; the text, CSV and JSON triplifiers); Neo4j Cypher Manual 25, "CREATE" (dynamic labels and relationship types
@@ -53,7 +53,6 @@ FULL_NAME = ONTOLOGY + "modules/data-product/fullName"
 TABLE = ONTOLOGY + "modules/data-product/table/"
 LINEAGE_WINDOW_MINUTES = 10  # observed edges count from a target's latest build: its statement's edges share one time
 STORES = {  # the stores LOCAL-STORES.md lists, with their login files; the newest file that exists is the live one
-    "pipeline": ("bolt://127.0.0.1:17687", ("~/epm-lpg/run.env",)),
     # a full driver run writes the rebuild's login; a run with --skip rebuild writes only the first container's
     "driver": ("bolt://127.0.0.1:17711", ("~/lpg-out/epm-rebuild/neo4j-run/run.env", "~/lpg-out/epm/neo4j-run/run.env")),
     "aura": (None, ("~/.config/neo4j/aura.env",)),
@@ -381,7 +380,7 @@ def graph_rows(g):
 
 
 def apply_store_overrides():
-    """EPM_STORES_JSON names other stores for a test run (as in projection/sync_stores.py): each of pipeline, driver and
+    """EPM_STORES_JSON names other stores for a test run (as in projection/sync_stores.py): each of driver and
     aura may give {"bolt": ..., "env": [...]}."""
     raw = os.environ.get("EPM_STORES_JSON")
     if not raw:
@@ -411,7 +410,7 @@ def neo4j_login(store):
 
 
 def ontology_counts(session):
-    """What the projection counts: :Resource nodes and the edges between them (pipeline.py graph_hash; runbook, Check)."""
+    """What the projection counts: :Resource nodes and the edges between them (the skill's load_verify.hash_graph; runbook, Check)."""
     nodes = session.run("MATCH (n:Resource) RETURN count(n) AS n").single()["n"]
     edges = session.run("MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS n").single()["n"]
     return nodes, edges
@@ -456,7 +455,7 @@ def load(stores=tuple(STORES)):
     return [load_store(s, nodes, edges) for s in stores]
 
 
-def walk(store="pipeline", gold="gold_commercial_core.mips_mpr_executive_summary_fact"):
+def walk(store="driver", gold="gold_commercial_core.mips_mpr_executive_summary_fact"):
     from neo4j import GraphDatabase
     uri, user, password = neo4j_login(store)
     with GraphDatabase.driver(uri, auth=(user, password)) as driver:
@@ -469,7 +468,7 @@ def walk(store="pipeline", gold="gold_commercial_core.mips_mpr_executive_summary
 
 # ---------- Delta ----------
 
-def sync(store="pipeline"):
+def sync(store="driver"):
     """Copies the Tech nodes and their edges from Neo4j, the source, into the two Delta tables sql/07 creates."""
     from neo4j import GraphDatabase
     from .databricks import connect, current_catalog, run

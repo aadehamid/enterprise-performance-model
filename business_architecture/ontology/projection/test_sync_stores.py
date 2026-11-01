@@ -40,7 +40,7 @@ class Expected(unittest.TestCase):
 
 
 class Drift(unittest.TestCase):
-    want = {"catalog_datasets": 50, "catalog_digest": "d", "input_fingerprint": "f", "newest": []}
+    want = {"catalog_datasets": 50, "catalog_digest": "d", "input_fingerprint": "f", "newest": [], "jena_graphs": {"g": 1}}
 
     def marker(self, **over):
         return {"catalog_datasets": 50, "catalog_digest": "d", "input_fingerprint": "f", "count": [4193, 21767],
@@ -50,11 +50,20 @@ class Drift(unittest.TestCase):
         return {s: status for s, status, _ in ss.drift(markers, live, self.want)}
 
     def test_each_status(self):
-        markers = {"pipeline": self.marker(), "driver": self.marker(catalog_digest="old"),
-                   "aura": self.marker(), "databricks": None}
-        live = {"pipeline": [4193, 21767], "driver": [4193, 21767], "aura": [0, 0], "databricks": [40169]}
+        markers = {"driver": self.marker(catalog_digest="old"), "aura": self.marker(), "databricks": None}
+        live = {"driver": [4193, 21767], "aura": [0, 0], "jena": {"g": 1}, "databricks": [40169]}
         self.assertEqual(self.statuses(markers, live),
-                         {"pipeline": "current", "driver": "behind", "aura": "changed", "databricks": "unmarked"})
+                         {"driver": "behind", "aura": "changed", "jena": "current", "databricks": "unmarked"})
+        self.assertEqual(self.statuses({"driver": self.marker()}, {"driver": [4193, 21767]})["driver"], "current")
+
+    def test_jena_is_judged_from_its_graphs_with_no_marker(self):
+        want = {"a": 1, "a/shapes": 2}
+        self.assertEqual(ss.judge_jena({"a": 1, "a/shapes": 2}, want)[0], "current")
+        self.assertEqual(ss.judge_jena({}, want)[0], "empty")
+        self.assertEqual(ss.judge_jena({"a": 1}, want)[0], "behind")
+        self.assertEqual(ss.judge_jena({"a": 1, "a/shapes": 2, "old": 9}, want)[0], "behind")
+        self.assertEqual(ss.judge_jena({"a": 1, "a/shapes": 3}, want)[0], "changed")
+        self.assertEqual(ss.judge_jena({"a": 1, "a/shapes": 2, "(the default graph)": 4}, want)[0], "behind")
 
     def test_an_unreachable_store_says_so_even_with_a_marker(self):
         markers = {s: self.marker() for s in ss.STORES}
@@ -80,9 +89,9 @@ class Drift(unittest.TestCase):
         self.assertEqual([s for s, _, _ in ss.drift({}, {}, self.want)], list(ss.STORES))
 
     def test_check_reads_and_judges_only_the_stores_named(self):
-        # check --store pipeline --store driver: the release validation's test stores are the two local Neo4j stores,
-        # so AuraDB and Databricks, outside that test, are neither read nor judged. The default is every store.
-        self.assertEqual([s for s, _, _ in ss.drift({}, {}, self.want, ("pipeline", "driver"))], ["pipeline", "driver"])
+        # check --store driver: a validation whose test store is the local Neo4j reads and judges nothing else, so
+        # AuraDB, Jena and Databricks, outside that test, stay untouched. The default is every store.
+        self.assertEqual([s for s, _, _ in ss.drift({}, {}, self.want, ("driver",))], ["driver"])
 
         def no_login(store):
             raise FileNotFoundError(store)
@@ -90,9 +99,9 @@ class Drift(unittest.TestCase):
         def databricks_read():
             raise AssertionError("Databricks was read for a check that did not name it")
         with mock.patch.object(ss, "neo4j_session", no_login), mock.patch.object(ss, "databricks", databricks_read):
-            markers, live = ss.read_markers_and_counts(("pipeline", "driver"))
-        self.assertEqual(set(markers), {"pipeline", "driver"})
-        self.assertEqual(live, {"pipeline": "unreachable (FileNotFoundError)", "driver": "unreachable (FileNotFoundError)"})
+            markers, live = ss.read_markers_and_counts(("driver",))
+        self.assertEqual(set(markers), {"driver"})
+        self.assertEqual(live, {"driver": "unreachable (FileNotFoundError)"})
         with mock.patch.object(ss, "neo4j_session", no_login), mock.patch.object(ss, "databricks", databricks_read):
             markers, live = ss.read_markers_and_counts()  # the default reads every store, Databricks included
         self.assertEqual(set(markers), set(ss.STORES))
@@ -109,16 +118,16 @@ class Drift(unittest.TestCase):
         out = io.StringIO()
         with mock.patch.object(sys, "argv", ["sync_stores.py", "check"] + argv), \
                 mock.patch.object(ss, "read_markers_and_counts", fake_read), \
-                mock.patch.object(ss, "expected", lambda ref=None: self.want), mock.patch("sys.stdout", out):
+                mock.patch.object(ss, "expected_for", lambda ref, stores: self.want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()
         self.assertEqual(stop.exception.code, 1)  # nothing marked: every judged store is unmarked
         return read, [line.split()[0] for line in out.getvalue().splitlines()]
 
     def test_main_passes_the_named_stores_to_the_reader_and_the_report(self):
-        read, reported = self.run_check(["--store", "pipeline", "--store", "driver"])
-        self.assertEqual(read, [("pipeline", "driver")])
-        self.assertEqual(reported, ["pipeline", "driver"])
+        read, reported = self.run_check(["--store", "driver", "--store", "aura"])
+        self.assertEqual(read, [("driver", "aura")])
+        self.assertEqual(reported, ["driver", "aura"])
         read, reported = self.run_check([])
         self.assertEqual(read, [tuple(ss.STORES)])
         self.assertEqual(reported, list(ss.STORES))
@@ -130,20 +139,88 @@ class Plan(unittest.TestCase):
         return [" ".join(c) for _, c in steps], reloaded
 
     def test_local_stores_reload_without_touching_the_cloud(self):
-        cmds, reloaded = self.cmds(["pipeline", "driver", "aura", "databricks"], cloud=False)
-        self.assertEqual(reloaded, ["pipeline", "driver"])
-        self.assertEqual(cmds[0], "./run_local.sh --keep")
-        self.assertTrue(cmds[1].endswith("--skip copy,databricks,rebuild"))
-        self.assertTrue(cmds[2].endswith("tech_graph load --store pipeline --store driver"))
+        cmds, reloaded = self.cmds(["driver", "jena", "aura", "databricks"], cloud=False)
+        self.assertEqual(reloaded, ["driver", "jena"])
+        self.assertTrue(cmds[0].endswith("--skip copy,databricks,rebuild"))
+        self.assertTrue(cmds[1].endswith(f"pipeline.py record --run {ss.DRIVER_OUT}"))
+        self.assertTrue(cmds[2].endswith("tech_graph load --store driver"))
+        self.assertEqual(len(cmds), 3)
 
     def test_cloud_runs_the_full_driver_once_and_reloads_the_technical_graph_in_aura(self):
         cmds, reloaded = self.cmds(["aura"], cloud=True)
-        self.assertEqual(reloaded, ["driver", "aura", "databricks"])
+        self.assertEqual(reloaded, ["driver", "jena", "aura", "databricks"])
         self.assertNotIn("--skip", cmds[0])
-        self.assertTrue(cmds[1].endswith("tech_graph load --store driver --store aura"))
+        self.assertTrue(cmds[2].endswith("tech_graph load --store driver --store aura"))
+
+    def test_jena_alone_runs_only_the_jena_step_and_touches_no_neo4j(self):
+        cmds, reloaded = self.cmds(["jena"], cloud=False)
+        self.assertEqual(reloaded, ["jena"])
+        self.assertEqual(len(cmds), 1)
+        self.assertTrue(cmds[0].endswith("--only jena"))
 
     def test_nothing_behind_runs_nothing(self):
         self.assertEqual(self.cmds([], cloud=True), ([], []))
+
+
+class StoresAreOneNeo4jPlusJena(unittest.TestCase):
+    def test_the_stores_and_the_run_configuration_agree(self):
+        self.assertEqual(ss.STORES, ("driver", "aura", "jena", "databricks"))
+        with open(os.path.join(HERE, "skill-run", "epm-run.json")) as f:
+            cfg = json.load(f)
+        self.assertIs(cfg["keep_neo4j"], True)
+        self.assertIs(cfg["keep_jena"], True)
+        self.assertEqual(cfg["out"], ss.DRIVER_OUT)
+        self.assertEqual(tuple(cfg["release_graphs"]), ss.RELEASE_GRAPHS)
+        self.assertIn(f":{cfg['jena']['port']}/", ss.JENA_QUERY)
+
+    def test_a_current_jena_holds_every_newest_release_three_times(self):
+        newest = ss.newest_releases(ss.catalog_datasets(ss.repo_file(ss.CATALOG)))
+        want = ss.jena_graphs(newest)
+        self.assertEqual(len(want), 3 * len(newest))
+        self.assertTrue(all(want.values()))
+        self.assertEqual({f"{iri}/{n}" for iri in newest for n in ("shapes", "catalog")} | set(newest), set(want))
+
+
+class OntologyLabelsOnly(unittest.TestCase):
+    """The technical graph (label Tech), the marker and the release records share the local Neo4j. This pins the exact
+    Cypher of the counts, which reads :Resource nodes and the edges between them, so none of those moves them. The
+    skill's test_release_record.py pins the hash and the round trip."""
+
+    def test_the_counts_read_resource_nodes_and_the_edges_between_them(self):
+        queries = []
+
+        class Session:
+            def run(self, query):
+                queries.append(query)
+                return mock.Mock(single=lambda: {"n": 0})
+        self.assertEqual(ss.resource_counts(Session()), (0, 0))
+        self.assertEqual(queries, ["MATCH (n:Resource) RETURN count(n) AS n", "MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS n"])
+
+
+class Neo4jChecked(unittest.TestCase):
+    want = {"newest": ["a", "b"]}
+
+    def session(self, nodes, edges, records):
+        class Session:
+            def run(self, query):
+                if "ModuleRelease" in query:
+                    return mock.Mock(value=lambda: records)
+                return mock.Mock(single=lambda: {"n": nodes if "(n:Resource)" in query else edges})
+        return Session()
+
+    def checked(self, nodes, edges, records):
+        report = json.load(open(ss.REPORT))
+        return ss.neo4j_checked("driver", self.session(report["nodes"] + nodes, report["relationships"] + edges, records), self.want)
+
+    def test_counts_equal_to_the_committed_report_and_one_record_per_release_pass(self):
+        report = json.load(open(ss.REPORT))
+        self.assertEqual(self.checked(0, 0, ["b", "a"]), [report["nodes"], report["relationships"]])
+
+    def test_other_counts_or_records_are_refused(self):
+        with self.assertRaisesRegex(SystemExit, "relationships"):
+            self.checked(0, 1, ["a", "b"])
+        with self.assertRaisesRegex(SystemExit, "release record"):
+            self.checked(0, 0, ["a"])
 
 
 class Markers(unittest.TestCase):
@@ -239,12 +316,12 @@ def stores_env(value):
 
 class StoreOverrides(unittest.TestCase):
     def test_the_env_json_replaces_only_what_it_names(self):
-        with stores_env(json.dumps({"pipeline": {"bolt": "bolt://127.0.0.1:17899", "env": ["/tmp/x.env"]},
-                                    "driver_reports": ["/tmp/r.json"], "databricks_env": "/tmp/d.env"})):
+        with stores_env(json.dumps({"driver": {"bolt": "bolt://127.0.0.1:17899", "env": ["/tmp/x.env"]},
+                                    "jena": {"query": "http://127.0.0.1:13999/ds/query"}, "databricks_env": "/tmp/d.env"})):
             mod = importlib.reload(ss)
-            self.assertEqual(mod.NEO4J_STORES["pipeline"], ("bolt://127.0.0.1:17899", ("/tmp/x.env",)))
+            self.assertEqual(mod.NEO4J_STORES["driver"], ("bolt://127.0.0.1:17899", ("/tmp/x.env",)))
             self.assertEqual(mod.NEO4J_STORES["aura"], (None, ("~/.config/neo4j/aura.env",)))
-            self.assertEqual(mod.DRIVER_REPORTS, ("/tmp/r.json",))
+            self.assertEqual(mod.JENA_QUERY, "http://127.0.0.1:13999/ds/query")
             self.assertEqual(mod.DATABRICKS_ENV, "/tmp/d.env")
 
     def test_the_callers_value_is_put_back(self):

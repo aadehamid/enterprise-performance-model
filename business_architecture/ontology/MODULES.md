@@ -27,6 +27,34 @@ The ontology holds three kinds of content, and keeps each in a fixed place:
 
 Operational records stay in the business systems and never enter the ontology: actual customers, invoices and KPI values. The playbook's policy 2 calls this "define, don't record".
 
+## The three files of each package, and what each is built from
+
+Every module package holds three graphs in Turtle:
+
+- **`<module>.ttl`, the content:** the module's terms, individuals and links.
+- **`shapes.ttl`, the rules:** the SHACL shapes the content must meet.
+- **`catalog.ttl`, the release record:** the DCAT dataset for this release, with its version, issue date and distributions.
+
+`scripts/test_modules_guide.py` checks the table below against the module builder. Paths are under `business_architecture/ontology/`.
+
+| Module | Its purpose | `<module>.ttl` is built from | `shapes.ttl` is built from |
+|---|---|---|---|
+| `core` | The process map | `business_architecture/business_process/downstream_process_map.json` at a pinned commit and core's previous release, through `release/build_core*.py` | `release/shapes.ttl`, and the canonical-fact and controlled-value shapes the later core builders add |
+| `organization` | Who does what | `organization/vocabulary.ttl`, `organization/roles.ttl`, `organization/assignments.ttl` | `organization/shapes.ttl` |
+| `ref-mpc` | The company facts | `ref-mpc/ref-mpc.ttl`, `ref-mpc/reference-parties.ttl`, `ref-mpc/reference-brands.ttl` | `ref-mpc/shapes.ttl` and the shapes of the `organization` and `party` releases it pins |
+| `party` | The customer domain | `party/vocabulary.ttl`, `party/code-lists.ttl`, `party/systems.ttl`, `party/lifecycle.ttl` | `party/shapes.ttl` |
+| `kpi` | What each measure means | `kpi/vocabulary.ttl`, `kpi/measures.ttl`, `population/vocabulary.ttl`, `population/population.ttl` | `kpi/shapes.ttl` |
+| `market-data` | The crack-spread recipes | `market-data/vocabulary.ttl`, `market-data/market-data.ttl` | `market-data/shapes.ttl` |
+| `data-product` | The portfolio | `data-product/vocabulary.ttl`, `data-product/data-products.ttl`, `data-product/pricing.ttl` | `data-product/shapes.ttl` |
+| `value-stream` | How value flows | `value-stream/vocabulary.ttl`, `value-stream/value-streams.ttl` | `value-stream/shapes.ttl` |
+| `system` | What each process uses | `system/vocabulary.ttl`, `system/systems.ttl` | `system/shapes.ttl` |
+| `lane` | Where a trading process sits | `lane/vocabulary.ttl`, `lane/lanes.ttl` | `lane/shapes.ttl` |
+| `integration` | Rules that apply across modules | `placement/vocabulary.ttl`, `authority/vocabulary.ttl`, `authority/source-tiers.ttl`, `consumer/vocabulary.ttl` | `consumer/shapes.ttl`, `placement/shapes.ttl`, `authority/shapes.ttl` |
+
+The module builder writes each `catalog.ttl` from the release's own version and issue date; several of the Turtle files above are themselves built from the CSV tables beside them.
+
+**What each store holds.** Jena and the Delta table `epm_triples` hold all three graphs of each module in full. Neo4j and AuraDB hold all of `<module>.ttl`, with no selective projection, and one `ModuleRelease` node per module drawn from `catalog.ttl`; the shapes validate the release and are not nodes. There is one local Neo4j and one standing Jena. `projection/README.md`, "What each store holds", gives the policy.
+
 ## Each module and its links
 
 ### core: the process map

@@ -1,6 +1,6 @@
 {
-  "inferred_triples": 0,
-  "input_fingerprint": "012e0f3b8e612cb23dab143d19776d62fe15063486317d8d6698c848d083aea8",
+  "inferred_triples": 2,
+  "input_fingerprint": "7ea58a14fdb22912afad17830fce57207d071fb52917eb1c2b6ee27cd13e2851",
   "inputs": {
     "releases/core/2.4.0/core.ttl": "6b0365456230d7ed1b4c17f27bffb26d7fd5b9e159f06809c814fbbe7b8da12a",
     "releases/data-product/1.2.0/data-product.ttl": "91072ca004bebacd5c6f70bd8d4fe5c69f3525a465d3769f49959299c4f484a4",
@@ -34,7 +34,7 @@
   },
   "versions": {
     "apoc": "bundled with neo4j:2025.06.2",
-    "guideline": "v2.2 (lpg-projection/, pin 8ce9ada)",
+    "method": "ontology-to-lpg 2.3",
     "n10s": "2025.06.1",
     "neo4j": "2025.06.2",
     "reasoner": "ELK (through ROBOT)",

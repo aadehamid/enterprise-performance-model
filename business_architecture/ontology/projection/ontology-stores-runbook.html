@@ -160,7 +160,7 @@ td:first-child { font-weight: 600; }
   <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
   <span class="name">EPM</span><span class="scope">Stores runbook</span>
   <nav aria-label="Sections">
-    <a href="#flow">How it fits</a><a href="#stores">Stores</a><a href="#check">Check</a><a href="#stop">Stop and start</a><a href="#reload">Reload</a><a href="#sync">Keep in step</a><a href="#purge">Purge</a><a href="#trouble">Fixes</a>
+    <a href="#flow">How it fits</a><a href="#stores">Stores</a><a href="#holds">What each holds</a><a href="#check">Check</a><a href="#stop">Stop and start</a><a href="#reload">Reload</a><a href="#sync">Keep in step</a><a href="#purge">Purge</a><a href="#trouble">Fixes</a>
   </nav>
 </header>
 
@@ -172,17 +172,17 @@ td:first-child { font-weight: 600; }
   </div>
   <a class="btn" href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">Open the Eraser diagram</a>
 </div>
-<p class="notice"><strong>The four ontology stores were reloaded on 2026-10-28</strong>, as the first step of Part 2, from the releases of that day, with <code>kpi</code> 1.3.0. Each store's figures below are from that reload, and every count and hash check in it passed; the reload's log is kept outside the repository. Check, below, gives the commands to count the graph stores again; rerunning the driver (Reload, step 4) recounts <code>epm_triples</code> and compares its hash. <em>Before that:</em> with the decision owner's approval, "Yes, purge those four (Recommended)", both local Neo4j stores, AuraDB and the Databricks table <code>epm_triples</code> were purged on 2026-10-27. The decision owner then chose "Wait, reload at Part 2 (Recommended)": the stores stayed empty, and the reload was the first step of Part 2, after the close-out answers ship, with the counts and hash checks (<code>../step4/review-evidence/decision-owner-answers/answers-2026-10-27-stores.md</code>). Reload, below, gives the commands. The pricing demo's Postgres and <code>idp_sbx</code> stayed loaded throughout.</p>
+<p class="notice"><strong>The four ontology stores were reloaded on 2026-10-28</strong>, as the first step of Part 2, from the releases of that day, with <code>kpi</code> 1.3.0. Each store's figures below are from that reload, and every count and hash check in it passed; the reload's log is kept outside the repository. Check, below, gives the commands to count the graph stores again; rerunning the driver (Reload, step 4) recounts <code>epm_triples</code> and compares its hash. <em>Before that:</em> with the decision owner's approval, "Yes, purge those four (Recommended)", both local Neo4j stores, AuraDB and the Databricks table <code>epm_triples</code> were purged on 2026-10-27. The decision owner then chose "Wait, reload at Part 2 (Recommended)": the stores stayed empty, and the reload was the first step of Part 2, after the close-out answers ship, with the counts and hash checks (<code>../step4/review-evidence/decision-owner-answers/answers-2026-10-27-stores.md</code>). Reload, below, gives the commands. The pricing demo's Postgres and <code>idp_sbx</code> stayed loaded throughout. <em>2026-11-01:</em> the standard is now one local Neo4j plus a standing Jena, and this page describes that standard. The next reload applies it: until then the old container <code>epm-lpg</code> still runs, and the stores read as behind.</p>
 
 <div class="stats">
   <div class="stat"><div class="k">Stores</div><div class="v">6</div><div class="d">3 on this Mac, 3 in the cloud</div></div>
   <div class="stat"><div class="k">Released packages</div><div class="v">50</div><div class="d">each one tagged in git</div></div>
-  <div class="stat"><div class="k">Pipeline graph, last load</div><div class="v">4,193 nodes</div><div class="d">0 SHACL violations; reloaded 2026-10-28</div></div>
-  <div class="stat"><div class="k">Reload</div><div class="v">4 steps</div><div class="d">the driver takes about 10 min</div></div>
+  <div class="stat"><div class="k">Local Neo4j, last load</div><div class="v">4,193 nodes</div><div class="d">22,142 relationships; 0 SHACL violations</div></div>
+  <div class="stat"><div class="k">Reload</div><div class="v">6 steps</div><div class="d">the driver takes about 10 min</div></div>
 </div>
 
 <h2 id="flow">How it fits together</h2>
-<p class="lead">Two flows feed the stores. The ontology flow starts at the process map and ends in the graph stores and a Databricks table. The demo flow starts at public market data and ends in Databricks metric views and Genie agents. Since E3 (2026-10-29) each metric-view measure that implements a <code>kpi</code> measure carries its KPI or OPM identifier, and definitions views read those measures' definitions from the Databricks table. Since E4 (2026-10-29) four Genie agents each read one subject area's metric views and its definitions view, and an orchestrator run from this Mac routes questions between them. Since E5 (2026-10-29) a technical graph of the demo's pipeline and its decision trail sit beside the ontology in both local Neo4j stores and AuraDB, under the label <code>Tech</code>, and in two Delta tables.</p>
+<p class="lead">Two flows feed the stores. The ontology flow starts at the process map and ends in the graph stores and a Databricks table. The demo flow starts at public market data and ends in Databricks metric views and Genie agents. Since E3 (2026-10-29) each metric-view measure that implements a <code>kpi</code> measure carries its KPI or OPM identifier, and definitions views read those measures' definitions from the Databricks table. Since E4 (2026-10-29) four Genie agents each read one subject area's metric views and its definitions view, and an orchestrator run from this Mac routes questions between them. Since E5 (2026-10-29) a technical graph of the demo's pipeline and its decision trail sit beside the ontology in the local Neo4j and AuraDB, under the label <code>Tech</code>, and in two Delta tables.</p>
 <figure>
 <div class="diagram wide" role="img" aria-labelledby="f1t">
 <svg viewBox="0 0 1040 560" xmlns="http://www.w3.org/2000/svg">
@@ -204,26 +204,24 @@ td:first-child { font-weight: 600; }
   <rect class="node key" x="356" y="134" width="150" height="64" rx="8"/>
   <text class="t" x="368" y="158">Released packages</text><text class="s" x="368" y="176">50 in Turtle and</text><text class="s" x="368" y="190">JSON-LD, each tagged</text>
 
-  <rect class="node" x="540" y="50" width="150" height="64" rx="8"/>
-  <text class="t" x="552" y="74">Pipeline</text><text class="m" x="552" y="92">pipeline.py,</text><text class="m" x="552" y="106">run_local.sh</text>
   <rect class="node store" x="716" y="50" width="146" height="64" rx="8"/>
-  <text class="t" x="728" y="74">Local Neo4j</text><text class="m" x="728" y="92">epm-lpg</text><text class="m" x="728" y="106">Bolt 17687</text>
+  <text class="t" x="728" y="74">Jena</text><text class="m" x="728" y="92">epm-jena-fuseki-1</text><text class="m" x="728" y="106">port 13031</text>
 
   <rect class="node" x="540" y="196" width="150" height="64" rx="8"/>
   <text class="t" x="552" y="220">Driver</text><text class="m" x="552" y="238">run_projection.py</text><text class="s" x="552" y="252">ontology-to-lpg skill</text>
   <rect class="node store" x="716" y="196" width="146" height="64" rx="8"/>
   <text class="t" x="728" y="220">Local Neo4j</text><text class="m" x="728" y="238">lpg-local-neo4j-1</text><text class="m" x="728" y="252">Bolt 17711</text>
   <rect class="node store" x="886" y="196" width="134" height="64" rx="8"/>
-  <text class="t" x="898" y="220">AuraDB</text><text class="s" x="898" y="238">a copy of the</text><text class="s" x="898" y="252">driver's graph</text>
+  <text class="t" x="898" y="220">AuraDB</text><text class="s" x="898" y="238">a copy of the</text><text class="s" x="898" y="252">local graph</text>
 
   <rect class="node store" x="716" y="306" width="146" height="64" rx="8"/>
   <text class="t" x="728" y="330">Databricks</text><text class="m" x="728" y="348">epm_ontology.</text><text class="m" x="728" y="362">epm_triples</text>
 
   <path class="e" d="M170 166H186" marker-end="url(#a)"/>
   <path class="e key" d="M336 166H352" marker-end="url(#ak)"/>
-  <path class="e key" d="M506 156C520 156 520 82 536 82" marker-end="url(#ak)"/>
   <path class="e key" d="M506 176C520 176 520 228 536 228" marker-end="url(#ak)"/>
-  <path class="e key" d="M690 82H712" marker-end="url(#ak)"/>
+  <path class="e" d="M615 196V82H712" marker-end="url(#a)"/>
+  <text class="el" x="624" y="74">load, then export and compare</text>
   <path class="e key" d="M690 222H712" marker-end="url(#ak)"/>
   <path class="e" d="M862 228H882" marker-end="url(#a)"/>
   <path class="e" d="M615 260V338H712" marker-end="url(#a)"/>
@@ -267,9 +265,8 @@ td:first-child { font-weight: 600; }
   
   <rect class="node key" x="24" y="184" width="312" height="52" rx="8"/><text class="t" x="34" y="204">Released packages</text><text class="s" x="34" y="220">50 in Turtle and JSON-LD, each tagged</text>
   
-  <rect class="node" x="24" y="270" width="150" height="66" rx="8"/><text class="t" x="34" y="290">Pipeline</text><text class="m" x="34" y="306">pipeline.py,</text><text class="m" x="34" y="320">run_local.sh</text>
   
-  <rect class="node store" x="186" y="270" width="150" height="66" rx="8"/><text class="t" x="196" y="290">Local Neo4j</text><text class="m" x="196" y="306">epm-lpg</text><text class="m" x="196" y="320">Bolt 17687</text>
+  <rect class="node store" x="186" y="270" width="150" height="66" rx="8"/><text class="t" x="196" y="290">Jena</text><text class="m" x="196" y="306">epm-jena-fuseki-1</text><text class="m" x="196" y="320">port 13031</text>
   
   <rect class="node" x="24" y="364" width="150" height="66" rx="8"/><text class="t" x="34" y="384">Driver</text><text class="m" x="34" y="400">run_projection.py</text><text class="s" x="34" y="414">ontology-to-lpg</text>
   
@@ -277,12 +274,11 @@ td:first-child { font-weight: 600; }
   
   <rect class="node store" x="24" y="452" width="150" height="66" rx="8"/><text class="t" x="34" y="472">Databricks</text><text class="m" x="34" y="488">epm_ontology.</text><text class="m" x="34" y="502">epm_triples</text>
   
-  <rect class="node store" x="186" y="452" width="150" height="66" rx="8"/><text class="t" x="196" y="472">AuraDB</text><text class="s" x="196" y="488">a copy of the</text><text class="s" x="196" y="502">driver's graph</text>
+  <rect class="node store" x="186" y="452" width="150" height="66" rx="8"/><text class="t" x="196" y="472">AuraDB</text><text class="s" x="196" y="488">a copy of the</text><text class="s" x="196" y="502">local graph</text>
   
   <path class="e" d="M180 96V110" marker-end="url(#p)"/>
   <path class="e key" d="M180 166V180" marker-end="url(#pk)"/>
-  <path class="e key" d="M99 236V266" marker-end="url(#pk)"/>
-  <path class="e key" d="M174 303H182" marker-end="url(#pk)"/>
+  <path class="e" d="M99 364V303H182" marker-end="url(#p)"/>
   <path class="e key" d="M60 236C60 250 15 250 15 300V397H20" marker-end="url(#pk)"/>
   <path class="e key" d="M174 397H182" marker-end="url(#pk)"/>
   <path class="e" d="M99 430V448" marker-end="url(#p)"/>
@@ -322,8 +318,8 @@ td:first-child { font-weight: 600; }
       <li>The process map and each module's source files are the master copy.</li>
       <li>Each module's builder turns its sources into Turtle, and <code>check.sh</code> gates every change.</li>
       <li>A release freezes a module as a tagged package under <code>business_architecture/ontology/releases/</code>.</li>
-      <li>Two projections turn the packages into a property graph. <code>pipeline.py</code> (run by <code>run_local.sh</code>) is the repository's own; the <code>ontology-to-lpg</code> skill's driver is the other, and it also copies the graph to AuraDB and writes the triples to Databricks.</li>
-      <li>The driver then rebuilds its graph from the Databricks table, which proves the table holds the whole ontology.</li>
+      <li>One loader, the <code>ontology-to-lpg</code> skill's driver, turns the packages into a property graph in the local Neo4j. It also copies that graph to AuraDB, and it writes all three graphs of each package to Jena and to Databricks. In CI, <code>pipeline.py build --verify</code> checks the same inputs with no database.</li>
+      <li>The driver then rebuilds the local graph from the Databricks table, which proves the table holds the whole ontology.</li>
     </ol>
   </div>
   <div class="card">
@@ -343,14 +339,27 @@ td:first-child { font-weight: 600; }
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Store</th><th>What it holds</th><th>Where</th><th>Login</th></tr></thead>
 <tbody>
-<tr><td>Local Neo4j, pipeline</td><td data-k="Holds">The projection that <code>pipeline.py</code> builds. Reloaded on 2026-10-28, on that day's releases with <code>kpi</code> 1.3.0: 4,193 nodes and 21,767 relationships from 36,951 triples, with no SHACL violation. Since 2026-10-29 it also holds the demo's technical graph and decision trail: 134 nodes labelled <code>Tech</code>, which those counts leave out (E5; 142 since E6 added the outside-context tables, 2026-10-29)</td><td data-k="Where">Container <code>epm-lpg</code>, Bolt <code>localhost:17687</code>, browser <code>http://localhost:17474</code></td><td data-k="Login"><code>~/epm-lpg/run.env</code></td></tr>
-<tr><td>Local Neo4j, driver</td><td data-k="Holds">The same ontology, loaded back from Databricks by the driver's last step. Reloaded on 2026-10-28, on that day's releases with <code>kpi</code> 1.3.0: 4,193 nodes and 22,142 relationships, the same as the driver's first load, and its 14 walks and module map matched the same walks in the triple store. Since 2026-10-29 also the 134 <code>Tech</code> nodes (E5; 142 since E6)</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> after a full run, <code>~/lpg-out/epm/neo4j-run/run.env</code> after <code>--skip rebuild</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
-<tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the driver's graph: the driver's copy step checks that both give the same graph hash. Reloaded on 2026-10-28: 4,193 nodes and 22,142 relationships, the driver's figures, read back after the copy. Since 2026-10-29 also the 134 <code>Tech</code> nodes (E5; 142 since E6). A Databricks job reached AuraDB through the secret scope <code>epm-neo4j</code> and counted its 4,193 ontology nodes; it read no <code>Tech</code> node</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
+<tr><td>Local Neo4j</td><td data-k="Holds">All the content of each module's newest release, one <code>ModuleRelease</code> node per module, and the module graph. The last load gave 4,193 nodes and 22,142 relationships from 36,951 triples and 2 inferred, with no SHACL violation. The driver's last step loads it back from Databricks. It also holds the demo's technical graph and decision trail, labelled <code>Tech</code>, which those counts leave out: 142 nodes since E6, 2026-10-29</td><td data-k="Where">Container <code>lpg-local-neo4j-1</code>, Bolt <code>localhost:17711</code> (no browser port)</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> after a full run, <code>~/lpg-out/epm/neo4j-run/run.env</code> after <code>--skip rebuild</code> (keys <code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code>)</td></tr>
+<tr><td>Jena</td><td data-k="Holds">All three graphs of each module's newest release, one named graph each: 33 graphs and 40,169 quads, with the same RDFC-1.0 hash as the releases. Its dataset is in memory, so a restart or a <code>docker stop</code> empties it</td><td data-k="Where">Container <code>epm-jena-fuseki-1</code>, <code>http://127.0.0.1:13031/ds</code></td><td data-k="Login">None</td></tr>
+<tr><td>Neo4j AuraDB</td><td data-k="Holds">A copy of the local graph, in the same form: the driver's copy step checks that both give the same graph hash, then writes the same <code>ModuleRelease</code> nodes. Reloaded on 2026-10-28: 4,193 nodes and 22,142 relationships, read back after the copy. Since 2026-10-29 also the 134 <code>Tech</code> nodes (E5; 142 since E6). A Databricks job reached AuraDB through the secret scope <code>epm-neo4j</code> and counted its 4,193 ontology nodes; it read no <code>Tech</code> node</td><td data-k="Where">Neo4j's cloud</td><td data-k="Login"><code>~/.config/neo4j/aura.env</code></td></tr>
 <tr><td>Databricks, <code>epm_triples</code></td><td data-k="Holds">The release triples as a Delta table. Reloaded on 2026-10-28, on that day's releases with <code>kpi</code> 1.3.0: 40,169 quads in 33 graphs, with the same RDFC-1.0 hash as the releases. The definitions views read <code>kpi</code> 1.3.0 from it (E3, 2026-10-29)</td><td data-k="Where"><code>workspace.epm_ontology.epm_triples</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code></td></tr>
 <tr><td>Databricks, <code>idp_sbx</code></td><td data-k="Holds">The demo's replica, silver and gold tables, six metric views, five definitions views, four Genie agents, and the technical graph's tables <code>tech_graph.tech_graph_nodes</code> and <code>tech_graph_edges</code> (E5)</td><td data-k="Where">Catalog <code>idp_sbx</code></td><td data-k="Login"><code>~/.config/databricks/epm.env</code> or the demo's <code>.env</code></td></tr>
 <tr><td>Local Postgres</td><td data-k="Holds">The demo's seven source databases: price_assessment, price_reference, reference_data_hub, rightangle, aspen_pims, production_accounting (six synthetic, renamed on 2026-10-28) and eia_weekly (EIA's public weekly data by PADD, added 2026-10-28 for the three-year extension), with an eighth, decision_truth, holding the hidden decision dossiers, which the pipeline never replicates (added 2026-10-28). The same eight also run on the exe.dev VM <code>databases.exe.xyz</code>, which the demo now reads through an SSH tunnel</td><td data-k="Where">Container <code>pricing-demo-sources</code>, <code>127.0.0.1:55432</code>, volume <code>pricing-demo-pgdata</code></td><td data-k="Login">The local demo login in the demo's <code>docker/docker-compose.yml</code></td></tr>
 </tbody></table></div>
-<p class="note">Loaded from the same releases, the two local graphs hold the same nodes but count relationships differently, because they follow different versions of the projection guideline: the pipeline v2.2, the driver the skill's v2.3. Each passes its own checks. Both were reloaded from the releases of 2026-10-28, so they hold the same 4,193 nodes; the pipeline counts 21,767 relationships and the driver 22,142. The driver's run also loads transient Apache Jena Fuseki stores, which it does not keep; the one that compares the walks held 37,089 quads, with an equal hash.</p>
+<p class="note">The standard is one local Neo4j plus Jena, and AuraDB copies the local Neo4j's form. Of the 22,142 relationships, 21,767 come from the releases' triples, 373 are schema relationships from n10s's ontology import, and 2 come from the reasoner's inferences. The driver's run also loads transient Fuseki stores for its checks, which it removes; the one that compares the walks held 37,089 quads, with an equal hash. Only the store of its <code>jena</code> step stands.</p>
+
+<h2 id="holds">What each store holds</h2>
+<p class="lead">Each module package has three Turtle files. <code>&lt;module&gt;.ttl</code> is the content. <code>shapes.ttl</code> is the rules. <code>catalog.ttl</code> is the DCAT release record: the dataset, its version, its issue date and its distributions. <code>../MODULES.md</code> gives each module's purpose and the files each package is built from.</p>
+<div class="tblwrap"><table class="stack">
+<thead><tr><th>Store</th><th>Content, <code>&lt;module&gt;.ttl</code></th><th>Rules, <code>shapes.ttl</code></th><th>Release record, <code>catalog.ttl</code></th></tr></thead>
+<tbody>
+<tr><td>Jena and Databricks <code>epm_triples</code></td><td data-k="Content">All, one named graph</td><td data-k="Rules">All, one named graph</td><td data-k="Release record">All, one named graph</td></tr>
+<tr><td>Local Neo4j and AuraDB</td><td data-k="Content">All, with no selective projection</td><td data-k="Rules">Not nodes. They validate the release: pySHACL before the load, n10s in the graph at the load</td><td data-k="Release record">Not in full: one <code>ModuleRelease</code> node per module</td></tr>
+</tbody></table></div>
+<p>Neo4j holds all the content so that the round trip keeps proving 0 lost and 0 added. A selective projection would lose that proof.</p>
+<p>A <code>ModuleRelease</code> node holds <code>module</code>, <code>version</code>, <code>version_iri</code>, <code>ontology</code>, <code>download_url</code>, <code>conforms</code>, <code>in_graph_constraints</code>, <code>violations</code>, <code>shapes_sha256</code>, <code>projection_version</code> and <code>loaded_at</code>. <code>conforms</code>, <code>in_graph_constraints</code> and <code>violations</code> describe the whole load, because the shapes run over every module together. A <code>DESCRIBES</code> relationship links the node to its module's <code>owl__Ontology</code> node. The node has no <code>Resource</code> label, so the hash, the counts, the module tags and the round trip do not read it, and no field enters a hash. To read the records:</p>
+<pre><code>MATCH (r:ModuleRelease)-[:DESCRIBES]-&gt;(o) RETURN r.module, r.version, r.conforms, r.violations, r.loaded_at, o.uri ORDER BY r.module</code></pre>
+<p>Two labels on a class do not mean two nodes. A class is one node with <code>owl__Class</code>, from its own triple, and <code>n4sch__Class</code>, from n10s's ontology import. 46 classes carry both. Count classes with one of them.</p>
 
 <h2 id="before">Before you start</h2>
 <div class="two">
@@ -359,7 +368,7 @@ td:first-child { font-weight: 600; }
     <ul>
       <li>Docker Desktop, running.</li>
       <li><a href="https://docs.astral.sh/uv/">uv</a>, and Java 11 or later for ROBOT.</li>
-      <li>ROBOT 1.9.10 at <code>~/epm-lpg/robot.jar</code>, and the n10s jar in <code>~/epm-lpg/plugins/</code>. The projection README's "Rerun the whole pipeline", steps 1 to 3, downloads both and gives their checksums.</li>
+      <li>ROBOT 1.9.10 at <code>~/epm-lpg/robot.jar</code>. The driver checks its checksum, and it fetches and checks the n10s jar itself.</li>
       <li>The env files named in the table. Create the Aura and Databricks files yourself, then run <code>chmod 600</code> on each.</li>
     </ul>
     <p>Every tool behind the stores and the demo, with its version: the ontology guide's <a href="../epm-ontology-guide.html#tools">"The tools behind it"</a>.</p>
@@ -373,17 +382,16 @@ DEMO="$EPM/demos/downstream-pricing-databricks-free"</code></pre>
 
 <h2 id="check">Check what is running</h2>
 <pre><code>docker ps --format '{{.Names}}  {{.Status}}'</code></pre>
-<p>All three local stores are up when the list shows <code>epm-lpg</code>, <code>lpg-local-neo4j-1</code> and <code>pricing-demo-sources</code>.</p>
+<p>All three local stores are up when the list shows <code>lpg-local-neo4j-1</code>, <code>epm-jena-fuseki-1</code> and <code>pricing-demo-sources</code>.</p>
 <h3>Count what each store holds</h3>
 <p>Every count below reads <code>:Resource</code> nodes and the edges between them, the projection itself. The demo's technical graph (E5) is labelled <code>Tech</code>, has no edge pointing into it from the ontology, and so changes none of them; <code>MATCH (n:Tech) RETURN count(n)</code> counts it, 134 nodes after its load on 2026-10-29 and 142 since E6 the same day.</p>
-<p>Pipeline Neo4j. The password is read from its file into <code>NEO4J_PASSWORD</code>, which <code>docker exec -e</code> passes to <code>cypher-shell</code>, and the command below names the variable, not the value, and prints no login:</p>
-<pre><code>set -a; . ~/epm-lpg/run.env; set +a
-docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j \
-  "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships;"</code></pre>
-<p>Driver Neo4j. After a full driver run its login is in the <code>epm-rebuild</code> file; after a run with <code>--skip rebuild</code>, change <code>epm-rebuild</code> to <code>epm</code> in the first line:</p>
+<p>The local Neo4j. The password is read from its file into <code>NEO4J_PASSWORD</code>, which <code>docker exec -e</code> passes to <code>cypher-shell</code>, and the command below names the variable, not the value, and prints no login. After a full driver run its login is in the <code>epm-rebuild</code> file; after a run with <code>--skip rebuild</code>, change <code>epm-rebuild</code> to <code>epm</code> in the first line:</p>
 <pre><code>export NEO4J_PASSWORD=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
 docker exec -e NEO4J_PASSWORD lpg-local-neo4j-1 cypher-shell -u neo4j \
   "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships;"</code></pre>
+<p>Jena. The check compares its graph names and each graph's triple count with the release files, and reads <code>empty</code> after a restart:</p>
+<pre><code>cd "$EPM/business_architecture/ontology/projection"
+uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py check --store jena</code></pre>
 <p>Postgres, the exact row count of every table in each database. Postgres quotes each table name itself (<code>format</code> with <code>%I</code>), so no name is pasted into the SQL. psql 16.10's own help describes <code>\gexec</code> as "execute query, then execute each value in its result" and <code>ON_ERROR_STOP</code> as "stop batch execution after error"; on 2026-10-26 a count of a missing table exited with status 3. The block prints <code>count failed</code> for any database it could not count, and ends with a non-zero status if one failed:</p>
 <pre><code>rc=0
 for db in price_assessment price_reference reference_data_hub rightangle aspen_pims production_accounting eia_weekly decision_truth; do
@@ -394,7 +402,7 @@ done
 [ "$rc" -eq 0 ]</code></pre>
 <p>The demo in Databricks, every table and metric view with its row count:</p>
 <pre><code>cd "$DEMO" && uv run python -m pricing_demo.databricks counts</code></pre>
-<p>AuraDB: open the instance in the <a href="https://console.neo4j.io/">Aura console</a> and run the same two queries as for the driver's Neo4j. After the reload of 2026-10-28 the copy step read back the driver's figures: 4,193 nodes and 22,142 relationships. The queries count only <code>:Resource</code> nodes, the projection itself; each store also holds a few nodes of its own (module tags and, locally, n10s settings), so a count of every node is a little higher.</p>
+<p>AuraDB: open the instance in the <a href="https://console.neo4j.io/">Aura console</a> and run the same two queries as for the local Neo4j. After the reload of 2026-10-28 the copy step read back 4,193 nodes and 22,142 relationships. The queries count only <code>:Resource</code> nodes, the projection itself; each store also holds a few nodes of its own (module tags, release records and, locally, n10s settings), so a count of every node is a little higher.</p>
 
 <h2 id="stop">Stop, start and reboot</h2>
 <p class="lead">Stopping keeps the data; purging removes it. A reload brings a purged store back from the repository.</p>
@@ -436,21 +444,12 @@ done
 <div class="two">
   <div class="card">
     <h3>Stop the local stores</h3>
-<pre><code>docker stop epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre>
+<pre><code>docker stop lpg-local-neo4j-1 epm-jena-fuseki-1 pricing-demo-sources</code></pre>
     <h3>Start them again</h3>
-<pre><code>docker start epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre>
-    <p id="ready">Neo4j needs about a minute after a start. Wait for each one to accept a login before you count anything. Each block below tries for up to two minutes, prints <code>ready</code> or <code>not ready</code>, and ends with a non-zero status when it is not ready.</p>
-<p>The pipeline's Neo4j:</p>
-<pre><code>set -a; . ~/epm-lpg/run.env; set +a
-state="not ready"
-for i in $(seq 1 24); do
-  if docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j "RETURN 1" >/dev/null 2>&amp;1; then
-    state=ready; break
-  fi
-  sleep 5
-done
-echo "$state"; [ "$state" = ready ]</code></pre>
-<p>The driver's Neo4j (after a run with <code>--skip rebuild</code>, change <code>epm-rebuild</code> to <code>epm</code>):</p>
+<pre><code>docker start lpg-local-neo4j-1 epm-jena-fuseki-1 pricing-demo-sources</code></pre>
+    <p>Stopping keeps the data of Neo4j and Postgres. Jena's dataset is in memory, so it comes back empty: reload it with the driver's <code>jena</code> step, through <code>sync_stores.py sync</code> (<a href="#sync">Keeping the stores in step</a>).</p>
+    <p id="ready">Neo4j needs about a minute after a start. Wait for it to accept a login before you count anything. The block below tries for up to two minutes, prints <code>ready</code> or <code>not ready</code>, and ends with a non-zero status when it is not ready.</p>
+<p>The local Neo4j (after a run with <code>--skip rebuild</code>, change <code>epm-rebuild</code> to <code>epm</code>):</p>
 <pre><code>export NEO4J_PASSWORD=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
 state="not ready"
 for i in $(seq 1 24); do
@@ -465,9 +464,10 @@ echo "$state"; [ "$state" = ready ]</code></pre>
     <h3>After a reboot</h3>
     <ol class="steps">
       <li>Start Docker Desktop, if it does not start at login.</li>
-      <li>Start all three containers, whichever came back by itself (Postgres has <code>restart: unless-stopped</code> in the demo's compose file; the two Neo4j have no restart policy). On 2026-10-26, <code>docker start</code> on a container that was already running exited 0 and left it running, with the same start time:
-<pre><code>docker start epm-lpg lpg-local-neo4j-1 pricing-demo-sources</code></pre></li>
-      <li>Wait for both Neo4j with the two blocks in <a href="#ready">Start them again</a>.</li>
+      <li>Start all three containers, whichever came back by itself (Postgres has <code>restart: unless-stopped</code> in the demo's compose file; Neo4j and Jena have no restart policy). On 2026-10-26, <code>docker start</code> on a container that was already running exited 0 and left it running, with the same start time:
+<pre><code>docker start lpg-local-neo4j-1 epm-jena-fuseki-1 pricing-demo-sources</code></pre></li>
+      <li>Wait for Neo4j with the block in <a href="#ready">Start them again</a>.</li>
+      <li>Reload Jena, which a reboot empties, with <code>sync_stores.py sync</code> (<a href="#sync">Keeping the stores in step</a>).</li>
       <li>Then run the counts in <a href="#check">Check what is running</a>.</li>
     </ol>
     <h3>The cloud stores</h3>
@@ -495,23 +495,22 @@ echo "$state"; [ "$state" = ready ]</code></pre>
   <rect class="node store" x="246" y="70" width="150" height="62" rx="8"/>
   <text class="t" x="258" y="94">Databricks demo</text><text class="s" x="258" y="112">idp_sbx, Genie</text></g>
   <g><circle class="num-c" cx="418" cy="98" r="12"/><text class="num-t" x="414" y="102">3</text>
-  <rect class="node store" x="438" y="70" width="140" height="62" rx="8"/>
-  <text class="t" x="450" y="94">Pipeline Neo4j</text><text class="m" x="450" y="112">epm-lpg</text></g>
+  <rect class="node gone" x="438" y="70" width="140" height="62" rx="8"/>
+  <text class="t" x="450" y="94">Old Neo4j</text><text class="s" x="450" y="112">remove it, once</text></g>
   <g><circle class="num-c" cx="600" cy="98" r="12"/><text class="num-t" x="596" y="102">4</text>
   <rect class="node store" x="620" y="70" width="132" height="62" rx="8"/>
-  <text class="t" x="632" y="94">Driver</text><text class="s" x="632" y="112">Neo4j, Aura, table</text></g>
+  <text class="t" x="632" y="94">Driver</text><text class="s" x="632" y="112">Neo4j, Jena, Aura, table</text></g>
 
   <path class="e" d="M128 52V66" marker-end="url(#c)"/>
   <path class="e" d="M204 120H242" marker-end="url(#c)"/>
-  <path class="e" d="M508 52V66" marker-end="url(#c)"/>
   <path class="e" d="M686 52V66" marker-end="url(#c)"/>
   <path class="e" d="M720 132C720 170 650 170 650 136" marker-end="url(#c)"/>
   <text class="el" x="54" y="162">1 writes the rows that</text><text class="el" x="54" y="176">step 2 copies to Parquet</text>
-  <text class="el" x="438" y="162">3 and 4 each read the releases;</text><text class="el" x="438" y="176">4's rebuild reads the table it wrote</text>
+  <text class="el" x="438" y="162">4 reads the releases;</text><text class="el" x="438" y="176">4's rebuild reads the table it wrote</text>
 </svg>
 </div>
 <p class="note swipe">Swipe the diagram sideways to see all of it.</p>
-<figcaption>Step 2 needs step 1's data. Steps 3 and 4 need only the releases, so either can run alone; this order is the one that ends with every store fresh.</figcaption>
+<figcaption>Step 2 needs step 1's data. Step 4 needs only the releases, so it can run alone. Step 3 runs once, and step 5 and step 6 follow step 4.</figcaption>
 </figure>
 
 <h3>1. Postgres: the seven source databases and decision_truth</h3>
@@ -530,22 +529,23 @@ uv run python -m pricing_demo.genie              # the four Genie agents
 uv run python -m pricing_demo.databricks counts  # check the row counts</code></pre>
 <p>The Genie step updates an agent that already exists by its title, so running it again makes no duplicates.</p>
 
-<h3>3. The pipeline's Neo4j</h3>
-<pre><code>cd "$EPM/business_architecture/ontology/projection"
-./run_local.sh --keep</code></pre>
-<p>It builds, reasons with ROBOT, loads and checks the graph, and leaves <code>epm-lpg</code> running with a new password in <code>~/epm-lpg/run.env</code>. It ends with <code>projection done</code>. Then check that git shows no changed file. A changed <code>projection-report.json</code> or manifest means the inputs changed and belongs in a pull request.</p>
+<h3>3. Retire the old local Neo4j, once</h3>
+<p>An earlier setup kept a second local Neo4j, in an older form. Remove it once:</p>
+<pre><code>docker rm -f -v epm-lpg</code></pre>
 
-<h3>4. The driver: its Neo4j, AuraDB and Databricks <code>epm_triples</code></h3>
+<h3>4. The driver: the local Neo4j, Jena, AuraDB and Databricks <code>epm_triples</code></h3>
 <pre><code>cd ~/.agents/skills/ontology-to-lpg/scripts
 uv run --no-project --with rdflib python3 run_projection.py \
   --config "$EPM/business_architecture/ontology/projection/skill-run/epm-run.json"</code></pre>
 <p>One run does all of it, in this order:</p>
 <ol class="steps">
   <li>It projects the releases.</li>
-  <li>It loads and checks its local Neo4j.</li>
-  <li>It replaces what AuraDB holds with a copy.</li>
+  <li>It empties the local Neo4j, then loads and checks it.</li>
+  <li>It writes one <code>ModuleRelease</code> node per module.</li>
+  <li>It replaces what AuraDB holds with a copy, and writes the same records there.</li>
+  <li>It loads all three graphs of each package into Jena, proves the round trip, and leaves Jena running. It replaces the Fuseki already on port 13031, because the run configuration names the same compose project, <code>epm-jena</code>.</li>
   <li>It writes <code>epm_triples</code> in one <code>CREATE OR REPLACE</code>.</li>
-  <li>It rebuilds the graph from that table into a fresh local Neo4j, which it keeps.</li>
+  <li>It rebuilds the graph from that table into a fresh local Neo4j, which it keeps, and copies that to AuraDB.</li>
 </ol>
 <p>It ends with <code>every step passed</code>. It takes about ten minutes.</p>
 <ul>
@@ -553,31 +553,39 @@ uv run --no-project --with rdflib python3 run_projection.py \
   <li>Add <code>--skip databricks</code> to leave the table as it is.</li>
   <li>After <code>--skip rebuild</code>, the kept graph's login is in <code>~/lpg-out/epm/neo4j-run/run.env</code> instead of the <code>epm-rebuild</code> one.</li>
 </ul>
-<div class="ok"><strong>When it is done</strong>Every store holds the newest releases again. Run the counts in <a href="#check">Check what is running</a>.</div>
+<p>Then take the run's result into the repository. Check what git shows: a changed <code>projection-report.json</code>, manifest or <code>inferred.nt</code> means the inputs changed and belongs in a pull request.</p>
+<pre><code>cd "$EPM/business_architecture/ontology/projection"
+uv run -q --with rdflib --with pyshacl python pipeline.py record --run ~/lpg-out/epm</code></pre>
 
 <h3>5. The demo's technical graph</h3>
-<p>Steps 3 and 4 empty their Neo4j stores and AuraDB, so the technical graph goes back in after them. Steps 1 and 2 must have run, and the Databricks build leaves its two Delta tables empty until the sync fills them:</p>
+<p>Step 4 empties the local Neo4j and AuraDB, so the technical graph goes back in after it. Steps 1 and 2 must have run, and the Databricks build leaves its two Delta tables empty until the sync fills them:</p>
 <pre><code>cd "$DEMO"
 uv run --group graph python -m pricing_demo.tech_graph collect   # live facts, checks, lineage
 uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything -> graph/*.ttl
-uv run --group graph python -m pricing_demo.tech_graph load      # both local Neo4j stores and AuraDB
+uv run --group graph python -m pricing_demo.tech_graph load      # the local Neo4j and AuraDB
 uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_sbx.tech_graph</code></pre>
 <p>The load stops if a store's <code>:Resource</code> counts change, or if an edge to the ontology finds no node.</p>
+
+<h3>6. Mark and check the stores</h3>
+<pre><code>cd "$EPM/business_architecture/ontology/projection"
+uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py mark --store driver --store aura --store jena --store databricks
+uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py check</code></pre>
+<div class="ok"><strong>When it is done</strong>Every store holds the newest releases again. Run the counts in <a href="#check">Check what is running</a>.</div>
 
 <h2 id="sync">Keeping the stores in step</h2>
 <p>The guide's "The plan to close it, not built yet" lists the work that would make these checks run by themselves (#455).</p>
 <p class="lead">Since 2026-10-29 each ontology store says which release set it was loaded from, so a new release shows which stores are behind. <code>sync_stores.py</code>, in the projection folder, does the checking and the reloading with the commands above.</p>
 <h3>What each store records</h3>
-<p>A marker with the catalog's datasets (their count and a digest of their IRIs, from <code>releases/catalog.ttl</code>), the projection's input fingerprint (from <code>projection-manifest.json</code>), the counts the store held when it was marked, the time and the commit. In the three Neo4j stores the marker is a node labelled <code>EpmStoreMarker</code>, never <code>Resource</code>, so the projection's counts, hash and round trip do not see it. In Databricks it is a row in <code>epm_store_markers</code>, beside <code>epm_triples</code>.</p>
-<p>A store is marked only after a check against the repository: the pipeline's graph must give the committed report's hash and counts; the driver's Neo4j and AuraDB must hold the projection's nodes and the driver report's relationships; <code>epm_triples</code> must hold every module's newest release. A pipeline reload deletes every node, the marker with them, so a store reloaded by hand reads as unmarked until it is marked again.</p>
+<p>A marker with the catalog's datasets (their count and a digest of their IRIs, from <code>releases/catalog.ttl</code>), the projection's input fingerprint (from <code>projection-manifest.json</code>), the counts the store held when it was marked, the time and the commit. In the local Neo4j and AuraDB the marker is a node labelled <code>EpmStoreMarker</code>, never <code>Resource</code>, so the projection's counts, hash and round trip do not see it. In Databricks it is a row in <code>epm_store_markers</code>, beside <code>epm_triples</code>. Jena has no marker: its named graphs are version IRIs, so the check compares its graph names and each graph's triple count with the release files.</p>
+<p>A store is marked only after a check against the repository: the local Neo4j and AuraDB must hold the committed report's counts and one release record for each newest release; <code>epm_triples</code> must hold every module's newest release. A driver load deletes every node, the marker with them, so a store reloaded by hand reads as unmarked until it is marked again. The store's name in these commands is <code>driver</code> for the local Neo4j.</p>
 <pre><code>cd "$EPM/business_architecture/ontology/projection"
-uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py mark --store pipeline --store driver --store aura --store databricks</code></pre>
+uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py mark --store driver --store aura --store jena --store databricks</code></pre>
 <h3>The drift check</h3>
-<p>It compares each marker with main's newest catalog and manifest (fetch main first; <code>--ref</code> names another ref) and each store's live count with its marker. Each store is current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or unreachable (the store could not be read: no connection, no login file or a missing table, for example; the error's name follows the word). It exits non-zero unless every store is current.</p>
+<p>It compares each marker with main's newest catalog and manifest (fetch main first; <code>--ref</code> names another ref) and each store's live count with its marker. Each store is current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or unreachable (the store could not be read: no connection, no login file or a missing table, for example; the error's name follows the word). Jena reads current, behind (other graphs than the newest releases), changed (the same graphs with another triple count) or empty (a restart emptied it). It exits non-zero unless every store is current.</p>
 <pre><code>uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py check</code></pre>
-<p>On 2026-10-29, after the four markers were written, every store read as current at commit 4d1e675b: the pipeline graph with 4,193 nodes and 21,767 relationships and its hash unchanged, the driver's Neo4j and AuraDB with 4,193 and 22,142, and <code>epm_triples</code> with 40,169 rows.</p>
+<p>On 2026-10-29, after the four markers were written, every store read as current at commit 4d1e675b: the pipeline graph with 4,193 nodes and 21,767 relationships and its hash unchanged, the driver's Neo4j and AuraDB with 4,193 and 22,142, and <code>epm_triples</code> with 40,169 rows. <em>2026-11-01:</em> the standard is now one local Neo4j, and the count 21,767 is the part of its 22,142 relationships that comes from the releases' triples.</p>
 <h3>sync_stores.py sync</h3>
-<p>It runs the drift check, then reloads what is not current: the pipeline graph with <code>run_local.sh --keep</code> (Reload, step 3), and the driver's Neo4j with a driver run that skips its <code>copy</code>, <code>databricks</code> and <code>rebuild</code> steps, so that graph comes from the repository rather than back from <code>epm_triples</code>. AuraDB and Databricks reload only with <code>--cloud</code>, through the full driver run (step 4), which reloads the driver's Neo4j too. Then it loads the technical graph back into each Neo4j store it reloaded (step 5) and marks those stores. <code>--dry-run</code> prints the commands and runs nothing. Only <code>--dry-run</code> has run so far: the reload path has not run live, so its first real reload is its test. Run it from a checkout of main: it marks what the working tree's catalog says, while the drift check reads main's. The driver is found in <code>$EPM_SKILLS</code>, by default <code>~/.agents/skills</code>.</p>
+<p>It runs the drift check, then reloads what is not current. The local Neo4j and Jena reload with a driver run that skips its <code>copy</code>, <code>databricks</code> and <code>rebuild</code> steps, so that graph comes from the repository rather than back from <code>epm_triples</code>. Jena alone reloads with the driver's <code>jena</code> step, which touches no Neo4j. AuraDB and Databricks reload only with <code>--cloud</code>, through the full driver run (step 4), which reloads the local Neo4j and Jena too. A run that loads the local Neo4j then takes its result into the repository with <code>pipeline.py record</code>. Then it loads the technical graph back into each Neo4j store it reloaded (step 5) and marks those stores. <code>--dry-run</code> prints the commands and runs nothing. Only <code>--dry-run</code> has run so far: the reload path has not run live, so its first real reload is its test. Run it from a checkout of main: it marks what the working tree's catalog says, while the drift check reads main's. The driver is found in <code>$EPM_SKILLS</code>, by default <code>~/.agents/skills</code>.</p>
 <pre><code>uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py sync --dry-run
 uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py sync --cloud</code></pre>
 <h3>The release-tag workflow</h3>
@@ -594,11 +602,12 @@ uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connec
 
 <div class="two">
   <div class="card">
-    <h3>The two local Neo4j containers</h3>
-<pre><code>docker rm -f -v epm-lpg
-cd ~/.agents/skills/ontology-to-lpg/docker
-docker compose -p lpg-local --profile neo4j --profile fuseki down -v</code></pre>
-    <p><code>-v</code> also removes each container's data volume. The next <code>run_local.sh --keep</code> or driver run creates a new container with a new password.</p>
+    <h3>The local Neo4j and Jena</h3>
+<pre><code>cd ~/.agents/skills/ontology-to-lpg/docker
+docker compose -p lpg-local --profile neo4j --profile fuseki down -v
+cd ~/.agents/skills/rdf-store/docker
+docker compose -p epm-jena down -v</code></pre>
+    <p><code>-v</code> also removes the container's data volume. The next driver run creates new containers, with a new password for Neo4j.</p>
   </div>
   <div class="card">
     <h3>Local Postgres</h3>
@@ -635,7 +644,7 @@ uv run python -m pricing_demo.databricks purge --yes   # drops them</code></pre>
 <tr><td>The demo's scripts cannot reach Databricks</td><td data-k="Why">The token in the env file has expired.</td><td data-k="Do">Make a new personal access token in Databricks, and put it in <code>~/.config/databricks/epm.env</code>.</td></tr>
 </tbody></table></div>
 
-<p class="src">Sources: <code>projection/README.md</code>, <code>run_local.sh</code>, <code>skill-run/README.md</code> and <code>LOCAL-STORES.md</code> in this folder; the demo's <code>README.md</code>, <code>docker/docker-compose.yml</code> and <code>pricing_demo/</code>; and the <code>ontology-to-lpg</code> skill's <code>run_projection.py</code> and <code>docker/compose.yaml</code>.</p>
+<p class="src">Sources: <code>projection/README.md</code>, <code>skill-run/README.md</code> and <code>LOCAL-STORES.md</code> in this folder; the demo's <code>README.md</code>, <code>docker/docker-compose.yml</code> and <code>pricing_demo/</code>; and the <code>ontology-to-lpg</code> skill's <code>run_projection.py</code> and <code>docker/compose.yaml</code>.</p>
 </div></main>
 <script>
 document.querySelectorAll("pre").forEach(function (pre) {

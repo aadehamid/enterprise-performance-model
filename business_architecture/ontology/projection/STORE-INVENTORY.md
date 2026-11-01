@@ -1,43 +1,38 @@
 # What each store holds now
 
-This page lists what each store held when it was last audited, what should not be in it, and the commands to check it yourself. `LOCAL-STORES.md` says where each store lives and how to refresh it, and `../../../demos/downstream-pricing-databricks-free/DATA.md` says how the demo's tables are generated. This page answers a different question: is the data in each store the latest, and is anything old left beside it?
+This page lists what each store should hold, what should not be in it, and the commands to check it yourself. `LOCAL-STORES.md` says where each store lives and how to refresh it, `README.md`, "What each store holds", gives the policy for each module's three graphs, and `../../../demos/downstream-pricing-databricks-free/DATA.md` says how the demo's tables are generated. This page answers a different question: is the data in each store the latest, and is anything old left beside it?
 
-**Last audit: 2026-10-29, at main `0b5d6051`.** The audit itself was read-only; the leftovers it found were removed afterwards at the decision owner's word, as the Postgres and Docker sections say. `sync_stores.py check` read all four ontology stores as current, each marked at 2026-10-29T14:23:14Z from the release set at commit `4d1e675b`. *2026-10-31:* the same check, run from main at `daf60fee`, read all four as current, with the same marks.
+**Figures from the last load:** `python3 scripts/epm_facts.py projection`, from the repository root, prints them. The ontology stores below take these figures at their next reload (*2026-11-01:* the last load ran on test containers). The `Postgres`, `Databricks` and `Docker` counts are from the last audit, on 2026-10-29 at main `0b5d6051`; that audit was read-only, and the leftovers it found were removed afterwards at the decision owner's word, as those sections say.
 
-## Local Neo4j, from the pipeline (container `epm-lpg`)
+## Local Neo4j (container `lpg-local-neo4j-1`)
 
 | What | Count | Where it comes from |
 |---|---|---|
-| Nodes labelled `Resource` (the ontology) | 4,193 | `pipeline.py`, on every released package |
-| Relationships between `Resource` nodes | 21,767 | The same load |
+| Nodes labelled `Resource` (the ontology) | 4,193 | The driver's `rebuild` step, from `epm_triples` |
+| Relationships between `Resource` nodes | 22,142 | The same load: 21,767 from the releases' triples, 373 schema relationships from the ontology import, and 2 from inferences |
+| Nodes labelled `ModuleRelease` | 11, one per module | The driver's `release-record` step |
 | Nodes labelled `Tech` (the technical graph and decision trail) | 142, each with its own `uri` | `pricing_demo.tech_graph load` |
-| `EpmStoreMarker` | 1 (`store: pipeline`) | `sync_stores.py mark` |
+| Nodes labelled `Module` | 11 | The driver's module tags |
+| `EpmStoreMarker` | 1 (`store: driver`) | `sync_stores.py mark` |
 | n10s configuration nodes (`_GraphConfig`, `_NsPrefDef`, `_n10sValidatorConfig`) | 1 each | The n10s load |
-| All nodes, all relationships | 4,339, 22,307 | |
 
 Should not be there: nodes from an earlier release beside the current ones, a second copy of the Tech graph (two `Tech` nodes with the same `uri`), or any label not listed above.
 
-## Local Neo4j, from the driver (container `lpg-local-neo4j-1`)
+## Jena (container `epm-jena-fuseki-1`)
 
-| What | Count | Where it comes from |
-|---|---|---|
-| Nodes labelled `Resource` | 4,193 | The driver's `rebuild` step, from `epm_triples` |
-| Relationships between `Resource` nodes | 22,142 | The same load; the driver counts more relationships than the pipeline from the same releases (see `ontology-stores-runbook.html`, Stores) |
-| Nodes labelled `Tech` | 142, each with its own `uri` | `pricing_demo.tech_graph load` |
-| Nodes labelled `Module` | 11 | The driver's module tags |
-| `EpmStoreMarker` | 1 (`store: driver`) | `sync_stores.py mark` |
-| n10s configuration nodes | 1 each | The n10s load |
-| All nodes, all relationships | 4,350, 22,706 | |
+All three graphs of each newest release: 33 named graphs and 40,169 triples, as in `epm_triples`. Each module has its content under its version IRI, and `<version IRI>/shapes` and `<version IRI>/catalog`. It holds no marker: the drift check compares its graph names and each graph's triple count with the release files.
+
+Should not be there: a graph of an older release, or a triple in the default graph. The dataset is in memory, so a restart empties it, and `sync_stores.py check` then reads `empty`. `sync_stores.py sync` reloads it.
 
 ## Neo4j AuraDB
 
-AuraDB holds a copy of the driver's graph, in one database. Its counts match the driver's, without the n10s configuration nodes:
+AuraDB holds a copy of the local Neo4j, in one database. Its counts match the local store's, without the n10s configuration nodes:
 
 - 4,193 `Resource` nodes, with 22,142 relationships between them;
+- 11 `ModuleRelease` nodes, the same records as the local store's;
 - 142 `Tech` nodes, each with its own `uri`;
 - 11 `Module` nodes;
-- one `EpmStoreMarker` (`store: aura`);
-- 4,347 nodes and 22,706 relationships in all.
+- one `EpmStoreMarker` (`store: aura`).
 
 ## Local Postgres (container `pricing-demo-sources`) and the exe.dev VM
 
@@ -91,13 +86,13 @@ Should not be there: a schema, table or view in `idp_sbx` that the demo's SQL do
 
 ## Docker on this Mac
 
-Three containers are in use: `epm-lpg`, `lpg-local-neo4j-1` and `pricing-demo-sources`, each with its data volume. `lpg-local-n10s-jar-1` is stopped, as it should be: at the driver's start it downloads the n10s plugin into the plugins folder and checks its checksum. The images `lpg-fuseki:6.2.0` and `rdf-store-fuseki:6.2.0` serve the driver's transient Jena store, whose container is removed after each run; a driver run rebuilds them if they are missing.
+Three containers are in use: `lpg-local-neo4j-1`, `epm-jena-fuseki-1` and `pricing-demo-sources`; the Neo4j and Postgres ones each have a data volume. `lpg-local-n10s-jar-1` is stopped, as it should be: at the driver's start it downloads the n10s plugin into the plugins folder and checks its checksum. The image `rdf-store-fuseki:6.2.0` serves Jena and the driver's transient store for the walks, and `lpg-fuseki:6.2.0` its transient store for the counts; those two transient containers are removed after each run, and a driver run rebuilds the images if they are missing. *2026-11-01:* `epm-lpg` leaves at the next reload.
 
 Should not be there: an unnamed volume attached to no container, or a container no store uses. On 2026-10-29, at the decision owner's word (the same answers file), 14 such volumes (about 3.8 GB, the data of Neo4j containers that later runs replaced, and their log volumes) and two unused containers (`practical_edison`, Docker's tutorial, and `pgadmin4_container`, never started) were removed. To check that none has come back:
 
 ```bash
 docker volume ls -q --filter dangling=true                    # should print nothing
-docker ps -a --format '{{.Names}} {{.Status}}'                # the three stores and lpg-local-n10s-jar-1
+docker ps -a --format '{{.Names}} {{.Status}}'                # the three containers and lpg-local-n10s-jar-1
 ```
 
 ## Check it yourself
@@ -105,18 +100,24 @@ docker ps -a --format '{{.Names}} {{.Status}}'                # the three stores
 From this folder, with the logins `LOCAL-STORES.md` names:
 
 ```bash
-uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py check
+uv run -q --no-project --with rdflib --with neo4j --with databricks-sql-connector python sync_stores.py check
 ```
 
-Each Neo4j store: the `:Resource` node and relationship counts, then the Tech graph and the marker. The pipeline store is shown. For the driver's store, use the container `lpg-local-neo4j-1` and the login file `ontology-stores-runbook.html`, Check, names. For AuraDB, run the same Cypher in the Aura console's query tool.
+The local Neo4j: the `:Resource` node and relationship counts, then the release records, the Tech graph and the marker. After a run with `--skip rebuild`, change `epm-rebuild` to `epm`. For AuraDB, run the same Cypher in the Aura console's query tool.
 
 ```bash
-set -a; . ~/epm-lpg/run.env; set +a
-docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j \
-  "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships; MATCH (t:Tech) RETURN count(t) AS tech, count(DISTINCT t.uri) AS distinct_uris; MATCH (m:EpmStoreMarker) RETURN m.store, m.marked_at;"
+export NEO4J_PASSWORD=$(grep '^PASSWORD=' ~/lpg-out/epm-rebuild/neo4j-run/run.env | cut -d= -f2-)
+docker exec -e NEO4J_PASSWORD lpg-local-neo4j-1 cypher-shell -u neo4j \
+  "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships; MATCH (r:ModuleRelease) RETURN count(r) AS releases; MATCH (t:Tech) RETURN count(t) AS tech, count(DISTINCT t.uri) AS distinct_uris; MATCH (m:EpmStoreMarker) RETURN m.store, m.marked_at;"
 ```
 
-Expect 4,193 nodes in every store; 21,767 relationships in the pipeline store and 22,142 in the driver's and AuraDB; 142 Tech nodes with 142 distinct URIs; one marker naming the store.
+Expect 4,193 nodes and 22,142 relationships in both stores; 11 release records; 142 Tech nodes with 142 distinct URIs; one marker naming the store.
+
+Jena: the graphs and triples it holds.
+
+```bash
+curl -s http://127.0.0.1:13031/ds/query --data-urlencode 'query=SELECT (COUNT(DISTINCT ?g) AS ?graphs) (COUNT(*) AS ?triples) WHERE { GRAPH ?g { ?s ?p ?o } }' -H 'Accept: text/csv'   # 33, 40169
+```
 
 Databricks, from the demo's folder: `uv run python -m pricing_demo.databricks counts` gives every `idp_sbx` object's rows. In the SQL editor:
 

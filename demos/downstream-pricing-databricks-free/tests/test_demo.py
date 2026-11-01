@@ -640,7 +640,7 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver()))
     with pytest.MonkeyPatch.context() as mp:
         mp.setitem(sys.modules, "neo4j", neo4j)
-        assert tech_graph.sync("pipeline") == (1, 1)
+        assert tech_graph.sync("driver") == (1, 1)
     kinds = [st.split(" epm_validate.tech_graph.")[0] for st in cur.statements]
     assert kinds == ["DELETE FROM", "INSERT INTO", "SELECT COUNT(*) FROM"] * 2  # nodes, then edges, each deleted, filled, counted
     only_catalog(cur.statements, "epm_validate")
@@ -1384,7 +1384,7 @@ def test_e5_a_gold_table_walks_to_the_measures_its_metric_views_implement():
 
 
 def test_e5_only_tech_nodes_and_edges_out_of_them_so_the_projection_counts_cannot_move():
-    # The projection counts :Resource nodes and the edges between them (pipeline.py graph_hash; runbook, Check).
+    # The projection counts :Resource nodes and the edges between them (the skill's load_verify.hash_graph; runbook, Check).
     nodes, edges = tech_graph.graph_rows(_graph("tech-graph.ttl", "decision-trail.ttl"))
     assert all(n["labels"][0] == "Tech" and "Resource" not in n["labels"] for n in nodes)
     uris = {n["props"]["uri"] for n in nodes}
