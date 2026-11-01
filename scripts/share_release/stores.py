@@ -47,60 +47,38 @@ def ledger(env, kind, name, detail="", **extra):
                             **{f"detail_{k}": v for k, v in extra.items()}}) + "\n")
 
 
-SECRET_FLAGS = ("--password", "--token", "--access-token")
-SECRET_KEYS = re.compile(r"PASSWORD|TOKEN|SECRET", re.I)
-SECRETS = set()  # every secret this run has seen (the generated Neo4j password, the --env file's logins): scrubbed from every record
+import procs
+import scrubbing
 
-
-def secrets_in(args, env):
-    """The secrets a command carries: a value after a secret flag, an argument of the form --flag=value, a value of an
-    environment variable whose name says it is one, and everything registered in SECRETS."""
-    found = set(SECRETS)
-    for i, a in enumerate(args):
-        if i and args[i - 1] in SECRET_FLAGS:
-            found.add(a)
-        for flag in SECRET_FLAGS:
-            if a.startswith(flag + "="):
-                found.add(a[len(flag) + 1:])
-    for k, v in (env or {}).items():
-        if SECRET_KEYS.search(k) and v:
-            found.add(v)
-    return {s for s in found if len(s) >= 4}
-
-
-def scrub(text, secrets):
-    """text with every secret replaced by ***, longest first."""
-    for s in sorted(secrets, key=len, reverse=True):
-        text = text.replace(s, "***")
-    return text
+SECRETS = scrubbing.SECRETS  # the secrets this run has seen, scrubbed from every record (scrubbing.py)
 
 
 def redacted(args, secrets=()):
-    """The command as recorded: the value after a secret-bearing flag, an --flag=value secret and any registered secret
-    are masked, so no output file holds a password."""
+    """The command as recorded: the value after a secret-bearing flag, an --flag=value secret and every known
+    secret masked, so no output file holds a password."""
     out = []
     for i, a in enumerate(args):
-        out.append("***" if i and args[i - 1] in SECRET_FLAGS else a)
-    return scrub(" ".join(out), set(secrets) | secrets_in(args, {}))
+        out.append("***" if i and args[i - 1] in scrubbing.SECRET_FLAGS else a)
+    return scrubbing.scrub(" ".join(out), set(secrets) | scrubbing.secrets_in(args))
 
 
 def sh(args, cwd, env=None, timeout=7200, input=None):
-    """One command, recorded with its exit code and the tail of its output; every secret it was given is scrubbed
-    from the record (the command, the tail, a timeout's partial output), so no result file holds one."""
+    """One command in its own process group with a deadline, recorded with its exit code and the tail of its output;
+    every secret it was given, inherited or that this run registered is scrubbed from the record (the command, the
+    tail, a timeout's partial output), so no result file holds one."""
     base = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
-    secrets = secrets_in(args, env)
+    merged = {**base, "PYTHONDONTWRITEBYTECODE": "1", **(env or {})}
+    secrets = scrubbing.secrets_in(args, merged)
     t = time.time()
     try:
-        r = subprocess.run(args, cwd=cwd, env={**base, "PYTHONDONTWRITEBYTECODE": "1", **(env or {})},
-                           capture_output=True, text=True, timeout=timeout, input=input)
-    except subprocess.TimeoutExpired as exc:
-        partial = exc.stdout.decode("utf-8", "replace") if isinstance(exc.stdout, bytes) else str(exc.stdout or "")
+        r = procs.run(args, timeout=timeout, cwd=cwd, env=merged, input=input)
+    except procs.Expired as exc:
         return {"command": redacted(args, secrets), "returncode": -1, "seconds": round(time.time() - t, 1),
-                "tail": scrub(f"timed out after {timeout} s: " + partial[-1500:], secrets)}
+                "tail": scrubbing.scrub(f"timed out after {timeout} s: " + exc.partial[-1500:], secrets)}
     except OSError as exc:
-        return {"command": redacted(args, secrets), "returncode": -1, "seconds": round(time.time() - t, 1), "tail": scrub(f"could not start: {exc}", secrets)}
+        return {"command": redacted(args, secrets), "returncode": -1, "seconds": round(time.time() - t, 1), "tail": scrubbing.scrub(f"could not start: {exc}", secrets)}
     return {"command": redacted(args, secrets), "returncode": r.returncode, "seconds": round(time.time() - t, 1),
-            "tail": scrub((r.stdout + r.stderr)[-3000:], secrets)}
+            "tail": scrubbing.scrub((r.stdout + r.stderr)[-3000:], secrets)}
 
 
 def uv(args, cwd, extra=(), **kw):
@@ -127,7 +105,7 @@ def read_login(env):
         for line in f:
             if line.startswith("NEO4J_PASSWORD="):
                 pw = line.split("=", 1)[1].strip()
-                SECRETS.add(pw)
+                scrubbing.register(pw)
                 return pw
     return None
 
@@ -138,16 +116,24 @@ def neo4j_up(env):
     name, port = env.get("TEST_NEO4J_NAME", "epm-validate"), env.get("TEST_NEO4J_PORT", "17799")
     pw = env.get("TEST_NEO4J_PASSWORD") or os.urandom(16).hex()
     env["TEST_NEO4J_PASSWORD"] = pw
-    SECRETS.add(pw)
-    subprocess.run(["docker", "rm", "-f", name], capture_output=True, timeout=600)
+    scrubbing.register(pw)
+    try:
+        procs.run(["docker", "rm", "-f", name], timeout=600)  # a stale container of an earlier run; absent is fine
+    except (procs.Expired, OSError) as exc:
+        raise RuntimeError(scrubbing.scrub(f"docker could not remove a stale container: {exc}")) from None
     importdir = expand(env["IMPORT_DIR"])
     os.makedirs(importdir, exist_ok=True)
-    r = subprocess.run(["docker", "run", "-d", "--name", name, "-p", f"127.0.0.1:{port}:7687", "-e", f"NEO4J_AUTH=neo4j/{pw}",
-                        "-e", 'NEO4J_PLUGINS=["apoc"]', "-e", "NEO4J_dbms_security_procedures_unrestricted=apoc.*,n10s.*",
-                        "-v", f"{importdir}:/import", "-v", f"{expand(env['PLUGINS_DIR'])}:/plugins", "neo4j:2025.06.2"],
-                       capture_output=True, text=True, timeout=1800)
+    # The login reaches docker through this process's environment (-e NEO4J_AUTH, no value: docker reads it from the
+    # environment), so the command line carries no password, and a timeout's message cannot either.
+    try:
+        r = procs.run(["docker", "run", "-d", "--name", name, "-p", f"127.0.0.1:{port}:7687", "-e", "NEO4J_AUTH",
+                       "-e", 'NEO4J_PLUGINS=["apoc"]', "-e", "NEO4J_dbms_security_procedures_unrestricted=apoc.*,n10s.*",
+                       "-v", f"{importdir}:/import", "-v", f"{expand(env['PLUGINS_DIR'])}:/plugins", "neo4j:2025.06.2"],
+                      timeout=1800, env={**os.environ, "NEO4J_AUTH": f"neo4j/{pw}"})
+    except (procs.Expired, OSError) as exc:
+        raise RuntimeError(scrubbing.scrub(f"the test Neo4j did not start: {exc}")) from None
     if r.returncode:
-        raise RuntimeError(r.stderr[-500:])
+        raise RuntimeError(scrubbing.scrub(r.stderr[-500:]))
     ledger(env, "container", name, f"Neo4j on 127.0.0.1:{port}")
     login = login_file(env)
     with open(login, "w") as f:  # the later rows and the snippet runner read the login back from here
@@ -155,7 +141,7 @@ def neo4j_up(env):
     os.chmod(login, 0o600)
     ledger(env, "file", login, "the test Neo4j's login")
     for _ in range(60):
-        logs = subprocess.run(["docker", "logs", name], capture_output=True, text=True, timeout=120)
+        logs = procs.run(["docker", "logs", name], timeout=120)
         if "Started." in logs.stdout + logs.stderr:
             return f"bolt://localhost:{port}", pw
         time.sleep(4)
@@ -169,7 +155,7 @@ def test_password(env):
         if not pw:
             raise RuntimeError("no test Neo4j login: run the projection-pipeline row first")
         env["TEST_NEO4J_PASSWORD"] = pw
-    SECRETS.add(env["TEST_NEO4J_PASSWORD"])
+    scrubbing.register(env["TEST_NEO4J_PASSWORD"])
     return env["TEST_NEO4J_PASSWORD"]
 
 
@@ -178,10 +164,10 @@ def cypher(bolt, pw, query):
     code = ("import json, os, sys\nfrom neo4j import GraphDatabase\n"
             "with GraphDatabase.driver(sys.argv[1], auth=('neo4j', os.environ['NEO4J_PASSWORD'])) as d, d.session() as s:\n"
             "    print(json.dumps(s.run(sys.argv[2]).data(), default=str))\n")
-    r = subprocess.run(["uv", "run", "-q", "--no-project", "--with", "neo4j", "python3", "-c", code, bolt, query],
-                       capture_output=True, text=True, env={**os.environ, "NEO4J_PASSWORD": pw}, timeout=600)
+    r = procs.run(["uv", "run", "-q", "--no-project", "--with", "neo4j", "python3", "-c", code, bolt, query],
+                  timeout=600, env={**os.environ, "NEO4J_PASSWORD": pw})
     if r.returncode:
-        raise RuntimeError(r.stderr[-500:])
+        raise RuntimeError(r.stderr[-500:])  # procs.run scrubbed it
     return json.loads(r.stdout)
 
 

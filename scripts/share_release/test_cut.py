@@ -31,11 +31,19 @@ def test_dangerous_output_folders_are_refused_before_anything_is_removed(tmp_pat
     assert r.returncode == 2 and "--replace" in r.stderr and (other / "notes.txt").exists()
     (other / "release.json").write_text("")  # a forged, empty marker beside unrelated files
     r = cut(tmp_path, other, None, "--replace")
-    assert r.returncode == 2 and "not this tool's release marker" in r.stderr and (other / "notes.txt").exists()
-    (other / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}')
+    assert r.returncode == 2 and "exactly the marker" in r.stderr and (other / "notes.txt").exists()
+    (other / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}')  # string-valued keys, but not this tool's marker
+    r = cut(tmp_path, other, None, "--replace")
+    assert r.returncode == 2 and "exactly the marker" in r.stderr and (other / "notes.txt").exists()
+    import json, sys
+    sys.path.insert(0, HERE); import manifest
+    (other / "release.json").write_text(json.dumps({**manifest.marker("2026-11-01"), "from": "x"}))  # one key too many
+    r = cut(tmp_path, other, None, "--replace")
+    assert r.returncode == 2 and "exactly the marker" in r.stderr and (other / "notes.txt").exists()
+    (other / "release.json").write_text(json.dumps(manifest.marker("2026-11-01")))
     r = cut(tmp_path, other, {"EPM_RELEASE_OWNER_NAMES": "", "HOME": str(tmp_path / "nohome")}, "--replace")  # no owner names: nothing removed
     assert r.returncode == 2 and "not configured" in r.stderr and (other / "notes.txt").exists()
-    r = cut(tmp_path, other, None, "--replace")  # a real marker, the names configured: the folder is replaced and the cut starts
+    r = cut(tmp_path, other, None, "--replace")  # the exact marker, the names configured: the folder is replaced and the cut starts
     assert "=== export" in r.stdout and not (other / "notes.txt").exists()
     r = cut(tmp_path, tmp_path / "fresh", None, "--store-rows", "")
     assert r.returncode == 2 and "names no row" in r.stderr

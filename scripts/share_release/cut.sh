@@ -22,12 +22,14 @@
 #
 # --out is written afresh. It is refused when it is "/", the home folder, the checkout or the skills checkout or
 # a parent of either, or a file. An existing folder that is not empty is removed only with --replace, and only
-# when it is a release of this tool: its release.json parses as JSON naming "release" and "mode". The owner's
-# names are checked before anything is removed, so a cut that would refuse removes nothing.
+# when its release.json is exactly the marker this tool writes (manifest.is_tool_marker: the fixed keys, the
+# release name, the mode text, a date; nothing else is accepted). The owner's names are checked before anything
+# is removed, so a cut that would refuse removes nothing.
 #
-# Deadlines: the rebuild, each validation run, the release's check.sh, the snippets and the clean room run under
-# cleanroom.py's deadline (STEP_TIMEOUT seconds each, default 7200; the clean room stops its container on expiry),
-# so a stalled download, store or daemon is a failed step, never a hung cut.
+# Deadlines: every long step (the rebuild, each validation run, the release's check.sh, the comparison, the
+# snippets, both gates, the report and the clean room) runs under cleanroom.py's deadline (STEP_TIMEOUT seconds
+# each, default 7200; the whole process group is killed on expiry and the clean room removes its container), so
+# a stalled download, store or daemon is a failed step, never a hung cut.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 EPM=""; SKILLS=""; OUT=""; ENVF=""; BASELINE=""; CLEANROOM=1; REPLACE=0; STEP_TIMEOUT="${STEP_TIMEOUT:-7200}"; STORE_ROWS="projection-pipeline,underscores,demo-offline,store-map"
@@ -60,8 +62,8 @@ if [ -e "$OUT" ]; then
   [ -d "$OUT" ] || refuse "it is a file"
   if [ -n "$(ls -A "$OUT")" ]; then
     [ "$REPLACE" = 1 ] || refuse "it is not empty; --replace removes an earlier release of this tool"
-    python3 -c 'import json, sys; m = json.load(open(sys.argv[1])); sys.exit(0 if isinstance(m, dict) and isinstance(m.get("release"), str) and isinstance(m.get("mode"), str) else 1)' "$OUT/release.json" 2>/dev/null \
-      || refuse "its release.json is not this tool's release marker"
+    python3 -I -c 'import sys; sys.path.insert(0, sys.argv[1]); import manifest; sys.exit(0 if manifest.is_tool_marker(sys.argv[2]) else 1)' "$HERE" "$OUT/release.json" \
+      || refuse "its release.json is not exactly the marker this tool writes"
   fi
 fi
 python3 -I -c 'import sys; sys.path.insert(0, sys.argv[1]); import owner; owner.owner_names()' "$HERE" || exit 2  # the names, before anything is removed
@@ -81,7 +83,7 @@ PY
 
 step "export"; rm -rf "$OUT"; python3 -I "$HERE/export.py" --epm "$EPM" --skills "$SKILLS" --out "$OUT" | tail -1
 step "rebuild"; within "$OUT-rebuild.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/rebuild.py" --release "$OUT" --epm "$EPM" > /dev/null || { tail -20 "$OUT-rebuild.log"; exit 1; }; tail -1 "$OUT-rebuild.log"
-step "gate"; python3 -I "$HERE/gate.py" "$OUT" | tail -1
+step "gate"; within "$OUT-gate.log" python3 -I "$HERE/gate.py" "$OUT" > /dev/null || { tail -20 "$OUT-gate.log"; exit 1; }; tail -1 "$OUT-gate.log"
 step "store rows ($STORE_ROWS)"; within "$OUT-stores.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" run --tree "$OUT" --out "$OUT-stores.json" --env "$ENVF" \
   --rows "$STORE_ROWS" > /dev/null || { tail -20 "$OUT-stores.log"; exit 1; }
 rows_ok "$OUT-stores.json" "store rows"
@@ -89,10 +91,10 @@ step "check.sh"; (cd "$OUT" && within "$OUT-check.log" bash scripts/check.sh > /
 step "tree rows"; within "$OUT-tree.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" run --tree "$OUT" --out "$OUT-tree.json" --env "$ENVF" \
   --rows regression,docs-links,skills-tests,iri-base,gate > /dev/null || { tail -20 "$OUT-tree.log"; exit 1; }
 rows_ok "$OUT-tree.json" "tree rows"
-step "compare"; uvpy "$HERE/validate.py" compare --main "$EPM" --release "$OUT" --out "$OUT-compare.json" > "$OUT-compare.log" 2>&1 || { tail -20 "$OUT-compare.log"; exit 1; }
+step "compare"; within "$OUT-compare.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" compare --main "$EPM" --release "$OUT" --out "$OUT-compare.json" > /dev/null || { tail -20 "$OUT-compare.log"; exit 1; }
 rows_ok "$OUT-compare.json" "comparison"
 step "snippets"; within "$OUT-snippets.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/snippets.py" --tree "$OUT" --out "$OUT-snippets.json" --env "$ENVF" > /dev/null || { tail -20 "$OUT-snippets.log"; exit 1; }; head -1 "$OUT-snippets.log"
-step "gate again"; find "$OUT" -type d \( -name __pycache__ -o -name .pytest_cache -o -name .venv \) -prune -exec rm -rf {} +; python3 -I "$HERE/gate.py" "$OUT" | tail -1
+step "gate again"; find "$OUT" -type d \( -name __pycache__ -o -name .pytest_cache -o -name .venv \) -prune -exec rm -rf {} +; within "$OUT-gate2.log" python3 -I "$HERE/gate.py" "$OUT" > /dev/null || { tail -20 "$OUT-gate2.log"; exit 1; }; tail -1 "$OUT-gate2.log"
 step "zip"; python3 -I "$HERE/publish.py" zip --release "$OUT" --out "$OUT.zip" | tail -1
 if [ "$CLEANROOM" = 1 ]; then step "clean room"; python3 "$HERE/cleanroom.py" "$OUT.zip" --log "$OUT-cleanroom.log" --timeout "$STEP_TIMEOUT" > /dev/null || { tail -20 "$OUT-cleanroom.log"; exit 1; }; tail -2 "$OUT-cleanroom.log"; fi
 if [ -n "$BASELINE" ]; then
@@ -101,7 +103,7 @@ import json, sys
 t, s = json.load(open(sys.argv[1])), json.load(open(sys.argv[2]))
 t["rows"].update(s["rows"]); json.dump(t, open(sys.argv[3], "w"), indent=1)
 PY
-  uvpy "$HERE/validate.py" report "$BASELINE" "$OUT-release.json" "$OUT-compare.json" --out "$OUT-VALIDATION.md" | tail -1
+  within "$OUT-report.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" report "$BASELINE" "$OUT-release.json" "$OUT-compare.json" --out "$OUT-VALIDATION.md" > /dev/null || { tail -20 "$OUT-report.log"; exit 1; }; tail -1 "$OUT-report.log"
 fi
 NOT_RUN="$(python3 -c 'import sys; a=set(sys.argv[1].split(",")); print(", ".join(r for r in sys.argv[2].split(",") if r not in a) or "none")' "$STORE_ROWS" "$ALL_STORE_ROWS")"
 step "done"; echo "release: $OUT; zip: $OUT.zip; store rows not run: $NOT_RUN (--store-rows all runs them when Databricks is reachable); remaining: step 9, $HERE/cleanup.py --ledger $LEDGER --env $ENVF --tree $OUT --yes, and the AuraDB reload from main; step 10, $HERE/publish.py branch --zip $OUT.zip --repo $EPM, then --push, the owner's decision"

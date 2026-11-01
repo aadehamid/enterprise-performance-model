@@ -11,9 +11,11 @@ the store rows wrote in IMPORT_DIR); SPARQL (PREFIX, SELECT, ASK, CONSTRUCT) run
 released packages; a shell block runs line by line when every command is read-only (the allowlist below), in the
 folder the block's own `cd` or "# from <folder>" names, which must be inside the tree; anything else (Turtle shown
 as an example, text, SQL for Databricks, a command that writes data or needs a login) is listed as not run, with
-its reason. No line reaches a shell: a command is split into words (shlex), its variables are the block's own, and
-it runs with a minimal environment that carries no login; a line with shell syntax (";", "|", redirection, a
-substitution) is listed as not run, and "a && b" runs a then b. A folder a block names that is not in the tree,
+its reason. No line reaches a shell: a command is split into words (shlex), its variables are the block's own
+(never this machine's environment), and it runs with a minimal environment that carries no login; a line with
+shell syntax (";", "|", redirection, a substitution) is listed as not run, and "a && b" runs a then b. What may
+run is a closed policy (POLICY): a named executable with its allowed options, every path-like operand resolved and
+required inside the tree, a Python script only from the tree and never "-c", and nothing else. A folder a block names that is not in the tree,
 or outside it, stops the block there: in the tree's own documents that is a failure (the document points
 nowhere), in a skill's reference it is an example folder and the rest of the block is listed as not run.
 The result names each snippet by file and line, so a failing one is a release defect with an address. --list
@@ -31,6 +33,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from validate import read_env  # noqa: E402
 
 import manifest  # noqa: E402
+import procs  # noqa: E402
 import shlex  # noqa: E402
 
 ONT = "business_architecture/ontology"
@@ -150,6 +153,134 @@ ROOT_WORDS = re.compile(r"^(?:the\s+)?(?:repository|release|tree)\s+root$|^\.$|^
 SHELL_SYNTAX = re.compile(r"[;|<>`]|\$\(|\$\{[^}]*[^A-Za-z0-9_}][^}]*\}")
 KEEP_ENV = ("PATH", "HOME", "TMPDIR", "LANG", "LC_ALL", "TERM", "UV_CACHE_DIR", "XDG_CACHE_HOME", "SSL_CERT_FILE")
 
+# The command policy: for each executable a document may run, the options it may take (a value-taking option is
+# listed with "=" or its value is the next word), and whether its path-like operands are checked. An option not
+# listed, an executable not listed, or an operand that resolves outside the tree is not run. Options with values
+# are listed as (option, takes_value).
+FILE_TOOLS = {
+    "ls": {"-l", "-a", "-la", "-al", "-1", "-h", "-lh", "-R", "-t", "-r", "-S", "-d"},
+    "cat": {"-n"}, "wc": {"-l", "-c", "-w", "-m"},
+    "head": {"-n:", "-c:"}, "tail": {"-n:", "-c:"},
+    "grep": {"-r", "-R", "-n", "-c", "-l", "-L", "-i", "-E", "-F", "-o", "-h", "-H", "-w", "-q", "-v", "-s", "-e:", "-A:", "-B:", "-C:", "--include=", "--exclude=", "--exclude-dir="},
+    "find": {"-name:", "-iname:", "-type:", "-maxdepth:", "-mindepth:", "-path:", "-newer:", "-size:", "-print", "-not", "-o", "-a", "-prune", "(", ")"},
+    "diff": {"-u", "-r", "-q", "-w", "-b"}, "shasum": {"-a:", "-c"}, "sha256sum": set(),
+}
+PYTHON_MODULES = {"pytest", "unittest"}
+UV_OPTIONS = {"-q", "--no-project", "--with:", "--group:", "--python:", "--project:", "--frozen", "--offline", "-B"}
+PYTHON_OPTIONS = {"-B", "-I", "-q", "-m:"}
+
+
+def option_ok(word, allowed):
+    """Whether an option word is allowed, and whether it takes the next word as its value: (ok, takes_value)."""
+    if word in allowed:
+        return True, False
+    if word + ":" in allowed:
+        return True, True
+    for a in allowed:
+        if a.endswith("=") and word.startswith(a):
+            return True, False
+    m = re.match(r"^-(\d+)$", word)  # head -5
+    if m and ("-n:" in allowed):
+        return True, False
+    if re.match(r"^-[a-zA-Z]{2,}$", word) and all(f"-{c}" in allowed for c in word[1:]):  # grep -rn: each letter an allowed flag
+        return True, False
+    return False, False
+
+
+def path_like(word):
+    return "/" in word or word.startswith((".", "~")) or os.path.exists(word)
+
+
+def operands_inside(words, cwd, tree):
+    """Every path-like operand resolved from cwd must be inside the tree; returns the first one that is not."""
+    for w in words:
+        if path_like(w):
+            real = os.path.realpath(os.path.join(cwd, os.path.expanduser(w)))
+            root = os.path.realpath(tree)
+            if not (real == root or real.startswith(root + os.sep)):
+                return w
+    return None
+
+
+def python_policy(words, cwd, tree):
+    """python3 [-B] [-I] <script.py in the tree> [args] | python3 -m pytest|unittest [args]: never -c, never a module outside the list."""
+    i, module = 0, None
+    while i < len(words) and words[i].startswith("-"):
+        ok, takes = option_ok(words[i], PYTHON_OPTIONS)
+        if not ok:
+            return f"option {words[i]} is not on the policy for python"
+        if words[i] == "-m":
+            module = words[i + 1] if i + 1 < len(words) else ""
+            if module not in PYTHON_MODULES:
+                return f"python -m {module} is not on the policy (only {', '.join(sorted(PYTHON_MODULES))})"
+            i += 2
+            break
+        i += 1
+    if module is None:
+        if i >= len(words) or not words[i].endswith(".py"):
+            return "python must run a .py script from the tree or -m pytest/unittest"
+        if operands_inside(["./" + words[i] if "/" not in words[i] else words[i]], cwd, tree):  # a bare name resolves from cwd, still inside
+            return f"the script {words[i]} is not in the tree"
+        i += 1
+    bad = operands_inside(words[i:], cwd, tree)
+    return f"the operand {bad} is outside the tree" if bad else None
+
+
+def policy(argv, cwd, tree):
+    """Why argv may not run, or None when it may."""
+    exe, rest = argv[0], argv[1:]
+    if exe in ("echo", "printf"):
+        return None
+    if exe in FILE_TOOLS:
+        allowed, i = FILE_TOOLS[exe], 0
+        operands = []
+        while i < len(rest):
+            w = rest[i]
+            if w.startswith("-") and w != "-":
+                ok, takes = option_ok(w, allowed)
+                if not ok:
+                    return f"option {w} is not on the policy for {exe}"
+                i += 2 if takes else 1
+                continue
+            operands.append(w); i += 1
+        bad = operands_inside(operands, cwd, tree)
+        return f"the operand {bad} is outside the tree" if bad else None
+    if exe in ("python", "python3"):
+        return python_policy(rest, cwd, tree)
+    if exe == "uv":
+        if not rest or rest[0] != "run":
+            return "uv may only run"
+        i = 1
+        while i < len(rest) and rest[i].startswith("-"):
+            ok, takes = option_ok(rest[i], UV_OPTIONS)
+            if not ok:
+                return f"option {rest[i]} is not on the policy for uv run"
+            i += 2 if takes else 1
+        if i < len(rest) and rest[i] in ("python", "python3"):
+            return python_policy(rest[i + 1:], cwd, tree)
+        if i < len(rest) and rest[i].endswith(".py"):
+            return python_policy(rest[i:], cwd, tree)
+        if i < len(rest) and rest[i] in PYTHON_MODULES:
+            bad = operands_inside(rest[i + 1:], cwd, tree)
+            return f"the operand {bad} is outside the tree" if bad else None
+        return "uv run must run python, a .py script from the tree, pytest or unittest"
+    if exe == "docker":
+        if rest[:1] == ["ps"] and all(w.startswith("--format") or w in ("-a",) for w in rest[1:2]) and len(rest) <= 3:
+            return None
+        if rest[:1] == ["compose"] and "ls" in rest and all(w in ("compose", "ls", "-p", "-a", "--format") or (i and rest[i - 1] in ("-p", "--format")) for i, w in enumerate(rest)):
+            return None
+        return "docker may only list (ps, compose ls)"
+    if exe == "git":
+        if rest[:1] and rest[0] in ("log", "status", "show", "diff") and all(not w.startswith("--output") for w in rest):
+            bad = operands_inside([w for w in rest[1:] if not w.startswith("-")], cwd, tree)
+            return f"the operand {bad} is outside the tree" if bad else None
+        return "git may only read (log, status, show, diff)"
+    if exe == "curl":
+        if all(w in ("-s", "-S", "-f", "-sS", "-sf", "-I") or re.match(r"^https?://(?:localhost|127\.0\.0\.1)(?::\d+)?(?:/|$)", w) for w in rest):
+            return None
+        return "curl may only read localhost"
+    return f"{exe} is not on the runner's command policy"
+
 
 def reader_variables(tree):
     """The variables the documents tell a reader to set to their own paths; here they are the tree's."""
@@ -211,14 +342,14 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
         parts = [p.strip() for p in line.split(";")] if ";" in line and all(ASSIGN.match(p.strip()) or p.strip().startswith("mkdir ") for p in line.split(";")) else [line]
         assigned = [ASSIGN.match(p) for p in parts]
         if all(assigned) and parts:
-            for a in assigned:
-                variables[a.group(1)] = os.path.expanduser(os.path.expandvars(a.group(2).strip('"')))
+            for a in assigned:  # expanded from the block's own variables only, never this machine's environment
+                variables[a.group(1)] = expand(a.group(2).strip('"'), variables)
             results.append({"line": line, "ran": True, "set": [a.group(1) for a in assigned]})
             continue
         if any(a for a in assigned):  # assignments beside a mkdir: keep the variables, run nothing
             for a in assigned:
                 if a:
-                    variables[a.group(1)] = os.path.expanduser(os.path.expandvars(a.group(2).strip('"')))
+                    variables[a.group(1)] = expand(a.group(2).strip('"'), variables)
             results.append({"line": line, "ran": False, "reason": "sets the reader's variables and makes folders"})
             continue
         if " && " in line and not SHELL_SYNTAX.search(line) and "||" not in line:
@@ -250,10 +381,14 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
         except ValueError as exc:
             results.append({"line": line, "ran": False, "reason": f"could not be split into words: {exc}"})
             continue
+        why = policy(argv, cwd, tree) if argv else "empty"
+        if why:
+            results.append({"line": line, "ran": False, "reason": f"not on the runner's command policy: {why}"})
+            continue
         try:
-            r = subprocess.run(argv, cwd=cwd, env=minimal_env(variables, manifest.is_release(tree)), capture_output=True, text=True, timeout=900)
+            r = procs.run(argv, timeout=900, cwd=cwd, env=minimal_env(variables, manifest.is_release(tree)))
             results.append({"line": line, "ran": True, "returncode": r.returncode, "tail": (r.stdout + r.stderr)[-300:]})
-        except subprocess.TimeoutExpired:
+        except procs.Expired:
             results.append({"line": line, "ran": True, "returncode": -1, "tail": "timed out"})
         except OSError as exc:
             results.append({"line": line, "ran": True, "returncode": -1, "tail": f"could not start: {exc}"})

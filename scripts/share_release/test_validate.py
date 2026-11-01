@@ -7,6 +7,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import manifest  # noqa: E402
 import validate  # noqa: E402
 
 NS = validate.MODULES_NS
@@ -66,7 +67,7 @@ def test_the_newest_version_is_chosen_by_number_everywhere(tmp_path):
 
 
 def test_the_skills_tests_row_fails_when_a_test_command_ran_no_test(tmp_path, monkeypatch):
-    (tmp_path / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}\n')
+    (tmp_path / "release.json").write_text(json.dumps(manifest.marker("2026-11-01")))  # the exact marker, the only one accepted
     tails = {"tests": "Ran 12 tests in 0.1s\n\nOK\n", "check": "ok\n"}
     kinds = {" ".join(cmd): kind for _, _, cmd, kind in validate.SKILL_CHECKS}
     monkeypatch.setattr(validate, "sh", lambda cmd, cwd, **kw: {"command": " ".join(cmd), "cwd": cwd, "returncode": 0, "seconds": 0,
@@ -96,7 +97,7 @@ def test_the_skill_checks_table_renders_the_release_check_script():
 def test_the_iri_base_row_fails_on_the_release_and_measures_on_main(tmp_path):
     (tmp_path / "doc.md").write_text("<https://w3id.org/lsc/ontology/> and LSC\n")
     assert validate.row_iri_base(str(tmp_path), {}) == {"files": 1, "places": 2, "samples": [("doc.md", 2)], "unreadable": [], "ok": True}
-    (tmp_path / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}\n')
+    (tmp_path / "release.json").write_text(json.dumps(manifest.marker("2026-11-01")))  # the exact marker, the only one accepted
     assert validate.row_iri_base(str(tmp_path), {})["ok"] is False
     (tmp_path / "doc.md").write_text("<https://w3id.org/mpc/ontology/>\n")
     assert validate.row_iri_base(str(tmp_path), {})["ok"] is True
@@ -133,7 +134,7 @@ def test_the_report_returns_the_failures_and_lists_the_figures_to_explain(tmp_pa
 
 
 def test_the_commands_exit_nonzero_on_a_failed_row(tmp_path):
-    (tmp_path / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}\n')
+    (tmp_path / "release.json").write_text(json.dumps(manifest.marker("2026-11-01")))  # the exact marker, the only one accepted
     (tmp_path / "doc.md").write_text("LSC\n")
     cmd = [sys.executable, os.path.join(HERE, "validate.py"), "run", "--tree", str(tmp_path), "--out", str(tmp_path / "out.json"), "--rows", "iri-base"]
     r = subprocess.run(cmd[:-1] + [""], capture_output=True, text=True)  # no row asked for: not a validation
@@ -147,3 +148,27 @@ def test_the_commands_exit_nonzero_on_a_failed_row(tmp_path):
     cmd = [sys.executable, os.path.join(HERE, "validate.py"), "run", "--tree", str(tmp_path), "--out", str(tmp_path / "out.json"), "--rows", "gate"]
     r = subprocess.run(cmd, capture_output=True, text=True, env={**os.environ, "EPM_RELEASE_OWNER_NAMES": "Ada Lovelace"})
     assert r.returncode == 1  # the gate row: the README's namespace note is missing
+
+
+def test_an_incomplete_newest_package_stops_rather_than_fall_back(tmp_path):
+    import pytest
+    for v, complete in (("1.9.0", True), ("2.0.0", False)):
+        folder = tmp_path / validate.ONT / "releases" / "lane" / v
+        folder.mkdir(parents=True)
+        if complete:
+            (folder / "manifest.json").write_text("{}")
+    with pytest.raises(SystemExit, match="2.0.0 is the newest version but has no manifest.json"):
+        manifest.newest_on_disk(str(tmp_path), "lane")
+    (tmp_path / validate.ONT / "releases" / "lane" / "2.0.0" / "manifest.json").write_text("{}")
+    assert manifest.newest_on_disk(str(tmp_path), "lane") == "2.0.0"
+
+
+def test_a_rows_crash_is_recorded_without_its_secret(tmp_path, monkeypatch):
+    import scrubbing
+    scrubbing.register("pw-crash-secret")
+    try:
+        monkeypatch.setitem(validate.ROWS, "boom", lambda tree, env: (_ for _ in ()).throw(RuntimeError("login neo4j/pw-crash-secret refused")))
+        result = validate.run(str(tmp_path), str(tmp_path / "out.json"), ["boom"], {})
+    finally:
+        scrubbing.SECRETS.discard("pw-crash-secret")
+    assert result["rows"]["boom"]["ok"] is False and "pw-crash-secret" not in result["rows"]["boom"]["error"] and "***" in result["rows"]["boom"]["error"]

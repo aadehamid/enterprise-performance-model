@@ -76,7 +76,9 @@ def test_no_line_reaches_a_shell_and_the_environment_carries_no_login():
         assert [x["returncode"] for x in r["lines"]] == [0, 0] and "hi" in r["lines"][0]["tail"] and "x.txt" in r["lines"][1]["tail"]
         os.environ["PLANTED_SECRET_TOKEN"] = "t0ken"
         try:
-            r = snippets.run_shell("python3 -c \"print(sorted(__import__('os').environ))\" --list", tree, {}, state)  # --list: on the read-only allowlist; no ';'
+            with open(os.path.join(tree, "env.py"), "w") as f:
+                f.write("import os\nprint(sorted(os.environ))\n")
+            r = snippets.run_shell("python3 env.py --list", tree, {}, state)  # a script from the tree, --list on the read-only allowlist
         finally:
             del os.environ["PLANTED_SECRET_TOKEN"]
         assert r["lines"][0]["returncode"] == 0 and "PLANTED_SECRET_TOKEN" not in r["lines"][0]["tail"] and "'PATH'" in r["lines"][0]["tail"]
@@ -105,3 +107,41 @@ def test_a_sparql_fragment_in_a_reference_is_listed_not_run_but_fails_in_the_tre
     assert r["ran"] is False
     with pytest.raises(Exception):
         snippets.run_sparql(fragment, str(tmp_path), "business_architecture/ontology/README.md")
+
+
+def test_only_the_command_policy_runs_and_every_operand_stays_in_the_tree():
+    with tempfile.TemporaryDirectory() as tree:
+        os.makedirs(os.path.join(tree, "a"))
+        with open(os.path.join(tree, "a", "x.txt"), "w") as f:
+            f.write("hi\n")
+        with open(os.path.join(tree, "ask.py"), "w") as f:
+            f.write("print('asked')\n")
+        state = {}
+        refused = ("cat /etc/hosts", "head -2 /etc/passwd", "grep foo /etc/passwd", "find / -name x", "find . -delete", "find . -exec rm {} +",
+                   'python3 -c "print(1)" --list', "python3 /tmp/x.py --list", "uv run python -c 'print(1)' --list", "uv run python -m pricing_demo.x walk",
+                   "rm -rf a", "bash scripts/check.sh", "curl -s https://attacker.invalid", "docker run -it x", "git push origin x", "ls --color=always a", "cat ../../etc/hosts")
+        for line in refused:
+            r = snippets.run_shell(line, tree, {}, state)
+            assert r["lines"][0]["ran"] is False, (line, r["lines"][0])
+        for line in ("cat /etc/hosts", "find . -delete", 'python3 -c "print(1)" --list', "cat ../../etc/hosts"):  # rm is refused earlier, as not read-only
+            assert "policy" in snippets.run_shell(line, tree, {}, state)["lines"][0]["reason"], line
+        for line in ("cat a/x.txt", "ls -la a", "grep -rn hi a", "head -1 a/x.txt", "find . -name '*.txt' -type f", "shasum -a 256 a/x.txt", "wc -l a/x.txt"):
+            r = snippets.run_shell(line, tree, {}, state)
+            assert r["lines"][0]["ran"] and r["lines"][0]["returncode"] == 0, (line, r["lines"][0])
+        r = snippets.run_shell("python3 ask.py --list", tree, {}, state)  # a script from the tree
+        assert r["lines"][0]["returncode"] == 0 and "asked" in r["lines"][0]["tail"]
+
+
+def test_an_assignment_expands_only_the_blocks_own_variables():
+    with tempfile.TemporaryDirectory() as tree:
+        os.environ["DATABRICKS_TOKEN"] = "dapi-planted-secret"
+        try:
+            state = {}
+            r = snippets.run_shell("X=$DATABRICKS_TOKEN\necho $X", tree, {}, state)
+        finally:
+            del os.environ["DATABRICKS_TOKEN"]
+        assert state["vars"]["X"] == "$DATABRICKS_TOKEN"  # the host's value never enters the block
+        assert r["lines"][1]["ran"] and r["lines"][1]["tail"].strip() == "$DATABRICKS_TOKEN"  # the name stays a name
+        assert "dapi-planted-secret" not in str(r) and "dapi-planted-secret" not in str(state)
+        r = snippets.run_shell("Y=$EPM/a\necho $Y", tree, {}, state)  # the reader's variables are the tree's
+        assert r["lines"][1]["ran"] and r["lines"][1]["tail"].strip() == os.path.join(tree, "a")

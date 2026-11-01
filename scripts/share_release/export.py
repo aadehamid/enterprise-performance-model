@@ -22,6 +22,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import manifest  # noqa: E402
 import owner  # noqa: E402
+import procs  # noqa: E402
 import rules  # noqa: E402
 
 TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".sql", ".sh", ".yml", ".yaml",
@@ -32,7 +33,10 @@ TEXT_NAMES = {".python-version", ".gitignore", ".env.example", "pre-push", "VERI
 def tracked(tree):
     """Every file under the tree, repository-relative, as git lists it when the tree is a checkout, else a walk."""
     if os.path.exists(os.path.join(tree, ".git")):  # a folder, or a file in a git worktree: tracked files only
-        out = subprocess.run(["git", "-C", tree, "ls-files", "-z"], capture_output=True, check=True, timeout=600).stdout
+        r = procs.run(["git", "-C", tree, "ls-files", "-z"], timeout=600, text=False)
+        if r.returncode:
+            raise SystemExit(f"git ls-files failed in {tree}: {r.stderr.decode('utf-8', 'replace')[-300:]}")
+        out = r.stdout
         return sorted(p for p in out.decode().split("\0") if p)
     paths = []
     for root, dirs, files in os.walk(tree):

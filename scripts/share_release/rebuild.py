@@ -21,6 +21,10 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import manifest  # noqa: E402
+import procs  # noqa: E402
+import scrubbing  # noqa: E402
 
 DEPS = ["--with", "rdflib", "--with", "pyshacl", "--with", "openpyxl", "--with", "jsonschema",
         "--with", "markdown-it-py>=4,<5"]
@@ -65,11 +69,11 @@ class Rebuild:
         """One builder or script, with a deadline: a stalled download or process is a failed step, not a hung cut."""
         cmd = ["uv", "run", "-q", "--no-project", *DEPS, "python3", *args] if deps else args
         try:
-            r = subprocess.run(cmd, cwd=os.path.join(self.release, cwd), env=self.env, capture_output=True, text=True, timeout=timeout)
+            r = procs.run(cmd, timeout=timeout, cwd=os.path.join(self.release, cwd), env=self.env)
             rc, tail = r.returncode, (r.stdout + r.stderr)[-1500:]
-        except subprocess.TimeoutExpired:
-            r, rc, tail = None, -1, f"timed out after {timeout} s"
-        self.steps.append({"step": name, "cwd": cwd, "command": " ".join(args), "returncode": rc, "tail": tail})
+        except procs.Expired as exc:
+            r, rc, tail = None, -1, f"timed out after {timeout} s: {exc.partial[-1000:]}"
+        self.steps.append({"step": name, "cwd": cwd, "command": scrubbing.scrub(" ".join(args)), "returncode": rc, "tail": scrubbing.scrub(tail)})
         if rc != 0:
             raise SystemExit(f"{name} failed in {cwd}: {' '.join(args)}\n{tail}")
         return r
@@ -179,12 +183,7 @@ class Rebuild:
         """release.json at the tree's root: what this tree is. The builders, the projection and the demo read release
         mode from it (build_module.SHARE_RELEASE), so no environment variable is needed to use the release. It names
         no folder of the machine it was cut on: the checkout's name could be the repository's."""
-        marker = {
-            "release": "EPM 1.0",
-            "built": datetime.date.today().isoformat(),
-            "mode": "share release: each module's builder builds against the newest package of every module it requires; "
-                    "the Neo4j projection names labels, relationship types and property keys with one underscore",
-        }
+        marker = manifest.marker(datetime.date.today().isoformat())  # the exact marker cut.sh and every reader accept
         with open(os.path.join(self.release, "release.json"), "w") as f:
             f.write(json.dumps(marker, indent=2) + "\n")
         self.steps.append({"step": "release.json", "returncode": 0})

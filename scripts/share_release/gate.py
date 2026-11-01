@@ -70,12 +70,15 @@ FIXTURE_FILES = re.compile(r"^(?:skills/ontology-to-lpg/scripts/test_[^/]+|busin
 TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".sql", ".sh", ".yml", ".yaml", ".txt",
             ".nt", ".toml", ".example", ".cypher", ".jsonl", ".css", ".svg", ".cfg", ".ini", ".lock"}
 OFFICE_EXT = {".xlsx", ".docx", ".pptx"}
-# A data: URL (RFC 2397): an optional media type with parameters, an optional ";base64" in any case, a comma, the payload.
-DATA_URL = re.compile(r"data:([^,\"'\s<>()]*),([^\"'\s<>()]*)", re.I)
+# A data: URL (RFC 2397, "The 'data' URL scheme", August 1998, read 2026-11-01): an optional media type with
+# parameters, an optional ";base64" in any case, a comma, the payload. A base64 payload may be wrapped over lines
+# (line breaks only; a space ends it).
+DATA_URL = re.compile(r"data:((?:[^,;\"'\s<>()]*)(?:;[^,;\"'\s<>()]*)*;base64),([A-Za-z0-9+/=\r\n]*)|data:([^,\"'\s<>()]*),([^\"'\s<>()]*)", re.I)
 CSS_COLOUR = re.compile(r"(?<=[:\s(,])#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b(?=[;\s)}\],!\"'])")
 STYLE_SPAN = re.compile(r"<style\b[^>]*>.*?</style>|\bstyle\s*=\s*\"[^\"]*\"|\bstyle\s*=\s*'[^']*'", re.S | re.I)
 PRINTABLE_RUN = re.compile(rb"[\x20-\x7e\t]{6,}")
-PDF_STREAM = re.compile(rb"stream\r?\n(.*?)\r?\nendstream", re.S)
+PDF_STREAM = re.compile(rb"stream(?:\r\n|\r|\n)(.*?)(?:\r\n|\r|\n)endstream", re.S)  # a stream ends with CR, LF or CRLF (PDF 32000-1:2008, 7.3.8)
+INFLATE_CAP = 64 * 1024 * 1024  # bytes one stream or one Office part may inflate to; past it the file fails rather than exhaust memory
 PDF_IMAGE_FILTERS = (b"/DCTDecode", b"/JPXDecode", b"/CCITTFaxDecode", b"/JBIG2Decode")
 NAMESPACE_NOTE = "Data, Analytics and Insight"
 PROBLEM = "PROBLEM:"  # a label prefix: the text could not be read, which is itself a failure
@@ -95,43 +98,64 @@ def mask_colours(text, ext):
     return STYLE_SPAN.sub(lambda m: CSS_COLOUR.sub("#colour", m.group(0)), text)
 
 
-BASE64_SHAPED = re.compile(r"^[A-Za-z0-9+/]{16,}={0,2}$")
+BASE64_SHAPED = re.compile(r"^[A-Za-z0-9+/]+={0,2}$")
+
+
+def readable(raw):
+    """Decoded bytes as the text to scan: the whole text when it is text (UTF-8 without a NUL), else its printable
+    runs. A short payload ("CVR") is text in full, never lost to the run length."""
+    if b"\0" not in raw:
+        try:
+            return raw.decode("utf-8")
+        except UnicodeDecodeError:
+            pass
+    return strings_of(raw)
 
 
 def decoded_data_urls(text):
-    """Each data: URL in a page, decoded: (label suffix, text) for a payload read, or a problem when it cannot be. A
-    base64 payload that is base64-shaped (16 or more characters of the alphabet) must decode, or the file fails; a
-    shorter or differently spelt payload (a test fixture's "abc", a code template's "{b64}") is read as the text it
-    is, since the scan of the file's text covers it."""
+    """Each data: URL in a page, decoded: (label suffix, text) for a payload read, or a problem when it cannot be.
+    Every base64 payload that is valid base64 is decoded, whatever its length ("Q1ZS" is "CVR"), with missing
+    padding supplied as a browser does; a payload that is base64-shaped but does not decode fails the file; a
+    payload that is not base64-shaped at all (a code template's "{b64}") is read as the text it is, since the scan of
+    the file's text covers it."""
     for i, m in enumerate(DATA_URL.finditer(text), 1):
-        params, payload = m.group(1), m.group(2)
-        if re.search(r"(?:^|;)base64$", params, re.I):
+        if m.group(1) is not None:
+            payload = re.sub(r"\s", "", m.group(2))
             if not BASE64_SHAPED.match(payload):
                 yield f"data URI {i}", payload
                 continue
             try:
-                raw = base64.b64decode(payload, validate=True)
+                raw = base64.b64decode(payload.rstrip("=") + "=" * (-len(payload.rstrip("=")) % 4), validate=True)
             except (binascii.Error, ValueError):
                 yield f"{PROBLEM}a data URI's base64 payload could not be decoded", f"data URI {i}"
                 continue
-            yield f"data URI {i}", strings_of(raw)
+            yield f"data URI {i}", readable(raw)
         else:
-            yield f"data URI {i}", urllib.parse.unquote(payload)
+            yield f"data URI {i}", urllib.parse.unquote(m.group(4))
+
+
+def inflate(data, cap=None):
+    """zlib-inflate data up to cap bytes; past the cap it raises zlib.error, so a small hostile stream cannot exhaust memory."""
+    d = zlib.decompressobj()
+    out = d.decompress(data, cap or INFLATE_CAP)
+    if d.unconsumed_tail:
+        raise zlib.error(f"inflates past {cap or INFLATE_CAP} bytes")
+    return out
 
 
 def pdf_texts(data):
     """A PDF's readable text: its raw printable runs (the metadata dictionaries), and every FlateDecode stream
-    inflated. A stream with a filter this gate cannot inflate, other than an image's, is a problem."""
+    inflated. A stream with a filter this gate cannot inflate, other than an image's, is a problem. A stream's
+    dictionary is everything from its object's "obj" keyword to "stream", however long."""
     yield "pdf", strings_of(data)
     for i, m in enumerate(PDF_STREAM.finditer(data), 1):
-        head = data[max(0, m.start() - 600):m.start()]
-        obj = head.rfind(b" obj")
-        dictionary = head[obj:] if obj >= 0 else head
+        obj = data.rfind(b" obj", 0, m.start())
+        dictionary = data[obj if obj >= 0 else 0:m.start()]
         if b"/FlateDecode" in dictionary:
             try:
-                yield f"pdf stream {i}", strings_of(zlib.decompress(m.group(1)))
-            except zlib.error:
-                yield f"{PROBLEM}a PDF stream could not be inflated", f"pdf stream {i}"
+                yield f"pdf stream {i}", strings_of(inflate(m.group(1)))
+            except zlib.error as exc:
+                yield f"{PROBLEM}a PDF stream could not be inflated", f"pdf stream {i}: {exc}"
         elif any(f in dictionary for f in PDF_IMAGE_FILTERS):
             continue
         elif b"/Filter" in dictionary:
@@ -146,7 +170,11 @@ def texts(path):
     if ext in OFFICE_EXT:
         try:
             with zipfile.ZipFile(path) as z:
-                for name in z.namelist():
+                for info in z.infolist():
+                    name = info.filename
+                    if info.file_size > INFLATE_CAP:
+                        yield f"{PROBLEM}an Office part inflates past the cap", f"{name}: {info.file_size} bytes"
+                        continue
                     if name.endswith((".xml", ".rels", ".txt")):
                         yield f"{path}:{name}", z.read(name).decode("utf-8", "replace")
                     elif not name.endswith("/"):
@@ -179,7 +207,7 @@ def allowed_double(rel, text, m):
     while start > 0 and WORD.match(text[start - 1]):
         start -= 1
     word = WORD.match(text, start).group(0)
-    if ALLOWED_DOUBLE.search(word):
+    if ALLOWED_DOUBLE.fullmatch(word):  # the whole word, so core__Process__init__ is not excused by its tail
         return True
     return bool(FIXTURE_FILES.match(rel)) and m.group(0).split("__", 1)[0] in V.FIXTURE_PREFIXES
 

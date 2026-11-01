@@ -6,11 +6,12 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import manifest  # noqa: E402
 import stores  # noqa: E402
 
 
 def release_tree(tmp_path):
-    (tmp_path / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}\n')
+    (tmp_path / "release.json").write_text(json.dumps(manifest.marker("2026-11-01")))  # the exact marker, the only one accepted
     return str(tmp_path)
 
 
@@ -181,3 +182,33 @@ def test_the_live_demo_row_writes_its_compose_override_outside_the_tree_and_ledg
     assert not os.path.exists(os.path.join(tree, "demos", "downstream-pricing-databricks-free", "docker", "compose.validate.yml"))
     ledger = [json.loads(l) for l in open(str(scratch / "ledger.jsonl"))]
     assert [(e["kind"], e["name"]) for e in ledger] == [("file", override), ("compose-project", "pricing-validate")]
+
+
+def test_a_docker_timeout_or_failure_at_startup_records_no_password(tmp_path, monkeypatch):
+    import scrubbing
+    bindir = tmp_path / "bin"; bindir.mkdir()
+    (bindir / "docker").write_text("#!/bin/sh\n[ \"$1\" = run ] && sleep 30\nexit 0\n")
+    os.chmod(str(bindir / "docker"), 0o755)
+    monkeypatch.setenv("PATH", f"{bindir}{os.pathsep}{os.environ['PATH']}")
+    original = stores.procs.run
+    monkeypatch.setattr(stores.procs, "run", lambda args, timeout, **kw: original(args, timeout=1 if args[:2] == ["docker", "run"] else timeout, **kw))
+    env = {"TEST_NEO4J_PASSWORD": "pw-very-secret-77", "IMPORT_DIR": str(tmp_path / "import"), "PLUGINS_DIR": str(tmp_path), "LEDGER_FILE": str(tmp_path / "l.jsonl")}
+    import pytest
+    with pytest.raises(RuntimeError) as exc:
+        stores.neo4j_up(env)
+    assert "pw-very-secret-77" not in str(exc.value) and "did not start" in str(exc.value)
+    assert "pw-very-secret-77" in scrubbing.SECRETS
+
+
+def test_inherited_and_short_secrets_are_scrubbed_too(monkeypatch):
+    import scrubbing
+    monkeypatch.setenv("DATABRICKS_TOKEN", "dapi-inherited-9")
+    r = stores.sh(["sh", "-c", "echo $DATABRICKS_TOKEN"], None)
+    assert "dapi-inherited-9" not in r["tail"] and "***" in r["tail"]  # inherited, never given: still scrubbed
+    r = stores.sh(["echo", "--password", "ab"], None)
+    assert r["tail"].strip() == "--password ***" and "ab" not in r["command"]  # a two-character password is still a password
+    scrubbing.register("zz")
+    try:
+        assert scrubbing.scrub("buzz zz") == "bu*** ***"  # the cost of a short secret: its letters go wherever they occur
+    finally:
+        scrubbing.SECRETS.discard("zz")

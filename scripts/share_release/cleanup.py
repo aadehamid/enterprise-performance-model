@@ -22,14 +22,18 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import procs  # noqa: E402
+import scrubbing  # noqa: E402
 from validate import read_env  # noqa: E402
 
 
 def run(args, cwd=None, env=None, timeout=3600):
+    """One command in its own process group with a deadline; the record is scrubbed of every secret."""
+    merged = {**os.environ, **(env or {})}
     try:
-        r = subprocess.run(args, cwd=cwd, env={**os.environ, **(env or {})}, capture_output=True, text=True, timeout=timeout)
-    except (subprocess.TimeoutExpired, OSError) as exc:
-        return 1, f"{type(exc).__name__}: {exc}"[-600:]
+        r = procs.run(args, timeout=timeout, cwd=cwd, env=merged)
+    except (procs.Expired, OSError) as exc:
+        return 1, scrubbing.scrub(f"{type(exc).__name__}: {exc}"[-600:], scrubbing.secrets_in(args, merged))
     return r.returncode, (r.stdout + r.stderr)[-600:]
 
 
@@ -51,8 +55,8 @@ def docker_names(args):
     """The names a docker listing prints, or None when the listing itself failed, timed out or could not start (no
     proof either way)."""
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=600)
-    except (subprocess.TimeoutExpired, OSError):
+        r = procs.run(args, timeout=600)
+    except (procs.Expired, OSError):
         return None
     return r.stdout if r.returncode == 0 else None
 

@@ -7,6 +7,7 @@ earlier glob matched it. Rules are applied in order; the last matching rule wins
 """
 import fnmatch
 import os
+import re
 
 # The 11 modules and the versions the release ships: (newest, previous). main at 0ad29381, 2026-10-31.
 MODULES = {
@@ -134,17 +135,50 @@ def newest_version(versions):
     return max(versions, key=lambda v: tuple(int(x) for x in v.split(".")))
 
 
+VERSION_FOLDER = re.compile(r"^\d+\.\d+\.\d+$")
+
+
 def newest_on_disk(tree, module):
-    """A module's newest version folder in a tree (releases/<module>/<version>/ with a manifest.json)."""
+    """A module's newest version folder in a tree, by number; the newest must be a complete package (its
+    manifest.json present), or the tree is wrong and this stops rather than fall back to an older one."""
     folder = os.path.join(tree, ONT, "releases", module)
-    versions = [v for v in os.listdir(folder) if v[0].isdigit() and os.path.isfile(os.path.join(folder, v, "manifest.json"))]
-    return newest_version(versions)
+    versions = [v for v in os.listdir(folder) if VERSION_FOLDER.match(v) and os.path.isdir(os.path.join(folder, v))]
+    if not versions:
+        raise SystemExit(f"{folder} holds no version folder")
+    newest = newest_version(versions)
+    if not os.path.isfile(os.path.join(folder, newest, "manifest.json")):
+        raise SystemExit(f"{folder}/{newest} is the newest version but has no manifest.json: an incomplete package")
+    return newest
 
 
+# The release marker this tool writes at a release tree's root (rebuild.py), and the only one it accepts: exactly
+# these keys, this release name, this mode text, and a date. cut.sh removes an existing output folder only when its
+# marker is exactly this; every reader of release mode in this tool asks is_release(); the builders read the same
+# file by its presence (build_module.SHARE_RELEASE).
 RELEASE_MARKER = "release.json"
+RELEASE_NAME = "EPM 1.0"
+RELEASE_MODE = ("share release: each module's builder builds against the newest package of every module it requires; "
+                "the Neo4j projection names labels, relationship types and property keys with one underscore")
+MARKER_KEYS = ("release", "built", "mode")
+
+
+def marker(built):
+    """The marker's content for a release built on the given date (YYYY-MM-DD)."""
+    return {"release": RELEASE_NAME, "built": built, "mode": RELEASE_MODE}
+
+
+def is_tool_marker(path):
+    """True only for a release.json this tool wrote: the exact keys and values of marker(), a well-formed date."""
+    import json
+    try:
+        with open(path, encoding="utf-8") as f:
+            m = json.load(f)
+    except (OSError, ValueError):
+        return False
+    return (isinstance(m, dict) and tuple(sorted(m)) == tuple(sorted(MARKER_KEYS)) and isinstance(m.get("built"), str)
+            and bool(re.match(r"^\d{4}-\d{2}-\d{2}$", m["built"])) and m == marker(m["built"]))
 
 
 def is_release(tree):
-    """A release tree carries release.json at its root (the rebuild writes it first); every reader of release mode
-    in this tool asks here, and the builders read the same file (build_module.SHARE_RELEASE)."""
-    return os.path.isfile(os.path.join(tree, RELEASE_MARKER))
+    """A release tree carries this tool's marker at its root (the rebuild writes it first)."""
+    return is_tool_marker(os.path.join(tree, RELEASE_MARKER))

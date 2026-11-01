@@ -22,8 +22,11 @@ https://docs.python.org/3.12/library/zipfile.html#zipfile.ZipInfo.external_attr,
 import argparse
 import os
 import subprocess
+import sys
 import tempfile
 import zipfile
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 SKIP_DIRS = (".git", "__pycache__", ".venv", ".pytest_cache", "out")
 SKIP_FILES = (".DS_Store",)
@@ -71,12 +74,23 @@ def make_zip(release, out):
 
 def extract(zip_path, into):
     """Unpack a zip, restoring each file's mode from the archive (a recipient's ./run_local.sh must still run)."""
-    subprocess.run(["python3", "-c", EXTRACT_CODE, zip_path, into], check=True, timeout=600)
+    import procs
+    r = procs.run(["python3", "-c", EXTRACT_CODE, zip_path, into], timeout=600)
+    if r.returncode:
+        raise SystemExit(f"extracting {zip_path} failed: {r.stderr[-300:]}")
+
+
+def guarded_update_ref(git, name, commit, expected):
+    """Point refs/heads/<name> at commit only if it still is what was read (expected; "" when it did not exist): a
+    second publisher racing on the same name loses with an error instead of both appearing to win."""
+    git("update-ref", f"refs/heads/{name}", commit, expected or "0" * 40)
 
 
 def make_branch(zip_path, repo, name, push=False):
-    """An orphan branch in `repo` whose single commit holds the zip's tree, through a temporary extraction, index and
-    work tree: the checkout itself is not touched, and nothing but the checked zip reaches the branch."""
+    """An orphan branch in `repo` whose single commit holds the zip's tree, through a temporary extraction, a per-call
+    temporary index and work tree: the checkout itself is not touched, nothing but the checked zip reaches the
+    branch, and two publications at once cannot share an index or silently overwrite each other's ref."""
+    import procs
     zip_path, repo = os.path.abspath(zip_path), os.path.abspath(repo)
     with tempfile.TemporaryDirectory() as tmp:
         extract(zip_path, tmp)
@@ -84,20 +98,31 @@ def make_branch(zip_path, repo, name, push=False):
         if len(roots) != 1:
             raise SystemExit(f"{zip_path} must hold one root folder, not {roots}")
         tree_dir = os.path.join(tmp, roots[0])
+        index = tempfile.NamedTemporaryFile(prefix="share-release-index-", dir=os.path.join(repo, ".git"), delete=False)
+        index.close(); os.remove(index.name)  # a fresh name of this call's own; git creates it
         env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
-        env.update({"GIT_INDEX_FILE": os.path.join(repo, ".git", "share-release-index"), "GIT_WORK_TREE": tree_dir, **IDENTITY})
-        git = lambda *a, **k: subprocess.run(["git", "-C", repo, *a], env=env, check=True, capture_output=True, text=True, timeout=600, **k)
-        if os.path.exists(env["GIT_INDEX_FILE"]):
-            os.remove(env["GIT_INDEX_FILE"])
-        listing = "".join(os.path.relpath(p, tree_dir) + "\0" for p in walk(tree_dir))
-        git("update-index", "--add", "-z", "--stdin", input=listing)
-        tree = git("write-tree").stdout.strip()
-        commit = git("commit-tree", tree, "-m", f"{name}: the share release, generated from main by scripts/share_release",
-                     input="").stdout.strip()
-        git("update-ref", f"refs/heads/{name}", commit)
-        os.remove(env["GIT_INDEX_FILE"])
+        env.update({"GIT_INDEX_FILE": index.name, "GIT_WORK_TREE": tree_dir, **IDENTITY})
+
+        def git(*a, **k):
+            r = procs.run(["git", "-C", repo, *a], timeout=600, env=env, **k)
+            if r.returncode:
+                raise subprocess.CalledProcessError(r.returncode, ["git", *a], r.stdout, r.stderr)
+            return r
+        try:
+            expected = procs.run(["git", "-C", repo, "rev-parse", "-q", "--verify", f"refs/heads/{name}"], timeout=600, env=env).stdout.strip()
+            listing = "".join(os.path.relpath(p, tree_dir) + "\0" for p in walk(tree_dir))
+            git("update-index", "--add", "-z", "--stdin", input=listing)
+            tree = git("write-tree").stdout.strip()
+            commit = git("commit-tree", tree, "-m", f"{name}: the share release, generated from main by scripts/share_release",
+                         input="").stdout.strip()
+            guarded_update_ref(git, name, commit, expected)
+        finally:
+            if os.path.exists(index.name):
+                os.remove(index.name)
     if push:
-        subprocess.run(["git", "-C", repo, "push", "-f", "origin", f"refs/heads/{name}:refs/heads/{name}"], check=True, timeout=1800)
+        r = procs.run(["git", "-C", repo, "push", "-f", "origin", f"refs/heads/{name}:refs/heads/{name}"], timeout=1800)
+        if r.returncode:
+            raise SystemExit(f"push failed: {r.stderr[-300:]}")
     return commit
 
 

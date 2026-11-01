@@ -6,7 +6,7 @@ the tool; it never ships.
 
 ```sh
 scripts/share_release/cut.sh --epm . --skills ../personal-agent-skills --out /tmp/release --env <stores env> \
-    [--baseline <main's validate json>] [--no-cleanroom]
+    [--baseline <main's validate json>] [--store-rows <rows>|all] [--no-cleanroom] [--replace]
 ```
 
 `cut.sh` runs the steps below in order and stops at the first failure: export, rebuild, gate, the store rows on
@@ -15,10 +15,12 @@ the release's `check.sh`, the tree rows, the comparison with main, every snippet
 clean room, and with `--baseline` the validation report. Each step writes beside the output folder. By default
 the store rows are the four that need no Databricks workspace; `--store-rows all` adds the driver, the live demo,
 the technical graph and the store sync when the workspace is reachable. The command refuses an `--out` that is
-the root, the home folder, a checkout or a parent of one, or a folder holding anything but a release. Its last
-line names the rows that did not run and the two steps that follow by hand: step 9, `cleanup.py --yes` from the
-ledger (`LEDGER_FILE` in `--env`) with the AuraDB reload from main, and step 10, `publish.py branch` and the
-push, which wait for the owner. The export alone is:
+the root, the home folder, a checkout or a parent of one, or a file; an existing folder that is not empty is
+removed only with `--replace`, and only when its `release.json` is exactly the marker this tool writes
+(`manifest.is_tool_marker`: the keys `release`, `built` and `mode`, the release name, the mode text, a date;
+nothing else is accepted). Its last line names the rows that did not run and the two steps that follow by hand:
+step 9, `cleanup.py --yes` from the ledger (`LEDGER_FILE` in `--env`) with the AuraDB reload from main, and step
+10, `publish.py branch --zip` and the push, which wait for the owner. The export alone is:
 
 ```sh
 python3 scripts/share_release/export.py --epm . --skills ../personal-agent-skills --out /tmp/release
@@ -37,13 +39,18 @@ python3 scripts/share_release/export.py --epm . --skills ../personal-agent-skill
   `templates/check.sh`, with the test files found in the tree and the skills' checks from `validate.SKILL_CHECKS`,
   the one table the `skills-tests` row runs too (`skill_checks.py`). Its freeze step and the builders' release
   mode (`frozen_sources.py`, `build_module.package_folder`, `scripts/conftest.py`) are not on `main` yet: they are
-  pending in the branch `release/builders-frozen-sources`, whose pull request merges before this tool's. Until
-  then a cut from this branch alone stops at the rebuild's freeze step.
+  pending in the branch `release/builders-frozen-sources`, whose pull request (not yet opened on 2026-11-01; add
+  its number here when it is) merges before this tool's. Until then a cut from this branch alone stops at the
+  rebuild's freeze step.
 - `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing), record number
   (full or short form), issue number, left-out document or double-underscore graph name; names match whole words;
   binaries and base64 data are read as the printable text inside them.
 - `validate.py`, `stores.py` and `snippets.py` are the validation: each row judges what it finds (a planted
-  violation fails it), every command exits nonzero on a failure, and no output file holds a password.
+  violation fails it), every command exits nonzero on a failure, and no output file holds a password: every
+  command runs through `procs.py` (its own process group, a deadline, the whole group killed on expiry) and every
+  record through `scrubbing.py` (the secrets a command was given, inherited or that the run registered, masked).
+  A document's snippet runs only under `snippets.POLICY`: a listed executable with its listed options, every
+  path-like operand inside the tree, a Python script only from the tree, never `-c`.
 - `publish.py` writes the zip (under the fixed root `epm-release`, refusing symlinks) and builds the orphan
   branch from that zip, with a neutral author and committer; `cleanroom.py` unpacks the zip in the container
   keeping each file's mode, runs `./scripts/check.sh`, and stops the container when its deadline passes. `cut.sh`

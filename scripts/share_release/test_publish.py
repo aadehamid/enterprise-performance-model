@@ -83,14 +83,16 @@ def test_a_symlink_in_the_release_stops_the_zip(tmp_path):
         list(publish.walk(release))
 
 
-def fake_docker(folder, exit_code=0, sleep=0):
-    """A docker on PATH that records its arguments NUL-separated and the subcommand of every call, sleeps as told,
-    then exits as told."""
+def fake_docker(folder, exit_code=0, sleep=0, rm_exit=0):
+    """A docker on PATH that records its arguments NUL-separated and the subcommand of every call, sleeps as told
+    (in a grandchild, as a real docker client waits on its daemon), then exits as told; rm exits as told too."""
     path = os.path.join(folder, "docker")
     with open(path, "w") as f:
         f.write("#!/bin/sh\necho \"$1 $2\" >> \"$FAKE_DOCKER_CALLS\"\n"
+                f"[ \"$1\" = rm ] && exit {rm_exit}\n"
                 "[ \"$1\" = run ] && printf '%s\\0' \"$@\" > \"$FAKE_DOCKER_LOG\"\n"
-                f"[ \"$1\" = run ] && sleep {sleep}\nexit {exit_code}\n")
+                f"[ \"$1\" = run ] && [ {sleep} -gt 0 ] && sh -c 'exec sleep {sleep}' \n"
+                f"exit {exit_code}\n")
     os.chmod(path, 0o755)
     return path
 
@@ -132,9 +134,81 @@ def test_the_clean_room_stops_its_container_when_the_deadline_passes(tmp_path):
     assert "deadline of 2 s passed" in (tmp_path / "room.log").read_text()
     calls = (tmp_path / "calls").read_text().split("\n")
     assert "run --rm" in calls and "rm -f" in calls  # the container was stopped by name
+    fake_docker(str(bindir), sleep=30, rm_exit=1)
+    r = subprocess.run(cmd, env=env, capture_output=True, text=True, timeout=60)
+    assert r.returncode == 1 and "could not remove the container epm-room-test" in (tmp_path / "room.log").read_text()  # a failed removal is said
     r = subprocess.run([sys.executable, os.path.join(HERE, "cleanroom.py"), "run", "--timeout", "1", "--log", str(tmp_path / "step.log"), "--", "sleep", "30"],
                        capture_output=True, text=True, timeout=60)
     assert r.returncode == 1 and "deadline of 1 s passed" in (tmp_path / "step.log").read_text()
     r = subprocess.run([sys.executable, os.path.join(HERE, "cleanroom.py"), "run", "--timeout", "10", "--log", str(tmp_path / "step.log"), "--", "echo", "done"],
                        capture_output=True, text=True, timeout=60)
     assert r.returncode == 0 and (tmp_path / "step.log").read_text() == "done\n"
+
+
+def test_the_deadline_kills_the_whole_process_group_and_bounds_every_wait(tmp_path):
+    import time
+    sys.path.insert(0, HERE)
+    import procs
+    token = f"epm-grandchild-{os.getpid()}"
+    log = str(tmp_path / "log")
+    t0 = time.time()
+    rc = procs.stream(["sh", "-c", f"python3 -c 'import time; time.sleep(60)  # {token}' & sleep 60"], 1, log, echo=False)
+    assert rc == -1 and time.time() - t0 < 15
+    time.sleep(0.5)
+    alive = subprocess.run(["pgrep", "-f", token], capture_output=True, text=True).stdout.strip()
+    assert alive == "", f"a grandchild survived the deadline: {alive}"  # the group, not only the child, was killed
+    t0 = time.time()
+    rc = procs.stream(["sh", "-c", "printf partial; sleep 60"], 1, log, echo=False)  # output without a newline, then silence
+    assert rc == -1 and time.time() - t0 < 15 and "partial" in open(log).read()
+    t0 = time.time()
+    rc = procs.stream(["sh", "-c", "exec >/dev/null 2>&1; sleep 60"], 1, log, echo=False)  # output closed, process lingers
+    assert rc == -1 and time.time() - t0 < 15
+    assert procs.stream(["sh", "-c", "echo done; exit 3"], 10, log, echo=False) == 3 and open(log).read() == "done\n"
+    try:
+        procs.run(["sh", "-c", f"python3 -c 'import time; time.sleep(60)  # {token}-run' & sleep 60"], timeout=1)
+        assert False, "no Expired"
+    except procs.Expired:
+        pass
+    time.sleep(0.5)
+    assert subprocess.run(["pgrep", "-f", token + "-run"], capture_output=True, text=True).stdout.strip() == ""
+
+
+def test_the_ref_update_is_guarded_and_each_publication_has_its_own_index(tmp_path):
+    import threading
+    sys.path.insert(0, HERE)
+    repo = str(tmp_path / "repo")
+    git = lambda *a: subprocess.run(["git", "-C", repo, *a], check=True, capture_output=True, text=True).stdout.strip()
+    subprocess.run(["git", "init", "-q", repo], check=True)
+    git("config", "user.name", "x"); git("config", "user.email", "x@example.com")
+    with open(os.path.join(repo, "main.txt"), "w") as f:
+        f.write("main\n")
+    git("add", "main.txt"); git("commit", "-q", "-m", "main")
+    zips = []
+    for n in ("one", "two"):
+        rel = make_release(str(tmp_path / n))
+        with open(os.path.join(rel, "which.txt"), "w") as f:
+            f.write(n + "\n")
+        publish.make_zip(rel, str(tmp_path / f"{n}.zip")); zips.append(str(tmp_path / f"{n}.zip"))
+    results, errors = {}, []
+
+    def go(n, z):
+        try:
+            results[n] = publish.make_branch(z, repo, f"share/{n}")
+        except Exception as exc:
+            errors.append(exc)
+    threads = [threading.Thread(target=go, args=(n, z)) for n, z in zip(("one", "two"), zips)]
+    for th in threads:
+        th.start()
+    for th in threads:
+        th.join()
+    assert not errors and git("show", "share/one:which.txt") == "one" and git("show", "share/two:which.txt") == "two"
+    assert not [f for f in os.listdir(os.path.join(repo, ".git")) if f.startswith("share-release-index")]
+    stale = git("rev-parse", "share/one")
+    git("update-ref", "refs/heads/share/one", git("rev-parse", "share/two"))  # someone moved the ref after it was read
+    try:
+        publish.guarded_update_ref(lambda *a, **k: subprocess.run(["git", "-C", repo, *a], check=True, capture_output=True, text=True),
+                                   "one", stale, stale)  # expects the old value, which is gone
+        assert False, "the stale update went through"
+    except subprocess.CalledProcessError:
+        pass
+    assert git("rev-parse", "share/one") == git("rev-parse", "share/two")  # untouched by the losing writer

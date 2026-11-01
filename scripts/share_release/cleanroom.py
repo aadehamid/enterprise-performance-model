@@ -8,22 +8,24 @@ own check script as a recipient would (./scripts/check.sh, so the executable bit
 The image is uv's Python 3.12 image (ghcr.io/astral-sh/uv), so the checks' dependencies can be fetched from
 PyPI; nothing else of this machine is mounted or passed. Docker is not inside the room, so the store rows run
 outside it (validate.py, on test stores); this proves the setup, the builders, the regression and every test.
-The container is started with a name and waited for with a deadline (macOS has no `timeout` command): when the
-deadline passes, the container is stopped and the room exits nonzero, so a stalled download or check is a
+The container is started with a name and waited for with a deadline (procs.stream: reads bounded by the deadline,
+the whole process group killed on expiry, the final wait bounded too): when the deadline passes, the container is
+removed by name, a removal that fails is logged, and the room exits nonzero, so a stalled download or check is a
 failed step, never a hung cut.
 
-    python3 scripts/share_release/cleanroom.py run --timeout <seconds> -- <command...>
+    python3 scripts/share_release/cleanroom.py run --timeout <seconds> --log <file> -- <command...>
 
-runs any command with the same deadline (cut.sh's longest steps), killing it on expiry.
+runs any command under the same deadline (cut.sh's long steps), killing its process group on expiry.
 """
 import argparse
 import os
 import subprocess
 import sys
-import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import procs  # noqa: E402
+
 IMAGE = "ghcr.io/astral-sh/uv:python3.12-bookworm"
 SCRIPT = ('set -e; mkdir -p /tmp/home /tmp/room; cd /tmp/room\n'
           'python3 -c "$EXTRACT" /release.zip .\n'
@@ -32,32 +34,13 @@ SCRIPT = ('set -e; mkdir -p /tmp/home /tmp/room; cd /tmp/room\n'
           './scripts/check.sh\n')
 
 
-def run_with_deadline(cmd, timeout, log, on_expiry=None):
-    """Run cmd, copying its output to the log and to stdout, for at most timeout seconds. On expiry the process is
-    killed, on_expiry() runs, and the return is -1."""
-    with open(log, "w") as out:
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-        deadline = time.time() + timeout
-        import selectors
-        sel = selectors.DefaultSelector()
-        sel.register(p.stdout, selectors.EVENT_READ)
-        while True:
-            left = deadline - time.time()
-            if left <= 0:
-                p.kill()
-                out.write(f"\nclean room: the deadline of {timeout} s passed; stopped\n")
-                print(f"clean room: the deadline of {timeout} s passed; stopped", flush=True)
-                if on_expiry:
-                    on_expiry()
-                p.wait()
-                return -1
-            if sel.select(timeout=min(left, 1.0)):
-                line = p.stdout.readline()
-                if not line:
-                    break
-                out.write(line); out.flush()
-                sys.stdout.write(line); sys.stdout.flush()
-        return p.wait()
+def remove_container(name):
+    """docker rm -f by name; the problem text when it fails, else None."""
+    try:
+        r = subprocess.run(["docker", "rm", "-f", name], capture_output=True, text=True, timeout=120)
+    except (subprocess.TimeoutExpired, OSError) as exc:
+        return f"could not remove the container {name}: {exc}"
+    return None if r.returncode == 0 else f"could not remove the container {name}: docker rm returned {r.returncode}: {r.stderr.strip()[-200:]}"
 
 
 def room(zip_path, log, timeout, name):
@@ -66,8 +49,7 @@ def room(zip_path, log, timeout, name):
     cmd = ["docker", "run", "--rm", "--name", name, "-v", f"{zip_path}:/release.zip:ro", "-e", "HOME=/tmp/home",
            "-e", "GIT_CONFIG_NOSYSTEM=1", "-e", "CHECK_WORKERS=4", "-e", f"EXTRACT={publish.EXTRACT_CODE}", "-w", "/tmp",
            IMAGE, "bash", "-c", SCRIPT]
-    stop = lambda: subprocess.run(["docker", "rm", "-f", name], capture_output=True, timeout=120)
-    return run_with_deadline(cmd, timeout, log, on_expiry=stop)
+    return procs.stream(cmd, timeout, log, on_expiry=lambda: remove_container(name))
 
 
 def main(argv=None):
@@ -79,7 +61,7 @@ def main(argv=None):
     ap.add_argument("command", nargs="*", help="with 'run': the command to run under the deadline")
     a = ap.parse_args(argv)
     if a.zip == "run":
-        return 0 if run_with_deadline(a.command, a.timeout, a.log) == 0 else 1
+        return 0 if procs.stream(a.command, a.timeout, a.log) == 0 else 1
     if not a.zip:
         ap.error("the release zip is required")
     return 0 if room(a.zip, a.log, a.timeout, a.name) == 0 else 1

@@ -267,3 +267,45 @@ def test_what_the_rules_leave_as_a_near_miss_fails_the_gate_on_purpose(tmp_path)
     out, _ = rules.apply("Catalogue record 0042, field 700; W-0042", "doc.md", {"EPM-DEC-001-0042": "2026-10-16"})
     (tmp_path / "doc.md").write_text(out + "\n")
     assert gate.scan(str(tmp_path)) == []  # a number outside a citation's forms is left alone by both
+
+
+def test_short_and_wrapped_base64_payloads_are_decoded(tmp_path):
+    import base64
+    clean(tmp_path)
+    (tmp_path / "page.html").write_text('<img alt="data:image/png;base64,Q1ZS">\n')  # "CVR" in four characters
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    wrapped = base64.b64encode(b"\x89PNG\0\0Drawn by Ada Lovelace\0").decode()
+    wrapped = wrapped[:12] + "\n" + wrapped[12:24] + "\r\n" + wrapped[24:]
+    (tmp_path / "page.html").write_text(f'<img src="data:image/png;base64,{wrapped}">\n')
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the owner's name or handle"]
+    (tmp_path / "page.html").write_text('<img src="data:image/png;base64,QUJD"> and Valero\n')  # "ABC"; the payload ends at the quote and the text after it is scanned as text
+    assert {h["reason"] for h in gate.scan(str(tmp_path))} == {"a peer named"}
+    (tmp_path / "page.html").write_text('<img src="data:image/png;base64,QWRhIExvdmVsYWNl">\n')  # unpadded, as a browser accepts
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the owner's name or handle"]
+
+
+def test_pdf_streams_with_long_dictionaries_cr_endings_and_a_size_cap(tmp_path, monkeypatch):
+    import zlib
+    clean(tmp_path)
+    payload = zlib.compress(b"BT (Prepared by Ada Lovelace) Tj ET")
+    long_dict = b"<< /Length 5 /Junk (" + b"x" * 900 + b") /Filter /FlateDecode >>"
+    (tmp_path / "doc.pdf").write_bytes(b"%PDF-1.4\n1 0 obj\n" + long_dict + b"\nstream\n" + payload + b"\nendstream\nendobj\n")
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the owner's name or handle"]  # the whole dictionary is read
+    (tmp_path / "doc.pdf").write_bytes(b"%PDF-1.4\r1 0 obj\r<< /Length 5 /Filter /FlateDecode >>\rstream\r" + payload + b"\rendstream\rendobj\r")
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the owner's name or handle"]  # CR-only line ends
+    (tmp_path / "doc.pdf").write_bytes(b"%PDF-1.4\n1 0 obj\n<< /Filter /FlateDecode >>\nstream\n" + zlib.compress(b"\0" * 200000) + b"\nendstream\n")
+    monkeypatch.setattr(gate, "INFLATE_CAP", 10000)
+    hits = gate.scan(str(tmp_path))
+    assert [h["reason"] for h in hits] == ["a PDF stream could not be inflated"] and "past 10000" in hits[0]["match"]
+    (tmp_path / "doc.pdf").unlink()
+    with zipfile.ZipFile(tmp_path / "book.xlsx", "w") as z:
+        z.writestr("xl/sharedStrings.xml", "<sst/>" + " " * 20000)
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["an Office part inflates past the cap"]
+
+
+def test_a_graph_name_is_not_excused_by_a_python_name_inside_the_same_word(tmp_path):
+    clean(tmp_path)
+    (tmp_path / "a.py").write_text("x = core__Process__init__\n")
+    assert [h["match"] for h in gate.scan(str(tmp_path))] == ["core__P"]
+    (tmp_path / "a.py").write_text("metric_time__day __init__.py __main__\n")
+    assert gate.scan(str(tmp_path)) == []

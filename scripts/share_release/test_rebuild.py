@@ -22,6 +22,13 @@ def test_the_release_marker_names_no_folder_of_the_machine(tmp_path):
     rb.release_marker()
     marker = json.load(open(str(tmp_path / "rel" / "release.json")))
     assert set(marker) == {"release", "built", "mode"} and "Enterprise" not in json.dumps(marker)
+    import manifest
+    assert manifest.is_tool_marker(str(tmp_path / "rel" / "release.json")) and marker == manifest.marker(marker["built"])
+    for bad in ({"release": "EPM 1.0", "mode": "share release"}, {**marker, "mode": "other"}, {**marker, "extra": 1}, {**marker, "built": "today"}, [], "x"):
+        (tmp_path / "rel" / "release.json").write_text(json.dumps(bad))
+        assert not manifest.is_tool_marker(str(tmp_path / "rel" / "release.json")), bad
+    (tmp_path / "rel" / "release.json").write_text("not json")
+    assert not manifest.is_tool_marker(str(tmp_path / "rel" / "release.json"))
 
 
 def test_the_history_folders_manifests_lose_their_provenance_and_name_the_rewritten_hashes(tmp_path):

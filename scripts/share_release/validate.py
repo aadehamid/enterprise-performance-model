@@ -28,6 +28,8 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import manifest  # noqa: E402
+import procs  # noqa: E402
+import scrubbing  # noqa: E402
 import skill_checks  # noqa: E402
 
 DEPS = ["--with", "rdflib", "--with", "pyshacl", "--with", "openpyxl", "--with", "jsonschema", "--with", "pytest",
@@ -50,13 +52,18 @@ def skill_folder(tree, skill, env):
 
 
 def sh(args, cwd, env=None, timeout=3600):
+    """One command in its own process group with a deadline; its record is scrubbed of every secret (scrubbing.py)."""
     env = {**{k: v for k, v in os.environ.items() if not k.startswith("GIT_")}, "PYTHONDONTWRITEBYTECODE": "1", **(env or {})}
+    secrets = scrubbing.secrets_in(args, env)
     t = time.time()
-    r = subprocess.run(args, cwd=cwd, env=env, capture_output=True, text=True, timeout=timeout)
-    text = r.stdout + r.stderr
+    try:
+        r = procs.run(args, timeout=timeout, cwd=cwd, env=env)
+        rc, text = r.returncode, r.stdout + r.stderr
+    except procs.Expired as exc:
+        rc, text = -1, f"timed out after {timeout} s: " + exc.partial
     m = re.search(r"\d+ passed[^\n]*", text)
-    return {"command": " ".join(args), "cwd": cwd, "returncode": r.returncode, "seconds": round(time.time() - t, 1),
-            "tail": text[-3000:], "pytest_summary": m.group(0) if m else None}
+    return {"command": scrubbing.scrub(" ".join(args), secrets), "cwd": cwd, "returncode": rc, "seconds": round(time.time() - t, 1),
+            "tail": scrubbing.scrub(text[-3000:], secrets), "pytest_summary": m.group(0) if m else None}
 
 
 def uv(args, cwd, **kw):
@@ -205,13 +212,13 @@ def run(tree, out, rows, env):
         raise SystemExit(f"unknown row(s): {', '.join(unknown)}")
     result = {"tree": tree, "release": is_release(tree), "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "rows": {}}
     if os.path.exists(os.path.join(tree, ".git")):
-        result["commit"] = subprocess.run(["git", "-C", tree, "rev-parse", "--short", "HEAD"], capture_output=True, text=True, timeout=600).stdout.strip()
+        result["commit"] = procs.run(["git", "-C", tree, "rev-parse", "--short", "HEAD"], timeout=600).stdout.strip()
     for name in rows:
         print(f"--- {name}", flush=True)
         try:
             result["rows"][name] = ROWS[name](tree, env)
-        except Exception as exc:  # a row that crashes is a result too
-            result["rows"][name] = {"ok": False, "error": repr(exc)[:500]}
+        except Exception as exc:  # a row that crashes is a result too; its text is scrubbed like every record
+            result["rows"][name] = {"ok": False, "error": scrubbing.scrub(repr(exc))[:500]}
         with open(out, "w") as f:
             json.dump(result, f, indent=1, default=str)
         print(f"    ok={result['rows'][name].get('ok')}", flush=True)

@@ -17,7 +17,13 @@ OWN_TICKERS = ("MPC", "MPLX")
 # search (https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=<cik>, same date): 34088 (Exxon Mobil Corp,
 # the filer before the 2025 holding company) and 48039 (HollyFrontier Corp, before the HF Sinclair merger of 2022).
 # The same file gives MPC 1510295 (Marathon Petroleum Corp) and MPLX 1552000 (MPLX LP), whose filings the release
-# may link; any other filer (an industry exhibit, for example) is not a peer.
+# may link; any other filer (an industry exhibit, for example) is not a peer. How a CIK is written: the SEC's
+# "Accessing EDGAR Data" page (https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data,
+# last modified 2021-03-23, read 2026-11-01) shows Archives paths with the CIK without leading zeroes
+# (/Archives/edgar/data/51143/), while the SEC's own data files write it as ten digits with leading zeroes
+# (company_tickers.json above; the submissions API's CIK##########.json, same page). The rules and the gate accept
+# both spellings in a path, so a link written either way is caught; they make no claim about which spelling EDGAR
+# serves.
 PEER_CIKS = ("1035002", "1534701", "1534504", "1915657", "821483", "1694426", "1376139", "93410", "2115436", "34088", "48039")
 # The ticker a filing's file name starts with (vlo-20251231.htm), lower case, HFC for HollyFrontier's old filings.
 PEER_SLUGS = ("vlo", "psx", "pbf", "dino", "parr", "dk", "cvi", "cvx", "xom", "hfc")
