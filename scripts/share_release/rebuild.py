@@ -62,8 +62,7 @@ def drop_dead_links(readme, tree):
             page = f.read()
 
     def keep(line):
-        m = re.search(r"epm-walkthrough\.html#([\w-]+)", line)
-        return not m or f'id="{m.group(1)}"' in page
+        return all(f'id="{anchor}"' in page for anchor in re.findall(r"epm-walkthrough\.html#([\w-]+)", line))
     return "".join(line for line in readme.splitlines(True) if keep(line))
 
 

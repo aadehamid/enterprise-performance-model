@@ -129,5 +129,5 @@ def test_a_readme_line_linking_a_missing_section_goes(tmp_path):
     folder.mkdir(parents=True)
     page = folder / "epm-walkthrough.html"
     page.write_text('<section id="here"></section>')
-    text = "a\n- see epm-walkthrough.html#here\n- see epm-walkthrough.html#gone\nb\n"
+    text = "a\n- see epm-walkthrough.html#here\n- see epm-walkthrough.html#gone\n- epm-walkthrough.html#here and epm-walkthrough.html#gone\nb\n"
     assert rebuild.drop_dead_links(text, str(tmp_path)) == "a\n- see epm-walkthrough.html#here\nb\n"
