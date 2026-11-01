@@ -60,11 +60,11 @@ Rerun it after any input or shape changes. `run_local.sh` runs steps 4 to 7 in o
      -v "$IMPORT":/import -v "$PLUGINS":/plugins neo4j:2025.06.2
    ```
 
-6. Load and verify. This step checks the rules and the shapes, writes the N-Triples and the in-graph shapes into the import folder, loads them, runs the three checks, and writes `projection-report.json`.
+6. Load and verify. This step checks the rules and the shapes, writes the N-Triples and the in-graph shapes into the import folder, loads them, runs the three checks, and writes `projection-report.json`. The password travels in the environment variable `NEO4J_PASSWORD`, never on the command line, so no process list or recorded command shows it.
 
    ```bash
-   uv run --with rdflib --with pyshacl --with neo4j python pipeline.py load-verify \
-     --bolt bolt://localhost:17687 --password <password> --import-dir "$IMPORT"
+   NEO4J_PASSWORD=<password> uv run --with rdflib --with pyshacl --with neo4j python pipeline.py load-verify \
+     --bolt bolt://localhost:17687 --import-dir "$IMPORT"
    ```
 
 7. Rewrite the manifest (`projection-manifest.json`), then remove the container. Commit `inferred.nt`, the manifest and the report together. The downloads stay in `~/epm-lpg/`, outside the repo.

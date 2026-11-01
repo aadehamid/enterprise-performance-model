@@ -6,9 +6,10 @@ Follows the guideline in ../lpg-projection/ (v2.2) with Rule 4 set to 4a, qualif
                                                  # sorted N-Triples and the manifest (no tools beyond rdflib)
     python3 pipeline.py build --verify           # fail unless the manifest matches a fresh build
     python3 pipeline.py reason --robot robot.jar # Step 2: ELK through ROBOT; writes inferred.nt
-    python3 pipeline.py load-verify --bolt bolt://localhost:17687 --password ... --import-dir DIR
+    NEO4J_PASSWORD=... python3 pipeline.py load-verify --bolt bolt://localhost:17687 --import-dir DIR
                                                  # Steps 4 and 5 against a running Neo4j with n10s and APOC;
-                                                 # writes projection-report.json
+                                                 # writes projection-report.json. The password comes from the
+                                                 # environment, so no process list or recorded command shows it.
 
 Turtle stays the master copy. Neo4j is a projection that can be rebuilt from these files at any time.
 """
@@ -502,7 +503,7 @@ def load_verify(bolt, password, import_dir):
     return report
 
 
-def main():
+def parser():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build")
@@ -511,9 +512,22 @@ def main():
     r.add_argument("--robot", required=True)
     lv = sub.add_parser("load-verify")
     lv.add_argument("--bolt", required=True)
-    lv.add_argument("--password", required=True)
+    lv.add_argument("--password", help="the Neo4j password; set NEO4J_PASSWORD in the environment instead, so that no "
+                    "process list or recorded command line shows it")
     lv.add_argument("--import-dir", required=True)
-    args = ap.parse_args()
+    return ap
+
+
+def neo4j_password(given):
+    """The Neo4j password: --password when given (kept for now), else NEO4J_PASSWORD from the environment."""
+    password = given or os.environ.get("NEO4J_PASSWORD")
+    if not password:
+        raise SystemExit("load-verify needs the Neo4j password: set NEO4J_PASSWORD in the environment")
+    return password
+
+
+def main():
+    args = parser().parse_args()
     if args.cmd == "build":
         loadable, inferred, manifest = build()
         print(f"Step 1 passed; loadable.nt {loadable.count(chr(10))} triples, inferred.nt {inferred.count(chr(10))}")
@@ -528,7 +542,7 @@ def main():
     elif args.cmd == "reason":
         reason(args.robot)
     else:
-        report = load_verify(args.bolt, args.password, args.import_dir)
+        report = load_verify(args.bolt, neo4j_password(args.password), args.import_dir)
         with open(REPORT, "w") as f:
             f.write(json.dumps(report, indent=2, sort_keys=True, default=str) + "\n")
         ok = (report["shacl_violations_in_graph"] == 0 and report["in_graph_mutant_violations"] > 0

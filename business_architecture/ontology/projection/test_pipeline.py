@@ -377,6 +377,37 @@ class Rename(unittest.TestCase):
                 self.assertEqual(report["renamed"], {"labels": 1})
 
 
+class Password(unittest.TestCase):
+    """load-verify reads the Neo4j password from NEO4J_PASSWORD, so no process list or recorded command line shows
+    it; --password still works for now. The runner and the README pass it that way."""
+
+    def test_load_verify_parses_without_a_password_argument(self):
+        args = pl.parser().parse_args(["load-verify", "--bolt", "bolt://x", "--import-dir", "d"])
+        self.assertIsNone(args.password)
+        self.assertEqual(pl.parser().parse_args(["load-verify", "--bolt", "b", "--password", "p", "--import-dir", "d"]).password, "p")
+
+    def test_the_password_comes_from_the_environment_or_the_argument(self):
+        with mock.patch.dict(os.environ, {"NEO4J_PASSWORD": "from-env"}):
+            self.assertEqual(pl.neo4j_password(None), "from-env")
+            self.assertEqual(pl.neo4j_password("given"), "given")
+        with mock.patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(pl.neo4j_password("given"), "given")
+            with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
+                pl.neo4j_password(None)
+            with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
+                pl.neo4j_password("")
+
+    def test_the_runner_the_readme_and_the_usage_pass_it_in_the_environment(self):
+        here = os.path.dirname(os.path.abspath(pl.__file__))
+        for name in ("run_local.sh", "README.md"):
+            with open(os.path.join(here, name)) as f:
+                text = f.read()
+            self.assertNotIn("--password", text, name)
+            self.assertIn("NEO4J_PASSWORD", text, name)
+        self.assertIn("NEO4J_PASSWORD=... python3 pipeline.py load-verify", pl.__doc__)
+        self.assertNotIn("--password ...", pl.__doc__)
+
+
 class Report(unittest.TestCase):
     def test_a_shape_change_makes_the_report_stale(self):
         from unittest import mock
