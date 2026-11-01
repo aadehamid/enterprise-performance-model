@@ -98,6 +98,31 @@ class Drift(unittest.TestCase):
         self.assertEqual(set(markers), set(ss.STORES))
         self.assertEqual(live["databricks"], "unreachable (AssertionError)")  # it was read, and the reader reported it
 
+    def run_check(self, argv):
+        """main() with `check` and the given options; the readers are replaced by recorders, and the report captured."""
+        import io
+        read = []
+
+        def fake_read(stores=ss.STORES):
+            read.append(tuple(stores))
+            return {}, {}
+        out = io.StringIO()
+        with mock.patch.object(sys, "argv", ["sync_stores.py", "check"] + argv), \
+                mock.patch.object(ss, "read_markers_and_counts", fake_read), \
+                mock.patch.object(ss, "expected", lambda ref=None: self.want), mock.patch("sys.stdout", out):
+            with self.assertRaises(SystemExit) as stop:
+                ss.main()
+        self.assertEqual(stop.exception.code, 1)  # nothing marked: every judged store is unmarked
+        return read, [line.split()[0] for line in out.getvalue().splitlines()]
+
+    def test_main_passes_the_named_stores_to_the_reader_and_the_report(self):
+        read, reported = self.run_check(["--store", "pipeline", "--store", "driver"])
+        self.assertEqual(read, [("pipeline", "driver")])
+        self.assertEqual(reported, ["pipeline", "driver"])
+        read, reported = self.run_check([])
+        self.assertEqual(read, [tuple(ss.STORES)])
+        self.assertEqual(reported, list(ss.STORES))
+
 
 class Plan(unittest.TestCase):
     def cmds(self, behind, cloud):

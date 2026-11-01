@@ -368,10 +368,24 @@ class FakeCursor:
         self.statements.append(statement)
 
     def fetchall(self):
-        return [(0,)] if self.statements[-1].startswith("SELECT COUNT") else []
+        last = self.statements[-1]
+        if last.startswith("SELECT COUNT") or last.startswith("SELECT MEASURE"):
+            return [(1,)]
+        if last.startswith("SHOW TABLES"):
+            return [("db", "t")]  # one table per schema, so counts runs a count query in that schema
+        return []
 
     def fetchone(self):
-        return (0,)
+        return (1,)
+
+
+def only_catalog(statements, catalog):
+    """Every statement names the catalog and no other: as `catalog.`, or as the catalog created."""
+    assert statements, "no statement ran"
+    for st in statements:
+        assert f"{catalog}." in st or st.startswith(f"CREATE CATALOG IF NOT EXISTS {catalog} ") \
+            or st == f"DESCRIBE CATALOG {catalog}", st
+        assert not re.search(r"\b(idp_sbx|workspace)\b", st), st
 
 
 class FakeConn:
@@ -426,9 +440,10 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     # DEMO_CATALOG=epm_validate: every statement, path and drop names that catalog and none names idp_sbx.
     cur, e = fake_connection(monkeypatch, "epm_validate")
     assert databricks.setup() == "epm_validate"
-    assert cur.statements[0].startswith("CREATE CATALOG IF NOT EXISTS epm_validate ")
-    assert {f"CREATE SCHEMA IF NOT EXISTS epm_validate.{s}" for s in databricks.SCHEMAS} <= set(cur.statements)
-    assert "CREATE VOLUME IF NOT EXISTS epm_validate.replica_landing.raw" in cur.statements
+    assert cur.statements == ([f"CREATE CATALOG IF NOT EXISTS epm_validate COMMENT '{databricks.DEMO_COMMENT}'"]
+                              + [f"CREATE SCHEMA IF NOT EXISTS epm_validate.{s}" for s in databricks.SCHEMAS]
+                              + ["CREATE VOLUME IF NOT EXISTS epm_validate.replica_landing.raw"])
+    only_catalog(cur.statements, "epm_validate")
 
     cur, e = fake_connection(monkeypatch, "epm_validate")
     (tmp_path / "replica" / "price_assessment").mkdir(parents=True)
@@ -443,6 +458,7 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
         mp.setitem(sys.modules, "databricks.sdk", sdk)
         assert databricks.upload() == 1
     assert uploads == ["/Volumes/epm_validate/replica_landing/raw/price_assessment/t.parquet"]
+    assert cur.statements == []  # the explicit catalog is chosen without a query
 
     cur, e = fake_connection(monkeypatch, "epm_validate")
     sql = tmp_path / "03_silver.sql"
@@ -452,18 +468,21 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     databricks.build(files=[str(sql)])
     assert cur.statements == ["CREATE OR REPLACE TABLE epm_validate.silver_udm_core.t AS SELECT 1"]
     assert checked == ["epm_validate"]
+    only_catalog(cur.statements, "epm_validate")
 
     cur, e = fake_connection(monkeypatch, "epm_validate")
-    assert databricks.counts() == {}
-    shows = [st for st in cur.statements if st.startswith("SHOW TABLES")]
-    assert shows and all(st.startswith("SHOW TABLES IN epm_validate.") for st in shows)
+    found = databricks.counts()
+    assert found == {f"{s}.t": 1 for s in databricks.SCHEMAS[1:]}  # one table per schema, each counted
+    assert len(cur.statements) == 2 * len(databricks.SCHEMAS[1:])  # a SHOW TABLES and a count per schema
+    only_catalog(cur.statements, "epm_validate")
 
     cur, e = fake_connection(monkeypatch, "epm_validate")
-    databricks.purge(execute=False, connection=(FakeConn(cur), e))
+    databricks.purge(execute=True, catalog="epm_validate", connection=(FakeConn(cur), e))
     out = capsys.readouterr().out
-    assert "catalog epm_validate" in out
-    drops = [line for line in out.splitlines() if line.startswith("DROP ")]
-    assert drops and all("epm_validate." in d for d in drops)
+    assert "catalog epm_validate" in out and "purged" in out
+    drops = [st for st in cur.statements if st.startswith("DROP ")]
+    assert drops == databricks.purge_statements("epm_validate")  # every drop ran, each in the catalog
+    only_catalog(cur.statements, "epm_validate")  # the ownership check and the drops
 
     cur, e = fake_connection(monkeypatch, "epm_validate")
     monkeypatch.setattr(tech_graph, "neo4j_login", lambda store: ("bolt://fake", "neo4j", "pw"))
@@ -476,14 +495,16 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
             return False
 
         def execute_query(self, query, **params):
-            return [], None, None
+            if "MATCH (n:Tech)" in query:
+                return [{"uri": "u", "labels": ["Tech", "GoldTable"], "p": {"uri": "u", "name": "g"}}], None, None
+            return [{"s": "u", "t": "READS_FROM", "o": "o", "ontology": False}], None, None
     neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver()))
     with pytest.MonkeyPatch.context() as mp:
         mp.setitem(sys.modules, "neo4j", neo4j)
-        assert tech_graph.sync("pipeline") == (0, 0)
-    assert "DELETE FROM epm_validate.tech_graph.tech_graph_nodes" in cur.statements
-    assert "SELECT COUNT(*) FROM epm_validate.tech_graph.tech_graph_edges" in cur.statements
-    assert not any("idp_sbx" in st for st in cur.statements)
+        assert tech_graph.sync("pipeline") == (1, 1)
+    kinds = [st.split(" epm_validate.tech_graph.")[0] for st in cur.statements]
+    assert kinds == ["DELETE FROM", "INSERT INTO", "SELECT COUNT(*) FROM"] * 2  # nodes, then edges, each deleted, filled, counted
+    only_catalog(cur.statements, "epm_validate")
 
 
 def test_without_demo_catalog_setup_builds_in_idp_sbx(monkeypatch):

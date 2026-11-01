@@ -6,10 +6,13 @@ Follows the guideline in ../lpg-projection/ (v2.2) with Rule 4 set to 4a, qualif
                                                  # sorted N-Triples and the manifest (no tools beyond rdflib)
     python3 pipeline.py build --verify           # fail unless the manifest matches a fresh build
     python3 pipeline.py reason --robot robot.jar # Step 2: ELK through ROBOT; writes inferred.nt
-    NEO4J_PASSWORD=... python3 pipeline.py load-verify --bolt bolt://localhost:17687 --import-dir DIR
+    python3 pipeline.py load-verify --bolt bolt://localhost:17687 --import-dir DIR   # NEO4J_PASSWORD in the environment
                                                  # Steps 4 and 5 against a running Neo4j with n10s and APOC;
-                                                 # writes projection-report.json. The password comes from the
-                                                 # environment, so no process list or recorded command shows it.
+                                                 # writes projection-report.json. The password is not an argument,
+                                                 # so it is not part of this process's command line: a run that
+                                                 # records the commands it runs (the release validation) records
+                                                 # none of it. Set the variable from the login file, not by typing
+                                                 # the value in front of the command, which the shell history keeps.
 
 Turtle stays the master copy. Neo4j is a projection that can be rebuilt from these files at any time.
 """
@@ -512,8 +515,8 @@ def parser():
     r.add_argument("--robot", required=True)
     lv = sub.add_parser("load-verify")
     lv.add_argument("--bolt", required=True)
-    lv.add_argument("--password", help="the Neo4j password; set NEO4J_PASSWORD in the environment instead, so that no "
-                    "process list or recorded command line shows it")
+    lv.add_argument("--password", help="the Neo4j password; set NEO4J_PASSWORD in the environment instead, so that it "
+                    "is not part of this command line (an argument is recorded by anything that logs the command)")
     lv.add_argument("--import-dir", required=True)
     return ap
 

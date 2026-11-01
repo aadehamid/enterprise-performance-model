@@ -378,8 +378,9 @@ class Rename(unittest.TestCase):
 
 
 class Password(unittest.TestCase):
-    """load-verify reads the Neo4j password from NEO4J_PASSWORD, so no process list or recorded command line shows
-    it; --password still works for now. The runner and the README pass it that way."""
+    """load-verify reads the Neo4j password from NEO4J_PASSWORD: not an argument, so not part of pipeline.py's
+    command line, which a run that logs its commands would record. --password still works for now. The runner and
+    the README pass it in the environment, and the README reads it without typing it into a command."""
 
     def test_load_verify_parses_without_a_password_argument(self):
         args = pl.parser().parse_args(["load-verify", "--bolt", "bolt://x", "--import-dir", "d"])
@@ -404,8 +405,36 @@ class Password(unittest.TestCase):
                 text = f.read()
             self.assertNotIn("--password", text, name)
             self.assertIn("NEO4J_PASSWORD", text, name)
-        self.assertIn("NEO4J_PASSWORD=... python3 pipeline.py load-verify", pl.__doc__)
+        self.assertIn("NEO4J_PASSWORD in the environment", pl.__doc__)
         self.assertNotIn("--password ...", pl.__doc__)
+        with open(os.path.join(here, "README.md")) as f:
+            readme = f.read()
+        self.assertIn("read -rs NEO4J_PASSWORD && export NEO4J_PASSWORD", readme)  # never typed into a recorded command
+        self.assertNotIn("NEO4J_PASSWORD=<password>", readme)
+        self.assertNotIn("neo4j/<password>", readme)
+
+    def run_main(self, argv, env):
+        """main() with the given arguments and environment, load_verify replaced by a recorder of the password it got."""
+        got = []
+
+        def fake_load_verify(bolt, password, import_dir):
+            got.append((bolt, password, import_dir))
+            return {"shacl_violations_in_graph": 0, "in_graph_mutant_violations": 1, "roundtrip_lost": 0,
+                    "roundtrip_added": 0, "determinism_hash_sorted": "h", "determinism_hash_shuffled": "h",
+                    "rename_lossless": True, "nodes": 1, "relationships": 1, "samples": {}, "versions": {}}
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(sys, "argv", ["pipeline.py"] + argv), \
+                mock.patch.dict(os.environ, env, clear=True), mock.patch.object(pl, "load_verify", fake_load_verify), \
+                mock.patch.object(pl, "REPORT", os.path.join(tmp, "report.json")), \
+                mock.patch("sys.stdout", new_callable=lambda: __import__("io").StringIO()):
+            pl.main()
+        return got
+
+    def test_main_hands_load_verify_the_password_from_the_environment(self):
+        argv = ["load-verify", "--bolt", "bolt://x", "--import-dir", "d"]
+        self.assertEqual(self.run_main(argv, {"NEO4J_PASSWORD": "from-env"}), [("bolt://x", "from-env", "d")])
+        self.assertEqual(self.run_main(argv + ["--password", "given"], {"NEO4J_PASSWORD": "from-env"}), [("bolt://x", "given", "d")])
+        with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
+            self.run_main(argv, {})
 
 
 class Report(unittest.TestCase):
