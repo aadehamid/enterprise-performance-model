@@ -14,10 +14,12 @@ from rdflib import Graph, Namespace, URIRef
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
 sys.path.insert(0, os.path.join(ONTOLOGY, "regression"))
+sys.path.insert(0, os.path.join(ONTOLOGY, "release"))
+import newest  # noqa: E402
 import run  # noqa: E402
 
 SHAPE_FILES = [
-    "releases/core/2.4.0/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl", "kpi/shapes.ttl",
+    f"releases/core/{newest.newest_version('core')}/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl", "kpi/shapes.ttl",
     "data-product/shapes.ttl", "value-stream/shapes.ttl", "system/shapes.ttl", "lane/shapes.ttl",
     "market-data/shapes.ttl", "consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl", "party/shapes.ttl",
     "validation/controlled-values.ttl",

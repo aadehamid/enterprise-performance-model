@@ -24,7 +24,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 STREAMS = [os.path.join(REPO, "business_architecture", "business_process", f)
            for f in ("value_stream_commercial_lifecycle.json", "value_stream_order_to_cash.json")]
-CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import newest  # noqa: E402
+CORE = newest.core_file()
 DATA_PRODUCTS = os.path.join(HERE, "..", "data-product", "data-products.ttl")
 MEASURES = os.path.join(HERE, "..", "kpi", "measures.ttl")
 OUTPUT = os.path.join(HERE, "value-streams.ttl")
@@ -81,7 +83,7 @@ def load():
         ids[d["id"]] += 1
         for c in d["capabilities"]:
             ids[c["id"]] += 1
-            problems += [f"{name} {c['id']}: process group {p!r} is not in core 2.4.0"
+            problems += [f"{name} {c['id']}: process group {p!r} is not in the newest core"
                          for p in c.get("alignsToProcessGroups", []) if len(procs.get(p, ())) != 1]
         vsps = set()
         for s in d["stages"]:
@@ -91,7 +93,7 @@ def load():
                 vsps.add(p["id"])
                 if p["capabilityId"] not in local:
                     problems.append(f"{name} {p['id']}: capability {p['capabilityId']!r} is not in this value stream")
-                problems += [f"{name} {p['id']}: process {x!r} is not in core 2.4.0"
+                problems += [f"{name} {p['id']}: process {x!r} is not in the newest core"
                              for x in p["linkedProcessIds"] if len(procs.get(x, ())) != 1]
                 problems += [f"{name} {p['id']}: {x!r} is not in the data-product module"
                              for x in p["produces"] + p["consumes"] if x not in items]

@@ -2,7 +2,7 @@
 """The zip, and the orphan branch (plan step 10).
 
     python3 scripts/share_release/publish.py zip --release <folder> --out <file.zip>
-    python3 scripts/share_release/publish.py branch --zip <file.zip> --repo <checkout> --name share/epm-1.0 [--push]
+    python3 scripts/share_release/publish.py branch --zip <file.zip> --repo <checkout> [--name <branch>] [--push]
     python3 scripts/share_release/publish.py extract --zip <file.zip> --into <folder>
 
 The zip holds the release tree and nothing else (no .git, no caches, no virtual environment; a symlink stops it),
@@ -27,6 +27,7 @@ import tempfile
 import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import manifest  # noqa: E402
 
 SKIP_DIRS = (".git", "__pycache__", ".venv", ".pytest_cache", "out")
 SKIP_FILES = (".DS_Store",)
@@ -131,7 +132,7 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("zip"); p.add_argument("--release", required=True); p.add_argument("--out", required=True)
     p = sub.add_parser("branch"); p.add_argument("--zip", required=True, help="the zip the gate and the clean room checked"); p.add_argument("--repo", required=True)
-    p.add_argument("--name", default="share/epm-1.0"); p.add_argument("--push", action="store_true")
+    p.add_argument("--name", default=manifest.RELEASE_BRANCH); p.add_argument("--push", action="store_true")
     p = sub.add_parser("extract"); p.add_argument("--zip", required=True); p.add_argument("--into", required=True)
     a = ap.parse_args(argv)
     if a.cmd == "zip":

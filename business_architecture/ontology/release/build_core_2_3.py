@@ -27,6 +27,7 @@ from rdflib.namespace import DCTERMS, OWL, RDF, SKOS, XSD
 
 import build_core_2_2 as prev
 import frozen_sources
+import newest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.dirname(HERE)
@@ -150,6 +151,7 @@ def package(g, counts):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--rebuild-released", action="store_true", help="overwrite a released package: a rebuild of the whole set")
     ap.add_argument("--verify", action="store_true")
     args = ap.parse_args()
     g, counts = build()
@@ -166,6 +168,7 @@ def main():
             sys.exit(f"core {VERSION} package is not current: {stale}")
         print("release package is current")
     if args.write:
+        newest.refuse_overwrite(RELEASE_DIR, files, f"core {VERSION}", args.rebuild_released)
         os.makedirs(RELEASE_DIR, exist_ok=True)
         for n, t in files.items():
             with open(os.path.join(RELEASE_DIR, n), "w") as f:

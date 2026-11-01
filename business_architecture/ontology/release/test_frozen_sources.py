@@ -71,8 +71,8 @@ class Frozen(unittest.TestCase):
         self.assertTrue(all(p == "business_architecture/business_process/downstream_process_map.json" for _, p in pins))
 
     def test_freeze_writes_one_file_per_pinned_commit(self):
-        if bm.SHARE_RELEASE and not os.path.exists(os.path.join(fs.REPO, ".git")):
-            self.skipTest("not a Git checkout (the share release reads its frozen copies and never freezes)")
+        if bm.SHARE_RELEASE:  # with or without .git: a clone of the release does not hold the pinned commits
+            self.skipTest("the share release reads its frozen copies and never freezes")
         # Anywhere else, Git or not, freeze() must write the four files or fail: a source tree is not a release.
         with tempfile.TemporaryDirectory() as tmp:
             old = fs.FROZEN

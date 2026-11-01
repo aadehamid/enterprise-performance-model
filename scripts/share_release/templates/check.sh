@@ -8,7 +8,11 @@
 # Compared with the repository this release was cut from, four checks are not here, because what they read did
 # not ship: the Step 4 evidence gate and its tests (the review evidence of the process-map mapping), the Step 4
 # pin check (Git history), the decision-record, quote, citation and name checks (the decision records and the
-# saved review comments), and the pre-push hook test (no pull requests here). Every content check runs.
+# saved review comments), and the pre-push hook test. Every content check runs.
+#
+# This script proves your copy is valid. It leaves out the tests in scripts/pinned-tests.txt, which ask whether your
+# copy still equals the release as shipped. scripts/check-pinned.sh runs those, and you may ignore it after you change
+# anything. When you add a module or a test, add it here too: HOW-TO-UPDATE.md says where.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
@@ -40,8 +44,9 @@ PY
 before="$(snapshot)"
 
 ONT=business_architecture/ontology
-# The core package and each module's package must equal a fresh build (the newest set, EPM 1.0).
-(cd $ONT/release && run with_deps python build_core_2_4.py --verify)
+# The core package and each module's package must equal a fresh build (the newest set).
+CORE_BUILDER="$(cd $ONT/release && python3 -c 'import newest; print(newest.core_builder())')"
+(cd $ONT/release && run with_deps python "$CORE_BUILDER.py" --verify)
 (cd $ONT/release && run with_deps python build_module.py organization --verify)
 (cd $ONT/release && run with_deps python build_module.py kpi --verify)
 (cd $ONT/release && run with_deps python build_module.py system --verify)
@@ -73,7 +78,7 @@ ONT=business_architecture/ontology
 (cd $ONT/projection && run with_deps python pipeline.py build --verify)
 # Every test file of the ontology, the demo and the scripts, in parallel (the list is written at the cut;
 # test_check_script.py checks it is complete).
-run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load \
+run with_deps python -m pytest -q -p no:cacheprovider --rootdir "$ROOT" --confcutdir "$ROOT" -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load \
 {{TEST_FILES}}
 # The four skills' own checks, each with the dependencies its own check names (the list is written at the cut from
 # one table, the same one the cut's skills-tests row runs). A test command that found no test is a failure.
@@ -84,6 +89,12 @@ run with_deps python scripts/epm_facts.py modules >/dev/null
 run with_deps python scripts/epm_facts.py coverage >/dev/null
 # The generated pages must equal a fresh build of their Markdown.
 run with_deps python scripts/build_docs_html.py --check
+
+# The last load's report. A stale report means the stores are behind the packages, not that the ontology is invalid.
+if ! EPM_PINNED_ONLY=1 with_deps python -m pytest -q -p no:cacheprovider --rootdir "$ROOT" --confcutdir "$ROOT" business_architecture/ontology/projection/test_pipeline.py \
+    -k test_the_step_5_report_describes_the_current_inputs_and_passed >/dev/null 2>&1; then
+  echo "note: projection-report.json describes an earlier build. Project into Neo4j again when you want the stores current (HOW-TO-UPDATE.md)."
+fi
 
 after="$(snapshot)"
 if [ "$before" != "$after" ]; then

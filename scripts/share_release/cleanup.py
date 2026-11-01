@@ -6,9 +6,12 @@
 Without --yes it prints what it would remove. It removes only what the ledger names: containers, compose projects
 (with their volumes), folders, files, the demo's test catalog (through the demo's own purge), the ontology's test
 table. It exits 0 only with positive proof: every deletion command returned 0, no container, project, folder or
-file in the ledger still exists, and nothing in the ledger was left to someone else. AuraDB is reloaded from main by
-the driver (the owner's instruction, EPM-DEC-001-0110 amendment item 12), outside this script: an "aura" entry is
-printed with that instruction and counts as not done until the ledger no longer holds it.
+file in the ledger still exists, and nothing in the ledger was left to someone else. The stores are then emptied
+(empty_stores.py) and reloaded from the release, not from main (the owner's instruction of 2026-11-01), outside this
+script: an "aura" entry is printed and counts as not done until the ledger no longer holds it.
+
+A Databricks catalog is purged only when the ledger line records that this run created it, and never when it is a
+shared catalog such as idp_sbx.
 
 A folder or file entry is removed only when it is a plain path of the validation: never "/", the home folder, a
 path of fewer than three components, or a folder that holds the checkout (--tree) or this tool.
@@ -48,6 +51,20 @@ def unsafe(path, protected):
         folder = os.path.realpath(folder)
         if real == folder or folder.startswith(real + os.sep):
             return f"it holds {name}"
+    return None
+
+
+# A shared workspace's catalogs: never this tool's to purge, whatever a ledger line says.
+SHARED_CATALOGS = {"idp_sbx", "workspace", "main", "samples", "system", "hive_metastore"}
+
+
+def catalog_refusal(entry):
+    """Why a ledgered catalog must not be purged, or None. A purge drops a whole catalog, so only one this run created
+    may go: the ledger line must say so, and stores.py says so only when the catalog was absent before the run."""
+    if entry["name"].lower() in SHARED_CATALOGS:
+        return "it is a shared catalog"
+    if entry.get("detail_created_by_run") is not True:
+        return "the ledger does not show that this run created it"
     return None
 
 
@@ -93,6 +110,10 @@ def main(argv=None):
                 refused.append((kind, name, why))
                 continue
         elif kind == "databricks-catalog":
+            why = catalog_refusal(e)
+            if why:
+                refused.append((kind, name, why))
+                continue
             cmd = ["uv", "run", "python", "-m", "pricing_demo.databricks", "purge", "--yes", "--catalog", name]
             cwd = os.path.join(a.tree, "demos", "downstream-pricing-databricks-free")
         elif kind == "databricks-table":

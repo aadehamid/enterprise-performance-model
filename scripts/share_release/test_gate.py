@@ -1,4 +1,5 @@
 """The leak gate fails on each kind of planted leak, in text, in a page's data, in an XLSX and in a path."""
+import pytest
 import os
 
 os.environ["EPM_RELEASE_OWNER_NAMES"] = "Ada Lovelace,Ada,adalove"  # a stand-in: no test names a person
@@ -384,3 +385,52 @@ def test_a_percent_encoded_entity_in_a_non_base64_payload_is_decoded_at_every_de
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
     (tmp_path / "page.html").write_text('<a href="data:text/html,%26%2367%3Bhevron">x</a>\n')  # the plain data URL form too
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+
+
+@pytest.mark.parametrize("name,planted", [
+    ("claude", "Drafted by Claude."), ("claude.ai", "see claude.ai"), ("CLAUDE.md", "Read CLAUDE.md"), ("codex", "Codex said"),
+    ("bugbot", "Bugbot found it"), ("kimi", "Kimi round 1"), ("anthropic", "from Anthropic"), ("chatgpt", "ChatGPT wrote"),
+    ("herdr", "a herdr pane"), ("openai", "OpenAI key"), ("gpt", "gpt-6-luna"), ("rex-review", "rex-review.sh"), ("pi-review", "pi-review.sh"),
+    ("agents.md", "see AGENTS.md"), ("cursor", "the Cursor bot"), ("cursor folder", "app/cursor merged"),
+    ("independent review", "the independent reviewer"), ("review round", "review round 2"), ("finding", "(finding 11)"),
+    ("verdict", "the PR verdict"), ("delegation", "Approved under the delegation"), ("delegated under", "delegated under a record"),
+    ("delegate", "Yes, delegate as described"), ("first name", "Kailey said"), ("pull request", "ship in one pull request"), ("pr", "the batch 08 PR"),
+])
+def test_an_agent_name_or_agent_work_fails(tmp_path, name, planted):
+    f = tmp_path / "notes.md"
+    f.write_text(planted + "\n")
+    assert any(h["file"] == "notes.md" and h["reason"] != "the namespace note is missing" for h in gate.scan(str(tmp_path))), name
+
+
+@pytest.mark.parametrize("fname,kept", [
+    ("db.py", "cur = conn.cursor()\n"), ("db.py", "class Cursor:\n    pass\nc = Cursor(1)\n"), ("page.css", "td { cursor: pointer; }\n"),
+    ("a.md", "the delegation of authority\n"), ("a.md", "public relations (PR) strategy\n"), ("a.md", "prov:SoftwareAgent and Genie agents\n"),
+    ("a.md", "`evidence.md`, finding 3\n"),
+])
+def test_what_is_not_the_build_passes(tmp_path, fname, kept):
+    (tmp_path / fname).write_text(kept)
+    assert [h for h in gate.scan(str(tmp_path)) if h["file"] == fname] == []
+
+
+def test_a_name_in_an_office_part_fails(tmp_path):
+    import zipfile
+    with zipfile.ZipFile(tmp_path / "book.xlsx", "w") as z:
+        z.writestr("xl/sharedStrings.xml", "<t>Drafted by Claude</t>")
+    assert any(h["reason"] == "an agent or review tool named" for h in gate.scan(str(tmp_path)))
+
+
+def test_an_agent_in_a_path_fails(tmp_path):
+    (tmp_path / "CLAUDE.md").write_text("x\n")
+    assert any(h["reason"] == "an agent or review tool named" and h.get("where") == "the path" for h in gate.scan(str(tmp_path)))
+
+
+def test_the_skills_may_teach_pull_requests_and_delegation(tmp_path):
+    folder = tmp_path / "skills" / "ontology"
+    folder.mkdir(parents=True)
+    (folder / "guide.md").write_text("Through a pull request. Decided (delegated under <record>).\n")
+    assert [h for h in gate.scan(str(tmp_path)) if h["file"].startswith("skills/")] == []
+
+
+def test_a_left_out_document_fails(tmp_path):
+    (tmp_path / "a.md").write_text("see step4/playbook/ontology-worklog.md and decision-packages/x\n")
+    assert any(h["reason"] == "a document the release leaves out" for h in gate.scan(str(tmp_path)))

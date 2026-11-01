@@ -23,7 +23,9 @@ from rdflib.namespace import DCTERMS, RDF, RDFS, SKOS, XSD
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 WORKBOOK = os.path.join(REPO, "business_architecture", "reference", "APQC-PCF-Downstream-Petroleum-v7.2.2.xlsx")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import newest  # noqa: E402
+CORE = newest.core_file()
 OUTPUT = os.path.join(HERE, "apqc-elements.ttl")
 SRC = Namespace("https://w3id.org/lsc/ontology/source/")
 PCF = SRC["apqc-pcf-7.2.2"]
@@ -87,7 +89,7 @@ def main():
             "# from the vendored workbook. Do not edit by hand.\n#\n"
             + "".join(f"# {line}\n" for line in ATTRIBUTION.replace(". ", ".\n").split("\n")) + "#\n"
             + build(rows).serialize(format="turtle"))
-    print(f"elements {len(rows)}; referenced by core 2.4.0 {len(referenced)}; not referenced {len(rows) - len(referenced)}")
+    print(f"elements {len(rows)}; referenced by the newest core {len(referenced)}; not referenced {len(rows) - len(referenced)}")
     if args.verify:
         if not (os.path.exists(OUTPUT) and open(OUTPUT).read() == text):
             sys.exit("apqc-elements.ttl is not current: run build_apqc_elements.py --write")

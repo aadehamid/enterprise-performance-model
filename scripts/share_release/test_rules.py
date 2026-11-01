@@ -1,4 +1,5 @@
 """Each rewrite rule, on a planted line, by hand."""
+import pytest
 import os
 
 os.environ["EPM_RELEASE_OWNER_NAMES"] = "Ada Lovelace,Ada,adalove"  # a stand-in: no test names a person
@@ -77,9 +78,9 @@ def test_approval_line():
     assert out == '"who": "a subject matter expert reviewing the documents"'
 
 
-def test_tool_names_stay_where_they_name_the_tool():
+def test_an_agent_is_not_named_in_a_note_and_a_draft_keeps_its_word():
     out, _ = run('skos:editorialNote "Drafted by Claude from the repository; the definition is Claude\'s words (EPM-DEC-001-0044)."@en')
-    assert out == 'skos:editorialNote "Drafted by Claude from the repository; the definition is Claude\'s words (the decision of 2026-10-18)."@en'
+    assert out == 'skos:editorialNote "Drafted from the repository; the definition is written for this ontology (the decision of 2026-10-18)."@en'
 
 
 def test_hosts_and_links():
@@ -106,7 +107,7 @@ def test_issue_and_pr_numbers():
     out, _ = run("fixed in PR #231 (#454); issue #457 is open; see #226 comment 613; the #226 pairs table")
     assert out == "fixed in an earlier change; an earlier change is open; see an earlier comment; the earlier change pairs table"
     out, _ = run("the five PRs (#108–#115) and #430-#448")
-    assert out == "the five PRs (earlier items) and earlier items"
+    assert out == "the five changes (earlier items) and earlier items"
 
 
 def test_numbers_in_a_page_are_prose_not_colours():
@@ -180,7 +181,8 @@ def test_manifest_ships_the_two_versions_and_leaves_older_ones_out():
     assert manifest.disposition("business_architecture/ontology/step4/target-report/test_context_pass.py", r) == "out"
     assert manifest.disposition("business_architecture/ontology/step4/label-report/label-dispositions-v1.2.csv", r) == "ship"
     assert manifest.disposition("business_architecture/domain/decisions/EPM-DEC-001-0001-x.md", r) == "out"
-    assert manifest.disposition("business_architecture/domain/decision-packages/2026-10-14/README.md", r) == "ship"
+    assert manifest.disposition("business_architecture/domain/decision-packages/2026-10-14/README.md", r) == "out"
+    assert manifest.disposition("business_architecture/ontology/step4/playbook/ontology-worklog.md", r) == "out"
     assert manifest.disposition("business_architecture/ontology/README.html", r) == "out"
     assert manifest.disposition("scripts/docs_template.html", r) == "ship"
     assert manifest.disposition("business_architecture/ontology/epm-walkthrough.html", r) == "ship"
@@ -314,7 +316,7 @@ def test_references_to_the_left_out_documents_in_prose_code_and_pages():
     assert out == ('        single(f"{ONT}/projection/README.md",\n               "How the released packages are projected."),\n'
                    '        single(f"{ONT}/projection/skill-run/README.md",\n               "How the driver runs."),\n')
     out, _ = run("read `references/lpg-projection.md`; the container lpg-projection on 17687; urn:lpg-projection:graph:; r\"lpg-projection/|ontology-worklog\"", "skills/ontology/scripts/test_playbook_guide.py")
-    assert "lpg-projection/|ontology-worklog" in out and "references/lpg-projection.md" in out  # the skills' own names stay
+    assert 'r"lpg-projection/"' in out and "ontology-worklog" not in out and "references/lpg-projection.md" in out  # the skills' own names stay
 
 
 def test_a_documents_path_to_a_previous_package_moves_to_the_history_folder():
@@ -343,3 +345,57 @@ def test_in_a_page_a_number_after_a_colon_is_a_colour_only_inside_css():
     assert out == '<p>Issue: an earlier change remains open</p><style>a{color: #455}</style><div style="color: #111">an earlier change is open</div>'
     out, _ = run("--text: #111; a: #222", "p.css")
     assert out == "--text: #111; a: #222"
+
+
+@pytest.mark.parametrize("before,after", [
+    ("Drafted by Claude from the subject matter expert's customer inputs", "Drafted from the subject matter expert's customer inputs"),
+    ("the definition is Claude's words (the decision of 2026-10-23).", "the definition is written for this ontology (the decision of 2026-10-23)."),
+    ("each defined from the inputs in Claude's words.", "each defined from the inputs in the ontology's own words."),
+    ("Claude's design under the decision of 2026-10-12", "the subject matter expert's decision of 2026-10-12"),
+    ("Approved by Claude under the delegation, which lets it approve the queue's minor releases (\"Yes, delegate as described (Recommended)\", saved in (the file)).",
+     "Approved by a subject matter expert."),
+    ("1.1.0, a minor Claude approved under the delegation, is in", "1.1.0, a minor release a subject matter expert approved, is in"),
+    ("Under the delegation (the decision of 2026-10-18), four roles stay", "By the decision of 2026-10-18, four roles stay"),
+    ("the scope note is Claude's, under the delegation (the decision of 2026-10-18, MPC-P07).", "the scope note follows the decision of 2026-10-18, MPC-P07."),
+    ("x = 1  # bounded (Kimi round 1, finding 11)", "x = 1  # bounded"),
+    ("    # Codex on step 2: a long text grows.", "    # a long text grows."),
+    ("    # Cursor's HOLD on an earlier change: a named record.", "    # a named record."),
+    ("It runs twice (finding 5).", "It runs twice."),
+    ("**Built with:** Kailey and Claude Code.\n**Started:** now", "**Started:** now"),
+    ("the process-map question set (Kailey, 2026-09-17)", "the process-map question set (a subject matter expert, 2026-09-17)"),
+    ("See AGENTS.md first", "See the project's instructions first"),
+    ("is a follow-up noted in the batch 08 PR.", "is a follow-up noted in batch 08 of the process-map work."),
+])
+def test_agents_rewrites_names_and_work(before, after):
+    assert rules.rule_agents(before, {"path": "x.py"})[0] == after
+
+
+@pytest.mark.parametrize("kept", [
+    "The delegation of authority is set by Market Risk Management.",  # a business term
+    "within the documented delegation of claim-settlement authority",
+    "cur = conn.cursor()",  # a database cursor
+    "class Cursor:\n    pass",
+    "td { cursor: pointer; }",
+    "a prov:Agent and a prov:SoftwareAgent",
+    "the four Genie agents and the supervisor",
+    "It waits for its owners to confirm it.",  # a draft keeps its status
+    "public relations (PR) strategy",
+])
+def test_agents_leaves_what_is_not_the_build(kept):
+    assert rules.rule_agents(kept, {"path": "x.py"})[0] == kept
+
+
+def test_agents_keeps_a_tuple_of_strings_in_code():
+    src = 'for subject in ("the reviewer", "Kimi"):'
+    assert "(" in rules.rule_agents(src, {"path": "x.py"})[0].split("in ")[1]
+
+
+def test_agents_removes_a_page_row_about_the_builds_tooling():
+    src = "<tr><td><code>AGENTS.md</code></td><td>x</td></tr>\n<tr><td>keep</td></tr>\n"
+    assert rules.rule_agents(src, {"path": "a.html"})[0] == "<tr><td>keep</td></tr>\n"
+
+
+def test_agents_leaves_the_skills_own_pull_requests():
+    src = "through a pull request"
+    assert rules.rule_agents(src, {"path": "skills/ontology/references/release.md"})[0] == src
+    assert rules.rule_agents(src, {"path": "README.md"})[0] == "through a change"

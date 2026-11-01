@@ -16,7 +16,7 @@
 #   workspace is reachable: --store-rows all, or a list, runs them; the default runs the four offline rows
 #   (projection-pipeline, underscores, demo-offline, store-map). The final line names the rows that did not run.
 # - Step 9, deleting the test data, is cleanup.py --ledger <LEDGER_FILE of --env> --yes, run after the review of
-#   the cut, and the AuraDB reload from main is the driver's step (the decision's amendment, item 12).
+#   the cut, and the stores are emptied and reloaded from the release (empty_stores.py and the driver; the owner's instruction of 2026-11-01).
 # - Step 10, the orphan branch and the shared zip, waits for the owner: publish.py branch, then --push.
 # The final line says what remains.
 #
@@ -88,6 +88,7 @@ step "store rows ($STORE_ROWS)"; within "$OUT-stores.log" uv run -q --no-project
   --rows "$STORE_ROWS" > /dev/null || { tail -20 "$OUT-stores.log"; exit 1; }
 rows_ok "$OUT-stores.json" "store rows"
 step "check.sh"; (cd "$OUT" && within "$OUT-check.log" bash scripts/check.sh > /dev/null) || { tail -30 "$OUT-check.log"; exit 1; }; tail -1 "$OUT-check.log"
+step "check.sh from a Git clone"; (within "$OUT-clone.log" python3 "$HERE/clonecheck.py" --release "$OUT" --log "$OUT-clone-check.log" --timeout "$STEP_TIMEOUT" > /dev/null) || { tail -30 "$OUT-clone-check.log"; exit 1; }; tail -1 "$OUT-clone-check.log"
 step "tree rows"; within "$OUT-tree.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" run --tree "$OUT" --out "$OUT-tree.json" --env "$ENVF" \
   --rows regression,docs-links,skills-tests,iri-base,gate > /dev/null || { tail -20 "$OUT-tree.log"; exit 1; }
 rows_ok "$OUT-tree.json" "tree rows"
@@ -113,4 +114,4 @@ PY
   within "$OUT-report.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" report "$BASELINE" "$OUT-release.json" "$OUT-compare.json" --out "$OUT-VALIDATION.md" > /dev/null || { tail -20 "$OUT-report.log"; exit 1; }; tail -1 "$OUT-report.log"
 fi
 NOT_RUN="$(python3 -c 'import sys; a=set(sys.argv[1].split(",")); print(", ".join(r for r in sys.argv[2].split(",") if r not in a) or "none")' "$STORE_ROWS" "$ALL_STORE_ROWS")"
-step "done"; echo "release: $OUT; zip: $OUT.zip; store rows not run: $NOT_RUN (--store-rows all runs them when Databricks is reachable); remaining: step 9, $HERE/cleanup.py --ledger $LEDGER --env $ENVF --tree $OUT --yes, and the AuraDB reload from main; step 10, $HERE/publish.py branch --zip $OUT.zip --repo $EPM, then --push, the owner's decision"
+step "done"; echo "release: $OUT; zip: $OUT.zip; store rows not run: $NOT_RUN (--store-rows all runs them when Databricks is reachable); remaining: step 9, $HERE/cleanup.py --ledger $LEDGER --env $ENVF --tree $OUT --yes, then $HERE/empty_stores.py and a reload of the stores from the release; step 10, $HERE/publish.py branch --zip $OUT.zip --repo $EPM, then --push, the owner's decision"

@@ -43,7 +43,9 @@ TABLE = os.path.join(HERE, "code-lists.csv")
 OUTPUT = os.path.join(HERE, "code-lists.ttl")
 SYSTEMS_OUTPUT = os.path.join(HERE, "systems.ttl")
 LIFECYCLE_OUTPUT = os.path.join(HERE, "lifecycle.ttl")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import newest  # noqa: E402
+CORE = newest.core_file()
 SYSTEM_MODULE = os.path.join(HERE, "..", "system", "systems.csv")
 # The system module's systems the process map does not name, such as PRM since system 1.5.0 (EPM-DEC-001-0100, 0108).
 SYSTEM_OTHERS = os.path.join(HERE, "..", "system", "other-systems.csv")
@@ -343,7 +345,7 @@ def load_lifecycle(codes, systems):
     owner = {"process": "lifecycle-stage", "system": "system-stage", "stage": "lifecycle-stage"}
     problems += [f"{r['stage']}: only a {owner[r['link']]} has a {r['link']} link" for r in rows
                  if r["link"] in owner and r["stage"].split("/")[0] != owner[r["link"]]]
-    problems += [f"{r['stage']}: process {r['target']} is not in core 2.4.0" for r in rows if r["link"] == "process" and r["target"] not in procs]
+    problems += [f"{r['stage']}: process {r['target']} is not in the newest core" for r in rows if r["link"] == "process" and r["target"] not in procs]
     problems += [f"{r['stage']}: system {r['target']} is not a customer system" for r in rows if r["link"] == "system" and r["target"] not in slugs]
     problems += [f"{r['stage']}: {r['target']} is not a system stage" for r in rows
                  if r["link"] == "stage" and (not r["target"].startswith("system-stage/") or tuple(r["target"].split("/", 1)) not in values)]

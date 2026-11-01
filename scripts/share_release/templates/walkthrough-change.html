@@ -1,0 +1,19 @@
+<section id="change" data-ss-id="section-change" data-ss-section>
+  <h2 class="rise" data-ss-id="how-to-change-the-ontology">How to change the ontology</h2>
+  <p class="section-lede rise" data-ss-id="change-lede">This release is your starting point, and your copy is yours to change. A released package never changes: a change is a decision by your owner, a new version and a new package. <code>HOW-TO-UPDATE.md</code>, at the top of this folder, has the worked commands for each change here.</p>
+  <h3 class="rise" data-ss-id="change-rules">Rules that apply to every change</h3>
+  <ul class="rise">
+    <li data-ss-id="change-rule-test"><strong>Minor or major.</strong> Ask whether every query, report and answer made under the old meaning would still be correct. If yes, it is a patch or a minor. If no, or if unsure, it is a major (<code>skills/ontology/references/release.md</code>, rules 3 and 4).</li>
+    <li data-ss-id="change-rule-delete"><strong>Never delete a term.</strong> Mark it <code>owl:deprecated</code>, point to its successor, and do this only in a major (rule 5).</li>
+    <li data-ss-id="change-rule-approve"><strong>Who approves.</strong> Your ontology owner approves every major and every module's first release. A module owner approves that module's minors and patches.</li>
+    <li data-ss-id="change-rule-evidence"><strong>Evidence.</strong> Cite the source of every fact you add, as the existing definitions do.</li>
+  </ul>
+  <h3 class="rise" data-ss-id="change-routes">What to change, and where</h3>
+  <div class="tbl rise" data-ss-id="change-table"><table class="gapt"><thead><tr><th>You want to</th><th>Start in</th><th>Section of <code>HOW-TO-UPDATE.md</code></th></tr></thead><tbody>
+<tr><td>Change a definition</td><td data-k="Start in">The module's table or Turtle file, such as <code>kpi/measure-details.csv</code></td><td data-k="Section">Change a concept's definition</td></tr>
+<tr><td>Add a concept or property</td><td data-k="Start in">The module's <code>vocabulary.ttl</code> and <code>shapes.ttl</code></td><td data-k="Section">Add a concept or property</td></tr>
+<tr><td>Change a process</td><td data-k="Start in"><code>downstream_process_map.json</code>, then a new core builder</td><td data-k="Section">Change a process</td></tr>
+<tr><td>Add a module</td><td data-k="Start in">A copy of <code>lane/</code>, then every place the table lists</td><td data-k="Section">Add a module</td></tr>
+<tr><td>Re-release what depends on a change</td><td data-k="Start in"><code>release/dependents.py</code></td><td data-k="Section">The cascade</td></tr>
+</tbody></table></div>
+</section>
