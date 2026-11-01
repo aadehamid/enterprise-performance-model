@@ -251,6 +251,7 @@ def rule_skills_layout(text, ctx):
     n = 0
     for group in ("data", "writing", "engineering", "planning", "research"):
         text, k = _count(rf"skills/{group}/", "", text); n += k
+        text, k = _count(rf'"skills", "{group}", ', "", text); n += k  # os.path.join(HERE, "..", "skills", "data", ...)
     return text, n
 
 

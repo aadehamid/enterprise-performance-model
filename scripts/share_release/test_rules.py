@@ -232,3 +232,8 @@ def test_the_earlier_core_builders_commands_become_notes():
     assert out == ("# from business_architecture/ontology/release\n# run when that release was cut; its inputs are not in this release "
                    "(the newest builder is build_core_2_4.py): uv run --with rdflib python build_core_next.py --verify\n"
                    "uv run --with rdflib python build_core_2_4.py --verify\n")
+
+
+def test_the_skills_layout_rule_covers_path_join_tuples():
+    out, _ = rules.apply('sys.path.insert(0, os.path.join(HERE, "..", "skills", "data", "ontology", "scripts"))\n', "skills/scripts/test_playbook_html.py")
+    assert out == 'sys.path.insert(0, os.path.join(HERE, "..", "ontology", "scripts"))\n'
