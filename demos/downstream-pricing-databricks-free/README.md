@@ -52,8 +52,6 @@ uv run --group outside python -m pricing_demo.outside plan     # the Parallel De
 uv run --group outside python -m pricing_demo.outside run --step events   # then monthly, diagnosis, forward; a cached call is never sent again
 uv run --group graph python -m pricing_demo.tech_graph collect   # live facts, data-quality checks, designed against observed lineage
 uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything: the technical graph and the decision trail, out/tech/graph/*.ttl
-uv run --group graph python -m pricing_demo.tech_graph compare   # the refreshed graph's structure against graph/*.ttl
-uv run --group graph python -m pricing_demo.tech_graph lineage   # the last collect's lineage against graph/lineage-known.json
 uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j and AuraDB, two named graphs in Jena
 uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_sbx.tech_graph.tech_graph_nodes and tech_graph_edges
 uv run --group graph python -m pricing_demo.tech_graph walk      # one Cypher walk from a gold table to the measures it implements
@@ -61,6 +59,8 @@ uv run python -m pricing_demo.databricks counts            # row counts
 uv run python -m pricing_demo.databricks purge             # list what a purge drops; --yes drops it
 uv run --with pytest python -m pytest -q tests             # offline tests
 ```
+
+Two more steps of `tech_graph` check a refresh and change nothing. After `build`, `compare` fails when the refreshed graph's objects or edges differ from `graph/*.ttl`, and `lineage` fails on a lineage difference `graph/lineage-known.json` does not state. `build` writes `out/tech/graph/`, which Git ignores, and `load` prefers it; `build --to-repo` writes `graph/*.ttl`. `collect --lineage-wait <seconds>` waits for Unity Catalog's lineage to arrive. `business_architecture/ontology/projection/rebuild_stores.py` runs all of it in order.
 
 Postgres listens only on this machine (127.0.0.1:55432), with the throwaway login `demo`. To move the source databases to another host, change `SOURCE_PG_DSN`; nothing else names the host. Since 2026-10-28 the source databases (seven since the three-year extension, with the hidden `decision_truth` beside them) also run on an exe.dev VM, `databases.exe.xyz`, where Postgres listens only on the VM's localhost. Open a tunnel and leave it running, `ssh -N -L 127.0.0.1:5433:127.0.0.1:5432 databases.exe.xyz`, then set `SOURCE_PG_DSN=postgresql://demo:<password>@127.0.0.1:5433` in `.env`. The VM's `demo` login has its own generated password, kept only in the local `.env`. The local container stays as the fallback.
 

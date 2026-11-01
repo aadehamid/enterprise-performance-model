@@ -79,7 +79,7 @@ class Drift(unittest.TestCase):
 
     def test_an_unreachable_store_says_so_even_with_a_marker(self):
         markers = {s: self.marker() for s in ss.STORES}
-        live = {s: [4193, 21767] for s in ss.STORES} | {"aura": "unreachable (ServiceUnavailable)"}
+        live = {s: [4193, 21767] for s in ss.STORES} | {"aura": "unreachable (ServiceUnavailable)", "jena": {"g": 1}}
         self.assertEqual(self.statuses(markers, live)["aura"], "unreachable")
 
     def test_a_missing_login_file_reads_as_unreachable_not_a_crash(self):
@@ -338,6 +338,7 @@ class StoreOverrides(unittest.TestCase):
             self.assertEqual(mod.NEO4J_STORES["driver"], ("bolt://127.0.0.1:17899", ("/tmp/x.env",)))
             self.assertEqual(mod.NEO4J_STORES["aura"], (None, ("~/.config/neo4j/aura.env",)))
             self.assertEqual(mod.JENA_QUERY, "http://127.0.0.1:13999/ds/query")
+            self.assertEqual(mod.DATABRICKS_ENV, "/tmp/d.env")
 
     def test_another_environment_names_its_run_configuration_output_and_table(self):
         with stores_env(json.dumps({"run_config": "/qa/run.json", "driver_out": "~/qa", "triples_table": "qa_triples"})):
@@ -346,7 +347,6 @@ class StoreOverrides(unittest.TestCase):
             self.assertIn("--config /qa/run.json", cmds[0])
             self.assertTrue(cmds[1].endswith("record --run ~/qa"))
             self.assertEqual(mod.TRIPLES_TABLE, "qa_triples")
-            self.assertEqual(mod.DATABRICKS_ENV, "/tmp/d.env")
 
     def test_the_callers_value_is_put_back(self):
         missing = object()

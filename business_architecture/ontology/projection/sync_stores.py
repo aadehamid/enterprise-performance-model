@@ -139,7 +139,7 @@ def judge_jena(held, want, tech=None):
     tech = tech or {}
     held = dict(held)
     held_tech = {g: held.pop(g) for g in list(held) if g in TECH_GRAPHS.values()}
-    if not held:
+    if not held and not held_tech:
         return "empty", "it holds no graph; a restart empties its in-memory dataset; sync reloads it"
     missing, stray = sorted(set(want) - set(held)), sorted(set(held) - set(want))
     if missing or stray:
