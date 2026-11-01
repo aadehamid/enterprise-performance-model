@@ -1,0 +1,135 @@
+# EPM-DEC-001-0110: A release of the ontology and demo for colleagues outside the build: what it holds, what is rewritten, how it is validated, and what follows it
+
+| Field | Value |
+|---|---|
+| Status | Decided (the decision owner, 2026-10-31, for the release's scope, the rewrites, the validation, the order of the releases and the work after them; the build choices delegated under EPM-DEC-001-0028) |
+| Date | 2026-10-31 |
+| Questions | The decision owner asked for a release to share with colleagues who were not part of the build. What it holds; whether it may name the repository, the decision owner or a peer; what "decision owner" means to a reader; whether internal documents stay; what LSC becomes; how the graph's names are written; how the decision owner's quotes read; which release the links go through; how the cut is validated; and what work follows the first release |
+| Source | Claude Code session of 2026-10-31; `answers-2026-10-31-share-release.md`, blocks 1 to 30 |
+
+## Context
+
+The ontology is done (EPM-DEC-001-0107) and its documents were tightened for the cut (#456, #458). The decision owner then asked for a release that colleagues outside the build can use, holding the newest release of each module and the one before it, every build and validation script, the demos, a copy of the agent skills used, and the documents. Nothing in it may name the repository or the decision owner, and no peer may be named. Claude scanned `main` and put seven points to the decision owner, then a plan whose "Decisions" list carried a recommendation for each open choice. The plan lives outside the repository (`release-cut/`, gitignored), because it names what the release must hide.
+
+What Claude found, from the repository on 2026-10-31 (`git grep`, `git ls-files`):
+
+- Seven peers are named in 50 tracked files, among them every `kpi` release's Turtle and JSON-LD; 132 files use the word peer.
+- The pattern `decision[ _-]?owner`, case-insensitive, matches 11,610 times in 700 files; the plain phrase "decision owner" is in 688 of them. 277 of the 700 are structured files: Turtle (63), CSV (61), Python (55), JSON (54), JSON-LD (39), SQL (3), shell (1) and YAML (1). The matches include identifiers (`decision_owner`, `DecisionOwnerRoles`, `DecisionOwnerAnswers`) and ontology role terms.
+- The IRI base `w3id.org/lsc` is in 479 files.
+- Every release manifest and each `core` release's Turtle cite an answers file in `step4/review-evidence/decision-owner-answers/`, which does not ship.
+- Builders and checks read Git history (`git show`, tags, the Step 4 pin), which a zip has none of.
+- Neo4j's n10s plugin writes graph names as `prefix__name` (`vs__Stage`); the round trip and the in-graph SHACL read those names.
+- 12 of the 24 dependency links between the newest packages name an older version, because a released package never changes after a later release of what it depends on.
+
+## Decision
+
+**The decision owner's decisions:**
+
+1. **The release and who it is for:** "I plan to cut a release that I can share with my colleagues who were not part of this process." It holds "the latest from each module release and the release before the latest", "all of the business process in json, the final version", "all of the scripts used either to build or validate", "the demos and all of its code", "a copy of my personal agent skills, eg ontology, ontology t lpg, clear writing, playbboks - ontology and projections" and "the docs with all the chnages made above". Its readers "must be able to do everything we have done here as the ntology and demo goes." It lives on "an prropriatley names release branch that I can zip and share with others and that we can always update if we add anything new in main."
+2. **No repository, no name, no peer:** "I dont want any mention of this repo or my name." Peers are "termed industry view or something like that": "Essentially all refrences are valid except for peers, which we wil call industry view or best practices."
+3. **The validation:** "The most important thing is the validation after cut. itMUST WORK like it didi when we did this from main. We must test EVERYTHIN and delet the data created to test it when we are done."
+4. **"Decision owner":** "decsions owner means an SME. I think we can leave it if the changes to a subject matter extert is too big of a work."
+5. **Internal documents and systems:** "internal documents and is fine and we can leave the files." With an option: "We shuld add a line in the release plan with an option to also remove the internal files and systems. So that anyone buiding this can choose. of course anything that will change if we want to remove this internal docs and systems muts be shared for review first if we choose the latter route."
+6. **Claims resting on peers:** "claims resting on peers stay in, but must be presentend as both industry standard and analysis of publickly available filings from peers - U.S refiners"
+7. **The name LSC:** "the LSC that we use bith in the namespaces and others should be MPC instead. Let us add that to th release cut"
+8. **Namespace approval:** "namespaces will be reviewed and approve by the Data, Analtyics, and Insight team. This will only be in the release part. main stays the same as the original from which we can cut relleases."
+9. **Names in the graph, and the release as a whole:** "make sure to use imsple normal underscore between names in the tripple instaed of the em dashes. em dashess "--" should never be used in the graph or anywahere in the release. for exmaple "vs__Stage" should be ""vs_Stage""". Asked what the dashes meant: "the loonger version of the separartor was what I meant", that is, the `__` separator n10s writes between a prefix and a name (`vs__Stage`), which the release must hold nowhere, not an em dash in prose.
+10. **The decision owner's quotes:** "couch the quote as coming from an SME that is reviewing the documents"
+11. **All links through the latest release:** "let us also make sure that the ontology that we will cut all links must be through the latest release. The release before that is just to demonstarte that we release ontology in releases."
+12. **The plan's recommendations:** "i agree with all yur recoommendation in the release cut". The recommendations accepted are the plan's, in Claude's words, not the decision owner's: (1) keep each module's version numbers inside a new edition, for example EPM 1.0, with hashes rebuilt, since recipients never see the originals; (2) every shipped version rebuilds from frozen inputs, with no rebuild of older versions and no Git history; (3) ship the decision records with the quotes reattributed, keep the worklog only if it passes the gate, and list the working-instruction quotes for the decision owner to reattribute or drop (*2026-10-31, the grill:* superseded; no record ships and every such quote is reattributed, amendment items 1 and 3 below); (4) the IRI base, superseded by decision 7 above; (5) the pricing demo and both O2C demos are the demos, and the early folders stay out unless a shipped file needs them (*2026-10-31, later:* superseded; only the pricing demo ships, amendment item 13); (6) the skills `ontology`, `ontology-to-lpg`, `rdf-store` and `clear-writing`, plus `way-of-working` only if recipients should adopt the working method (*2026-10-31, the grill:* "No, leave it out (Recommended)", amendment item 9); (7) APQC with its notice, and DPROD and other PDFs only where a build needs them, each licence checked; (8) a neutral contact line the decision owner fills in when sharing, or none; (9) the demo defaults to local Docker for Postgres and drops the exe.dev option, recipients bring their own Databricks, EIA key and optional AuraDB and Parallel keys, and the cached Parallel answers ship; (10) a second, temporary Aura instance and a separate Databricks workspace for the test, each deleted afterwards (*2026-10-31, later:* for AuraDB the decision owner chose the fallback of reusing and restoring the existing database, amendment item 12).
+13. **What follows the first release:** "yes, build it after the first release. I will do them once we confirm the release, and then cut another release." and "Please, add all of them to the plan to do after the first release cut. we wll then do a follow up release once we take care of the other ontology work with another release to make it complete fully." Later the same day, replacing the sentence that the first release goes to the colleagues: "let us leave OPEN_ITEM.md out of this plan for now. it will be handled sepaately. By the way when I finish with (1) I will not share with coleague until I complete all of theother tasks and do another release to update the previous one to a full version. It is then that I will share with colleague as a complete picture."
+14. **The technical graph and Databricks:** "the technical graph should not be projected to Databricks since databrick already have technical graph in delta table"
+15. **A viewer, after the full release:** "when we have completed the full release of the ontology we should use https://github.com/morluto/rea to create an ontology viewer like https://openenergyplatform.org/viewer/oeo/ to view our ontology using https://github.com/leonxlnx/taste-skill". "The veiwer is where most people will go to review the ontology" and "The viewer should be built on one ontology release only."
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+1. **The release is generated, never edited.** One command exports an allowlist of paths from `main` and the skills repository's `main`, applies rewrite rules, rebuilds every package, page and hash, runs a leak gate that fails on any name, handle, repository, host, peer or issue number, and writes an orphan branch with one commit and a zip of its tree. Updating the release means running the command again. The export script, its rules and the gate live in `main` under `scripts/share_release/` and do not ship.
+2. **"Decision owner" stays** and is defined once, in the glossary and the release's README, as a subject matter expert: the rename would touch 11,610 matches in 700 files, 277 of them structured, with identifiers and role terms among them, which is the case the decision owner's words leave the term in.
+3. **Peers:** every claim stays; its source reads "Industry standard, and analysis of publicly available filings from peers (U.S. refiners)"; no peer is named, and no peer claim reads as MPC's.
+4. **LSC becomes MPC in the release only:** IRIs (`w3id.org/lsc` to `w3id.org/mpc`), module titles and every other use, with all hashes rebuilt; `main` keeps LSC. The release's README says the IRIs identify terms, resolve nowhere and are not issued by Marathon, and that the namespaces will be reviewed and approved by the Data, Analytics and Insight team, a future review. The leak gate checks that this note is absent from `main` and present in the release.
+5. **The latest set is the ontology.** Each newest package is rebuilt so its manifest, `dcterms:requires` and catalog record name only the newest versions; terms link by IRI, so only the pins move, and a pin move that changes anything else stops the cut. The release before is history only, under `releases/previous/` with a README, rewritten and hash-verified, loaded by nothing; its pins may name versions the release does not ship, such as `system` 1.2.0, and the README says so.
+6. **Single underscores everywhere in the release:** in the graph (labels, relationship types, property keys), in every Cypher query, document and generated file, and in code. The leak gate fails on `__` between names anywhere in the release; Python's own names such as `__init__.py` and `__main__` are language syntax, not separators between names, and stay (Claude's reading). The graph is tested before the export is written: a per-term mapping in n10s first (its reference page names the setting); a rename after the checks second; and if neither keeps 0 lost, 0 added and equal hashes, the result goes to the decision owner. No check is loosened.
+7. **Quotes:** each stays, attributed to "a subject matter expert reviewing the documents"; citations of the answers folder come out; the answers folder and night logs do not ship. The working-instruction quotes go to the decision owner as a list (*2026-10-31, the grill:* no list; every one is reattributed, amendment item 3).
+8. **Validation** runs against a baseline saved from `main` first, in a clean room with no GitHub access and only the zip, over every area the plan lists (setup, checks, business process, builders, ontology content, underscores, latest links, the LSC rename, SHACL and the regression, projection pipeline and driver, technical graph, sync, demos offline and live, acceptance, other demos (*2026-10-31, later:* none; only the pricing demo ships, amendment item 13), skills, documents, every snippet, the store map, the in-sync strategy and the leak gate). A difference passes only if a rewrite rule explains it. The live acceptance tests vary by model, so re-judged runs must match exactly and a new live run is reported beside `main`'s (*2026-10-31, the grill:* the live run is skipped on the release; the offline re-judge runs if it needs no Databricks, amendment item 11). Test data is deleted from a ledger and shown gone; `main`'s stores read the same before and after; the first release is validated and not shared.
+9. **After the first release,** on `main` through its own pull requests: a vocabulary module for the technical graph (the first use of `references/new-module.md`), lineage from Databricks (#457), and the in-sync plan (#455, #426). The technical graph is not projected into the ontology's Databricks table: Databricks already holds it as the Delta copy EPM-DEC-001-0109 (decision 7) records, `tech_graph_nodes` and `tech_graph_edges`, and that copy stays as it is. A second release, the full version, is then cut with the same command and validated against a new baseline; that is the version shared with colleagues. The viewer starts only after it.
+10. **Question 17:** sharing the full version with business consumers meets EPM-DEC-001-0086's trigger. Claude asks the decision owner before the zip is shared and records the answer.
+
+## Amendment, 2026-10-31 (later): the grill of what the inventory found
+
+Step 1's inventory of every tracked path found eleven points the plan did not settle. Claude put each to the decision owner with a recommendation (`answers-2026-10-31-share-release.md`, blocks 12 to 27). The decisions:
+
+1. **Approval provenance in the packages:** "O like Option 1. In addition I do not want refrences like ""EPM-DEC-001-0044;" shows up anywhere. The people that will consume the release are not aware of these documents". Asked whether that means the decision records do not ship, since their numbers are cited in hundreds of other files (the question said 486; the count of files holding a full record number outside the records, the review evidence and the pages is 482): "Records do not ship; every citation comes out (Recommended)". This supersedes recommendation (3) under decision 12 above, which shipped the decision records with their quotes reattributed and listed the working-instruction quotes for the decision owner.
+2. **Tool names:** "Keep where they name the tool that did the work (Recommended)".
+3. **Quotes that are working instructions:** "Reattribute all, same as other quotes (Recommended)".
+4. **Peer names inside the cached Parallel answers:** "Rewrite them, report any verdict change under this rule (Recommended)".
+5. **Chevron and Exxon Mobil:** "Yes, treat them as peers (Recommended)".
+6. **The Step 4 gate:** asked "what is this gate", then, with the explanation: "Yes, drop it; the check script says why (Recommended)".
+7. **Folders the plan left out:** asked "what do we mean by this best practices?", then, with the folder described: "Decision packages (6)" and "best-practices (7)" ship; the Step 3c reviewer notes, the old `lpg-projection` guideline, the trial notes and the O2C research files stay out.
+8. **The skills' personal files:** "SOURCES rewritten, calibration.md out (Recommended)".
+9. **`way-of-working`:** "No, leave it out (Recommended)".
+10. **The previous set's folder:** "Confirm (Recommended)", to the question whether the release before the latest goes under its own folder, `releases/previous/`, with a README saying it is history only, nothing loads it, and its pins may name versions the release does not ship.
+11. **The 21 use cases:** "In this release we do not have to test the 21 use cases that we were validating in main by the way. That is the only think that contributed to Databrick daily limit." Asked which of the two acceptance checks is skipped: "Skip the live run only (Recommended)".
+12. **AuraDB for the test** (block 28), asked which fallback to use when a second free AuraDB instance is not available, option 1 being to skip the Aura copy step and report it untested and option 2 to point the test at main's Aura and reload main's data afterwards: "2. clean out Aura... then load with data you want to test. When you are done clean out the data in Aura again and load data from main." So, in place of recommendation (10)'s second instance, the test empties the owner's AuraDB, loads its data, then empties it again and reloads `main`'s, proven by `sync_stores.py check`.
+13. **The scope, restated** (blocks 29 and 30): "all the playbooks (ontology, projection, guides, walkthrough should also be included. and all the scripts we use anywhere to create, validate, load and so on the ontology. A copy of all of the bsuienss json processes needs to be part of the release cut as well." and "only things that ontology related and the pricing demo. all other files no related to any of this should not be part of the release." So the two O2C demos come out; the pricing demo, the ontology, its documents, playbooks, scripts and the business process JSON stay, rewritten for a reader who has never seen the repository.
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+- **No decision record ships, and no record number appears in the release.** The 110 records, their index and page come out, and so does every record number elsewhere: on `main` at 0ad29381, outside the records folder, the Step 4 review evidence and the generated pages, 482 files hold a record number (`EPM-DEC-001-` and four digits) in 9,305 places (`git grep`; 545 files and 10,738 places with the review evidence and the pages counted). In the ontology a term's record citation becomes a provenance note with the date and "a subject matter expert reviewing the documents"; in documents the number is dropped or replaced by the date; the manifests' `decisions` and `approval.file` fields come out and `approval.who` reads "a subject matter expert reviewing the documents". The leak gate fails on `EPM-DEC-001`. The six decision packages ship rewritten the same way.
+- **Tool names** stay where a sentence says which tool did the work (the walkthrough's tools table, the worklog) and come out of approval lines. The gate does not fail on them.
+- **Every quote** of the decision owner outside the records, working instructions included, is attributed to "a subject matter expert reviewing the documents".
+- **Peers** are the seven companies the evidence cites plus Chevron and Exxon Mobil: no company but MPC and MPLX is named in a comparison, in the cached Parallel answers included. A re-judged verdict that changes after that rewrite is reported as explained by it.
+- **The release's check script** drops the Step 4 gate, its ledger, its tests and the pin check, and says why; the taxonomy ships as the frozen `baseline/` the builders read.
+- **The skills** ship without `calibration.md` and without `way-of-working`; each `SOURCES.md` is rewritten.
+- **The test stores (Claude's build choice, under EPM-DEC-001-0028):** AuraDB as the decision owner directed in item 12; Databricks keeps the existing Free Edition workspace and uses its own catalog and schema names for the test, deleted afterwards, in place of the separate workspace recommendation (10) named, since the live acceptance run, the one heavy use of the workspace, is skipped.
+- **The acceptance tests:** the live run is skipped on the release and its README says so; the offline re-judge of the ten recorded runs runs if it needs no Databricks; the code and the recorded runs ship. With the live run out, the validation no longer depends on Databricks Free Edition's daily limit.
+
+## Alternatives considered
+
+- **An ordinary branch merged from `main`.** Not chosen: rewritten text conflicts on every merge, and the branch's history carries author names, PR numbers and peer mentions.
+- **Renaming "decision owner" to "subject matter expert".** Not chosen: 11,610 matches in 700 files, identifiers and ontology role terms among them; the decision owner's words leave the term in when the change is too big.
+- **Keeping the IRI base `w3id.org/lsc` in the release.** The plan's first recommendation; superseded by the decision owner's answer that LSC becomes MPC.
+- **Shipping every version of every module.** Not chosen: the decision owner asked for the newest and the one before.
+- **Removing internal documents and systems by default.** Not chosen: the decision owner keeps them, with a reviewed option to remove them.
+
+## The decision owner's recorded words
+
+From `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-31-share-release.md`:
+
+- "I plan to cut a release that I can share with my colleagues who were not part of this process."
+- "I dont want any mention of this repo or my name."
+- "Essentially all refrences are valid except for peers, which we wil call industry view or best practices."
+- "The most important thing is the validation after cut. itMUST WORK like it didi when we did this from main. We must test EVERYTHIN and delet the data created to test it when we are done."
+- "decsions owner means an SME. I think we can leave it if the changes to a subject matter extert is too big of a work."
+- "internal documents and is fine and we can leave the files."
+- "claims resting on peers stay in, but must be presentend as both industry standard and analysis of publickly available filings from peers - U.S refiners"
+- "the LSC that we use bith in the namespaces and others should be MPC instead. Let us add that to th release cut"
+- "namespaces will be reviewed and approve by the Data, Analtyics, and Insight team. This will only be in the release part. main stays the same as the original from which we can cut relleases."
+- "make sure to use imsple normal underscore between names in the tripple instaed of the em dashes. em dashess "--" should never be used in the graph or anywahere in the release."
+- "couch the quote as coming from an SME that is reviewing the documents"
+- "let us also make sure that the ontology that we will cut all links must be through the latest release. The release before that is just to demonstarte that we release ontology in releases."
+- "i agree with all yur recoommendation in the release cut"
+- "yes, build it after the first release. I will do them once we confirm the release, and then cut another release."
+- "By the way when I finish with (1) I will not share with coleague until I complete all of theother tasks and do another release to update the previous one to a full version. It is then that I will share with colleague as a complete picture."
+- "the technical graph should not be projected to Databricks since databrick already have technical graph in delta table"
+- "The viewer should be built on one ontology release only."
+- "In this release we do not have to test the 21 use cases that we were validating in main by the way. That is the only think that contributed to Databrick daily limit."
+- "The people that will consume the release are not aware of these documents"
+- "Records do not ship; every citation comes out (Recommended)"
+- "Yes, drop it; the check script says why (Recommended)"
+- "Skip the live run only (Recommended)"
+
+## Evidence
+
+- `business_architecture/ontology/releases/` (50 version folders of 11 modules; the newest set's 12 older pins, read from each manifest's `requires` on 2026-10-31).
+- `business_architecture/reference/downstream-peers/` (the seven peers the evidence cites); `git grep -il` for their names: 50 files.
+- `business_architecture/ontology/release/build_core_2_2.py`, `build_core_next.py`, `projection/sync_stores.py` (`git show`); `scripts/check.sh` (the Step 4 pin); `scripts/test_published_figures.py` (`git archive`).
+- `business_architecture/reference/README.md` (the APQC notice that must travel with all copies; EPM-DEC-001-0078).
+- EPM-DEC-001-0049 (the repository names the decision owner by role); EPM-DEC-001-0086 (question 17 parked until the ontology is first shared with business consumers).
+- n10s (neosemantics) 4.0 documentation, "Importing RDF Data" (https://neo4j.com/labs/neosemantics/4.0/import/, read 2026-10-31): under the default `handleVocabUris` setting a property such as `http://neo4j.org/vocab/sw#name` "has been shortened to `ns0__name` (notice the double underscore separator used between the prefix and the local name in the URI)"; `IGNORE` keeps local names only and `KEEP` keeps full URIs. "Configuring Neo4j to use RDF data" (https://neo4j.com/labs/neosemantics/4.0/config/, read 2026-10-31): the default is `SHORTEN`; the full list of settings is in the Reference section, which the underscore test reads before it runs.
+- morluto/rea, `LICENSE` (MIT) at commit d54a4661 (2026-10-31), newest release rea-agents-6.8.0 (2026-10-25); leonxlnx/taste-skill, `LICENSE` (MIT) at commit 12af471f (2026-10-24), release v2.1.5 (2026-10-24); both read with `gh api` on 2026-10-31. The MIT claim covers those commits.
+
+## Consequences
+
+- The plan for the cut, its inventory of every tracked path, and the validation report stay outside the repository in `release-cut/` (gitignored) until the export script and gate land under `scripts/share_release/`.
+- EPM-DEC-001-0086 carries a dated note: the full version's sharing is the trigger to ask question 17.
+- Every change on `main` for the cut goes through a pull request with `scripts/check.sh`, the independent review and the Cursor verdict; both repositories end private; major releases, Market Data accountability and question 17 stay with the decision owner.
