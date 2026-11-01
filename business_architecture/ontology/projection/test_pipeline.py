@@ -4,7 +4,9 @@ the committed Step 5 report describes the current inputs and passed.
 
 Run: python3 -m pytest test_pipeline.py (needs rdflib, pyshacl).
 """
+import inspect
 import json
+import os
 import types
 import unittest
 from unittest import mock
@@ -88,9 +90,20 @@ class Rules(unittest.TestCase):
         # In SHORTEN mode the prefix keeps org:identifier and dcterms:identifier apart; a term whose
         # local part has a slash gets no name, and check_rules reports it.
         self.assertIsNone(pl.lpg_name("https://w3id.org/lsc/ontology/modules/core/a/b"))
-        self.assertEqual(pl.lpg_name(str(RDFS.label)), "rdfs" + pl.SEP + "label")
-        self.assertEqual(pl.lpg_name("http://www.w3.org/ns/org#identifier"), "org" + pl.SEP + "identifier")
-        self.assertEqual(pl.lpg_name("http://purl.org/dc/terms/identifier"), "dcterms" + pl.SEP + "identifier")
+        self.assertEqual(pl.lpg_name(str(RDFS.label), sep="__"), "rdfs__label")
+        self.assertEqual(pl.lpg_name("http://www.w3.org/ns/org#identifier", sep="__"), "org__identifier")
+        self.assertEqual(pl.lpg_name("http://purl.org/dc/terms/identifier", sep="__"), "dcterms__identifier")
+        self.assertEqual(pl.lpg_name(str(RDFS.label), sep="_"), "rdfs_label")
+
+    def test_the_separator_is_n10s_two_underscores_on_main_and_one_in_the_share_release(self):
+        # Read from the two inputs themselves, so a wrong separator on main fails here (EPM-DEC-001-0110).
+        marker = os.path.isfile(os.path.join(pl.ONTOLOGY, "..", "..", "release.json"))
+        variable = bool(os.environ.get("EPM_SHARE_RELEASE"))
+        self.assertEqual(pl.N10S_SEP, "__")
+        self.assertEqual(pl.SHARE_RELEASE, marker or variable)
+        self.assertEqual(pl.SEP, "_" if marker or variable else "__")
+        if not (marker or variable):
+            self.assertEqual(pl.lpg_name(str(RDFS.label)), "rdfs__label")
 
     def test_a_term_without_an_lpg_name_fails_rule_5(self):
         # In the core namespace (so Rule 3 passes) but with a slash in the local part, so SHORTEN
@@ -236,6 +249,107 @@ class OntologyLabelsOnly(unittest.TestCase):
         ])
 
 
+class RenameSession:
+    """A fake Neo4j session: nodes and edges in memory, answering the queries rename_separator sends. `lossy`
+    makes the property renames drop their values, as a broken APOC call would."""
+
+    class Result:
+        def __init__(self, rows=None, row=None):
+            self.rows, self.row = rows, row
+
+        def data(self):
+            return self.rows
+
+        def single(self):
+            return self.row
+
+        def consume(self):
+            return None
+
+    def __init__(self, nodes, edges, lossy=False):
+        self.nodes, self.edges, self.lossy = nodes, edges, lossy
+
+    def run(self, query, **params):
+        R, n, e = self.Result, self.nodes, self.edges
+        if "UNWIND labels(n)" in query:
+            return R(row={"l": sorted({l for x in n for l in x["l"]})})
+        if "collect(DISTINCT type(r))" in query:
+            return R(row={"l": sorted({x["t"] for x in e})})
+        if "UNWIND keys(n)" in query:
+            return R(row={"l": sorted({k for x in n for k in x["p"]})})
+        if "UNWIND keys(r)" in query:
+            return R(row={"l": sorted({k for x in e for k in x["p"]})})
+        if query.startswith("MATCH (n:Resource) RETURN n.uri AS uri, labels(n) AS l, properties(n) AS p"):
+            return R(rows=[{"uri": x["uri"], "l": list(x["l"]), "p": dict(x["p"])} for x in sorted(n, key=lambda x: x["uri"])])
+        if "properties(r) AS p" in query:
+            return R(rows=[{"s": x["s"], "t": x["t"], "o": x["o"], "p": dict(x["p"])} for x in sorted(e, key=lambda x: (x["s"], x["t"], x["o"]))])
+        old, new = params["o"], params["n"]
+        if "rename.label" in query:
+            for x in n:
+                x["l"] = [new if l == old else l for l in x["l"]]
+        elif "rename.type(" in query:
+            for x in e:
+                x["t"] = new if x["t"] == old else x["t"]
+        elif "rename.nodeProperty" in query or "rename.typeProperty" in query:
+            for x in n if "node" in query else e:
+                if old in x["p"]:
+                    value = x["p"].pop(old)
+                    x["p"][new] = None if self.lossy else value
+        else:
+            raise AssertionError(query)
+        return R()
+
+
+class Rename(unittest.TestCase):
+    """The share release's rename (EPM-DEC-001-0110): every label, relationship type and property key with the n10s
+    separator takes one underscore, nothing else changes, and the dump before, renamed in expectation, equals the
+    dump after. On main nothing is renamed; the committed report says so."""
+
+    def graph(self):
+        nodes = [{"uri": "u1", "l": ["Resource", "kpi__MeasureDefinition"], "p": {"uri": "u1", "skos__prefLabel": "A"}},
+                 {"uri": "u2", "l": ["Resource", "Tech"], "p": {"uri": "u2", "name": "x"}}]
+        edges = [{"s": "u1", "t": "kpi__usedBy", "o": "u2", "p": {"dcterms__source": "s"}},
+                 {"s": "u2", "t": "IMPLEMENTS", "o": "u1", "p": {}}]
+        return nodes, edges
+
+    def test_every_kind_is_renamed_and_the_rest_is_untouched(self):
+        session = RenameSession(*self.graph())
+        with mock.patch.object(pl, "SEP", "_"):
+            counts, lossless = pl.rename_separator(session)
+        self.assertEqual(counts, {"labels": 1, "rels": 1, "keys": 2})
+        self.assertTrue(lossless)
+        self.assertEqual(session.nodes[0]["l"], ["Resource", "kpi_MeasureDefinition"])
+        self.assertEqual(session.nodes[0]["p"], {"uri": "u1", "skos_prefLabel": "A"})
+        self.assertEqual(session.nodes[1], {"uri": "u2", "l": ["Resource", "Tech"], "p": {"uri": "u2", "name": "x"}})
+        self.assertEqual([x["t"] for x in session.edges], ["kpi_usedBy", "IMPLEMENTS"])
+        self.assertEqual(session.edges[0]["p"], {"dcterms_source": "s"})
+        self.assertFalse(any("__" in l for x in session.nodes for l in list(x["l"]) + list(x["p"])))
+        self.assertFalse(any("__" in k for x in session.edges for k in [x["t"]] + list(x["p"])))
+
+    def test_a_name_the_rename_would_collide_with_stops_it(self):
+        nodes, edges = self.graph()
+        nodes[1]["l"].append("kpi_MeasureDefinition")  # already there in the one-underscore form
+        with mock.patch.object(pl, "SEP", "_"), self.assertRaisesRegex(RuntimeError, "collides in labels"):
+            pl.rename_separator(RenameSession(nodes, edges))
+
+    def test_a_rename_that_loses_a_value_is_not_lossless(self):
+        session = RenameSession(*self.graph(), lossy=True)
+        with mock.patch.object(pl, "SEP", "_"):
+            counts, lossless = pl.rename_separator(session)
+        self.assertEqual(counts["keys"], 2)
+        self.assertFalse(lossless)
+
+    def test_on_main_nothing_is_renamed(self):
+        with mock.patch.object(pl, "SEP", pl.N10S_SEP):
+            self.assertEqual(pl.rename_if_share(RenameSession(*self.graph())), ({}, True))
+
+    def test_both_loads_must_be_lossless(self):
+        # load_verify keeps the first rename's result and fails on it, not only on the second's (the kept graph's).
+        src = inspect.getsource(pl.load_verify)
+        self.assertIn("_, lossless = rename_if_share(s)", src)
+        self.assertIn("lossless = lossless and kept_lossless", src)
+
+
 class Report(unittest.TestCase):
     def test_a_shape_change_makes_the_report_stale(self):
         from unittest import mock
@@ -263,6 +377,10 @@ class Report(unittest.TestCase):
         self.assertGreater(report["in_graph_mutant_violations"], 0)
         self.assertEqual((report["roundtrip_lost"], report["roundtrip_added"]), (0, 0))
         self.assertEqual(report["determinism_hash_sorted"], report["determinism_hash_shuffled"])
+        self.assertIs(report["rename_lossless"], True)
+        self.assertEqual(report["separator"], pl.SEP)
+        if not pl.SHARE_RELEASE:
+            self.assertEqual((report["separator"], report["renamed"]), ("__", {}))  # main keeps the n10s names
 
 
 if __name__ == "__main__":

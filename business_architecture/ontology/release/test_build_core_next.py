@@ -13,7 +13,8 @@ from rdflib import Graph, URIRef
 from rdflib.namespace import OWL, RDFS, SKOS
 
 import build_core_next as b
-if not os.path.isdir(getattr(b, "RELEASE_DIR", "") or getattr(b, "OUT", "")):  # noqa: E402
+import build_module as bm  # noqa: E402  (release mode: EPM_SHARE_RELEASE, or release.json at the tree's root)
+if bm.SHARE_RELEASE and not os.path.isdir(getattr(b, "RELEASE_DIR", "") or getattr(b, "OUT", "")):  # noqa: E402
     raise unittest.SkipTest("this core package did not ship (the share release holds the newest and previous packages only)")
 
 G, COUNTS = b.build()
@@ -65,7 +66,7 @@ class Candidate(unittest.TestCase):
         self.assertEqual(b.APPROVAL, ("step4/review-evidence/decision-owner-answers/core-2-0-0-release.md",
                                       "I approve the core 2.0.0 releas"))
         path, words = b.APPROVAL
-        if not os.path.exists(os.path.join(b.ONTOLOGY, path)):
+        if bm.SHARE_RELEASE and not os.path.exists(os.path.join(b.ONTOLOGY, path)):
             # The share release carries no answers folder: the builder names the review comments of a subject
             # matter expert instead of a file, and the words travel in the manifest (EPM-DEC-001-0110).
             self.assertIn("subject matter expert", path)
@@ -105,7 +106,7 @@ class PinnedSource(unittest.TestCase):
 
     def test_the_pinned_commit_is_in_this_branch(self):
         import frozen_sources
-        if frozen_sources.is_frozen(b.SOURCE_COMMIT, b.SOURCE_PATH):
+        if bm.SHARE_RELEASE and frozen_sources.is_frozen(b.SOURCE_COMMIT, b.SOURCE_PATH):
             self.skipTest("the map at the pinned commit is a frozen file here (the share release has no Git history)")
         repo = os.path.dirname(os.path.dirname(b.ONTOLOGY))
         r = b.subprocess.run(["git", "-C", repo, "merge-base", "--is-ancestor", b.SOURCE_COMMIT, "HEAD"],

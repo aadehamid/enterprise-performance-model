@@ -124,6 +124,7 @@ def readme_figures(text):
     return re.findall(r"\d[\d,]*", text) + NUMBER_WORD.findall(text)
 
 
+@pytest.mark.inputs("step4-readme")
 def test_step4_readme_states_no_live_figures():
     # Live figures live in epm_facts.py counts only, so no batch edits figure prose
     # (retro on #235: restated figures were the most frequent review finding).
@@ -164,6 +165,7 @@ def test_step4_readme_states_no_live_figures():
     "The gate currently has no FAIL checks.",
     "Current evidence-gate FAIL checks: none.",
 ])
+@pytest.mark.inputs("step4-readme")
 def test_readme_guard_catches_restated_figures(line):
     assert readme_figures(flat(STEP4_README) + " " + line)
 
@@ -192,6 +194,7 @@ INDEX_SECTIONS = {
 }
 
 
+@pytest.mark.inputs("backlog")
 def test_backlog_index_matches_sections():
     rows = epm_facts.phase1_rows()
     by_section = {}
@@ -227,6 +230,7 @@ def test_backlog_index_matches_sections():
     assert sorted(seen) == sorted(INDEX_SECTIONS), f"index rows {seen} must list each section exactly once"
 
 
+@pytest.mark.inputs("records", "history")
 def test_decision_0025_figures(facts_0025):
     facts = facts_0025
     text = flat(DEC_0025)
@@ -266,6 +270,7 @@ def section_count(prefix):
     return sum(1 for _, (_, s) in epm_facts.phase1_rows().items() if s.startswith(prefix))
 
 
+@pytest.mark.inputs("backlog")
 def test_backlog_section_totals():
     text = flat(epm_facts.BACKLOG)
     pairs = pairs_table()
@@ -290,6 +295,7 @@ def test_backlog_section_totals():
         assert int(m.group(1)) == expected, f"{pattern}: states {m.group(1)}, actual {expected}"
 
 
+@pytest.mark.inputs("records", "history")
 def test_decision_0025_every_figure(facts_0025):
     facts = facts_0025
     text = flat(DEC_0025)

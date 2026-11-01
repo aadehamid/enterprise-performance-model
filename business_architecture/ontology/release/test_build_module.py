@@ -9,6 +9,7 @@ import re
 import json
 import os
 import unittest
+from unittest import mock
 
 from rdflib import Graph, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF
@@ -74,7 +75,7 @@ def approval_holds(name, m):
     path, words = m["approval"]
     if (path, words) != APPROVALS[name]:
         return False
-    if not os.path.exists(os.path.join(bm.ONTOLOGY, path)):
+    if bm.SHARE_RELEASE and not os.path.exists(os.path.join(bm.ONTOLOGY, path)):
         # The share release carries no answers folder: its builders name the review comments of a subject matter
         # expert instead of a file, and the words still travel with the package (EPM-DEC-001-0110).
         return "subject matter expert" in path
@@ -85,10 +86,12 @@ def approval_holds(name, m):
 
 
 def shipped(tc, name, version):
-    """The package's folder in either layout (build_module.package_folder); a test of a package that did not ship skips."""
+    """The package's folder in either layout (build_module.package_folder). In the share release a package that did
+    not ship skips the test; on main every package is on disk, so a missing one fails."""
     folder = bm.package_folder(name, version)
-    if folder is None:
+    if folder is None and bm.SHARE_RELEASE:
         tc.skipTest(f"{name} {version} did not ship (the share release holds each module's newest and previous packages only)")
+    tc.assertIsNotNone(folder, f"{name} {version} is not on disk under releases/")
     return folder
 
 
@@ -172,8 +175,6 @@ class EarlierReleases(unittest.TestCase):
         # must still match its own manifest.
         for name in ("organization", "ref-mpc", "kpi", "value-stream", "data-product", "party", "integration"):
             out = os.path.join(shipped(self, name, "1.0.0"))
-            if not os.path.isdir(out):
-                self.skipTest("the 1.0.0 packages did not ship (the share release holds the newest and previous packages only)")
             with open(os.path.join(out, "manifest.json")) as f:
                 manifest = json.load(f)
             self.assertEqual(manifest["version"], "1.0.0")
@@ -219,6 +220,27 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("integration"), {
             "core": "2.4.0", "organization": "2.2.0", "kpi": "1.2.0", "data-product": "1.2.0",
             "value-stream": "1.2.0", "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.1.0"})  # 2.5.0
+
+    def test_in_release_mode_the_closure_reads_the_builders_table_and_no_manifest(self):
+        # The export rebuilds the newest packages in some order, so a manifest not yet rebuilt still names the old
+        # pins (system 1.2.0, core 2.3.0): in release mode the closure never opens one (EPM-DEC-001-0110).
+        def manifest_opened(dep, version):
+            raise AssertionError(f"released_requires({dep}, {version}) was read in release mode")
+        with mock.patch.object(bm, "SHARE_RELEASE", True), mock.patch.object(bm, "released_requires", manifest_opened), \
+                mock.patch.object(bm, "newest_on_disk", lambda module: "9.9.9"):
+            def reach(name):
+                # Every module reachable through the builders' raw depends_on lists (core reaches nothing).
+                seen, todo = set(), list(bm.MODULES[name]["depends_on"])
+                while todo:
+                    d = todo.pop()
+                    if d not in seen:
+                        seen.add(d)
+                        todo += bm.MODULES[d]["depends_on"] if d in bm.MODULES else []
+                return seen
+            newest = lambda d: "9.9.9" if d == "core" else bm.label(bm.MODULES[d])
+            self.assertEqual(reach("value-stream"), {"core", "data-product", "kpi", "system"})
+            for name in bm.MODULES:
+                self.assertEqual(bm.released_closure(name), {d: newest(d) for d in reach(name)}, name)
 
     def test_a_check_loads_one_release_of_each_module(self):
         if bm.SHARE_RELEASE:

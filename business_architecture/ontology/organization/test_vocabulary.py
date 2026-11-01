@@ -5,6 +5,7 @@ and SHACL that accepts a valid assignment and control relationship and rejects b
 Run: python3 -m pytest test_vocabulary.py (needs rdflib, pyshacl).
 """
 import os
+import sys
 import unittest
 
 from pyshacl import validate
@@ -12,17 +13,21 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS, XSD
 
-def released_path(module, version, fname=""):
-    """A released package's folder or file, in releases/<module>/<version>/ or, in the share release, in its
-    history folder releases/previous/<module>/<version>/; None when neither exists (the package did not ship)."""
-    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "releases")
-    for folder in (os.path.join(base, module, version), os.path.join(base, "previous", module, version)):
-        if os.path.isdir(folder):
-            return os.path.join(folder, fname) if fname else folder
-    return None
-
-
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import build_module as bm  # noqa: E402  (release mode, and where a released package sits in either layout)
+
+
+def released(tc, module, version, fname):
+    """A file of a released package, in either layout. In the share release a package that did not ship skips the
+    test; on main every package is on disk, so a missing one fails."""
+    folder = bm.package_folder(module, version)
+    if folder is None and bm.SHARE_RELEASE:
+        tc.skipTest(f"{module} {version} did not ship (the share release holds the newest and previous packages only)")
+    tc.assertIsNotNone(folder, f"{module} {version} is not on disk under releases/")
+    return os.path.join(folder, fname)
+
+
 ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
 RACI = Namespace("https://w3id.org/lsc/ontology/modules/organization/raci-level/")
 ORG = Namespace("http://www.w3.org/ns/org#")
@@ -159,10 +164,8 @@ class Vocabulary(unittest.TestCase):
         header = URIRef("https://w3id.org/lsc/ontology/modules/organization")
         deprecated = URIRef("http://www.w3.org/2002/07/owl#deprecated")
         for before, after in (("2.0.0", "2.1.0"), ("2.1.0", "2.2.0")):
-            if released_path("organization", before) is None:
-                self.skipTest(f"organization {before} did not ship here")
-            old = Graph().parse(released_path("organization", before, "organization.ttl"))
-            new = Graph().parse(released_path("organization", after, "organization.ttl"))
+            old = Graph().parse(released(self, "organization", before, "organization.ttl"))
+            new = Graph().parse(released(self, "organization", after, "organization.ttl"))
             self.assertEqual({s for s in old.subjects() if s != header} - set(new.subjects()), set(), after)
             self.assertEqual(set(new.subjects(deprecated, None)), set(old.subjects(deprecated, None)), after)
 
@@ -171,8 +174,8 @@ class Vocabulary(unittest.TestCase):
         # label and loses its old preferred label; three editorial notes change; nothing else differs.
         releases = os.path.join(HERE, "..", "releases", "organization")
         header = URIRef("https://w3id.org/lsc/ontology/modules/organization")
-        old = Graph().parse(released_path("organization", "2.1.0", "organization.ttl"))
-        new = Graph().parse(released_path("organization", "2.2.0", "organization.ttl"))
+        old = Graph().parse(released(self, "organization", "2.1.0", "organization.ttl"))
+        new = Graph().parse(released(self, "organization", "2.2.0", "organization.ttl"))
         role = "https://w3id.org/lsc/ontology/modules/organization/role/"
         added = {(s, p, o) for s, p, o in new - old if s != header}
         removed = {(s, p, o) for s, p, o in old - new if s != header}

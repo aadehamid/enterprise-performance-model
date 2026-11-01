@@ -13,8 +13,12 @@ from rdflib.namespace import RDF, SH, SKOS
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build  # noqa: E402
 
-# The build checks the governed table against the Step 4 review evidence, which the share release does not carry.
-pytestmark = pytest.mark.skipif(not os.path.exists(build.REVIEWS[0]),
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "release"))
+import build_module as bm  # noqa: E402  (release mode: EPM_SHARE_RELEASE, or release.json at the tree's root)
+
+# The build checks the governed table against the Step 4 review evidence, which the share release does not carry;
+# on main the evidence is always here, and a missing file fails the build as before.
+pytestmark = pytest.mark.skipif(bm.SHARE_RELEASE and not os.path.exists(build.REVIEWS[0]),
                                 reason="the Step 4 review evidence is not here (the share release leaves the Step 4 gate out)")
 
 CORE = rdflib.Namespace(build.CORE)

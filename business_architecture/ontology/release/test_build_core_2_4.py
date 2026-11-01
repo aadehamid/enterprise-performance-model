@@ -17,6 +17,7 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF, SKOS, XSD
 
 import build_core_2_4 as b
+import build_module as bm  # release mode: EPM_SHARE_RELEASE, or release.json at the tree's root
 
 G, COUNTS = b.build()
 BASE = Graph().parse(os.path.join(b.BASE, "core.ttl"))
@@ -170,7 +171,7 @@ class Package(unittest.TestCase):
     def test_the_approval_is_the_delegation_in_the_saved_file(self):
         path, words = b.APPROVAL
         self.assertEqual(words, "Yes, delegate as described (Recommended)")
-        if not os.path.exists(os.path.join(b.ONTOLOGY, path)):
+        if bm.SHARE_RELEASE and not os.path.exists(os.path.join(b.ONTOLOGY, path)):
             # The share release carries no answers folder: the builder names the review comments of a subject
             # matter expert instead of a file, and the words travel in the manifest (EPM-DEC-001-0110).
             self.assertIn("subject matter expert", path)
@@ -184,7 +185,7 @@ class Package(unittest.TestCase):
 
     def test_the_proposal_acceptance_is_the_decision_owners_words(self):
         path = os.path.join(b.ONTOLOGY, "step4/review-evidence/decision-owner-answers/answers-2026-10-26-night.md")
-        if not os.path.exists(path):
+        if bm.SHARE_RELEASE and not os.path.exists(path):
             self.skipTest("the answers folder is not here (the share release carries none)")
         with open(path) as f:
             body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)

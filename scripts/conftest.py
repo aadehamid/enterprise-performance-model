@@ -1,46 +1,69 @@
 """Pytest hooks for the scripts' tests.
 
-The share release (EPM-DEC-001-0110) carries no decision records, no saved answers and no Step 4 evidence,
-so the tests of the checks that read them are skipped there, each with its reason. On main every file is
-present and nothing is skipped.
+The share release (EPM-DEC-001-0110) carries no decision records, no saved answers, no Step 4 gate, ledger, backlog
+or review evidence, and no Git history. A test that reads one of them says so with the mark `inputs`, naming what it
+reads (`@pytest.mark.inputs("records", "answers")`); a test that builds its own inputs in a temporary tree carries no
+mark and runs everywhere. In release mode (EPM_SHARE_RELEASE, or release.json at the tree's root) the hook skips a
+marked test whose input is not in the tree, with the input in the reason. On main the hook does nothing: release mode
+is off, so a missing input fails its test as it always did, and no test is skipped (scripts/test_conftest.py).
 """
 import os
-import re
 
 import pytest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
-STEP4_LEDGER = os.path.join(ROOT, "business_architecture", "ontology", "step4", "ledger-v2.md")
-STEP4_GATE = os.path.join(ROOT, "business_architecture", "ontology", "step4", "mapping_v2.py")
-ANSWERS = os.path.join(ROOT, "business_architecture", "ontology", "step4", "review-evidence", "decision-owner-answers")
+STEP4 = os.path.join("business_architecture", "ontology", "step4")
+# Each input a test may name: its path from the tree's root, and how a skip reason names it.
+INPUTS = {
+    "records": (os.path.join("business_architecture", "domain", "decisions"), "the decision records"),
+    "answers": (os.path.join(STEP4, "review-evidence", "decision-owner-answers"), "the saved answers"),
+    "reviews": (os.path.join(STEP4, "review-evidence"), "the Step 4 review evidence"),
+    "backlog": (os.path.join(STEP4, "source-workbook-backlog.md"), "the Step 4 backlog"),
+    "ledger": (os.path.join(STEP4, "ledger-v2.md"), "the Step 4 ledger"),
+    "gate": (os.path.join(STEP4, "mapping_v2.py"), "the Step 4 gate"),
+    "step4-readme": (os.path.join(STEP4, "README.md"), "the Step 4 README"),
+    "history": (".git", "the Git history"),
+}
 
-# Tests of test_epm_facts.py and test_published_figures.py that read the records, the answers or the Step 4 ledger.
-RECORD_TESTS = re.compile(r"quotes|decision|citations|recorded_words|saved_answer|names_the_decision_owner|status|"
-                          r"raw_html|review_holds|held_provenance|parser_ignores|wrapped_lists|look_alike|"
-                          r"invisible_format|images_are_refused|home_section|sentences_starting")
-LEDGER_TESTS = re.compile(r"ledger|backlog|counts_break|phase1|readme_guard|step4_readme|row_reports|sweep")
-# Tests of test_docs_html.py that read the decision records or their index page.
-PAGE_RECORD_TESTS = re.compile(r"index_row|decision_record|decision_id")
-# ... and the facts test that expects the records' index page among the generated copies.
-RECORD_TESTS = re.compile(RECORD_TESTS.pattern + r"|repository_pages")
+
+def share_release(root=ROOT):
+    """Whether this tree is a share release: EPM_SHARE_RELEASE is set, or release.json sits at the tree's root."""
+    return bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(root, "release.json"))
+
+
+SHARE_RELEASE = share_release()
+
+
+def missing_inputs(names, root=ROOT):
+    """Of the named inputs, those not in the tree under root, as (name, how the reason names it)."""
+    unknown = sorted(set(names) - set(INPUTS))
+    if unknown:
+        raise ValueError(f"unknown inputs {unknown}; the known ones are {sorted(INPUTS)}")
+    return [(n, INPUTS[n][1]) for n in names if not os.path.exists(os.path.join(root, INPUTS[n][0]))]
+
+
+def skip_reason(names, share=None, root=ROOT):
+    """Why a test marked with these inputs skips: None on main (never a skip there), and None in release mode when
+    every input it names is in the tree."""
+    if not (SHARE_RELEASE if share is None else share):
+        return None
+    missing = missing_inputs(names, root)
+    if not missing:
+        return None
+    return (", ".join(what for _, what in missing)
+            + " not in this tree (the share release leaves them out, EPM-DEC-001-0110)")
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "inputs(name, ...): the live repository inputs the test reads ("
+                            + ", ".join(INPUTS) + "); in the share release the test skips when one is not in the tree")
 
 
 def pytest_collection_modifyitems(config, items):
-    no_records = not os.path.isdir(DECISIONS) or not os.path.isdir(ANSWERS)
-    no_ledger = not os.path.isfile(STEP4_LEDGER)
-    no_gate = not os.path.isfile(STEP4_GATE)
     for item in items:
-        if item.fspath.basename == "test_docs_html.py":
-            if no_records and PAGE_RECORD_TESTS.search(item.name):
-                item.add_marker(pytest.mark.skip(reason="no decision records here (the share release carries none)"))
+        mark = item.get_closest_marker("inputs")
+        if mark is None:
             continue
-        if not item.fspath.basename in ("test_epm_facts.py", "test_published_figures.py"):
-            continue
-        if no_gate and "facts" in getattr(item, "fixturenames", ()) and "taxonomy" not in item.name:
-            # `epm_facts.py counts` gives the taxonomy figures only without the gate, so the taxonomy test still runs.
-            item.add_marker(pytest.mark.skip(reason="no Step 4 gate here, so `epm_facts.py counts` has no ledger figures (the share release leaves it out)"))
-        elif no_records and RECORD_TESTS.search(item.name):
-            item.add_marker(pytest.mark.skip(reason="no decision records or saved answers here (the share release carries none)"))
-        elif no_ledger and LEDGER_TESTS.search(item.name):
-            item.add_marker(pytest.mark.skip(reason="no Step 4 ledger here (the share release leaves the Step 4 gate out)"))
+        reason = skip_reason(mark.args)  # raises on an input name the table does not know
+        if reason:
+            item.add_marker(pytest.mark.skip(reason=reason))

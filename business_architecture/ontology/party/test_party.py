@@ -59,6 +59,44 @@ def notations(scheme):
     return {str(n) for v in CODES.subjects(SKOS.inScheme, CUST[scheme]) for n in CODES.objects(v, SKOS.notation)}
 
 
+class ChangeNotes(unittest.TestCase):
+    """A change note must end with its record. The share release's form, "(the decision of <date>).", passes only in
+    release mode (EPM-DEC-001-0110); on main it is refused like any other note without a record."""
+
+    def notes(self, note, share):
+        from unittest import mock
+        sys.path.insert(0, HERE)
+        import build_party as bp
+        term = bp.CUST["system-stage/prospect"]
+        g = Graph()
+        g.add((term, RDF.type, SKOS.Concept))
+        form = bp.NOTE_FORM.replace("|the decision of \\d{4}-\\d{2}-\\d{2}", "")
+        if share:
+            form = form.replace("(?:EPM-DEC-001-\\d{4}", "(?:EPM-DEC-001-\\d{4}|the decision of \\d{4}-\\d{2}-\\d{2}")
+        with mock.patch.object(bp, "NOTE_FORM", form), \
+                mock.patch.object(bp, "read", lambda path: [{"term": "system-stage/prospect", "note": note}]):
+            bp.add_change_notes((g,))
+        return list(g.objects(term, SKOS.changeNote))
+
+    def test_a_record_citation_passes_in_both_modes(self):
+        note = "2026-10-27: renamed from lead (EPM-DEC-001-0108)."
+        for share in (False, True):
+            self.assertEqual(self.notes(note, share), [Literal(note, lang="en")], share)
+
+    def test_the_date_only_form_passes_only_in_release_mode(self):
+        note = "2026-10-27: renamed from lead (the decision of 2026-10-27)."
+        self.assertEqual(self.notes(note, share=True), [Literal(note, lang="en")])
+        with self.assertRaises(SystemExit):
+            self.notes(note, share=False)
+
+    def test_the_form_in_use_follows_release_mode(self):
+        import build_party as bp
+        marker = os.path.isfile(os.path.join(HERE, "..", "..", "..", "release.json"))
+        variable = bool(os.environ.get("EPM_SHARE_RELEASE"))
+        self.assertEqual(bp.SHARE_RELEASE, marker or variable)
+        self.assertEqual("the decision of" in bp.NOTE_FORM, marker or variable)
+
+
 class Build(unittest.TestCase):
     def test_code_lists_are_current(self):
         env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}

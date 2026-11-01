@@ -1,4 +1,5 @@
 """Frozen sources: the builders read a frozen copy of the process map when one exists, else Git."""
+import contextlib
 import os
 import subprocess
 import sys
@@ -62,12 +63,42 @@ class Frozen(unittest.TestCase):
 
 
 class ReleaseMode(unittest.TestCase):
-    def test_pins_are_dropped_and_core_is_its_newest_package(self):
+    """build_module reads release mode from EPM_SHARE_RELEASE or release.json at the tree's root. Each test that sets
+    the variable puts the caller's value back (a release run sets it for the whole session) and reloads the module."""
+
+    @contextlib.contextmanager
+    def with_env(self, value):
+        """Run build_module with EPM_SHARE_RELEASE set to `value` (None: unset); restore the environment after."""
         import importlib
-        os.environ["EPM_SHARE_RELEASE"] = "1"
+        import build_module as bm
+        missing = object()
+        before = os.environ.get("EPM_SHARE_RELEASE", missing)
+        if value is None:
+            os.environ.pop("EPM_SHARE_RELEASE", None)
+        else:
+            os.environ["EPM_SHARE_RELEASE"] = value
         try:
-            import build_module as bm
-            bm = importlib.reload(bm)
+            yield importlib.reload(bm)
+        finally:
+            if before is missing:
+                os.environ.pop("EPM_SHARE_RELEASE", None)
+            else:
+                os.environ["EPM_SHARE_RELEASE"] = before
+            importlib.reload(bm)
+
+    def test_the_marker_file_or_the_variable_means_release_mode(self):
+        import build_module as bm
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.with_env(None) as bm:
+                self.assertFalse(bm.share_release(tmp))
+                with open(os.path.join(tmp, "release.json"), "w") as f:
+                    f.write("{}\n")
+                self.assertTrue(bm.share_release(tmp))
+            with self.with_env("1") as bm:
+                self.assertTrue(bm.share_release(tempfile.gettempdir()))
+
+    def test_pins_are_dropped_and_core_is_its_newest_package(self):
+        with self.with_env("1") as bm:
             self.assertTrue(bm.SHARE_RELEASE)
             deps = bm.dependencies("kpi")
             self.assertEqual(deps["core"], bm.newest_on_disk("core"))
@@ -76,16 +107,39 @@ class ReleaseMode(unittest.TestCase):
                 for dep, version in bm.dependencies(name).items():
                     expected = bm.newest_on_disk("core") if dep == "core" else bm.label(bm.MODULES[dep])
                     self.assertEqual(version, expected, (name, dep))
-        finally:
-            del os.environ["EPM_SHARE_RELEASE"]
-            importlib.reload(bm)
 
-    def test_on_main_the_pins_stand(self):
+    def test_the_callers_variable_is_put_back(self):
+        missing = object()
+        before = os.environ.get("EPM_SHARE_RELEASE", missing)
+        for preset in ("preset", None):
+            if preset is None:
+                os.environ.pop("EPM_SHARE_RELEASE", None)
+            else:
+                os.environ["EPM_SHARE_RELEASE"] = preset
+            try:
+                with self.with_env("1") as bm:
+                    self.assertTrue(bm.SHARE_RELEASE)
+                self.assertEqual(os.environ.get("EPM_SHARE_RELEASE", None), preset)
+            finally:
+                if before is missing:
+                    os.environ.pop("EPM_SHARE_RELEASE", None)
+                else:
+                    os.environ["EPM_SHARE_RELEASE"] = before
+        import importlib
         import build_module as bm
-        if bm.SHARE_RELEASE:
-            self.skipTest("release mode: the pins move to the newest set (checked by test_build_module)")
-        self.assertFalse(os.path.isfile(os.path.join(bm.ROOT, "release.json")), "release.json marks a release tree, never main")
-        self.assertEqual(bm.dependencies("kpi")["core"], "2.3.0")
+        importlib.reload(bm)
+
+    def test_without_the_marker_and_the_variable_the_pins_stand(self):
+        # No skip: the mode is read from the two inputs themselves, and each mode has its own assertion.
+        import build_module as bm
+        marker = os.path.isfile(os.path.join(bm.ROOT, "release.json"))
+        variable = bool(os.environ.get("EPM_SHARE_RELEASE"))
+        self.assertEqual(bm.SHARE_RELEASE, marker or variable)
+        if marker or variable:
+            self.assertEqual(bm.dependencies("kpi")["core"], bm.newest_on_disk("core"))
+        else:
+            self.assertEqual(bm.dependencies("kpi")["core"], "2.3.0")  # the pin on main (EPM-DEC-001-0106)
+            self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.1.0", "party": "2.0.0"})
 
 
 if __name__ == "__main__":

@@ -141,6 +141,20 @@ def metric_views():
     return views
 
 
+def test_the_graph_separator_is_two_underscores_on_main_and_one_in_the_share_release():
+    # The ontology's names in Neo4j (EPM-DEC-001-0110): read from the two inputs themselves, so a wrong separator on
+    # main fails here; the two queries that name ontology properties build them with the separator, never a literal.
+    root = os.path.normpath(os.path.join(config.ROOT, "..", ".."))
+    marker, variable = os.path.isfile(os.path.join(root, "release.json")), bool(os.environ.get("EPM_SHARE_RELEASE"))
+    assert config.SHARE_RELEASE == (marker or variable)
+    assert config.GRAPH_SEP == ("_" if marker or variable else "__")
+    for name in ("acceptance.py", "tech_graph.py"):
+        with open(os.path.join(config.ROOT, "pricing_demo", name)) as f:
+            text = f.read()
+        assert "{GRAPH_SEP}" in text, name
+        assert not re.search(r"\b(skos|kpi|dcterms|org|core|vs|dp)__\w", text), name
+
+
 def test_finding_6_a_carried_eia_value_is_spot_anchored_not_real():
     # 2026-05-04: Brent has no EIA observation that day; the generator carries May 1's value (118.26).
     brent = public_data.load("brent")

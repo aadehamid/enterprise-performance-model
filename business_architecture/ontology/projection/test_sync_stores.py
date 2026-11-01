@@ -1,4 +1,6 @@
 """Offline tests of sync_stores.py and the release-tag workflow (brief item 7c): no store is contacted."""
+import contextlib
+import importlib
 import inspect
 import json
 import os
@@ -6,9 +8,11 @@ import re
 import subprocess
 import sys
 import unittest
+from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import pipeline as pl  # noqa: E402  (release mode: EPM_SHARE_RELEASE, or release.json at the tree's root)
 import sync_stores as ss  # noqa: E402
 
 WORKFLOW = os.path.join(ss.REPO, ".github", "workflows", "sync-stores.yml")
@@ -110,9 +114,9 @@ class Markers(unittest.TestCase):
         self.assertIn("raise SystemExit", inspect.getsource(ss.databricks_checked))
 
 
-@unittest.skipUnless(os.path.exists(WORKFLOW), "no workflow file here (the share release ships no GitHub workflow)")
+@unittest.skipIf(pl.SHARE_RELEASE and not os.path.exists(WORKFLOW), "no workflow file here (the share release ships no GitHub workflow)")
 class Workflow(unittest.TestCase):
-    text = open(WORKFLOW).read() if os.path.exists(WORKFLOW) else ""
+    text = open(WORKFLOW).read() if os.path.exists(WORKFLOW) else ""  # on main a missing file fails the tests below
 
     def test_it_runs_on_every_release_tag(self):
         self.assertIn("tags: ['*-v*']", self.text)
@@ -136,31 +140,98 @@ class StoreTablesAgree(unittest.TestCase):
     the demo's tech_graph.py, which sync_stores runs as a separate program. The demo is its own project, so the two
     tables stay apart, and this test keeps them equal."""
 
-    def test_the_demo_lists_the_same_neo4j_stores(self):
+    @staticmethod
+    def demo_literal():
+        """The demo's table as written in tech_graph.py, before any EPM_STORES_JSON override."""
         import ast
         path = os.path.join(ss.DEMO, "pricing_demo", "tech_graph.py")
         tree = ast.parse(open(path).read())
         node = next(n.value for n in tree.body if isinstance(n, ast.Assign) and any(
             isinstance(t, ast.Name) and t.id == "STORES" for t in n.targets))
-        self.assertEqual(ast.literal_eval(node), ss.NEO4J_STORES)
+        return ast.literal_eval(node)
+
+    @staticmethod
+    def demo_module():
+        import importlib
+        sys.path.insert(0, ss.DEMO)
+        import pricing_demo.tech_graph as tg
+        return importlib.reload(tg)
+
+    def test_the_demo_lists_the_same_neo4j_stores(self):
+        if os.environ.get("EPM_STORES_JSON"):
+            # Both modules applied the same override at import; the literal in the file no longer says what they hold.
+            self.assertEqual(self.demo_module().STORES, ss.NEO4J_STORES)
+        else:
+            self.assertEqual(self.demo_literal(), ss.NEO4J_STORES)
+
+    def test_the_tables_still_agree_under_an_override(self):
+        with stores_env(json.dumps({"driver": {"bolt": "bolt://127.0.0.1:17898"}, "aura": {"env": ["/tmp/a.env"]}})):
+            mod = importlib.reload(ss)
+            self.assertEqual(mod.NEO4J_STORES["driver"][0], "bolt://127.0.0.1:17898")
+            self.assertEqual(self.demo_module().STORES, mod.NEO4J_STORES)
+            self.assertNotEqual(self.demo_literal(), mod.NEO4J_STORES)
+        self.demo_module()
 
 
-if __name__ == "__main__":
-    unittest.main()
-
+@contextlib.contextmanager
+def stores_env(value):
+    """EPM_STORES_JSON set to `value` for the block (None: unset); the caller's value is put back after, and
+    sync_stores is reloaded, so a release run that sets it for the whole session keeps its stores."""
+    missing = object()
+    before = os.environ.get("EPM_STORES_JSON", missing)
+    if value is None:
+        os.environ.pop("EPM_STORES_JSON", None)
+    else:
+        os.environ["EPM_STORES_JSON"] = value
+    try:
+        yield
+    finally:
+        if before is missing:
+            os.environ.pop("EPM_STORES_JSON", None)
+        else:
+            os.environ["EPM_STORES_JSON"] = before
+        importlib.reload(ss)
 
 
 class StoreOverrides(unittest.TestCase):
     def test_the_env_json_replaces_only_what_it_names(self):
-        import importlib
-        os.environ["EPM_STORES_JSON"] = json.dumps({"pipeline": {"bolt": "bolt://127.0.0.1:17899", "env": ["/tmp/x.env"]},
-                                                    "driver_reports": ["/tmp/r.json"], "databricks_env": "/tmp/d.env"})
-        try:
+        with stores_env(json.dumps({"pipeline": {"bolt": "bolt://127.0.0.1:17899", "env": ["/tmp/x.env"]},
+                                    "driver_reports": ["/tmp/r.json"], "databricks_env": "/tmp/d.env"})):
             mod = importlib.reload(ss)
             self.assertEqual(mod.NEO4J_STORES["pipeline"], ("bolt://127.0.0.1:17899", ("/tmp/x.env",)))
             self.assertEqual(mod.NEO4J_STORES["aura"], (None, ("~/.config/neo4j/aura.env",)))
             self.assertEqual(mod.DRIVER_REPORTS, ("/tmp/r.json",))
             self.assertEqual(mod.DATABRICKS_ENV, "/tmp/d.env")
-        finally:
-            del os.environ["EPM_STORES_JSON"]
-            importlib.reload(ss)
+
+    def test_the_callers_value_is_put_back(self):
+        missing = object()
+        before = os.environ.get("EPM_STORES_JSON", missing)
+        for preset in ('{"databricks_env": "/tmp/preset.env"}', None):
+            if preset is None:
+                os.environ.pop("EPM_STORES_JSON", None)
+            else:
+                os.environ["EPM_STORES_JSON"] = preset
+            try:
+                with stores_env('{"databricks_env": "/tmp/inner.env"}'):
+                    self.assertEqual(importlib.reload(ss).DATABRICKS_ENV, "/tmp/inner.env")
+                self.assertEqual(os.environ.get("EPM_STORES_JSON"), preset)
+                self.assertEqual(ss.DATABRICKS_ENV, "/tmp/preset.env" if preset else "~/.config/databricks/epm.env")
+            finally:
+                if before is missing:
+                    os.environ.pop("EPM_STORES_JSON", None)
+                else:
+                    os.environ["EPM_STORES_JSON"] = before
+                importlib.reload(ss)
+
+
+class WithoutGit(unittest.TestCase):
+    def test_a_tree_without_git_has_no_commit_and_reads_itself(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(ss, "REPO", tmp):
+            self.assertEqual(ss.commit(), "unknown (not a Git checkout)")
+            self.assertEqual(ss.default_ref(), "worktree")
+        self.assertEqual(ss.default_ref(), "origin/main")  # this checkout
+
+
+if __name__ == "__main__":
+    unittest.main()

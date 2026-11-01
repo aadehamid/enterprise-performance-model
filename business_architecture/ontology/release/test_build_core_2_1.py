@@ -14,7 +14,8 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import OWL, RDF, SKOS
 
 import build_core_2_1 as b
-if not os.path.isdir(getattr(b, "RELEASE_DIR", "") or getattr(b, "OUT", "")):  # noqa: E402
+import build_module as bm  # noqa: E402  (release mode: EPM_SHARE_RELEASE, or release.json at the tree's root)
+if bm.SHARE_RELEASE and not os.path.isdir(getattr(b, "RELEASE_DIR", "") or getattr(b, "OUT", "")):  # noqa: E402
     raise unittest.SkipTest("this core package did not ship (the share release holds the newest and previous packages only)")
 
 ROWS = b.mapping()
@@ -167,7 +168,7 @@ class Package(unittest.TestCase):
         self.assertEqual(b.APPROVAL, ("step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md",
                                       "Yes, cut 2.1.0 (Recommended)"))
         path, words = b.APPROVAL
-        if not os.path.exists(os.path.join(b.ONTOLOGY, path)):
+        if bm.SHARE_RELEASE and not os.path.exists(os.path.join(b.ONTOLOGY, path)):
             # The share release carries no answers folder: the builder names the review comments of a subject
             # matter expert instead of a file, and the words travel in the manifest (EPM-DEC-001-0110).
             self.assertIn("subject matter expert", path)

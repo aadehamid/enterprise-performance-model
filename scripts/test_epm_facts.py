@@ -23,6 +23,7 @@ def run(*args):
     return json.loads(out)
 
 
+@pytest.mark.inputs("gate")
 def test_ledger_conserves_and_matches_governed_figures():
     c = run("counts")
     led = c["ledger"]
@@ -39,6 +40,7 @@ def test_ledger_conserves_and_matches_governed_figures():
     assert (c["evidence_gate"]["pass_checks"], c["evidence_gate"]["fail_checks"]) == (347, 0)
 
 
+@pytest.mark.inputs("gate")
 def test_phase1_scope_matches_decision_0025():
     p = run("counts")["phase1"]
     assert p["rows"] == 276 and p["held"] == 51
@@ -87,6 +89,7 @@ def test_phase1_scope_matches_decision_0025():
     assert p["held_outside"] == 411
 
 
+@pytest.mark.inputs("backlog")
 def test_citations_are_not_rows():
     rows = epm_facts.phase1_rows()
     assert "REL-00214" not in rows  # cited inside the REL-00152 rationale
@@ -94,6 +97,7 @@ def test_citations_are_not_rows():
     assert "REL-00215" in rows and rows["REL-00215"][0] == 206  # a listed governed-by row
 
 
+@pytest.mark.inputs("backlog")
 def test_home_section_beats_pairs_table():
     rows = epm_facts.phase1_rows()
     assert rows["REL-00469"][0] == 203
@@ -101,6 +105,7 @@ def test_home_section_beats_pairs_table():
     assert rows["REL-01130"][0] == 202  # a reverse informed-by row, only in the pairs table
 
 
+@pytest.mark.inputs("reviews")
 def test_review_holds_read_only_the_decision_column():
     per_file, _ = epm_facts.review_holds()
     # 22 rows in this file say "RECONCILED — already held" in review_section with a blank decision.
@@ -108,6 +113,7 @@ def test_review_holds_read_only_the_decision_column():
     assert per_file["enables-g3-section-b5-class-verdict.csv"] == 42
 
 
+@pytest.mark.inputs("ledger")
 def test_row_reports_held_provenance():
     r = run("row", "REL-00436")
     assert r["status"] == "held"
@@ -145,6 +151,7 @@ def test_find_skips_only_a_fresh_generated_copy(tmp_path, monkeypatch):
     assert sorted(name for name, _, _, _ in hits) == ["README.md", "ontology-stores-runbook.html", "orphan.html", "stale.html"]
 
 
+@pytest.mark.inputs("records")
 def test_the_repository_pages_are_skipped_when_fresh():
     copies = epm_facts.generated_copies()
     assert "business_architecture/ontology/README.html" in copies
@@ -265,6 +272,7 @@ def _backlog():
         return f.read()
 
 
+@pytest.mark.inputs("backlog")
 def test_parser_ignores_table_padding():
     text = _backlog()
     squeezed = "\n".join(
@@ -275,6 +283,7 @@ def test_parser_ignores_table_padding():
     assert epm_facts.phase1_rows(squeezed) == epm_facts.phase1_rows(text)
 
 
+@pytest.mark.inputs("backlog")
 def test_parser_ignores_indentation_and_bullet_style():
     text = _backlog()
     reformatted = "\n".join(
@@ -284,6 +293,7 @@ def test_parser_ignores_indentation_and_bullet_style():
     assert epm_facts.phase1_rows(reformatted) == epm_facts.phase1_rows(text)
 
 
+@pytest.mark.inputs("backlog")
 def test_sentences_starting_with_an_id_are_not_rows():
     text = _backlog() + "\n\nREL-00366 is a precedent, not a row requiring source correction.\n- REL-00214 explains why REL-00152 is held (citation).\n"
     rows = epm_facts.phase1_rows(text)
@@ -291,6 +301,7 @@ def test_sentences_starting_with_an_id_are_not_rows():
     assert rows == epm_facts.phase1_rows()
 
 
+@pytest.mark.inputs("backlog")
 def test_wrapped_lists_keep_every_row():
     text = _backlog()
     wrapped = text.replace("REL-01223, REL-01227, REL-01241, REL-01289, REL-01291, REL-01294.",
@@ -314,10 +325,12 @@ def _decisions_copy(tmp_path):
     return folder
 
 
+@pytest.mark.inputs("records")
 def test_decision_records_are_consistent_today():
     assert epm_facts.decision_problems() == []
 
 
+@pytest.mark.inputs("records")
 def test_decisions_check_catches_status_mismatch(tmp_path):
     folder = _decisions_copy(tmp_path)
     rec = next(folder.glob("EPM-DEC-001-0024-*.md"))
@@ -325,6 +338,7 @@ def test_decisions_check_catches_status_mismatch(tmp_path):
     assert any(p.startswith("0024: index status") for p in epm_facts.decision_problems(str(folder)))
 
 
+@pytest.mark.inputs("records")
 def test_decisions_check_requires_a_quote_for_decided(tmp_path):
     folder = _decisions_copy(tmp_path)
     rec = next(folder.glob("EPM-DEC-001-0009-*.md"))
@@ -335,6 +349,7 @@ def test_decisions_check_requires_a_quote_for_decided(tmp_path):
     assert any(p.startswith("0009: Decided, but no quote") for p in epm_facts.decision_problems(str(folder)))
 
 
+@pytest.mark.inputs("records")
 def test_decisions_check_catches_unindexed_record_and_bad_amendment(tmp_path):
     folder = _decisions_copy(tmp_path)
     (folder / "EPM-DEC-001-9999-new.md").write_text("# EPM-DEC-001-9999: new\n\n| Status | Decided; amended by EPM-DEC-001-9998 |\n")
@@ -351,6 +366,7 @@ def test_status_parts_reads_every_amendment():
         "Decided; amended by EPM-DEC-001-0025 (2026-10-06) and EPM-DEC-001-0026 (2026-10-12)") == ("Decided", {"0025", "0026"})
 
 
+@pytest.mark.inputs("records")
 def test_decisions_check_catches_a_second_amendment_target(tmp_path):
     folder = _decisions_copy(tmp_path)
     rec = next(folder.glob("EPM-DEC-001-0013-*.md"))
@@ -386,10 +402,12 @@ def _quote_fixture(tmp_path, reason="", owner_words=None, block=None):
     return epm_facts.quote_problems(str(reviews), str(backlog), epm_facts.ANSWERS)
 
 
+@pytest.mark.inputs("records", "reviews", "backlog", "answers")
 def test_quotes_pass_on_the_repo():
     assert epm_facts.quote_problems() == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_catch_a_period_moved_inside_a_shortened_quote(tmp_path):
     # The #225 defect: The decision owner's sentence continues after "activity".
     bad = 'it "does not require completion of all trade-capture activity." more'
@@ -398,21 +416,25 @@ def test_quotes_catch_a_period_moved_inside_a_shortened_quote(tmp_path):
     assert _quote_fixture(tmp_path / "good", reason=good) == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_catch_altered_answer_text_and_block_quotes(tmp_path):
     assert any("owner_words" in p for p in _quote_fixture(tmp_path / "a", owner_words="a, with my own wording."))
     assert any("block quote" in p for p in _quote_fixture(tmp_path / "b", block="Go ahead with the Batch 1 PR."))
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_split_an_ellipsis_and_skip_short_terms(tmp_path):
     ok = 'They said "adopted reference-model positions … not verified MPC internal procedures" and "owned by".'
     assert _quote_fixture(tmp_path, reason=ok) == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_catch_an_inserted_comma(tmp_path):
     bad = 'it "does not require completion of all trade-capture activity," more'
     assert any("semantic_reason" in p for p in _quote_fixture(tmp_path, reason=bad))
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_read_indented_and_lazy_block_quotes(tmp_path):
     assert any("block quote" in p for p in _quote_fixture(
         tmp_path / "a", block="x\n\n  > The decision owner approved all held relationships for immediate emission."))
@@ -430,6 +452,7 @@ def test_quotes_report_when_nothing_was_checked(tmp_path):
     assert any("no review file" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_follow_commonmark_block_structure(tmp_path):
     nested = "- Decision record\n\n    > The decision owner approved all held relationships for immediate emission."
     assert any("block quote" in p for p in _quote_fixture(tmp_path / "a", block="x\n\n" + nested))
@@ -453,12 +476,14 @@ def test_quotes_reject_empty_answers_and_blank_rows(tmp_path):
     assert any("owner_words is blank" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_check_code_and_html_inside_block_quotes(tmp_path):
     fake = "The decision owner approved all held relationships for immediate emission."
     for i, block in enumerate([f"```text\n> {fake}\n> ```", f"    {fake}", f"<p>{fake}</p>"]):
         assert any("block quote" in p for p in _quote_fixture(tmp_path / str(i), block=block)), block
 
 
+@pytest.mark.inputs("answers")
 def test_quotes_reject_a_repeated_column(tmp_path):
     reviews = tmp_path / "reviews"
     reviews.mkdir()
@@ -470,6 +495,7 @@ def test_quotes_reject_a_repeated_column(tmp_path):
     assert any("repeated column" in p for p in problems)
 
 
+@pytest.mark.inputs("answers")
 def test_quotes_reject_a_header_only_review_file(tmp_path):
     reviews = tmp_path / "reviews"
     reviews.mkdir()
@@ -491,17 +517,20 @@ def _decision_fixture(tmp_path, number, words, status="Decided"):
     return epm_facts.quote_problems(reviews, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_catch_unsaved_words_in_a_decision_record(tmp_path):
     # The PR #231 defect: chat answers quoted in EPM-DEC-001-0026, never saved.
     problems = _decision_fixture(tmp_path, 26, 'The decision owner answered "yes to all seven" in the session.')
     assert any("EPM-DEC-001-0026" in p and "yes to all seven" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_accept_saved_words_in_a_decision_record(tmp_path):
     words = 'They approved on #226: "Approved: Q1–Q18 as recommended in the comment above"'
     assert _decision_fixture(tmp_path, 26, words) == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_pair_quote_marks_within_one_paragraph(tmp_path):
     # Issue #251: EPM-DEC-001-0028 quoted a nested quotation ending in "". The quote pattern
     # skips an empty pair's first mark and paired its second with the opening mark of a quote
@@ -511,6 +540,7 @@ def test_quotes_pair_quote_marks_within_one_paragraph(tmp_path):
     assert _decision_fixture(tmp_path, 26, words) == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_still_catch_an_unsaved_quote_after_an_empty_pair(tmp_path):
     words = ('They quoted "" here and moved on.\n\n'
              'Then they said "these words were never saved anywhere at all".')
@@ -519,6 +549,7 @@ def test_quotes_still_catch_an_unsaved_quote_after_an_empty_pair(tmp_path):
     assert not any("moved on" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_report_an_unclosed_quotation(tmp_path):
     # Pi's review of #251: quote marks pair only within a block, so an unclosed quotation
     # beside a saved one would otherwise pass unchecked.
@@ -528,28 +559,33 @@ def test_quotes_report_an_unclosed_quotation(tmp_path):
     assert any("unpaired quote mark" in p and "never saved" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_report_unequal_curly_quote_marks(tmp_path):
     words = ('They said “words never saved anywhere at all\n\n'
              'They approved on #226: "Approved: Q1–Q18 as recommended in the comment above"')
     assert any("unpaired quote mark" in p for p in _decision_fixture(tmp_path, 26, words))
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_check_only_the_recorded_words_section(tmp_path):
     # The Decision section quotes the predicate's definition, which is not the decision owner's answer.
     assert _decision_fixture(tmp_path, 27, 'They said "Approved: Q1–Q18 as recommended in the comment above"') == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_skip_records_before_0026(tmp_path):
     # Records 0001-0025 quote sessions that were never saved as answers.
     assert _decision_fixture(tmp_path, 25, 'Q12: "I agree with this."') == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_quotes_require_a_checked_quote_in_a_decided_record(tmp_path):
     problems = _decision_fixture(tmp_path, 26, "The decision owner agreed in the session.")
     assert any("EPM-DEC-001-0026" in p and "no quote" in p for p in problems)
     assert _decision_fixture(tmp_path / "p", 26, "Not yet decided.", status="Proposed") == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_section_follows_markdown_headings(tmp_path):
     # A "## " line inside a code fence is not a heading: the quote after the fence is still checked.
     words = ('"Approved: Q1–Q18 as recommended in the comment above"\n\n```text\n## Example\n```\n\n'
@@ -565,6 +601,7 @@ def test_recorded_words_section_follows_markdown_headings(tmp_path):
     assert any("no quote" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_refuse_raw_html(tmp_path):
     # Raw HTML can hide a quote (a comment, an attribute) or show one the text reading misses
     # (an entity in an HTML block, words joined by <br>), so it is reported, not interpreted.
@@ -579,6 +616,7 @@ def test_recorded_words_refuse_raw_html(tmp_path):
         assert any("raw HTML" in p for p in _decision_fixture(tmp_path / name, 26, words)), name
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_reject_a_repeated_section(tmp_path):
     words = ('"Approved: Q1–Q18 as recommended in the comment above"\n\n'
              "## The decision owner's recorded words\n\nThe decision owner also said \"yes to all seven\"")
@@ -588,6 +626,7 @@ def test_recorded_words_reject_a_repeated_section(tmp_path):
 SAVED = '"Approved: Q1–Q18 as recommended in the comment above"'
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_read_displayed_text_not_raw_markdown(tmp_path):
     # Entity-encoded quote marks display as quote marks, so the unsaved words are checked.
     entity = SAVED + "\n\nThe decision owner also said &quot;yes to all seven&quot;."
@@ -596,6 +635,7 @@ def test_recorded_words_read_displayed_text_not_raw_markdown(tmp_path):
     assert _decision_fixture(tmp_path / "c", 26, '"**Approved: Q1–Q18 as recommended in the comment above**"') == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_recognise_a_formatted_heading(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
@@ -605,6 +645,7 @@ def test_recorded_words_recognise_a_formatted_heading(tmp_path):
     assert any("yes to all seven" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_keep_comment_syntax_inside_code(tmp_path):
     fenced = SAVED + '\n\n```text\n<!-- "yes to all seven" -->\n```'
     assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, fenced))
@@ -612,11 +653,13 @@ def test_recorded_words_keep_comment_syntax_inside_code(tmp_path):
     assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "b", 26, inline))
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_continue_past_a_heading_nested_in_a_quote(tmp_path):
     words = SAVED + '\n\n> ## Example\n\nThe decision owner also said "yes to all seven"'
     assert any("yes to all seven" in p for p in _decision_fixture(tmp_path, 26, words))
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_match_a_saved_answer_with_formatting(tmp_path):
     # 205-batch1.md says "For each **a** response, ..."; both sides are compared as displayed text.
     assert _decision_fixture(tmp_path, 26, '"For each **a** response, use the revised wording below"') == []
@@ -647,6 +690,7 @@ def test_rendered_answers_keep_comment_syntax_in_code(tmp_path):
     assert "header" not in corpus
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_recorded_words_heading_html_is_reported(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
@@ -666,12 +710,14 @@ def _decision_with_answers(tmp_path, answer_text, words):
             if "EPM-DEC-001-0026" in p]
 
 
+@pytest.mark.inputs("reviews", "backlog")
 def test_recorded_words_match_whole_words_only(tmp_path):
     assert _decision_with_answers(tmp_path / "a", "deauthorize deployment now\n", '"authorize deployment now"')
     assert _decision_with_answers(tmp_path / "b", "approve every risky changeset\n", '"approve every risky change"')
     assert _decision_with_answers(tmp_path / "c", "Yes, approve every risky change.\n", '"approve every risky change"') == []
 
 
+@pytest.mark.inputs("reviews", "backlog")
 def test_saved_answer_blocks_with_html_are_not_used(tmp_path):
     answer = "The decision owner said <span hidden>authorize deployment now</span>.\n"
     assert _decision_with_answers(tmp_path, answer, '"authorize deployment now"')
@@ -714,6 +760,7 @@ def test_word_match_rejects_a_quote_that_drops_a_possessive():
     assert match("approve every risky change’", "They wrote ‘approve every risky change’ today")
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_a_hidden_second_status_row_is_reported(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
@@ -725,6 +772,7 @@ def test_a_hidden_second_status_row_is_reported(tmp_path):
     assert any("raw HTML" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_status_rows_are_counted_with_any_spacing(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
@@ -739,6 +787,7 @@ def test_status_rows_are_counted_with_any_spacing(tmp_path):
     assert any("no quote" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_status_comes_from_the_displayed_table(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
@@ -750,6 +799,7 @@ def test_status_comes_from_the_displayed_table(tmp_path):
         assert any("no quote" in p for p in problems), row
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_two_displayed_status_rows_are_reported(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
@@ -760,6 +810,7 @@ def test_two_displayed_status_rows_are_reported(tmp_path):
     assert any("exactly one" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_raw_html_in_the_status_row_is_reported(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
@@ -770,6 +821,7 @@ def test_raw_html_in_the_status_row_is_reported(tmp_path):
     assert any("raw HTML" in p for p in problems)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_any_raw_html_in_a_checked_record_is_reported(tmp_path):
     cases = {
         "status_label": "| Field | Value |\n|---|---|\n| Status | Proposed |\n| Status<span hidden>old</span> | Decided |\n\n"
@@ -786,6 +838,7 @@ def test_any_raw_html_in_a_checked_record_is_reported(tmp_path):
         assert any("raw HTML" in p for p in problems), name
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_an_unrecognised_status_is_reported(tmp_path):
     for i, status in enumerate(("​Decided", "﻿Decided", "(Decided)", "Decidedly")):
         folder = tmp_path / str(i) / "decisions"
@@ -797,6 +850,7 @@ def test_an_unrecognised_status_is_reported(tmp_path):
         assert any(("status" in p.lower() and "recognised" in p) or "invisible" in p for p in problems), repr(status)
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_images_are_refused_on_both_sides(tmp_path):
     words = '"Approved: Q1–Q18 as ![never](missing.png) recommended in the comment above"'
     assert any("image" in p for p in _decision_fixture(tmp_path / "a", 26, words))
@@ -804,6 +858,7 @@ def test_images_are_refused_on_both_sides(tmp_path):
     assert "approve every risky change" not in corpus
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_invisible_format_characters_are_refused(tmp_path):
     for i, body in enumerate((
             "## The decision owner's recorded words\n\n" + SAVED + "\n\n## ​the decision owner's recorded words\n\n\"yes to all seven\"\n",
@@ -815,6 +870,7 @@ def test_invisible_format_characters_are_refused(tmp_path):
         assert any("invisible" in p for p in problems), i
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_look_alike_recorded_words_headings_are_still_sections(tmp_path):
     for i, heading in enumerate(("## &#8203;the decision owner's recorded words", "## &#x200B;the decision owner's recorded words",
                                  "## &ZeroWidthSpace;the decision owner's recorded words", "## The decision owner's recorded words️",
@@ -828,12 +884,14 @@ def test_look_alike_recorded_words_headings_are_still_sections(tmp_path):
         assert problems, heading
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_block_quotes_in_recorded_words_are_checked(tmp_path):
     assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, SAVED + "\n\n> yes to all seven"))
     # A saved answer given only as a block quote satisfies a Decided record.
     assert _decision_fixture(tmp_path / "b", 26, "> Approved: Q1–Q18 as recommended in the comment above") == []
 
 
+@pytest.mark.inputs("reviews", "backlog", "answers")
 def test_both_decision_checks_accept_a_block_quoted_approval(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
@@ -848,6 +906,7 @@ def test_both_decision_checks_accept_a_block_quoted_approval(tmp_path):
             if "0026" in p] == []
 
 
+@pytest.mark.inputs("gate")
 def test_counts_break_emitting_down_by_verb_and_predicate():
     c = run("counts")
     by = c["emitting_by_verb"]
@@ -898,6 +957,18 @@ def test_names_check_finds_the_owner_in_any_case_path_and_office_file(tmp_path):
         "prose.md:2: names the decision owner",
         "prose.md (displayed text):2: names the decision owner",
     ])
+
+
+def test_names_check_reads_every_file_where_there_is_no_git(tmp_path):
+    # A tree without .git (the share release): every file under the root is read, not only the tracked ones.
+    first = "Ha" + "mid"
+    (tmp_path / "deep").mkdir()
+    (tmp_path / "deep" / "prose.md").write_text(f"line one\n{first} approved it.\n")
+    (tmp_path / "clean.md").write_text("The decision owner approved it.\n")
+    (tmp_path / "__pycache__").mkdir()
+    (tmp_path / "__pycache__" / "x.pyc").write_text(first)
+    assert set(epm_facts.name_problems(str(tmp_path))) == {
+        "deep/prose.md:2: names the decision owner", "deep/prose.md (displayed text):2: names the decision owner"}
 
 
 def test_names_check_finds_a_name_split_by_markdown_or_html_formatting(tmp_path):
@@ -1055,7 +1126,20 @@ def _citation_fixture(tmp_path, doc):
     return epm_facts.citation_problems(root=str(tmp_path), answers=str(answers), decisions=str(decisions), files=["doc.md"])
 
 
-def test_citations_pass_on_the_repo():
+@pytest.mark.inputs("records", "answers")
+def test_citations_walk_every_markdown_file_where_there_is_no_git(tmp_path):
+    # files=None in a tree without .git (the share release): every .md under the root is read, nothing is tracked.
+    answers, decisions = tmp_path / "answers", tmp_path / "decisions"
+    answers.mkdir(); decisions.mkdir()
+    (answers / "answers-y.md").write_text("<!-- verbatim from urn:epm:pull:1:comment:7000001 -->\nship the ledger as it stands today\n")
+    (tmp_path / "deep").mkdir()
+    (tmp_path / "deep" / "doc.md").write_text('The decision owner wrote "drop the ledger from the plan" (`answers-y.md`).\n')
+    (tmp_path / "other.txt").write_text('The decision owner wrote "drop the ledger from the plan" (`answers-y.md`).\n')
+    problems = epm_facts.citation_problems(root=str(tmp_path), answers=str(answers), decisions=str(decisions))
+    assert problems and all(p.startswith("deep/doc.md") for p in problems), problems
+
+
+
     assert epm_facts.citation_problems() == []
 
 
