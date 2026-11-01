@@ -100,10 +100,13 @@ def finish(a, ontology=ONTOLOGY):
     p, c = set_lists(read(pipeline), read(config), a.module, a.old, new)
     if not os.path.isdir(source) or os.path.exists(target):
         raise SystemExit(f"cannot move {source} to {target}: the source is missing or the target exists")
+    # A failed write (a full disk) stops here with nothing changed; the two replaces are renames in one folder.
+    write(pipeline + ".new", p)
+    write(config + ".new", c)
     os.makedirs(folder, exist_ok=True)
     shutil.move(source, target)
-    write(pipeline, p)
-    write(config, c)
+    os.replace(pipeline + ".new", pipeline)
+    os.replace(config + ".new", config)
     print(f"{a.module} {a.old} moved to releases/previous/; the projection's lists name {new}")
 
 

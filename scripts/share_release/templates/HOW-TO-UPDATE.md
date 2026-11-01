@@ -22,7 +22,7 @@ ONT=business_architecture/ontology
    bash scripts/check.sh
    ```
 
-3. Run `scripts/check.sh` again after each change. It proves your copy is valid: every package equals a fresh build of its sources, the shapes conform, the competency questions answer and the tests pass. Do not share a change until it passes. In a Git copy, run `git add -A` first, because one test reads which generated pages Git tracks. The log shows skipped tests and a line that starts `FAIL a store request`. Both are expected: the skipped tests read what this release does not hold, and that line is a test of a failure. Only the last line, `all checks passed`, tells you the result.
+3. Run `scripts/check.sh` again after each change. It proves your copy is valid: every package equals a fresh build of its sources, the shapes conform, the competency questions answer and the tests pass. Do not share a change until it passes. In a Git copy, run `git add -A` first, because one test reads which generated pages Git tracks. The log shows skipped tests and a line that starts `FAIL a store request`. Both are expected. Most skipped tests read what this release does not hold, a few depend on your machine, and adding `-rs` to the script's pytest line prints each reason. The `FAIL` line is a test of a failure. The last line, `all checks passed`, tells you the result.
 
 ## Patch, minor or major
 

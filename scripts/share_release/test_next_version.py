@@ -83,3 +83,19 @@ def test_finish_changes_nothing_when_a_list_lacks_the_version(tmp_path):
     with pytest.raises(SystemExit):
         nv.finish(type("A", (), {"module": "kpi", "old": "1.3.0"}), str(ont))
     assert (ont / "releases" / "kpi" / "1.3.0").is_dir() and not (ont / "releases" / "previous").exists()
+
+
+def test_finish_moves_nothing_when_a_write_fails(tmp_path, monkeypatch):
+    ont = tmp_path
+    for v in ("1.3.0", "1.3.1"):
+        (ont / "releases" / "kpi" / v).mkdir(parents=True)
+    (ont / "projection" / "skill-run").mkdir(parents=True)
+    (ont / "projection" / "pipeline.py").write_text('("kpi", "1.3.0")')
+    (ont / "projection" / "skill-run" / "epm-config.json").write_text('"kpi": "1.3.0"')
+
+    def full_disk(path, text):
+        raise OSError("disk full")
+    monkeypatch.setattr(nv, "write", full_disk)
+    with pytest.raises(OSError):
+        nv.finish(type("A", (), {"module": "kpi", "old": "1.3.0"}), str(ont))
+    assert (ont / "releases" / "kpi" / "1.3.0").is_dir() and (ont / "projection" / "pipeline.py").read_text() == '("kpi", "1.3.0")'
