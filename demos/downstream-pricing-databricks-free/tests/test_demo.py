@@ -4,6 +4,7 @@ import csv
 import glob
 import datetime as dt
 import hashlib
+import inspect
 import os
 import re
 import sys
@@ -139,6 +140,20 @@ def metric_views():
         meas = body.split("measures:")[1]
         views[m.group(1)] = (set(re.findall(r"- name: (\w+)", dims)), set(re.findall(r"- name: (\w+)", meas)))
     return views
+
+
+def test_the_graph_separator_is_two_underscores_on_main_and_one_in_the_share_release():
+    # The ontology's names in Neo4j (EPM-DEC-001-0110): read from the two inputs themselves, so a wrong separator on
+    # main fails here; the two queries that name ontology properties build them with the separator, never a literal.
+    root = os.path.normpath(os.path.join(config.ROOT, "..", ".."))
+    marker, variable = os.path.isfile(os.path.join(root, "release.json")), bool(os.environ.get("EPM_SHARE_RELEASE"))
+    assert config.SHARE_RELEASE == (marker or variable)
+    assert config.GRAPH_SEP == ("_" if marker or variable else "__")
+    for name in ("acceptance.py", "tech_graph.py"):
+        with open(os.path.join(config.ROOT, "pricing_demo", name)) as f:
+            text = f.read()
+        assert "{GRAPH_SEP}" in text, name
+        assert not re.search(r"\b(skos|kpi|dcterms|org|core|vs|dp)__\w", text), name
 
 
 def test_finding_6_a_carried_eia_value_is_spot_anchored_not_real():
@@ -328,10 +343,315 @@ def test_finding_11_one_catalog_rule_for_every_step():
 
         def fetchall(self):
             return [(c,) for c in self.catalogs] if self.q == "SHOW CATALOGS" else [(s,) for s in self.idp_schemas]
-    env = {"DEMO_CATALOG": "workspace"}
+    env = {"DEMO_CATALOG": None}  # unset: idp_sbx only when setup's landing schema is there, else workspace
     assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["default"]), env) == "workspace"  # visible, not ours
     assert databricks.current_catalog(Cursor(["workspace"], []), env) == "workspace"
     assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["replica_landing"]), env) == "idp_sbx"
+
+
+class FakeCursor:
+    """A Databricks cursor that records every statement; SHOW CATALOGS is refused, because an explicit catalog is
+    used without asking the workspace."""
+
+    def __init__(self):
+        self.statements = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def execute(self, statement, params=None):
+        if statement == "SHOW CATALOGS":
+            raise AssertionError("the workspace was asked for its catalogs although DEMO_CATALOG is set")
+        self.statements.append(statement)
+
+    def fetchall(self):
+        last = self.statements[-1]
+        if last.startswith("SELECT COUNT") or last.startswith("SELECT MEASURE"):
+            return [(1,)]
+        if last.startswith("SHOW TABLES"):
+            # The schema's built objects where the build checks them (check_built), else one table, so counts counts it.
+            schema = last.rsplit(".", 1)[-1]
+            return [(None, name) for name in sorted(databricks.BUILT.get(schema, {"t"}))]
+        return []
+
+    def fetchone(self):
+        return (1,)
+
+
+IDENT = r"(?:[a-z_]\w*|`(?:[^`]|``)+`)"  # a bare identifier, or a backtick-quoted one, `` being a backtick inside
+THREE_PART = re.compile(rf"(?<![\w.`])({IDENT})\.({IDENT})\.({IDENT})(?![\w.`])")
+VOLUME_PATH = re.compile(r"/volumes/([a-z_]\w*)/")
+# A statement on a schema or volume names catalog.schema: the name after the verb must start with the catalog.
+SCHEMA_LEVEL = re.compile(rf"^(?:create schema if not exists|show tables in|drop schema if exists|drop volume if exists|"
+                          rf"create volume if not exists)\s+({IDENT})\.")
+# Inside a string literal a token (a run without spaces) that is a URL or a path may hold dots: the IRIs the
+# definitions views hold ('http://www.w3.org/...'), and volume paths. Any other token is read for three-part names.
+URL_OR_PATH = ("http://", "https://", "urn:", "/", ".")
+
+
+def sql_parts(statement):
+    """One pass over the statement: the code with each string literal replaced by '' and every comment dropped, and
+    the literals' contents. A literal is '...' or "..." (Databricks SQL allows both); a doubled quote ('' or "") and a
+    backslash-escaped quote stay inside it. A line comment runs from -- to the line's end, a block comment from /* to
+    */; neither reaches the code or the literals. A backtick-quoted identifier stays in the code as written."""
+    code, literals, i, n = [], [], 0, len(statement)
+    while i < n:
+        c = statement[i]
+        if c in "'\"":
+            j, text = i + 1, []
+            while j < n:
+                if statement[j] == "\\" and j + 1 < n:
+                    text.append(statement[j + 1])
+                    j += 2
+                elif statement[j] == c and j + 1 < n and statement[j + 1] == c:
+                    text.append(c)
+                    j += 2
+                elif statement[j] == c:
+                    break
+                else:
+                    text.append(statement[j])
+                    j += 1
+            literals.append("".join(text))
+            code.append("''")
+            i = j + 1
+        elif statement.startswith("--", i):
+            j = statement.find("\n", i)
+            i = n if j < 0 else j  # the newline itself stays in the code
+        elif statement.startswith("/*", i):
+            j = statement.find("*/", i + 2)
+            i = n if j < 0 else j + 2
+        elif c == "`":
+            j = i + 1
+            while j < n:
+                if statement[j] == "`" and j + 1 < n and statement[j + 1] == "`":
+                    j += 2
+                elif statement[j] == "`":
+                    break
+                else:
+                    j += 1
+            code.append(statement[i:j + 1])
+            i = j + 1
+        else:
+            code.append(c)
+            i += 1
+    return "".join(code), literals
+
+
+def plain(name):
+    """A parsed three-part name as catalog.schema.object, each component unquoted (`` inside a quoted one is a backtick)."""
+    return ".".join(part[1:-1].replace("``", "`") if part.startswith("`") else part for part in name)
+
+
+def names_in_text(text):
+    """Three-part names inside a literal's contents, token by token; a token that is a URL or a path is passed over."""
+    found = []
+    for token in text.split():
+        if not token.startswith(URL_OR_PATH):
+            found += [plain(m) for m in THREE_PART.findall(token)]
+    return found
+
+
+def only_catalog(statements, catalog, triples=None):
+    """Every statement names the demo's catalog and no other, in any letter case and with or without backticks:
+    each three-part name (in the code and inside string literals), each schema-level name and each volume path
+    starts with it, the one other table allowed being `triples`, the ontology's triple table, which the definitions
+    views read from the projection's catalog (EPM_TRIPLES); and each statement names at least one object of the
+    demo's catalog in its code, comments and literals aside, except the catalog's own creation and description."""
+    assert statements, "no statement ran"
+    catalog, triples = catalog.lower(), triples.lower() if triples else None
+    for st in statements:
+        code, literals = sql_parts(st.lower())
+        names = [plain(m) for m in THREE_PART.findall(code)] + [plain((m,)) + "." for m in SCHEMA_LEVEL.findall(code)]
+        names += [m + "." for m in VOLUME_PATH.findall(code + " " + " ".join(literals))]
+        in_text = [n for text in literals for n in names_in_text(text)]
+        others = {n for n in names + in_text if n.split(".")[0] != catalog and n != triples}
+        assert not others, (sorted(others), st)
+        own = [n for n in names if n.split(".")[0] == catalog]
+        if not own:
+            bare = code.strip()
+            assert bare == f"describe catalog {catalog}" or bare.startswith(f"create catalog if not exists {catalog} "), st
+        for banned in ("idp_sbx", "workspace"):  # the shared catalogs, as bare tokens anywhere but in the triple table's name
+            if banned != catalog:
+                outside = (code + " " + " ".join(literals)).replace(triples, "") if triples else code + " " + " ".join(literals)
+                assert not re.search(rf"\b{banned}\b", outside), (banned, st)
+
+
+def test_only_catalog_refuses_another_catalog_in_any_case_or_quoting_or_place():
+    triples = "workspace.epm_ontology.epm_triples"
+    only_catalog(["CREATE TABLE epm_validate.a.b AS SELECT 1", "CREATE SCHEMA IF NOT EXISTS epm_validate.s",
+                  "SHOW TABLES IN epm_validate.s", "DROP SCHEMA IF EXISTS epm_validate.s",
+                  "CREATE TABLE `epm_validate`.`a`.`b` AS SELECT 1",
+                  "CREATE TABLE epm_validate.a.b AS SELECT 'it''s' AS x FROM epm_validate.s.t",
+                  "CREATE TABLE epm_validate.a.b AS SELECT 'it\\'s' AS x FROM epm_validate.s.t WHERE y = 'v'",
+                  'CREATE TABLE epm_validate.a.b AS SELECT "say ""so"" or \\"not\\"" AS x FROM epm_validate.s.t',
+                  "CREATE VIEW epm_validate.a.v AS SELECT 'http://www.w3.org/2004/02/skos/core#prefLabel'",
+                  "CREATE VIEW epm_validate.a.v AS SELECT 'see https://www.w3.org/TR/skos-reference/ and urn:a.b.c'",
+                  "COPY INTO epm_validate.a.b FROM '/Volumes/epm_validate/a/raw/'",
+                  "CREATE TABLE epm_validate.a.b AS SELECT 1 -- a comment may mention other.x.y\n",
+                  "CREATE TABLE epm_validate.a.b AS SELECT 1 /* and so may other.x.y here */",
+                  "SELECT '-- not a comment' FROM epm_validate.a.b",
+                  "SELECT '/* not a comment */' FROM epm_validate.a.b"], "epm_validate")
+    only_catalog([f"CREATE VIEW epm_validate.a.v AS SELECT * FROM {triples}"], "epm_validate", triples)
+    for bad in ("CREATE TABLE IDP_SBX.a.b AS SELECT 1", "CREATE TABLE epm_validate.a.b AS SELECT * FROM Workspace.x.y",
+                "CREATE TABLE epm_validate.a.b AS SELECT * FROM other.x.y",
+                "CREATE TABLE epm_validate.a.b AS SELECT * FROM `other`.`x`.`y`",  # backtick-quoted
+                "CREATE TABLE epm_validate.a.b AS SELECT * FROM `other``catalog`.s.t",  # an escaped backtick inside
+                "CREATE TABLE epm_validate.a.b AS SELECT 'other.x.y'",  # inside a literal
+                'CREATE TABLE epm_validate.a.b AS SELECT "other.x.y"',  # inside a double-quoted literal
+                "CREATE TABLE epm_validate.a.b AS SELECT '@other.x.y'",  # beside punctuation, in no URL or path
+                "CREATE TABLE epm_validate.a.b AS SELECT 'other.x.y-suffix'",
+                "CREATE TABLE epm_validate.a.b AS SELECT 'it\\'s' AS x FROM other.s.t WHERE y = 'v'",  # after an escaped quote
+                "CREATE TABLE epm_validate.a.b AS SELECT 'it''s' AS x FROM other.s.t WHERE y = 'v'",  # after a doubled quote
+                "COPY INTO epm_validate.a.b FROM '/Volumes/idp_sbx/a/raw/'",
+                "SELECT 1", "SELECT 1 -- epm_validate", "SELECT 'epm_validate'",  # no object of the catalog
+                "SELECT 1 -- epm_validate.a.b", "SELECT 1 /* epm_validate.a.b */",  # a comment is no object
+                'SELECT "epm_validate.a.b"',  # a double-quoted string is no object
+                "CREATE TABLE epm_validate.a.b AS SELECT 'IDP_SBX'", "CREATE SCHEMA IF NOT EXISTS other.s",
+                "SHOW TABLES IN Other.s", "DROP SCHEMA IF EXISTS other.s"):
+        with pytest.raises(AssertionError):
+            only_catalog([bad], "epm_validate")
+    with pytest.raises(AssertionError):
+        only_catalog([f"CREATE VIEW epm_validate.a.v AS SELECT * FROM {triples}"], "epm_validate")  # not configured
+    with pytest.raises(AssertionError):  # the triple table alone is no demo object
+        only_catalog([f"SELECT * FROM {triples} WHERE object = 'epm_validate'"], "epm_validate", triples)
+    assert sql_parts("a 'b''c' d 'e\\'f' g -- h 'i'\nj /* k */ l \"m\"\"n\" `o``p`") == \
+        ("a '' d '' g \nj  l '' `o``p`", ["b'c", "e'f", 'm"n'])
+    assert plain(("`o``p`", "q", "`r`")) == "o`p.q.r"
+
+
+class FakeConn:
+    def __init__(self, cur):
+        self.cur = cur
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def cursor(self):
+        return self.cur
+
+
+def fake_connection(monkeypatch, catalog):
+    cur = FakeCursor()
+    e = {"DEMO_CATALOG": catalog, "DATABRICKS_HOST": "https://h", "DATABRICKS_TOKEN": "t", "DATABRICKS_HTTP_PATH": "/p",
+         "EPM_TRIPLES": "workspace.epm_ontology.epm_triples"}
+    monkeypatch.setattr(databricks, "connect", lambda: (FakeConn(cur), e))
+    return cur, e
+
+
+def test_an_explicit_demo_catalog_is_used_as_given_and_idp_sbx_only_when_it_is_unset(monkeypatch):
+    # The release validation set DEMO_CATALOG=epm_validate and must build there, never in the shared idp_sbx: the one
+    # rule (current_catalog) takes the value as given without a query; without DEMO_CATALOG the choice is idp_sbx.
+    given = {"DEMO_CATALOG": "epm_validate"}
+    assert databricks.explicit_catalog(given) == "epm_validate"
+    assert databricks.explicit_catalog({"DEMO_CATALOG": None}) is None and databricks.explicit_catalog({}) is None
+    assert databricks.current_catalog(FakeCursor(), given) == "epm_validate"
+    assert databricks.chosen_catalog is databricks.current_catalog
+
+    class Refuses(FakeCursor):
+        def execute(self, statement, params=None):
+            if statement.startswith("CREATE CATALOG"):
+                raise RuntimeError("no create rights")
+            super().execute(statement)
+    assert databricks.catalog(Refuses(), given) == "epm_validate"  # it may exist without create rights
+    assert databricks.catalog(Refuses(), {}) == "workspace"  # the default, when idp_sbx cannot be created
+    # databricks_env passes DEMO_CATALOG through as given, and leaves it None when nothing sets it.
+    base = {"DATABRICKS_HOST": "x.cloud.databricks.com", "DATABRICKS_TOKEN": "t", "DATABRICKS_HTTP_PATH": "/sql/1"}
+    monkeypatch.setattr(config.os.path, "exists", lambda path: False)  # no epm.env
+    monkeypatch.setattr(config, "env", lambda name, default=None: {**base, "DEMO_CATALOG": "epm_validate"}.get(name, default))
+    assert config.databricks_env()["DEMO_CATALOG"] == "epm_validate"
+    monkeypatch.setattr(config, "env", lambda name, default=None: base.get(name, default))
+    assert config.databricks_env()["DEMO_CATALOG"] is None
+
+
+def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys):
+    # setup, upload, build, counts, purge and tech_graph's sync, each run against a fake workspace with
+    # DEMO_CATALOG=epm_validate: every statement, path and drop names that catalog and none names idp_sbx.
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    assert databricks.setup() == "epm_validate"
+    assert cur.statements == ([f"CREATE CATALOG IF NOT EXISTS epm_validate COMMENT '{databricks.DEMO_COMMENT}'"]
+                              + [f"CREATE SCHEMA IF NOT EXISTS epm_validate.{s}" for s in databricks.SCHEMAS]
+                              + ["CREATE VOLUME IF NOT EXISTS epm_validate.replica_landing.raw"])
+    only_catalog(cur.statements, "epm_validate")
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    (tmp_path / "replica" / "price_assessment").mkdir(parents=True)
+    (tmp_path / "replica" / "price_assessment" / "t.parquet").write_bytes(b"PAR1")
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    monkeypatch.setattr(replicate, "check_replica", lambda: {"price_assessment/t": {"rows": 1}})
+    uploads = []
+    client = types.SimpleNamespace(files=types.SimpleNamespace(upload=lambda target, data, overwrite: uploads.append(target)))
+    sdk = types.SimpleNamespace(WorkspaceClient=lambda host, token: client)
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setitem(sys.modules, "databricks", types.SimpleNamespace(sdk=sdk))
+        mp.setitem(sys.modules, "databricks.sdk", sdk)
+        assert databricks.upload() == 1
+    assert uploads == ["/Volumes/epm_validate/replica_landing/raw/price_assessment/t.parquet"]
+    assert cur.statements == []  # the explicit catalog is chosen without a query
+
+    # The real build: every statement of sql/02 to sql/07 rendered for the catalog, the replica check over an empty
+    # manifest, and check_built over the fake's built objects. The definitions views read the ontology's triple table
+    # from the projection's catalog (EPM_TRIPLES), the one name outside the demo's catalog that may appear.
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    monkeypatch.setattr(replicate, "check_replica", lambda: {})
+    monkeypatch.setattr(replicate, "replicated_at", lambda: "2026-10-31T00:00:00")
+    databricks.build()
+    rendered = [st for path in sorted(glob.glob(os.path.join(config.ROOT, "sql", "0[2-9]_*.sql")))
+                for st in databricks.statements(path, "epm_validate", e["EPM_TRIPLES"])]
+    assert len(rendered) > 50
+    assert [st for st in cur.statements if not st.startswith(("SHOW TABLES", "SELECT COUNT", "SELECT MEASURE"))] == rendered
+    assert any(e["EPM_TRIPLES"] in st for st in rendered)  # sql/06 names the triple table
+    only_catalog(cur.statements, "epm_validate", e["EPM_TRIPLES"])
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    found = databricks.counts()
+    tables = {s: sorted(databricks.BUILT.get(s, {"t"})) for s in databricks.SCHEMAS[1:]}  # what the fake lists per schema
+    assert found == {f"{s}.{name}": 1 for s, names in tables.items() for name in names}  # every table counted
+    assert len(cur.statements) == len(tables) + sum(len(n) for n in tables.values())  # a SHOW TABLES per schema, a count per table
+    only_catalog(cur.statements, "epm_validate")
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    databricks.purge(execute=True, catalog="epm_validate", connection=(FakeConn(cur), e))
+    out = capsys.readouterr().out
+    assert "catalog epm_validate" in out and "purged" in out
+    drops = [st for st in cur.statements if st.startswith("DROP ")]
+    assert drops == databricks.purge_statements("epm_validate")  # every drop ran, each in the catalog
+    only_catalog(cur.statements, "epm_validate")  # the ownership check and the drops
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    monkeypatch.setattr(tech_graph, "neo4j_login", lambda store: ("bolt://fake", "neo4j", "pw"))
+
+    class Driver:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def execute_query(self, query, **params):
+            if "MATCH (n:Tech)" in query:
+                return [{"uri": "u", "labels": ["Tech", "GoldTable"], "p": {"uri": "u", "name": "g"}}], None, None
+            return [{"s": "u", "t": "READS_FROM", "o": "o", "ontology": False}], None, None
+    neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver()))
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setitem(sys.modules, "neo4j", neo4j)
+        assert tech_graph.sync("pipeline") == (1, 1)
+    kinds = [st.split(" epm_validate.tech_graph.")[0] for st in cur.statements]
+    assert kinds == ["DELETE FROM", "INSERT INTO", "SELECT COUNT(*) FROM"] * 2  # nodes, then edges, each deleted, filled, counted
+    only_catalog(cur.statements, "epm_validate")
+
+
+def test_without_demo_catalog_setup_builds_in_idp_sbx(monkeypatch):
+    cur = FakeCursor()
+    monkeypatch.setattr(databricks, "connect", lambda: (FakeConn(cur), {"DEMO_CATALOG": None}))
+    assert databricks.setup() == "idp_sbx"
+    assert cur.statements[:2] == [f"CREATE CATALOG IF NOT EXISTS idp_sbx COMMENT '{databricks.DEMO_COMMENT}'",
+                                  "CREATE SCHEMA IF NOT EXISTS idp_sbx.replica_landing"]
 
 
 def test_finding_20_a_database_commits_only_after_every_table_loaded(monkeypatch):

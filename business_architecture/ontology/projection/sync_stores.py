@@ -8,7 +8,7 @@ because a reload wipes it, and marks the stores it reloaded.
 
     python3 sync_stores.py expected [--ref origin/main]   # what a current store holds
     python3 sync_stores.py mark --store pipeline ...       # check a store against the repository, then mark it
-    python3 sync_stores.py check [--ref origin/main]       # the drift check: which stores are behind
+    python3 sync_stores.py check [--ref origin/main] [--store pipeline ...]   # the drift check: which stores are behind (default: all)
     python3 sync_stores.py sync [--cloud] [--dry-run]      # reload what is behind, then mark it
 
 The markers stay out of the projection: in Neo4j a node labelled EpmStoreMarker, never Resource, which the
@@ -41,11 +41,35 @@ STORES = (*NEO4J_STORES, "databricks")
 MARKER_FIELDS = ("catalog_datasets", "catalog_digest", "input_fingerprint")
 
 
+def apply_store_overrides():
+    """EPM_STORES_JSON names other stores for a test run, so the test never points at the loaded ones (the share
+    release's validation): {"pipeline": {"bolt": ..., "env": [...]}, "driver": {...}, "aura": {"env": [...]},
+    "driver_reports": [...], "databricks_env": "..."}. Each key is optional."""
+    global DRIVER_REPORTS, DATABRICKS_ENV
+    raw = os.environ.get("EPM_STORES_JSON")
+    if not raw:
+        return
+    over = json.loads(raw)
+    for store in NEO4J_STORES:
+        if store in over:
+            bolt = over[store].get("bolt", NEO4J_STORES[store][0])
+            envs = tuple(over[store].get("env", NEO4J_STORES[store][1]))
+            NEO4J_STORES[store] = (bolt, envs)
+    if "driver_reports" in over:
+        DRIVER_REPORTS = tuple(over["driver_reports"])
+    if "databricks_env" in over:
+        DATABRICKS_ENV = over["databricks_env"]
+
+
+apply_store_overrides()
+
+
 # ---------- what a current store holds ----------
 
 def repo_file(path, ref=None):
-    """A file's text in the working tree, or at a git ref (main's newest catalog for the drift check)."""
-    if ref is None:
+    """A file's text in the working tree, or at a git ref (main's newest catalog for the drift check). The ref
+    `worktree` reads the tree itself, for a tree without Git such as the share release."""
+    if ref is None or ref == "worktree":
         return open(os.path.join(REPO, path)).read()
     return subprocess.run(["git", "-C", REPO, "show", f"{ref}:{path}"], check=True, capture_output=True, text=True).stdout
 
@@ -77,13 +101,13 @@ def expected(ref=None):
 
 # ---------- the drift check ----------
 
-def drift(markers, live, want):
+def drift(markers, live, want, stores=STORES):
     """Each store's status from its marker, its live count and the repository's expected values:
     current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or
     unreachable (the store could not be read: no connection, no login file or a missing table, for example; the
-    error's name follows the word)."""
+    error's name follows the word). `stores` narrows the report to the stores named (check --store)."""
     rows = []
-    for store in STORES:
+    for store in stores:
         m = markers.get(store)
         if isinstance(live.get(store), str):
             rows.append((store, "unreachable", live[store]))
@@ -142,9 +166,11 @@ def resource_counts(session):
     return nodes, edges
 
 
-def read_markers_and_counts():
+def read_markers_and_counts(stores=STORES):
+    """Each named store's marker and live count; a store not named is not read (check --store, so a validation whose
+    test stores are the two local Neo4j stores never touches AuraDB or Databricks)."""
     markers, live = {}, {}
-    for store in NEO4J_STORES:
+    for store in [s for s in NEO4J_STORES if s in stores]:
         try:
             driver, session = neo4j_session(store)
             with driver, session:
@@ -153,6 +179,8 @@ def read_markers_and_counts():
                 live[store] = list(resource_counts(session))
         except Exception as err:  # a store that can't be read (down, or no login file) reads as unreachable, with the reason
             markers[store], live[store] = None, f"unreachable ({type(err).__name__})"
+    if "databricks" not in stores:
+        return markers, live
     try:
         conn, schema = databricks()
         with conn, conn.cursor() as cur:
@@ -172,7 +200,15 @@ def read_markers_and_counts():
 # ---------- marking ----------
 
 def commit():
+    """The checkout's commit, written into each marker; a tree without Git (the share release) says so instead."""
+    if not os.path.exists(os.path.join(REPO, ".git")):
+        return "unknown (not a Git checkout)"
     return subprocess.run(["git", "-C", REPO, "rev-parse", "--short=8", "HEAD"], capture_output=True, text=True).stdout.strip()
+
+
+def default_ref():
+    """Where check and sync read the newest catalog: origin/main in a checkout; the tree itself where there is no Git."""
+    return "origin/main" if os.path.exists(os.path.join(REPO, ".git")) else "worktree"
 
 
 def now():
@@ -275,8 +311,10 @@ def sync(cloud, dry_run, ref, skills):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("command", choices=("expected", "mark", "check", "sync"))
-    ap.add_argument("--ref", default="origin/main", help="check, sync: the git ref whose catalog is newest (default origin/main)")
-    ap.add_argument("--store", action="append", choices=STORES, help="mark: these stores")
+    ap.add_argument("--ref", default=default_ref(), help="check, sync: the git ref whose catalog is newest (default origin/main "
+                    "in a checkout; worktree, the default without Git, reads this tree)")
+    ap.add_argument("--store", action="append", choices=STORES,
+                    help="mark: these stores; check: read and judge only these stores (default: every store)")
     ap.add_argument("--cloud", action="store_true", help="sync: also reload AuraDB and Databricks (the full driver run)")
     ap.add_argument("--dry-run", action="store_true", help="sync: print the commands, run nothing")
     ap.add_argument("--skills", default=os.environ.get("EPM_SKILLS", "~/.agents/skills"),
@@ -289,7 +327,8 @@ def main():
             raise SystemExit("mark: name the stores with --store")
         mark(args.store)  # a marker records what the working tree's catalog says the store was loaded from
     elif args.command == "check":
-        rows = drift(*read_markers_and_counts(), expected(args.ref))
+        stores = tuple(args.store) if args.store else STORES
+        rows = drift(*read_markers_and_counts(stores), expected(args.ref), stores)
         for store, status, why in rows:
             print(f"{store:<11} {status:<9} {why}")
         sys.exit(0 if all(status == "current" for _, status, _ in rows) else 1)

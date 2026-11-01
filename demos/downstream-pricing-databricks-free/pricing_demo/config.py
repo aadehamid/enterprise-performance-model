@@ -15,6 +15,11 @@ WINDOW_END = dt.date(2026, 10, 20)
 # EIA's weekly data by PADD reaches six years back, so a five-year seasonal average exists for every week in the window.
 WEEKLY_START = dt.date(2020, 10, 16)
 SEED = 20261025
+# The ontology graph's names in Neo4j: prefix, separator, local name. n10s writes two underscores; the share
+# release renames them to one (EPM-DEC-001-0110), so a query builds its names with this separator.
+# The share release (release.json at the tree's root, or EPM_SHARE_RELEASE set) names graph elements with one underscore.
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(ROOT, "..", "..", "release.json"))
+GRAPH_SEP = "_" if SHARE_RELEASE else "_" * 2
 
 # The names the demo uses for the source systems: a public product name where one exists (RightAngle, Aspen PIMS),
 # otherwise a generic one (the decision owner, 2026-10-28). The real names stay in the ontology; README.md maps
@@ -56,8 +61,9 @@ def env(name, default=None):
 
 
 def databricks_env():
-    """Host, token, HTTP path and catalog, from the environment, .env, or ~/.config/databricks/epm.env, and EPM_TRIPLES,
-    the ontology's triple table, which the projection driver writes to epm.env's catalog and schema."""
+    """Host, token, HTTP path and DEMO_CATALOG (None when unset), from the environment, .env, or
+    ~/.config/databricks/epm.env, and EPM_TRIPLES, the ontology's triple table, which the projection driver writes to
+    epm.env's catalog and schema."""
     values = {k: env(k) for k in ("DATABRICKS_HOST", "DATABRICKS_TOKEN", "DATABRICKS_HTTP_PATH", "DEMO_CATALOG", "EPM_TRIPLES")}
     projection = {"DATABRICKS_CATALOG": "workspace", "DATABRICKS_SCHEMA": "epm_ontology"}
     path = os.path.expanduser("~/.config/databricks/epm.env")
@@ -68,14 +74,14 @@ def databricks_env():
                 k, v = k.strip(), v.strip().strip('"').strip("'")
                 if k in values and not values[k]:
                     values[k] = v
-                if k == "DATABRICKS_CATALOG" and not values["DEMO_CATALOG"]:
-                    values["DEMO_CATALOG"] = v
                 if k in projection and v:
                     projection[k] = v
     missing = [k for k in ("DATABRICKS_HOST", "DATABRICKS_TOKEN", "DATABRICKS_HTTP_PATH") if not values[k]]
     if missing:
         raise SystemExit("Databricks settings missing: " + ", ".join(missing))
-    values["DEMO_CATALOG"] = values["DEMO_CATALOG"] or "workspace"
+    # DEMO_CATALOG stays unset when nothing names it: the Databricks steps then use idp_sbx (databricks.py). The
+    # projection's DATABRICKS_CATALOG in epm.env is its own setting and no longer stands in for it.
+    values["DEMO_CATALOG"] = values["DEMO_CATALOG"] or None
     values["EPM_TRIPLES"] = values["EPM_TRIPLES"] or "{DATABRICKS_CATALOG}.{DATABRICKS_SCHEMA}.epm_triples".format(**projection)
     values["DATABRICKS_HOST"] = values["DATABRICKS_HOST"].rstrip("/")
     if not values["DATABRICKS_HOST"].startswith("https://"):

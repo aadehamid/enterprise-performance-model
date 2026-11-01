@@ -48,6 +48,18 @@ SYSTEM_MODULE = os.path.join(HERE, "..", "system", "systems.csv")
 # The system module's systems the process map does not name, such as PRM since system 1.5.0 (EPM-DEC-001-0100, 0108).
 SYSTEM_OTHERS = os.path.join(HERE, "..", "system", "other-systems.csv")
 CHANGE_NOTES = os.path.join(HERE, "change-notes.csv")
+# A change note ends with its record, "(EPM-DEC-001-0108)." on main. The share release carries no records and writes
+# "(the decision of 2026-10-27)." instead (EPM-DEC-001-0110); that form is accepted only in release mode
+# (EPM_SHARE_RELEASE, or release.json at the tree's root), so a note on main must still cite its record.
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(HERE, "..", "..", "..", "release.json"))
+
+
+def note_form(share):
+    """The form a change note must take: dated, and ending with its record; in release mode the record may be a date."""
+    return r"\d{4}-\d{2}-\d{2}: .*\((?:EPM-DEC-001-\d{4}" + (r"|the decision of \d{4}-\d{2}-\d{2}" if share else "") + r")\)\.$"
+
+
+NOTE_FORM = note_form(SHARE_RELEASE)
 CODE_MAPPINGS = os.path.join(HERE, "code-list-mappings.csv")
 # The definitions' sources are shared with the system module (item G, EPM-DEC-001-0099).
 SYSTEM_SOURCES = os.path.join(HERE, "..", "system", "sources.csv")
@@ -449,7 +461,7 @@ def add_change_notes(graphs):
         where = [g for g in graphs if (term, None, None) in g]
         if not where:
             problems.append(f"change-notes.csv: {r['term']} is not a term the module builds")
-        elif not re.match(r"\d{4}-\d{2}-\d{2}: .*\(EPM-DEC-001-\d{4}\)\.$", r["note"]):
+        elif not re.match(NOTE_FORM, r["note"]):
             problems.append(f"change-notes.csv: {r['term']}: the note must start with its date and end with its record")
         else:
             where[0].add((term, SKOS.changeNote, Literal(r["note"], lang="en")))

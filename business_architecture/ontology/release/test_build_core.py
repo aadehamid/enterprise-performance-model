@@ -17,6 +17,9 @@ from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS, XSD
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import build_core as b  # noqa: E402
+import build_module as bm  # noqa: E402  (release mode: EPM_SHARE_RELEASE, or release.json at the tree's root)
+if bm.SHARE_RELEASE and not os.path.isdir(b.RELEASE_DIR):  # noqa: E402
+    raise unittest.SkipTest("this core package did not ship (the share release holds the newest and previous packages only)")
 
 BUILT = b.build()
 

@@ -296,6 +296,7 @@ class Shapes(unittest.TestCase):
 def name_tokens(text):
     """Lower-case word tokens, with accents removed and CamelCase split, so a name written
     "Name", "NAME", "name-surname", "NameSurname" or with an accent still matches."""
+    text = re.sub(r"base64,[A-Za-z0-9+/=]{64,}", " ", text)  # an embedded font or image, not words
     text = unicodedata.normalize("NFKD", text)
     text = "".join(c for c in text if not unicodedata.combining(c))
     text = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", text)
@@ -307,8 +308,12 @@ class Privacy(unittest.TestCase):
         # EPM-DEC-001-0040: personas stay, the people's names do not. Every tracked file is
         # read, whatever its extension, and so is every file in this folder before it is
         # committed. A file holding a NUL byte is binary and skipped.
-        tracked = subprocess.run(["git", "ls-files", "-z"], cwd=bm.REPO, capture_output=True, check=True).stdout
-        paths = {os.path.join(bm.REPO, os.fsdecode(n)) for n in tracked.split(b"\0") if n}
+        if os.path.exists(os.path.join(bm.REPO, ".git")):  # a folder, or a file in a worktree
+            tracked = subprocess.run(["git", "ls-files", "-z"], cwd=bm.REPO, capture_output=True, check=True).stdout
+            paths = {os.path.join(bm.REPO, os.fsdecode(n)) for n in tracked.split(b"\0") if n}
+        else:  # a tree without Git, such as the share release: every file in it
+            paths = {os.path.join(r, f) for r, ds, fs in os.walk(bm.REPO) for f in fs
+                     if not any(part in (".git", "__pycache__", ".venv") for part in r.split(os.sep))}
         paths |= {p for p in glob.glob(os.path.join(HERE, "*")) if os.path.isfile(p)}
         checked = 0
         for path in sorted(p for p in paths if os.path.isfile(p)):

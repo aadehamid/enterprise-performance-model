@@ -7,6 +7,7 @@ from party/ (EPM-DEC-001-0075).
 Run: python3 -m pytest test_ref_mpc.py (needs rdflib, pyshacl).
 """
 import os
+import sys
 import unittest
 from decimal import Decimal
 
@@ -16,6 +17,18 @@ from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ORGANIZATION = os.path.join(HERE, "..", "organization")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import build_module as bm  # noqa: E402  (release mode, and where a released package sits in either layout)
+
+
+def core_shapes_graph():
+    """Core 1.0.0's shapes, which hold the source shape (EPM-DEC-001-0033). In the share release, which holds the
+    newest and previous core only, the newest core's shapes carry the same shape; on main 1.0.0 is always on disk."""
+    folder = bm.package_folder("core", "1.0.0")
+    if folder is None and bm.SHARE_RELEASE:
+        folder = os.path.join(bm.ONTOLOGY, "releases", "core", bm.newest_on_disk("core"))
+    return Graph().parse(os.path.join(folder, "shapes.ttl"))
+
 REF = Namespace("https://w3id.org/lsc/ontology/modules/ref-mpc/")
 ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
 ORG = Namespace("http://www.w3.org/ns/org#")
@@ -43,7 +56,7 @@ class Facts(unittest.TestCase):
     def test_the_module_meets_the_core_source_shape(self):
         # Core requires every dcterms:source target to be a titled bibliographic resource. A source
         # node gives its URL as a citation, as core's own source nodes do (EPM-DEC-001-0033).
-        core_shapes = Graph().parse(os.path.join(HERE, "..", "releases", "core", "1.0.0", "shapes.ttl"))
+        core_shapes = core_shapes_graph()
         ok, _, text = validate(MODULE, shacl_graph=core_shapes)
         self.assertTrue(ok, text)
         # The reference parties cite MPLX's 10-K, src:mplx-s01, which meets the same shape (Pi on #341).
@@ -205,7 +218,7 @@ class Brands(unittest.TestCase):
         self.assertFalse(validate(g, shacl_graph=SHAPES)[0])
 
     def test_the_brands_meet_the_core_source_shape(self):
-        core_shapes = Graph().parse(os.path.join(HERE, "..", "releases", "core", "1.0.0", "shapes.ttl"))
+        core_shapes = core_shapes_graph()
         ok, _, text = validate(self.BRANDS, shacl_graph=core_shapes)
         self.assertTrue(ok, text)
 

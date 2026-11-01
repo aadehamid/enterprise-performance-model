@@ -26,10 +26,11 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF, SKOS, XSD
 
 import build_core_2_2 as prev
+import frozen_sources
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.dirname(HERE)
-BASE = os.path.join(ONTOLOGY, "releases", "core", "2.2.0")
+BASE = frozen_sources.package_dir(ONTOLOGY, "core", "2.2.0")
 SOURCE_PATH = prev.SOURCE_PATH
 # The map as 2.2.0 was built from it, and the map as 2.3.0 is built from it: the merge of the pull
 # request that added CM 1.3.7.1.7, the last change to the map on main before this release.

@@ -6,6 +6,8 @@
   "input_fingerprint": "012e0f3b8e612cb23dab143d19776d62fe15063486317d8d6698c848d083aea8",
   "nodes": 4193,
   "relationships": 21767,
+  "rename_lossless": true,
+  "renamed": {},
   "roundtrip_added": 0,
   "roundtrip_lost": 0,
   "samples": {
@@ -13,6 +15,7 @@
     "lost": [],
     "violations": []
   },
+  "separator": "__",
   "shacl_violations_in_graph": 0,
   "shapes_fingerprint": "6a39efa2f802957740f91687f3f972aad3bab051e93931310eb67034c2e6c0a1",
   "versions": {

@@ -9,6 +9,7 @@ import re
 import json
 import os
 import unittest
+from unittest import mock
 
 from rdflib import Graph, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF
@@ -74,10 +75,34 @@ def approval_holds(name, m):
     path, words = m["approval"]
     if (path, words) != APPROVALS[name]:
         return False
+    if bm.SHARE_RELEASE and not os.path.exists(os.path.join(bm.ONTOLOGY, path)):
+        # The share release carries no answers folder: its builders name the review comments of a subject matter
+        # expert instead of a file, and the words still travel with the package (EPM-DEC-001-0110).
+        return "subject matter expert" in path
     with open(os.path.join(bm.ONTOLOGY, path)) as f:
         # The decision owner's words sit in the body; Claude's context sits in HTML comments.
         body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)
     return words in body
+
+
+def shipped(tc, name, version):
+    """The package's folder in either layout (build_module.package_folder). In the share release a package that did
+    not ship skips the test; on main every package is on disk, so a missing one fails."""
+    folder = bm.package_folder(name, version)
+    if folder is None and bm.SHARE_RELEASE:
+        tc.skipTest(f"{name} {version} did not ship (the share release holds each module's newest and previous packages only)")
+    tc.assertIsNotNone(folder, f"{name} {version} is not on disk under releases/")
+    return folder
+
+
+def approval_file(tc, folder):
+    """The approval file a package's manifest names. The share release's manifests name none (approval.file comes
+    out, EPM-DEC-001-0110), so there the test skips; on main the field is always there."""
+    with open(os.path.join(folder, "manifest.json")) as f:
+        approved = json.load(f)["approved_by"]
+    if bm.SHARE_RELEASE and "recorded_in" not in approved:
+        tc.skipTest("the manifest's approval file does not ship (the share release names a subject matter expert instead)")
+    return approved["recorded_in"]
 
 
 class Packages(unittest.TestCase):
@@ -119,7 +144,7 @@ class Packages(unittest.TestCase):
             for dep, version in bm.dependencies(name).items():
                 with self.subTest(module=name, dep=dep):
                     # The dependency's package must be on disk, not only in the builder's own table.
-                    package = os.path.join(bm.ONTOLOGY, "releases", dep, version)
+                    package = os.path.join(shipped(self, dep, version))
                     self.assertTrue(os.path.isfile(os.path.join(package, "manifest.json")), f"{name} names {dep} {version}")
                     with open(os.path.join(package, "manifest.json")) as f:
                         self.assertEqual(json.load(f)["version"], version)
@@ -159,7 +184,7 @@ class EarlierReleases(unittest.TestCase):
         # The builder now builds organization 2.0.0 and ref-mpc 1.1.0; each released 1.0.0 package
         # must still match its own manifest.
         for name in ("organization", "ref-mpc", "kpi", "value-stream", "data-product", "party", "integration"):
-            out = os.path.join(bm.ONTOLOGY, "releases", name, "1.0.0")
+            out = os.path.join(shipped(self, name, "1.0.0"))
             with open(os.path.join(out, "manifest.json")) as f:
                 manifest = json.load(f)
             self.assertEqual(manifest["version"], "1.0.0")
@@ -183,6 +208,12 @@ class EarlierReleases(unittest.TestCase):
             self.assertFalse(set(outside) & set(released), path)
 
     def test_the_new_releases_require_the_current_ones(self):
+        if bm.SHARE_RELEASE:
+            # The share release rebuilds every newest package against the newest versions (EPM-DEC-001-0110).
+            for name in bm.MODULES:
+                for dep, version in bm.dependencies(name).items():
+                    self.assertEqual(version, bm.newest_on_disk("core") if dep == "core" else bm.label(bm.MODULES[dep]), (name, dep))
+            return
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.1.0", "party": "2.0.0"})  # 2.0.0 and 1.0.0 in 1.2.0 (0080); 1.3.0 (0108)
         self.assertEqual(bm.dependencies("organization"), {"core": "2.3.0"})  # 2.1.0 in 2.0.0; 2.3.0 since 2.1.0 (0106)
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0; 1.2.0 too
@@ -200,7 +231,30 @@ class EarlierReleases(unittest.TestCase):
             "core": "2.4.0", "organization": "2.2.0", "kpi": "1.2.0", "data-product": "1.2.0",
             "value-stream": "1.2.0", "system": "1.5.0", "lane": "1.1.0", "market-data": "1.1.0", "party": "2.1.0"})  # 2.5.0
 
+    def test_in_release_mode_the_closure_reads_the_builders_table_and_no_manifest(self):
+        # The export rebuilds the newest packages in some order, so a manifest not yet rebuilt still names the old
+        # pins (system 1.2.0, core 2.3.0): in release mode the closure never opens one (EPM-DEC-001-0110).
+        def manifest_opened(dep, version):
+            raise AssertionError(f"released_requires({dep}, {version}) was read in release mode")
+        with mock.patch.object(bm, "SHARE_RELEASE", True), mock.patch.object(bm, "released_requires", manifest_opened), \
+                mock.patch.object(bm, "newest_on_disk", lambda module: "9.9.9"):
+            def reach(name):
+                # Every module reachable through the builders' raw depends_on lists (core reaches nothing).
+                seen, todo = set(), list(bm.MODULES[name]["depends_on"])
+                while todo:
+                    d = todo.pop()
+                    if d not in seen:
+                        seen.add(d)
+                        todo += bm.MODULES[d]["depends_on"] if d in bm.MODULES else []
+                return seen
+            newest = lambda d: "9.9.9" if d == "core" else bm.label(bm.MODULES[d])
+            self.assertEqual(reach("value-stream"), {"core", "data-product", "kpi", "system"})
+            for name in bm.MODULES:
+                self.assertEqual(bm.released_closure(name), {d: newest(d) for d in reach(name)}, name)
+
     def test_a_check_loads_one_release_of_each_module(self):
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set, so the pinned closures do not hold")
         # value-stream reaches core three times: directly, and through kpi 1.2.0 and data-product 1.2.0, each at 2.3.0;
         # data-product also reaches system 1.2.0. One release of each loads.
         self.assertEqual(bm.released_closure("value-stream"), {"core": "2.3.0", "data-product": "1.2.0", "kpi": "1.2.0",
@@ -252,6 +306,8 @@ class EarlierReleases(unittest.TestCase):
             bm.released_requires = real
 
     def test_the_validated_graph_holds_one_core_release(self):
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set, so the pinned closures do not hold")
         # Codex round 1 on EPM-DEC-001-0077, item 3: the graph the shapes see, not only the version table.
         core = URIRef(bm.MODULES_NS + "core")
         expected = {"value-stream": "2.3.0", "market-data": "2.3.0", "ref-mpc": "2.4.0"}  # market-data 1.1.0 (0100); ref-mpc 1.3.0 (0108)
@@ -267,6 +323,8 @@ class EarlierReleases(unittest.TestCase):
             self.assertNotIn((URIRef("https://w3id.org/lsc/ontology/process/" + slug), decision, review), data)
 
     def test_check_hands_the_validator_one_core_release(self):
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set, so the pinned closures do not hold")
         # Codex round 2: observe the graph check() passes to SHACL itself, not only the helper's result.
         core = URIRef(bm.MODULES_NS + "core")
         review = URIRef(bm.MODULES_NS + "core/apqc-mapping-decision/review-link")
@@ -292,6 +350,8 @@ class EarlierReleases(unittest.TestCase):
             bm.validate = real
 
     def test_a_later_dependency_release_leaves_the_released_packages_unchanged(self):
+        if bm.SHARE_RELEASE:
+            self.skipTest("release mode: the pins move to the newest set, so the pinned closures do not hold")
         # Codex round 1: kpi 1.1.0 and a later data-product must not change value-stream or market-data 1.0.0,
         # nor what their checks load (closures come from each selected release's own manifest).
         saved = {n: dict(bm.MODULES[n]) for n in ("kpi", "data-product")}
@@ -333,7 +393,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_ref_mpc_1_1_0_is_untouched(self):
         # A later ref-mpc is built now; the released 1.1.0 package must still match its own manifest.
-        out = os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.1.0")
+        out = os.path.join(shipped(self, "ref-mpc", "1.1.0"))
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
         self.assertEqual(manifest["version"], "1.1.0")
@@ -343,7 +403,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_ref_mpc_1_2_0_is_untouched(self):
         # ref-mpc 1.3.0 is built now; the released 1.2.0 package must still match its own manifest.
-        out = os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.2.0")
+        out = os.path.join(shipped(self, "ref-mpc", "1.2.0"))
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
         self.assertEqual(manifest["version"], "1.2.0")
@@ -353,7 +413,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_ref_mpc_1_3_0_holds_the_companies_the_parties_and_the_brands(self):
         # EPM-DEC-001-0108, amendment of 2026-10-27: the brands join the two parts of 1.2.0.
-        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.3.0", "ref-mpc.ttl"))
+        released = Graph().parse(os.path.join(shipped(self, "ref-mpc", "1.3.0"), "ref-mpc.ttl"))
         header = URIRef(bm.MODULES_NS + "ref-mpc")
         released.remove((header, None, None))
         sources = Graph()
@@ -363,7 +423,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(set(released), set(sources))
         for slug in ("marathon", "arco", "tesoro"):
             self.assertIn((URIRef(bm.MODULES_NS + "ref-mpc/brand/" + slug), None, None), released)
-        with open(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.3.0", "manifest.json")) as f:
+        with open(os.path.join(shipped(self, "ref-mpc", "1.3.0"), "manifest.json")) as f:
             manifest = json.load(f)
         self.assertEqual(manifest["approved_by"]["recorded_in"], BRANDS[0])
 
@@ -376,7 +436,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_ref_mpc_1_2_0_holds_the_companies_and_the_parties(self):
         # EPM-DEC-001-0080: ref-mpc.ttl and the reference parties moved from party/ (EPM-DEC-001-0075).
-        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.2.0", "ref-mpc.ttl"))
+        released = Graph().parse(os.path.join(shipped(self, "ref-mpc", "1.2.0"), "ref-mpc.ttl"))
         header = URIRef(bm.MODULES_NS + "ref-mpc")
         released.remove((header, None, None))
         sources = Graph()
@@ -388,7 +448,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_kpi_1_0_1_is_untouched(self):
         # kpi 1.1.0 is built now; the released 1.0.1 package must still match its own manifest.
-        out = os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.0.1")
+        out = os.path.join(shipped(self, "kpi", "1.0.1"))
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
         self.assertEqual(manifest["version"], "1.0.1")
@@ -415,7 +475,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_kpi_1_1_0_is_untouched(self):
         # kpi 1.1.1 is built now; the released 1.1.0 package must still match its own manifest.
-        out = os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.1.0")
+        out = os.path.join(shipped(self, "kpi", "1.1.0"))
         with open(os.path.join(out, "manifest.json")) as f:
             manifest = json.load(f)
         for fname, digest in manifest["files"].items():
@@ -426,6 +486,8 @@ class EarlierReleases(unittest.TestCase):
         # value-stream 1.0.0, market-data and integration were released against kpi 1.0.1 and keep naming it;
         # value-stream 1.1.0 requires kpi 1.1.0 (EPM-DEC-001-0090), and its 1.0.0 manifest is unchanged.
         # integration 2.0.0 requires kpi 1.1.1 (EPM-DEC-001-0094); its 1.0.0 manifest still names 1.0.1.
+        for name in ("market-data", "integration", "value-stream"):
+            shipped(self, name, "1.0.0")
         self.assertEqual(bm.released_requires("market-data", "1.0.0")["kpi"], "1.0.1")  # 1.1.0 requires kpi 1.2.0 (0100)
         self.assertEqual(bm.released_requires("integration", "1.0.0")["kpi"], "1.0.1")
         self.assertEqual(bm.released_requires("value-stream", "1.0.0")["kpi"], "1.0.1")
@@ -499,8 +561,7 @@ class EarlierReleases(unittest.TestCase):
         # EPM-DEC-001-0104: system 1.4.0 and party 1.4.0, minors Claude approved under the delegation and the brief.
         # Since system 1.5.0 and party 2.0.0 (EPM-DEC-001-0108) the builder builds neither; their packages keep it.
         for name in ("system", "party"):
-            with open(os.path.join(bm.ONTOLOGY, "releases", name, "1.4.0", "manifest.json")) as f:
-                self.assertEqual(json.load(f)["approved_by"]["recorded_in"], NIGHT_BRIEF[0])
+            self.assertEqual(approval_file(self, shipped(self, name, "1.4.0")), NIGHT_BRIEF[0])
 
     def test_the_customer_inputs_releases_carry_the_alignment(self):
         # EPM-DEC-001-0108: party 2.0.0, a major the decision owner approved by aligning with the plan that names it;
@@ -512,8 +573,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual((m["version"], m["stage"], m["issued"]), ("1.5.0", None, "2026-10-27"))
         self.assertIn("EPM-DEC-001-0108", m["decisions"])
         for name, version in (("party", "2.0.0"), ("integration", "2.4.0")):
-            with open(os.path.join(bm.ONTOLOGY, "releases", name, version, "manifest.json")) as f:
-                self.assertEqual(json.load(f)["approved_by"]["recorded_in"], CUSTOMER_INPUTS[0])
+            self.assertEqual(approval_file(self, shipped(self, name, version)), CUSTOMER_INPUTS[0])
         for name, version in (("party", "2.1.0"), ("integration", "2.5.0")):
             m = bm.MODULES[name]
             self.assertEqual(m["approval"], DELEGATED)
@@ -529,14 +589,12 @@ class EarlierReleases(unittest.TestCase):
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-25"))
         # Since kpi 1.3.0 (EPM-DEC-001-0109) the builder builds kpi 1.3.0; kpi 1.2.0's package keeps the approval it names.
-        with open(os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.2.0", "manifest.json")) as f:
-            self.assertEqual(json.load(f)["approved_by"]["recorded_in"], ITEM_F[0])
+        self.assertEqual(approval_file(self, shipped(self, "kpi", "1.2.0")), ITEM_F[0])
 
     def test_the_close_out_releases_carry_the_close_out_approval(self):
         # EPM-DEC-001-0088: the decision owner approved the six close-out releases together. Since value-stream 1.2.0
         # (EPM-DEC-001-0106) the builder builds none of them; value-stream 1.1.0's package keeps the approval it names.
-        with open(os.path.join(bm.ONTOLOGY, "releases", "value-stream", "1.1.0", "manifest.json")) as f:
-            self.assertEqual(json.load(f)["approved_by"]["recorded_in"], CLOSEOUT[0])
+        self.assertEqual(approval_file(self, shipped(self, "value-stream", "1.1.0")), CLOSEOUT[0])
 
 
 class BuilderGate(unittest.TestCase):

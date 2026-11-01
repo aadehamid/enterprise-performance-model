@@ -55,16 +55,17 @@ Rerun it after any input or shape changes. `run_local.sh` runs steps 4 to 7 in o
 5. Start Neo4j 2025.06.2 with the plugins folder mounted. The image downloads APOC itself (`NEO4J_PLUGINS`), and n10s loads from the mounted jar. Wait until `docker logs epm-lpg` prints `Started.`
 
    ```bash
-   docker run -d --name epm-lpg -p 17687:7687 -e NEO4J_AUTH=neo4j/<password> -e NEO4J_PLUGINS='["apoc"]' \
+   read -rs NEO4J_PASSWORD && export NEO4J_PASSWORD   # the password, in the variable the next two commands read
+   docker run -d --name epm-lpg -p 17687:7687 -e NEO4J_AUTH="neo4j/$NEO4J_PASSWORD" -e NEO4J_PLUGINS='["apoc"]' \
      -e NEO4J_dbms_security_procedures_unrestricted='apoc.*,n10s.*' \
      -v "$IMPORT":/import -v "$PLUGINS":/plugins neo4j:2025.06.2
    ```
 
-6. Load and verify. This step checks the rules and the shapes, writes the N-Triples and the in-graph shapes into the import folder, loads them, runs the three checks, and writes `projection-report.json`.
+6. Load and verify. This step checks the rules and the shapes, writes the N-Triples and the in-graph shapes into the import folder, loads them, runs the three checks, and writes `projection-report.json`. `pipeline.py` reads the password from the environment variable `NEO4J_PASSWORD`, exported in step 5; it has no argument for it.
 
    ```bash
    uv run --with rdflib --with pyshacl --with neo4j python pipeline.py load-verify \
-     --bolt bolt://localhost:17687 --password <password> --import-dir "$IMPORT"
+     --bolt bolt://localhost:17687 --import-dir "$IMPORT"
    ```
 
 7. Rewrite the manifest (`projection-manifest.json`), then remove the container. Commit `inferred.nt`, the manifest and the report together. The downloads stay in `~/epm-lpg/`, outside the repo.
