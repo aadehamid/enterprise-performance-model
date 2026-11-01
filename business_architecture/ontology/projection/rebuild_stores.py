@@ -317,13 +317,13 @@ def main(argv=None):
             for name, cwd, cmd in steps:
                 print(f"{name}: (in {os.path.relpath(cwd, REPO)}) {' '.join(cmd)}")
             return 0
-        os.makedirs(os.path.dirname(config_path), exist_ok=True)
-        with open(config_path, "w", encoding="utf-8") as f:
-            json.dump(run_config(s, stores, args.empty), f, indent=1)
         held, problems = holding(s, stores, env)
         problems += [] if args.empty else [f"{store} holds data ({n}): pass --empty to replace it" for store, n in held]
         if problems:
             raise Refused(*problems)
+        os.makedirs(os.path.dirname(config_path), exist_ok=True)
+        with open(config_path, "w", encoding="utf-8") as f:
+            json.dump(run_config(s, stores, args.empty), f, indent=1)
     except Refused as refused:
         for problem in refused.args:
             print(f"REFUSED {problem}", file=sys.stderr)

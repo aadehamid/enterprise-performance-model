@@ -242,6 +242,7 @@ class Running(Base):
                 mock.patch.object(rb, "run_steps", side_effect=AssertionError("no step runs")):
             self.assertEqual(rb.main(["--env", env, "--store", "jena"]), 2)
         self.assertIn("jena holds data (3): pass --empty", err.getvalue())
+        self.assertFalse(os.path.exists(f"{self.tmp}/out-run.json"))  # a refusal changes nothing
 
 
 class Empty(unittest.TestCase):
