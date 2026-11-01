@@ -104,7 +104,7 @@ t, s = json.load(open(sys.argv[1])), json.load(open(sys.argv[2]))
 t["rows"].update(s["rows"])
 # The release's own check.sh ran as a step of the cut, not as a validate row: its result is the "checks" row here,
 # so the report compares it with main's checks row instead of reporting it as not run on the release.
-log = open(sys.argv[4], encoding="utf-8", errors="replace").read().rstrip().split("\n")
+log = open(sys.argv[4], encoding="utf-8", errors="replace").read().splitlines()  # the last line exactly, trailing blanks included
 last = log[-1] if log else ""
 t["rows"]["checks"] = {"ok": last == "all checks passed", "command": "bash scripts/check.sh (the release's own, run by the cut)",
                        "tail": "\n".join(log[-20:])}
