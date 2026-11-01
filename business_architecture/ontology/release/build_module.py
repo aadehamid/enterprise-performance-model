@@ -275,7 +275,14 @@ RELEASED = {"core": "1.0.0"}  # released modules this builder does not build
 # its newest package on disk; on main nothing changes.
 # A release tree carries release.json at its root (the rebuild writes it), so its readers need no environment variable.
 ROOT = os.path.normpath(os.path.join(ONTOLOGY, "..", ".."))
-SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(ROOT, "release.json"))
+
+
+def share_release(root=ROOT):
+    """Whether this tree is a share release: EPM_SHARE_RELEASE is set, or release.json sits at the tree's root."""
+    return bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(root, "release.json"))
+
+
+SHARE_RELEASE = share_release()
 
 
 def package_folder(module, version):
@@ -355,25 +362,36 @@ def released_requires(dep, version):
         return json.load(f).get("depends_on") or {}
 
 
+def current_requires(dep, version):
+    """What a package of the newest set requires in the share release: the builder's own table, with every pin
+    moved to the newest set (dependencies), and nothing for core, which depends on no module. Read in place of
+    the manifests there, because the export rebuilds the newest packages in some order and a manifest not yet
+    rebuilt still names the old pins (such as system 1.2.0, which the release does not ship)."""
+    return dependencies(dep) if dep in MODULES else {}
+
+
 def released_closure(name):
     """Every released package this module's check loads: its dependencies at the versions it names,
     and theirs (from each selected release's manifest), down to core. Where two paths name different
-    versions of one module, the highest is loaded, so a graph never holds two releases of one module."""
-    return closure(dependencies(name))
+    versions of one module, the highest is loaded, so a graph never holds two releases of one module.
+    In the share release the requirements come from the builder's table (current_requires), never a manifest."""
+    return closure(dependencies(name), current_requires if SHARE_RELEASE else released_requires)
 
 
-def closure(depends_on):
+def closure(depends_on, requires=None):
     """The released packages that the given dependencies load, by the rule of released_closure. A
     written package's closure starts from its own manifest: closure(released_requires(name, version)).
     It settles on the highest release of each module reachable from the given requirements through the
-    chosen releases' own requirements, so a release that loses to a higher one adds nothing (the
-    fixed point of the ontology skill's check_packages.closure, personal-agent-skills #49)."""
+    chosen releases' own requirements (`requires`, each chosen release's manifest unless told otherwise), so a
+    release that loses to a higher one adds nothing (the fixed point of the ontology skill's
+    check_packages.closure, personal-agent-skills #49)."""
     def key(version):
         return tuple(map(int, version.split(".")))
+    requires = requires or released_requires  # looked up when called, so a test may stand in for the manifests
     chosen = {}
     for _ in range(1000):
         want = {}
-        for deps in [dict(depends_on)] + [released_requires(dep, version) for dep, version in chosen.items()]:
+        for deps in [dict(depends_on)] + [requires(dep, version) for dep, version in chosen.items()]:
             for dep, version in deps.items():
                 if dep not in want or key(version) > key(want[dep]):
                     want[dep] = version

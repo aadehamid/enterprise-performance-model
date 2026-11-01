@@ -196,7 +196,15 @@ def read_markers_and_counts():
 # ---------- marking ----------
 
 def commit():
+    """The checkout's commit, written into each marker; a tree without Git (the share release) says so instead."""
+    if not os.path.exists(os.path.join(REPO, ".git")):
+        return "unknown (not a Git checkout)"
     return subprocess.run(["git", "-C", REPO, "rev-parse", "--short=8", "HEAD"], capture_output=True, text=True).stdout.strip()
+
+
+def default_ref():
+    """Where check and sync read the newest catalog: origin/main in a checkout; the tree itself where there is no Git."""
+    return "origin/main" if os.path.exists(os.path.join(REPO, ".git")) else "worktree"
 
 
 def now():
@@ -299,7 +307,8 @@ def sync(cloud, dry_run, ref, skills):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("command", choices=("expected", "mark", "check", "sync"))
-    ap.add_argument("--ref", default="origin/main", help="check, sync: the git ref whose catalog is newest (default origin/main; worktree reads this tree)")
+    ap.add_argument("--ref", default=default_ref(), help="check, sync: the git ref whose catalog is newest (default origin/main "
+                    "in a checkout; worktree, the default without Git, reads this tree)")
     ap.add_argument("--store", action="append", choices=STORES, help="mark: these stores")
     ap.add_argument("--cloud", action="store_true", help="sync: also reload AuraDB and Databricks (the full driver run)")
     ap.add_argument("--dry-run", action="store_true", help="sync: print the commands, run nothing")

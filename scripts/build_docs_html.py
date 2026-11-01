@@ -37,6 +37,11 @@ TEMPLATE = os.path.join(ROOT, "scripts", "docs_template.html")
 GENERATOR = "scripts/build_docs_html.py"
 MARK = f'<meta name="generator" content="{GENERATOR}">'
 
+# The share release (EPM-DEC-001-0110) carries no decision records and leaves some documents out: in release mode
+# (EPM_SHARE_RELEASE, or release.json at the tree's root) a page whose source is not here is not built, and nothing
+# links to the decisions page. On main every source must be here, as before.
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(ROOT, "release.json"))
+
 GUIDE = "business_architecture/ontology/epm-ontology-guide.html"
 ONT = "business_architecture/ontology"
 DECISIONS_DIR = "business_architecture/domain/decisions"
@@ -53,8 +58,8 @@ MODULE_READMES = ["kpi", "lane", "market-data", "organization", "party", "ref-mp
 
 def single(src, lead, scope="EPM ontology"):
     """A page for one Markdown source; its title is the source's own H1, word for word."""
-    # A source that is not in this tree (the share release leaves some documents out) makes no page: build_all drops it.
-    title = source_title(src) if os.path.exists(os.path.join(ROOT, src)) else None
+    # In release mode a source that is not in this tree makes no page: pages() drops it. On main it is read as always.
+    title = None if SHARE_RELEASE and not os.path.exists(os.path.join(ROOT, src)) else source_title(src)
     return {"out": src[:-3] + ".html", "title": title, "scope": scope, "lead": lead, "sources": [src]}
 
 
@@ -150,8 +155,8 @@ def all_pages():
         out.append(single(rel, "A proposed change to the process map. A proposal is not applied until it is accepted.",
                           scope="Process-map proposal"))
     records = sorted(glob.glob(os.path.join(ROOT, DECISIONS_DIR, "EPM-DEC-001-*.md")))
-    if not records or not os.path.exists(os.path.join(ROOT, DECISIONS_DIR, "README.md")):
-        return out  # no decision records in this tree (the share release carries none, EPM-DEC-001-0110): no decisions page
+    if SHARE_RELEASE and not (records and os.path.exists(os.path.join(ROOT, DECISIONS_DIR, "README.md"))):
+        return out  # the share release carries no decision records (EPM-DEC-001-0110): no decisions page
     numbers = [record_id(p) for p in records]
     twice = sorted({n for n in numbers if numbers.count(n) > 1})
     if twice:
@@ -246,12 +251,13 @@ def record_id(path):
 class Page:
     """Renders the sources of one page; knows where every other generated page and record lives."""
 
-    def __init__(self, spec, generated):
+    def __init__(self, spec, generated, decisions_page=True):
         self.spec = spec
         self.out = os.path.join(ROOT, spec["out"])
         self.out_dir = os.path.dirname(self.out)
         self.generated = generated     # normalised Markdown path -> its page's path
         self.decisions = spec.get("decisions", False)
+        self.decisions_page = decisions_page  # whether decisions.html is built in this run; if not, nothing links to it
         self.toc, self.used = [], set()
 
     # ---- anchors and links
@@ -275,6 +281,13 @@ class Page:
         if os.path.normpath(target) == os.path.normpath(self.out):
             return ""
         return os.path.relpath(target, self.out_dir)
+
+    def record_link(self, src, url):
+        """Whether a relative Markdown link names a decision record's file."""
+        if re.match(r"^[a-z]+:", url) or url.startswith("#"):
+            return False
+        path = url.partition("#")[0]
+        return bool(record_id(os.path.normpath(os.path.join(os.path.dirname(src), path))))
 
     def link(self, src, url):
         """Where a Markdown link points on the generated pages."""
@@ -313,12 +326,15 @@ class Page:
 
         def a(m):
             url = re.sub(r"\x00(\d+)\x00", lambda c: re.sub(r"<[^>]+>", "", codes[int(c.group(1))]), m.group(2))
+            if not self.decisions_page and self.record_link(src, html.unescape(url)):
+                return hold(m.group(1))  # a link to a record, with no decisions page to take it: the text alone
             return hold(f'<a href="{html.escape(self.link(src, html.unescape(url)))}">{m.group(1)}</a>')
         s = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", a, s)
         s = re.sub(r'(?<![="\w/>])(https?://[^\s<)\x00]*[^\s<).,;:\x00])',
                    lambda m: hold(f'<a href="{m.group(1)}">{m.group(1)}</a>'), s)
         page = self.to(DECISIONS_PAGE)
-        s = DEC_ID.sub(lambda m: hold(f'<a href="{page}#EPM-DEC-001-{m.group(1)}">{m.group(0)}</a>'), s)
+        if self.decisions_page:
+            s = DEC_ID.sub(lambda m: hold(f'<a href="{page}#EPM-DEC-001-{m.group(1)}">{m.group(0)}</a>'), s)
         s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
         s = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
         s = re.sub(r"~~(.+?)~~", r"<del>\1</del>", s)
@@ -528,7 +544,7 @@ class Page:
                         for lvl, aid, text in self.toc)
         with open(TEMPLATE, encoding="utf-8") as f:
             page = f.read()
-        if not os.path.exists(os.path.join(ROOT, DECISIONS_DIR, "README.md")):  # no decisions page in this tree (the share release): no link to it
+        if not self.decisions_page:  # no decisions page in this run (the share release): no link to it in the navigation
             page = page.replace('    <a href="{{DECISIONS}}">Decisions</a>\n', "")
         values = {
             "{{GENERATOR}}": GENERATOR,
@@ -559,15 +575,16 @@ def generated_map(specs):
 
 
 def pages():
-    """The pages this tree can build: all_pages() minus those with a source that is not here (the share release
-    carries no decision records and leaves some documents out, EPM-DEC-001-0110)."""
-    return [s for s in all_pages() if all(os.path.exists(os.path.join(ROOT, rel)) for rel in s["sources"] + ([s["intro"]] if "intro" in s else []))]
+    """Every page on main. In release mode, all_pages() minus those with a source that is not here: the share release
+    carries no decision records and leaves some documents out (EPM-DEC-001-0110)."""
+    specs = all_pages()
+    if not SHARE_RELEASE:
+        return specs
+    return [s for s in specs if all(os.path.exists(os.path.join(ROOT, rel)) for rel in s["sources"] + ([s["intro"]] if "intro" in s else []))]
 
 
 def build_all():
     """Every page's path -> its HTML. Refuses (ValueError) when a source holds Markdown the renderer does not cover."""
-    # A page whose source is not in this tree is not built: the share release carries no decision records,
-    # so its decisions page has no source (EPM-DEC-001-0110).
     specs = pages()
     problems = []
     for spec in specs:
@@ -576,7 +593,8 @@ def build_all():
     if problems:
         raise ValueError("Markdown the renderer does not cover:\n  " + "\n  ".join(problems))
     gen = generated_map(specs)
-    return {s["out"]: Page(s, gen).render() for s in specs}
+    decisions_page = any(s.get("decisions") for s in specs)  # absent in the share release: then nothing links to it
+    return {s["out"]: Page(s, gen, decisions_page).render() for s in specs}
 
 
 def marked_pages(root=ROOT):

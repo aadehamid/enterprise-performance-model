@@ -1270,11 +1270,21 @@ def _name_texts(path, name):
     return texts
 
 
+def tracked_files(root=ROOT):
+    """Every tracked path from the root, or, in a tree without Git (the share release), every file in it but the
+    caches and environments a run leaves behind."""
+    if os.path.exists(os.path.join(root, ".git")):
+        # Inherited GIT_DIR or GIT_INDEX_FILE (a hook sets them) would point git at another repository.
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+        return [n for n in subprocess.check_output(["git", "-C", root, "ls-files", "-z"], env=env).decode().split("\0") if n]
+    left_out = {".git", "__pycache__", ".venv", "node_modules", ".pytest_cache"}
+    return sorted(os.path.relpath(os.path.join(r, f), root) for r, ds, fs in os.walk(root) for f in fs
+                  if not left_out & set(os.path.relpath(r, root).split(os.sep)))
+
+
 def name_problems(root=ROOT):
     """Each tracked path, and each line of a tracked file, that names the decision owner, in any case."""
-    # Inherited GIT_DIR or GIT_INDEX_FILE (a hook sets them) would point git at another repository.
-    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
-    names = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], env=env).decode().split("\0")
+    names = tracked_files(root)
     problems = []
     for name in names:
         if not name:

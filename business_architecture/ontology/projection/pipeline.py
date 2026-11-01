@@ -176,6 +176,11 @@ def rename_separator(session):
     return {k: len(v) for k, v in plan.items()}, lossless
 
 
+def rename_if_share(session):
+    """The share release's rename, or nothing on main: (counts renamed, whether the rename was lossless)."""
+    return ({}, True) if SEP == N10S_SEP else rename_separator(session)
+
+
 def shapes_fingerprint():
     """SHA-256 over every shape file, in order. The Step 5 report records it, so a shape change makes
     the committed report stale even when the loaded triples do not change."""
@@ -450,8 +455,7 @@ def load_verify(bolt, password, import_dir):
     driver = GraphDatabase.driver(bolt, auth=("neo4j", password))
     with driver.session() as s:
         load(s, "shuffled.nt", setup)
-        if SEP != N10S_SEP:
-            rename_separator(s)
+        _, lossless = rename_if_share(s)  # the first load's rename must be lossless too; it is checked below with the second's
         hash_shuffled = graph_hash(s)
         load(s, "loadable.nt", setup)
         s.run("CALL n10s.validation.shacl.import.fetch('file:///import/shapes.ttl','Turtle')").consume()
@@ -467,7 +471,8 @@ def load_verify(bolt, password, import_dir):
         caught = len(s.run("CALL n10s.validation.shacl.validate() YIELD focusNode RETURN focusNode").data())
         # Put the name back, so a graph kept after the run (run_local.sh --keep) is the projection itself.
         s.run(f"MATCH (r:{role} {{uri: $uri}}) SET r.{pref} = $label", uri=probe["uri"], label=probe["label"]).consume()
-        renamed, lossless = ({}, True) if SEP == N10S_SEP else rename_separator(s)
+        renamed, kept_lossless = rename_if_share(s)
+        lossless = lossless and kept_lossless  # a loss in either load fails the run, not only a difference between them
         hash_sorted = graph_hash(s)  # the hash of the graph as it is kept: renamed in the share release
     driver.close()
     src = Graph().parse(data=loadable + inferred, format="nt")
