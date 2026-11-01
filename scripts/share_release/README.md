@@ -10,7 +10,7 @@ scripts/share_release/cut.sh --epm . --skills ../personal-agent-skills --out /tm
 ```
 
 `cut.sh` runs the steps below in order and stops at the first failure: export, rebuild, gate, the store rows on
-the test stores (`--env` names them; the projection's load-verify writes the release's own report and figures),
+the test stores (`--env` names them; the release's own `rebuild_stores.py` writes its report and figures),
 the release's `check.sh` from the folder and from a Git clone of it (`clonecheck.py`), the tree rows, the comparison with main, every snippet, the gate again, the zip, the
 clean room, and with `--baseline` the validation report. Each step writes beside the output folder. By default
 the store rows are the four that need no Databricks workspace; `--store-rows all` adds the driver, the live demo,
@@ -19,7 +19,7 @@ the root, the home folder, a checkout or a parent of one, or a file; an existing
 removed only with `--replace`, and only when its `release.json` is exactly the marker this tool writes
 (`manifest.is_tool_marker`: the keys `release`, `built` and `mode`, the release name, the mode text, a date;
 nothing else is accepted). Its last line names the rows that did not run and the two steps that follow by hand:
-step 9, `cleanup.py --yes` from the ledger (`LEDGER_FILE` in `--env`), then `empty_stores.py` and a reload of the stores
+step 9, `cleanup.py --yes` from the ledger (`LEDGER_FILE` in `--env`), then, from the release's root, `python3 business_architecture/ontology/projection/rebuild_stores.py --env <file> --empty`, which empties and reloads the stores
 from the release, not from main (the owner's instruction of 2026-11-01), and step 10, `publish.py branch --zip` and the push, which wait for the owner. The export alone is:
 
 ```sh
@@ -60,7 +60,6 @@ A new cut is a small edit: `manifest.py` holds its facts in one place (`RELEASE_
   their source, the other repositories, the graph prefixes).
 - `cleanup.py` removes only what the ledger names, refuses the root, the home folder, any folder holding a checkout
   and any catalog this run did not create (a test catalog's name starts with `epm_release_validate_`), and exits 0 only with proof that everything is gone.
-- `empty_stores.py` empties the stores named on its command line before they are reloaded from the release.
 
 The release is for people who only ever receive it (the decision's amendment of 2026-11-01). It names no agent or review
 tool, and every decision in it reads as the subject matter expert's (rule 15). `HOW-TO-UPDATE.md` tells its readers how to

@@ -7,7 +7,7 @@ Without --yes it prints what it would remove. It removes only what the ledger na
 (with their volumes), folders, files, the demo's test catalog (through the demo's own purge), the ontology's test
 table. It exits 0 only with positive proof: every deletion command returned 0, no container, project, folder or
 file in the ledger still exists, and nothing in the ledger was left to someone else. The stores are then emptied
-(empty_stores.py) and reloaded from the release, not from main (the owner's instruction of 2026-11-01), outside this
+and reloaded (rebuild_stores.py --empty, in the release) from the release, not from main (the owner's instruction of 2026-11-01), outside this
 script: an "aura" entry is printed and counts as not done until the ledger no longer holds it.
 
 A Databricks catalog is purged only when its name starts with the validation's prefix and the ledger line records that
