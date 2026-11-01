@@ -346,6 +346,9 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
     raw = [l.strip() for l in text.split("\n") if l.strip()]
     cwd, results, stopped = cwd or tree, [], None
     for line in raw:
+        if re.match(r"^git\b", line):  # with or without arguments, with shell syntax or after a stopped block: the one reason, first
+            results.append({"line": line, "ran": False, "reason": GIT_REASON})
+            continue
         if stopped:
             results.append({"line": line, "ran": False, "reason": f"not run: the block stopped at {stopped!r}, a folder not in the tree"})
             continue
@@ -386,9 +389,6 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
             continue
         if SHELL_SYNTAX.search(line) or "||" in line or "&&" in line:
             results.append({"line": line, "ran": False, "reason": "shell syntax (a separator, pipe, redirection or substitution); no line reaches a shell"})
-            continue
-        if re.match(r"^git\b", line):  # with or without arguments, before any other judgement
-            results.append({"line": line, "ran": False, "reason": GIT_REASON})
             continue
         if line.startswith("cd "):
             target = inside(tree, os.path.join(cwd, os.path.expanduser(expand(line[3:].strip().strip('"'), variables))))

@@ -372,3 +372,15 @@ def test_entity_encoded_text_inside_a_decoded_payload_is_scanned_at_every_depth(
     outer = base64.b64encode(f'<iframe src="data:text/html;base64,{inner}"></iframe>'.encode()).decode()
     (tmp_path / "page.html").write_text(f'<iframe src="data:text/html;base64,{outer}"></iframe>\n')  # two layers down
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+
+
+def test_a_percent_encoded_entity_in_a_non_base64_payload_is_decoded_at_every_depth(tmp_path):
+    import base64
+    clean(tmp_path)
+    (tmp_path / "page.html").write_text('<iframe src="data:text/html;base64,%26%2367%3Bhevron"></iframe>\n')  # not base64-shaped: percent-decodes to &#67;hevron
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    outer = base64.b64encode(b'<iframe src="data:text/html;base64,%26%2367%3Bhevron"></iframe>').decode()
+    (tmp_path / "page.html").write_text(f'<iframe src="data:text/html;base64,{outer}"></iframe>\n')  # the same, nested
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    (tmp_path / "page.html").write_text('<a href="data:text/html,%26%2367%3Bhevron">x</a>\n')  # the plain data URL form too
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]

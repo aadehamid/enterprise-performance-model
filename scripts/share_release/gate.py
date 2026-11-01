@@ -160,14 +160,16 @@ def decoded_data_urls(text, depth=1, prefix=""):
         if re.search(r"(?:^|;)base64$", head, re.I):
             payload = re.sub(r"\s", "", urllib.parse.unquote(payload))
             if not BASE64_SHAPED.match(payload):
-                yield label, payload
-                continue
-            try:
-                raw = base64.b64decode(payload.rstrip("=") + "=" * (-len(payload.rstrip("=")) % 4), validate=True)
-            except (binascii.Error, ValueError):
-                yield f"{PROBLEM}a data URI's base64 payload could not be decoded", label
-                continue
-            decoded = readable(raw)
+                decoded = payload  # not base64 at all (a template's "{b64}", or text): read through the same path as every payload
+            else:
+                decoded = None
+            if decoded is None:
+                try:
+                    raw = base64.b64decode(payload.rstrip("=") + "=" * (-len(payload.rstrip("=")) % 4), validate=True)
+                except (binascii.Error, ValueError):
+                    yield f"{PROBLEM}a data URI's base64 payload could not be decoded", label
+                    continue
+                decoded = readable(raw)
         else:
             decoded = urllib.parse.unquote(payload)
         inner = html.unescape(decoded)  # a payload is a document too: its character references are decoded before it is read (the HTML Standard sections cited in texts())

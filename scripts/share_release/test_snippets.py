@@ -221,8 +221,10 @@ def test_a_git_line_is_listed_and_never_run_even_inside_a_git_checkout():
 def test_every_git_line_gets_the_checkout_reason():
     with tempfile.TemporaryDirectory() as tree:
         state = {}
-        r = snippets.run_shell("git\ngit status\ngit branch\ngit status --porcelain\ngit push origin main\ngitk", tree, {}, state)
-        for x in r["lines"][:5]:
-            assert x["ran"] is False and x["reason"] == snippets.GIT_REASON, x
-        assert r["lines"][5]["ran"] is False and r["lines"][5]["reason"] != snippets.GIT_REASON  # gitk is another word
+        r = snippets.run_shell("git\ngit status\ngit branch\ngit status --porcelain\ngit push origin main\ngit status; echo ok\ngit log | head\ngitk", tree, {}, state)
+        for x in r["lines"][:7]:
+            assert x["ran"] is False and x["reason"] == snippets.GIT_REASON, x  # shell syntax on a git line changes nothing
+        assert r["lines"][7]["ran"] is False and r["lines"][7]["reason"] != snippets.GIT_REASON  # gitk is another word
         assert r["failed"] == []
+        r = snippets.run_shell("cd nowhere\ngit status\nls .", tree, {}, state)  # after a stopped block, still the one reason
+        assert r["lines"][1]["reason"] == snippets.GIT_REASON and "stopped" in r["lines"][2]["reason"]
