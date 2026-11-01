@@ -51,8 +51,10 @@ uv run python -m pricing_demo.aura_test                    # can Databricks reac
 uv run --group outside python -m pricing_demo.outside plan     # the Parallel Decisions calls each step needs, and how many are cached
 uv run --group outside python -m pricing_demo.outside run --step events   # then monthly, diagnosis, forward; a cached call is never sent again
 uv run --group graph python -m pricing_demo.tech_graph collect   # live facts, data-quality checks, designed against observed lineage
-uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything: the technical graph and the decision trail, graph/*.ttl
-uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j and AuraDB
+uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything: the technical graph and the decision trail, out/tech/graph/*.ttl
+uv run --group graph python -m pricing_demo.tech_graph compare   # the refreshed graph's structure against graph/*.ttl
+uv run --group graph python -m pricing_demo.tech_graph lineage   # the last collect's lineage against graph/lineage-known.json
+uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j and AuraDB, two named graphs in Jena
 uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_sbx.tech_graph.tech_graph_nodes and tech_graph_edges
 uv run --group graph python -m pricing_demo.tech_graph walk      # one Cypher walk from a gold table to the measures it implements
 uv run python -m pricing_demo.databricks counts            # row counts

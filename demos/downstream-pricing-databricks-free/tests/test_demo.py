@@ -2268,3 +2268,80 @@ def test_after_e7_an_empty_reply_while_agents_remain_is_sent_back(monkeypatch):
     monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
     result = supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
     assert result["answer"] == "the answer" and seen[1][-1]["content"].startswith("Not yet")
+
+
+def test_lineage_wait_reads_again_until_the_events_arrive_or_the_time_runs_out(monkeypatch):
+    designed = {("a", "b"), ("b", "c")}
+    assert tech_graph.lineage_gaps(designed, {"a", "b", "c"}, {("a", "b")}) == ["c"]
+    assert tech_graph.lineage_gaps(designed, {"a", "b"}, set()) == ["b"]  # c is not built, so no event can come
+    reads = [{("a", "b")}, {("a", "b")}, {("a", "b"), ("b", "c")}]
+    monkeypatch.setattr(tech_graph, "designed_lineage", lambda cur, triples: ({"a", "b", "c"}, designed))
+    monkeypatch.setattr(tech_graph, "observed_lineage", lambda cur, cat: reads.pop(0))
+    monkeypatch.setattr(tech_graph, "LINEAGE", os.path.join(tempfile.mkdtemp(), "lineage.json"))
+    slept, now = [], [0]
+
+    def sleep(seconds):
+        slept.append(seconds)
+        now[0] += seconds
+    result = tech_graph.lineage_check(None, "c", "t", ["a", "b", "c"], wait=300, sleep=sleep, clock=lambda: now[0])
+    assert result["result"] == "pass" and len(slept) == 2
+    reads[:] = [{("a", "b")}] * 3
+    now[0], slept[:] = 0, []
+    result = tech_graph.lineage_check(None, "c", "t", ["a", "b", "c"], wait=60, sleep=sleep, clock=lambda: now[0])
+    assert result["result"] == "differs" and len(slept) == 1  # bounded: it reports what it has when the time runs out
+
+
+def test_the_lineage_gate_fails_only_on_what_the_release_does_not_state():
+    known = {"designed_only": [["a", "b"]], "observed_only": [], "designed_not_built": [["x", "y"]]}
+    same = {"matched": [], "designed_only": [["a", "b"]], "observed_only": [], "designed_not_built": [["x", "y"]]}
+    assert tech_graph.lineage_gate(same, known) == []
+    assert tech_graph.lineage_gate({**same, "observed_only": [["p", "q"]]}, known) == ["observed_only: new p -> q"]
+    assert tech_graph.lineage_gate({**same, "designed_only": []}, known) == ["designed_only: no longer a -> b"]
+
+
+def test_the_known_lineage_differences_are_the_ones_the_committed_check_counted():
+    from rdflib import Graph, Namespace
+    known = json.load(open(tech_graph.KNOWN_LINEAGE))
+    detail = str(Graph().parse(os.path.join(ROOT, "graph", "tech-graph.ttl")).value(
+        rdflib_uri("urn:pricing-demo:tech:check/designed-vs-observed-lineage"), Namespace(tech_graph.VOCAB).detail))
+    assert detail == (f"26 edges match; {len(known['designed_only'])} designed only; {len(known['observed_only'])} observed only; "
+                      f"{len(known['designed_not_built'])} designed edges touch a table the demo does not build")
+
+
+def rdflib_uri(iri):
+    from rdflib import URIRef
+    return URIRef(iri)
+
+
+def structure_graph(text):
+    from rdflib import Graph
+    return Graph().parse(data="@prefix tv: <urn:pricing-demo:tech-vocab#> . @prefix t: <urn:pricing-demo:tech:> .\n" + text, format="turtle")
+
+
+def test_a_refresh_with_new_counts_is_no_structural_difference_and_a_new_edge_is():
+    base = 't:v a tv:MetricView ; tv:rows 1 ; tv:lastRefresh "x" ; tv:readsFrom t:g ; tv:hostedOn t:h1 . t:g a tv:GoldTable . t:h1 a tv:Host ; tv:name "vm" .'
+    fresh = 't:v a tv:MetricView ; tv:rows 2 ; tv:lastRefresh "y" ; tv:readsFrom t:g ; tv:hostedOn t:h2 . t:g a tv:GoldTable . t:h2 a tv:Host ; tv:name "local" .'
+    assert tech_graph.compare_structure(structure_graph(fresh), structure_graph(base)) == []
+    moved = fresh + " t:v tv:readsFrom t:z . t:z a tv:GoldTable ."
+    lines = tech_graph.compare_structure(structure_graph(moved), structure_graph(base))
+    assert lines == ["new object urn:pricing-demo:tech:z", f"new edge urn:pricing-demo:tech:v {tech_graph.VOCAB}readsFrom urn:pricing-demo:tech:z"]
+    assert tech_graph.compare_structure(structure_graph(base), structure_graph(moved))[0] == "missing object urn:pricing-demo:tech:z"
+
+
+def test_load_takes_a_refreshed_graph_when_one_exists_and_writes_nothing_the_release_ships(monkeypatch, tmp_path):
+    monkeypatch.setattr(tech_graph, "REFRESHED", str(tmp_path / "graph"))
+    assert tech_graph.graph_folder() == tech_graph.GRAPH
+    (tmp_path / "graph").mkdir()
+    (tmp_path / "graph" / "tech-graph.ttl").write_text("")
+    assert tech_graph.graph_folder() == tech_graph.GRAPH  # one file alone is not a refreshed graph
+    (tmp_path / "graph" / "decision-trail.ttl").write_text("")
+    assert tech_graph.graph_folder() == str(tmp_path / "graph")
+    assert subprocess.run(["git", "check-ignore", "-q", os.path.join(ROOT, "out", "tech", "graph", "tech-graph.ttl")], cwd=ROOT).returncode == 0 or not os.path.exists(os.path.join(ROOT, ".git"))
+
+
+def test_jena_load_fails_when_an_edges_target_is_in_no_release_graph():
+    query = tech_graph.jena_missing_query()
+    for iri in tech_graph.JENA_GRAPHS.values():
+        assert f"<{iri}>" in query
+    assert "FILTER NOT EXISTS" in query and tech_graph.ONTOLOGY in query
+

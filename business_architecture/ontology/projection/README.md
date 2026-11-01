@@ -8,7 +8,7 @@ Each module package has three graphs: `<module>.ttl` (the content), `shapes.ttl`
 
 | Store | `<module>.ttl` | `shapes.ttl` | `catalog.ttl` |
 |---|---|---|---|
-| Jena, one local standing Fuseki | All | All | All |
+| Jena, one local standing Fuseki, which also holds the technical graph as two named graphs of its own | All | All | All |
 | Databricks, the Delta table `epm_triples` | All | All | All |
 | Neo4j, one local store and its copy in AuraDB | All | Not as nodes: they validate the release | Not in full: one `ModuleRelease` node per module |
 
@@ -29,6 +29,10 @@ Each module package has three graphs: `<module>.ttl` (the content), `shapes.ttl`
 | `STORE-INVENTORY.md` | What each store should hold, by database, schema or label, with counts, what should not be in it, and the commands to check it |
 | `ontology-stores-runbook.html` | A standalone page for a person: the end-to-end workflow with diagrams, and how to check, stop, start, purge and reload each store, and how to keep them in step with the releases |
 | `test_pipeline.py` | The rule checks, the build, the record, and that the report is current and passed |
+| `rebuild_stores.py` | One command from an environment file to loaded, validated stores, with no prompt: `python3 rebuild_stores.py --env <file> [--store ...] [--empty] [--plan]`. It writes a report and a log per step, and exits non-zero with the failing step named. The walkthrough's "Connect and load every store" explains each step |
+| `empty_stores.py` | Counts what each store holds and, with `--yes`, empties it; in Databricks only this tool's two tables |
+| `test_rebuild_stores.py` | The offline tests of those two |
+| `skill-run/environment.example` | Every key of an environment file, with its default |
 | `sync_stores.py` | Marks the local Neo4j, AuraDB and Databricks with the release set each was loaded from, after checking it against the repository; the drift check against main's newest catalog, which judges Jena from its graph names and triple counts; and `sync`, which reloads what is behind with the driver (AuraDB and Databricks only with `--cloud`), takes the result into this folder, loads the demo's technical graph back, and marks what it reloaded. The runbook's "Keeping the stores in step" gives the commands |
 | `test_sync_stores.py` | The offline tests of `sync_stores.py` and of `.github/workflows/sync-stores.yml`, the release-tag workflow that runs the driver for AuraDB and Databricks, inactive until its repository secrets exist |
 
@@ -36,7 +40,7 @@ Each module package has three graphs: `<module>.ttl` (the content), `shapes.ttl`
 
 ## Run the projection
 
-Run it after any input or shape changes. You need Docker, [uv](https://docs.astral.sh/uv/) and Java 11 or later ([ROBOT's Getting Started](https://robot.obolibrary.org/): "make sure you have Java 11 or later installed"). The driver is in the `ontology-to-lpg` skill, in the `scripts/` folder of `$SKILLS/ontology-to-lpg`.
+`rebuild_stores.py` does all of this, and the stores' other steps, from one environment file. By hand: run it after any input or shape changes. You need Docker, [uv](https://docs.astral.sh/uv/) and Java 11 or later ([ROBOT's Getting Started](https://robot.obolibrary.org/): "make sure you have Java 11 or later installed"). The driver is in the `ontology-to-lpg` skill, in the `scripts/` folder of `$SKILLS/ontology-to-lpg`.
 
 1. Download ROBOT 1.9.10 (it runs the ELK reasoner), and check its SHA-256. If the checksum differs, stop: the driver refuses another file. The driver fetches and checks the n10s (neosemantics) plugin itself.
 

@@ -20,9 +20,9 @@ Should not be there: nodes from an earlier release beside the current ones, a se
 
 ## Jena (container `epm-jena-fuseki-1`)
 
-All three graphs of each newest release: 33 named graphs and 40,169 triples, as in `epm_triples`. Each module has its content under its version IRI, and `<version IRI>/shapes` and `<version IRI>/catalog`. It holds no marker: the drift check compares its graph names and each graph's triple count with the release files.
+All three graphs of each newest release: 33 named graphs and 40,169 triples, as in `epm_triples`. Each module has its content under its version IRI, and `<version IRI>/shapes` and `<version IRI>/catalog`. Beside them it holds the technical graph, as `urn:pricing-demo:graph:tech-graph` and `urn:pricing-demo:graph:decision-trail`. It holds no marker: the drift check compares its graph names and each graph's triple count with the files.
 
-Should not be there: a graph of an older release, or a triple in the default graph. The dataset is in memory, so a restart empties it, and `sync_stores.py check` then reads `empty`. `sync_stores.py sync` reloads it.
+Should not be there: a graph of an older release, any other graph, or a triple in the default graph. The dataset is in memory, so a restart empties it, and `sync_stores.py check` then reads `empty`. `sync_stores.py sync` reloads it.
 
 ## Neo4j AuraDB
 
@@ -113,10 +113,10 @@ docker exec -e NEO4J_PASSWORD lpg-local-neo4j-1 cypher-shell -u neo4j \
 
 Expect 4,193 nodes and 22,142 relationships in both stores; 11 release records; 142 Tech nodes with 142 distinct URIs; one marker naming the store.
 
-Jena: the graphs and triples it holds.
+Jena: the release's graphs and triples, leaving out the technical graph's two.
 
 ```bash
-curl -s http://127.0.0.1:13031/ds/query --data-urlencode 'query=SELECT (COUNT(DISTINCT ?g) AS ?graphs) (COUNT(*) AS ?triples) WHERE { GRAPH ?g { ?s ?p ?o } }' -H 'Accept: text/csv'   # 33, 40169
+curl -s http://127.0.0.1:13031/ds/query --data-urlencode 'query=SELECT (COUNT(DISTINCT ?g) AS ?graphs) (COUNT(*) AS ?triples) WHERE { GRAPH ?g { ?s ?p ?o } FILTER(!STRSTARTS(STR(?g), "urn:pricing-demo:")) }' -H 'Accept: text/csv'   # 33, 40169
 ```
 
 Databricks, from the demo's folder: `uv run python -m pricing_demo.databricks counts` gives every `idp_sbx` object's rows. In the SQL editor:

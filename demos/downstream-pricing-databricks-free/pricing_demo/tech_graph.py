@@ -2,8 +2,10 @@
 (EPM-DEC-001-0109, decisions 5 to 7). Run from this machine, in this order:
 
     uv run --group graph python -m pricing_demo.tech_graph collect   # live facts -> out/tech/live.json; checks; lineage
-    uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything over the demo's files -> graph/*.ttl
-    uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j and AuraDB
+    uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything over the demo's files -> out/tech/graph/*.ttl
+    uv run --group graph python -m pricing_demo.tech_graph compare   # the refreshed graph's structure against graph/*.ttl
+    uv run --group graph python -m pricing_demo.tech_graph lineage   # the last collect's lineage against graph/lineage-known.json
+    uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j and AuraDB, named graphs in Jena
     uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> Delta tech_graph_nodes, tech_graph_edges
     uv run --group graph python -m pricing_demo.tech_graph walk      # the Cypher walk from a gold table to its measures
 
@@ -13,7 +15,13 @@ observed lineage, and writes the facts as JSON. build runs the SPARQL Anything q
 the README's run commands, that JSON and the ontology's CSV tables, then wiring.rq over the result, and writes Turtle.
 load gives every node the label Tech and no Resource label, and starts every edge at a Tech node (ending at another
 Tech node or an ontology node), so the projection's counts and hashes, which read :Resource nodes and the edges between them, do not change;
-load checks that on each store. A driver run empties its store, so run load again after one.
+load checks that on each store. A driver run empties its store, so run load again after one. In Jena each file is its
+own named graph beside the release graphs, and load fails when an edge's ontology target is in no release graph.
+
+graph/*.ttl is what the release ships, from an earlier collect. build writes a refreshed copy to out/tech/graph/, which
+Git ignores, and load takes that copy when it exists. compare separates volatile values (row counts, refresh times, a
+check's result, the host) from structure (objects and edges), and a structural difference fails. build --to-repo
+writes graph/*.ttl instead, for a change that is meant to ship.
 Logins come from the files LOCAL-STORES.md names; no secret is printed.
 Sources: SPARQL Anything documentation, v1.3.0 ("Introduction": Facade-X, fx:properties, the location and content
 options; the text, CSV and JSON triplifiers); Neo4j Cypher Manual 25, "CREATE" (dynamic labels and relationship types
@@ -26,6 +34,9 @@ import glob
 import json
 import os
 import re
+import time
+import urllib.parse
+import urllib.request
 from decimal import Decimal
 
 from .aura_test import read_env
@@ -34,6 +45,11 @@ from .config import GRAPH_SEP, HIDDEN_SYSTEMS, OUT, PROVENANCE, ROOT, SYSTEMS, s
 REPO = os.path.abspath(os.path.join(ROOT, "..", ".."))
 SPARQL = os.path.join(ROOT, "sparql")
 GRAPH = os.path.join(ROOT, "graph")
+REFRESHED = os.path.join(OUT, "tech", "graph")
+GRAPH_FILES = ("tech-graph.ttl", "decision-trail.ttl")
+KNOWN_LINEAGE = os.path.join(GRAPH, "lineage-known.json")
+JENA_GRAPHS = {"tech-graph.ttl": "urn:pricing-demo:graph:tech-graph", "decision-trail.ttl": "urn:pricing-demo:graph:decision-trail"}
+JENA_QUERY = "http://127.0.0.1:13031/ds/query"  # projection/skill-run/epm-run.json's "jena"
 LIVE = os.path.join(OUT, "tech", "live.json")
 LINEAGE = os.path.join(OUT, "tech", "lineage.json")
 AURA_TEST = os.path.join(OUT, "tech", "aura-test.json")
@@ -52,6 +68,7 @@ WAS_DERIVED_FROM = PROV + "wasDerivedFrom"
 FULL_NAME = ONTOLOGY + "modules/data-product/fullName"
 TABLE = ONTOLOGY + "modules/data-product/table/"
 LINEAGE_WINDOW_MINUTES = 10  # observed edges count from a target's latest build: its statement's edges share one time
+LINEAGE_POLL_SECONDS = 60  # how often collect --lineage-wait reads Unity Catalog's lineage again
 STORES = {  # the stores LOCAL-STORES.md lists, with their login files; the newest file that exists is the live one
     # a full driver run writes the rebuild's login; a run with --skip rebuild writes only the first container's
     "driver": ("bolt://127.0.0.1:17711", ("~/lpg-out/epm-rebuild/neo4j-run/run.env", "~/lpg-out/epm/neo4j-run/run.env")),
@@ -215,10 +232,22 @@ def compare_lineage(designed_tables, designed, observed, present):
             "matched": sorted(designed & in_scope), "designed_not_built": sorted(absent)}
 
 
-def lineage_check(cur, cat, triples, present):
+def lineage_gaps(designed, present, observed):
+    """Built tables the design says read something, with no observed edge into them yet: Unity Catalog can lag a build."""
+    return sorted({t for s, t in designed if s in present and t in present} - {t for _, t in observed})
+
+
+def lineage_check(cur, cat, triples, present, wait=0, sleep=time.sleep, clock=time.monotonic):
+    """The lineage comparison. With wait, a table whose events have not arrived is read again until they do or the seconds
+    run out, so a lag does not read as a difference; an edge still missing then is reported as it stands."""
     try:
         tables, designed = designed_lineage(cur, triples)
-        found = compare_lineage(tables, designed, observed_lineage(cur, cat), set(present))
+        deadline = clock() + wait
+        observed = observed_lineage(cur, cat)
+        while lineage_gaps(designed, set(present), observed) and clock() < deadline:
+            sleep(LINEAGE_POLL_SECONDS)
+            observed = observed_lineage(cur, cat)
+        found = compare_lineage(tables, designed, observed, set(present))
     except Exception as err:  # Free Edition may lack the system tables: the test is skipped with the reason
         return {"id": "designed-vs-observed-lineage", "label": "Designed lineage matches Unity Catalog's observed lineage",
                 "result": "skipped", "detail": f"{type(err).__name__}: {str(err).splitlines()[0][:300]}", "checked_at": now(),
@@ -247,7 +276,32 @@ def aura_check():
             "covers": ["epm_triples"]}
 
 
-def collect(manifest_path=MANIFEST):
+def lineage_gate(found, known):
+    """What differs between a lineage comparison and the differences the release states it expects: the demo is simpler
+    than the design in known places. Empty means the comparison holds nothing new."""
+    problems = []
+    for key in ("designed_only", "observed_only", "designed_not_built"):
+        got, want = {tuple(e) for e in found[key]}, {tuple(e) for e in known[key]}
+        problems += [f"{key}: new {e[0]} -> {e[1]}" for e in sorted(got - want)]
+        problems += [f"{key}: no longer {e[0]} -> {e[1]}" for e in sorted(want - got)]
+    return problems
+
+
+def lineage():
+    """Fails on a lineage difference graph/lineage-known.json does not state."""
+    if not os.path.exists(LINEAGE):
+        raise SystemExit(f"no {LINEAGE}: the lineage check was skipped or collect has not run")
+    found, known = json.load(open(LINEAGE)), json.load(open(KNOWN_LINEAGE))
+    problems = lineage_gate(found, known)
+    for problem in problems:
+        print(f"FAIL {problem}")
+    print(f"{len(found['matched'])} edges match; {len(found['designed_only'])} designed only; {len(found['observed_only'])} observed only; "
+          f"{len(found['designed_not_built'])} touch a table the demo does not build; {len(problems)} not stated in {os.path.basename(KNOWN_LINEAGE)}")
+    if problems:
+        raise SystemExit(1)
+
+
+def collect(manifest_path=MANIFEST, lineage_wait=0):
     from . import genie
     from .databricks import SCHEMAS, connect, current_catalog, run
     dsn = source_dsn()
@@ -261,7 +315,7 @@ def collect(manifest_path=MANIFEST):
             cur, f"SELECT schema_name, table_name, tag_value FROM {cat}.information_schema.table_tags "
                  "WHERE tag_name = 'epm_measure_identifiers' ORDER BY 1, 2")]
         checks = quality_checks(cur, cat, objects, manifest, tags)
-        checks.append(lineage_check(cur, cat, e["EPM_TRIPLES"], [o["id"] for o in objects]))
+        checks.append(lineage_check(cur, cat, e["EPM_TRIPLES"], [o["id"] for o in objects], lineage_wait))
     aura = aura_check()
     if aura:
         checks.append(aura)
@@ -320,21 +374,52 @@ def typed_only(g, typed):
     return g
 
 
-def build():
+def build(to_repo=False):
     from rdflib import RDF, Namespace
     graph = construct(GRAPH_QUERIES)
     graph += graph.query(open(os.path.join(SPARQL, "wiring.rq")).read()).graph
     trail = construct(TRAIL_QUERIES)
     typed = set(graph.subjects(RDF.type, None)) | set(trail.subjects(RDF.type, None))
-    os.makedirs(GRAPH, exist_ok=True)
-    for name, g in (("tech-graph.ttl", graph), ("decision-trail.ttl", trail)):
+    folder = GRAPH if to_repo else REFRESHED
+    os.makedirs(folder, exist_ok=True)
+    for name, g in zip(GRAPH_FILES, (graph, trail)):
         g = typed_only(g, typed)
         for prefix, ns in (("tv", VOCAB), ("tech", TECH), ("prov", PROV), ("measure", ONTOLOGY + "modules/kpi/measure/")):
             g.bind(prefix, Namespace(ns))
-        g.serialize(os.path.join(GRAPH, name), format="turtle")
+        g.serialize(os.path.join(folder, name), format="turtle")
         nodes, edges = graph_rows(g)
-        print(f"wrote graph/{name}: {len(nodes)} nodes, {len(edges)} edges")
+        print(f"wrote {os.path.relpath(os.path.join(folder, name), ROOT)}: {len(nodes)} nodes, {len(edges)} edges")
     return graph, trail
+
+
+def structure(g):
+    """A graph's objects and edges, without what a run changes: literals (row counts, refresh times, a check's result and
+    detail) and the host, which names the machine the source databases ran on. Returns (typed nodes, edges)."""
+    from rdflib import RDF, URIRef
+    host = VOCAB + "hostedOn"
+    hosts = {s for s, o in g.subject_objects(RDF.type) if str(o) == VOCAB + "Host"}
+    nodes = {(str(s), str(o)) for s, o in g.subject_objects(RDF.type) if s not in hosts}
+    edges = {(str(s), str(p), str(o)) for s, p, o in g if isinstance(o, URIRef) and p != RDF.type and str(p) != host and s not in hosts}
+    return nodes, edges
+
+
+def compare_structure(refreshed, shipped):
+    """What the refreshed graph adds to or lacks from the shipped one, as sorted lines."""
+    (new_nodes, new_edges), (old_nodes, old_edges) = structure(refreshed), structure(shipped)
+    return ([f"new object {n[0]}" for n in sorted(new_nodes - old_nodes)] + [f"missing object {n[0]}" for n in sorted(old_nodes - new_nodes)]
+            + [f"new edge {' '.join(e)}" for e in sorted(new_edges - old_edges)] + [f"missing edge {' '.join(e)}" for e in sorted(old_edges - new_edges)])
+
+
+def compare():
+    """Fails when the refreshed graph's objects or edges differ from what the release ships."""
+    if not all(os.path.exists(os.path.join(REFRESHED, n)) for n in GRAPH_FILES):
+        raise SystemExit(f"no refreshed graph in {REFRESHED}: run collect and build")
+    differences = compare_structure(read_graph(REFRESHED), read_graph(GRAPH))
+    for line in differences[:50]:
+        print(f"FAIL {line}")
+    print(f"{len(differences)} structural difference(s) between {os.path.relpath(REFRESHED, ROOT)} and graph/")
+    if differences:
+        raise SystemExit(1)
 
 
 # ---------- Neo4j ----------
@@ -380,8 +465,9 @@ def graph_rows(g):
 
 
 def apply_store_overrides():
-    """EPM_STORES_JSON names other stores for a test run (as in projection/sync_stores.py): each of driver and
-    aura may give {"bolt": ..., "env": [...]}."""
+    """EPM_STORES_JSON names other stores for a test run or another environment (as in projection/sync_stores.py): each
+    of driver and aura may give {"bolt": ..., "env": [...]}, and jena {"query": ...}."""
+    global JENA_QUERY
     raw = os.environ.get("EPM_STORES_JSON")
     if not raw:
         return
@@ -389,6 +475,7 @@ def apply_store_overrides():
     for store in list(STORES):
         if store in over:
             STORES[store] = (over[store].get("bolt", STORES[store][0]), tuple(over[store].get("env", STORES[store][1])))
+    JENA_QUERY = over.get("jena", {}).get("query", JENA_QUERY)
 
 
 apply_store_overrides()
@@ -442,17 +529,57 @@ def load_store(store, nodes, edges):
             "resource_nodes": after[0], "resource_relationships": after[1]}
 
 
-def read_graph():
+def graph_folder():
+    """The refreshed graph when a build wrote one, otherwise what the release ships."""
+    return REFRESHED if all(os.path.exists(os.path.join(REFRESHED, n)) for n in GRAPH_FILES) else GRAPH
+
+
+def read_graph(folder=None):
     from rdflib import Graph
     g = Graph()
-    for name in ("tech-graph.ttl", "decision-trail.ttl"):
-        g.parse(os.path.join(GRAPH, name), format="turtle")
+    for name in GRAPH_FILES:
+        g.parse(os.path.join(folder or graph_folder(), name), format="turtle")
     return g
 
 
-def load(stores=tuple(STORES)):
-    nodes, edges = graph_rows(read_graph())
-    return [load_store(s, nodes, edges) for s in stores]
+def sparql_select(query):
+    """Rows of a SELECT on Jena, each {variable: value}."""
+    request = urllib.request.Request(JENA_QUERY + "?" + urllib.parse.urlencode({"query": query}),
+                                     headers={"Accept": "application/sparql-results+json"})
+    with urllib.request.urlopen(request, timeout=120) as response:
+        return [{k: v["value"] for k, v in row.items()} for row in json.load(response)["results"]["bindings"]]
+
+
+def jena_missing_query():
+    names = " ".join(f"<{iri}>" for iri in JENA_GRAPHS.values())
+    return (f"SELECT DISTINCT ?o WHERE {{ VALUES ?t {{ {names} }} GRAPH ?t {{ ?s ?p ?o FILTER(isIRI(?o) && STRSTARTS(STR(?o), \"{ONTOLOGY}\")) }} "
+            f"FILTER NOT EXISTS {{ GRAPH ?g {{ ?o ?x ?y }} FILTER(?g NOT IN ({names.replace(' ', ', ')})) }} }}")
+
+
+def load_jena(folder):
+    """Each graph file as its own named graph in Jena, replaced whole; an edge whose ontology target is in no release
+    graph fails, as it does in Neo4j. The release's proof ran before these graphs arrive and never covers them."""
+    data = JENA_QUERY.rsplit("/", 1)[0] + "/data"
+    counts = {}
+    for name, iri in JENA_GRAPHS.items():
+        with open(os.path.join(folder, name), "rb") as f:
+            body = f.read()
+        request = urllib.request.Request(data + "?" + urllib.parse.urlencode({"graph": iri}), data=body, method="PUT",
+                                         headers={"Content-Type": "text/turtle"})
+        urllib.request.urlopen(request, timeout=120).close()
+        counts[name] = int(sparql_select(f"SELECT (COUNT(*) AS ?n) WHERE {{ GRAPH <{iri}> {{ ?s ?p ?o }} }}")[0]["n"])
+    missing = sorted(r["o"] for r in sparql_select(jena_missing_query()))
+    if missing:
+        raise SystemExit(f"jena: {len(missing)} edge target(s) in no release graph, e.g. {missing[:5]}")
+    print(f"jena: {', '.join(f'{iri} {counts[n]} triples' for n, iri in JENA_GRAPHS.items())}; every ontology target found")
+    return {"store": "jena", "graphs": counts}
+
+
+def load(stores=(*STORES, "jena")):
+    folder = graph_folder()
+    print(f"loading from {os.path.relpath(folder, ROOT)}")
+    nodes, edges = graph_rows(read_graph(folder))
+    return [load_jena(folder) if s == "jena" else load_store(s, nodes, edges) for s in stores]
 
 
 def walk(store="driver", gold="gold_commercial_core.mips_mpr_executive_summary_fact"):
@@ -500,13 +627,17 @@ def sync(store="driver"):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("step", choices=("collect", "build", "load", "sync", "walk"))
-    ap.add_argument("--store", action="append", choices=tuple(STORES), help="load: these stores only (default: all)")
+    ap.add_argument("step", choices=("collect", "build", "compare", "lineage", "load", "sync", "walk"))
+    ap.add_argument("--store", action="append", choices=(*STORES, "jena"), help="load: these stores only (default: all)")
+    ap.add_argument("--lineage-wait", type=int, default=0, help="collect: seconds to wait for Unity Catalog's lineage to arrive")
+    ap.add_argument("--to-repo", action="store_true", help="build: write graph/*.ttl, what the release ships, not out/tech/graph/")
     ap.add_argument("--manifest", default=MANIFEST, help="collect: the replica manifest the Databricks replica came from")
     args = ap.parse_args()
     if args.step == "collect":
-        collect(args.manifest)
+        collect(args.manifest, args.lineage_wait)
+    elif args.step == "build":
+        build(args.to_repo)
     elif args.step == "load":
-        load(tuple(args.store or STORES))
+        load(tuple(args.store or (*STORES, "jena")))
     else:
-        {"build": build, "sync": sync, "walk": walk}[args.step]()
+        {"compare": compare, "lineage": lineage, "sync": sync, "walk": walk}[args.step]()

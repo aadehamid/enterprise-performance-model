@@ -4,7 +4,8 @@ The Neo4j stores and the Delta table each hold a marker saying which release set
 datasets (their count and a digest of their IRIs, from releases/catalog.ttl) and the projection's input fingerprint
 (projection-manifest.json). The drift check compares each marker with main's newest catalog and manifest. Jena holds
 no marker: its named graphs are version IRIs, so the check reads its graph names and each graph's triple count and
-compares them with the newest release files. sync reloads what is behind with the ontology-to-lpg driver, takes the
+compares them with the newest release files, and the technical graph's two named graphs, which stay out of the release's
+proof, with the graph files the demo would load. sync reloads what is behind with the ontology-to-lpg driver, takes the
 driver's result into this folder, loads the pricing demo's technical graph again, because a reload wipes it, and
 marks the stores it reloaded.
 
@@ -45,6 +46,7 @@ RUN_CONFIG = os.path.join(HERE, "skill-run", "epm-run.json")
 DRIVER_OUT = "~/lpg-out/epm"  # the run configuration's "out"
 TRIPLES_TABLE = "epm_triples"  # the run configuration's "databricks" table
 RELEASE_GRAPHS = ("shapes", "catalog")  # skill-run/epm-run.json's "release_graphs"
+TECH_GRAPHS = {"tech-graph.ttl": "urn:pricing-demo:graph:tech-graph", "decision-trail.ttl": "urn:pricing-demo:graph:decision-trail"}  # tech_graph.JENA_GRAPHS
 STORES = (*NEO4J_STORES, "jena", "databricks")
 MARKER_FIELDS = ("catalog_datasets", "catalog_digest", "input_fingerprint")
 
@@ -123,8 +125,20 @@ def jena_graphs(newest, ref=None):
     return graphs
 
 
-def judge_jena(held, want):
-    """Jena's status from the graphs it holds and those the release files say it should: its graph names are its marker."""
+def tech_graph_counts():
+    """{graph IRI: triple count} of the technical graph as the demo would load it: a refreshed copy, or what the release ships."""
+    from rdflib import Graph
+    refreshed = os.path.join(DEMO, "out", "tech", "graph")
+    folder = refreshed if all(os.path.isfile(os.path.join(refreshed, n)) for n in TECH_GRAPHS) else os.path.join(DEMO, "graph")
+    return {iri: len(Graph().parse(os.path.join(folder, name), format="turtle")) for name, iri in TECH_GRAPHS.items()}
+
+
+def judge_jena(held, want, tech=None):
+    """Jena's status from the graphs it holds and those the release files say it should: its graph names are its marker.
+    The technical graph's named graphs stay out of that comparison and are judged on their own against tech."""
+    tech = tech or {}
+    held = dict(held)
+    held_tech = {g: held.pop(g) for g in list(held) if g in TECH_GRAPHS.values()}
     if not held:
         return "empty", "it holds no graph; a restart empties its in-memory dataset; sync reloads it"
     missing, stray = sorted(set(want) - set(held)), sorted(set(held) - set(want))
@@ -133,7 +147,10 @@ def judge_jena(held, want):
     moved = [g for g in want if held[g] != want[g]]
     if moved:
         return "changed", f"{len(moved)} graph(s) hold another triple count than the release files, e.g. {moved[0]}"
-    return "current", f"{len(held)} graphs, {sum(held.values())} triples, each equal to the release files"
+    if held_tech != tech:
+        return "changed", f"the technical graph differs from its files: {sum(held_tech.values())} triples, not {sum(tech.values())}; run tech_graph load --store jena"
+    return "current", (f"{len(held)} graphs, {sum(held.values())} triples, each equal to the release files"
+                       + (f"; technical graph {sum(tech.values())} triples" if tech else ""))
 
 
 # ---------- the drift check ----------
@@ -150,7 +167,7 @@ def drift(markers, live, want, stores=STORES):
         if isinstance(live.get(store), str):
             rows.append((store, "unreachable", live[store]))
         elif store == "jena":
-            rows.append((store, *judge_jena(live.get(store) or {}, want["jena_graphs"])))
+            rows.append((store, *judge_jena(live.get(store) or {}, want["jena_graphs"], want.get("jena_tech"))))
         elif not m:
             rows.append((store, "unmarked", "no marker: mark it after a checked load, or sync it"))
         elif any(m.get(k) != want[k] for k in MARKER_FIELDS):
@@ -222,6 +239,10 @@ def resource_counts(session):
     return nodes, edges
 
 
+def tech_count(session):
+    return session.run("MATCH (n:Tech) RETURN count(n) AS n").single()["n"]
+
+
 def read_markers_and_counts(stores=STORES):
     """Each named store's marker and live count; a store not named is not read (check --store, so a validation whose
     test store is the local Neo4j never touches AuraDB, Jena or Databricks)."""
@@ -232,7 +253,7 @@ def read_markers_and_counts(stores=STORES):
             with driver, session:
                 rec = session.run("MATCH (m:EpmStoreMarker {store: $s}) RETURN properties(m) AS p", s=store).single()
                 markers[store] = rec["p"] if rec else None
-                live[store] = list(resource_counts(session))
+                live[store] = [*resource_counts(session), tech_count(session)]
         except Exception as err:  # a store that can't be read (down, or no login file) reads as unreachable, with the reason
             markers[store], live[store] = None, f"unreachable ({type(err).__name__})"
     if "jena" in stores:
@@ -289,7 +310,7 @@ def neo4j_checked(store, session, want):
     if sorted(records) != want["newest"]:
         raise SystemExit(f"{store}: its {len(records)} release record(s) are not one for each of the "
                          f"{len(want['newest'])} newest releases")
-    return [nodes, edges]
+    return [nodes, edges, tech_count(session)]
 
 
 def databricks_checked(cur, schema, want):
@@ -307,7 +328,7 @@ def mark(stores, want=None):
     base = {k: want[k] for k in MARKER_FIELDS} | {"marked_at": now(), "commit": commit()}
     for store in stores:
         if store == "jena":  # its graph names are its marker: nothing is written to it
-            status, why = judge_jena(read_jena(), jena_graphs(want["newest"]))
+            status, why = judge_jena(read_jena(), jena_graphs(want["newest"]), tech_graph_counts())
             if status != "current":
                 raise SystemExit(f"jena: {status}: {why}")
             print(f"jena: current, {why}")
@@ -352,17 +373,19 @@ def plan(behind, cloud, skills):
     if "driver" in reloaded:
         steps.append((HERE, ["uv", "run", "-q", "--with", "rdflib", "--with", "pyshacl", "python", "pipeline.py",
                              "record", "--run", DRIVER_OUT]))
-    tech = [s for s in reloaded if s in NEO4J_STORES]
+    tech = [s for s in reloaded if s in NEO4J_STORES or s == "jena"]
     if tech:  # a reload wipes the technical graph (runbook, Reload, step 5)
         steps.append((DEMO, ["uv", "run", "--group", "graph", "python", "-m", "pricing_demo.tech_graph", "load"]
                       + [a for s in tech for a in ("--store", s)]))
+    if "databricks" in reloaded:  # the Delta copy follows Neo4j
+        steps.append((DEMO, ["uv", "run", "--group", "graph", "python", "-m", "pricing_demo.tech_graph", "sync"]))
     return steps, reloaded
 
 
 def expected_for(ref, stores):
     """What the named stores should hold; Jena's graph counts are read from the release files only when it is named."""
     want = expected(ref)
-    return want | {"jena_graphs": jena_graphs(want["newest"], ref)} if "jena" in stores else want
+    return want | {"jena_graphs": jena_graphs(want["newest"], ref), "jena_tech": tech_graph_counts()} if "jena" in stores else want
 
 
 def sync(cloud, dry_run, ref, skills):

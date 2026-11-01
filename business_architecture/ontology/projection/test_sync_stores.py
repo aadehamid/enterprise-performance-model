@@ -65,6 +65,18 @@ class Drift(unittest.TestCase):
         self.assertEqual(ss.judge_jena({"a": 1, "a/shapes": 3}, want)[0], "changed")
         self.assertEqual(ss.judge_jena({"a": 1, "a/shapes": 2, "(the default graph)": 4}, want)[0], "behind")
 
+    def test_the_technical_graph_stays_out_of_the_release_comparison_and_is_judged_on_its_own(self):
+        want, iri = {"a": 1}, ss.TECH_GRAPHS["tech-graph.ttl"]
+        self.assertEqual(ss.judge_jena({"a": 1, iri: 5}, want, {iri: 5})[0], "current")
+        self.assertEqual(ss.judge_jena({"a": 1}, want, {iri: 5})[0], "changed")
+        self.assertEqual(ss.judge_jena({"a": 1, iri: 4}, want, {iri: 5})[0], "changed")
+        self.assertEqual(ss.judge_jena({iri: 5}, want, {iri: 5})[0], "behind")
+
+    def test_the_technical_graphs_names_equal_the_demos(self):
+        sys.path.insert(0, ss.DEMO)
+        import pricing_demo.tech_graph as tg
+        self.assertEqual(ss.TECH_GRAPHS, tg.JENA_GRAPHS)
+
     def test_an_unreachable_store_says_so_even_with_a_marker(self):
         markers = {s: self.marker() for s in ss.STORES}
         live = {s: [4193, 21767] for s in ss.STORES} | {"aura": "unreachable (ServiceUnavailable)"}
@@ -143,20 +155,22 @@ class Plan(unittest.TestCase):
         self.assertEqual(reloaded, ["driver", "jena"])
         self.assertTrue(cmds[0].endswith("--skip copy,databricks,rebuild"))
         self.assertTrue(cmds[1].endswith(f"pipeline.py record --run {ss.DRIVER_OUT}"))
-        self.assertTrue(cmds[2].endswith("tech_graph load --store driver"))
+        self.assertTrue(cmds[2].endswith("tech_graph load --store driver --store jena"))
         self.assertEqual(len(cmds), 3)
 
     def test_cloud_runs_the_full_driver_once_and_reloads_the_technical_graph_in_aura(self):
         cmds, reloaded = self.cmds(["aura"], cloud=True)
         self.assertEqual(reloaded, ["driver", "jena", "aura", "databricks"])
         self.assertNotIn("--skip", cmds[0])
-        self.assertTrue(cmds[2].endswith("tech_graph load --store driver --store aura"))
+        self.assertTrue(cmds[2].endswith("tech_graph load --store driver --store jena --store aura"))
+        self.assertTrue(cmds[3].endswith("tech_graph sync"))
 
     def test_jena_alone_runs_only_the_jena_step_and_touches_no_neo4j(self):
         cmds, reloaded = self.cmds(["jena"], cloud=False)
         self.assertEqual(reloaded, ["jena"])
-        self.assertEqual(len(cmds), 1)
         self.assertTrue(cmds[0].endswith("--only jena"))
+        self.assertTrue(cmds[1].endswith("tech_graph load --store jena"))
+        self.assertEqual(len(cmds), 2)
 
     def test_nothing_behind_runs_nothing(self):
         self.assertEqual(self.cmds([], cloud=True), ([], []))
@@ -205,6 +219,8 @@ class Neo4jChecked(unittest.TestCase):
             def run(self, query):
                 if "ModuleRelease" in query:
                     return mock.Mock(value=lambda: records)
+                if ":Tech" in query:
+                    return mock.Mock(single=lambda: {"n": 7})
                 return mock.Mock(single=lambda: {"n": nodes if "(n:Resource)" in query else edges})
         return Session()
 
@@ -214,7 +230,7 @@ class Neo4jChecked(unittest.TestCase):
 
     def test_counts_equal_to_the_committed_report_and_one_record_per_release_pass(self):
         report = json.load(open(ss.REPORT))
-        self.assertEqual(self.checked(0, 0, ["b", "a"]), [report["nodes"], report["relationships"]])
+        self.assertEqual(self.checked(0, 0, ["b", "a"]), [report["nodes"], report["relationships"], 7])
 
     def test_other_counts_or_records_are_refused(self):
         with self.assertRaisesRegex(SystemExit, "relationships"):

@@ -3,6 +3,7 @@ Block 1: the decision owner's earlier remark on the scope.
 Block 2: the decision owner's answer to the three questions.
 Block 3: the decision owner's added requirement for the walkthrough.
 Block 4: the decision owner's second added requirement for the walkthrough.
+Block 5: the decision owner's three decisions on Jena, automation and the lineage refresh.
 Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
 This only affects projection from turttle to lpg in Neo4j. Triple stres and delta tables hold all three graphs for each module fully
@@ -12,3 +13,5 @@ This only affects projection from turttle to lpg in Neo4j. Triple stres and delt
 In the walkthrough, please, can you add a session on what is needed to be able to project to either Neo4j , Aura, and Databricks. This must include any required information that is needed such as URL, keys, personal token, and so on to be able to make the connection. I want my colleagues to be able to take the walk through and create the same thing we have in QA/Prod enviroment following the walkthrough without missing any information. It should be straight forward. This means the path ot the scripts used for all of this must also be provided, including the validation scripts etc.
 
 Also the how to create technical graph from databricks as source and its projection to ontology and dusbsequent projection to Neo4J /Aura must alos have the same detailed information. There should aslo be a section that deribes the link between Databricks objects such as Metric View, its mesaure/metrics/KPI, the underlyitng tables and its lineage is linked to the ontology and how the ontology contextualize the objects in Databricks.
+
+1. Should Jena also load the update tech graph since the original ontology have changed. This tie back to keeping the ontology in sync everywher they are used once a change happen. This will be crucial going forward and we have to have a clear plan on what that should look like in the walkthrough 2. We should be able to describe what we did in a way that is reproducible by anyone or an agent. It must be automated fully for this to scale 3. Let us refresh the linege once we relases the cust and uploda the fresh data.

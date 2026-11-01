@@ -380,6 +380,7 @@ DEMO="$EPM/demos/downstream-pricing-databricks-free"</code></pre>
   </div>
 </div>
 
+<p class="lead">To rebuild every store from nothing with one command, use <code>rebuild_stores.py --env &lt;file&gt;</code>. The walkthrough's "Connect and load every store" explains it and every connection value.</p>
 <h2 id="check">Check what is running</h2>
 <pre><code>docker ps --format '{{.Names}}  {{.Status}}'</code></pre>
 <p>All three local stores are up when the list shows <code>lpg-local-neo4j-1</code>, <code>epm-jena-fuseki-1</code> and <code>pricing-demo-sources</code>.</p>

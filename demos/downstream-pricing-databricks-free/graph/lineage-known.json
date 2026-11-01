@@ -1,0 +1,64 @@
+{
+ "note": "The differences between the data-product module's designed lineage and what the demo builds, which the demo states it expects: it is simpler than the design in these places. tech_graph lineage fails on any other.",
+ "designed_only": [
+  [
+   "replica_reference_data_hub.deliveryperiodcategory",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_reference_data_hub.holidaycalendar",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_reference_data_hub.priceservice",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "silver_mdm_core.mips_price_batch_dim",
+   "gold_commercial_core.mpr_mips_crack_spread_price_fact"
+  ],
+  [
+   "silver_udm_core.mips_price_assessment_fact",
+   "gold_commercial_core.mpr_mips_crack_spread_price_fact"
+  ]
+ ],
+ "observed_only": [],
+ "designed_not_built": [
+  [
+   "replica_price_reference.areastate",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_price_reference.attribute",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_price_reference.attributeref",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_price_reference.category",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_price_reference.city",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_price_reference.country",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_price_reference.facility",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_price_reference.frequency",
+   "silver_mdm_core.mpr_price_master_dim"
+  ],
+  [
+   "replica_price_reference.pricetype",
+   "silver_mdm_core.mpr_price_master_dim"
+  ]
+ ]
+}
