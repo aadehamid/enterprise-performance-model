@@ -9,6 +9,8 @@
   "target_env": "~/.config/neo4j/aura.env",
   "replace_target": true,
   "keep_neo4j": true,
+  "keep_jena": true,
+  "jena": {"compose_project": "epm-jena", "port": 13031},
   "databricks": {"env": "~/.config/databricks/epm.env", "table": "epm_triples"},
   "queries": "queries.json",
   "rebuild": {"source": "databricks", "out": "~/lpg-out/epm-rebuild"}

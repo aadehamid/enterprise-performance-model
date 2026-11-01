@@ -7,7 +7,9 @@ import hashlib
 import inspect
 import os
 import re
+import subprocess
 import sys
+import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
@@ -640,7 +642,7 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver()))
     with pytest.MonkeyPatch.context() as mp:
         mp.setitem(sys.modules, "neo4j", neo4j)
-        assert tech_graph.sync("pipeline") == (1, 1)
+        assert tech_graph.sync("driver") == (1, 1)
     kinds = [st.split(" epm_validate.tech_graph.")[0] for st in cur.statements]
     assert kinds == ["DELETE FROM", "INSERT INTO", "SELECT COUNT(*) FROM"] * 2  # nodes, then edges, each deleted, filled, counted
     only_catalog(cur.statements, "epm_validate")
@@ -1384,7 +1386,7 @@ def test_e5_a_gold_table_walks_to_the_measures_its_metric_views_implement():
 
 
 def test_e5_only_tech_nodes_and_edges_out_of_them_so_the_projection_counts_cannot_move():
-    # The projection counts :Resource nodes and the edges between them (pipeline.py graph_hash; runbook, Check).
+    # The projection counts :Resource nodes and the edges between them (the skill's load_verify.hash_graph; runbook, Check).
     nodes, edges = tech_graph.graph_rows(_graph("tech-graph.ttl", "decision-trail.ttl"))
     assert all(n["labels"][0] == "Tech" and "Resource" not in n["labels"] for n in nodes)
     uris = {n["props"]["uri"] for n in nodes}
@@ -2268,3 +2270,89 @@ def test_after_e7_an_empty_reply_while_agents_remain_is_sent_back(monkeypatch):
     monkeypatch.setattr(supervisor, "ask_genie", lambda w, space, q: {"status": "COMPLETED", "text": "t"})
     result = supervisor.orchestrate(None, {t: "d" for t in genie.AGENTS}, {t: "id" for t in genie.AGENTS}, "q")
     assert result["answer"] == "the answer" and seen[1][-1]["content"].startswith("Not yet")
+
+
+def test_lineage_wait_reads_again_until_the_events_arrive_or_the_time_runs_out(monkeypatch):
+    designed = {("a", "b"), ("b", "c")}
+    assert tech_graph.lineage_gaps(designed, {"a", "b", "c"}, {("a", "b")}) == ["c"]
+    assert tech_graph.lineage_gaps(designed, {"a", "b"}, set()) == ["b"]  # c is not built, so no event can come
+    reads = [{("a", "b")}, {("a", "b")}, {("a", "b"), ("b", "c")}]
+    monkeypatch.setattr(tech_graph, "designed_lineage", lambda cur, triples: ({"a", "b", "c"}, designed))
+    monkeypatch.setattr(tech_graph, "observed_lineage", lambda cur, cat: reads.pop(0))
+    monkeypatch.setattr(tech_graph, "LINEAGE", os.path.join(tempfile.mkdtemp(), "lineage.json"))
+    slept, now = [], [0]
+
+    def sleep(seconds):
+        slept.append(seconds)
+        now[0] += seconds
+    result = tech_graph.lineage_check(None, "c", "t", ["a", "b", "c"], wait=300, sleep=sleep, clock=lambda: now[0])
+    assert result["result"] == "pass" and len(slept) == 2
+    reads[:] = [{("a", "b")}] * 3
+    now[0], slept[:] = 0, []
+    result = tech_graph.lineage_check(None, "c", "t", ["a", "b", "c"], wait=60, sleep=sleep, clock=lambda: now[0])
+    assert result["result"] == "differs" and len(slept) == 1  # bounded: it reports what it has when the time runs out
+
+
+def test_the_lineage_gate_fails_only_on_what_the_release_does_not_state():
+    known = {"designed_only": [["a", "b"]], "observed_only": [], "designed_not_built": [["x", "y"]]}
+    same = {"matched": [], "designed_only": [["a", "b"]], "observed_only": [], "designed_not_built": [["x", "y"]]}
+    assert tech_graph.lineage_gate(same, known) == []
+    assert tech_graph.lineage_gate({**same, "observed_only": [["p", "q"]]}, known) == ["observed_only: new p -> q"]
+    assert tech_graph.lineage_gate({**same, "designed_only": []}, known) == ["designed_only: no longer a -> b"]
+
+
+def test_the_known_lineage_differences_are_the_ones_the_committed_check_counted():
+    from rdflib import Graph, Namespace
+    known = json.load(open(tech_graph.KNOWN_LINEAGE))
+    detail = str(Graph().parse(os.path.join(ROOT, "graph", "tech-graph.ttl")).value(
+        rdflib_uri("urn:pricing-demo:tech:check/designed-vs-observed-lineage"), Namespace(tech_graph.VOCAB).detail))
+    assert detail == (f"26 edges match; {len(known['designed_only'])} designed only; {len(known['observed_only'])} observed only; "
+                      f"{len(known['designed_not_built'])} designed edges touch a table the demo does not build")
+
+
+def rdflib_uri(iri):
+    from rdflib import URIRef
+    return URIRef(iri)
+
+
+def structure_graph(text):
+    from rdflib import Graph
+    return Graph().parse(data="@prefix tv: <urn:pricing-demo:tech-vocab#> . @prefix t: <urn:pricing-demo:tech:> .\n" + text, format="turtle")
+
+
+def test_a_refresh_with_new_counts_is_no_structural_difference_and_a_new_edge_is():
+    base = 't:v a tv:MetricView ; tv:rows 1 ; tv:lastRefresh "x" ; tv:readsFrom t:g ; tv:hostedOn t:h1 . t:g a tv:GoldTable . t:h1 a tv:Host ; tv:name "vm" .'
+    fresh = 't:v a tv:MetricView ; tv:rows 2 ; tv:lastRefresh "y" ; tv:readsFrom t:g ; tv:hostedOn t:h2 . t:g a tv:GoldTable . t:h2 a tv:Host ; tv:name "local" .'
+    assert tech_graph.compare_structure(structure_graph(fresh), structure_graph(base)) == []
+    moved = fresh + " t:v tv:readsFrom t:z . t:z a tv:GoldTable ."
+    lines = tech_graph.compare_structure(structure_graph(moved), structure_graph(base))
+    assert lines == ["new object urn:pricing-demo:tech:z", f"new statement urn:pricing-demo:tech:v {tech_graph.VOCAB}readsFrom urn:pricing-demo:tech:z"]
+    renamed = base.replace('t:v a tv:MetricView ;', 't:v a tv:MetricView ; tv:name "another name" ;')
+    assert tech_graph.compare_structure(structure_graph(renamed), structure_graph(base))[0].startswith("new statement urn:pricing-demo:tech:v")
+    assert tech_graph.compare_structure(structure_graph(base), structure_graph(moved))[0] == "missing object urn:pricing-demo:tech:z"
+
+
+def test_load_takes_a_refreshed_graph_when_one_exists_and_writes_nothing_the_release_ships(monkeypatch, tmp_path):
+    monkeypatch.setattr(tech_graph, "REFRESHED", str(tmp_path / "graph"))
+    assert tech_graph.graph_folder() == tech_graph.GRAPH
+    (tmp_path / "graph").mkdir()
+    (tmp_path / "graph" / "tech-graph.ttl").write_text("")
+    assert tech_graph.graph_folder() == tech_graph.GRAPH  # one file alone is not a refreshed graph
+    (tmp_path / "graph" / "decision-trail.ttl").write_text("")
+    assert tech_graph.graph_folder() == str(tmp_path / "graph")
+    assert subprocess.run(["git", "check-ignore", "-q", os.path.join(ROOT, "out", "tech", "graph", "tech-graph.ttl")], cwd=ROOT).returncode == 0 or not os.path.exists(os.path.join(ROOT, ".git"))
+
+
+def test_jena_load_looks_for_targets_only_in_current_release_graphs_and_writes_nothing_when_one_is_missing(monkeypatch, tmp_path):
+    query = tech_graph.jena_found_query(["https://x/a"], ["https://x/m/1.0.0"])
+    for graph in ("<https://x/m/1.0.0>", "<https://x/m/1.0.0/shapes>", "<https://x/m/1.0.0/catalog>"):
+        assert graph in query
+    assert "urn:pricing-demo:graph" not in query
+    newest = tech_graph.newest_releases()
+    assert len(newest) == 11 and all(iri.rsplit("/", 1)[-1][0].isdigit() for iri in newest)
+    (tmp_path / "tech-graph.ttl").write_text(f"<urn:a> <urn:b> <{tech_graph.ONTOLOGY}gone> .\n")
+    (tmp_path / "decision-trail.ttl").write_text("")
+    monkeypatch.setattr(tech_graph, "sparql_select", lambda query: [])
+    monkeypatch.setattr(tech_graph.urllib.request, "urlopen", lambda *a, **k: pytest.fail("Jena was written to"))
+    with pytest.raises(SystemExit, match="1 edge target"):
+        tech_graph.load_jena(str(tmp_path))

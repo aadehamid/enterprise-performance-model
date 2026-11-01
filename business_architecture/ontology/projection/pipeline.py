@@ -1,33 +1,26 @@
-"""Step 12: project the ontology into a Neo4j labelled property graph (EPM-DEC-001-0020, 0021, 0036).
+"""Step 12's checks and committed record: the projection's inputs, checked with no database, and the result of the last load.
 
-Follows the guideline in ../lpg-projection/ (v2.2) with Rule 4 set to 4a, qualified-relation nodes:
+The one loader is the ontology-to-lpg skill's run_projection.py (skill-run/README.md). What stays here runs in CI and
+needs neither Docker nor Java:
 
-    python3 pipeline.py build                    # Steps 1 and 3: check the rules, validate, write the
-                                                 # sorted N-Triples and the manifest (no tools beyond rdflib)
+    python3 pipeline.py build                    # check the rules, validate, write projection-manifest.json
     python3 pipeline.py build --verify           # fail unless the manifest matches a fresh build
-    python3 pipeline.py reason --robot robot.jar # Step 2: ELK through ROBOT; writes inferred.nt
-    python3 pipeline.py load-verify --bolt bolt://localhost:17687 --import-dir DIR   # NEO4J_PASSWORD in the environment
-                                                 # Steps 4 and 5 against a running Neo4j with n10s and APOC;
-                                                 # writes projection-report.json. The password is read from the
-                                                 # environment variable NEO4J_PASSWORD; there is no argument for it.
+    python3 pipeline.py record --run ~/lpg-out/epm   # after a driver run on these inputs: take its inferred.nt and a summary
+                                                 # of its report into this folder, then rewrite the manifest
 
-Turtle stays the master copy. Neo4j is a projection that can be rebuilt from these files at any time.
+Commit inferred.nt, projection-manifest.json and projection-report.json together. Turtle stays the master copy; Neo4j
+is a projection that can be rebuilt from these files at any time.
 """
 import argparse
 import hashlib
 import json
 import os
-import random
-import re
-import subprocess
 import sys
-import tempfile
-from collections import Counter, defaultdict
+from collections import defaultdict
 
 from pyshacl import validate
-from rdflib import BNode, Graph, Literal, Namespace, URIRef
-from rdflib.collection import Collection
-from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
+from rdflib import BNode, Graph, Namespace, URIRef
+from rdflib.namespace import OWL, RDF, RDFS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
@@ -92,7 +85,7 @@ QUALIFIED_RELATIONS = [
 # that no longer occurs, so the list cannot go stale (EPM-DEC-001-0036).
 RELEASE_EXCEPTIONS = {}  # every listed gap is closed by integration 2.0.0 (EPM-DEC-001-0094)
 VERSIONS = {"neo4j": "2025.06.2", "n10s": "2025.06.1", "apoc": "bundled with neo4j:2025.06.2",
-            "robot": "1.9.10", "reasoner": "ELK (through ROBOT)", "guideline": "v2.2 (lpg-projection/, pin 8ce9ada)"}
+            "robot": "1.9.10", "reasoner": "ELK (through ROBOT)", "method": "ontology-to-lpg 2.3"}
 
 
 def graph(paths):
@@ -117,8 +110,8 @@ def sha(*texts):
 
 # n10s writes every label, relationship type and property key as the fixed prefix, two underscores and the local
 # name (its SHORTEN setting). The graph keeps that on main. In the share release the separator is one underscore
-# (EPM-DEC-001-0110): after every check has passed on the n10s names, the load renames each label, type and key,
-# proves the rename lossless against a dump taken before it, and hashes the renamed graph.
+# (EPM-DEC-001-0110): the driver renames each name after every check has passed on the n10s names (the run
+# configuration's separator).
 N10S_SEP = "_" * 2
 SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(ONTOLOGY, "..", "..", "release.json"))
 SEP = "_" if SHARE_RELEASE else N10S_SEP
@@ -134,57 +127,9 @@ def lpg_name(iri, sep=None):
     return None
 
 
-def names_in_use(session):
-    """Every label, relationship type and property key the data holds (not the token tables, which keep deleted names)."""
-    labels = session.run("MATCH (n) UNWIND labels(n) AS l RETURN collect(DISTINCT l) AS l").single()["l"]
-    rels = session.run("MATCH ()-[r]->() RETURN collect(DISTINCT type(r)) AS l").single()["l"]
-    keys = session.run("MATCH (n) UNWIND keys(n) AS k RETURN collect(DISTINCT k) AS l").single()["l"]
-    keys += [k for k in session.run("MATCH ()-[r]->() UNWIND keys(r) AS k RETURN collect(DISTINCT k) AS l").single()["l"] if k not in keys]
-    return labels, rels, keys
-
-
-def dump(session):
-    nodes = session.run("MATCH (n:Resource) RETURN n.uri AS uri, labels(n) AS l, properties(n) AS p ORDER BY uri").data()
-    edges = session.run("MATCH (a:Resource)-[r]->(b:Resource) RETURN a.uri AS s, type(r) AS t, b.uri AS o, properties(r) AS p ORDER BY s, t, o").data()
-    return nodes, edges
-
-
-def rename_separator(session):
-    """Rename every label, relationship type and property key from the n10s form to the SEP form, with APOC,
-    and prove it lossless: the dump before, with the expected renames applied, equals the dump after. Returns the
-    counts renamed and whether the comparison held."""
-    labels, rels, keys = names_in_use(session)
-    plan = {kind: {x: x.replace(N10S_SEP, SEP, 1) for x in names if N10S_SEP in x}
-            for kind, names in (("labels", labels), ("rels", rels), ("keys", keys))}
-    for kind, existing in (("labels", labels), ("rels", rels), ("keys", keys)):
-        new = list(plan[kind].values())
-        if len(set(new)) != len(new) or set(new) & set(existing):
-            raise RuntimeError(f"the single-underscore rename collides in {kind}")
-    before = dump(session)
-    for old, new in plan["labels"].items():
-        session.run("CALL apoc.refactor.rename.label($o, $n)", o=old, n=new).consume()
-    for old, new in plan["rels"].items():
-        session.run("CALL apoc.refactor.rename.type($o, $n)", o=old, n=new).consume()
-    for old, new in plan["keys"].items():
-        session.run("CALL apoc.refactor.rename.nodeProperty($o, $n)", o=old, n=new).consume()
-        session.run("CALL apoc.refactor.rename.typeProperty($o, $n)", o=old, n=new).consume()
-    L, R, K = plan["labels"], plan["rels"], plan["keys"]
-    expected = ([{"uri": n["uri"], "l": sorted(L.get(x, x) for x in n["l"]), "p": {K.get(k, k): v for k, v in n["p"].items()}} for n in before[0]],
-                [{"s": e["s"], "t": R.get(e["t"], e["t"]), "o": e["o"], "p": {K.get(k, k): v for k, v in e["p"].items()}} for e in before[1]])
-    after = dump(session)
-    got = ([{**n, "l": sorted(n["l"])} for n in after[0]], after[1])
-    lossless = json.dumps(expected, sort_keys=True, default=str) == json.dumps(got, sort_keys=True, default=str)
-    return {k: len(v) for k, v in plan.items()}, lossless
-
-
-def rename_if_share(session):
-    """The share release's rename, or nothing on main: (counts renamed, whether the rename was lossless)."""
-    return ({}, True) if SEP == N10S_SEP else rename_separator(session)
-
-
 def shapes_fingerprint():
-    """SHA-256 over every shape file, in order. The Step 5 report records it, so a shape change makes
-    the committed report stale even when the loaded triples do not change."""
+    """SHA-256 over every shape file, in order. The committed report records it, so a shape change makes
+    the report stale even when the loaded triples do not change."""
     return sha(*(open(os.path.join(ONTOLOGY, p)).read() for p in SHAPES))
 
 
@@ -276,231 +221,58 @@ def build():
     return loadable, inferred, json.dumps(manifest, indent=2, sort_keys=True) + "\n"
 
 
-# ---------- Step 2: reason once, upstream ----------
+# ---------- the record of the last load ----------
 
-def reason(robot):
-    with tempfile.TemporaryDirectory() as tmp:
-        merged, reasoned = os.path.join(tmp, "merged.ttl"), os.path.join(tmp, "reasoned.ttl")
-        data = graph(INPUTS)
-        data.serialize(merged, format="turtle")
-        subprocess.run(["java", "-jar", robot, "reason", "--reasoner", "ELK", "--input", merged,
-                        "--axiom-generators", "SubClass ClassAssertion", "--output", reasoned], check=True)
-        before = set(sorted_nt(data).splitlines())
-        after = Graph().parse(reasoned)
-    # inferred.nt: in the reasoner's output, not its input; rdf:type and rdfs:subClassOf only;
-    # subject and object both IRIs (guideline Step 3).
-    # Also drop triples whose object is an OWL or RDFS built-in (owl:NamedIndividual, owl:Class,
-    # owl:Thing, owl:AnnotationProperty, rdfs:Datatype): the OWL API writes these declarations into
-    # the reasoner's output; they are not inferences about the domain (EPM-DEC-001-0036).
-    builtin = (str(OWL), str(RDFS))
-    keep = Graph()
-    for s, p, o in after:
-        if p in (RDF.type, RDFS.subClassOf) and isinstance(s, URIRef) and isinstance(o, URIRef) \
-                and not str(o).startswith(builtin):
-            keep.add((s, p, o))
-    lines = [line for line in sorted_nt(keep).splitlines() if line not in before]
+# What the committed report keeps of the driver's. Its compiled rows and fail cases run to some 800 KB and stay in the
+# driver's output folder.
+REPORT_FIELDS = ("shacl_violations_in_graph", "in_graph_shape_constraints", "in_graph_mutant_violations", "roundtrip_lost",
+                 "roundtrip_added", "determinism_hash_sorted", "determinism_hash_shuffled", "nodes", "relationships",
+                 "schema_relationships", "export_rows", "schema_rows_skipped", "separator", "renamed", "rename_lossless")
+
+
+def report_problems(report):
+    """Why a load's report cannot stand as the record: every check the load must have passed."""
+    checks = {"it does not say passed": report.get("passed") is True,
+              "a SHACL violation in the graph": report.get("shacl_violations_in_graph") == 0,
+              "the deliberate mutant was not caught": (report.get("in_graph_mutant_violations") or 0) > 0,
+              "the round trip lost or added a triple": (report.get("roundtrip_lost"), report.get("roundtrip_added")) == (0, 0),
+              "the two loads hash differently": bool(report.get("determinism_hash_sorted"))
+              and report.get("determinism_hash_sorted") == report.get("determinism_hash_shuffled"),
+              "the rename was not lossless": report.get("rename_lossless") is True}
+    return [why for why, ok in checks.items() if not ok]
+
+
+def record(run):
+    """Takes a driver run's result into this folder, once its inputs are proven to be this tree's: every file its
+    run-manifest.json lists has the SHA-256 of the file this tree projects, and it loaded the same triples."""
+    with open(os.path.join(run, "run-manifest.json")) as f:
+        ran = json.load(f)
+    with open(os.path.join(run, "projection-report.json")) as f:
+        report = json.load(f)
+    with open(os.path.join(run, "inferred.nt")) as f:
+        inferred = f.read()
+    with open(os.path.join(run, "loadable.nt")) as f:
+        loaded = f.read()
+    tree = sorted(sha(open(os.path.join(ONTOLOGY, p)).read()) for p in INPUTS + SHAPES)
+    if sorted(e["sha256"] for e in ran["data"] + ran["shapes"]) != tree:
+        sys.exit("record: that run read other inputs than this tree's; run the driver on this tree")
+    problems = report_problems(report)
+    if problems:
+        sys.exit("record: the run's report cannot stand: " + "; ".join(problems))
+    if set(loaded.splitlines()) != set(sorted_nt(graph(INPUTS)).splitlines()):
+        sys.exit("record: that run loaded other triples than this tree's")
     with open(INFERRED, "w") as f:
-        f.write("".join(line + "\n" for line in lines))
-    print(f"inferred.nt: {len(lines)} triples")
-
-
-# ---------- Steps 4 and 5 ----------
-
-def literal_multivalued(data, shapes):
-    """Literal-valued predicates that may carry more than one value: n10s keeps them as arrays."""
-    one = {shapes.value(n, SH.path) for n in shapes.subjects(SH.maxCount, Literal(1))}
-    lit = {p for s, p, o in data if isinstance(o, Literal)}
-    seen = Counter((s, p) for s, p, o in data if isinstance(o, Literal))
-    many = {p for (s, p), n in seen.items() if n > 1}
-    return sorted(str(p) for p in lit if p not in one or p in many)
-
-
-# What n10s 2025.06.1 cannot validate in the graph. Step 1 has already validated every one of these
-# with pySHACL on the exact triples that are loaded, and the round trip proves the graph holds those
-# triples, so the full shapes hold in the graph (EPM-DEC-001-0036).
-# sh:pattern is among them: n10s matches the pattern against the whole string, where SHACL searches
-# it, so "\S" fails on every value longer than one character (EPM-DEC-001-0036, amendment of
-# 2026-10-22). So is an sh:in list of literals: n10s does not match a loaded true to the list's true.
-N10S_UNSUPPORTED = [SH["not"], SH.languageIn, SH.targetObjectsOf, SH.targetSubjectsOf, SH.node,
-                    SH.message, SH.severity, SH.pattern]
-
-
-def in_graph_shapes(shapes):
-    """The subset of the shapes that n10s validates inside Neo4j: property shapes on target classes."""
-    g = Graph()
-    for s, p, o in shapes:
-        if p in N10S_UNSUPPORTED:
-            continue
-        if p == SH.datatype and o == RDF.langString:
-            continue
-        if p == SH["in"] and any(isinstance(m, Literal) for m in Collection(shapes, o)):
-            continue
-        g.add((s, p, o))
-    # Drop node shapes left with no target class: n10s validates only targeted shapes.
-    for shape in set(g.subjects(RDF.type, SH.NodeShape)):
-        if (shape, SH.targetClass, None) not in g:
-            for prop in list(g.objects(shape, SH.property)):
-                g.remove((prop, None, None))
-            g.remove((shape, None, None))
-    return g
-
-
-def cypher_setup(data, shapes):
-    """Generated, not handwritten (guideline anti-patterns): prefixes and config. SHORTEN, as guideline
-    v2.2 says (v2.1's example used MAP): n10s validates SHACL only in a namespace-aware graph
-    (EPM-DEC-001-0036)."""
-    stmts = ["CREATE CONSTRAINT n10s_unique_uri IF NOT EXISTS FOR (r:Resource) REQUIRE r.uri IS UNIQUE"]
-    multival = json.dumps(literal_multivalued(data, shapes))
-    stmts.append("CALL n10s.graphconfig.init({handleVocabUris:'SHORTEN', handleRDFTypes:'LABELS_AND_NODES', "
-                 f"handleMultival:'ARRAY', multivalPropList:{multival}, keepLangTag:true, keepCustomDataTypes:true}})")
-    return stmts
-
-
-def load(session, nt_name, setup):
-    session.run("MATCH (n) DETACH DELETE n").consume()
-    for drop in ("CALL n10s.graphconfig.drop()", "CALL n10s.nsprefixes.removeAll()", "CALL n10s.mapping.dropAll()"):
-        try:
-            session.run(drop).consume()
-        except Exception:
-            pass
-    for stmt in setup:
-        session.run(stmt).consume()
-    # Fixed prefixes after the config, so n10s never invents an ns0-style prefix (Rule 3).
-    for k, v in PREFIXES.items():
-        session.run("CALL n10s.nsprefixes.add($k, $v)", k=k, v=v).consume()
-    for name in (nt_name, "inferred.nt"):
-        r = session.run(f"CALL n10s.rdf.import.fetch('file:///import/{name}','N-Triples')").single()
-        if r["terminationStatus"] != "OK":
-            raise RuntimeError(f"n10s import of {name}: {dict(r)}")
-    # 4g: sort array properties so the graph does not depend on load order.
-    keys = session.run("MATCH (n:Resource) UNWIND keys(n) AS k WITH n, k WHERE valueType(n[k]) STARTS WITH 'LIST' "
-                       "RETURN DISTINCT k").value()
-    for k in keys:
-        session.run(f"MATCH (n:Resource) WHERE n.`{k}` IS NOT NULL SET n.`{k}` = apoc.coll.sort(n.`{k}`)").consume()
-
-
-def graph_hash(session):
-    nodes = session.run("MATCH (n:Resource) RETURN n.uri AS uri, labels(n) AS l, properties(n) AS p ORDER BY uri").data()
-    edges = session.run("MATCH (a:Resource)-[r]->(b:Resource) RETURN a.uri AS s, type(r) AS t, b.uri AS o, "
-                        "r.uri AS u ORDER BY s, t, o, u").data()
-    canon = json.dumps({"nodes": [{**n, "l": sorted(n["l"])} for n in nodes], "edges": edges},
-                       sort_keys=True, default=str)
-    return sha(canon), len(nodes), len(edges)
-
-
-LANG_SUFFIX = re.compile(r"^(.*)@([a-z]{2,3}(?:-[A-Za-z0-9]+)*)$", re.S)
-INTEGERS = {XSD.integer, XSD.long, XSD.int, XSD.short, XSD.byte, XSD.nonNegativeInteger, XSD.positiveInteger}
-
-
-def canonical(term):
-    """One spelling per RDF literal, so the round trip compares values, not spellings: a plain
-    literal and an xsd:string literal are the same (RDF 1.1); integer types load as INTEGER and come
-    back as xsd:long (guideline section 8), so they compare as xsd:integer; xsd:decimal loads as FLOAT
-    and comes back as xsd:double (section 8; Add-on C not adopted), so both compare by their value as a
-    double, and the build refuses a decimal whose double does not print back to the same value."""
-    if not isinstance(term, Literal) or term.language:
-        return term
-    if term.datatype in (None, XSD.string):
-        return Literal(str(term))
-    if term.datatype in INTEGERS:
-        return Literal(int(term), datatype=XSD.integer)
-    if term.datatype in (XSD.decimal, XSD.double, XSD.float):
-        return Literal(repr(float(term)), datatype=XSD.double)
-    return term
-
-
-def canonical_graph(g):
-    out = Graph()
-    for s, p, o in g:
-        out.add((s, p, canonical(o)))
-    return out
-
-
-def roundtrip(session):
-    rows = session.run("CALL n10s.rdf.export.cypher('MATCH (n:Resource) OPTIONAL MATCH (n)-[r]->(m:Resource) "
-                       "RETURN n, r, m') YIELD subject, predicate, object, isLiteral, literalType, literalLang "
-                       "RETURN subject, predicate, object, isLiteral, literalType, literalLang").data()
-    g = Graph()
-    for r in rows:
-        if r["isLiteral"]:
-            m = LANG_SUFFIX.match(str(r["object"]))
-            if r["literalLang"]:
-                o = Literal(r["object"], lang=r["literalLang"])
-            elif m and r["literalType"] in (None, str(XSD.string)):
-                # keepLangTag stores "text@en" in the graph; the export hands it back untagged.
-                o = Literal(m.group(1), lang=m.group(2))
-            else:
-                o = Literal(r["object"], datatype=URIRef(r["literalType"]) if r["literalType"] else None)
-        else:
-            o = URIRef(r["object"])
-        g.add((URIRef(r["subject"]), URIRef(r["predicate"]), o))
-    return g
-
-
-def load_verify(bolt, password, import_dir):
-    from neo4j import GraphDatabase
-    from rdflib.compare import graph_diff, to_isomorphic
-
-    data, shapes = graph(INPUTS), graph(SHAPES)
-    loadable, inferred, _ = build()
-    setup = cypher_setup(data, shapes)
-    lines = loadable.splitlines()
-    shuffled = lines[:]
-    random.Random(12).shuffle(shuffled)
-    for name, text in (("loadable.nt", loadable), ("inferred.nt", inferred),
-                       ("shuffled.nt", "".join(x + "\n" for x in shuffled))):
-        with open(os.path.join(import_dir, name), "w") as f:
-            f.write(text)
-    with open(os.path.join(import_dir, "shapes.ttl"), "w") as f:
-        f.write(in_graph_shapes(shapes).serialize(format="turtle"))
-    driver = GraphDatabase.driver(bolt, auth=("neo4j", password))
-    with driver.session() as s:
-        load(s, "shuffled.nt", setup)
-        _, lossless = rename_if_share(s)  # the first load's rename must be lossless too; it is checked below with the second's
-        hash_shuffled = graph_hash(s)
-        load(s, "loadable.nt", setup)
-        s.run("CALL n10s.validation.shacl.import.fetch('file:///import/shapes.ttl','Turtle')").consume()
-        violations = s.run("CALL n10s.validation.shacl.validate() YIELD focusNode, propertyShape, resultMessage "
-                           "RETURN focusNode, propertyShape, resultMessage").data()
-        out = roundtrip(s)
-        # The in-graph check must be able to fail: remove one role's name, which every role must
-        # have exactly once (the organization package's shapes.ttl), and count the violations n10s reports.
-        shapes_loaded = s.run("CALL n10s.validation.shacl.listShapes() YIELD target RETURN count(*) AS n").single()["n"]
-        role, pref = f"org{N10S_SEP}Role", f"skos{N10S_SEP}prefLabel"  # the n10s names, before any rename
-        probe = s.run(f"MATCH (r:{role}) WITH r ORDER BY r.uri LIMIT 1 WITH r, r.{pref} AS label "
-                      f"REMOVE r.{pref} RETURN r.uri AS uri, label").single()
-        caught = len(s.run("CALL n10s.validation.shacl.validate() YIELD focusNode RETURN focusNode").data())
-        # Put the name back, so a graph kept after the run (run_local.sh --keep) is the projection itself.
-        s.run(f"MATCH (r:{role} {{uri: $uri}}) SET r.{pref} = $label", uri=probe["uri"], label=probe["label"]).consume()
-        renamed, kept_lossless = rename_if_share(s)
-        lossless = lossless and kept_lossless  # a loss in either load fails the run, not only a difference between them
-        hash_sorted = graph_hash(s)  # the hash of the graph as it is kept: renamed in the share release
-    driver.close()
-    src = Graph().parse(data=loadable + inferred, format="nt")
-    inexact = [o for o in src.objects() if isinstance(o, Literal) and o.datatype == XSD.decimal
-               and str(o.toPython()) != repr(float(o))]
-    if inexact:
-        sys.exit(f"a decimal does not survive as a FLOAT; adopt guideline Add-on C: {inexact[:3]}")
-    clash = [o for o in src.objects() if isinstance(o, Literal) and not o.language and LANG_SUFFIX.match(str(o))]
-    if clash:
-        sys.exit(f"a source string ends like a language tag, so the round trip cannot tell them apart: {clash[:3]}")
-    both, lost, added = graph_diff(to_isomorphic(canonical_graph(src)), to_isomorphic(canonical_graph(out)))
-    report = {
-        "input_fingerprint": sha(loadable, inferred),
-        "shapes_fingerprint": shapes_fingerprint(),
-        "shacl_violations_in_graph": len(violations),
-        "in_graph_shape_constraints": shapes_loaded,
-        "in_graph_mutant_violations": caught,
-        "roundtrip_lost": len(lost), "roundtrip_added": len(added),
-        "determinism_hash_sorted": hash_sorted[0], "determinism_hash_shuffled": hash_shuffled[0],
-        "nodes": hash_sorted[1], "relationships": hash_sorted[2],
-        "separator": SEP, "renamed": renamed, "rename_lossless": lossless,
-        "versions": VERSIONS,
-        "samples": {"violations": violations[:5],
-                    "lost": [" ".join(x.n3() for x in t) for t in list(lost)[:10]],
-                    "added": [" ".join(x.n3() for x in t) for t in list(added)[:10]]},
-    }
-    return report
+        f.write(inferred)
+    loadable, inferred, manifest = build()  # Step 1 now covers the run's inferences too
+    summary = {k: report[k] for k in REPORT_FIELDS}
+    summary.update({"input_fingerprint": sha(loadable, inferred), "shapes_fingerprint": shapes_fingerprint(),
+                    "versions": report["versions"]})
+    with open(MANIFEST, "w") as f:
+        f.write(manifest)
+    with open(REPORT, "w") as f:
+        f.write(json.dumps(summary, indent=2, sort_keys=True) + "\n")
+    print(f"recorded: {summary['nodes']} nodes, {summary['relationships']} relationships, "
+          f"{loadable.count(chr(10))} triples and {inferred.count(chr(10))} inferred")
 
 
 def parser():
@@ -508,21 +280,9 @@ def parser():
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build")
     b.add_argument("--verify", action="store_true")
-    r = sub.add_parser("reason")
-    r.add_argument("--robot", required=True)
-    lv = sub.add_parser("load-verify")
-    lv.add_argument("--bolt", required=True)
-    lv.add_argument("--import-dir", required=True)
-    lv.epilog = "The Neo4j password is read from the environment variable NEO4J_PASSWORD."
+    r = sub.add_parser("record")
+    r.add_argument("--run", required=True, help="the driver's output folder (the run configuration's out)")
     return ap
-
-
-def neo4j_password():
-    """The Neo4j password, from the environment variable NEO4J_PASSWORD; load-verify has no argument for it."""
-    password = os.environ.get("NEO4J_PASSWORD")
-    if not password:
-        raise SystemExit("load-verify needs the Neo4j password: set NEO4J_PASSWORD in the environment")
-    return password
 
 
 def main():
@@ -538,19 +298,8 @@ def main():
             with open(MANIFEST, "w") as f:
                 f.write(manifest)
             print("wrote projection-manifest.json")
-    elif args.cmd == "reason":
-        reason(args.robot)
     else:
-        report = load_verify(args.bolt, neo4j_password(), args.import_dir)
-        with open(REPORT, "w") as f:
-            f.write(json.dumps(report, indent=2, sort_keys=True, default=str) + "\n")
-        ok = (report["shacl_violations_in_graph"] == 0 and report["in_graph_mutant_violations"] > 0
-              and report["roundtrip_lost"] == 0 and report["roundtrip_added"] == 0
-              and report["determinism_hash_sorted"] == report["determinism_hash_shuffled"]
-              and report["rename_lossless"])
-        print(json.dumps({k: v for k, v in report.items() if k not in ("samples", "versions")}, indent=1))
-        if not ok:
-            sys.exit("Step 5 failed; see projection-report.json samples")
+        record(os.path.expanduser(args.run))
 
 
 if __name__ == "__main__":
