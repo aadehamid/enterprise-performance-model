@@ -157,6 +157,8 @@ def all_pages():
     records = sorted(glob.glob(os.path.join(ROOT, DECISIONS_DIR, "EPM-DEC-001-*.md")))
     if SHARE_RELEASE and not (records and os.path.exists(os.path.join(ROOT, DECISIONS_DIR, "README.md"))):
         return out  # the share release carries no decision records (EPM-DEC-001-0110): no decisions page
+    if not records:
+        raise ValueError(f"no decision records under {DECISIONS_DIR}; the decisions page cannot be built from none")
     numbers = [record_id(p) for p in records]
     twice = sorted({n for n in numbers if numbers.count(n) > 1})
     if twice:

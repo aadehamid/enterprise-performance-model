@@ -66,6 +66,9 @@ TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "out
 DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
 ANSWERS = os.path.join(REVIEWS, "decision-owner-answers")
 SCOPED = os.path.join(STEP4, "scoped-sequence")
+# The share release (EPM-DEC-001-0110) leaves the Step 4 gate out; in release mode (EPM_SHARE_RELEASE, or release.json
+# at the tree's root) `counts` gives the taxonomy figures alone. On main the gate must be here, as before.
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(ROOT, "release.json"))
 
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
@@ -321,8 +324,8 @@ def taxonomy():
 # ---------- commands ----------
 
 def cmd_counts(args):
-    if not os.path.isfile(os.path.join(STEP4, "mapping_v2.py")):
-        # A tree without the Step 4 gate (the share release): the taxonomy figures only.
+    if SHARE_RELEASE and not os.path.isfile(os.path.join(STEP4, "mapping_v2.py")):
+        # The share release, without the Step 4 gate: the taxonomy figures only. On main a missing gate fails below.
         out = {"commit": commit(), "step4_gate": "not in this tree", "taxonomy": taxonomy(), "sources": [rel(TAXONOMY)]}
         if args.json:
             print(json.dumps(out, indent=2))
@@ -1099,6 +1102,15 @@ RECORD_ID = re.compile(r"EPM-DEC-001-(\d{4})")
 COMMENT_ID = re.compile(r"comment (\d{6,})")
 
 
+def markdown_files(root=ROOT):
+    """Every tracked Markdown file from the root; in a tree without Git (the share release), every .md file in it."""
+    if os.path.exists(os.path.join(root, ".git")):
+        out = subprocess.run(["git", "ls-files", "-z", "*.md"], cwd=root, capture_output=True, text=True, check=True).stdout
+        return [f for f in out.split("\0") if f]
+    return sorted(os.path.relpath(os.path.join(r, f), root) for r, ds, fs in os.walk(root)
+                  for f in fs if f.endswith(".md") and ".git" not in r.split(os.sep))
+
+
 def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=None):
     """Words a tracked Markdown document attributes to the decision owner, outside the decision records, the saved
     answers and the review evidence (whose quotes `quotes` checks). Every quote of three or more words after an
@@ -1120,12 +1132,8 @@ def citation_problems(root=ROOT, answers=ANSWERS, decisions=DECISIONS, files=Non
     record_texts = {m.group(1): recorded_words(p) for p in glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))
                     for m in [re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(p))] if m}
     records = set(record_texts)
-    if files is None and os.path.exists(os.path.join(root, ".git")):
-        out = subprocess.run(["git", "ls-files", "-z", "*.md"], cwd=root, capture_output=True, text=True, check=True).stdout
-        files = [f for f in out.split("\0") if f]
-    elif files is None:  # a tree without Git, such as the share release: every Markdown file in it
-        files = sorted(os.path.relpath(os.path.join(r, f), root) for r, ds, fs in os.walk(root)
-                       for f in fs if f.endswith(".md") and ".git" not in r.split(os.sep))
+    if files is None:
+        files = markdown_files(root)
     # the saved answers, the decision records (checked by `quotes`) and the rest of the review evidence: records kept as
     # they were made, not documents to correct
     skip = (os.path.relpath(answers, root), os.path.relpath(decisions, root), os.path.relpath(REVIEWS, root))

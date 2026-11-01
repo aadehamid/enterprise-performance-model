@@ -23,6 +23,11 @@ INPUTS = {
     "gate": (os.path.join(STEP4, "mapping_v2.py"), "the Step 4 gate"),
     "step4-readme": (os.path.join(STEP4, "README.md"), "the Step 4 README"),
     "history": (".git", "the Git history"),
+    # A test whose own fixture is written in the records' conventions (a record number, the recorded-words heading,
+    # a citation of an answers file) reads nothing from the tree, but the release rewrites those conventions in the
+    # test file itself, so it tests them only where the records are.
+    "record-citations": (os.path.join("business_architecture", "domain", "decisions"),
+                         "the record citations (the release rewrites record numbers and the recorded-words heading)"),
 }
 
 

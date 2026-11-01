@@ -396,11 +396,36 @@ def test_without_a_decisions_page_nothing_links_to_it(monkeypatch):
             path = html.unescape(href).partition("#")[0]
             if path and not re.match(r"^[a-z]+:", path):
                 assert os.path.exists(os.path.normpath(os.path.join(os.path.dirname(here), path))), (out, href)
+
+
+@pytest.mark.inputs("record-citations")
+def test_without_a_decisions_page_a_record_citation_stays_text():
+    reduced = [s for s in b.all_pages() if not s.get("decisions")]
     spec = next(s for s in reduced if s["out"] == "business_architecture/ontology/README.html")
     p = b.Page(spec, b.generated_map(reduced), decisions_page=False)
     assert p.inline(SRC, "see EPM-DEC-001-0040.") == "see EPM-DEC-001-0040."
     assert p.inline(SRC, "[0099](../domain/decisions/EPM-DEC-001-0099-item-g.md)") == "0099"
     assert 'href="MODULES.html"' in p.inline(SRC, "[guide](MODULES.md)")  # other links are unchanged
+
+
+def no_records(monkeypatch):
+    real = b.glob.glob
+    monkeypatch.setattr(b.glob, "glob", lambda pattern: [] if "EPM-DEC-001-" in pattern else real(pattern))
+
+
+@pytest.mark.inputs("records")
+def test_on_main_no_records_stops_the_build(monkeypatch):
+    # Main's strictness over a tree that holds every other document: an empty record set is refused, not rendered empty.
+    no_records(monkeypatch)
+    monkeypatch.setattr(b, "SHARE_RELEASE", False)
+    with pytest.raises(ValueError, match="no decision records"):
+        b.all_pages()
+
+
+def test_in_release_mode_no_records_means_no_decisions_page(monkeypatch):
+    no_records(monkeypatch)
+    monkeypatch.setattr(b, "SHARE_RELEASE", True)
+    assert not any(s.get("decisions") for s in b.all_pages())
 
 
 def test_on_main_a_missing_source_still_stops_the_build(monkeypatch):

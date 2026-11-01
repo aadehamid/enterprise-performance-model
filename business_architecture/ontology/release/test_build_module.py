@@ -95,6 +95,16 @@ def shipped(tc, name, version):
     return folder
 
 
+def approval_file(tc, folder):
+    """The approval file a package's manifest names. The share release's manifests name none (approval.file comes
+    out, EPM-DEC-001-0110), so there the test skips; on main the field is always there."""
+    with open(os.path.join(folder, "manifest.json")) as f:
+        approved = json.load(f)["approved_by"]
+    if bm.SHARE_RELEASE and "recorded_in" not in approved:
+        tc.skipTest("the manifest's approval file does not ship (the share release names a subject matter expert instead)")
+    return approved["recorded_in"]
+
+
 class Packages(unittest.TestCase):
     def test_each_written_package_equals_a_fresh_build(self):
         for name in bm.MODULES:
@@ -551,8 +561,7 @@ class EarlierReleases(unittest.TestCase):
         # EPM-DEC-001-0104: system 1.4.0 and party 1.4.0, minors Claude approved under the delegation and the brief.
         # Since system 1.5.0 and party 2.0.0 (EPM-DEC-001-0108) the builder builds neither; their packages keep it.
         for name in ("system", "party"):
-            with open(os.path.join(shipped(self, name, "1.4.0"), "manifest.json")) as f:
-                self.assertEqual(json.load(f)["approved_by"]["recorded_in"], NIGHT_BRIEF[0])
+            self.assertEqual(approval_file(self, shipped(self, name, "1.4.0")), NIGHT_BRIEF[0])
 
     def test_the_customer_inputs_releases_carry_the_alignment(self):
         # EPM-DEC-001-0108: party 2.0.0, a major the decision owner approved by aligning with the plan that names it;
@@ -564,8 +573,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual((m["version"], m["stage"], m["issued"]), ("1.5.0", None, "2026-10-27"))
         self.assertIn("EPM-DEC-001-0108", m["decisions"])
         for name, version in (("party", "2.0.0"), ("integration", "2.4.0")):
-            with open(os.path.join(shipped(self, name, version), "manifest.json")) as f:
-                self.assertEqual(json.load(f)["approved_by"]["recorded_in"], CUSTOMER_INPUTS[0])
+            self.assertEqual(approval_file(self, shipped(self, name, version)), CUSTOMER_INPUTS[0])
         for name, version in (("party", "2.1.0"), ("integration", "2.5.0")):
             m = bm.MODULES[name]
             self.assertEqual(m["approval"], DELEGATED)
@@ -581,14 +589,12 @@ class EarlierReleases(unittest.TestCase):
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-25"))
         # Since kpi 1.3.0 (EPM-DEC-001-0109) the builder builds kpi 1.3.0; kpi 1.2.0's package keeps the approval it names.
-        with open(os.path.join(shipped(self, "kpi", "1.2.0"), "manifest.json")) as f:
-            self.assertEqual(json.load(f)["approved_by"]["recorded_in"], ITEM_F[0])
+        self.assertEqual(approval_file(self, shipped(self, "kpi", "1.2.0")), ITEM_F[0])
 
     def test_the_close_out_releases_carry_the_close_out_approval(self):
         # EPM-DEC-001-0088: the decision owner approved the six close-out releases together. Since value-stream 1.2.0
         # (EPM-DEC-001-0106) the builder builds none of them; value-stream 1.1.0's package keeps the approval it names.
-        with open(os.path.join(shipped(self, "value-stream", "1.1.0"), "manifest.json")) as f:
-            self.assertEqual(json.load(f)["approved_by"]["recorded_in"], CLOSEOUT[0])
+        self.assertEqual(approval_file(self, shipped(self, "value-stream", "1.1.0")), CLOSEOUT[0])
 
 
 class BuilderGate(unittest.TestCase):

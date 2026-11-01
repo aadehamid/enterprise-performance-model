@@ -5,9 +5,11 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import build_module as bm  # noqa: E402  (release mode: EPM_SHARE_RELEASE, or release.json at the tree's root)
 import frozen_sources as fs  # noqa: E402
 
 
@@ -41,14 +43,37 @@ class Frozen(unittest.TestCase):
             finally:
                 fs.FROZEN = old
 
+    def test_the_history_folder_is_read_only_in_release_mode(self):
+        # On main a package missing from releases/<module>/<version>/ is missing, even if a copy of that version sits
+        # under releases/previous/; only the share release puts packages there (EPM-DEC-001-0110).
+        with tempfile.TemporaryDirectory() as tmp:
+            plain = os.path.join(tmp, "releases", "core", "2.3.0")
+            previous = os.path.join(tmp, "releases", "previous", "core", "2.3.0")
+            os.makedirs(previous)
+            with open(os.path.join(previous, "manifest.json"), "w") as f:
+                f.write("{}\n")
+            with mock.patch.object(fs, "SHARE_RELEASE", False):
+                self.assertEqual(fs.package_dir(tmp, "core", "2.3.0"), plain)
+            with mock.patch.object(fs, "SHARE_RELEASE", True):
+                self.assertEqual(fs.package_dir(tmp, "core", "2.3.0"), previous)
+            with mock.patch.object(bm, "ONTOLOGY", tmp):
+                with mock.patch.object(bm, "SHARE_RELEASE", False):
+                    self.assertIsNone(bm.package_folder("core", "2.3.0"))
+                    with self.assertRaises(FileNotFoundError):
+                        bm.released_requires("core", "2.3.0")
+                with mock.patch.object(bm, "SHARE_RELEASE", True):
+                    self.assertEqual(bm.package_folder("core", "2.3.0"), previous)
+                    self.assertEqual(bm.released_requires("core", "2.3.0"), {})
+
     def test_the_pinned_commits_are_the_four_the_core_builders_name(self):
         pins = fs.pinned()
         self.assertEqual([c[:8] for c, _ in pins], ["b75fd991", "82593547", "c351ef0e", "4906666a"])
         self.assertTrue(all(p == "business_architecture/business_process/downstream_process_map.json" for _, p in pins))
 
     def test_freeze_writes_one_file_per_pinned_commit(self):
-        if not os.path.exists(os.path.join(fs.REPO, ".git")):
+        if bm.SHARE_RELEASE and not os.path.exists(os.path.join(fs.REPO, ".git")):
             self.skipTest("not a Git checkout (the share release reads its frozen copies and never freezes)")
+        # Anywhere else, Git or not, freeze() must write the four files or fail: a source tree is not a release.
         with tempfile.TemporaryDirectory() as tmp:
             old = fs.FROZEN
             fs.FROZEN = tmp

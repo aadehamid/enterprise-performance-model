@@ -230,7 +230,8 @@ class WithoutGit(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(ss, "REPO", tmp):
             self.assertEqual(ss.commit(), "unknown (not a Git checkout)")
             self.assertEqual(ss.default_ref(), "worktree")
-        self.assertEqual(ss.default_ref(), "origin/main")  # this checkout
+            os.mkdir(os.path.join(tmp, ".git"))  # a checkout: the default is main's newest catalog
+            self.assertEqual(ss.default_ref(), "origin/main")
 
 
 if __name__ == "__main__":

@@ -52,7 +52,14 @@ CHANGE_NOTES = os.path.join(HERE, "change-notes.csv")
 # "(the decision of 2026-10-27)." instead (EPM-DEC-001-0110); that form is accepted only in release mode
 # (EPM_SHARE_RELEASE, or release.json at the tree's root), so a note on main must still cite its record.
 SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(HERE, "..", "..", "..", "release.json"))
-NOTE_FORM = r"\d{4}-\d{2}-\d{2}: .*\((?:EPM-DEC-001-\d{4}" + (r"|the decision of \d{4}-\d{2}-\d{2}" if SHARE_RELEASE else "") + r")\)\.$"
+
+
+def note_form(share):
+    """The form a change note must take: dated, and ending with its record; in release mode the record may be a date."""
+    return r"\d{4}-\d{2}-\d{2}: .*\((?:EPM-DEC-001-\d{4}" + (r"|the decision of \d{4}-\d{2}-\d{2}" if share else "") + r")\)\.$"
+
+
+NOTE_FORM = note_form(SHARE_RELEASE)
 CODE_MAPPINGS = os.path.join(HERE, "code-list-mappings.csv")
 # The definitions' sources are shared with the system module (item G, EPM-DEC-001-0099).
 SYSTEM_SOURCES = os.path.join(HERE, "..", "system", "sources.csv")

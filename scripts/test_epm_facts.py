@@ -260,6 +260,7 @@ def test_sweep_finds_the_old_wording_left_elsewhere(tmp_path, monkeypatch):
     assert states == {("b.md", "live"), ("c.md", "dated"), ("d.sql", "dated"), ("e.page", "live"), ("f — guide.md", "live")}
 
 
+@pytest.mark.inputs("record-citations")
 def test_sweep_marks_a_line_that_holds_a_date():
     for line in ["x *2026-10-21:* four", "*Note 2026-10-14:* v2.2", "(Superseded 2026-10-13: by 0030)",
                  "Added 2026-10-20 to check", "(updated 2026-07-20): x"]:
@@ -358,6 +359,7 @@ def test_decisions_check_catches_unindexed_record_and_bad_amendment(tmp_path):
     assert "9999: amended by 9998, which does not exist" in problems
 
 
+@pytest.mark.inputs("record-citations")
 def test_status_parts_reads_every_amendment():
     assert epm_facts._status_parts("Decided; amended by 0024, 9998") == ("Decided", {"0024", "9998"})
     assert epm_facts._status_parts("Decided; amended by EPM-DEC-001-0024 and EPM-DEC-001-0025 (2026-10-06)") == ("Decided", {"0024", "0025"})
@@ -1126,23 +1128,48 @@ def _citation_fixture(tmp_path, doc):
     return epm_facts.citation_problems(root=str(tmp_path), answers=str(answers), decisions=str(decisions), files=["doc.md"])
 
 
-@pytest.mark.inputs("records", "answers")
 def test_citations_walk_every_markdown_file_where_there_is_no_git(tmp_path):
     # files=None in a tree without .git (the share release): every .md under the root is read, nothing is tracked.
-    answers, decisions = tmp_path / "answers", tmp_path / "decisions"
-    answers.mkdir(); decisions.mkdir()
-    (answers / "answers-y.md").write_text("<!-- verbatim from urn:epm:pull:1:comment:7000001 -->\nship the ledger as it stands today\n")
     (tmp_path / "deep").mkdir()
-    (tmp_path / "deep" / "doc.md").write_text('The decision owner wrote "drop the ledger from the plan" (`answers-y.md`).\n')
-    (tmp_path / "other.txt").write_text('The decision owner wrote "drop the ledger from the plan" (`answers-y.md`).\n')
-    problems = epm_facts.citation_problems(root=str(tmp_path), answers=str(answers), decisions=str(decisions))
-    assert problems and all(p.startswith("deep/doc.md") for p in problems), problems
+    (tmp_path / "deep" / "doc.md").write_text("a document\n")
+    (tmp_path / "top.md").write_text("another\n")
+    (tmp_path / "other.txt").write_text("not Markdown\n")
+    assert epm_facts.markdown_files(str(tmp_path)) == ["deep/doc.md", "top.md"]
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True, env=env)
+    subprocess.run(["git", "-C", str(tmp_path), "add", "top.md"], check=True, env=env)
+    assert epm_facts.markdown_files(str(tmp_path)) == ["top.md"]  # with Git, the tracked files only
 
 
-
+@pytest.mark.inputs("records", "answers")
+def test_citations_pass_on_the_repo():
     assert epm_facts.citation_problems() == []
 
 
+def test_counts_without_the_gate_answers_only_in_release_mode(tmp_path, monkeypatch, capsys):
+    # Without mapping_v2.py the taxonomy-only answer is the share release's; on main the command goes on into the
+    # pipeline, which reads the gate and fails as it always did.
+    import types
+
+    class GateRead(Exception):
+        pass
+
+    def pipeline():
+        raise GateRead("the existing path: the gate is read")
+    monkeypatch.setattr(epm_facts, "STEP4", str(tmp_path))  # no mapping_v2.py here
+    monkeypatch.setattr(epm_facts, "run_pipeline", pipeline)
+    monkeypatch.setattr(epm_facts, "taxonomy", lambda: {"concepts": 1})
+    monkeypatch.setattr(epm_facts, "commit", lambda: "c")
+    args = types.SimpleNamespace(json=True)
+    monkeypatch.setattr(epm_facts, "SHARE_RELEASE", False)
+    with pytest.raises(GateRead):
+        epm_facts.cmd_counts(args)
+    monkeypatch.setattr(epm_facts, "SHARE_RELEASE", True)
+    assert epm_facts.cmd_counts(args) == 0
+    assert json.loads(capsys.readouterr().out)["step4_gate"] == "not in this tree"
+
+
+@pytest.mark.inputs("record-citations")
 def test_citations_need_the_words_in_a_saved_answer_and_a_named_source(tmp_path):
     unsaved = 'The decision owner said: "keep the new figures as they were recorded" (answers-x.md).\n'
     assert NAMED_MISS in _citation_fixture(tmp_path / "a", unsaved)[0]
@@ -1153,6 +1180,7 @@ def test_citations_need_the_words_in_a_saved_answer_and_a_named_source(tmp_path)
         assert _citation_fixture(tmp_path / f"c{k}", cited) == []
 
 
+@pytest.mark.inputs("record-citations")
 def test_citations_check_every_quote_a_verb_gives_and_the_named_source(tmp_path):
     # Codex on the citation check: the second of two quotes went unchecked, and a made-up file passed as a source.
     second = ('The decision owner asked: "keep the old figures as they were recorded" (answers-x.md), then chose '
@@ -1167,6 +1195,7 @@ def test_citations_check_every_quote_a_verb_gives_and_the_named_source(tmp_path)
     assert _citation_fixture(tmp_path / "d", other) == []  # another subject's quote, far from the role
 
 
+@pytest.mark.inputs("record-citations")
 def test_citations_skip_a_quoted_title_and_short_terms(tmp_path):
     # "For the decision owner" is a section title: the asking is the record's, not the decision owner's words
     title = 'The record\'s "For the decision owner" item 3 asked you to "Choose where the files are hosted".\n'
@@ -1174,6 +1203,7 @@ def test_citations_skip_a_quoted_title_and_short_terms(tmp_path):
     assert _citation_fixture(tmp_path / "b", 'The decision owner chose "Option A".\n') == []
 
 
+@pytest.mark.inputs("record-citations")
 def test_citations_hold_each_edge_codex_found_in_round_2(tmp_path):
     # A cited record counts only through its "The decision owner's recorded words" section, not its draft text.
     record = tmp_path / "a" / "decisions" / "EPM-DEC-001-0001-x.md"
@@ -1198,6 +1228,7 @@ def test_citations_hold_each_edge_codex_found_in_round_2(tmp_path):
     assert _citation_fixture(tmp_path / "e", option) == []
 
 
+@pytest.mark.inputs("record-citations")
 def test_citations_need_the_quote_in_the_source_they_name(tmp_path):
     # Cursor's HOLD on #419: a named record that lacks the quote passed when another answer held it.
     record = tmp_path / "a" / "decisions" / "EPM-DEC-001-0001-x.md"
@@ -1249,6 +1280,7 @@ def test_citations_need_the_quote_in_the_source_they_name(tmp_path):
     assert NAMED_MISS in _citation_fixture(tmp_path / "i", right)[0]
 
 
+@pytest.mark.inputs("record-citations")
 def test_citations_know_every_saved_answer_and_match_whole_words(tmp_path):
     # Bugbot on 0ae3cbb: a saved answer with another name (delegation.md) went unrecognised as a source.
     (tmp_path / "a" / "answers").mkdir(parents=True)
@@ -1265,6 +1297,7 @@ def test_citations_know_every_saved_answer_and_match_whole_words(tmp_path):
     assert _citation_fixture(tmp_path / "c", stop) == []
 
 
+@pytest.mark.inputs("record-citations")
 def test_citations_check_every_quote_in_a_list_after_one_verb(tmp_path):
     # Bugbot on 2755510: 'said "A" and "B", then chose "C"' checked only "A".
     for k, doc in enumerate(('The decision owner said "keep the old figures as they were recorded" and "a sentence nobody '

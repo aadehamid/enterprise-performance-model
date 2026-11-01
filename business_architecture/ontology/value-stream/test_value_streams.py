@@ -61,8 +61,11 @@ class Vocabulary(unittest.TestCase):
         for g in (VOCAB, package):
             for p in (VS.produces, VS.consumes):
                 self.assertEqual(set(g.objects(p, RDFS.range)), {SKOS.Concept}, p)
-        # A line is a real object of vs:consumes, and both kinds are SKOS concepts in the pinned data-product package.
-        dp = Graph().parse(os.path.join(HERE, "..", "releases", "data-product", "1.0.0", "data-product.ttl"))
+        # A line is a real object of vs:consumes, and both kinds are SKOS concepts in the data-product package the value
+        # stream is built against: the pinned 1.0.0 on main; in the share release, where the pins move to the newest
+        # set and 1.0.0 is not shipped, the newest data-product.
+        version = bm.dependencies("value-stream")["data-product"] if bm.SHARE_RELEASE else "1.0.0"
+        dp = Graph().parse(released(self, "data-product", version, "data-product.ttl"))
         line = URIRef("https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization")
         self.assertIn(line, set(STREAMS.objects(None, VS.consumes)))
         for o in set(STREAMS.objects(None, VS.produces)) | set(STREAMS.objects(None, VS.consumes)):

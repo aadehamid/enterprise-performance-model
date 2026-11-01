@@ -288,8 +288,10 @@ SHARE_RELEASE = share_release()
 def package_folder(module, version):
     """The released package's folder, in releases/<module>/<version>/ or, in the share release, in its history
     folder releases/previous/<module>/<version>/; None when the package did not ship."""
-    for folder in (os.path.join(ONTOLOGY, "releases", module, version),
-                   os.path.join(ONTOLOGY, "releases", "previous", module, version)):
+    folders = [os.path.join(ONTOLOGY, "releases", module, version)]
+    if SHARE_RELEASE:  # the history folder exists only in the share release; on main a package is where it was written
+        folders.append(os.path.join(ONTOLOGY, "releases", "previous", module, version))
+    for folder in folders:
         if os.path.isfile(os.path.join(folder, "manifest.json")):
             return folder
     return None

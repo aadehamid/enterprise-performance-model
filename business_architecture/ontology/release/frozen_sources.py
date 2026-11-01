@@ -16,6 +16,9 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
 FROZEN = os.path.join(HERE, "frozen")
+# Release mode (EPM-DEC-001-0110): EPM_SHARE_RELEASE, or release.json at the tree's root. Only then does a package
+# sit in the history folder; on main every package is in releases/<module>/<version>/.
+SHARE_RELEASE = bool(os.environ.get("EPM_SHARE_RELEASE")) or os.path.isfile(os.path.join(REPO, "release.json"))
 
 
 def package_dir(ontology, module, version):
@@ -23,7 +26,7 @@ def package_dir(ontology, module, version):
     releases/previous/<module>/<version>/ when the package moved there (EPM-DEC-001-0110)."""
     plain = os.path.join(ontology, "releases", module, version)
     previous = os.path.join(ontology, "releases", "previous", module, version)
-    return previous if not os.path.isdir(plain) and os.path.isdir(previous) else plain
+    return previous if SHARE_RELEASE and not os.path.isdir(plain) and os.path.isdir(previous) else plain
 
 
 def frozen_path(commit, path):

@@ -4,9 +4,10 @@ the committed Step 5 report describes the current inputs and passed.
 
 Run: python3 -m pytest test_pipeline.py (needs rdflib, pyshacl).
 """
-import inspect
 import json
 import os
+import sys
+import tempfile
 import types
 import unittest
 from unittest import mock
@@ -343,11 +344,37 @@ class Rename(unittest.TestCase):
         with mock.patch.object(pl, "SEP", pl.N10S_SEP):
             self.assertEqual(pl.rename_if_share(RenameSession(*self.graph())), ({}, True))
 
+    def load_verify(self, first, second):
+        """Run load_verify against a fake driver, with the two renames answering `first` and `second`."""
+        class Session:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def run(self, query, **params):
+                return types.SimpleNamespace(consume=lambda: None, data=lambda: [],
+                                             single=lambda: {"n": 0, "uri": "u", "label": "l"})
+
+        driver = types.SimpleNamespace(session=Session, close=lambda: None)
+        neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda bolt, auth: driver))
+        renames = iter([({}, first), ({"labels": 1}, second)])
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict(sys.modules, {"neo4j": neo4j}), \
+                mock.patch.object(pl, "build", lambda: ("", "", None)), mock.patch.object(pl, "graph", lambda paths: Graph()), \
+                mock.patch.object(pl, "cypher_setup", lambda d, s: ""), mock.patch.object(pl, "in_graph_shapes", lambda s: Graph()), \
+                mock.patch.object(pl, "load", lambda s, name, setup: None), mock.patch.object(pl, "graph_hash", lambda s: ("h", 1, 1)), \
+                mock.patch.object(pl, "roundtrip", lambda s: Graph()), mock.patch.object(pl, "shapes_fingerprint", lambda: "f"), \
+                mock.patch.object(pl, "rename_if_share", lambda s: next(renames)):
+            return pl.load_verify("bolt://fake", "pw", tmp)
+
     def test_both_loads_must_be_lossless(self):
-        # load_verify keeps the first rename's result and fails on it, not only on the second's (the kept graph's).
-        src = inspect.getsource(pl.load_verify)
-        self.assertIn("_, lossless = rename_if_share(s)", src)
-        self.assertIn("lossless = lossless and kept_lossless", src)
+        # load_verify renames after each load; a loss in either fails the run, and the counts are the kept graph's.
+        for first, second, expected in ((True, True, True), (False, True, False), (True, False, False)):
+            with self.subTest(first=first, second=second):
+                report = self.load_verify(first, second)
+                self.assertIs(report["rename_lossless"], expected)
+                self.assertEqual(report["renamed"], {"labels": 1})
 
 
 class Report(unittest.TestCase):
