@@ -2326,7 +2326,9 @@ def test_a_refresh_with_new_counts_is_no_structural_difference_and_a_new_edge_is
     assert tech_graph.compare_structure(structure_graph(fresh), structure_graph(base)) == []
     moved = fresh + " t:v tv:readsFrom t:z . t:z a tv:GoldTable ."
     lines = tech_graph.compare_structure(structure_graph(moved), structure_graph(base))
-    assert lines == ["new object urn:pricing-demo:tech:z", f"new edge urn:pricing-demo:tech:v {tech_graph.VOCAB}readsFrom urn:pricing-demo:tech:z"]
+    assert lines == ["new object urn:pricing-demo:tech:z", f"new statement urn:pricing-demo:tech:v {tech_graph.VOCAB}readsFrom urn:pricing-demo:tech:z"]
+    renamed = base.replace('t:v a tv:MetricView ;', 't:v a tv:MetricView ; tv:name "another name" ;')
+    assert tech_graph.compare_structure(structure_graph(renamed), structure_graph(base))[0].startswith("new statement urn:pricing-demo:tech:v")
     assert tech_graph.compare_structure(structure_graph(base), structure_graph(moved))[0] == "missing object urn:pricing-demo:tech:z"
 
 
@@ -2341,9 +2343,16 @@ def test_load_takes_a_refreshed_graph_when_one_exists_and_writes_nothing_the_rel
     assert subprocess.run(["git", "check-ignore", "-q", os.path.join(ROOT, "out", "tech", "graph", "tech-graph.ttl")], cwd=ROOT).returncode == 0 or not os.path.exists(os.path.join(ROOT, ".git"))
 
 
-def test_jena_load_fails_when_an_edges_target_is_in_no_release_graph():
-    query = tech_graph.jena_missing_query()
-    for iri in tech_graph.JENA_GRAPHS.values():
-        assert f"<{iri}>" in query
-    assert "FILTER NOT EXISTS" in query and tech_graph.ONTOLOGY in query
-
+def test_jena_load_looks_for_targets_only_in_current_release_graphs_and_writes_nothing_when_one_is_missing(monkeypatch, tmp_path):
+    query = tech_graph.jena_found_query(["https://x/a"], ["https://x/m/1.0.0"])
+    for graph in ("<https://x/m/1.0.0>", "<https://x/m/1.0.0/shapes>", "<https://x/m/1.0.0/catalog>"):
+        assert graph in query
+    assert "urn:pricing-demo:graph" not in query
+    newest = tech_graph.newest_releases()
+    assert len(newest) == 11 and all(iri.rsplit("/", 1)[-1][0].isdigit() for iri in newest)
+    (tmp_path / "tech-graph.ttl").write_text(f"<urn:a> <urn:b> <{tech_graph.ONTOLOGY}gone> .\n")
+    (tmp_path / "decision-trail.ttl").write_text("")
+    monkeypatch.setattr(tech_graph, "sparql_select", lambda query: [])
+    monkeypatch.setattr(tech_graph.urllib.request, "urlopen", lambda *a, **k: pytest.fail("Jena was written to"))
+    with pytest.raises(SystemExit, match="1 edge target"):
+        tech_graph.load_jena(str(tmp_path))

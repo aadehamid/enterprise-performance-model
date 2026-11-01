@@ -20,7 +20,7 @@ own named graph beside the release graphs, and load fails when an edge's ontolog
 
 graph/*.ttl is what the release ships, from an earlier collect. build writes a refreshed copy to out/tech/graph/, which
 Git ignores, and load takes that copy when it exists. compare separates volatile values (row counts, refresh times, a
-check's result, the host) from structure (objects and edges), and a structural difference fails. build --to-repo
+check's result, the host) from everything else (objects, edges and stable values), and a difference there fails. build --to-repo
 writes graph/*.ttl instead, for a change that is meant to ship.
 Logins come from the files LOCAL-STORES.md names; no secret is printed.
 Sources: SPARQL Anything documentation, v1.3.0 ("Introduction": Facade-X, fx:properties, the location and content
@@ -392,22 +392,27 @@ def build(to_repo=False):
     return graph, trail
 
 
+# What a run changes, named one by one: anything else that differs is a difference in structure.
+VOLATILE = tuple(VOCAB + name for name in ("rows", "tables", "lastRefresh", "checkedAt", "result", "detail"))
+
+
 def structure(g):
-    """A graph's objects and edges, without what a run changes: literals (row counts, refresh times, a check's result and
-    detail) and the host, which names the machine the source databases ran on. Returns (typed nodes, edges)."""
-    from rdflib import RDF, URIRef
+    """A graph's objects, edges and stable values, without what a run changes: the VOLATILE values, and the host, which
+    names the machine the source databases ran on. Returns (typed nodes, statements)."""
+    from rdflib import RDF
     host = VOCAB + "hostedOn"
     hosts = {s for s, o in g.subject_objects(RDF.type) if str(o) == VOCAB + "Host"}
     nodes = {(str(s), str(o)) for s, o in g.subject_objects(RDF.type) if s not in hosts}
-    edges = {(str(s), str(p), str(o)) for s, p, o in g if isinstance(o, URIRef) and p != RDF.type and str(p) != host and s not in hosts}
-    return nodes, edges
+    statements = {(str(s), str(p), str(o)) for s, p, o in g
+                  if p != RDF.type and str(p) != host and str(p) not in VOLATILE and s not in hosts}
+    return nodes, statements
 
 
 def compare_structure(refreshed, shipped):
     """What the refreshed graph adds to or lacks from the shipped one, as sorted lines."""
     (new_nodes, new_edges), (old_nodes, old_edges) = structure(refreshed), structure(shipped)
     return ([f"new object {n[0]}" for n in sorted(new_nodes - old_nodes)] + [f"missing object {n[0]}" for n in sorted(old_nodes - new_nodes)]
-            + [f"new edge {' '.join(e)}" for e in sorted(new_edges - old_edges)] + [f"missing edge {' '.join(e)}" for e in sorted(old_edges - new_edges)])
+            + [f"new statement {' '.join(e)}" for e in sorted(new_edges - old_edges)] + [f"missing statement {' '.join(e)}" for e in sorted(old_edges - new_edges)])
 
 
 def compare():
@@ -550,15 +555,39 @@ def sparql_select(query):
         return [{k: v["value"] for k, v in row.items()} for row in json.load(response)["results"]["bindings"]]
 
 
-def jena_missing_query():
-    names = " ".join(f"<{iri}>" for iri in JENA_GRAPHS.values())
-    return (f"SELECT DISTINCT ?o WHERE {{ VALUES ?t {{ {names} }} GRAPH ?t {{ ?s ?p ?o FILTER(isIRI(?o) && STRSTARTS(STR(?o), \"{ONTOLOGY}\")) }} "
-            f"FILTER NOT EXISTS {{ GRAPH ?g {{ ?o ?x ?y }} FILTER(?g NOT IN ({names.replace(' ', ', ')})) }} }}")
+def newest_releases(catalog=os.path.join(REPO, "business_architecture", "ontology", "releases", "catalog.ttl")):
+    """Each module's newest release IRI from the catalog: the graphs a current Jena holds its content under."""
+    from rdflib import Graph, URIRef
+    newest = {}
+    for iri in Graph().parse(catalog).objects(None, URIRef("http://www.w3.org/ns/dcat#dataset")):
+        module, version = str(iri).rsplit("/", 2)[-2:]
+        key = tuple(int(p) for p in version.split("."))
+        if module not in newest or key > newest[module][0]:
+            newest[module] = (key, str(iri))
+    return sorted(iri for _, iri in newest.values())
+
+
+def ontology_targets(g):
+    from rdflib import URIRef
+    return sorted({str(o) for o in g.objects() if isinstance(o, URIRef) and str(o).startswith(ONTOLOGY)})
+
+
+def jena_found_query(targets, releases):
+    """The targets some current release's graph, content or shapes or catalog, says something about."""
+    graphs = " ".join(f"<{iri}>" for r in releases for iri in (r, f"{r}/shapes", f"{r}/catalog"))
+    return (f"SELECT DISTINCT ?o WHERE {{ VALUES ?o {{ {' '.join(f'<{o}>' for o in targets)} }} VALUES ?g {{ {graphs} }} "
+            "GRAPH ?g { ?o ?x ?y } }")
 
 
 def load_jena(folder):
-    """Each graph file as its own named graph in Jena, replaced whole; an edge whose ontology target is in no release
-    graph fails, as it does in Neo4j. The release's proof ran before these graphs arrive and never covers them."""
+    """Each graph file as its own named graph in Jena, replaced whole, once every ontology target is found in a current
+    release's graph; a target that is not fails, as it does in Neo4j, and leaves Jena as it was. The release's proof ran
+    before these graphs arrive and never covers them."""
+    targets = ontology_targets(read_graph(folder))
+    found = {r["o"] for r in sparql_select(jena_found_query(targets, newest_releases()))}
+    missing = sorted(set(targets) - found)
+    if missing:
+        raise SystemExit(f"jena: {len(missing)} edge target(s) in no current release graph, e.g. {missing[:5]}; nothing was changed")
     data = JENA_QUERY.rsplit("/", 1)[0] + "/data"
     counts = {}
     for name, iri in JENA_GRAPHS.items():
@@ -568,9 +597,6 @@ def load_jena(folder):
                                          headers={"Content-Type": "text/turtle"})
         urllib.request.urlopen(request, timeout=120).close()
         counts[name] = int(sparql_select(f"SELECT (COUNT(*) AS ?n) WHERE {{ GRAPH <{iri}> {{ ?s ?p ?o }} }}")[0]["n"])
-    missing = sorted(r["o"] for r in sparql_select(jena_missing_query()))
-    if missing:
-        raise SystemExit(f"jena: {len(missing)} edge target(s) in no release graph, e.g. {missing[:5]}")
     print(f"jena: {', '.join(f'{iri} {counts[n]} triples' for n, iri in JENA_GRAPHS.items())}; every ontology target found")
     return {"store": "jena", "graphs": counts}
 
