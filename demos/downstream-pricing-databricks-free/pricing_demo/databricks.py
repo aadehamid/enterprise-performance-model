@@ -6,10 +6,13 @@
     uv run python -m pricing_demo.databricks counts    # row counts of every table and view
     uv run python -m pricing_demo.databricks purge     # list what a purge drops; --yes drops it
 
-The catalog is idp_sbx when the workspace lets you create it, otherwise DEMO_CATALOG (Free Edition: workspace), and
-every schema except the replica schemas keeps the name it has in idp_sbx, so the objects read like the shared ones;
-the replica schemas follow the source databases' names since 2026-10-28 (README.md, "The source systems"). One rule picks the catalog
-for every step: idp_sbx only if it holds this demo's landing schema, which setup creates (Kimi round 1, finding 11).
+The catalog is DEMO_CATALOG as given when it is set (the environment or .env), with no preference for idp_sbx: a
+validation run that names its own catalog builds there and nowhere else. When DEMO_CATALOG is unset the catalog is
+idp_sbx, created if the workspace lets you, else workspace (Free Edition's own). Every schema except the replica
+schemas keeps the name it has in idp_sbx, so the objects read like the shared ones; the replica schemas follow the
+source databases' names since 2026-10-28 (README.md, "The source systems"). One rule picks the catalog for every step
+(chosen_catalog); without DEMO_CATALOG, idp_sbx counts only if it holds this demo's landing schema, which setup
+creates (Kimi round 1, finding 11).
 Upload refuses an incomplete replica, and build checks each replica table against the replica's manifest (finding 5).
 Secrets stay in variables.
 """
@@ -45,6 +48,8 @@ BUILT = {
 }
 VOLUME = "replica_landing.raw"
 DEMO_COMMENT = "Synthetic sandbox mirror for the pricing demo"
+DEFAULT_CATALOG = "idp_sbx"  # when DEMO_CATALOG is unset
+FALLBACK_CATALOG = "workspace"  # Free Edition's own catalog, when idp_sbx can be neither created nor used
 
 
 def connect():
@@ -62,25 +67,39 @@ def run(cur, statement):
         return []
 
 
+def explicit_catalog(e):
+    """DEMO_CATALOG as given in the environment or .env, or None when it is unset."""
+    return e.get("DEMO_CATALOG") or None
+
+
 def catalog(cur, e):
+    """setup's catalog: DEMO_CATALOG as given (created if the workspace allows; it may exist already), else idp_sbx,
+    else, when idp_sbx cannot be created, workspace."""
+    explicit = explicit_catalog(e)
+    if explicit:
+        try:
+            run(cur, f"CREATE CATALOG IF NOT EXISTS {explicit} COMMENT '{DEMO_COMMENT}'")
+        except Exception as err:  # an existing catalog the token may use but not create
+            print(f"{explicit} not created ({type(err).__name__}); using it as it is")
+        return explicit
     try:
-        run(cur, f"CREATE CATALOG IF NOT EXISTS idp_sbx COMMENT '{DEMO_COMMENT}'")
-        return "idp_sbx"
+        run(cur, f"CREATE CATALOG IF NOT EXISTS {DEFAULT_CATALOG} COMMENT '{DEMO_COMMENT}'")
+        return DEFAULT_CATALOG
     except Exception as err:
-        print(f"idp_sbx not created ({type(err).__name__}); using {e['DEMO_CATALOG']}")
-        return e["DEMO_CATALOG"]
+        print(f"{DEFAULT_CATALOG} not created ({type(err).__name__}); using {FALLBACK_CATALOG}")
+        return FALLBACK_CATALOG
 
 
 def setup():
     conn, e = connect()
     with conn, conn.cursor() as cur:
         cat = catalog(cur, e)
-        if cat == "idp_sbx":
+        if cat == DEFAULT_CATALOG and not explicit_catalog(e):
             try:
-                run(cur, "CREATE SCHEMA IF NOT EXISTS idp_sbx.replica_landing")
+                run(cur, f"CREATE SCHEMA IF NOT EXISTS {DEFAULT_CATALOG}.replica_landing")
             except Exception as err:  # a catalog the token cannot write to is not usable
-                print(f"idp_sbx not usable ({type(err).__name__}); using {e['DEMO_CATALOG']}")
-                cat = e["DEMO_CATALOG"]
+                print(f"{DEFAULT_CATALOG} not usable ({type(err).__name__}); using {FALLBACK_CATALOG}")
+                cat = FALLBACK_CATALOG
         for s in SCHEMAS:
             run(cur, f"CREATE SCHEMA IF NOT EXISTS {cat}.{s}")
         run(cur, f"CREATE VOLUME IF NOT EXISTS {cat}.{VOLUME}")
@@ -89,12 +108,19 @@ def setup():
 
 
 def current_catalog(cur, e):
-    """idp_sbx only when it holds this demo's landing schema, which setup creates there; otherwise DEMO_CATALOG.
-    A visible idp_sbx that setup could not use does not count."""
+    """The catalog every later step uses (chosen_catalog): DEMO_CATALOG as given when set, without a query. Without
+    it, idp_sbx only when it holds this demo's landing schema, which setup creates there; otherwise workspace. A
+    visible idp_sbx that setup could not use does not count."""
+    explicit = explicit_catalog(e)
+    if explicit:
+        return explicit
     cats = {r[0] for r in run(cur, "SHOW CATALOGS")}
-    if "idp_sbx" in cats and "replica_landing" in {r[0] for r in run(cur, "SHOW SCHEMAS IN idp_sbx")}:
-        return "idp_sbx"
-    return e["DEMO_CATALOG"]
+    if DEFAULT_CATALOG in cats and "replica_landing" in {r[0] for r in run(cur, f"SHOW SCHEMAS IN {DEFAULT_CATALOG}")}:
+        return DEFAULT_CATALOG
+    return FALLBACK_CATALOG
+
+
+chosen_catalog = current_catalog  # the one rule, under the name the module docstring gives it
 
 
 def upload():
@@ -199,17 +225,15 @@ def purge_statements(cat):
 
 
 def demo_owns(cur, cat):
-    """True for idp_sbx only when it carries the comment setup gives it: a catalog of that name made by anyone else
-    is not the demo's."""
-    if cat != "idp_sbx":
-        return False
-    rows = run(cur, "DESCRIBE CATALOG idp_sbx")
+    """True only when the catalog carries the comment setup gives the one it creates (idp_sbx by default, or the
+    DEMO_CATALOG it was given): a catalog of that name made by anyone else is not the demo's."""
+    rows = run(cur, f"DESCRIBE CATALOG {cat}")
     return any(str(r[0]).strip().lower() == "comment" and str(r[1]).strip() == DEMO_COMMENT for r in rows)
 
 
 def purge(execute=False, catalog=None, connection=None):
     """Prints the drop statements; runs them only with --yes. Stops at the first statement that fails. A catalog the
-    demo does not own (DEMO_CATALOG, or an idp_sbx without setup's comment) is purged only when --catalog names it."""
+    demo did not create (one without setup's comment) is purged only when --catalog names it."""
     conn, e = connection or connect()
     with conn, conn.cursor() as cur:
         cat = current_catalog(cur, e)

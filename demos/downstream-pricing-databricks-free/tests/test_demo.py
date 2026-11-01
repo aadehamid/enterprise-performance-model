@@ -4,6 +4,7 @@ import csv
 import glob
 import datetime as dt
 import hashlib
+import inspect
 import os
 import re
 import sys
@@ -342,10 +343,58 @@ def test_finding_11_one_catalog_rule_for_every_step():
 
         def fetchall(self):
             return [(c,) for c in self.catalogs] if self.q == "SHOW CATALOGS" else [(s,) for s in self.idp_schemas]
-    env = {"DEMO_CATALOG": "workspace"}
+    env = {"DEMO_CATALOG": None}  # unset: idp_sbx only when setup's landing schema is there, else workspace
     assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["default"]), env) == "workspace"  # visible, not ours
     assert databricks.current_catalog(Cursor(["workspace"], []), env) == "workspace"
     assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["replica_landing"]), env) == "idp_sbx"
+
+
+def test_an_explicit_demo_catalog_is_used_as_given_and_idp_sbx_only_when_it_is_unset(monkeypatch):
+    # The release validation set DEMO_CATALOG=epm_validate and must build there, never in the shared idp_sbx: every
+    # step's choice (current_catalog, which setup, upload, build, counts, purge and tech_graph's sync all call) takes
+    # the value as given without a query, and setup creates that catalog. Without DEMO_CATALOG the choice is idp_sbx.
+    class NoQuery:
+        def execute(self, q):
+            raise AssertionError(f"a query was sent to pick the catalog: {q}")
+
+    class Creates:
+        def __init__(self, refuse=False):
+            self.refuse, self.statements = refuse, []
+
+        def execute(self, q):
+            self.statements.append(q)
+            if self.refuse and q.startswith("CREATE CATALOG"):
+                raise RuntimeError("no create rights")
+
+        def fetchall(self):
+            return []
+
+    given = {"DEMO_CATALOG": "epm_validate"}
+    assert databricks.explicit_catalog(given) == "epm_validate"
+    assert databricks.explicit_catalog({"DEMO_CATALOG": None}) is None and databricks.explicit_catalog({}) is None
+    assert databricks.current_catalog(NoQuery(), given) == "epm_validate"
+    assert databricks.chosen_catalog is databricks.current_catalog
+    cur = Creates()
+    assert databricks.catalog(cur, given) == "epm_validate"
+    assert cur.statements[0].startswith("CREATE CATALOG IF NOT EXISTS epm_validate ")
+    assert databricks.catalog(Creates(refuse=True), given) == "epm_validate"  # it may exist without create rights
+    cur = Creates()
+    assert databricks.catalog(cur, {"DEMO_CATALOG": None}) == "idp_sbx"
+    assert cur.statements[0].startswith("CREATE CATALOG IF NOT EXISTS idp_sbx ")
+    assert databricks.catalog(Creates(refuse=True), {}) == "workspace"
+    for name in ("setup", "upload", "build", "counts", "purge"):
+        assert name in databricks.__doc__ or hasattr(databricks, name)
+    for name in ("upload", "build", "counts", "purge"):
+        assert "current_catalog(cur, e)" in inspect.getsource(getattr(databricks, name)), name
+    with open(os.path.join(config.ROOT, "pricing_demo", "tech_graph.py")) as f:
+        assert f.read().count("current_catalog(cur, e)") >= 1
+    # databricks_env passes DEMO_CATALOG through as given, and leaves it None when nothing sets it.
+    base = {"DATABRICKS_HOST": "x.cloud.databricks.com", "DATABRICKS_TOKEN": "t", "DATABRICKS_HTTP_PATH": "/sql/1"}
+    monkeypatch.setattr(config.os.path, "exists", lambda path: False)  # no epm.env
+    monkeypatch.setattr(config, "env", lambda name, default=None: {**base, "DEMO_CATALOG": "epm_validate"}.get(name, default))
+    assert config.databricks_env()["DEMO_CATALOG"] == "epm_validate"
+    monkeypatch.setattr(config, "env", lambda name, default=None: base.get(name, default))
+    assert config.databricks_env()["DEMO_CATALOG"] is None
 
 
 def test_finding_20_a_database_commits_only_after_every_table_loaded(monkeypatch):
