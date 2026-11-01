@@ -95,10 +95,10 @@ def domain_of(process, value):
 
 
 def source_map():
-    """The bytes of the process map at SOURCE_COMMIT."""
+    """The bytes of the process map at SOURCE_COMMIT: the frozen copy if there is one (release/frozen/), else Git."""
+    import frozen_sources
     repo = os.path.dirname(os.path.dirname(ONTOLOGY))
-    return subprocess.run(["git", "-C", repo, "show", f"{SOURCE_COMMIT}:{SOURCE_PATH}"],
-                          check=True, capture_output=True, stdin=subprocess.DEVNULL).stdout
+    return frozen_sources.read(SOURCE_COMMIT, SOURCE_PATH, repo)
 
 
 def sipoc():

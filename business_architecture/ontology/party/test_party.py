@@ -59,6 +59,60 @@ def notations(scheme):
     return {str(n) for v in CODES.subjects(SKOS.inScheme, CUST[scheme]) for n in CODES.objects(v, SKOS.notation)}
 
 
+class ChangeNotes(unittest.TestCase):
+    """A change note must end with its record. The share release's form, "(the decision of <date>).", passes only in
+    release mode (EPM-DEC-001-0110); on main it is refused like any other note without a record."""
+
+    def notes(self, note, share):
+        from unittest import mock
+        sys.path.insert(0, HERE)
+        import build_party as bp
+        term = bp.CUST["system-stage/prospect"]
+        g = Graph()
+        g.add((term, RDF.type, SKOS.Concept))
+        with mock.patch.object(bp, "NOTE_FORM", bp.note_form(share)), \
+                mock.patch.object(bp, "read", lambda path: [{"term": "system-stage/prospect", "note": note}]):
+            bp.add_change_notes((g,))
+        return list(g.objects(term, SKOS.changeNote))
+
+    @staticmethod
+    def record_citations_missing():
+        """True in release mode when the decision records are not in the tree: the release rewrites every record
+        number to its date, so a note citing a record is tested only where the records are."""
+        sys.path.insert(0, os.path.join(HERE, "..", "release"))
+        import build_module as bm
+        return bm.SHARE_RELEASE and not os.path.isdir(os.path.join(bm.ROOT, "business_architecture", "domain", "decisions"))
+
+    def test_the_skip_needs_release_mode_and_the_records_missing(self):
+        from unittest import mock
+        sys.path.insert(0, os.path.join(HERE, "..", "release"))
+        import build_module as bm
+        for share, records, missing in ((False, True, False), (False, False, False), (True, True, False), (True, False, True)):
+            with mock.patch.object(bm, "SHARE_RELEASE", share), mock.patch.object(os.path, "isdir", lambda path: records):
+                self.assertEqual(self.record_citations_missing(), missing, (share, records))
+
+    def test_a_record_citation_passes_in_both_modes(self):
+        if self.record_citations_missing():
+            self.skipTest("the decision records are not in this tree, and the release rewrites every record number to its date")
+        note = "2026-10-27: renamed from lead (EPM-DEC-001-0108)."
+        for share in (False, True):
+            self.assertEqual(self.notes(note, share), [Literal(note, lang="en")], share)
+
+    def test_the_date_only_form_passes_only_in_release_mode(self):
+        note = "2026-10-27: renamed from lead (the decision of 2026-10-27)."
+        self.assertEqual(self.notes(note, share=True), [Literal(note, lang="en")])
+        with self.assertRaises(SystemExit):
+            self.notes(note, share=False)
+
+    def test_the_form_in_use_follows_release_mode(self):
+        import build_party as bp
+        marker = os.path.isfile(os.path.join(HERE, "..", "..", "..", "release.json"))
+        variable = bool(os.environ.get("EPM_SHARE_RELEASE"))
+        self.assertEqual(bp.SHARE_RELEASE, marker or variable)
+        self.assertEqual(bp.NOTE_FORM, bp.note_form(marker or variable))
+        self.assertNotEqual(bp.note_form(True), bp.note_form(False))
+
+
 class Build(unittest.TestCase):
     def test_code_lists_are_current(self):
         env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}

@@ -40,7 +40,7 @@ docker compose -f docker/docker-compose.yml up -d          # the seven source da
 uv sync
 uv run python -m pricing_demo.load_postgres                # generate and load the source tables
 uv run python -m pricing_demo.replicate                    # Postgres -> Parquet with DuckDB
-uv run python -m pricing_demo.databricks setup             # catalog idp_sbx (or DEMO_CATALOG), schemas, volume
+uv run python -m pricing_demo.databricks setup             # catalog DEMO_CATALOG as given, or idp_sbx when it is unset; schemas, volume
 uv run python -m pricing_demo.databricks upload            # Parquet -> the volume
 uv run python -m pricing_demo.databricks build             # replica, silver, gold, metric views, definitions views, empty tech_graph tables
 uv run python -m pricing_demo.genie                        # the four Genie agents

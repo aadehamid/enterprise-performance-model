@@ -284,6 +284,7 @@ def _text(cell):
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", cell))).strip()
 
 
+@pytest.mark.inputs("records")
 def test_every_index_row_shows_its_record_title_full_status_and_date():
     page = PAGES[b.DECISIONS_PAGE]
     rows = dict(re.findall(r'<tr><td class="num"><a href="#(EPM-DEC-001-\d{4})">\d{4}</a></td>(.*?)</tr>', page))
@@ -343,6 +344,7 @@ def test_every_source_exists():
             assert os.path.isfile(os.path.join(b.ROOT, src)), src
 
 
+@pytest.mark.inputs("records")
 def test_every_decision_record_has_its_anchor_and_index_row():
     page = PAGES[b.DECISIONS_PAGE]
     records = [f for f in os.listdir(os.path.join(b.ROOT, b.DECISIONS_DIR)) if b.DEC_FILE.search(f)]
@@ -378,6 +380,63 @@ def test_every_link_on_every_page_resolves():
     assert not problems, "\n".join(problems[:20])
 
 
+def test_without_a_decisions_page_nothing_links_to_it(monkeypatch):
+    # The share release's tree (EPM-DEC-001-0110): the decisions page is not built, so the navigation has no link
+    # to it, a record ID in text stays text, a Markdown link to a record keeps its text alone, and every link that
+    # is generated resolves.
+    reduced = [s for s in b.all_pages() if not s.get("decisions")]
+    monkeypatch.setattr(b, "pages", lambda: reduced)
+    built = b.build_all()
+    assert b.DECISIONS_PAGE not in built
+    for out, page in built.items():
+        assert not re.search(r'href="[^"]*decisions\.html', page), out
+        assert 'href="{{DECISIONS}}"' not in page and ">Decisions</a>" not in page, out
+        here = os.path.normpath(os.path.join(b.ROOT, out))
+        for href in re.findall(r'href="([^"]+)"', page):
+            path = html.unescape(href).partition("#")[0]
+            if path and not re.match(r"^[a-z]+:", path):
+                assert os.path.exists(os.path.normpath(os.path.join(os.path.dirname(here), path))), (out, href)
+
+
+@pytest.mark.inputs("record-citations")
+def test_without_a_decisions_page_a_record_citation_stays_text():
+    reduced = [s for s in b.all_pages() if not s.get("decisions")]
+    spec = next(s for s in reduced if s["out"] == "business_architecture/ontology/README.html")
+    p = b.Page(spec, b.generated_map(reduced), decisions_page=False)
+    assert p.inline(SRC, "see EPM-DEC-001-0040.") == "see EPM-DEC-001-0040."
+    assert p.inline(SRC, "[0099](../domain/decisions/EPM-DEC-001-0099-item-g.md)") == "0099"
+    assert 'href="MODULES.html"' in p.inline(SRC, "[guide](MODULES.md)")  # other links are unchanged
+
+
+def no_records(monkeypatch):
+    real = b.glob.glob
+    monkeypatch.setattr(b.glob, "glob", lambda pattern: [] if "EPM-DEC-001-" in pattern else real(pattern))
+
+
+@pytest.mark.inputs("records")
+def test_on_main_no_records_stops_the_build(monkeypatch):
+    # Main's strictness over a tree that holds every other document: an empty record set is refused, not rendered empty.
+    no_records(monkeypatch)
+    monkeypatch.setattr(b, "SHARE_RELEASE", False)
+    with pytest.raises(ValueError, match="no decision records"):
+        b.all_pages()
+
+
+def test_in_release_mode_no_records_means_no_decisions_page(monkeypatch):
+    no_records(monkeypatch)
+    monkeypatch.setattr(b, "SHARE_RELEASE", True)
+    assert not any(s.get("decisions") for s in b.all_pages())
+
+
+def test_on_main_a_missing_source_still_stops_the_build(monkeypatch):
+    # Release mode off: single() reads the source's title as it always did, so a source that is not here raises.
+    monkeypatch.setattr(b, "SHARE_RELEASE", False)
+    with pytest.raises(FileNotFoundError):
+        b.single("business_architecture/ontology/no-such-document.md", "lead")
+    monkeypatch.setattr(b, "SHARE_RELEASE", True)
+    assert b.single("business_architecture/ontology/no-such-document.md", "lead")["title"] is None
+
+
 def page(spec_out="business_architecture/ontology/README.html"):
     specs = b.pages()
     spec = next(s for s in specs if s["out"] == spec_out)
@@ -392,11 +451,13 @@ def test_a_link_to_a_generated_document_goes_to_its_page():
     assert 'href="kpi/README.html#releases"' in page().inline(SRC, "[kpi](kpi/README.md#releases)")
 
 
+@pytest.mark.inputs("records")
 def test_a_link_to_a_decision_record_goes_to_its_anchor():
     out = page().inline(SRC, "[0099](../domain/decisions/EPM-DEC-001-0099-item-g.md)")
     assert 'href="../domain/decisions/decisions.html#EPM-DEC-001-0099"' in out
 
 
+@pytest.mark.inputs("records")
 def test_a_decision_id_in_text_becomes_a_link_but_not_inside_code_or_a_link():
     p = page()
     assert '<a href="../domain/decisions/decisions.html#EPM-DEC-001-0040">EPM-DEC-001-0040</a>' in \

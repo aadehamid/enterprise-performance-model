@@ -376,7 +376,7 @@ DEMO="$EPM/demos/downstream-pricing-databricks-free"</code></pre>
 <p>All three local stores are up when the list shows <code>epm-lpg</code>, <code>lpg-local-neo4j-1</code> and <code>pricing-demo-sources</code>.</p>
 <h3>Count what each store holds</h3>
 <p>Every count below reads <code>:Resource</code> nodes and the edges between them, the projection itself. The demo's technical graph (E5) is labelled <code>Tech</code>, has no edge pointing into it from the ontology, and so changes none of them; <code>MATCH (n:Tech) RETURN count(n)</code> counts it, 134 nodes after its load on 2026-10-29 and 142 since E6 the same day.</p>
-<p>Pipeline Neo4j. The password is read from its file into <code>NEO4J_PASSWORD</code>, which <code>docker exec -e</code> passes to <code>cypher-shell</code>, so it never appears on a command line or in the output:</p>
+<p>Pipeline Neo4j. The password is read from its file into <code>NEO4J_PASSWORD</code>, which <code>docker exec -e</code> passes to <code>cypher-shell</code>, and the command below names the variable, not the value, and prints no login:</p>
 <pre><code>set -a; . ~/epm-lpg/run.env; set +a
 docker exec -e NEO4J_PASSWORD epm-lpg cypher-shell -u neo4j \
   "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships;"</code></pre>
@@ -523,7 +523,7 @@ uv run python -m pricing_demo.load_postgres</code></pre>
 <h3>2. Databricks: the demo catalog</h3>
 <pre><code>cd "$DEMO"
 uv run python -m pricing_demo.replicate          # Postgres to Parquet, with DuckDB
-uv run python -m pricing_demo.databricks setup   # catalog idp_sbx (or DEMO_CATALOG), schemas, volume
+uv run python -m pricing_demo.databricks setup   # catalog DEMO_CATALOG as given, or idp_sbx when it is unset; schemas, volume
 uv run python -m pricing_demo.databricks upload  # Parquet to the volume
 uv run python -m pricing_demo.databricks build   # replica, silver, gold, metric views, definitions views, empty tech_graph tables
 uv run python -m pricing_demo.genie              # the four Genie agents
