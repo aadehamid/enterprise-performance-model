@@ -33,38 +33,38 @@ import re
 
 import manifest
 import owner
+import vocabulary as V
 
 ONT = "business_architecture/ontology"
 
-# Rule 11's prefixes: the projection's fixed prefixes plus n10s's schema and SHACL prefixes.
-GRAPH_PREFIXES = ("core", "orgm", "kpi", "pop", "party", "dp", "vs", "sys", "lane", "mkt", "plc", "auth", "con",
-                  "skos", "dcterms", "org", "rdfs", "owl", "rdf", "prov", "oeo", "n4sch", "sh", "tv", "tech")
+# Rule 11's prefixes: the projection's fixed prefixes plus n10s's schema and SHACL prefixes (vocabulary.py).
+GRAPH_PREFIXES = V.GRAPH_PREFIXES
 PEER_NAMES = [r"Valero Energy Corporation", r"Valero Energy", r"Valero", r"Phillips ?66", r"PBF Energy", r"PBF",
               r"HF ?Sinclair", r"HollyFrontier", r"Par\s+Pacific", r"Delek US", r"Delek", r"CVR Energy", r"CVR",
               r"Chevron Corporation", r"Chevron", r"Exxon ?Mobil", r"ExxonMobil", r"Exxon"]
-# The peers' stock tickers, as the cached market news and the evidence tables write them (case-sensitive: "psx" or
-# "dino" in lower case is not a ticker). DK (Delek) is two letters, so it counts only inside a ticker list or in
+# The peers' stock tickers (vocabulary.PEER_TICKERS; case-sensitive: "psx" or "dino" in lower case is not a ticker).
+# DK (Delek) is two letters, so it counts only inside a ticker list (MPC and MPLX count as list members) or in
 # parentheses after a name; the others stand on their own.
-PEER_TICKERS = ("VLO", "PSX", "PBF", "DINO", "PARR", "CVI", "CVX", "XOM")
-TICKER = r"(?:" + "|".join(PEER_TICKERS) + r")"
-TICKER_OR_DK = r"(?:" + "|".join(PEER_TICKERS) + r"|DK)"
+TICKER = r"(?:" + "|".join(V.PEER_TICKERS) + r")"
+TICKER_OR_DK = r"(?:" + "|".join(V.PEER_TICKERS) + r"|DK)"
+LIST_TICKER = r"(?:" + "|".join(V.PEER_TICKERS + V.OWN_TICKERS) + r")"
+TICKER_SEP = r"(?:,\s*|/|\s+and\s+|\s+or\s+)"
 # A link whose address names a peer (a filing on EDGAR, a news slug, an investor site) is withheld with the name.
 PEER_URL = re.compile(r"https?://[^\s)\]\"'<>|]*(?:pbf|valero|phillips66|hfsinclair|hollyfrontier|parpacific|par-pacific|delek|cvrenergy|cvr-energy|chevron|exxon)[^\s)\]\"'<>|]*", re.I)
-# A filing on SEC EDGAR is named by the filer's CIK and the file by the ticker (vlo-20251231.htm): a peer's filing is
-# withheld; MPC's (CIK 1510295), MPLX's (1552000) and any other filer's (an industry exhibit) stay.
-PEER_CIKS = ("1035002", "1534701", "1534504", "1915657", "48039", "1694426", "1376339", "821483", "93410", "34088")
-PEER_SLUGS = "|".join(t.lower() for t in ("VLO", "PSX", "PBF", "DINO", "PARR", "DK", "CVI", "CVX", "XOM", "HFC"))
-EDGAR_URL = re.compile(r"https?://(?:www\.)?sec\.gov/Archives/edgar/data/(?:" + "|".join(PEER_CIKS) + r")/[^\s)\]\"'<>|]*"
-                       r"|https?://(?:www\.)?sec\.gov/Archives/edgar/data/\d+/[^\s)\]\"'<>|]*/(?:" + PEER_SLUGS + r")-\d{8}\.[^\s)\]\"'<>|]*", re.I)
+# A filing on SEC EDGAR is named by the filer's CIK (vocabulary.PEER_CIKS, cited there; EDGAR writes it with or without
+# leading zeroes) and the file by the ticker (vlo-20251231.htm): a peer's filing is withheld; MPC's, MPLX's and any
+# other filer's (an industry exhibit) stay.
+EDGAR_URL = re.compile(r"https?://(?:www\.)?sec\.gov/Archives/edgar/data/0*(?:" + "|".join(V.PEER_CIKS) + r")/[^\s)\]\"'<>|]*"
+                       r"|https?://(?:www\.)?sec\.gov/Archives/edgar/data/\d+/[^\s)\]\"'<>|]*/(?:" + "|".join(V.PEER_SLUGS) + r")-\d{8}\.[^\s)\]\"'<>|]*", re.I)
 PEER_FILING = "a public filing of a U.S. refining peer (link withheld)"
-# Other repositories of the same account that a document may name (not this one and not the skills repository).
-OTHER_REPOS = ("enterprise-people-graph",)
+OTHER_REPOS = V.OTHER_REPOS
 PEER_ALT = "|".join(PEER_NAMES)
 SME = "a subject matter expert reviewing the documents"
 PEER_SOURCE = "Industry standard, and analysis of publicly available filings from peers (U.S. refiners)"
 ANSWERS_DIR = "step4/review-evidence/decision-owner-answers/"
 ANSWERS_DIR_RE = r"(?:business_architecture/ontology/)?(?:step4/)?(?:review-evidence/)?decision-owner-answers/"
 ANSWERS_FILE = r"(?:answers-\d{4}-\d{2}-\d{2}[A-Za-z0-9-]*|delegation-steps-5-12|core-2-0-0-release|phase1-sweep|204-batch1|closeout-answers-\d{4}-\d{2}-\d{2})\.md"
+STYLE_SPAN = re.compile(r"<style\b[^>]*>.*?</style>|\bstyle\s*=\s*\"[^\"]*\"|\bstyle\s*=\s*'[^']*'", re.S | re.I)
 HOME_PATHS = [
     (r"~/workspace/ontology-build", "build/work"),
     (r"\$HOME/Dropbox/1_PROJECTS/Enterprise Performance Model", "$EPM"),
@@ -234,11 +234,15 @@ def rule_numbers(text, ctx):
     if not html:
         text, k = _count(r"(?<![&A-Za-z0-9_-])#(\d{2,4})(?!\d|[a-fA-F0-9]{2})(?![\w-])", "an earlier change", text); n += k
     else:
-        # In a page, a number after a space, a tag or a bracket is prose; after a colon or an equals sign, with any
-        # spaces between ("--text: #111"), it is a colour and stays.
+        # In a page, a number after a space, a tag or a bracket is prose; inside a <style> block or a style attribute
+        # (or anywhere in a stylesheet), after a colon or an equals sign with any spaces between ("--text: #111"), it
+        # is a colour and stays. "Issue: #455" in prose is a number.
+        spans = [(0, len(text))] if ctx.get("path", "").endswith(".css") else [m.span() for m in STYLE_SPAN.finditer(text)]
+
         def prose_number(m):
             before = text[:m.start()].rstrip()
-            return m.group(0) if before.endswith((":", "=")) else "an earlier change"
+            in_css = any(a <= m.start() < b for a, b in spans)
+            return m.group(0) if in_css and before.endswith((":", "=")) else "an earlier change"
         text, k = _count(r"(?<=[\s>(,])#(\d{2,4})(?![\da-fA-F])(?![\w-])", prose_number, text); n += k
     text, k = _count(r"\b([Tt]he) an earlier change\b", r"\1 earlier change", text); n += k
     return text, n
@@ -263,7 +267,10 @@ def rule_peers(text, ctx):
     text, k = _count(r"\b(?:" + PEER_ALT + r")\b", "a U.S. refining peer", text); n += k
     # The tickers: a list ("PSX, VLO and MPC" keeps MPC), a ticker after a name ("a U.S. refining peer (VLO)"), one alone.
     text, k = _count(r"\b(?:a U\.S\. refining peer|U\.S\. refining peers) \(" + TICKER_OR_DK + r"\)", "a U.S. refining peer", text); n += k
-    text, k = _count(r"\b" + TICKER_OR_DK + r"(?:(?:,\s*|\s+and\s+|\s+or\s+|/)" + TICKER_OR_DK + r")+(?:'s)?\b", "U.S. refining peers", text); n += k
+    text, k = _count(r"\b" + TICKER_OR_DK + r"(?:" + TICKER_SEP + TICKER_OR_DK + r")+(?:'s)?\b", "U.S. refining peers", text); n += k
+    # DK beside MPC or MPLX ("DK and MPC", "MPLX/DK") is Delek's ticker; MPC and MPLX themselves stay.
+    text, k = _count(r"\bDK(?=" + TICKER_SEP + LIST_TICKER + r"\b)", "a U.S. refining peer", text); n += k
+    text, k = _count(r"\b(" + LIST_TICKER + TICKER_SEP + r")DK\b", r"\1a U.S. refining peer", text); n += k
     text, k = _count(r"\(" + TICKER_OR_DK + r"\)", "(a U.S. refining peer)", text); n += k
     text, k = _count(r"\b" + TICKER + r"'s\b", "a U.S. refining peer's", text); n += k
     text, k = _count(r"\b" + TICKER + r"\b", "a U.S. refining peer", text); n += k

@@ -35,15 +35,21 @@ python3 scripts/share_release/export.py --epm . --skills ../personal-agent-skill
   `main` and the release traces to a rule. It reads no Git history.
 - `rebuild.py` rebuilds packages, pages and hashes inside the release and writes its `check.sh` from
   `templates/check.sh`, with the test files found in the tree and the skills' checks from `validate.SKILL_CHECKS`,
-  the one table the `skills-tests` row runs too. It needs the builders' release mode (`frozen_sources.py`,
-  `build_module.package_folder`, `scripts/conftest.py`), which the branch `release/builders-frozen-sources` adds.
+  the one table the `skills-tests` row runs too (`skill_checks.py`). Its freeze step and the builders' release
+  mode (`frozen_sources.py`, `build_module.package_folder`, `scripts/conftest.py`) are not on `main` yet: they are
+  pending in the branch `release/builders-frozen-sources`, whose pull request merges before this tool's. Until
+  then a cut from this branch alone stops at the rebuild's freeze step.
 - `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing), record number
   (full or short form), issue number, left-out document or double-underscore graph name; names match whole words;
   binaries and base64 data are read as the printable text inside them.
 - `validate.py`, `stores.py` and `snippets.py` are the validation: each row judges what it finds (a planted
   violation fails it), every command exits nonzero on a failure, and no output file holds a password.
-- `publish.py` writes the zip and the orphan branch from the same file list, the branch with a neutral author
-  and committer; `cleanroom.sh` unpacks the zip keeping each file's mode and runs `./scripts/check.sh`.
+- `publish.py` writes the zip (under the fixed root `epm-release`, refusing symlinks) and builds the orphan
+  branch from that zip, with a neutral author and committer; `cleanroom.py` unpacks the zip in the container
+  keeping each file's mode, runs `./scripts/check.sh`, and stops the container when its deadline passes. `cut.sh`
+  runs its long steps under the same deadline (`STEP_TIMEOUT`, 7200 s by default).
+- `vocabulary.py` holds the leak vocabulary the rules and the gate share (peers' tickers and EDGAR filers, with
+  their source, the other repositories, the graph prefixes).
 - `cleanup.py` removes only what the ledger names, refuses the root, the home folder and any folder holding a
   checkout, and exits 0 only with proof that everything is gone.
 

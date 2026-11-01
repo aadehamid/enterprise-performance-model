@@ -9,10 +9,13 @@ Markdown file or a <pre> block in a page. It is classified by its first word: Cy
 UNWIND) runs against the test Neo4j named in --env (its login from TEST_NEO4J_PASSWORD, else from the login file
 the store rows wrote in IMPORT_DIR); SPARQL (PREFIX, SELECT, ASK, CONSTRUCT) runs with rdflib over the newest
 released packages; a shell block runs line by line when every command is read-only (the allowlist below), in the
-folder the block's own `cd` or "# from <folder>" names; anything else (Turtle shown as an example, text, SQL for
-Databricks, a command that writes data or needs a login) is listed as not run, with its reason. A folder a block
-names that is not in the tree stops the block there: in the tree's own documents that is a failure (the document
-points nowhere), in a skill's reference it is an example folder and the rest of the block is listed as not run.
+folder the block's own `cd` or "# from <folder>" names, which must be inside the tree; anything else (Turtle shown
+as an example, text, SQL for Databricks, a command that writes data or needs a login) is listed as not run, with
+its reason. No line reaches a shell: a command is split into words (shlex), its variables are the block's own, and
+it runs with a minimal environment that carries no login; a line with shell syntax (";", "|", redirection, a
+substitution) is listed as not run, and "a && b" runs a then b. A folder a block names that is not in the tree,
+or outside it, stops the block there: in the tree's own documents that is a failure (the document points
+nowhere), in a skill's reference it is an example folder and the rest of the block is listed as not run.
 The result names each snippet by file and line, so a failing one is a release defect with an address. --list
 prints every block with its kind and runs nothing.
 """
@@ -28,6 +31,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from validate import read_env  # noqa: E402
 
 import manifest  # noqa: E402
+import shlex  # noqa: E402
 
 ONT = "business_architecture/ontology"
 NOT_DOCS = {"docs_template.html", "playbook_template.html"}  # page templates hold placeholders, not snippets
@@ -51,16 +55,9 @@ def documents(tree):
 
 def neo4j_login(env):
     """The test Neo4j's password: TEST_NEO4J_PASSWORD in --env, else the login file the store rows wrote in IMPORT_DIR
-    (validate-neo4j.env); "" when there is no test Neo4j to run against."""
-    if env.get("TEST_NEO4J_PASSWORD"):
-        return env["TEST_NEO4J_PASSWORD"]
-    path = os.path.join(os.path.expanduser(env.get("IMPORT_DIR", "")), "validate-neo4j.env") if env.get("IMPORT_DIR") else ""
-    if path and os.path.exists(path):
-        with open(path) as f:
-            for line in f:
-                if line.startswith("NEO4J_PASSWORD="):
-                    return line.split("=", 1)[1].strip()
-    return ""
+    (stores.read_login, the one reader of that file); "" when there is no test Neo4j to run against."""
+    from stores import read_login
+    return env.get("TEST_NEO4J_PASSWORD") or read_login(env) or ""
 READ_ONLY = re.compile(r"^(?:cd |ls |cat |head |tail |grep |find |wc |echo |printf |python3? [^\n]*(?:--verify|--check| find | modules | coverage |ask\.py|run\.py|--list|--help)|"
                        r"uv run [^\n]*(?:--verify|--check| find | modules | coverage |ask\.py|run\.py|pytest|counts|describe|check |--dry-run|--help|--list|walk)|"
                        r"sha256sum |shasum |git (?:log|status|show|diff) |docker ps|docker compose [^\n]*\bls\b|curl -s[^\n]*localhost)")
@@ -125,8 +122,7 @@ def run_sparql(text, tree):
     if "g" not in _GRAPH:
         g = Graph()
         for m in MODULES:
-            folders = sorted(p for p in os.listdir(os.path.join(tree, ONT, "releases", m)) if p[0].isdigit())
-            g.parse(os.path.join(tree, ONT, "releases", m, folders[-1], f"{m}.ttl"))
+            g.parse(os.path.join(tree, ONT, "releases", m, manifest.newest_on_disk(tree, m), f"{m}.ttl"))
         _GRAPH["g"] = g
     query = "\n".join(l for l in text.split("\n") if not l.strip().startswith("#"))
     res = _GRAPH["g"].query(query)
@@ -138,12 +134,37 @@ FROM = re.compile(r"^#\s*from\s+(.+?)\s*$")
 ROOT_WORDS = re.compile(r"^(?:the\s+)?(?:repository|release|tree)\s+root$|^\.$|^/$")
 
 
+SHELL_SYNTAX = re.compile(r"[;|<>`]|\$\(|\$\{[^}]*[^A-Za-z0-9_}][^}]*\}")
+KEEP_ENV = ("PATH", "HOME", "TMPDIR", "LANG", "LC_ALL", "TERM", "UV_CACHE_DIR", "XDG_CACHE_HOME", "SSL_CERT_FILE")
+
+
 def reader_variables(tree):
     """The variables the documents tell a reader to set to their own paths; here they are the tree's."""
     return {"EPM": tree, "SKILLS": os.path.join(tree, "skills"), "DEMO": os.path.join(tree, "demos", "downstream-pricing-databricks-free")}
 
 
-def run_shell(text, tree, env, state=None, strict=True):
+def expand(text, variables):
+    """$VAR and ${VAR} from the block's own variables (unknown ones stay, so the runner can say so), then ~."""
+    return os.path.expanduser(re.sub(r"\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?", lambda v: variables.get(v.group(1), v.group(0)), text))
+
+
+def inside(tree, target):
+    """The folder a block names, resolved, when it is inside the tree; None when it is not (or not a folder)."""
+    real, root = os.path.realpath(target), os.path.realpath(tree)
+    return real if os.path.isdir(real) and (real == root or real.startswith(root + os.sep)) else None
+
+
+def minimal_env(variables, release):
+    """What a command sees: the shell's basics, the block's variables, release mode; no login of this machine."""
+    e = {k: os.environ[k] for k in KEEP_ENV if k in os.environ}
+    e["PYTHONDONTWRITEBYTECODE"] = "1"
+    if release:
+        e["EPM_SHARE_RELEASE"] = "1"
+    e.update(variables)
+    return e
+
+
+def run_shell(text, tree, env, state=None, strict=True, cwd=None):
     """state carries the shell variables a document's earlier blocks set (PLUGINS=..., ROBOT=...), as a reader's
     shell would; a block that opens with "# from <folder>" runs in that folder of the tree ("# from repository root"
     is the tree). A folder that is not in the tree stops the block: with strict, the block fails; without, its
@@ -153,7 +174,7 @@ def run_shell(text, tree, env, state=None, strict=True):
     for k, v in reader_variables(tree).items():
         variables.setdefault(k, v)
     raw = [l.strip() for l in text.split("\n") if l.strip()]
-    cwd, results, stopped = tree, [], None
+    cwd, results, stopped = cwd or tree, [], None
     for line in raw:
         if stopped:
             results.append({"line": line, "ran": False, "reason": f"not run: the block stopped at {stopped!r}, a folder not in the tree"})
@@ -164,9 +185,8 @@ def run_shell(text, tree, env, state=None, strict=True):
             if ROOT_WORDS.match(folder):
                 cwd = tree
                 continue
-            folder = os.path.expandvars(folder) if "$" not in folder else re.sub(r"\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?", lambda v: variables.get(v.group(1), v.group(0)), folder)
-            target = os.path.normpath(os.path.join(tree, os.path.expanduser(folder)))
-            if os.path.isdir(target):
+            target = inside(tree, os.path.join(tree, expand(folder, variables)))
+            if target:
                 cwd = target
             else:
                 results.append({"line": line, "ran": False, "reason": "folder not in the tree", "failed_folder": True})
@@ -188,10 +208,18 @@ def run_shell(text, tree, env, state=None, strict=True):
                     variables[a.group(1)] = os.path.expanduser(os.path.expandvars(a.group(2).strip('"')))
             results.append({"line": line, "ran": False, "reason": "sets the reader's variables and makes folders"})
             continue
+        if " && " in line and not SHELL_SYNTAX.search(line) and "||" not in line:
+            # "a && b": b runs after a in the same folder (a cd carries); each part is judged on its own.
+            chain = run_shell("\n".join(p.strip() for p in line.split(" && ")), tree, env, state, strict=strict, cwd=cwd)
+            results.extend(chain["lines"])
+            stopped, cwd = chain["stopped_at"] or stopped, chain["cwd"]
+            continue
+        if SHELL_SYNTAX.search(line) or "||" in line or "&&" in line:
+            results.append({"line": line, "ran": False, "reason": "shell syntax (a separator, pipe, redirection or substitution); no line reaches a shell"})
+            continue
         if line.startswith("cd "):
-            folder = re.sub(r"\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?", lambda v: variables.get(v.group(1), v.group(0)), line[3:].strip().strip('"'))
-            target = os.path.normpath(os.path.join(cwd, os.path.expanduser(folder)))
-            if os.path.isdir(target):
+            target = inside(tree, os.path.join(cwd, expand(line[3:].strip().strip('"'), variables)))
+            if target:
                 cwd = target; results.append({"line": line, "ran": True})
             else:
                 results.append({"line": line, "ran": False, "reason": "folder not in the tree", "failed_folder": True})
@@ -200,23 +228,27 @@ def run_shell(text, tree, env, state=None, strict=True):
         if not READ_ONLY.match(line) or re.search(r"-m pricing_demo\.|sync_stores\.py|--write|--yes|load_postgres|replicate|upload| build\b|tech_graph (?:load|sync|collect)|run_projection|run_local|docker compose [^\n]*up|docker run|--repeat|acceptance run|genie|supervisor", line):
             results.append({"line": line, "ran": False, "reason": "writes data, needs a login or a store, or is not read-only"})
             continue
-        e = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
-        e.update({"EPM_SHARE_RELEASE": "1"} if os.path.exists(os.path.join(tree, "KNOWN-OPEN-ITEMS.md")) else {})
-        e.update(variables)
-        unset = [v for v in re.findall(r"\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?", line) if v not in e]
+        unset = [v for v in re.findall(r"\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?", line) if v not in variables]
         if unset:
             results.append({"line": line, "ran": False, "reason": f"uses a variable no earlier block set: {', '.join(unset)}"})
             continue
         try:
-            r = subprocess.run(["bash", "-lc", line], cwd=cwd, env=e, capture_output=True, text=True, timeout=900)
+            argv = [expand(a, variables) for a in shlex.split(line)]
+        except ValueError as exc:
+            results.append({"line": line, "ran": False, "reason": f"could not be split into words: {exc}"})
+            continue
+        try:
+            r = subprocess.run(argv, cwd=cwd, env=minimal_env(variables, manifest.is_release(tree)), capture_output=True, text=True, timeout=900)
             results.append({"line": line, "ran": True, "returncode": r.returncode, "tail": (r.stdout + r.stderr)[-300:]})
         except subprocess.TimeoutExpired:
             results.append({"line": line, "ran": True, "returncode": -1, "tail": "timed out"})
+        except OSError as exc:
+            results.append({"line": line, "ran": True, "returncode": -1, "tail": f"could not start: {exc}"})
     failed = [r for r in results if r.get("ran") and r.get("returncode")]
     if strict:
         failed += [r for r in results if r.get("failed_folder")]
     return {"ran": any(r.get("ran") for r in results), "lines": results, "failed": failed,
-            "stopped_at": stopped}
+            "stopped_at": stopped, "cwd": cwd}
 
 
 def main(argv=None):

@@ -27,7 +27,11 @@ import json
 import os
 import re
 import subprocess
+import sys
 import time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import manifest  # noqa: E402
 
 ONT = "business_architecture/ontology"
 DEMO = "demos/downstream-pricing-databricks-free"
@@ -44,27 +48,59 @@ def ledger(env, kind, name, detail="", **extra):
 
 
 SECRET_FLAGS = ("--password", "--token", "--access-token")
+SECRET_KEYS = re.compile(r"PASSWORD|TOKEN|SECRET", re.I)
+SECRETS = set()  # every secret this run has seen (the generated Neo4j password, the --env file's logins): scrubbed from every record
 
 
-def redacted(args):
-    """The command as recorded: the value after a secret-bearing flag is masked, so no output file holds a password."""
+def secrets_in(args, env):
+    """The secrets a command carries: a value after a secret flag, an argument of the form --flag=value, a value of an
+    environment variable whose name says it is one, and everything registered in SECRETS."""
+    found = set(SECRETS)
+    for i, a in enumerate(args):
+        if i and args[i - 1] in SECRET_FLAGS:
+            found.add(a)
+        for flag in SECRET_FLAGS:
+            if a.startswith(flag + "="):
+                found.add(a[len(flag) + 1:])
+    for k, v in (env or {}).items():
+        if SECRET_KEYS.search(k) and v:
+            found.add(v)
+    return {s for s in found if len(s) >= 4}
+
+
+def scrub(text, secrets):
+    """text with every secret replaced by ***, longest first."""
+    for s in sorted(secrets, key=len, reverse=True):
+        text = text.replace(s, "***")
+    return text
+
+
+def redacted(args, secrets=()):
+    """The command as recorded: the value after a secret-bearing flag, an --flag=value secret and any registered secret
+    are masked, so no output file holds a password."""
     out = []
     for i, a in enumerate(args):
         out.append("***" if i and args[i - 1] in SECRET_FLAGS else a)
-    return " ".join(out)
+    return scrub(" ".join(out), set(secrets) | secrets_in(args, {}))
 
 
 def sh(args, cwd, env=None, timeout=7200, input=None):
+    """One command, recorded with its exit code and the tail of its output; every secret it was given is scrubbed
+    from the record (the command, the tail, a timeout's partial output), so no result file holds one."""
     base = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    secrets = secrets_in(args, env)
     t = time.time()
     try:
         r = subprocess.run(args, cwd=cwd, env={**base, "PYTHONDONTWRITEBYTECODE": "1", **(env or {})},
                            capture_output=True, text=True, timeout=timeout, input=input)
     except subprocess.TimeoutExpired as exc:
-        return {"command": redacted(args), "returncode": -1, "seconds": round(time.time() - t, 1),
-                "tail": f"timed out after {timeout} s: " + ((exc.stdout or b"")[-1500:].decode("utf-8", "replace") if isinstance(exc.stdout, bytes) else str(exc.stdout or "")[-1500:])}
-    return {"command": redacted(args), "returncode": r.returncode, "seconds": round(time.time() - t, 1),
-            "tail": (r.stdout + r.stderr)[-3000:]}
+        partial = exc.stdout.decode("utf-8", "replace") if isinstance(exc.stdout, bytes) else str(exc.stdout or "")
+        return {"command": redacted(args, secrets), "returncode": -1, "seconds": round(time.time() - t, 1),
+                "tail": scrub(f"timed out after {timeout} s: " + partial[-1500:], secrets)}
+    except OSError as exc:
+        return {"command": redacted(args, secrets), "returncode": -1, "seconds": round(time.time() - t, 1), "tail": scrub(f"could not start: {exc}", secrets)}
+    return {"command": redacted(args, secrets), "returncode": r.returncode, "seconds": round(time.time() - t, 1),
+            "tail": scrub((r.stdout + r.stderr)[-3000:], secrets)}
 
 
 def uv(args, cwd, extra=(), **kw):
@@ -74,7 +110,26 @@ def uv(args, cwd, extra=(), **kw):
 
 
 def release_env(tree):
-    return {"EPM_SHARE_RELEASE": "1"} if os.path.exists(os.path.join(tree, "KNOWN-OPEN-ITEMS.md")) else {}
+    return {"EPM_SHARE_RELEASE": "1"} if manifest.is_release(tree) else {}
+
+
+def login_file(env):
+    """Where neo4j_up writes the test Neo4j's login and every later reader finds it: IMPORT_DIR/validate-neo4j.env."""
+    return os.path.join(expand(env["IMPORT_DIR"]), "validate-neo4j.env") if env.get("IMPORT_DIR") else ""
+
+
+def read_login(env):
+    """The password in the login file, or None when there is no file (no store row has run)."""
+    path = login_file(env)
+    if not path or not os.path.exists(path):
+        return None
+    with open(path) as f:
+        for line in f:
+            if line.startswith("NEO4J_PASSWORD="):
+                pw = line.split("=", 1)[1].strip()
+                SECRETS.add(pw)
+                return pw
+    return None
 
 
 # ---------- the throwaway Neo4j ----------
@@ -83,6 +138,7 @@ def neo4j_up(env):
     name, port = env.get("TEST_NEO4J_NAME", "epm-validate"), env.get("TEST_NEO4J_PORT", "17799")
     pw = env.get("TEST_NEO4J_PASSWORD") or os.urandom(16).hex()
     env["TEST_NEO4J_PASSWORD"] = pw
+    SECRETS.add(pw)
     subprocess.run(["docker", "rm", "-f", name], capture_output=True, timeout=600)
     importdir = expand(env["IMPORT_DIR"])
     os.makedirs(importdir, exist_ok=True)
@@ -93,7 +149,7 @@ def neo4j_up(env):
     if r.returncode:
         raise RuntimeError(r.stderr[-500:])
     ledger(env, "container", name, f"Neo4j on 127.0.0.1:{port}")
-    login = os.path.join(importdir, "validate-neo4j.env")
+    login = login_file(env)
     with open(login, "w") as f:  # the later rows and the snippet runner read the login back from here
         f.write(f"NEO4J_URI=bolt://localhost:{port}\nNEO4J_USERNAME=neo4j\nNEO4J_PASSWORD={pw}\n")
     os.chmod(login, 0o600)
@@ -109,9 +165,11 @@ def neo4j_up(env):
 def test_password(env):
     """The test Neo4j's password: from this run's neo4j_up, else from the login file an earlier run wrote."""
     if not env.get("TEST_NEO4J_PASSWORD"):
-        path = os.path.join(expand(env["IMPORT_DIR"]), "validate-neo4j.env")
-        with open(path) as f:
-            env["TEST_NEO4J_PASSWORD"] = [l.split("=", 1)[1].strip() for l in f if l.startswith("NEO4J_PASSWORD=")][0]
+        pw = read_login(env)
+        if not pw:
+            raise RuntimeError("no test Neo4j login: run the projection-pipeline row first")
+        env["TEST_NEO4J_PASSWORD"] = pw
+    SECRETS.add(env["TEST_NEO4J_PASSWORD"])
     return env["TEST_NEO4J_PASSWORD"]
 
 
@@ -140,17 +198,17 @@ def row_projection_pipeline(tree, env):
     if r["returncode"]:
         return {**out, "ok": False}
     bolt, pw = neo4j_up(env)
-    # pipeline.py takes the password as an argument (its own interface); the record of the command masks it (sh()).
-    r = uv(["pipeline.py", "load-verify", "--bolt", bolt, "--password", pw, "--import-dir", expand(env["IMPORT_DIR"])],
-           proj, env=release_env(tree)); out["steps"].append(r)
+    # The password reaches pipeline.py through its environment (NEO4J_PASSWORD), never the command line.
+    r = uv(["pipeline.py", "load-verify", "--bolt", bolt, "--import-dir", expand(env["IMPORT_DIR"])],
+           proj, env={**release_env(tree), "NEO4J_PASSWORD": pw}); out["steps"].append(r)
     report_path = os.path.join(proj, "projection-report.json")
     out["report"] = os.path.exists(report_path)
     if out["report"]:
         with open(report_path) as f:
             rep = json.load(f)
         out.update({k: rep.get(k) for k in ("nodes", "relationships", "shacl_violations_in_graph", "in_graph_mutant_violations",
-                                             "roundtrip_lost", "roundtrip_added", "determinism_hash_sorted", "separator",
-                                             "renamed", "rename_lossless")})
+                                             "roundtrip_lost", "roundtrip_added", "determinism_hash_sorted", "determinism_hash_shuffled",
+                                             "separator", "renamed", "rename_lossless")})
         out["hashes_equal"] = rep.get("determinism_hash_sorted") == rep.get("determinism_hash_shuffled")
         if r["returncode"] == 0 and release_env(tree):
             out["readme_note"] = note_projection_figures(tree, rep)
@@ -159,12 +217,19 @@ def row_projection_pipeline(tree, env):
 
 
 def projection_ok(out, release):
-    """The row passes when load-verify passed and wrote its report with equal hashes, nothing lost or added in the
-    round trip, no violation in the graph, and, on the release, the single-underscore evidence (separator "_",
-    rename_lossless) and the README note written and its page rebuilt."""
+    """The row passes when load-verify passed and wrote its report with two present, equal hashes, exactly zero lost
+    or added triples in the round trip, exactly zero violations in the graph, at least one violation on the
+    deliberate mutant, and, on the release, the single-underscore evidence (separator "_", rename_lossless) and the
+    README note written and its page rebuilt. A missing figure is a failure, never a zero."""
     if out["steps"][-1]["returncode"] != 0 or not out.get("report"):
         return False
-    if not out.get("hashes_equal") or out.get("roundtrip_lost") or out.get("roundtrip_added") or out.get("shacl_violations_in_graph"):
+    hashes = (out.get("determinism_hash_sorted"), out.get("determinism_hash_shuffled"))
+    if not all(isinstance(h, str) and h for h in hashes) or hashes[0] != hashes[1]:
+        return False
+    if any(out.get(k) != 0 or isinstance(out.get(k), bool) for k in ("roundtrip_lost", "roundtrip_added", "shacl_violations_in_graph")):
+        return False
+    mutant = out.get("in_graph_mutant_violations")
+    if not isinstance(mutant, int) or isinstance(mutant, bool) or mutant <= 0:
         return False
     if release:
         note = out.get("readme_note") or {}
@@ -179,8 +244,9 @@ def note_projection_figures(tree, rep):
     with open(path, encoding="utf-8") as f:
         text = f.read()
     marker = "The last run, on every released package with"
-    if "*This release's own run" in text:
-        return {"written": True, "page_ok": page_build(tree)["returncode"] == 0, "note": "already there from an earlier run"}
+    # An earlier run's note is replaced, never kept: its figures may be stale against this report.
+    text, replaced = re.subn(r"\*This release's own run \([^)]*\):\*.*?\*Before the release, on main:\* the last run, on every released package with",
+                             marker, text, count=1, flags=re.S)
     if marker not in text:
         return {"written": False, "page_ok": False, "note": "not written: the run paragraph was not found"}
     renamed = rep.get("renamed") or {}
@@ -196,7 +262,8 @@ def note_projection_figures(tree, rep):
     with open(path, "w", encoding="utf-8") as f:
         f.write(text)
     r = page_build(tree)
-    return {"written": True, "page_ok": r["returncode"] == 0, "note": note if r["returncode"] == 0 else f"written, but the page rebuild failed: {r['tail'][-300:]}"}
+    return {"written": True, "page_ok": r["returncode"] == 0, "replaced": bool(replaced),
+            "note": note if r["returncode"] == 0 else f"written, but the page rebuild failed: {r['tail'][-300:]}"}
 
 
 def page_build(tree):
@@ -423,22 +490,40 @@ def row_tech_graph(tree, env):
     return out
 
 
+TEST_STORES = ("pipeline", "driver")
+
+
+def check_lines(tail):
+    """The status of each store in a sync_stores.py check: {store: (status, why)}."""
+    out = {}
+    for line in tail.split("\n"):
+        m = re.match(r"^(\w+)\s+(unreachable|unmarked|behind|changed|current)\s+(.*)$", line.strip())
+        if m:
+            out[m.group(1)] = (m.group(2), m.group(3))
+    return out
+
+
 def row_sync(tree, env):
-    """sync_stores.py mark and check on the test stores; then one node removed on purpose, and check reports it."""
+    """sync_stores.py mark and check on the two test stores (--store pipeline --store driver, on the mark and on every
+    check); then one node removed on purpose from the pipeline store, and check reports it. AuraDB and Databricks are
+    main's stores: the row never reads them, and says so."""
     proj = os.path.join(tree, ONT, "projection")
     e = {**release_env(tree), "EPM_STORES_JSON": stores_json(env)}
+    stores = [a for s in TEST_STORES for a in ("--store", s)]
     ref = ["--ref", "worktree"]
-    out = {"steps": []}
-    r = uv(["sync_stores.py", "mark", "--store", "pipeline", "--store", "driver"], proj, env=e); out["steps"].append(r)
-    r = uv(["sync_stores.py", "check", *ref], proj, env=e); out["steps"].append(r)
+    out = {"steps": [], "stores": list(TEST_STORES), "outside_the_test": "aura and databricks are main's stores, not read by this row"}
+    r = uv(["sync_stores.py", "mark", *stores], proj, env=e); out["steps"].append(r)
+    r = uv(["sync_stores.py", "check", *stores, *ref], proj, env=e); out["steps"].append(r)
     out["check_before"] = r["tail"][-800:]
+    out["before"] = {s: st for s, (st, _) in check_lines(r["tail"]).items() if s in TEST_STORES}
     bolt, pw = f"bolt://localhost:{env.get('TEST_NEO4J_PORT', '17799')}", test_password(env)
     victim = cypher(bolt, pw, "MATCH (n:Resource) WITH n ORDER BY n.uri LIMIT 1 RETURN n.uri AS uri")  # any one resource
     if victim:
         cypher(bolt, pw, f"MATCH (n:Resource {{uri: '{victim[0]['uri']}'}}) DETACH DELETE n")
-        r = uv(["sync_stores.py", "check", *ref], proj, env=e); out["steps"].append(r)
+        r = uv(["sync_stores.py", "check", *stores, *ref], proj, env=e); out["steps"].append(r)
         out["check_after_drift"] = r["tail"][-800:]
-        out["drift_caught"] = "pipeline" in r["tail"] and ("changed" in r["tail"] or "behind" in r["tail"])
+        out["after"] = {s: st for s, (st, _) in check_lines(r["tail"]).items() if s in TEST_STORES}
+        out["drift_caught"] = out["after"].get("pipeline") in ("changed", "behind")
         out["removed"] = victim[0]["uri"]
     out["repair"] = "the test repairs by reloading the pipeline row's load-verify (sync's reload is bound to the loaded container names)"
     out["ok"] = sync_ok(out)
@@ -446,8 +531,14 @@ def row_sync(tree, env):
 
 
 def sync_ok(out):
-    """mark and the first check returned 0, a victim was found, and the check after the drift reported it."""
-    return bool(out["steps"]) and all(s["returncode"] == 0 for s in out["steps"]) and bool(out.get("removed")) and out.get("drift_caught", False)
+    """mark and the first check returned 0 with both test stores current; a victim was found; the check after the
+    drift exits 1 (sync_stores.py exits 1 precisely when a store it read is behind or changed) with the pipeline
+    store changed and the driver store still current. Only the two test stores' lines are judged."""
+    steps = out["steps"]
+    before, after = out.get("before", {}), out.get("after", {})
+    return (len(steps) == 3 and steps[0]["returncode"] == 0 and steps[1]["returncode"] == 0 and steps[2]["returncode"] == 1
+            and all(before.get(s) == "current" for s in TEST_STORES) and bool(out.get("removed"))
+            and after.get("pipeline") in ("changed", "behind") and after.get("driver") == "current")
 
 
 def row_store_map(tree, env):

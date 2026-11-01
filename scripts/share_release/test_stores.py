@@ -10,7 +10,7 @@ import stores  # noqa: E402
 
 
 def release_tree(tmp_path):
-    (tmp_path / "KNOWN-OPEN-ITEMS.md").write_text("open\n")
+    (tmp_path / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}\n')
     return str(tmp_path)
 
 
@@ -24,10 +24,36 @@ def stub_cypher(answers):
     return cypher
 
 
-def test_the_recorded_command_masks_a_password():
+def test_no_record_holds_a_password():
     assert stores.redacted(["pipeline.py", "load-verify", "--password", "s3cret", "--import-dir", "/x"]) == "pipeline.py load-verify --password *** --import-dir /x"
-    r = stores.sh(["echo", "--password", "s3cret"], None)
-    assert "s3cret" not in r["command"] and r["returncode"] == 0
+    r = stores.sh(["echo", "--password", "s3cret", "--token=t0ken"], None)
+    assert "s3cret" not in r["command"] and "t0ken" not in r["command"] and r["returncode"] == 0
+    assert "s3cret" not in r["tail"] and "t0ken" not in r["tail"] and "***" in r["tail"]  # the echoed secret is scrubbed from the output too
+    r = stores.sh(["sh", "-c", "echo $NEO4J_PASSWORD"], None, env={"NEO4J_PASSWORD": "fromenv1"})
+    assert "fromenv1" not in r["tail"] and "***" in r["tail"]
+    stores.SECRETS.add("generated9")
+    try:
+        r = stores.sh(["echo", "the generated9 one"], None)
+        assert "generated9" not in r["tail"]
+        r = stores.sh(["sh", "-c", "echo generated9; sleep 5"], None, timeout=1)
+        assert r["returncode"] == -1 and "generated9" not in r["tail"]
+    finally:
+        stores.SECRETS.discard("generated9")
+
+
+def test_the_projection_row_passes_the_password_through_the_environment(tmp_path, monkeypatch):
+    tree = release_tree(tmp_path)
+    (tmp_path / "business_architecture" / "ontology" / "projection").mkdir(parents=True)
+    calls = []
+    monkeypatch.setattr(stores, "uv", lambda args, cwd, env=None, **kw: (calls.append((args, env)), {"command": " ".join(args), "returncode": 1, "seconds": 0, "tail": ""})[1])
+    monkeypatch.setattr(stores, "neo4j_up", lambda env: ("bolt://localhost:1", "pw-secret-1"))
+    env = {"IMPORT_DIR": str(tmp_path / "import"), "ROBOT_JAR": "/r.jar", "LEDGER_FILE": str(tmp_path / "ledger.jsonl")}
+    calls.clear()
+    monkeypatch.setattr(stores, "uv", lambda args, cwd, env=None, **kw: (calls.append((args, env)), {"command": " ".join(args), "returncode": 0, "seconds": 0, "tail": ""})[1])
+    stores.row_projection_pipeline(tree, env)
+    args, e = calls[-1]
+    assert args[:2] == ["pipeline.py", "load-verify"] and "--password" not in args and "pw-secret-1" not in " ".join(args)
+    assert e["NEO4J_PASSWORD"] == "pw-secret-1"
 
 
 def test_the_underscore_row_fails_on_a_planted_double_separator_anywhere(tmp_path, monkeypatch):
@@ -46,15 +72,22 @@ def test_the_underscore_row_fails_on_a_planted_double_separator_anywhere(tmp_pat
     assert stores.row_underscores(str(tmp_path / "main"), env)["ok"] is True  # on main the row measures n10s's names
 
 
-def test_the_projection_row_needs_the_report_the_rename_evidence_and_the_readme_note():
-    base = {"steps": [{"returncode": 0}], "report": True, "hashes_equal": True, "roundtrip_lost": 0, "roundtrip_added": 0,
-            "shacl_violations_in_graph": 0, "separator": "_", "rename_lossless": True, "readme_note": {"written": True, "page_ok": True}}
+def test_the_projection_row_needs_every_figure_present_and_right():
+    base = {"steps": [{"returncode": 0}], "report": True, "determinism_hash_sorted": "abc", "determinism_hash_shuffled": "abc", "hashes_equal": True,
+            "roundtrip_lost": 0, "roundtrip_added": 0, "shacl_violations_in_graph": 0, "in_graph_mutant_violations": 1,
+            "separator": "_", "rename_lossless": True, "readme_note": {"written": True, "page_ok": True}}
     assert stores.projection_ok(base, release=True) is True
     assert stores.projection_ok({**base, "readme_note": None, "separator": "__", "rename_lossless": False}, release=False) is True
-    for change in ({"steps": [{"returncode": 1}]}, {"report": False}, {"hashes_equal": False}, {"roundtrip_lost": 1}, {"roundtrip_added": 2},
-                   {"shacl_violations_in_graph": 1}, {"separator": "__"}, {"rename_lossless": False}, {"readme_note": {"written": False, "page_ok": False}},
-                   {"readme_note": {"written": True, "page_ok": False}}):
+    for change in ({"steps": [{"returncode": 1}]}, {"report": False}, {"determinism_hash_shuffled": "abd"}, {"roundtrip_lost": 1}, {"roundtrip_added": 2},
+                   {"shacl_violations_in_graph": 1}, {"in_graph_mutant_violations": 0}, {"separator": "__"}, {"rename_lossless": False},
+                   {"readme_note": {"written": False, "page_ok": False}}, {"readme_note": {"written": True, "page_ok": False}},
+                   {"roundtrip_lost": False}, {"in_graph_mutant_violations": True}):
         assert stores.projection_ok({**base, **change}, release=True) is False, change
+    for missing in ("determinism_hash_sorted", "determinism_hash_shuffled", "roundtrip_lost", "roundtrip_added", "shacl_violations_in_graph", "in_graph_mutant_violations"):
+        partial = {k: v for k, v in base.items() if k != missing}  # a report without the figure proves nothing
+        assert stores.projection_ok(partial, release=True) is False, missing
+        assert stores.projection_ok({**partial, missing: None}, release=True) is False, missing
+    assert stores.projection_ok({**base, "determinism_hash_sorted": None, "determinism_hash_shuffled": None}, release=True) is False  # None == None is not equal hashes
 
 
 def test_the_readme_note_reports_what_it_wrote_and_whether_the_page_rebuilt(tmp_path, monkeypatch):
@@ -66,8 +99,9 @@ def test_the_readme_note_reports_what_it_wrote_and_whether_the_page_rebuilt(tmp_
     monkeypatch.setattr(stores, "page_build", lambda tree: {"returncode": 0, "tail": ""})
     out = stores.note_projection_figures(tree, rep)
     assert out["written"] and out["page_ok"] and "10 nodes and 20 relationships" in readme.read_text()
-    out = stores.note_projection_figures(tree, rep)  # a second run writes no second note
-    assert out["written"] and out["page_ok"] and readme.read_text().count("This release's own run") == 1
+    out = stores.note_projection_figures(tree, {**rep, "nodes": 11})  # a later run replaces the note: its figures are this report's
+    assert out["written"] and out["page_ok"] and out["replaced"] and readme.read_text().count("This release's own run") == 1
+    assert "11 nodes" in readme.read_text() and "10 nodes" not in readme.read_text() and readme.read_text().lower().count("the last run, on every released package with") == 1
     monkeypatch.setattr(stores, "page_build", lambda tree: {"returncode": 1, "tail": "boom"})
     assert stores.note_projection_figures(tree, rep)["page_ok"] is False
     readme.write_text("No run paragraph here.\n")
@@ -90,13 +124,48 @@ def test_the_offline_demo_row_needs_every_run_paired_and_compared(tmp_path):
         assert stores.demo_offline_ok(0, [good, bad]) is False, bad
 
 
-def test_the_sync_row_counts_every_step_and_the_drift():
-    good = {"steps": [{"returncode": 0}, {"returncode": 0}, {"returncode": 0}], "removed": "urn:x", "drift_caught": True}
+def test_the_sync_row_judges_the_two_test_stores_and_expects_the_drift_checks_exit_code():
+    good = {"steps": [{"returncode": 0}, {"returncode": 0}, {"returncode": 1}], "removed": "urn:x", "drift_caught": True,
+            "before": {"pipeline": "current", "driver": "current"}, "after": {"pipeline": "changed", "driver": "current"}}
     assert stores.sync_ok(good) is True
-    assert stores.sync_ok({**good, "steps": [{"returncode": 1}, {"returncode": 0}, {"returncode": 0}]}) is False  # mark failed
-    assert stores.sync_ok({**good, "drift_caught": False}) is False
+    assert stores.sync_ok({**good, "steps": [{"returncode": 1}, {"returncode": 0}, {"returncode": 1}]}) is False  # mark failed
+    assert stores.sync_ok({**good, "steps": [{"returncode": 0}, {"returncode": 1}, {"returncode": 1}]}) is False  # not current before the drift
+    assert stores.sync_ok({**good, "steps": [{"returncode": 0}, {"returncode": 0}, {"returncode": 0}]}) is False  # the drift check exits 1 when it sees the drift
+    assert stores.sync_ok({**good, "after": {"pipeline": "current", "driver": "current"}}) is False
+    assert stores.sync_ok({**good, "after": {"pipeline": "changed", "driver": "behind"}}) is False
+    assert stores.sync_ok({**good, "before": {"pipeline": "current"}}) is False
     assert stores.sync_ok({**good, "removed": None}) is False
     assert stores.sync_ok({"steps": []}) is False
+
+
+def test_the_sync_row_reads_only_the_test_stores_lines(tmp_path, monkeypatch):
+    """The real check (rel15) printed aura unmarked and databricks behind beside the two current test stores; the row
+    passes --store for the two, reads their lines only, and names the other two as outside the test."""
+    tree = release_tree(tmp_path)
+    (tmp_path / "business_architecture" / "ontology" / "projection").mkdir(parents=True)
+    before = ("pipeline    current   marked 2026-11-01T04:44:59Z at commit unknown\ndriver      current   marked 2026-11-01T04:44:59Z at commit unknown\n"
+              "aura        unmarked  no marker: mark it after a checked load, or sync it\ndatabricks  behind    marked 2026-10-29T14:23:14Z from another release set\n[WARN] pyarrow\n")
+    after = before.replace("pipeline    current   marked 2026-11-01T04:44:59Z at commit unknown", "pipeline    changed   marked with [4189, 21767], now holds [4188, 21407]")
+    calls = []
+
+    def uv(args, cwd, env=None, **kw):
+        calls.append(args)
+        if args[1] == "mark":
+            return {"command": " ".join(args), "returncode": 0, "seconds": 0, "tail": "pipeline: marked\ndriver: marked\n"}
+        return {"command": " ".join(args), "returncode": 1, "seconds": 0, "tail": after if len(calls) > 2 else before}
+    monkeypatch.setattr(stores, "uv", uv)
+    monkeypatch.setattr(stores, "test_password", lambda env: "pw")
+    monkeypatch.setattr(stores, "stores_json", lambda env: "{}")
+    monkeypatch.setattr(stores, "cypher", lambda bolt, pw, q: [{"uri": "urn:victim"}] if "RETURN n.uri" in q else [])
+    row = stores.row_sync(tree, {})
+    assert all(a[1] != "check" or a[2:6] == ["--store", "pipeline", "--store", "driver"] for a in calls) and calls[0][1:6] == ["mark", "--store", "pipeline", "--store", "driver"]
+    assert row["before"] == {"pipeline": "current", "driver": "current"} and row["after"] == {"pipeline": "changed", "driver": "current"}
+    assert row["drift_caught"] and "aura" not in row["before"] and "aura and databricks" in row["outside_the_test"]
+    assert row["ok"] is False  # the first check exited 1 as rel15's did when it read every store; with --store it exits 0
+    calls.clear()
+    seq = iter([(0, "pipeline: marked\n"), (0, before), (1, after)])
+    monkeypatch.setattr(stores, "uv", lambda args, cwd, env=None, **kw: (lambda rc_tail: {"command": " ".join(args), "returncode": rc_tail[0], "seconds": 0, "tail": rc_tail[1]})(next(seq)))
+    assert stores.row_sync(tree, {})["ok"] is True
 
 
 def test_the_live_demo_row_writes_its_compose_override_outside_the_tree_and_ledgers_it(tmp_path, monkeypatch):

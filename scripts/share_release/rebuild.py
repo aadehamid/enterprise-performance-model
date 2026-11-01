@@ -126,10 +126,11 @@ class Rebuild:
                        for root, dirs, files in os.walk(self.release) for f in files
                        if f.startswith("test_") and f.endswith(".py") and "__pycache__" not in root
                        and not os.path.relpath(root, self.release).startswith("skills"))  # the skills' tests run their own way
-        import validate
+        import shlex
+        import skill_checks
         with open(os.path.join(HERE, "templates", "check.sh")) as f:
-            text = (f.read().replace("{{TEST_FILES}}", " \\\n".join("  " + t for t in tests))
-                    .replace("{{SKILL_CHECKS}}", validate.render_skill_checks()))
+            text = (f.read().replace("{{TEST_FILES}}", " \\\n".join("  " + shlex.quote(t) for t in tests))
+                    .replace("{{SKILL_CHECKS}}", skill_checks.render()))
         out = os.path.join(self.release, "scripts", "check.sh")
         os.makedirs(os.path.dirname(out), exist_ok=True)
         with open(out, "w") as f:

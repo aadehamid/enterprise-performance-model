@@ -50,23 +50,40 @@ def test_latest_links_reject_an_older_pin_a_changed_dependency_set_and_a_stale_c
     assert validate.latest_links(main, release, newest) == ["kpi 4.0.0 requires ['core'] in the release and ['core', 'organization'] on main"]
     main, release, newest = fake_trees(tmp_path / "c", deps, {**newest_of, "kpi": "3.9.0"})
     assert validate.latest_links(main, release, newest) == ["the catalog lists [('kpi', '3.9.0')] that are not newest and misses [('kpi', '4.0.0')]"]
+    main, release, newest = fake_trees(tmp_path / "d", deps, newest_of)
+    os.remove(os.path.join(main, validate.ONT, "releases", "kpi", newest["kpi"], "manifest.json"))
+    assert validate.latest_links(main, release, newest) == ["kpi 4.0.0 has no manifest on main to compare with"]  # no baseline, no pass
+
+
+def test_the_newest_version_is_chosen_by_number_everywhere(tmp_path):
+    import manifest
+    assert manifest.newest_version(["1.9.0", "1.10.0", "1.2.0"]) == "1.10.0"
+    for v in ("1.9.0", "1.10.0"):
+        folder = tmp_path / validate.ONT / "releases" / "kpi" / v
+        folder.mkdir(parents=True); (folder / "manifest.json").write_text("{}")
+    assert manifest.newest_on_disk(str(tmp_path), "kpi") == "1.10.0"
+    assert sorted(["1.9.0", "1.10.0"])[-1] == "1.9.0"  # what text order would have chosen
 
 
 def test_the_skills_tests_row_fails_when_a_test_command_ran_no_test(tmp_path, monkeypatch):
-    (tmp_path / "KNOWN-OPEN-ITEMS.md").write_text("open\n")
+    (tmp_path / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}\n')
     tails = {"tests": "Ran 12 tests in 0.1s\n\nOK\n", "check": "ok\n"}
+    kinds = {" ".join(cmd): kind for _, _, cmd, kind in validate.SKILL_CHECKS}
     monkeypatch.setattr(validate, "sh", lambda cmd, cwd, **kw: {"command": " ".join(cmd), "cwd": cwd, "returncode": 0, "seconds": 0,
-                                                                 "tail": tails["tests" if "unittest" in cmd else "check"], "pytest_summary": None})
+                                                                 "tail": tails[kinds[" ".join(cmd)]], "pytest_summary": None})
     row = validate.row_skills_tests(str(tmp_path), {})
-    assert row["ok"] is True and row["passed"] == 36 and set(row["runs"]) == {"ontology", "ontology:check_sssom.py", "ontology-to-lpg", "rdf-store", "skills:test_playbook_html.py"}
+    assert row["ok"] is True and row["passed"] == 48 and set(row["runs"]) == {"ontology", "ontology:check_sssom.py", "ontology-to-lpg", "rdf-store", "skills:test_playbook_html.py"}
+    assert row["runs"]["skills:test_playbook_html.py"]["kind"] == "tests"  # a unittest suite: zero tests is a failure there too
     tails["tests"] = "Ran 0 tests in 0.0s\n\nOK\n"
     row = validate.row_skills_tests(str(tmp_path), {})
     assert row["ok"] is False and all(not r["ok"] for r in row["runs"].values() if r["kind"] == "tests") and row["runs"]["ontology:check_sssom.py"]["ok"]
+    assert row["runs"]["skills:test_playbook_html.py"]["ok"] is False
     assert validate.row_skills_tests(str(tmp_path / "main"), {})["ok"] is None  # main without SKILLS_REPO: not run, with its reason
 
 
 def test_the_skill_checks_table_renders_the_release_check_script():
-    rendered = validate.render_skill_checks()
+    import skill_checks
+    rendered = skill_checks.render()
     with open(os.path.join(HERE, "templates", "check.sh")) as f:
         template = f.read()
     assert "{{SKILL_CHECKS}}" in template and "run_tests()" in template
@@ -78,11 +95,21 @@ def test_the_skill_checks_table_renders_the_release_check_script():
 
 def test_the_iri_base_row_fails_on_the_release_and_measures_on_main(tmp_path):
     (tmp_path / "doc.md").write_text("<https://w3id.org/lsc/ontology/> and LSC\n")
-    assert validate.row_iri_base(str(tmp_path), {}) == {"files": 1, "places": 2, "samples": [("doc.md", 2)], "ok": True}
-    (tmp_path / "KNOWN-OPEN-ITEMS.md").write_text("open\n")
+    assert validate.row_iri_base(str(tmp_path), {}) == {"files": 1, "places": 2, "samples": [("doc.md", 2)], "unreadable": [], "ok": True}
+    (tmp_path / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}\n')
     assert validate.row_iri_base(str(tmp_path), {})["ok"] is False
     (tmp_path / "doc.md").write_text("<https://w3id.org/mpc/ontology/>\n")
     assert validate.row_iri_base(str(tmp_path), {})["ok"] is True
+    (tmp_path / "locked.md").write_text("LSC\n")
+    os.chmod(str(tmp_path / "locked.md"), 0)
+    try:
+        if os.access(str(tmp_path / "locked.md"), os.R_OK):
+            import pytest
+            pytest.skip("this user reads every file (root), so an unreadable file cannot be planted")
+        row = validate.row_iri_base(str(tmp_path), {})
+        assert row["ok"] is False and row["unreadable"] and "locked.md" in row["unreadable"][0]  # a file not read proves nothing
+    finally:
+        os.chmod(str(tmp_path / "locked.md"), 0o644)
 
 
 def test_the_report_returns_the_failures_and_lists_the_figures_to_explain(tmp_path):
@@ -106,9 +133,13 @@ def test_the_report_returns_the_failures_and_lists_the_figures_to_explain(tmp_pa
 
 
 def test_the_commands_exit_nonzero_on_a_failed_row(tmp_path):
-    (tmp_path / "KNOWN-OPEN-ITEMS.md").write_text("open\n")
+    (tmp_path / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}\n')
     (tmp_path / "doc.md").write_text("LSC\n")
     cmd = [sys.executable, os.path.join(HERE, "validate.py"), "run", "--tree", str(tmp_path), "--out", str(tmp_path / "out.json"), "--rows", "iri-base"]
+    r = subprocess.run(cmd[:-1] + [""], capture_output=True, text=True)  # no row asked for: not a validation
+    assert r.returncode != 0 and "no row" in r.stderr and not (tmp_path / "out.json").exists()
+    r = subprocess.run(cmd[:-1] + ["iri-base,nonsuch"], capture_output=True, text=True)
+    assert r.returncode != 0 and "unknown row" in r.stderr
     r = subprocess.run(cmd, capture_output=True, text=True)
     assert r.returncode == 1 and json.load(open(str(tmp_path / "out.json")))["rows"]["iri-base"]["ok"] is False
     (tmp_path / "doc.md").write_text("MPC\n")

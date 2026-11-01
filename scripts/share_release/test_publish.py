@@ -12,9 +12,11 @@ import publish  # noqa: E402
 
 def make_release(root):
     os.makedirs(os.path.join(root, "business_architecture", "ontology", "projection"))
-    os.makedirs(os.path.join(root, ".venv", "bin")); os.makedirs(os.path.join(root, "__pycache__")); os.makedirs(os.path.join(root, "out"))
+    for d in (".venv/bin", "__pycache__", "out", ".git", ".pytest_cache/v/cache"):
+        os.makedirs(os.path.join(root, d))
     files = {"README.md": "hello\n", "release.json": "{}\n", "business_architecture/ontology/projection/run_local.sh": "#!/bin/sh\necho hi\n",
-             ".venv/bin/activate": "secret token\n", "__pycache__/x.pyc": "pyc\n", ".DS_Store": "x", "out/report.json": "{}"}
+             ".venv/bin/activate": "secret token\n", "__pycache__/x.pyc": "pyc\n", ".DS_Store": "x", "out/report.json": "{}",
+             ".git/config": "[user]\n\tname = Ada Lovelace\n", ".pytest_cache/v/cache/nodeids": "[]"}
     for rel, text in files.items():
         with open(os.path.join(root, rel), "w") as f:
             f.write(text)
@@ -32,13 +34,13 @@ def test_the_zip_holds_the_shipped_files_and_extract_keeps_the_executable_bit(tm
     n, size = publish.make_zip(release, out)
     assert n == 3 and size > 0
     with zipfile.ZipFile(out) as z:
-        assert set(z.namelist()) == {"rel/" + s for s in SHIPPED}
+        assert set(z.namelist()) == {"epm-release/" + s for s in SHIPPED}  # the fixed root, never the output folder's name
     room = tmp_path / "room"; room.mkdir()
     with zipfile.ZipFile(out) as z:
         z.extractall(str(room / "plain"))
-    assert not os.access(str(room / "plain" / "rel" / "business_architecture/ontology/projection/run_local.sh"), os.X_OK)  # what extractall does
+    assert not os.access(str(room / "plain" / "epm-release" / "business_architecture/ontology/projection/run_local.sh"), os.X_OK)  # what extractall does (CPython issue 59999), measured here
     publish.extract(out, str(room / "kept"))
-    script = str(room / "kept" / "rel" / "business_architecture/ontology/projection/run_local.sh")
+    script = str(room / "kept" / "epm-release" / "business_architecture/ontology/projection/run_local.sh")
     assert stat.S_IMODE(os.stat(script).st_mode) == 0o755
     assert subprocess.run([script], capture_output=True, text=True).stdout == "hi\n"
 
@@ -52,8 +54,14 @@ def test_the_orphan_branch_holds_the_zips_files_with_a_neutral_identity(tmp_path
         f.write("main\n")
     git("add", "main.txt"); git("commit", "-q", "-m", "main")
     release = make_release(str(tmp_path / "rel"))
-    commit = publish.make_branch(release, repo, "share/test")
+    zip_path = str(tmp_path / "rel.zip")
+    publish.make_zip(release, zip_path)
+    with open(os.path.join(release, "README.md"), "a") as f:
+        f.write("edited after the zip, never checked\n")  # must not reach the branch
+    (tmp_path / "rel" / "extra.md").write_text("added after the zip\n")
+    commit = publish.make_branch(zip_path, repo, "share/test")
     assert git("rev-parse", "share/test") == commit
+    assert git("show", "share/test:README.md") == "hello"
     assert git("rev-list", "--count", "share/test") == "1"  # an orphan: one commit, no history
     assert set(git("ls-tree", "-r", "--name-only", "share/test").split("\n")) == SHIPPED
     assert "100755" in git("ls-tree", "share/test", "business_architecture/ontology/projection/run_local.sh")
@@ -62,29 +70,71 @@ def test_the_orphan_branch_holds_the_zips_files_with_a_neutral_identity(tmp_path
     assert git("status", "--porcelain") == "" and not os.path.exists(os.path.join(repo, ".git", "share-release-index"))
 
 
-def fake_docker(folder, exit_code=0):
-    """A docker on PATH that records its arguments and the script it was given, then exits as told."""
+def test_a_symlink_in_the_release_stops_the_zip(tmp_path):
+    import pytest
+    release = make_release(str(tmp_path / "rel"))
+    (tmp_path / "secret.env").write_text("TOKEN=x\n")
+    os.symlink(str(tmp_path / "secret.env"), os.path.join(release, "linked.env"))
+    with pytest.raises(SystemExit, match="symlink"):
+        publish.make_zip(release, str(tmp_path / "rel.zip"))
+    os.remove(os.path.join(release, "linked.env"))
+    os.symlink(str(tmp_path), os.path.join(release, "linked-dir"))
+    with pytest.raises(SystemExit, match="symlink"):
+        list(publish.walk(release))
+
+
+def fake_docker(folder, exit_code=0, sleep=0):
+    """A docker on PATH that records its arguments NUL-separated and the subcommand of every call, sleeps as told,
+    then exits as told."""
     path = os.path.join(folder, "docker")
     with open(path, "w") as f:
-        f.write("#!/bin/sh\nprintf '%s\\0' \"$@\" > \"$FAKE_DOCKER_LOG\"\nexit " + str(exit_code) + "\n")
+        f.write("#!/bin/sh\necho \"$1 $2\" >> \"$FAKE_DOCKER_CALLS\"\n"
+                "[ \"$1\" = run ] && printf '%s\\0' \"$@\" > \"$FAKE_DOCKER_LOG\"\n"
+                f"[ \"$1\" = run ] && sleep {sleep}\nexit {exit_code}\n")
     os.chmod(path, 0o755)
     return path
+
+
+def room_env(tmp_path, bindir):
+    return {**os.environ, "PATH": f"{bindir}{os.pathsep}{os.environ['PATH']}", "FAKE_DOCKER_LOG": str(tmp_path / "log"),
+            "FAKE_DOCKER_CALLS": str(tmp_path / "calls"), "DATABRICKS_TOKEN": "t0ken", "NEO4J_PASSWORD": "pw"}
 
 
 def test_the_clean_room_mounts_only_the_zip_and_reports_a_failed_check(tmp_path):
     bindir = tmp_path / "bin"; bindir.mkdir()
     fake_docker(str(bindir))
     (tmp_path / "rel.zip").write_bytes(b"PK")
-    env = {**os.environ, "PATH": f"{bindir}{os.pathsep}{os.environ['PATH']}", "FAKE_DOCKER_LOG": str(tmp_path / "log"),
-           "DATABRICKS_TOKEN": "t0ken", "NEO4J_PASSWORD": "pw"}
-    r = subprocess.run(["bash", os.path.join(HERE, "cleanroom.sh"), str(tmp_path / "rel.zip"), str(tmp_path / "room.log")], env=env, capture_output=True, text=True)
+    env = room_env(tmp_path, bindir)
+    cmd = [sys.executable, os.path.join(HERE, "cleanroom.py"), str(tmp_path / "rel.zip"), "--log", str(tmp_path / "room.log"), "--timeout", "30"]
+    r = subprocess.run(cmd, env=env, capture_output=True, text=True)
     assert r.returncode == 0, r.stderr
     args = (tmp_path / "log").read_text().split("\0")[:-1]  # NUL-terminated
-    assert args.count("-v") == 1 and f"{tmp_path / 'rel.zip'}:/release.zip:ro" in args
+    assert args.count("-v") == 1 and f"{tmp_path / 'rel.zip'}:/release.zip:ro" in args and "--name" in args
     envs = [args[i + 1] for i, a in enumerate(args) if a == "-e"]
     assert "HOME=/tmp/home" in envs and not any("TOKEN" in e or "PASSWORD" in e for e in envs)
     script = args[-1]
     assert 'python3 -c "$EXTRACT"' in script and "./scripts/check.sh" in script and "zipfile" in next(e for e in envs if e.startswith("EXTRACT="))
     fake_docker(str(bindir), exit_code=1)
-    r = subprocess.run(["bash", os.path.join(HERE, "cleanroom.sh"), str(tmp_path / "rel.zip"), str(tmp_path / "room.log")], env=env, capture_output=True, text=True)
+    r = subprocess.run(cmd, env=env, capture_output=True, text=True)
     assert r.returncode != 0
+
+
+def test_the_clean_room_stops_its_container_when_the_deadline_passes(tmp_path):
+    bindir = tmp_path / "bin"; bindir.mkdir()
+    fake_docker(str(bindir), sleep=30)
+    (tmp_path / "rel.zip").write_bytes(b"PK")
+    env = room_env(tmp_path, bindir)
+    cmd = [sys.executable, os.path.join(HERE, "cleanroom.py"), str(tmp_path / "rel.zip"), "--log", str(tmp_path / "room.log"), "--timeout", "2", "--name", "epm-room-test"]
+    import time
+    t0 = time.time()
+    r = subprocess.run(cmd, env=env, capture_output=True, text=True, timeout=60)
+    assert r.returncode == 1 and time.time() - t0 < 20
+    assert "deadline of 2 s passed" in (tmp_path / "room.log").read_text()
+    calls = (tmp_path / "calls").read_text().split("\n")
+    assert "run --rm" in calls and "rm -f" in calls  # the container was stopped by name
+    r = subprocess.run([sys.executable, os.path.join(HERE, "cleanroom.py"), "run", "--timeout", "1", "--log", str(tmp_path / "step.log"), "--", "sleep", "30"],
+                       capture_output=True, text=True, timeout=60)
+    assert r.returncode == 1 and "deadline of 1 s passed" in (tmp_path / "step.log").read_text()
+    r = subprocess.run([sys.executable, os.path.join(HERE, "cleanroom.py"), "run", "--timeout", "10", "--log", str(tmp_path / "step.log"), "--", "echo", "done"],
+                       capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0 and (tmp_path / "step.log").read_text() == "done\n"

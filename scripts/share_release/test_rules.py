@@ -291,8 +291,8 @@ def test_short_record_numbers_after_a_citation():
 
 
 def test_css_colours_after_a_colon_with_a_space_stay():
-    out, _ = run("  :root { --bg: #fff; --text: #111; --muted: #555; } body { color: #111; } <p>#455 holds the work</p>", "page.html")
-    assert out == "  :root { --bg: #fff; --text: #111; --muted: #555; } body { color: #111; } <p>an earlier change holds the work</p>"
+    out, _ = run("<style>  :root { --bg: #fff; --text: #111; --muted: #555; } body { color: #111; }</style> <p>#455 holds the work</p>", "page.html")
+    assert out == "<style>  :root { --bg: #fff; --text: #111; --muted: #555; } body { color: #111; }</style> <p>an earlier change holds the work</p>"
 
 
 def test_references_to_the_left_out_documents_in_prose_code_and_pages():
@@ -326,3 +326,20 @@ def test_a_documents_path_to_a_previous_package_moves_to_the_history_folder():
     assert out == '"shapes": ["releases/party/2.0.0/shapes.ttl"]'  # code resolves the path itself
     out, _ = run("see releases/kpi/1.2.0/kpi.ttl", "business_architecture/ontology/releases/previous/kpi/1.2.0/CHANGELOG.md")
     assert out == "see releases/kpi/1.2.0/kpi.ttl"  # the history folder is left as cut
+
+
+def test_dk_beside_mpc_or_mplx_is_a_ticker_and_the_two_stay():
+    out, _ = run("see DK and MPC report; MPLX/DK; MPC, DK and VLO; the DK stays; MPC and MPLX")
+    assert out == "see a U.S. refining peer and MPC report; MPLX/a U.S. refining peer; MPC, U.S. refining peers; the DK stays; MPC and MPLX"
+
+
+def test_a_zero_padded_cik_is_the_same_filer():
+    out, _ = run("https://www.sec.gov/Archives/edgar/data/0001035002/000162828026011499/a10k.htm and https://www.sec.gov/Archives/edgar/data/0001510295/000151029526000010/mpc-20251231.htm")
+    assert out == "a public filing of a U.S. refining peer (link withheld) and https://www.sec.gov/Archives/edgar/data/0001510295/000151029526000010/mpc-20251231.htm"
+
+
+def test_in_a_page_a_number_after_a_colon_is_a_colour_only_inside_css():
+    out, _ = run('<p>Issue: #455 remains open</p><style>a{color: #455}</style><div style="color: #111">#222 is open</div>', "p.html")
+    assert out == '<p>Issue: an earlier change remains open</p><style>a{color: #455}</style><div style="color: #111">an earlier change is open</div>'
+    out, _ = run("--text: #111; a: #222", "p.css")
+    assert out == "--text: #111; a: #222"

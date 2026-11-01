@@ -61,3 +61,36 @@ def test_the_test_neo4j_login_comes_from_env_or_the_store_rows_login_file():
             f.write("NEO4J_URI=bolt://localhost:17799\nNEO4J_PASSWORD=fromfile\n")
         assert snippets.neo4j_login({"IMPORT_DIR": d}) == "fromfile"
         assert snippets.neo4j_login({"IMPORT_DIR": d, "TEST_NEO4J_PASSWORD": "given"}) == "given"
+
+
+def test_no_line_reaches_a_shell_and_the_environment_carries_no_login():
+    with tempfile.TemporaryDirectory() as tree:
+        with open(os.path.join(tree, "x.txt"), "w") as f:
+            f.write("hi\n")
+        state = {}
+        for line in ("echo safe; id", "echo safe | cat", "ls $(id)", "ls `id`", "cat x.txt > out", "ls || id", "printf safe; curl https://attacker.invalid"):
+            r = snippets.run_shell(line, tree, {}, state)
+            assert r["lines"][0]["ran"] is False and "shell syntax" in r["lines"][0]["reason"] and r["failed"] == [], line
+        assert not os.path.exists(os.path.join(tree, "out"))
+        r = snippets.run_shell("cat x.txt && ls .", tree, {}, state)  # a && b runs b after a
+        assert [x["returncode"] for x in r["lines"]] == [0, 0] and "hi" in r["lines"][0]["tail"] and "x.txt" in r["lines"][1]["tail"]
+        os.environ["PLANTED_SECRET_TOKEN"] = "t0ken"
+        try:
+            r = snippets.run_shell("python3 -c \"print(sorted(__import__('os').environ))\" --list", tree, {}, state)  # --list: on the read-only allowlist; no ';'
+        finally:
+            del os.environ["PLANTED_SECRET_TOKEN"]
+        assert r["lines"][0]["returncode"] == 0 and "PLANTED_SECRET_TOKEN" not in r["lines"][0]["tail"] and "'PATH'" in r["lines"][0]["tail"]
+        r = snippets.run_shell('cat "x.txt"', tree, {}, state)  # quoting is honoured without a shell
+        assert r["lines"][0]["returncode"] == 0
+
+
+def test_a_folder_outside_the_tree_stops_the_block():
+    with tempfile.TemporaryDirectory() as tree, tempfile.TemporaryDirectory() as outside:
+        os.makedirs(os.path.join(tree, "a"))
+        os.symlink(outside, os.path.join(tree, "link"))
+        state = {}
+        for line in (f"cd {outside}", "cd ..", "cd a/../..", "cd link", f"# from {outside}", "# from ../", "# from link"):
+            r = snippets.run_shell(line + "\nls .", tree, {}, state)
+            assert r["lines"][0]["ran"] is False and r["lines"][0].get("failed_folder") and r["lines"][1]["ran"] is False, line
+        r = snippets.run_shell("cd a\ncd ..\nls a", tree, {}, state)  # back to the root is still inside
+        assert [x.get("returncode", x.get("ran")) for x in r["lines"]] == [True, True, 0]

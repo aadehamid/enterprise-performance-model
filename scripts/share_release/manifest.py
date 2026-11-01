@@ -127,3 +127,24 @@ def release_path(path, source):
 
 def shipped(paths, rules):
     return [p for p in paths if disposition(p, rules) == "ship"]
+
+
+def newest_version(versions):
+    """The newest of version strings such as "1.9.0" and "1.10.0", by number, never by text (1.10.0 is newer)."""
+    return max(versions, key=lambda v: tuple(int(x) for x in v.split(".")))
+
+
+def newest_on_disk(tree, module):
+    """A module's newest version folder in a tree (releases/<module>/<version>/ with a manifest.json)."""
+    folder = os.path.join(tree, ONT, "releases", module)
+    versions = [v for v in os.listdir(folder) if v[0].isdigit() and os.path.isfile(os.path.join(folder, v, "manifest.json"))]
+    return newest_version(versions)
+
+
+RELEASE_MARKER = "release.json"
+
+
+def is_release(tree):
+    """A release tree carries release.json at its root (the rebuild writes it first); every reader of release mode
+    in this tool asks here, and the builders read the same file (build_module.SHARE_RELEASE)."""
+    return os.path.isfile(os.path.join(tree, RELEASE_MARKER))

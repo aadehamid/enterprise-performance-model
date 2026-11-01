@@ -48,8 +48,12 @@ def unsafe(path, protected):
 
 
 def docker_names(args):
-    """The names a docker listing prints, or None when the listing itself failed (no proof either way)."""
-    r = subprocess.run(args, capture_output=True, text=True, timeout=600)
+    """The names a docker listing prints, or None when the listing itself failed, timed out or could not start (no
+    proof either way)."""
+    try:
+        r = subprocess.run(args, capture_output=True, text=True, timeout=600)
+    except (subprocess.TimeoutExpired, OSError):
+        return None
     return r.stdout if r.returncode == 0 else None
 
 
@@ -100,14 +104,18 @@ def main(argv=None):
             print(f"would remove {kind} {name}" + (f": {' '.join(cmd)}" if cmd else ""))
             continue
         if kind == "folder":
-            shutil.rmtree(os.path.expanduser(name), ignore_errors=True)
-            done.append((kind, name, 0 if not os.path.exists(os.path.expanduser(name)) else 1, ""))
+            target = os.path.expanduser(name)
+            if os.path.islink(target):  # a link, broken or not, is removed as a link, never followed
+                os.unlink(target)
+            else:
+                shutil.rmtree(target, ignore_errors=True)
+            done.append((kind, name, 0 if not os.path.lexists(target) else 1, ""))
         elif kind == "file":
             try:
                 os.remove(os.path.expanduser(name))
             except FileNotFoundError:
                 pass
-            done.append((kind, name, 0 if not os.path.exists(os.path.expanduser(name)) else 1, ""))
+            done.append((kind, name, 0 if not os.path.lexists(os.path.expanduser(name)) else 1, ""))
         else:
             rc, out = run(cmd, cwd=cwd, env={"DEMO_CATALOG": name} if kind == "databricks-catalog" else None)
             done.append((kind, name, rc, out))
@@ -125,7 +133,7 @@ def main(argv=None):
             proof.append(f"container {e['name']} still exists")
         if e["kind"] == "compose-project" and projects and f'"{e["name"]}"' in projects:
             proof.append(f"compose project {e['name']} still exists")
-        if e["kind"] in ("folder", "file") and os.path.exists(os.path.expanduser(e["name"])):
+        if e["kind"] in ("folder", "file") and os.path.lexists(os.path.expanduser(e["name"])):
             proof.append(f"{e['kind']} {e['name']} still exists")
     for kind, name, rc, out in done:
         print(f"{'removed' if rc == 0 else 'FAILED'} {kind} {name} {out.strip()[-200:]}")

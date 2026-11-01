@@ -28,6 +28,7 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import manifest  # noqa: E402
+import skill_checks  # noqa: E402
 
 DEPS = ["--with", "rdflib", "--with", "pyshacl", "--with", "openpyxl", "--with", "jsonschema", "--with", "pytest",
         "--with", "pytest-xdist", "--with", "markdown-it-py>=4,<5", "--with", "neo4j"]
@@ -35,18 +36,7 @@ ONT = "business_architecture/ontology"
 MODULES = list(manifest.MODULES)  # the one inventory of modules (manifest.py)
 MODULES_NS = "https://w3id.org/mpc/ontology/modules/"
 
-# The four shipped skills' own checks, one table for the skills-tests row and for the release's check.sh (rebuild.py
-# renders it): (skill, folder inside the skill, command, kind). A "tests" command must report "Ran N tests" with
-# N > 0; a "check" command must exit 0. The skill "" is the skills folder itself (the playbook pages' test).
-SKILL_CHECKS = [
-    ("ontology", "scripts", ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "pyyaml", "--with", "pyshacl",
-                             "python3", "-m", "unittest", "discover", "-q", "-p", "test_*.py"], "tests"),
-    ("ontology", "", ["uv", "run", "-q", "--no-project", "--with", "pyyaml", "python3", "scripts/check_sssom.py", "templates/mappings.sssom.tsv"], "check"),
-    ("ontology-to-lpg", "scripts", ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "pyshacl", "--with", "mcp-neo4j-data-modeling==0.8.2",
-                                    "python3", "-m", "unittest", "-q", "test_projection", "test_engine_gate", "test_modeling", "test_explore", "test_run_projection"], "tests"),
-    ("rdf-store", "scripts", ["uv", "run", "-q", "--no-project", "--with", "pyoxigraph", "python3", "-m", "unittest", "-q", "test_rdf_store"], "tests"),
-    ("", "", ["uv", "run", "-q", "--no-project", "--with", "markdown-it-py>=4,<5", "python3", "scripts/test_playbook_html.py"], "check"),
-]
+SKILL_CHECKS = skill_checks.SKILL_CHECKS  # the one table of the skills' checks (skill_checks.py); rebuild.py renders it too
 
 
 def skill_folder(tree, skill, env):
@@ -57,17 +47,6 @@ def skill_folder(tree, skill, env):
     if not repo:
         return None
     return os.path.join(repo, "skills", "data", skill) if skill else repo
-
-
-def render_skill_checks():
-    """The skill section of the release's check.sh, from SKILL_CHECKS."""
-    import shlex
-    lines = []
-    for skill, folder, cmd, kind in SKILL_CHECKS:
-        cwd = "/".join(p for p in ("skills", skill, folder) if p)
-        runner = "run_tests" if kind == "tests" else "run"
-        lines.append(f"(cd {cwd} && {runner} {' '.join(shlex.quote(a) for a in cmd)})")
-    return "\n".join(lines)
 
 
 def sh(args, cwd, env=None, timeout=3600):
@@ -85,7 +64,7 @@ def uv(args, cwd, **kw):
 
 
 def is_release(tree):
-    return os.path.exists(os.path.join(tree, "KNOWN-OPEN-ITEMS.md"))
+    return manifest.is_release(tree)  # release.json at the root, the one marker every reader asks
 
 
 # ---------- rows for one tree ----------
@@ -141,7 +120,7 @@ def row_skills_tests(tree, env):
         return {"ok": None, "reason": "give SKILLS_REPO in --env for main"}
     out = {"runs": {}}
     for skill, folder, cmd, kind in SKILL_CHECKS:
-        name = f"{skill or 'skills'}:{os.path.basename(next(a for a in cmd if a.endswith('.py')))}" if kind == "check" else skill
+        name = skill_checks.name_of(skill, cmd, kind)
         r = sh(cmd, os.path.join(skill_folder(tree, skill, env), folder))
         m = re.search(r"Ran (\d+) tests?", r["tail"])
         tests = int(m.group(1)) if m else None
@@ -155,7 +134,7 @@ def row_skills_tests(tree, env):
 def row_iri_base(tree, env):
     """The old IRI base and company name anywhere in the tree (0 expected on the release)."""
     pat = re.compile(r"w3id\\*\.org/lsc|\bLSC\b|Lagos Specialty", re.I)
-    hits = []
+    hits, unreadable = [], []
     for root, dirs, files in os.walk(tree):
         dirs[:] = [d for d in dirs if d not in (".git", "__pycache__", ".venv", "release-cut")]
         for f in files:
@@ -163,12 +142,14 @@ def row_iri_base(tree, env):
             try:
                 with open(path, encoding="utf-8", errors="replace") as fh:
                     n = len(pat.findall(fh.read()))
-            except OSError:
+            except OSError as exc:
+                unreadable.append(f"{os.path.relpath(path, tree)}: {exc.strerror}")  # a file not read proves nothing
                 continue
             if n:
                 hits.append((os.path.relpath(path, tree), n))
     # On main the row measures (the old base is everywhere there); on the release the old base may be nowhere.
-    return {"files": len(hits), "places": sum(n for _, n in hits), "samples": hits[:10], "ok": not hits if is_release(tree) else True}
+    return {"files": len(hits), "places": sum(n for _, n in hits), "samples": hits[:10], "unreadable": unreadable,
+            "ok": not unreadable and (not hits if is_release(tree) else True)}
 
 
 def row_gate(tree, env):
@@ -217,6 +198,11 @@ def run(tree, out, rows, env):
     """Each row in turn, the json rewritten after each. Returns the result; a row with ok False is a failure of the run
     (main() exits 1), a row with ok None was not run and says why."""
     tree = os.path.abspath(tree)
+    if not rows:
+        raise SystemExit("no row was asked for: a run of no rows is not a validation")
+    unknown = [r for r in rows if r not in ROWS]
+    if unknown:
+        raise SystemExit(f"unknown row(s): {', '.join(unknown)}")
     result = {"tree": tree, "release": is_release(tree), "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "rows": {}}
     if os.path.exists(os.path.join(tree, ".git")):
         result["commit"] = subprocess.run(["git", "-C", tree, "rev-parse", "--short", "HEAD"], capture_output=True, text=True, timeout=600).stdout.strip()
@@ -258,8 +244,8 @@ def compare(main, release, out):
     from rdflib.compare import graph_diff, to_isomorphic
     content = {}
     for m in MODULES:
-        folder = sorted(glob.glob(os.path.join(release, ONT, "releases", m, "[0-9]*")))[-1]
-        version = os.path.basename(folder)
+        version = manifest.newest_on_disk(release, m)
+        folder = os.path.join(release, ONT, "releases", m, version)
         src = os.path.join(main, ONT, "releases", m, version, f"{m}.ttl")
         with open(src, encoding="utf-8") as f:
             text, _ = rules.apply(f.read(), f"{ONT}/releases/{m}/{version}/{m}.ttl", dates)
@@ -289,12 +275,8 @@ def compare(main, release, out):
 
 
 def newest_versions(release):
-    """Each module's newest version in the release (its releases/<module>/<version>/ folders)."""
-    out = {}
-    for m in MODULES:
-        folders = [os.path.basename(p) for p in glob.glob(os.path.join(release, ONT, "releases", m, "[0-9]*"))]
-        out[m] = max(folders, key=lambda v: tuple(int(x) for x in v.split(".")))
-    return out
+    """Each module's newest version in the release, by number (manifest.newest_on_disk)."""
+    return {m: manifest.newest_on_disk(release, m) for m in MODULES}
 
 
 def explained_by_pin_move(only_main, only_release, module, newest):
@@ -327,7 +309,9 @@ def latest_links(main, release, newest):
         with open(os.path.join(release, ONT, "releases", m, newest[m], "manifest.json")) as f:
             deps = json.load(f).get("depends_on") or {}
         main_manifest = os.path.join(main, ONT, "releases", m, newest[m], "manifest.json")
-        if os.path.exists(main_manifest):
+        if not os.path.exists(main_manifest):
+            bad.append(f"{m} {newest[m]} has no manifest on main to compare with")  # no baseline, no comparison, no pass
+        else:
             with open(main_manifest) as f:
                 main_deps = json.load(f).get("depends_on") or {}
             if set(main_deps) != set(deps):

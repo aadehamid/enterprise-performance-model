@@ -6,13 +6,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CUT = os.path.join(HERE, "cut.sh")
 
 
-def cut(tmp_path, out, env_extra=None):
+def cut(tmp_path, out, env_extra=None, *extra):
     epm, skills = tmp_path / "epm", tmp_path / "skills"
     epm.mkdir(exist_ok=True); skills.mkdir(exist_ok=True)
     (tmp_path / "stores.env").write_text("LEDGER_FILE=" + str(tmp_path / "ledger.jsonl") + "\n")
-    env = {**os.environ, **(env_extra or {})}
-    return subprocess.run(["bash", CUT, "--epm", str(epm), "--skills", str(skills), "--out", str(out), "--env", str(tmp_path / "stores.env"), "--no-cleanroom"],
-                          env=env, capture_output=True, text=True, timeout=60)
+    env = {**os.environ, "EPM_RELEASE_OWNER_NAMES": "Ada Lovelace", **(env_extra or {})}
+    return subprocess.run(["bash", CUT, "--epm", str(epm), "--skills", str(skills), "--out", str(out), "--env", str(tmp_path / "stores.env"), "--no-cleanroom", *extra],
+                          env=env, capture_output=True, text=True, timeout=120)
 
 
 def test_dangerous_output_folders_are_refused_before_anything_is_removed(tmp_path):
@@ -28,7 +28,17 @@ def test_dangerous_output_folders_are_refused_before_anything_is_removed(tmp_pat
     assert r.returncode == 2 and "parent" in r.stderr and (tmp_path / "epm" / "README.md").exists()
     other = tmp_path / "other"; other.mkdir(); (other / "notes.txt").write_text("mine")
     r = cut(tmp_path, other)
-    assert r.returncode == 2 and "holds no release.json" in r.stderr and (other / "notes.txt").exists()
+    assert r.returncode == 2 and "--replace" in r.stderr and (other / "notes.txt").exists()
+    (other / "release.json").write_text("")  # a forged, empty marker beside unrelated files
+    r = cut(tmp_path, other, None, "--replace")
+    assert r.returncode == 2 and "not this tool's release marker" in r.stderr and (other / "notes.txt").exists()
+    (other / "release.json").write_text('{"release": "EPM 1.0", "mode": "share release"}')
+    r = cut(tmp_path, other, {"EPM_RELEASE_OWNER_NAMES": "", "HOME": str(tmp_path / "nohome")}, "--replace")  # no owner names: nothing removed
+    assert r.returncode == 2 and "not configured" in r.stderr and (other / "notes.txt").exists()
+    r = cut(tmp_path, other, None, "--replace")  # a real marker, the names configured: the folder is replaced and the cut starts
+    assert "=== export" in r.stdout and not (other / "notes.txt").exists()
+    r = cut(tmp_path, tmp_path / "fresh", None, "--store-rows", "")
+    assert r.returncode == 2 and "names no row" in r.stderr
     (tmp_path / "afile").write_text("x")
     r = cut(tmp_path, tmp_path / "afile")
     assert r.returncode == 2 and "it is a file" in r.stderr and (tmp_path / "afile").exists()

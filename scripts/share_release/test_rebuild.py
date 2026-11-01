@@ -42,14 +42,16 @@ def test_the_history_folders_manifests_lose_their_provenance_and_name_the_rewrit
 
 def test_the_generated_check_script_lists_every_test_file_and_the_skill_checks(tmp_path):
     rel = tmp_path / "rel"
-    for p in ("a/test_a.py", "b/c/test_b.py", "skills/x/scripts/test_skill.py", "a/__pycache__/test_cached.py", "a/helper.py"):
+    for p in ("a/test_a.py", "b/c/test_b.py", "skills/x/scripts/test_skill.py", "a/__pycache__/test_cached.py", "a/helper.py", "odd name/test_$(id).py"):
         (rel / p).parent.mkdir(parents=True, exist_ok=True); (rel / p).write_text("")
     rb = rebuild.Rebuild(str(rel), str(tmp_path))
     rb.check_script()
     text = (rel / "scripts" / "check.sh").read_text()
     assert "{{" not in text and os.access(str(rel / "scripts" / "check.sh"), os.X_OK)
     assert "  a/test_a.py \\\n  b/c/test_b.py" in text and "test_skill.py" not in text.split("--dist load")[1].split("\n(cd")[0] and "test_cached" not in text
-    assert validate.render_skill_checks() in text and rb.steps[-1]["tests"] == 2
+    import skill_checks
+    assert skill_checks.render() in text and rb.steps[-1]["tests"] == 3
+    assert "'odd name/test_$(id).py'" in text and "  odd name/test_$(id).py" not in text  # quoted: no word splitting, no substitution
 
 
 def verifies(path):

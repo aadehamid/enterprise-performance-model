@@ -75,3 +75,17 @@ def test_dangerous_paths_are_refused_and_kept(tmp_path):
     assert (home / "keep.txt").exists() and (tree / "README.md").exists() and tmp_path.exists()
     assert r.stdout.count("REFUSED") == 5 and "the home folder" in r.stdout and "holds the tree" in r.stdout and "holds this tool" not in r.stdout
     assert not os.path.exists(str(tmp_path / "docker.log"))  # nothing ran
+
+
+def test_a_missing_docker_is_no_proof_and_a_broken_symlink_is_removed_as_a_link(tmp_path):
+    folder, login = validation_paths(tmp_path)
+    ledger, envf, env = setup(tmp_path, [{"kind": "container", "name": "epm-validate"}])
+    env["PATH"] = str(tmp_path / "nowhere")  # no docker at all
+    r = run(ledger, envf, env, "--yes")
+    assert r.returncode == 1 and "docker ps failed: no proof" in r.stdout and "Traceback" not in r.stderr
+    link = tmp_path / "scratch" / "validate" / "gone-link"
+    os.symlink(str(tmp_path / "scratch" / "validate" / "never-existed"), str(link))  # a broken folder symlink
+    ledger, envf, env = setup(tmp_path, [{"kind": "folder", "name": str(link)}])
+    assert os.path.lexists(str(link))
+    r = run(ledger, envf, env, "--yes")
+    assert r.returncode == 0 and not os.path.lexists(str(link)) and "everything in the ledger is gone" in r.stdout
