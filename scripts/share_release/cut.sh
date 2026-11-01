@@ -57,7 +57,7 @@ print("comparison:", ", ".join(f"{k} {'ok' if v.get('ok') else 'FAILED'}" for k,
 sys.exit(1 if any(not v.get("ok") for v in rows.values()) else 0)
 PY
 step "snippets"; uvpy "$HERE/snippets.py" --tree "$OUT" --out "$OUT-snippets.json" --env "$ENVF" | head -1
-step "gate again"; find "$OUT" -type d \( -name __pycache__ -o -name .pytest_cache \) -prune -exec rm -rf {} +; python3 -I "$HERE/gate.py" "$OUT" | tail -1
+step "gate again"; find "$OUT" -type d \( -name __pycache__ -o -name .pytest_cache -o -name .venv \) -prune -exec rm -rf {} +; python3 -I "$HERE/gate.py" "$OUT" | tail -1
 step "zip"; python3 -I "$HERE/publish.py" zip --release "$OUT" --out "$OUT.zip" | tail -1
 if [ "$CLEANROOM" = 1 ]; then step "clean room"; bash "$HERE/cleanroom.sh" "$OUT.zip" "$OUT-cleanroom.log" > /dev/null; tail -2 "$OUT-cleanroom.log"; fi
 if [ -n "$BASELINE" ]; then

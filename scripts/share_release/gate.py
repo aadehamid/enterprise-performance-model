@@ -74,7 +74,9 @@ def scan(release):
     hits = []
     note_found = False
     for root, dirs, files in os.walk(release):
-        dirs[:] = sorted(d for d in dirs if d not in (".git", "__pycache__", ".pytest_cache"))
+        # A virtual environment or a cache inside the tree is a validation artefact, never a shipped file (publish.py
+        # leaves them out of the zip and the branch).
+        dirs[:] = sorted(d for d in dirs if d not in (".git", "__pycache__", ".pytest_cache", ".venv"))
         for f in sorted(files):
             path = os.path.join(root, f)
             rel = os.path.relpath(path, release)
