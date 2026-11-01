@@ -72,3 +72,22 @@ def test_remove_internal_option_leaves_the_internal_folder_out(tmp_path):
     export.export(str(epm), "", str(tmp_path / "b"), remove_internal=True)
     assert not (tmp_path / "b/business_architecture/reference/internal").exists()
     assert (tmp_path / "b/business_architecture/reference/README.md").exists()
+
+
+def test_every_kind_of_file_keeps_its_mode(tmp_path):
+    import stat
+    import zipfile
+    epm = tmp_path / "epm"
+    make_tree(str(epm), {"business_architecture/ontology/projection/run_local.sh": "#!/bin/sh\necho hi\n",
+                         "business_architecture/reference/logo.png": b"\x89PNG\0\0"})
+    with zipfile.ZipFile(str(epm / "business_architecture" / "reference" / "book.xlsx"), "w") as z:
+        z.writestr("xl/sharedStrings.xml", "<sst/>")
+    os.chmod(str(epm / "business_architecture/ontology/projection/run_local.sh"), 0o755)
+    os.chmod(str(epm / "business_architecture/reference/logo.png"), 0o640)
+    os.chmod(str(epm / "business_architecture/reference/book.xlsx"), 0o640)
+    out = tmp_path / "release"
+    export.export(str(epm), "", str(out))
+    mode = lambda rel: stat.S_IMODE(os.stat(str(out / rel)).st_mode)
+    assert mode("business_architecture/ontology/projection/run_local.sh") == 0o755
+    assert mode("business_architecture/reference/logo.png") == 0o640
+    assert mode("business_architecture/reference/book.xlsx") == 0o640

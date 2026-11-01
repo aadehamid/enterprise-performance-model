@@ -128,7 +128,7 @@ def test_peer_names_and_lists():
 
 def test_peer_links_are_withheld_and_a_name_split_across_lines_is_found():
     out, _ = run("| https://www.sec.gov/Archives/edgar/data/1534504/000153450426000010/pbf-20251231.htm | 2026-10-20 |\n\"url\": \"https://www.qcintel.com/article/delek-starts-maintenance\"\npeers (Par\nPacific) is here")
-    assert out == "| a public source naming a U.S. refining peer (link withheld) | 2026-10-20 |\n\"url\": \"a public source naming a U.S. refining peer (link withheld)\"\npeers (a U.S. refining peer) is here"
+    assert out == "| a public filing of a U.S. refining peer (link withheld) | 2026-10-20 |\n\"url\": \"a public source naming a U.S. refining peer (link withheld)\"\npeers (a U.S. refining peer) is here"
     out, _ = run("[the 10-K](https://www.sec.gov/Archives/edgar/data/1510295/mpc-20251231.htm)")
     assert out == "[the 10-K](https://www.sec.gov/Archives/edgar/data/1510295/mpc-20251231.htm)"
 
@@ -255,3 +255,74 @@ def test_the_pages_mentions_of_the_store_notes_go():
     assert out == ('<tr><td><code>a.html</code></td><td>y</td></tr>\nFigures from <code>MODULES.md</code>; '
                    'Ports and names from the stores runbook; comes from the stores runbook and the demo; '
                    'Start with <code>projection/README.md</code>, then <code>pipeline.py</code>')
+
+
+def test_another_repository_of_the_account_and_its_issue_numbers():
+    out, _ = run("the enterprise-people-graph folder points to it (enterprise-people-graph\n  #4); re-pinned (enterprise-people-graph PR #3); in enterprise-people-graph")
+    assert out == "the other repository folder points to it (another repository); re-pinned (another repository); in another repository"
+    assert "enterprise-people-graph" not in out
+
+
+def test_peer_tickers_in_news_titles_and_evidence_tables():
+    out, _ = run("Oil Above $90 Puts PSX, VLO and MPC in Focus; Valero (VLO) | Phillips 66 (PSX) | HF Sinclair (DINO); PSX uses crude capacity; XOM/CVX report; (DK) too; DK, VLO")
+    assert out == ("Oil Above $90 Puts U.S. refining peers and MPC in Focus; a U.S. refining peer | a U.S. refining peer | a U.S. refining peer; "
+                   "a U.S. refining peer uses crude capacity; U.S. refining peers report; (a U.S. refining peer) too; U.S. refining peers")
+    out, _ = run("the DK stays, so does psx in lower case and a DINOSAUR")  # DK alone, lower case and a longer word are not tickers
+    assert out == "the DK stays, so does psx in lower case and a DINOSAUR"
+
+
+def test_peer_filings_on_edgar_are_withheld_and_own_and_industry_filings_stay():
+    out, _ = run("https://www.sec.gov/Archives/edgar/data/1534504/000153450426000010/pbf-20251231.htm and https://www.sec.gov/Archives/edgar/data/999/000/vlo-20251231.htm")
+    assert out == "a public filing of a U.S. refining peer (link withheld) and a public filing of a U.S. refining peer (link withheld)"
+    kept = ("https://www.sec.gov/Archives/edgar/data/1510295/000151029526000010/mpc-20251231.htm | "
+            "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm | "
+            "https://www.sec.gov/Archives/edgar/data/67646/000119312503054119/dex991.htm")
+    out, _ = run(kept)
+    assert out == kept
+
+
+def test_short_record_numbers_after_a_citation():
+    dates = {**DATES, "EPM-DEC-001-0020": "2026-10-06", "EPM-DEC-001-0021": "2026-10-07", "EPM-DEC-001-0036": "2026-10-12", "EPM-DEC-001-0040": "2026-10-14", "EPM-DEC-001-0043": "2026-10-16"}
+    out, _ = rules.apply("see EPM-DEC-001-0020, 0021 and 0036; EPM-DEC-001-0040 to 0043; (EPM-DEC-001-0038, amending 0021); the guideline (0021); EPM-DEC-001-0044, 0999", "a.md", dates)
+    assert out == ("see the decision of 2026-10-06, the decision of 2026-10-07 and the decision of 2026-10-12; the decisions of 2026-10-14 to 2026-10-16; "
+                   "(the decision of 2026-10-13, amending the decision of 2026-10-07); the guideline (the decision of 2026-10-07); the decision of 2026-10-18, 0999")
+    out, _ = rules.apply("Catalogue record 0042, field 700; W-0042; (0042) is unknown here", "a.md", dates)
+    assert out == "Catalogue record 0042, field 700; W-0042; (0042) is unknown here"  # a number that is not a known record stays
+
+
+def test_css_colours_after_a_colon_with_a_space_stay():
+    out, _ = run("  :root { --bg: #fff; --text: #111; --muted: #555; } body { color: #111; } <p>#455 holds the work</p>", "page.html")
+    assert out == "  :root { --bg: #fff; --text: #111; --muted: #555; } body { color: #111; } <p>an earlier change holds the work</p>"
+
+
+def test_references_to_the_left_out_documents_in_prose_code_and_pages():
+    out, _ = run("Logins come from the files LOCAL-STORES.md names; none is printed.\nNEO4J_STORES = {  # LOCAL-STORES.md; the driver", "sync_stores.py")
+    assert out == "Logins come from the files the stores runbook names; none is printed.\nNEO4J_STORES = {  # the stores runbook; the driver"
+    out, _ = run('<figcaption>Counts from <code>business_architecture/ontology/projection/STORE-INVENTORY.md</code>, 2026-10-29.</figcaption>', "walk.html")
+    assert out == "<figcaption>Counts from the store inventory of the original build (not in this release), 2026-10-29.</figcaption>"
+    out, _ = run("| `lpg-projection/` | The superseded v2.2 copy |\n| `projection/` | The projection |\n", "business_architecture/ontology/README.md")
+    assert out == "| `projection/` | The projection |\n"
+    out, _ = run('"guideline": "v2.2 (lpg-projection/, pin 8ce9ada)"', "business_architecture/ontology/projection/projection-manifest.json")
+    assert out == '"guideline": "v2.2 (the projection guideline, pin 8ce9ada)"'
+    out, _ = run("Follows the guideline in ../lpg-projection/ (v2.2) with Rule 4 set to 4a", "business_architecture/ontology/projection/pipeline.py")
+    assert out == "Follows the projection guideline, version 2.2, with Rule 4 set to 4a"
+    src = ('        single(f"{ONT}/projection/README.md",\n               "How the released packages are projected."),\n'
+           '        single(f"{ONT}/projection/LOCAL-STORES.md",\n               "Where each store lives."),\n'
+           '        single(f"{ONT}/projection/STORE-INVENTORY.md",\n               "What each store holds now."),\n'
+           '        single(f"{ONT}/projection/skill-run/README.md",\n               "How the driver runs."),\n')
+    out, _ = run(src, "scripts/build_docs_html.py")
+    assert out == ('        single(f"{ONT}/projection/README.md",\n               "How the released packages are projected."),\n'
+                   '        single(f"{ONT}/projection/skill-run/README.md",\n               "How the driver runs."),\n')
+    out, _ = run("read `references/lpg-projection.md`; the container lpg-projection on 17687; urn:lpg-projection:graph:; r\"lpg-projection/|ontology-worklog\"", "skills/ontology/scripts/test_playbook_guide.py")
+    assert "lpg-projection/|ontology-worklog" in out and "references/lpg-projection.md" in out  # the skills' own names stay
+
+
+def test_a_documents_path_to_a_previous_package_moves_to_the_history_folder():
+    out, _ = run("released as 1.2.0 (`../releases/kpi/1.2.0/`) then 1.3.0 (`../releases/kpi/1.3.0/`); cd business_architecture/ontology/releases/kpi/1.2.0 && shasum", "business_architecture/ontology/kpi/README.md")
+    assert out == "released as 1.2.0 (`../releases/previous/kpi/1.2.0/`) then 1.3.0 (`../releases/kpi/1.3.0/`); cd business_architecture/ontology/releases/previous/kpi/1.2.0 && shasum"
+    out, _ = run("<https://w3id.org/mpc/ontology/modules/kpi/releases/1.2.0/kpi.ttl>; releases/previous/kpi/1.2.0/kpi.ttl", "a.ttl")
+    assert out == "<https://w3id.org/mpc/ontology/modules/kpi/releases/1.2.0/kpi.ttl>; releases/previous/kpi/1.2.0/kpi.ttl"
+    out, _ = run('"shapes": ["releases/party/2.0.0/shapes.ttl"]', "business_architecture/ontology/release/build_module.py")
+    assert out == '"shapes": ["releases/party/2.0.0/shapes.ttl"]'  # code resolves the path itself
+    out, _ = run("see releases/kpi/1.2.0/kpi.ttl", "business_architecture/ontology/releases/previous/kpi/1.2.0/CHANGELOG.md")
+    assert out == "see releases/kpi/1.2.0/kpi.ttl"  # the history folder is left as cut

@@ -21,6 +21,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import manifest  # noqa: E402
+import owner  # noqa: E402
 import rules  # noqa: E402
 
 TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".sql", ".sh", ".yml", ".yaml",
@@ -31,7 +32,7 @@ TEXT_NAMES = {".python-version", ".gitignore", ".env.example", "pre-push", "VERI
 def tracked(tree):
     """Every file under the tree, repository-relative, as git lists it when the tree is a checkout, else a walk."""
     if os.path.exists(os.path.join(tree, ".git")):  # a folder, or a file in a git worktree: tracked files only
-        out = subprocess.run(["git", "-C", tree, "ls-files", "-z"], capture_output=True, check=True).stdout
+        out = subprocess.run(["git", "-C", tree, "ls-files", "-z"], capture_output=True, check=True, timeout=600).stdout
         return sorted(p for p in out.decode().split("\0") if p)
     paths = []
     for root, dirs, files in os.walk(tree):
@@ -60,6 +61,7 @@ def rewrite_office(src, dest, dest_rel, dates):
                 for k, v in c.items():
                     counts[k] = counts.get(k, 0) + v
             zout.writestr(info, data)
+    shutil.copymode(src, dest)  # the file's mode travels with it, as for every other kind of file
     return counts
 
 
@@ -88,6 +90,7 @@ def record_dates(epm):
 def export(epm, skills, out, remove_internal=False):
     if os.path.exists(out):
         raise SystemExit(f"{out} exists; export writes a fresh folder")
+    owner.owner_names()  # fail closed before anything is written: a release cut without the names would leak them
     dates = record_dates(epm)
     report = {"epm": os.path.abspath(epm), "skills": os.path.abspath(skills), "files": {}, "rule_totals": {},
               "remove_internal": remove_internal}
