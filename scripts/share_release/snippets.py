@@ -117,14 +117,27 @@ def run_cypher(text, env):
 _GRAPH = {}
 
 
-def run_sparql(text, tree):
+REFERENCE_DOCS = re.compile(r"^(?:skills/|best-practices/)")
+
+
+def run_sparql(text, tree, rel=""):
+    """A SPARQL block runs over the newest packages. In a skill's reference or a best-practices guide a block that
+    does not parse alone is a fragment shown to explain a query (a CONSTRUCT shown in pieces), listed as not run
+    with the parser's words; in the tree's own documents a block that does not parse is a failure."""
     from rdflib import Graph
+    from rdflib.plugins.sparql import prepareQuery
+    query = "\n".join(l for l in text.split("\n") if not l.strip().startswith("#"))
+    try:
+        prepareQuery(query)
+    except Exception as exc:
+        if REFERENCE_DOCS.match(rel):
+            return {"ran": False, "reason": f"a query fragment shown in a reference; it does not parse alone: {str(exc)[:120]}"}
+        raise
     if "g" not in _GRAPH:
         g = Graph()
         for m in MODULES:
             g.parse(os.path.join(tree, ONT, "releases", m, manifest.newest_on_disk(tree, m), f"{m}.ttl"))
         _GRAPH["g"] = g
-    query = "\n".join(l for l in text.split("\n") if not l.strip().startswith("#"))
     res = _GRAPH["g"].query(query)
     return {"ran": True, "rows": len(list(res))}
 
@@ -282,7 +295,7 @@ def main(argv=None):
                 if kind == "cypher" and password:
                     entry.update(run_cypher(b["text"], env))
                 elif kind == "sparql":
-                    entry.update(run_sparql(b["text"], tree))
+                    entry.update(run_sparql(b["text"], tree, b["file"]))
                 elif kind == "shell":
                     entry.update(run_shell(b["text"], tree, env, state, strict=strict))
                 else:

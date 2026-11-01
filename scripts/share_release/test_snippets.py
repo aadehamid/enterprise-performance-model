@@ -94,3 +94,14 @@ def test_a_folder_outside_the_tree_stops_the_block():
             assert r["lines"][0]["ran"] is False and r["lines"][0].get("failed_folder") and r["lines"][1]["ran"] is False, line
         r = snippets.run_shell("cd a\ncd ..\nls a", tree, {}, state)  # back to the root is still inside
         assert [x.get("returncode", x.get("ran")) for x in r["lines"]] == [True, True, 0]
+
+
+def test_a_sparql_fragment_in_a_reference_is_listed_not_run_but_fails_in_the_trees_own_documents(tmp_path):
+    import pytest
+    fragment = "CONSTRUCT { ?s ?p ?o } WHERE { ?s ?p ?o FILTER"
+    r = snippets.run_sparql(fragment, str(tmp_path), "skills/ontology-to-lpg/references/pipeline.md")
+    assert r["ran"] is False and "fragment" in r["reason"]
+    r = snippets.run_sparql(fragment, str(tmp_path), "best-practices/guide.md")
+    assert r["ran"] is False
+    with pytest.raises(Exception):
+        snippets.run_sparql(fragment, str(tmp_path), "business_architecture/ontology/README.md")
