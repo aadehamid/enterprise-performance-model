@@ -37,6 +37,21 @@ MODULE_ORDER = ["organization", "kpi", "system", "party", "ref-mpc", "data-produ
                 "market-data", "integration"]
 
 
+SME = "a subject matter expert reviewing the documents"
+
+
+def provenance_removed(manifest):
+    """A manifest without its record list and approval file; the approver reads as the subject matter expert."""
+    manifest = dict(manifest)
+    manifest.pop("decisions", None)
+    for key in ("approval", "approved_by"):
+        if isinstance(manifest.get(key), dict):
+            manifest[key] = {k: v for k, v in manifest[key].items() if k not in ("file", "recorded_in")}
+            if "who" in manifest[key]:
+                manifest[key]["who"] = SME
+    return manifest
+
+
 class Rebuild:
     def __init__(self, release, epm):
         self.release, self.epm = os.path.abspath(release), os.path.abspath(epm)
@@ -46,12 +61,16 @@ class Rebuild:
             if k.startswith("GIT_"):
                 del self.env[k]
 
-    def run(self, name, args, cwd, deps=True):
+    def run(self, name, args, cwd, deps=True, timeout=7200):
+        """One builder or script, with a deadline: a stalled download or process is a failed step, not a hung cut."""
         cmd = ["uv", "run", "-q", "--no-project", *DEPS, "python3", *args] if deps else args
-        r = subprocess.run(cmd, cwd=os.path.join(self.release, cwd), env=self.env, capture_output=True, text=True)
-        tail = (r.stdout + r.stderr)[-1500:]
-        self.steps.append({"step": name, "cwd": cwd, "command": " ".join(args), "returncode": r.returncode, "tail": tail})
-        if r.returncode != 0:
+        try:
+            r = subprocess.run(cmd, cwd=os.path.join(self.release, cwd), env=self.env, capture_output=True, text=True, timeout=timeout)
+            rc, tail = r.returncode, (r.stdout + r.stderr)[-1500:]
+        except subprocess.TimeoutExpired:
+            r, rc, tail = None, -1, f"timed out after {timeout} s"
+        self.steps.append({"step": name, "cwd": cwd, "command": " ".join(args), "returncode": rc, "tail": tail})
+        if rc != 0:
             raise SystemExit(f"{name} failed in {cwd}: {' '.join(args)}\n{tail}")
         return r
 
@@ -78,7 +97,10 @@ class Rebuild:
         self.steps.append({"step": "rewrite frozen", "rules": counts, "returncode": 0})
 
     def previous_hashes(self):
-        """The history folder's manifests name the files' hashes as rewritten; nothing else in them changes."""
+        """The history folder's manifests name the files' hashes as rewritten, and lose their provenance fields (the
+        record list, the approval file, where the approval was recorded), keeping who approved as the subject matter
+        expert (EPM-DEC-001-0110, amendment: the manifests' decisions and approval.file come out). The newest
+        packages' manifests are written by the builders in release mode the same way."""
         base = os.path.join(self.release, ONT, "releases", "previous")
         done = []
         for module in sorted(d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d))):
@@ -89,6 +111,7 @@ class Rebuild:
                     continue
                 with open(mpath) as f:
                     manifest = json.load(f)
+                manifest = provenance_removed(manifest)
                 for fname in manifest.get("files", {}):
                     with open(os.path.join(folder, fname), "rb") as f:
                         manifest["files"][fname] = hashlib.sha256(f.read()).hexdigest()
@@ -103,9 +126,12 @@ class Rebuild:
                        for root, dirs, files in os.walk(self.release) for f in files
                        if f.startswith("test_") and f.endswith(".py") and "__pycache__" not in root
                        and not os.path.relpath(root, self.release).startswith("skills"))  # the skills' tests run their own way
+        import validate
         with open(os.path.join(HERE, "templates", "check.sh")) as f:
-            text = f.read().replace("{{TEST_FILES}}", " \\\n".join("  " + t for t in tests))
+            text = (f.read().replace("{{TEST_FILES}}", " \\\n".join("  " + t for t in tests))
+                    .replace("{{SKILL_CHECKS}}", validate.render_skill_checks()))
         out = os.path.join(self.release, "scripts", "check.sh")
+        os.makedirs(os.path.dirname(out), exist_ok=True)
         with open(out, "w") as f:
             f.write(text)
         os.chmod(out, 0o755)
@@ -150,13 +176,13 @@ class Rebuild:
 
     def release_marker(self):
         """release.json at the tree's root: what this tree is. The builders, the projection and the demo read release
-        mode from it (build_module.SHARE_RELEASE), so no environment variable is needed to use the release."""
+        mode from it (build_module.SHARE_RELEASE), so no environment variable is needed to use the release. It names
+        no folder of the machine it was cut on: the checkout's name could be the repository's."""
         marker = {
             "release": "EPM 1.0",
             "built": datetime.date.today().isoformat(),
             "mode": "share release: each module's builder builds against the newest package of every module it requires; "
                     "the Neo4j projection names labels, relationship types and property keys with one underscore",
-            "from": {"epm": os.path.basename(self.epm)},
         }
         with open(os.path.join(self.release, "release.json"), "w") as f:
             f.write(json.dumps(marker, indent=2) + "\n")

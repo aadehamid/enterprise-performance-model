@@ -16,6 +16,10 @@ while IFS= read -r var; do unset "$var"; done < <(compgen -e | grep '^GIT_' || t
 export PYTHONDONTWRITEBYTECODE=1
 export EPM_SHARE_RELEASE=1   # the builders and tests read the release's layout: the newest set, and releases/previous/
 run() { echo "--- $*"; "$@"; }
+run_tests() {  # unittest exits 0 on zero tests; a test command must have run at least one
+  echo "--- $*"; local out; out="$("$@" 2>&1)"; local rc=$?; printf '%s\n' "$out"
+  [ "$rc" -eq 0 ] && grep -qE '^Ran [1-9][0-9]* tests? ' <<<"$out"
+}
 with_deps() { uv run -q --no-project --with pytest --with pytest-xdist --with rdflib --with pyshacl --with openpyxl --with jsonschema --with "markdown-it-py>=4,<5" "$@"; }
 
 # Snapshot the tree, so a check that writes a file is caught.
@@ -71,12 +75,9 @@ ONT=business_architecture/ontology
 # test_check_script.py checks it is complete).
 run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load \
 {{TEST_FILES}}
-# The four skills' own tests, each with the dependencies its own check names.
-(cd skills/ontology/scripts && run uv run -q --no-project --with rdflib --with pyyaml --with pyshacl python3 -m unittest discover -q -p "test_*.py")
-(cd skills/ontology && run uv run -q --no-project --with pyyaml python3 scripts/check_sssom.py templates/mappings.sssom.tsv)
-(cd skills/ontology-to-lpg/scripts && run uv run -q --no-project --with rdflib --with pyshacl --with mcp-neo4j-data-modeling==0.8.2 python3 -m unittest -q test_projection test_engine_gate test_modeling test_explore test_run_projection)
-(cd skills/rdf-store/scripts && run uv run -q --no-project --with pyoxigraph python3 -m unittest -q test_rdf_store)
-(cd skills && run uv run -q --no-project --with "markdown-it-py>=4,<5" python3 scripts/test_playbook_html.py)
+# The four skills' own checks, each with the dependencies its own check names (the list is written at the cut from
+# one table, the same one the cut's skills-tests row runs). A test command that found no test is a failure.
+{{SKILL_CHECKS}}
 # The module map and the coverage counts run from the release folders.
 run with_deps python scripts/epm_facts.py counts >/dev/null
 run with_deps python scripts/epm_facts.py modules >/dev/null

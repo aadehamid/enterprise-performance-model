@@ -27,11 +27,47 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import manifest  # noqa: E402
+
 DEPS = ["--with", "rdflib", "--with", "pyshacl", "--with", "openpyxl", "--with", "jsonschema", "--with", "pytest",
         "--with", "pytest-xdist", "--with", "markdown-it-py>=4,<5", "--with", "neo4j"]
 ONT = "business_architecture/ontology"
-MODULES = ["core", "organization", "ref-mpc", "kpi", "party", "data-product", "value-stream", "system", "lane",
-           "market-data", "integration"]
+MODULES = list(manifest.MODULES)  # the one inventory of modules (manifest.py)
+MODULES_NS = "https://w3id.org/mpc/ontology/modules/"
+
+# The four shipped skills' own checks, one table for the skills-tests row and for the release's check.sh (rebuild.py
+# renders it): (skill, folder inside the skill, command, kind). A "tests" command must report "Ran N tests" with
+# N > 0; a "check" command must exit 0. The skill "" is the skills folder itself (the playbook pages' test).
+SKILL_CHECKS = [
+    ("ontology", "scripts", ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "pyyaml", "--with", "pyshacl",
+                             "python3", "-m", "unittest", "discover", "-q", "-p", "test_*.py"], "tests"),
+    ("ontology", "", ["uv", "run", "-q", "--no-project", "--with", "pyyaml", "python3", "scripts/check_sssom.py", "templates/mappings.sssom.tsv"], "check"),
+    ("ontology-to-lpg", "scripts", ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "pyshacl", "--with", "mcp-neo4j-data-modeling==0.8.2",
+                                    "python3", "-m", "unittest", "-q", "test_projection", "test_engine_gate", "test_modeling", "test_explore", "test_run_projection"], "tests"),
+    ("rdf-store", "scripts", ["uv", "run", "-q", "--no-project", "--with", "pyoxigraph", "python3", "-m", "unittest", "-q", "test_rdf_store"], "tests"),
+    ("", "", ["uv", "run", "-q", "--no-project", "--with", "markdown-it-py>=4,<5", "python3", "scripts/test_playbook_html.py"], "check"),
+]
+
+
+def skill_folder(tree, skill, env):
+    """Where a skill lives: in the release under skills/<name>/, on main in the skills repository's skills/<group>/<name>/."""
+    if is_release(tree):
+        return os.path.join(tree, "skills", skill) if skill else os.path.join(tree, "skills")
+    repo = env.get("SKILLS_REPO", "")
+    if not repo:
+        return None
+    return os.path.join(repo, "skills", "data", skill) if skill else repo
+
+
+def render_skill_checks():
+    """The skill section of the release's check.sh, from SKILL_CHECKS."""
+    import shlex
+    lines = []
+    for skill, folder, cmd, kind in SKILL_CHECKS:
+        cwd = "/".join(p for p in ("skills", skill, folder) if p)
+        runner = "run_tests" if kind == "tests" else "run"
+        lines.append(f"(cd {cwd} && {runner} {' '.join(shlex.quote(a) for a in cmd)})")
+    return "\n".join(lines)
 
 
 def sh(args, cwd, env=None, timeout=3600):
@@ -98,29 +134,21 @@ def row_docs_links(tree, env):
 
 
 def row_skills_tests(tree, env):
-    """The four shipped skills' own tests, each with the dependencies its own check names: in the release under
-    skills/<name>/, on main in the skills repository's skills/<group>/<name>/."""
-    if is_release(tree):
-        base = {"ontology": os.path.join(tree, "skills", "ontology"), "ontology-to-lpg": os.path.join(tree, "skills", "ontology-to-lpg"),
-                "rdf-store": os.path.join(tree, "skills", "rdf-store")}
-    else:
-        repo = env.get("SKILLS_REPO", "")
-        if not repo:
-            return {"ok": None, "reason": "give SKILLS_REPO in --env for main"}
-        base = {"ontology": os.path.join(repo, "skills", "data", "ontology"), "ontology-to-lpg": os.path.join(repo, "skills", "data", "ontology-to-lpg"),
-                "rdf-store": os.path.join(repo, "skills", "data", "rdf-store")}
-    runs = [
-        ("ontology", ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "pyyaml", "--with", "pyshacl", "python3", "-m", "unittest", "discover", "-q", "-p", "test_*.py"], os.path.join(base["ontology"], "scripts")),
-        ("ontology-to-lpg", ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "pyshacl", "--with", "mcp-neo4j-data-modeling==0.8.2", "python3", "-m", "unittest", "-q", "test_projection", "test_engine_gate", "test_modeling", "test_explore", "test_run_projection"], os.path.join(base["ontology-to-lpg"], "scripts")),
-        ("rdf-store", ["uv", "run", "-q", "--no-project", "--with", "pyoxigraph", "python3", "-m", "unittest", "-q", "test_rdf_store"], os.path.join(base["rdf-store"], "scripts")),
-    ]
+    """The four shipped skills' own checks (SKILL_CHECKS, the same table the release's check.sh is rendered from): in
+    the release under skills/<name>/, on main in the skills repository's skills/<group>/<name>/. A test command
+    that ran no test fails the row."""
+    if skill_folder(tree, "ontology", env) is None:
+        return {"ok": None, "reason": "give SKILLS_REPO in --env for main"}
     out = {"runs": {}}
-    for name, cmd, cwd in runs:
-        r = sh(cmd, cwd)
-        m = re.search(r"Ran (\d+) tests", r["tail"])
-        out["runs"][name] = {"returncode": r["returncode"], "tests": int(m.group(1)) if m else None, "tail": r["tail"][-400:]}
+    for skill, folder, cmd, kind in SKILL_CHECKS:
+        name = f"{skill or 'skills'}:{os.path.basename(next(a for a in cmd if a.endswith('.py')))}" if kind == "check" else skill
+        r = sh(cmd, os.path.join(skill_folder(tree, skill, env), folder))
+        m = re.search(r"Ran (\d+) tests?", r["tail"])
+        tests = int(m.group(1)) if m else None
+        out["runs"][name] = {"returncode": r["returncode"], "kind": kind, "tests": tests, "tail": r["tail"][-400:],
+                             "ok": r["returncode"] == 0 and (kind != "tests" or bool(tests))}
     out["passed"] = sum(x["tests"] or 0 for x in out["runs"].values())
-    out["ok"] = all(x["returncode"] == 0 for x in out["runs"].values())
+    out["ok"] = all(x["ok"] for x in out["runs"].values())
     return out
 
 
@@ -139,7 +167,8 @@ def row_iri_base(tree, env):
                 continue
             if n:
                 hits.append((os.path.relpath(path, tree), n))
-    return {"files": len(hits), "places": sum(n for _, n in hits), "samples": hits[:10], "ok": True}
+    # On main the row measures (the old base is everywhere there); on the release the old base may be nowhere.
+    return {"files": len(hits), "places": sum(n for _, n in hits), "samples": hits[:10], "ok": not hits if is_release(tree) else True}
 
 
 def row_gate(tree, env):
@@ -185,10 +214,12 @@ def read_env(path):
 
 
 def run(tree, out, rows, env):
+    """Each row in turn, the json rewritten after each. Returns the result; a row with ok False is a failure of the run
+    (main() exits 1), a row with ok None was not run and says why."""
     tree = os.path.abspath(tree)
     result = {"tree": tree, "release": is_release(tree), "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "rows": {}}
     if os.path.exists(os.path.join(tree, ".git")):
-        result["commit"] = subprocess.run(["git", "-C", tree, "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
+        result["commit"] = subprocess.run(["git", "-C", tree, "rev-parse", "--short", "HEAD"], capture_output=True, text=True, timeout=600).stdout.strip()
     for name in rows:
         print(f"--- {name}", flush=True)
         try:
@@ -235,11 +266,7 @@ def compare(main, release, out):
         a = Graph().parse(data=text, format="turtle")
         b = Graph().parse(os.path.join(folder, f"{m}.ttl"))
         both, only_main, only_release = graph_diff(to_isomorphic(a), to_isomorphic(b))
-        # A difference that the rules explain: the newest package's pins moved to the newest versions
-        # (dcterms:requires on the module's own IRI), nothing else.
-        requires = URIRef("http://purl.org/dc/terms/requires")
-        module_iri = URIRef(f"https://w3id.org/mpc/ontology/modules/{m}")
-        explained = all(t[0] == module_iri and t[1] == requires for t in list(only_main) + list(only_release))
+        explained = explained_by_pin_move(only_main, only_release, m, newest_versions(release))
         content[m] = {"version": version, "main_triples": len(a), "release_triples": len(b),
                       "isomorphic": not only_main and not only_release, "only_main": len(only_main),
                       "only_release": len(only_release), "explained_by_pin_move": explained,
@@ -247,16 +274,11 @@ def compare(main, release, out):
     result["rows"]["ontology-content"] = {"modules": content,
                                           "ok": all(c["isomorphic"] or c["explained_by_pin_move"] for c in content.values())}
 
-    # 3. The newest packages' pins name only newest versions; the catalog lists the newest set.
+    # 3. The newest packages' pins name only newest versions, of the same dependencies as on main; the catalog lists
+    # exactly the newest set.
     newest = {m: content[m]["version"] for m in MODULES}
-    bad = []
-    for m in MODULES:
-        with open(os.path.join(release, ONT, "releases", m, newest[m], "manifest.json")) as f:
-            man = json.load(f)
-        for dep, v in (man.get("depends_on") or {}).items():
-            if newest.get(dep) != v:
-                bad.append(f"{m} {newest[m]} requires {dep} {v}, newest is {newest.get(dep)}")
-    result["rows"]["latest-links"] = {"older_pins": bad, "ok": not bad}
+    bad = latest_links(main, release, newest)
+    result["rows"]["latest-links"] = {"problems": bad, "ok": not bad}
 
     # 4. The gate.
     r = sh([sys.executable, os.path.join(HERE, "gate.py"), release], release)
@@ -266,7 +288,66 @@ def compare(main, release, out):
     return result
 
 
+def newest_versions(release):
+    """Each module's newest version in the release (its releases/<module>/<version>/ folders)."""
+    out = {}
+    for m in MODULES:
+        folders = [os.path.basename(p) for p in glob.glob(os.path.join(release, ONT, "releases", m, "[0-9]*"))]
+        out[m] = max(folders, key=lambda v: tuple(int(x) for x in v.split(".")))
+    return out
+
+
+def explained_by_pin_move(only_main, only_release, module, newest):
+    """A difference between main's Turtle (after the rules) and the release's that the rules explain: every differing
+    triple is a dcterms:requires on the module's own IRI, the same dependencies moved on both sides, and each new
+    target is that dependency's newest version. Nothing else is explained."""
+    from rdflib import URIRef
+    requires = URIRef("http://purl.org/dc/terms/requires")
+    module_iri = URIRef(MODULES_NS + module)
+    diff = list(only_main) + list(only_release)
+    if not diff:
+        return True
+    if any(t[0] != module_iri or t[1] != requires for t in diff):
+        return False
+
+    def dep_of(obj):
+        m = re.match(re.escape(MODULES_NS) + r"([a-z-]+)/(\d+\.\d+\.\d+)$", str(obj))
+        return (m.group(1), m.group(2)) if m else (None, None)
+    main_deps = {dep_of(t[2])[0] for t in only_main}
+    rel = {dep_of(t[2]) for t in only_release}
+    return (main_deps == {d for d, _ in rel} and None not in main_deps
+            and all(newest.get(d) == v for d, v in rel))
+
+
+def latest_links(main, release, newest):
+    """What is wrong with the newest packages' links: a pin that is not the newest version, a dependency added or
+    dropped against main's manifest, or a catalog that does not list exactly the newest set."""
+    bad = []
+    for m in MODULES:
+        with open(os.path.join(release, ONT, "releases", m, newest[m], "manifest.json")) as f:
+            deps = json.load(f).get("depends_on") or {}
+        main_manifest = os.path.join(main, ONT, "releases", m, newest[m], "manifest.json")
+        if os.path.exists(main_manifest):
+            with open(main_manifest) as f:
+                main_deps = json.load(f).get("depends_on") or {}
+            if set(main_deps) != set(deps):
+                bad.append(f"{m} {newest[m]} requires {sorted(deps)} in the release and {sorted(main_deps)} on main")
+        for dep, v in deps.items():
+            if newest.get(dep) != v:
+                bad.append(f"{m} {newest[m]} requires {dep} {v}, newest is {newest.get(dep)}")
+    catalog = os.path.join(release, ONT, "releases", "catalog.ttl")
+    with open(catalog, encoding="utf-8") as f:
+        listed = set(re.findall(re.escape(MODULES_NS) + r"([a-z-]+)/(\d+\.\d+\.\d+)> a dcat:Dataset", f.read()))
+    expected = set(newest.items())
+    if listed != expected:
+        bad.append(f"the catalog lists {sorted(listed - expected)} that are not newest and misses {sorted(expected - listed)}")
+    return bad
+
+
 def report(baseline, release, comparison, out):
+    """The table the plan asks for. Returns the failures: a release row that failed, a baseline row the release did
+    not run, a comparison row that failed. A figure that differs is listed for the cut's notes to explain (a rewrite
+    rule, or the pins' move); it is not by itself a failure, since the release ships fewer tests than main."""
     with open(baseline) as f:
         b = json.load(f)
     with open(release) as f:
@@ -275,6 +356,7 @@ def report(baseline, release, comparison, out):
     lines = ["# Validation after the cut", "", f"Baseline: `{b.get('tree')}` at `{b.get('commit', '?')}`. Release: `{r.get('tree')}`.", "",
              "| Row | Main | Release | Same? |", "|---|---|---|---|"]
     keys = ("passed", "skipped", "answerable", "partial", "waiting", "parked", "broken", "files", "places", "leaks")
+    failures, differences = [], []
 
     def summary(row):
         if row is None:
@@ -287,11 +369,24 @@ def report(baseline, release, comparison, out):
         mb, mr = b["rows"].get(name), r["rows"].get(name)
         same = "yes" if mb and mr and all(mb.get(k) == mr.get(k) for k in keys if k in mb or k in mr) and mb.get("ok") == mr.get("ok") else "no"
         lines.append(f"| {name} | {summary(mb)} | {summary(mr)} | {same} |")
+        if mr is not None and mr.get("ok") is False:
+            failures.append(f"{name} failed on the release")
+        if mb is not None and mb.get("ok") is not None and (mr is None or mr.get("ok") is None):
+            failures.append(f"{name} ran on main and not on the release")
+        if same == "no" and mr is not None and mr.get("ok") and mb is not None and mb.get("ok"):
+            differences.append(name)
     for name, row in c["rows"].items():
         lines.append(f"| {name} (comparison) | | {'pass' if row.get('ok') else 'FAIL'} | |")
+        if not row.get("ok"):
+            failures.append(f"{name} (comparison) failed")
+    if differences:
+        lines += ["", "Figures that differ, to explain in the cut's notes: " + ", ".join(differences) + "."]
+    if failures:
+        lines += ["", "FAILED: " + "; ".join(failures) + "."]
     with open(out, "w") as f:
         f.write("\n".join(lines) + "\n")
     print("\n".join(lines))
+    return failures
 
 
 def main(argv=None):
@@ -303,12 +398,14 @@ def main(argv=None):
     p = sub.add_parser("report"); p.add_argument("baseline"); p.add_argument("release"); p.add_argument("comparison", nargs="?"); p.add_argument("--out", default="VALIDATION.md")
     a = ap.parse_args(argv)
     if a.cmd == "run":
-        run(a.tree, a.out, [r for r in a.rows.split(",") if r], read_env(a.env))
+        result = run(a.tree, a.out, [r for r in a.rows.split(",") if r], read_env(a.env))
+        return 1 if any(v.get("ok") is False for v in result["rows"].values()) else 0
     elif a.cmd == "compare":
-        compare(a.main, a.release, a.out)
+        result = compare(a.main, a.release, a.out)
+        return 1 if any(not v.get("ok") for v in result["rows"].values()) else 0
     else:
-        report(a.baseline, a.release, a.comparison, a.out)
+        return 1 if report(a.baseline, a.release, a.comparison, a.out) else 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
