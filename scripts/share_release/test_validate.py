@@ -238,8 +238,14 @@ def test_a_linked_or_unreadable_folder_stops_the_comparison(tmp_path):
     (elsewhere / "unexpected.json").write_text('{"n": 2}\n')
     link = release / "business_architecture/business_process/linked"
     link.symlink_to(elsewhere, target_is_directory=True)
-    with pytest.raises(OSError, match="linked folder"):
+    with pytest.raises(OSError, match="linked entry"):
         validate.compare_business_process(str(main), str(release), {})
+    elsewhere.chmod(0)  # os.walk now lists the link among the files
+    try:
+        with pytest.raises(OSError, match="linked entry"):
+            validate.compare_business_process(str(main), str(release), {})
+    finally:
+        elsewhere.chmod(0o755)
     link.unlink()
     locked = release / "business_architecture/business_process/proposals"
     locked.mkdir()
