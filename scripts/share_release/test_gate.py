@@ -178,3 +178,16 @@ def test_the_lpg_skills_test_fixtures_may_describe_n10s_names_but_nothing_else_m
     other.mkdir(parents=True)
     (other / "test_docs.py").write_text('expected = "core__Forbidden"\n')  # another skill's test is not a fixture of n10s
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the graph's double-underscore separator"]
+
+
+def test_the_pipelines_own_tests_may_name_n10s_fixtures_but_not_the_ontologys_prefixes(tmp_path):
+    clean(tmp_path)
+    rel = tmp_path / "business_architecture/ontology/projection/test_pipeline.py"
+    rel.parent.mkdir(parents=True)
+    rel.write_text('assert lpg_name(x, sep="__") == "rdfs__label"; nodes = [{"l": ["lib__Thing"]}]\n')
+    assert [h for h in gate.scan(str(tmp_path)) if "double-underscore" in h["reason"]] == []
+    rel.write_text('nodes = [{"l": ["kpi__MeasureDefinition"]}]\n')
+    assert any("double-underscore" in h["reason"] for h in gate.scan(str(tmp_path)))
+    other = tmp_path / "business_architecture/ontology/projection/test_sync_stores.py"
+    other.write_text('x = "rdfs__label"\n')
+    assert any("double-underscore" in h["reason"] and "test_sync_stores" in h["file"] for h in gate.scan(str(tmp_path)))

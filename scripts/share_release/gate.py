@@ -54,7 +54,8 @@ ALLOWED_DOUBLE = re.compile(r"metric_time__day|__init__|__main__|__pycache__|__f
 # (lib__Work, my__node, n4sch__Entity): a third-party tool's format on fixture names, not a name in any graph, query,
 # document or page of the release (the night log of 2026-11-01, 00:45). The exemption covers those test files only,
 # and never a prefix of this ontology's graph, so a planted vs__Stage or core__Process fails there too.
-FIXTURE_FILES = re.compile(r"^skills/ontology-to-lpg/scripts/test_[^/]+\.py$")
+# ... and the projection pipeline's own tests of the n10s names it renames (business_architecture/ontology/projection/test_pipeline.py).
+FIXTURE_FILES = re.compile(r"^(?:skills/ontology-to-lpg/scripts/test_[^/]+|business_architecture/ontology/projection/test_pipeline)\.py$")
 GRAPH_PREFIXES = ("core", "orgm", "kpi", "pop", "party", "dp", "vs", "sys", "lane", "mkt", "plc", "auth", "con", "tv", "tech", "oeo")
 TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".sql", ".sh", ".yml", ".yaml", ".txt",
             ".nt", ".toml", ".example", ".cypher", ".jsonl", ".css", ".svg", ".cfg", ".ini", ".lock"}
