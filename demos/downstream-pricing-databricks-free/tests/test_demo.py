@@ -381,50 +381,101 @@ class FakeCursor:
         return (1,)
 
 
-THREE_PART = re.compile(r"(?<![\w.])([a-z_]\w*)\.([a-z_]\w*)\.([a-z_]\w*)(?![\w.])")
+IDENT = r"(?:[a-z_]\w*|`[^`]+`)"  # a bare or a backtick-quoted identifier component
+THREE_PART = re.compile(rf"(?<![\w.`])({IDENT})\.({IDENT})\.({IDENT})(?![\w.`])")
+# Inside a string literal the same shape counts, unless it sits in a URL or path ('http://www.w3.org/...'), which the
+# definitions views hold as IRIs.
+THREE_PART_IN_TEXT = re.compile(rf"(?<![\w.`/:@-])({IDENT})\.({IDENT})\.({IDENT})(?![\w.`/:@-])")
 VOLUME_PATH = re.compile(r"/volumes/([a-z_]\w*)/")
 # A statement on a schema or volume names catalog.schema: the name after the verb must start with the catalog.
-SCHEMA_LEVEL = re.compile(r"^(?:create schema if not exists|show tables in|drop schema if exists|drop volume if exists|"
-                          r"create volume if not exists)\s+([a-z_]\w*)\.")
+SCHEMA_LEVEL = re.compile(rf"^(?:create schema if not exists|show tables in|drop schema if exists|drop volume if exists|"
+                          rf"create volume if not exists)\s+({IDENT})\.")
+
+
+def sql_parts(statement):
+    """The statement's code with each string literal replaced by '', and the literals' contents. A doubled quote ('')
+    and a backslash-escaped quote (\\') stay inside their literal."""
+    code, literals, i, n = [], [], 0, len(statement)
+    while i < n:
+        if statement[i] != "'":
+            code.append(statement[i])
+            i += 1
+            continue
+        j, text = i + 1, []
+        while j < n:
+            if statement[j] == "\\" and j + 1 < n:
+                text.append(statement[j + 1])
+                j += 2
+            elif statement[j] == "'" and j + 1 < n and statement[j + 1] == "'":
+                text.append("'")
+                j += 2
+            elif statement[j] == "'":
+                break
+            else:
+                text.append(statement[j])
+                j += 1
+        literals.append("".join(text))
+        code.append("''")
+        i = j + 1
+    return "".join(code), literals
+
+
+def plain(name):
+    return ".".join(part.strip("`") for part in name)
 
 
 def only_catalog(statements, catalog, triples=None):
-    """Every statement names the demo's catalog and no other, in any letter case: each three-part name and each
-    volume path starts with it, and the only other table allowed is `triples`, the ontology's triple table, which the
-    definitions views read from the projection's catalog (EPM_TRIPLES). A statement that names no object at all is
-    the catalog's own creation or description."""
+    """Every statement names the demo's catalog and no other, in any letter case and with or without backticks:
+    each three-part name (in the code and inside string literals), each schema-level name and each volume path
+    starts with it, the one other table allowed being `triples`, the ontology's triple table, which the definitions
+    views read from the projection's catalog (EPM_TRIPLES); and each statement names at least one object of the
+    demo's catalog, except the catalog's own creation and description."""
     assert statements, "no statement ran"
     catalog, triples = catalog.lower(), triples.lower() if triples else None
     for st in statements:
         low = st.lower()
-        code = re.sub(r"'[^']*'", "''", low)  # object names sit outside string literals (IRIs in sql/06 hold dots)
-        names = [".".join(m) for m in THREE_PART.findall(code)] + [m + "." for m in VOLUME_PATH.findall(low)]
-        names += [m + "." for m in SCHEMA_LEVEL.findall(code)]
-        others = {n for n in names if n.split(".")[0] != catalog and n != triples}
+        code, literals = sql_parts(low)
+        names = [plain(m) for m in THREE_PART.findall(code)] + [m.strip("`") + "." for m in SCHEMA_LEVEL.findall(code)]
+        names += [m + "." for m in VOLUME_PATH.findall(low)]
+        in_text = [plain(m) for text in literals for m in THREE_PART_IN_TEXT.findall(text)]
+        others = {n for n in names + in_text if n.split(".")[0] != catalog and n != triples}
         assert not others, (sorted(others), st)
-        if not names:
-            assert low == f"describe catalog {catalog}" or low.startswith(f"create catalog if not exists {catalog} "), st
-        assert catalog in low, st
-        rest = low.replace(triples, "") if triples else low  # the triple table's catalog is the one allowed mention
-        for banned in ("idp_sbx", "workspace"):
+        own = [n for n in names if n.split(".")[0] == catalog]
+        if not own:
+            assert code == f"describe catalog {catalog}" or code.startswith(f"create catalog if not exists {catalog} "), st
+        for banned in ("idp_sbx", "workspace"):  # the shared catalogs, as bare tokens anywhere but in the triple table's name
             if banned != catalog:
-                assert not re.search(rf"\b{banned}\b", rest), (banned, st)
+                outside = (code + " " + " ".join(literals)).replace(triples, "") if triples else code + " " + " ".join(literals)
+                assert not re.search(rf"\b{banned}\b", outside), (banned, st)
 
 
-def test_only_catalog_refuses_another_catalog_in_any_case():
+def test_only_catalog_refuses_another_catalog_in_any_case_or_quoting_or_place():
+    triples = "workspace.epm_ontology.epm_triples"
     only_catalog(["CREATE TABLE epm_validate.a.b AS SELECT 1", "CREATE SCHEMA IF NOT EXISTS epm_validate.s",
-                  "SHOW TABLES IN epm_validate.s", "DROP SCHEMA IF EXISTS epm_validate.s"], "epm_validate")
-    only_catalog(["CREATE VIEW epm_validate.a.v AS SELECT * FROM workspace.epm_ontology.epm_triples"], "epm_validate",
-                 "workspace.epm_ontology.epm_triples")
-    only_catalog(["CREATE VIEW epm_validate.a.v AS SELECT 'http://www.w3.org/2004/02/skos/core#prefLabel'"], "epm_validate")
+                  "SHOW TABLES IN epm_validate.s", "DROP SCHEMA IF EXISTS epm_validate.s",
+                  "CREATE TABLE `epm_validate`.`a`.`b` AS SELECT 1",
+                  "CREATE TABLE epm_validate.a.b AS SELECT 'it''s' AS x FROM epm_validate.s.t",
+                  "CREATE TABLE epm_validate.a.b AS SELECT 'it\\'s' AS x FROM epm_validate.s.t WHERE y = 'v'",
+                  "CREATE VIEW epm_validate.a.v AS SELECT 'http://www.w3.org/2004/02/skos/core#prefLabel'",
+                  "COPY INTO epm_validate.a.b FROM '/Volumes/epm_validate/a/raw/'"], "epm_validate")
+    only_catalog([f"CREATE VIEW epm_validate.a.v AS SELECT * FROM {triples}"], "epm_validate", triples)
     for bad in ("CREATE TABLE IDP_SBX.a.b AS SELECT 1", "CREATE TABLE epm_validate.a.b AS SELECT * FROM Workspace.x.y",
-                "CREATE TABLE epm_validate.a.b AS SELECT * FROM other.x.y", "COPY INTO epm_validate.a.b FROM '/Volumes/idp_sbx/a/raw/'",
-                "SELECT 1", "CREATE TABLE epm_validate.a.b AS SELECT 'IDP_SBX'", "CREATE SCHEMA IF NOT EXISTS other.s",
+                "CREATE TABLE epm_validate.a.b AS SELECT * FROM other.x.y",
+                "CREATE TABLE epm_validate.a.b AS SELECT * FROM `other`.`x`.`y`",  # backtick-quoted
+                "CREATE TABLE epm_validate.a.b AS SELECT 'other.x.y'",  # inside a literal
+                "CREATE TABLE epm_validate.a.b AS SELECT 'it\\'s' AS x FROM other.s.t WHERE y = 'v'",  # after an escaped quote
+                "CREATE TABLE epm_validate.a.b AS SELECT 'it''s' AS x FROM other.s.t WHERE y = 'v'",  # after a doubled quote
+                "COPY INTO epm_validate.a.b FROM '/Volumes/idp_sbx/a/raw/'",
+                "SELECT 1", "SELECT 1 -- epm_validate", "SELECT 'epm_validate'",  # no object of the catalog
+                "CREATE TABLE epm_validate.a.b AS SELECT 'IDP_SBX'", "CREATE SCHEMA IF NOT EXISTS other.s",
                 "SHOW TABLES IN Other.s", "DROP SCHEMA IF EXISTS other.s"):
         with pytest.raises(AssertionError):
             only_catalog([bad], "epm_validate")
     with pytest.raises(AssertionError):
-        only_catalog(["CREATE VIEW epm_validate.a.v AS SELECT * FROM workspace.epm_ontology.epm_triples"], "epm_validate")
+        only_catalog([f"CREATE VIEW epm_validate.a.v AS SELECT * FROM {triples}"], "epm_validate")  # not configured
+    with pytest.raises(AssertionError):  # the triple table alone is no demo object
+        only_catalog([f"SELECT * FROM {triples} WHERE object = 'epm_validate'"], "epm_validate", triples)
+    assert sql_parts("a 'b''c' d 'e\\'f' g") == ("a '' d '' g", ["b'c", "e'f"])
 
 
 class FakeConn:
