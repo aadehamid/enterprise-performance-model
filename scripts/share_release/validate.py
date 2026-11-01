@@ -272,13 +272,20 @@ def compare(main, release, out):
     return result
 
 
+def json_files(root):
+    """Every JSON file under root, relative to it: nested, hidden or upper-case names included, as the export ships
+    them. os.walk takes the root literally, so a folder name holding glob characters cannot empty the list."""
+    return [os.path.relpath(os.path.join(folder, name), root).replace(os.sep, "/")
+            for folder, _, names in os.walk(root) for name in names if name.lower().endswith(".json")]
+
+
 def compare_business_process(main, release, dates):
     """Main's business-process JSON after the rewrite rules must equal the release's copy byte for byte; the two
     folders must hold the same files (the manifest ships the whole folder). Every file that differs, or exists on
     one side only, is recorded and fails the row."""
     import rules
     folder = "business_architecture/business_process"
-    names = sorted({os.path.basename(p) for tree in (main, release) for p in glob.glob(os.path.join(tree, folder, "*.json"))})
+    names = sorted({name for tree in (main, release) for name in json_files(os.path.join(tree, folder))})
     diffs, same = [], 0
     for name in names:
         rel = f"{folder}/{name}"

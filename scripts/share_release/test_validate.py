@@ -5,6 +5,8 @@ import os
 import subprocess
 import sys
 
+import pytest
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import manifest  # noqa: E402
@@ -202,3 +204,26 @@ def test_a_process_map_on_one_side_only_fails_the_comparison(tmp_path):
     (main / "business_architecture/business_process/lanes.json").write_text('{"lanes": 3}\n')  # a map the release lacks
     row = validate.compare_business_process(str(main), str(release), {})
     assert row["different"] == ["business_architecture/business_process/lanes.json (only on main)"] and row["ok"] is False
+
+
+@pytest.mark.parametrize("name", ["proposals/unexpected.json", ".unexpected.json", "unexpected.JSON"])
+def test_a_nested_hidden_or_upper_case_map_in_the_release_fails_the_comparison(tmp_path, name):
+    main, release = tmp_path / "main", tmp_path / "release"
+    for tree in (main, release):
+        (tree / "business_architecture" / "business_process").mkdir(parents=True)
+        (tree / "business_architecture/business_process/map.json").write_text('{"n": 1}\n')
+    extra = release / "business_architecture/business_process" / name
+    extra.parent.mkdir(parents=True, exist_ok=True)
+    extra.write_text('{"n": 2}\n')
+    row = validate.compare_business_process(str(main), str(release), {})
+    assert row["different"] == [f"business_architecture/business_process/{name} (only on the release)"] and row["ok"] is False
+
+
+def test_glob_characters_in_the_tree_path_do_not_empty_the_comparison(tmp_path):
+    main, release = tmp_path / "cut[1]" / "main", tmp_path / "cut[1]" / "release"
+    for tree, n in ((main, 1), (release, 2)):
+        (tree / "business_architecture" / "business_process").mkdir(parents=True)
+        (tree / "business_architecture/business_process/map.json").write_text(f'{{"n": {n}}}\n')
+    row = validate.compare_business_process(str(main), str(release), {})
+    assert row["different"] == ["business_architecture/business_process/map.json"] and row["ok"] is False
+
