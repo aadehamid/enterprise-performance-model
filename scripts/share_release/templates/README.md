@@ -42,6 +42,7 @@ It verifies that every released package equals a fresh build from its sources, r
 
 - **Rebuild a module:** each module's source has its own builder in its folder, and `scripts/check.sh` lists them all. For `lane`, from `business_architecture/ontology/lane/`, `uv run --no-project --with rdflib --with pyshacl python3 -B build_lanes.py --verify`; for `kpi`, `build_measures.py`. `release/build_module.py <module> --verify` checks the package. Add `--write` only with a new version: `HOW-TO-UPDATE.md` says how.
 - **Project into Neo4j:** `business_architecture/ontology/projection/README.md`, and `projection/ontology-stores-runbook.html` for every store, hands on.
+- **Connect and load every store:** `business_architecture/ontology/epm-walkthrough.html#connect`, the walkthrough's section of that name.
 - **Ask a competency question:** from `business_architecture/ontology/regression/`, `uv run --no-project --with rdflib python3 -B ask.py <question-id>`, and `../competency-questions.md` for the list.
 - **Run the pricing demo:** `demos/downstream-pricing-databricks-free/README.md`.
 - **Add a module, or change anything else:** `HOW-TO-UPDATE.md`.

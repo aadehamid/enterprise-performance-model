@@ -399,3 +399,15 @@ def test_agents_leaves_the_skills_own_pull_requests():
     src = "through a pull request"
     assert rules.rule_agents(src, {"path": "skills/ontology/references/release.md"})[0] == src
     assert rules.rule_agents(src, {"path": "README.md"})[0] == "through a change"
+
+
+def test_the_demos_remote_machine_and_tunnel_are_reworded():
+    src = "Postgres, one database per source system (the exe.dev VM through an SSH tunnel; the local Docker container is the fallback)"
+    assert run(src)[0] == "Postgres, one database per source system (the local Docker container; `SOURCE_PG_DSN` names another host)"
+    assert run("then from the exe.dev VM through the tunnel")[0] == "then from a remote host"
+
+
+def test_the_demos_tunnel_instructions_go():
+    src = ("change `SOURCE_PG_DSN`; nothing else names the host. Since 2026-10-28 the source databases (seven, with `x`) also run on an exe.dev VM, "
+           "`databases.exe.xyz`, where Postgres listens only on the VM's localhost. Open a tunnel, `ssh -N -L 1:2 databases.exe.xyz`. The local container stays as the fallback.")
+    assert run(src)[0] == "change `SOURCE_PG_DSN`; nothing else names the host."
