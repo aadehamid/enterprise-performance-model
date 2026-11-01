@@ -10,6 +10,7 @@ import snippets  # noqa: E402
 def test_databricks_sql_is_not_sparql():
     assert snippets.kind_of({"lang": "", "text": "SELECT e.source, t.object\nFROM idp_sbx.tech_graph.edges e"}) == "sql"
     assert snippets.kind_of({"lang": "", "text": "SELECT a, MEASURE(b) AS m\nFROM v GROUP BY ALL"}) == "sql"
+    assert snippets.kind_of({"lang": "", "text": "SELECT count(*) FROM <catalog>.<schema>.epm_triples;"}) == "sql"
     assert snippets.kind_of({"lang": "", "text": "PREFIX x: <u>\nSELECT ?s WHERE { ?s a x:T }"}) == "sparql"
     assert snippets.kind_of({"lang": "", "text": "SELECT ?s WHERE { ?s ?p ?o }"}) == "sparql"
 
@@ -36,6 +37,8 @@ def test_a_from_comment_sets_the_folder_and_variables_carry_across_blocks():
         os.makedirs(os.path.join(tree, "skills", "s", "scripts"))
         r = snippets.run_shell('# from $SKILLS/s/scripts\nls .\ncd "$EPM/a"\nls .', tree, {}, state)  # the reader's variables are the tree's
         assert [x.get("returncode", x.get("ran")) for x in r["lines"]] == [0, True, 0] and "b" in r["lines"][2]["tail"]
+        r = snippets.run_shell('export ROOT_DIR="$PWD"\ncd "$ROOT_DIR/a"\nls .', tree, {}, state)  # a reader runs from the top folder
+        assert not r["failed"] and "b" in r["lines"][-1]["tail"]
         r = snippets.run_shell('DIR=' + os.path.join(tree, "a") + '; mkdir -p "$DIR"', tree, {}, state)
         assert state["vars"]["DIR"] == os.path.join(tree, "a") and not r["failed"]
         r = snippets.run_shell('ls "$DIR/b"', tree, {}, state)
