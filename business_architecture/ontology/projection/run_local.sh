@@ -33,8 +33,7 @@ for _ in $(seq 1 120); do docker logs epm-lpg 2>&1 | grep -q "Started." && break
 if ! docker logs epm-lpg 2>&1 | grep -q "Started."; then
   echo "Neo4j did not start; see: docker logs epm-lpg (a full Docker disk is the usual cause)" >&2; exit 1
 fi
-# The password goes to pipeline.py in the environment, not as an argument, so pipeline.py's command line does not
-# hold it (Docker above takes it through -e, as Docker requires). This script runs non-interactively: no shell history.
+# pipeline.py reads the password from the environment variable NEO4J_PASSWORD; it has no argument for it.
 NEO4J_PASSWORD="$pw" uv run -q --with rdflib --with pyshacl --with neo4j python pipeline.py load-verify \
   --bolt bolt://localhost:17687 --import-dir "$import"
 uv run -q --with rdflib --with pyshacl python pipeline.py build

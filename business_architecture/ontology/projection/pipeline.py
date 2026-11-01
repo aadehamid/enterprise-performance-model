@@ -8,11 +8,8 @@ Follows the guideline in ../lpg-projection/ (v2.2) with Rule 4 set to 4a, qualif
     python3 pipeline.py reason --robot robot.jar # Step 2: ELK through ROBOT; writes inferred.nt
     python3 pipeline.py load-verify --bolt bolt://localhost:17687 --import-dir DIR   # NEO4J_PASSWORD in the environment
                                                  # Steps 4 and 5 against a running Neo4j with n10s and APOC;
-                                                 # writes projection-report.json. The password is not an argument,
-                                                 # so it is not part of this process's command line: a run that
-                                                 # records the commands it runs (the release validation) records
-                                                 # none of it. Set the variable from the login file, not by typing
-                                                 # the value in front of the command, which the shell history keeps.
+                                                 # writes projection-report.json. The password is read from the
+                                                 # environment variable NEO4J_PASSWORD; there is no argument for it.
 
 Turtle stays the master copy. Neo4j is a projection that can be rebuilt from these files at any time.
 """
@@ -515,15 +512,14 @@ def parser():
     r.add_argument("--robot", required=True)
     lv = sub.add_parser("load-verify")
     lv.add_argument("--bolt", required=True)
-    lv.add_argument("--password", help="the Neo4j password; set NEO4J_PASSWORD in the environment instead, so that it "
-                    "is not part of this command line (an argument is recorded by anything that logs the command)")
     lv.add_argument("--import-dir", required=True)
+    lv.epilog = "The Neo4j password is read from the environment variable NEO4J_PASSWORD."
     return ap
 
 
-def neo4j_password(given):
-    """The Neo4j password: --password when given (kept for now), else NEO4J_PASSWORD from the environment."""
-    password = given or os.environ.get("NEO4J_PASSWORD")
+def neo4j_password():
+    """The Neo4j password, from the environment variable NEO4J_PASSWORD; load-verify has no argument for it."""
+    password = os.environ.get("NEO4J_PASSWORD")
     if not password:
         raise SystemExit("load-verify needs the Neo4j password: set NEO4J_PASSWORD in the environment")
     return password
@@ -545,7 +541,7 @@ def main():
     elif args.cmd == "reason":
         reason(args.robot)
     else:
-        report = load_verify(args.bolt, neo4j_password(args.password), args.import_dir)
+        report = load_verify(args.bolt, neo4j_password(), args.import_dir)
         with open(REPORT, "w") as f:
             f.write(json.dumps(report, indent=2, sort_keys=True, default=str) + "\n")
         ok = (report["shacl_violations_in_graph"] == 0 and report["in_graph_mutant_violations"] > 0

@@ -378,25 +378,25 @@ class Rename(unittest.TestCase):
 
 
 class Password(unittest.TestCase):
-    """load-verify reads the Neo4j password from NEO4J_PASSWORD: not an argument, so not part of pipeline.py's
-    command line, which a run that logs its commands would record. --password still works for now. The runner and
-    the README pass it in the environment, and the README reads it without typing it into a command."""
+    """load-verify reads the Neo4j password from the environment variable NEO4J_PASSWORD and has no argument for it;
+    the runner and the README pass it that way."""
 
-    def test_load_verify_parses_without_a_password_argument(self):
+    def test_load_verify_has_no_password_argument(self):
         args = pl.parser().parse_args(["load-verify", "--bolt", "bolt://x", "--import-dir", "d"])
-        self.assertIsNone(args.password)
-        self.assertEqual(pl.parser().parse_args(["load-verify", "--bolt", "b", "--password", "p", "--import-dir", "d"]).password, "p")
+        self.assertFalse(hasattr(args, "password"))
+        with mock.patch("sys.stderr", new_callable=lambda: __import__("io").StringIO()):
+            with self.assertRaises(SystemExit):
+                pl.parser().parse_args(["load-verify", "--bolt", "b", "--password", "p", "--import-dir", "d"])
 
-    def test_the_password_comes_from_the_environment_or_the_argument(self):
+    def test_the_password_comes_from_the_environment(self):
         with mock.patch.dict(os.environ, {"NEO4J_PASSWORD": "from-env"}):
-            self.assertEqual(pl.neo4j_password(None), "from-env")
-            self.assertEqual(pl.neo4j_password("given"), "given")
+            self.assertEqual(pl.neo4j_password(), "from-env")
         with mock.patch.dict(os.environ, {}, clear=True):
-            self.assertEqual(pl.neo4j_password("given"), "given")
             with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
-                pl.neo4j_password(None)
+                pl.neo4j_password()
+        with mock.patch.dict(os.environ, {"NEO4J_PASSWORD": ""}):
             with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
-                pl.neo4j_password("")
+                pl.neo4j_password()
 
     def test_the_runner_the_readme_and_the_usage_pass_it_in_the_environment(self):
         here = os.path.dirname(os.path.abspath(pl.__file__))
@@ -406,12 +406,11 @@ class Password(unittest.TestCase):
             self.assertNotIn("--password", text, name)
             self.assertIn("NEO4J_PASSWORD", text, name)
         self.assertIn("NEO4J_PASSWORD in the environment", pl.__doc__)
-        self.assertNotIn("--password ...", pl.__doc__)
+        self.assertNotIn("--password", pl.__doc__)
         with open(os.path.join(here, "README.md")) as f:
             readme = f.read()
-        self.assertIn("read -rs NEO4J_PASSWORD && export NEO4J_PASSWORD", readme)  # never typed into a recorded command
-        self.assertNotIn("NEO4J_PASSWORD=<password>", readme)
-        self.assertNotIn("neo4j/<password>", readme)
+        self.assertIn("read -rs NEO4J_PASSWORD && export NEO4J_PASSWORD", readme)
+        self.assertNotIn("<password>", readme)
 
     def run_main(self, argv, env):
         """main() with the given arguments and environment, load_verify replaced by a recorder of the password it got."""
@@ -425,16 +424,18 @@ class Password(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(sys, "argv", ["pipeline.py"] + argv), \
                 mock.patch.dict(os.environ, env, clear=True), mock.patch.object(pl, "load_verify", fake_load_verify), \
                 mock.patch.object(pl, "REPORT", os.path.join(tmp, "report.json")), \
-                mock.patch("sys.stdout", new_callable=lambda: __import__("io").StringIO()):
+                mock.patch("sys.stdout", new_callable=lambda: __import__("io").StringIO()), \
+                mock.patch("sys.stderr", new_callable=lambda: __import__("io").StringIO()):
             pl.main()
         return got
 
     def test_main_hands_load_verify_the_password_from_the_environment(self):
         argv = ["load-verify", "--bolt", "bolt://x", "--import-dir", "d"]
         self.assertEqual(self.run_main(argv, {"NEO4J_PASSWORD": "from-env"}), [("bolt://x", "from-env", "d")])
-        self.assertEqual(self.run_main(argv + ["--password", "given"], {"NEO4J_PASSWORD": "from-env"}), [("bolt://x", "given", "d")])
         with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
             self.run_main(argv, {})
+        with self.assertRaises(SystemExit):  # the argument is gone: the parser refuses it
+            self.run_main(argv + ["--password", "given"], {"NEO4J_PASSWORD": "from-env"})
 
 
 class Report(unittest.TestCase):

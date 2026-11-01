@@ -372,20 +372,59 @@ class FakeCursor:
         if last.startswith("SELECT COUNT") or last.startswith("SELECT MEASURE"):
             return [(1,)]
         if last.startswith("SHOW TABLES"):
-            return [("db", "t")]  # one table per schema, so counts runs a count query in that schema
+            # The schema's built objects where the build checks them (check_built), else one table, so counts counts it.
+            schema = last.rsplit(".", 1)[-1]
+            return [(None, name) for name in sorted(databricks.BUILT.get(schema, {"t"}))]
         return []
 
     def fetchone(self):
         return (1,)
 
 
-def only_catalog(statements, catalog):
-    """Every statement names the catalog and no other: as `catalog.`, or as the catalog created."""
+THREE_PART = re.compile(r"(?<![\w.])([a-z_]\w*)\.([a-z_]\w*)\.([a-z_]\w*)(?![\w.])")
+VOLUME_PATH = re.compile(r"/volumes/([a-z_]\w*)/")
+# A statement on a schema or volume names catalog.schema: the name after the verb must start with the catalog.
+SCHEMA_LEVEL = re.compile(r"^(?:create schema if not exists|show tables in|drop schema if exists|drop volume if exists|"
+                          r"create volume if not exists)\s+([a-z_]\w*)\.")
+
+
+def only_catalog(statements, catalog, triples=None):
+    """Every statement names the demo's catalog and no other, in any letter case: each three-part name and each
+    volume path starts with it, and the only other table allowed is `triples`, the ontology's triple table, which the
+    definitions views read from the projection's catalog (EPM_TRIPLES). A statement that names no object at all is
+    the catalog's own creation or description."""
     assert statements, "no statement ran"
+    catalog, triples = catalog.lower(), triples.lower() if triples else None
     for st in statements:
-        assert f"{catalog}." in st or st.startswith(f"CREATE CATALOG IF NOT EXISTS {catalog} ") \
-            or st == f"DESCRIBE CATALOG {catalog}", st
-        assert not re.search(r"\b(idp_sbx|workspace)\b", st), st
+        low = st.lower()
+        code = re.sub(r"'[^']*'", "''", low)  # object names sit outside string literals (IRIs in sql/06 hold dots)
+        names = [".".join(m) for m in THREE_PART.findall(code)] + [m + "." for m in VOLUME_PATH.findall(low)]
+        names += [m + "." for m in SCHEMA_LEVEL.findall(code)]
+        others = {n for n in names if n.split(".")[0] != catalog and n != triples}
+        assert not others, (sorted(others), st)
+        if not names:
+            assert low == f"describe catalog {catalog}" or low.startswith(f"create catalog if not exists {catalog} "), st
+        assert catalog in low, st
+        rest = low.replace(triples, "") if triples else low  # the triple table's catalog is the one allowed mention
+        for banned in ("idp_sbx", "workspace"):
+            if banned != catalog:
+                assert not re.search(rf"\b{banned}\b", rest), (banned, st)
+
+
+def test_only_catalog_refuses_another_catalog_in_any_case():
+    only_catalog(["CREATE TABLE epm_validate.a.b AS SELECT 1", "CREATE SCHEMA IF NOT EXISTS epm_validate.s",
+                  "SHOW TABLES IN epm_validate.s", "DROP SCHEMA IF EXISTS epm_validate.s"], "epm_validate")
+    only_catalog(["CREATE VIEW epm_validate.a.v AS SELECT * FROM workspace.epm_ontology.epm_triples"], "epm_validate",
+                 "workspace.epm_ontology.epm_triples")
+    only_catalog(["CREATE VIEW epm_validate.a.v AS SELECT 'http://www.w3.org/2004/02/skos/core#prefLabel'"], "epm_validate")
+    for bad in ("CREATE TABLE IDP_SBX.a.b AS SELECT 1", "CREATE TABLE epm_validate.a.b AS SELECT * FROM Workspace.x.y",
+                "CREATE TABLE epm_validate.a.b AS SELECT * FROM other.x.y", "COPY INTO epm_validate.a.b FROM '/Volumes/idp_sbx/a/raw/'",
+                "SELECT 1", "CREATE TABLE epm_validate.a.b AS SELECT 'IDP_SBX'", "CREATE SCHEMA IF NOT EXISTS other.s",
+                "SHOW TABLES IN Other.s", "DROP SCHEMA IF EXISTS other.s"):
+        with pytest.raises(AssertionError):
+            only_catalog([bad], "epm_validate")
+    with pytest.raises(AssertionError):
+        only_catalog(["CREATE VIEW epm_validate.a.v AS SELECT * FROM workspace.epm_ontology.epm_triples"], "epm_validate")
 
 
 class FakeConn:
@@ -460,20 +499,25 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     assert uploads == ["/Volumes/epm_validate/replica_landing/raw/price_assessment/t.parquet"]
     assert cur.statements == []  # the explicit catalog is chosen without a query
 
+    # The real build: every statement of sql/02 to sql/07 rendered for the catalog, the replica check over an empty
+    # manifest, and check_built over the fake's built objects. The definitions views read the ontology's triple table
+    # from the projection's catalog (EPM_TRIPLES), the one name outside the demo's catalog that may appear.
     cur, e = fake_connection(monkeypatch, "epm_validate")
-    sql = tmp_path / "03_silver.sql"
-    sql.write_text("-- a layer\nCREATE OR REPLACE TABLE ${catalog}.silver_udm_core.t AS SELECT 1;\n")
-    checked = []
-    monkeypatch.setattr(databricks, "check_built", lambda cur, cat: checked.append(cat))
-    databricks.build(files=[str(sql)])
-    assert cur.statements == ["CREATE OR REPLACE TABLE epm_validate.silver_udm_core.t AS SELECT 1"]
-    assert checked == ["epm_validate"]
-    only_catalog(cur.statements, "epm_validate")
+    monkeypatch.setattr(replicate, "check_replica", lambda: {})
+    monkeypatch.setattr(replicate, "replicated_at", lambda: "2026-10-31T00:00:00")
+    databricks.build()
+    rendered = [st for path in sorted(glob.glob(os.path.join(config.ROOT, "sql", "0[2-9]_*.sql")))
+                for st in databricks.statements(path, "epm_validate", e["EPM_TRIPLES"])]
+    assert len(rendered) > 50
+    assert [st for st in cur.statements if not st.startswith(("SHOW TABLES", "SELECT COUNT", "SELECT MEASURE"))] == rendered
+    assert any(e["EPM_TRIPLES"] in st for st in rendered)  # sql/06 names the triple table
+    only_catalog(cur.statements, "epm_validate", e["EPM_TRIPLES"])
 
     cur, e = fake_connection(monkeypatch, "epm_validate")
     found = databricks.counts()
-    assert found == {f"{s}.t": 1 for s in databricks.SCHEMAS[1:]}  # one table per schema, each counted
-    assert len(cur.statements) == 2 * len(databricks.SCHEMAS[1:])  # a SHOW TABLES and a count per schema
+    tables = {s: sorted(databricks.BUILT.get(s, {"t"})) for s in databricks.SCHEMAS[1:]}  # what the fake lists per schema
+    assert found == {f"{s}.{name}": 1 for s, names in tables.items() for name in names}  # every table counted
+    assert len(cur.statements) == len(tables) + sum(len(n) for n in tables.values())  # a SHOW TABLES per schema, a count per table
     only_catalog(cur.statements, "epm_validate")
 
     cur, e = fake_connection(monkeypatch, "epm_validate")

@@ -55,13 +55,13 @@ Rerun it after any input or shape changes. `run_local.sh` runs steps 4 to 7 in o
 5. Start Neo4j 2025.06.2 with the plugins folder mounted. The image downloads APOC itself (`NEO4J_PLUGINS`), and n10s loads from the mounted jar. Wait until `docker logs epm-lpg` prints `Started.`
 
    ```bash
-   read -rs NEO4J_PASSWORD && export NEO4J_PASSWORD   # typed without echo, so the shell history holds only the variable's name
+   read -rs NEO4J_PASSWORD && export NEO4J_PASSWORD   # the password, in the variable the next two commands read
    docker run -d --name epm-lpg -p 17687:7687 -e NEO4J_AUTH="neo4j/$NEO4J_PASSWORD" -e NEO4J_PLUGINS='["apoc"]' \
      -e NEO4J_dbms_security_procedures_unrestricted='apoc.*,n10s.*' \
      -v "$IMPORT":/import -v "$PLUGINS":/plugins neo4j:2025.06.2
    ```
 
-6. Load and verify. This step checks the rules and the shapes, writes the N-Triples and the in-graph shapes into the import folder, loads them, runs the three checks, and writes `projection-report.json`. `pipeline.py` reads the password from the environment variable `NEO4J_PASSWORD`, exported in step 5, and takes no password argument, so the password is not part of its command line: a run that records the commands it runs, such as the release validation, records none of it. (Docker, in step 5, takes it through `-e`, as Docker requires.)
+6. Load and verify. This step checks the rules and the shapes, writes the N-Triples and the in-graph shapes into the import folder, loads them, runs the three checks, and writes `projection-report.json`. `pipeline.py` reads the password from the environment variable `NEO4J_PASSWORD`, exported in step 5; it has no argument for it.
 
    ```bash
    uv run --with rdflib --with pyshacl --with neo4j python pipeline.py load-verify \
