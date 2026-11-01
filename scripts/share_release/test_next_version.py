@@ -71,3 +71,15 @@ def test_finish_moves_the_old_package_and_refuses_the_newest(tmp_path):
     nv.finish(args, str(ont))
     assert (ont / "releases" / "previous" / "kpi" / "1.3.0").is_dir() and not (ont / "releases" / "kpi" / "1.3.0").exists()
     assert '"1.3.1"' in (ont / "projection" / "pipeline.py").read_text()
+
+
+def test_finish_changes_nothing_when_a_list_lacks_the_version(tmp_path):
+    ont = tmp_path
+    for v in ("1.3.0", "1.3.1"):
+        (ont / "releases" / "kpi" / v).mkdir(parents=True)
+    (ont / "projection" / "skill-run").mkdir(parents=True)
+    (ont / "projection" / "pipeline.py").write_text('("kpi", "1.2.0")')
+    (ont / "projection" / "skill-run" / "epm-config.json").write_text('"kpi": "1.3.0"')
+    with pytest.raises(SystemExit):
+        nv.finish(type("A", (), {"module": "kpi", "old": "1.3.0"}), str(ont))
+    assert (ont / "releases" / "kpi" / "1.3.0").is_dir() and not (ont / "releases" / "previous").exists()

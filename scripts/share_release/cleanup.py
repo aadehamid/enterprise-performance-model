@@ -10,8 +10,8 @@ file in the ledger still exists, and nothing in the ledger was left to someone e
 (empty_stores.py) and reloaded from the release, not from main (the owner's instruction of 2026-11-01), outside this
 script: an "aura" entry is printed and counts as not done until the ledger no longer holds it.
 
-A Databricks catalog is purged only when the ledger line records that this run created it, and never when it is a
-shared catalog such as idp_sbx.
+A Databricks catalog is purged only when its name starts with the validation's prefix and the ledger line records that
+this run created it, and never when it is a shared catalog such as idp_sbx. So give DEMO_CATALOG that prefix in --env.
 
 A folder or file entry is removed only when it is a plain path of the validation: never "/", the home folder, a
 path of fewer than three components, or a folder that holds the checkout (--tree) or this tool.
@@ -55,6 +55,9 @@ def unsafe(path, protected):
 
 
 # A shared workspace's catalogs: never this tool's to purge, whatever a ledger line says.
+# A purge drops a whole catalog. Prior absence alone is weak proof, since someone could create the name between the check
+# and the run, so the name must also be one nobody else would choose.
+TEST_CATALOG_PREFIX = "epm_release_validate_"
 SHARED_CATALOGS = {"idp_sbx", "workspace", "main", "samples", "system", "hive_metastore"}
 
 
@@ -63,6 +66,8 @@ def catalog_refusal(entry):
     may go: the ledger line must say so, and stores.py says so only when the catalog was absent before the run."""
     if entry["name"].lower() in SHARED_CATALOGS:
         return "it is a shared catalog"
+    if not entry["name"].startswith(TEST_CATALOG_PREFIX):
+        return f"its name does not start with {TEST_CATALOG_PREFIX}, the prefix of a catalog made for one validation"
     if entry.get("detail_created_by_run") is not True:
         return "the ledger does not show that this run created it"
     return None

@@ -93,11 +93,15 @@ def finish(a, ontology=ONTOLOGY):
     if new == a.old:
         raise SystemExit(f"{a.module} {a.old} is still the newest package: write the new one first")
     folder = os.path.join(ontology, "releases", "previous", a.module)
-    os.makedirs(folder, exist_ok=True)
-    shutil.move(os.path.join(ontology, "releases", a.module, a.old), os.path.join(folder, a.old))
+    source, target = os.path.join(ontology, "releases", a.module, a.old), os.path.join(folder, a.old)
     pipeline, config = (os.path.join(ontology, "projection", "pipeline.py"),
                         os.path.join(ontology, "projection", "skill-run", "epm-config.json"))
+    # Everything that can stop this is checked before anything changes.
     p, c = set_lists(read(pipeline), read(config), a.module, a.old, new)
+    if not os.path.isdir(source) or os.path.exists(target):
+        raise SystemExit(f"cannot move {source} to {target}: the source is missing or the target exists")
+    os.makedirs(folder, exist_ok=True)
+    shutil.move(source, target)
     write(pipeline, p)
     write(config, c)
     print(f"{a.module} {a.old} moved to releases/previous/; the projection's lists name {new}")

@@ -59,7 +59,7 @@ A new cut is a small edit: `manifest.py` holds its facts in one place (`RELEASE_
 - `vocabulary.py` holds the leak vocabulary the rules and the gate share (peers' tickers and EDGAR filers, with
   their source, the other repositories, the graph prefixes).
 - `cleanup.py` removes only what the ledger names, refuses the root, the home folder, any folder holding a checkout
-  and any catalog this run did not create, and exits 0 only with proof that everything is gone.
+  and any catalog this run did not create (a test catalog's name starts with `epm_release_validate_`), and exits 0 only with proof that everything is gone.
 - `empty_stores.py` empties the stores named on its command line before they are reloaded from the release.
 
 The release is for people who only ever receive it (the decision's amendment of 2026-11-01). It names no agent or review

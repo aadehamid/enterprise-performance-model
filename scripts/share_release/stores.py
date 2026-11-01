@@ -14,7 +14,7 @@ Each row runs against test stores named in the --env file, never the loaded ones
     AURA_ENV=~/.config/neo4j/aura.env        the owner's AuraDB, authorized for this run (the brief); omit to skip the copy step
     DATABRICKS_ENV=~/.config/databricks/epm.env
     DATABRICKS_TABLE=epm_triples_validate    the ontology's test table
-    DEMO_CATALOG=epm_validate                the demo's test catalog
+    DEMO_CATALOG=epm_release_validate_demo                the demo's test catalog
     DEMO_PG_PORT=55433                       the demo's Postgres test container port (compose project DEMO_PROJECT)
     DEMO_PROJECT=pricing-validate
     SKILLS_DIR=<folder holding ontology-to-lpg and rdf-store>   (the release's skills/, or ~/.agents/skills on main)
@@ -411,7 +411,7 @@ volumes:
 def demo_env(tree, env):
     """The demo's environment for the test: its own Postgres, catalog and triple table."""
     e = {**release_env(tree), "SOURCE_PG_DSN": f"postgresql://demo:demo@localhost:{env.get('DEMO_PG_PORT', '55433')}",
-         "DEMO_CATALOG": env.get("DEMO_CATALOG", "epm_validate")}
+         "DEMO_CATALOG": env.get("DEMO_CATALOG", "epm_release_validate_demo")}
     if env.get("DATABRICKS_TRIPLES_TABLE_FULL"):
         e["EPM_TRIPLES"] = env["DATABRICKS_TRIPLES_TABLE_FULL"]
     return e
