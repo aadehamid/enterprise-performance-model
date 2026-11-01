@@ -50,7 +50,7 @@ def packages_on_disk():
 
 # The share release ships only each module's newest and previous package (EPM-DEC-001-0110), so with
 # EPM_SHARE_RELEASE set the list is what is on disk; on main it is the pinned list above, checked against the disk.
-if os.environ.get("EPM_SHARE_RELEASE"):
+if build_module.SHARE_RELEASE:  # the environment variable, or release.json at the tree's root
     PACKAGES = sorted(packages_on_disk())
 
 
