@@ -6,6 +6,8 @@ os.environ["EPM_RELEASE_OWNER_NAMES"] = "Ada Lovelace,Ada,adalove"  # a stand-in
 import subprocess
 import sys
 
+import pytest
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import export  # noqa: E402
@@ -91,3 +93,18 @@ def test_every_kind_of_file_keeps_its_mode(tmp_path):
     assert mode("business_architecture/ontology/projection/run_local.sh") == 0o755
     assert mode("business_architecture/reference/logo.png") == 0o640
     assert mode("business_architecture/reference/book.xlsx") == 0o640
+
+
+def test_export_refuses_a_link_on_a_shipped_path(tmp_path):
+    outside = tmp_path / "outside.json"
+    outside.write_text("SECRET-OUTSIDE-TREE\n")
+    epm = tmp_path / "epm"
+    make_tree(str(epm), {"business_architecture/ontology/README.md": "text\n"})
+    folder = epm / "business_architecture/business_process"
+    folder.mkdir(parents=True)
+    (folder / "map.json").symlink_to(outside)
+    out = tmp_path / "out"
+    (tmp_path / "skills").mkdir()
+    with pytest.raises(SystemExit, match="the release ships no links"):
+        export.export(str(epm), str(tmp_path / "skills"), str(out))
+    assert "SECRET-OUTSIDE-TREE" not in "".join(p.read_text() for p in out.rglob("*.json") if p.is_file())

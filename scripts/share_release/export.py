@@ -110,6 +110,9 @@ def export(epm, skills, out, remove_internal=False):
             dest = os.path.join(out, dest_rel)
             os.makedirs(os.path.dirname(dest), exist_ok=True)
             src = os.path.join(tree, path)
+            # A link would put whatever it points at into the release as an ordinary file, and neither repository has one.
+            if os.path.realpath(src) != os.path.join(os.path.realpath(tree), path):
+                raise SystemExit(f"{path} is a link or sits behind one; the release ships no links")
             entry = {"source": source, "release_path": dest_rel}
             if is_text(path):
                 with open(src, encoding="utf-8", errors="surrogateescape") as f:
