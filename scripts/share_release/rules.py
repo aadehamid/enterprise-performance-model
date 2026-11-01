@@ -217,6 +217,10 @@ def rule_left_out(text, ctx):
     text, k = _count(r"^\| `(?:LOCAL-STORES|STORE-INVENTORY)\.md` \|.*\n", "", text, re.M); n += k
     text, k = _count(r"following the guideline in `\.\./lpg-projection/` \(v2\.2\)", "following the projection guideline, version 2.2,", text); n += k
     text, k = _count(r", and `\.\./lpg-projection/` keeps the v2\.2 copy as superseded evidence;", " (the v2.2 copy is not part of this release);", text); n += k
+    # The walkthrough's commands for core's earlier builders: they read the earlier packages, which the release
+    # leaves out, so the release shows them as what was run, not as a command to run.
+    text, k = _count(r"^(uv run [^\n]*python build_core(?:_next|_2_1)?\.py(?: --verify)?)$",
+                     r"# run when that release was cut; its inputs are not in this release (the newest builder is build_core_2_4.py): \1", text, re.M); n += k
     return text, n
 
 

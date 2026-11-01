@@ -224,3 +224,11 @@ def test_the_guide_tests_record_term_follows_its_fixture():
     out, _ = rules.apply(src, "skills/ontology/scripts/test_playbook_guide.py", {"EPM-DEC-001-0001": "2026-10-05"})
     assert '("a project decision record", r"the decision of \\d{4}-\\d{2}-\\d{2}|\\bEPM\\b")' in out
     assert '("see the decision of 2026-10-05", "a project decision record")' in out
+
+
+def test_the_earlier_core_builders_commands_become_notes():
+    src = "# from business_architecture/ontology/release\nuv run --with rdflib python build_core_next.py --verify\nuv run --with rdflib python build_core_2_4.py --verify\n"
+    out, _ = rules.apply(src, "business_architecture/ontology/epm-walkthrough.html")
+    assert out == ("# from business_architecture/ontology/release\n# run when that release was cut; its inputs are not in this release "
+                   "(the newest builder is build_core_2_4.py): uv run --with rdflib python build_core_next.py --verify\n"
+                   "uv run --with rdflib python build_core_2_4.py --verify\n")

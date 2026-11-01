@@ -22,6 +22,8 @@ def test_a_from_comment_sets_the_folder_and_variables_carry_across_blocks():
         state = {}
         r = snippets.run_shell("# from a/b\ncat x.txt", tree, {}, state)
         assert r["lines"][0]["ran"] and r["lines"][0]["returncode"] == 0 and "hi" in r["lines"][0]["tail"]
+        r = snippets.run_shell("# from a\nls .\n# from a/b\ncat x.txt", tree, {}, state)
+        assert [x["returncode"] for x in r["lines"]] == [0, 0] and "hi" in r["lines"][1]["tail"]
         r = snippets.run_shell("# from nowhere\nls", tree, {}, state)
         assert r["lines"][0] == {"line": "# from nowhere", "ran": False, "reason": "folder not in the tree"}
         r = snippets.run_shell('DIR=' + os.path.join(tree, "a") + '; mkdir -p "$DIR"', tree, {}, state)

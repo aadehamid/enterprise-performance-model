@@ -100,7 +100,8 @@ def run_sparql(text, tree):
     return {"ran": True, "rows": len(list(res))}
 
 
-ASSIGN = re.compile(r"^(?:export\s+)?([A-Z_][A-Z0-9_]*)=(\S*)$")
+ASSIGN = re.compile(r"^(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)=(\S*)$")
+FROM = re.compile(r"^#\s*from\s+(\S+)")
 
 
 def run_shell(text, tree, env, state=None):
@@ -110,15 +111,17 @@ def run_shell(text, tree, env, state=None):
     variables = state.setdefault("vars", {})
     raw = [l.strip() for l in text.split("\n") if l.strip()]
     cwd, results = tree, []
-    m = re.match(r"^#\s*from\s+(\S+)", raw[0]) if raw else None
-    if m:
-        target = os.path.normpath(os.path.join(tree, m.group(1).strip("`")))
-        if os.path.isdir(target):
-            cwd = target
-        else:
-            results.append({"line": raw[0], "ran": False, "reason": "folder not in the tree"})
-    lines = [l for l in raw if not l.startswith("#")]
-    for line in lines:
+    for line in raw:
+        m = FROM.match(line)
+        if m:  # "# from <folder>" before a command: the folder it runs in
+            target = os.path.normpath(os.path.join(tree, m.group(1).strip("`")))
+            if os.path.isdir(target):
+                cwd = target
+            else:
+                results.append({"line": line, "ran": False, "reason": "folder not in the tree"})
+            continue
+        if line.startswith("#"):
+            continue
         line = re.sub(r"\s+#.*$", "", line)
         parts = [p.strip() for p in line.split(";")] if ";" in line and all(ASSIGN.match(p.strip()) or p.strip().startswith("mkdir ") for p in line.split(";")) else [line]
         assigned = [ASSIGN.match(p) for p in parts]
@@ -140,13 +143,13 @@ def run_shell(text, tree, env, state=None):
             else:
                 results.append({"line": line, "ran": False, "reason": "folder not in the tree"})
             continue
-        if not READ_ONLY.match(line) or re.search(r"--write|--yes|load_postgres|replicate|upload| build\b|tech_graph (?:load|sync|collect)|run_projection|run_local|docker compose [^\n]*up|docker run|--repeat|acceptance run|genie|supervisor", line):
+        if not READ_ONLY.match(line) or re.search(r"-m pricing_demo\.|sync_stores\.py|--write|--yes|load_postgres|replicate|upload| build\b|tech_graph (?:load|sync|collect)|run_projection|run_local|docker compose [^\n]*up|docker run|--repeat|acceptance run|genie|supervisor", line):
             results.append({"line": line, "ran": False, "reason": "writes data, needs a login or a store, or is not read-only"})
             continue
         e = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
         e.update({"EPM_SHARE_RELEASE": "1"} if os.path.exists(os.path.join(tree, "KNOWN-OPEN-ITEMS.md")) else {})
         e.update(variables)
-        unset = [v for v in re.findall(r"\$\{?([A-Z_][A-Z0-9_]*)\}?", line) if v not in e]
+        unset = [v for v in re.findall(r"\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?", line) if v not in e]
         if unset:
             results.append({"line": line, "ran": False, "reason": f"uses a variable no earlier block set: {', '.join(unset)}"})
             continue
