@@ -227,3 +227,26 @@ def test_glob_characters_in_the_tree_path_do_not_empty_the_comparison(tmp_path):
     row = validate.compare_business_process(str(main), str(release), {})
     assert row["different"] == ["business_architecture/business_process/map.json"] and row["ok"] is False
 
+
+def test_a_linked_or_unreadable_folder_stops_the_comparison(tmp_path):
+    main, release = tmp_path / "main", tmp_path / "release"
+    for tree in (main, release):
+        (tree / "business_architecture" / "business_process").mkdir(parents=True)
+        (tree / "business_architecture/business_process/map.json").write_text('{"n": 1}\n')
+    elsewhere = tmp_path / "elsewhere"
+    elsewhere.mkdir()
+    (elsewhere / "unexpected.json").write_text('{"n": 2}\n')
+    link = release / "business_architecture/business_process/linked"
+    link.symlink_to(elsewhere, target_is_directory=True)
+    with pytest.raises(OSError, match="linked folder"):
+        validate.compare_business_process(str(main), str(release), {})
+    link.unlink()
+    locked = release / "business_architecture/business_process/proposals"
+    locked.mkdir()
+    locked.chmod(0)
+    try:
+        with pytest.raises(PermissionError):
+            validate.compare_business_process(str(main), str(release), {})
+    finally:
+        locked.chmod(0o755)
+

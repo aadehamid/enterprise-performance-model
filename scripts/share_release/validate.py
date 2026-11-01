@@ -274,9 +274,18 @@ def compare(main, release, out):
 
 def json_files(root):
     """Every JSON file under root, relative to it: nested, hidden or upper-case names included, as the export ships
-    them. os.walk takes the root literally, so a folder name holding glob characters cannot empty the list."""
-    return [os.path.relpath(os.path.join(folder, name), root).replace(os.sep, "/")
-            for folder, _, names in os.walk(root) for name in names if name.lower().endswith(".json")]
+    them. os.walk takes the root literally, so a folder name holding glob characters cannot empty the list. A folder
+    that cannot be read, or a linked folder (which os.walk would not enter), stops the row instead of hiding files."""
+    def refuse(err):
+        raise err
+    found = []
+    for folder, subfolders, names in os.walk(root, onerror=refuse):
+        for sub in subfolders:
+            if os.path.islink(os.path.join(folder, sub)):
+                raise OSError(f"a linked folder in the process maps: {os.path.join(folder, sub)}")
+        found += [os.path.relpath(os.path.join(folder, name), root).replace(os.sep, "/")
+                  for name in names if name.lower().endswith(".json")]
+    return found
 
 
 def compare_business_process(main, release, dates):
