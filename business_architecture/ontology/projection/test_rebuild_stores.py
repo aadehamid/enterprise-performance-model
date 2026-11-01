@@ -168,10 +168,10 @@ class Plan(Base):
 
 
 class Running(Base):
-    def holding(self, lines, code=0, containers=""):
+    def holding(self, lines, code=0, containers="", docker_code=0):
         def fake(cmd, **k):
             if cmd[0] == "docker":
-                return types.SimpleNamespace(stdout=containers, returncode=0)
+                return types.SimpleNamespace(stdout=containers, returncode=docker_code)
             return types.SimpleNamespace(stdout="\n".join(json.dumps(x) for x in lines), returncode=code)
         s = rb.settings(self.env_file(""))
         return rb.holding(s, ALL, {}, runner=fake)
@@ -189,6 +189,12 @@ class Running(Base):
         held, problems = self.holding(lines, containers="abc123\n")
         self.assertEqual(held, [("driver", "a container that did not answer, ServiceUnavailable")])
         self.assertEqual(problems, [])
+
+    def test_docker_failing_to_list_containers_is_a_problem_not_an_empty_store(self):
+        lines = [{"store": "driver", "unreachable": "ServiceUnavailable"}, {"store": "jena", "held": 0},
+                 {"store": "aura", "held": 0}, {"store": "databricks", "held": 0}]
+        held, problems = self.holding(lines, docker_code=1)
+        self.assertEqual((held, problems), ([], ["driver: Docker could not list its containers; nothing was changed"]))
 
     def test_a_failed_count_is_not_an_empty_store(self):
         held, problems = self.holding([], code=1)

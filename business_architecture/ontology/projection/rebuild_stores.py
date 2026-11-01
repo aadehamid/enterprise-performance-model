@@ -217,10 +217,10 @@ def plan(s, stores, config_path, empty):
 
 
 def containers(project, runner=subprocess.run):
-    """The containers of a compose project, running or stopped: what the load would remove."""
+    """The containers of a compose project, running or stopped: what the load would remove. None when Docker cannot say."""
     done = runner(["docker", "ps", "-aq", "--filter", f"label=com.docker.compose.project={project}"],
                   stdin=subprocess.DEVNULL, capture_output=True, text=True)
-    return done.stdout.split()
+    return done.stdout.split() if done.returncode == 0 else None
 
 
 def holding(s, stores, env, runner=subprocess.run):
@@ -246,8 +246,12 @@ def holding(s, stores, env, runner=subprocess.run):
         elif "unreachable" in row:
             if store not in projects:
                 problems.append(f"{store}: could not be reached ({row['unreachable']}); check its login values")
-            elif containers(projects[store], runner):
-                held.append((store, f"a container that did not answer, {row['unreachable']}"))
+            else:
+                found = containers(projects[store], runner)
+                if found is None:
+                    problems.append(f"{store}: Docker could not list its containers; nothing was changed")
+                elif found:
+                    held.append((store, f"a container that did not answer, {row['unreachable']}"))
         elif row.get("held"):
             held.append((store, row["held"]))
     return held, problems
