@@ -74,7 +74,7 @@ def make_zip(release, out):
 
 
 def extract(zip_path, into):
-    """Unpack a zip, restoring each file's mode from the archive (a recipient's ./run_local.sh must still run)."""
+    """Unpack a zip, restoring each file's mode from the archive (a recipient's ./scripts/check.sh must still run)."""
     import procs
     r = procs.run(["python3", "-c", EXTRACT_CODE, zip_path, into], timeout=600)
     if r.returncode:

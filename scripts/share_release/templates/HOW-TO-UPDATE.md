@@ -97,13 +97,11 @@ The worked example changes the definition of the measure Unit Utilization in `kp
    ```
 
 4. Follow the release steps for `kpi`.
-5. Search the whole copy for the old wording, and update each document that quotes it. No check catches a copy of a sentence. This guide also matches, as its own example, so leave it. For this example:
+5. Search the whole copy for the old wording, and update each document that quotes it. No check catches a copy of a sentence. This command leaves out this guide, which quotes the wording as its example, and the packages, which never change. In a plain folder with no Git, use `grep -rn` and skip the same paths. For this example:
 
    ```sh
-   git grep -n "as a share of its constrained capacity"
+   git grep -n "as a share of its constrained capacity" -- . ':!HOW-TO-UPDATE.*' ':!business_architecture/ontology/releases/'
    ```
-
-   Leave `releases/` and `releases/previous/` as they are, since a released package never changes.
 
 If the meaning changed, the release is a major, and your ontology owner approves it.
 
@@ -168,7 +166,7 @@ Register the module in every place below. A place you miss fails a check or leav
 | `$ONT/projection/skill-run/epm-config.json` | The version under `packages`, the namespace under `own_namespaces`, the prefix under `prefixes` |
 | `$ONT/regression/` | Its questions in `expected.csv`, a query in `queries/`, and the module's files in the list in `run.py` |
 | `$ONT/validation/test_all_module_shapes.py` | Its `shapes.ttl` in `SHAPE_FILES` |
-| `$ONT/competency-questions.md` | Each new question, numbered after the last. "Locked" there describes this release's set: your owner may add to it |
+| `$ONT/competency-questions.md` | Each new question, numbered after the last. "Locked" there, and "44 questions" there and in `$ONT/epm-ontology-guide.html` and `$ONT/regression/run.py`, describe this release's set: your owner may add to it |
 | `scripts/epm_facts.py` | An entry in the `coverage` table, if processes link to the module |
 | `$ONT/MODULES.md` | A section on the module, with a `<!-- module: name -->` example |
 | `scripts/build_docs_html.py` | The module's folder in `MODULE_READMES`, then run the builder for its HTML page |
@@ -207,11 +205,35 @@ A package names the exact version of each module it requires. So a new version o
 
 ## Project into Neo4j and Jena
 
-The packages are the source. Neo4j and Jena are copies that you can empty and reload. `scripts/check.sh` does not need them: when the stores are behind, it prints a note and still passes. `$ONT/projection/README.md`, "Run the projection", gives the commands, and `$ONT/projection/ontology-stores-runbook.html` shows each store hands on. You need Docker and Java. After a load:
+The packages are the source. Neo4j and Jena are copies that you can empty and reload. `scripts/check.sh` does not need them: when the stores are behind, it prints a note and still passes. One command, `rebuild_stores.py`, loads both from an environment file. You need Docker, Java 11 or later and ROBOT 1.9.10. `$ONT/epm-walkthrough.html`, "Connect and load every store", says how to get ROBOT and explains each step, and `$ONT/projection/ontology-stores-runbook.html` shows each store hands on.
 
-1. Check that the load lost nothing, added nothing and found no violation.
-2. Update the projection's report and manifest as that README says, and commit them.
-3. Run `sync_stores.py check` to see which store is behind the newest packages.
+1. Copy the environment file outside your copy, and let only yourself read it. The script refuses a file that others can read. Every key has a default, so for these two stores you can leave the file as it is.
+
+   ```sh
+   mkdir -p ~/.config/epm
+   cp $ONT/projection/skill-run/environment.example ~/.config/epm/qa.env
+   chmod 600 ~/.config/epm/qa.env
+   ```
+
+2. List the steps. This changes nothing:
+
+   ```sh
+   python3 $ONT/projection/rebuild_stores.py --env ~/.config/epm/qa.env --store driver --store jena --plan
+   ```
+
+3. Load the stores. **`--empty` replaces what the two stores hold.** Without it, the script refuses a store that holds data.
+
+   ```sh
+   python3 $ONT/projection/rebuild_stores.py --env ~/.config/epm/qa.env --store driver --store jena --empty
+   ```
+
+   The script stops at the first failing step and names it. The load fails if it lost a triple, added one or found a violation. The script also takes the result into `$ONT/projection/` and checks the stores against your packages.
+4. Commit `inferred.nt`, `projection-manifest.json` and `projection-report.json` from `$ONT/projection/`. `scripts/check.sh` then stops printing its note, and `python3 scripts/epm_facts.py projection` prints the new figures.
+5. To see later which store is behind your newest packages:
+
+   ```sh
+   (cd $ONT/projection && uv run -q --no-project --with rdflib --with neo4j python sync_stores.py check --ref worktree --store driver --store jena)
+   ```
 
 ## The optional check against this release
 

@@ -96,7 +96,7 @@ def kind_of(b):
         return "sql"  # Databricks SQL over a catalog table or a metric view
     if b["lang"] in ("sparql",) or first2.upper() in ("PREFIX", "SELECT", "ASK", "CONSTRUCT", "DESCRIBE"):
         return "sparql"
-    if b["lang"] in ("bash", "sh", "shell", "console") or first2 in ("cd", "uv", "python3", "python", "docker", "./run_local.sh", "scripts/check.sh", "export", "set", "curl", "ls"):
+    if b["lang"] in ("bash", "sh", "shell", "console") or first2 in ("cd", "uv", "python3", "python", "docker", "scripts/check.sh", "export", "set", "curl", "ls"):
         return "shell"
     if b["lang"] in ("turtle", "ttl") or first2.startswith("@prefix"):
         return "turtle"
