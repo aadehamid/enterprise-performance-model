@@ -57,7 +57,7 @@ PATTERNS = [
     ("a peer's ticker", re.compile(TICKERS)),
     # A filer's CIK may be written with leading zeroes (EDGAR accepts both); the list is vocabulary.PEER_CIKS, cited there.
     ("a peer's filing on EDGAR", re.compile(r"sec\.gov/Archives/edgar/data/0*(?:" + "|".join(V.PEER_CIKS) + r")/|edgar/data/\d+/\S*/(?:" + "|".join(V.PEER_SLUGS) + r")-\d{8}\.", re.I)),
-    ("a document the release leaves out", re.compile(r"LOCAL-STORES\.(?:md|html)|STORE-INVENTORY\.(?:md|html)|ontology-worklog|decision-packages|business_architecture/ontology/lpg-projection|\.\./lpg-projection/|`lpg-projection/`|\(lpg-projection/")),
+    ("a document the release leaves out", re.compile(r"LOCAL-STORES\.(?:md|html)|STORE-INVENTORY\.(?:md|html)|ontology-worklog|pr-reviews-262-266-269|business_architecture/ontology/lpg-projection|\.\./lpg-projection/|`lpg-projection/`|\(lpg-projection/")),
     ("an issue or pull request number", re.compile(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+|(?<![&\w-])#\d{3}\b(?![\da-fA-F])")),
     ("the graph's double-underscore separator", re.compile(r"\b[a-z][a-z0-9]*__[A-Za-z]")),
     ("an agent or review tool named", re.compile(AGENT_NAMES, re.I)),

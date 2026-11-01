@@ -55,6 +55,9 @@ EPM_RULES = [
     ("ship", "business_architecture/domain/data-domain-register.md"),
     ("ship", "business_architecture/domain/customer_domain_problem_statement_v0.1.md"),
     ("ship", "business_architecture/domain/market-data-and-commercial-risk-draft.md"),
+    ("ship", "business_architecture/domain/decision-packages/*"),
+    # Only about the agents' reviews and merges, so it cannot be made neutral (the decision's amendment of 2026-11-01).
+    ("out", "business_architecture/domain/decision-packages/2026-10-14/pr-reviews-262-266-269.md"),
     # The pricing demo (the owner, 2026-10-31: only the ontology and the pricing demo). The O2C demos stay out.
     ("ship", "demos/downstream-pricing-databricks-free/*"),
     # Scripts that build or validate.

@@ -53,6 +53,20 @@ SME = "a subject matter expert reviewing the documents"
 FILE_MAP_ROW = re.compile(r"<tr><td><code>([^<]+)</code></td>.*?</tr>\n?")
 
 
+def drop_dead_links(readme, tree):
+    """A line of the README that links a walkthrough section goes when this tree's walkthrough has no such section."""
+    path = os.path.join(tree, ONT, "epm-walkthrough.html")
+    page = ""
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            page = f.read()
+
+    def keep(line):
+        m = re.search(r"epm-walkthrough\.html#([\w-]+)", line)
+        return not m or f'id="{m.group(1)}"' in page
+    return "".join(line for line in readme.splitlines(True) if keep(line))
+
+
 def prune_file_map(page, tree):
     """In the walkthrough's appendix, a row whose first cell names a path that is not in the tree goes. For a pattern
     (`folder/*`), the row stays when its folder is in the tree."""
@@ -183,6 +197,8 @@ class Rebuild:
         for name, dest in TEMPLATES:
             with open(os.path.join(HERE, "templates", name)) as f:
                 text = manifest.fill(f.read())
+            if name == "README.md":
+                text = drop_dead_links(text, self.release)
             out = os.path.join(self.release, dest)
             os.makedirs(os.path.dirname(out) or self.release, exist_ok=True)
             with open(out, "w") as f:

@@ -13,7 +13,7 @@ To understand it, start with `business_architecture/ontology/epm-ontology-guide.
 | `business_architecture/business_process/` | The process authority: the downstream process map, the two value streams, the office lanes and the data-product portfolio, as JSON, with their schemas and tests |
 | `business_architecture/ontology/` | The ontology: each module's sources and builder, the released packages (`releases/`, the newest set, and `releases/previous/`, the release before each), the projection into Neo4j, the competency-question regression, the validation shapes, and the documents |
 | `business_architecture/reference/` | The evidence behind the definitions: MPC's public filings, the industry view (analysis of publicly available filings from U.S. refining peers), the APQC framework, vendor descriptions |
-| `business_architecture/domain/` | The business glossary, the data domains and the problem statement |
+| `business_architecture/domain/` | The business glossary, the data domains, the problem statement, and the decision packages |
 | `demos/downstream-pricing-databricks-free/` | The pricing demo: synthetic pricing data in Databricks Free Edition, metric views bound to the ontology's measures, Genie agents, a technical graph and the acceptance tests |
 | `skills/` | The four skills that hold the method: `ontology` (the method), `ontology-to-lpg` (the projection into a property graph), `rdf-store` (triple stores) and `clear-writing` |
 | `scripts/` | `check.sh`, the one command that proves your copy is valid; `check-pinned.sh`, the optional check that it still equals this release; `epm_facts.py`, which reports figures from the sources; the page builder |

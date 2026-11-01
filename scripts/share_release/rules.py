@@ -469,6 +469,11 @@ AGENT_TEXT = [
     # The worklog does not ship (the decision's amendment of 2026-11-01).
     (r"the worklog \(the build record\),\s+", ""),
     (r"^\|[^\n]*ontology-worklog[^\n]*\n", ""),
+    (r"^\|[^\n]*pr-reviews-262-266-269[^\n]*\n", ""),
+    (r"^- [^\n]*Cursor app merged[^\n]*\n", ""),
+    (r" Check what a private repo changes for the Cursor app and the CI runs before you choose this\.", ""),
+    (r' ?\(`business_architecture/ontology/step4/playbook/ontology-worklog\.md`, section "[^"]*"\.?\)', ""),
+    (r'; worklog entry "[^"]*", `business_architecture/ontology/step4/playbook/ontology-worklog\.md`, section "[^"]*"', ""),
     (r"\s+and this project's decision records\s+\(`\.\./domain/decisions/`, the decision records\)", ""),
     (r",? and\s+the worklog's plan table for where the build stands\. The worklog was named\s+`ontology-playbook\.md` until [\d-]+\.", "."),
     (r"project decisions get an the decision records record and a dated worklog\s+entry,", "project decisions get a decision record,"),

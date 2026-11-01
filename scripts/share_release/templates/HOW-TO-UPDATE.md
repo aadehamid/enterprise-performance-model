@@ -237,4 +237,5 @@ These describe how the ontology was first built. You need none of them to update
 - `$ONT/epm-walkthrough.html`, Part 2, and `$ONT/build/`, apart from the identity map named above.
 - `$ONT/step4/` and the older core builders, `build_core_next.py` and `build_core_2_1.py`, which rebuild earlier releases.
 - `$ONT/release/frozen/`, apart from the copies you add.
+- `business_architecture/domain/decision-packages/`, questions put to the subject matter expert during the build.
 - `$ONT/business-closeout.md`, and any note in a README or changelog dated before you received this release.

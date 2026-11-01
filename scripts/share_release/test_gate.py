@@ -432,5 +432,5 @@ def test_the_skills_may_teach_pull_requests_and_delegation(tmp_path):
 
 
 def test_a_left_out_document_fails(tmp_path):
-    (tmp_path / "a.md").write_text("see step4/playbook/ontology-worklog.md and decision-packages/x\n")
+    (tmp_path / "a.md").write_text("see step4/playbook/ontology-worklog.md and pr-reviews-262-266-269.md\n")
     assert any(h["reason"] == "a document the release leaves out" for h in gate.scan(str(tmp_path)))
