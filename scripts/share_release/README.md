@@ -37,10 +37,9 @@ python3 scripts/share_release/export.py --epm . --skills ../personal-agent-skill
   `main` and the release traces to a rule. It reads no Git history.
 - `rebuild.py` rebuilds packages, pages and hashes inside the release and writes its `check.sh` from
   `templates/check.sh`, with the test files found in the tree and the skills' checks from `validate.SKILL_CHECKS`,
-  the one table the `skills-tests` row runs too (`skill_checks.py`). Its freeze step and the builders' release
-  mode (`frozen_sources.py`, `build_module.package_folder`, `scripts/conftest.py`) are not on `main` yet: they are
-  pending in the branch `release/builders-frozen-sources`, pull request #460, which merges before this tool's.
-  Until then a cut from this branch alone stops at the rebuild's freeze step.
+  the one table the `skills-tests` row runs too (`skill_checks.py`). Its freeze step relies on the builders'
+  release mode (`frozen_sources.py`, `build_module.package_folder`, `scripts/conftest.py`), merged into `main` by
+  pull request #460 on 2026-11-01.
 - `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing), record number
   (full or short form), issue number, left-out document or double-underscore graph name; names match whole words;
   binaries and base64 data are read as the printable text inside them.
