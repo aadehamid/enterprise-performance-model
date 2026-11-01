@@ -64,7 +64,7 @@ def neo4j_login(env):
     return env.get("TEST_NEO4J_PASSWORD") or read_login(env) or ""
 READ_ONLY = re.compile(r"^(?:cd |ls |cat |head |tail |grep |find |wc |echo |printf |python3? [^\n]*(?:--verify|--check| find | modules | coverage |ask\.py|run\.py|--list|--help)|"
                        r"uv run [^\n]*(?:--verify|--check| find | modules | coverage |ask\.py|run\.py|pytest|counts|describe|check |--dry-run|--help|--list|walk)|"
-                       r"sha256sum |shasum |git (?:log|status|show|diff) |docker ps|docker compose [^\n]*\bls\b|curl -s[^\n]*localhost)")
+                       r"sha256sum |shasum |git\b|docker ps|docker compose [^\n]*\bls\b|curl -s[^\n]*localhost)")
 MODULES = list(manifest.MODULES)
 
 
@@ -172,12 +172,16 @@ UV_OPTIONS = {"-q", "--no-project", "--with:", "--group:", "--python:", "--proje
 PYTHON_OPTIONS = {"-B", "-I", "-q", "-m:"}
 # A document's own variable is never exported under a name a tool reads for a program or a path to one.
 NOT_EXPORTED = re.compile(r"^(?:GIT_|PYTHON|UV_|LD_|DYLD_|PIP_|SSL_|XDG_|PATH$|HOME$|TMPDIR$|SHELL$|ENV$|BASH_ENV$|IFS$|VIRTUAL_ENV$)")
-# git reads programs to run from its configuration (diff.external, core.pager, textconv) wherever it finds a config
-# file, so it runs with a fixed environment that carries no document variable at all: no system or global config,
-# a throwaway HOME and XDG folder, no pager and no hooks, and on diff, log and show git's own --no-ext-diff and
-# --no-textconv, which override diff.external and a driver's textconv wherever they are configured.
-GIT_ARGV_PREFIX = ("--no-pager", "-c", "core.pager=cat", "-c", "core.hooksPath=/dev/null")
-GIT_DIFF_GUARDS = ("--no-ext-diff", "--no-textconv")
+# git never runs: every line whose first word is git is listed as not run with GIT_REASON, before any other
+# judgement. The release tree is not a Git checkout, so such a line could not run there as written; and git's
+# configuration names programs it runs, which a document's variables or a checkout's files could set: core.fsmonitor
+# ("the pathname of the 'fsmonitor' hook command"), core.pager ("Text viewer ... interpreted by the shell"),
+# core.hooksPath, diff.external ("diff generation is ... using the given command"), filter.<driver>.clean ("The
+# command which is used to convert the content of a worktree file"), core.sshCommand (git-config(1), Git 2.56.0,
+# 2026-09-27, read with `git help config` on 2026-11-01); --no-ext-diff disallows external diff drivers and
+# --no-textconv the text conversion filters (git-diff(1), same version), but neither names the monitor, the pager,
+# the hooks or the clean filter, so the policy is not to run git at all rather than to guard it.
+GIT_REASON = "not run: the release tree is not a Git checkout"
 PACKAGE_SPEC = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*(?:\[[A-Za-z0-9,._-]+\])?(?:[=<>!~]=?[A-Za-z0-9.*,<>=!~ -]*)?$")
 
 
@@ -292,10 +296,7 @@ def policy(argv, cwd, tree):
             return None
         return "docker may only list (ps, compose ls)"
     if exe == "git":
-        # The release tree is not a Git checkout, so a document's git line can never run there as written; and git reads
-        # programs to run from its configuration and attributes (diff.external, core.fsmonitor, clean filters), which no
-        # option set closes. Every git line is listed, never run.
-        return "the release tree is not a Git checkout"
+        return GIT_REASON  # run_shell lists a git line before policy() is asked; this keeps the policy closed
     if exe == "curl":
         if all(w in ("-s", "-S", "-f", "-sS", "-sf", "-I") or re.match(r"^https?://(?:localhost|127\.0\.0\.1)(?::\d+)?(?:/|$)", w) for w in rest):
             return None
@@ -385,6 +386,9 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
             continue
         if SHELL_SYNTAX.search(line) or "||" in line or "&&" in line:
             results.append({"line": line, "ran": False, "reason": "shell syntax (a separator, pipe, redirection or substitution); no line reaches a shell"})
+            continue
+        if re.match(r"^git\b", line):  # with or without arguments, before any other judgement
+            results.append({"line": line, "ran": False, "reason": GIT_REASON})
             continue
         if line.startswith("cd "):
             target = inside(tree, os.path.join(cwd, os.path.expanduser(expand(line[3:].strip().strip('"'), variables))))

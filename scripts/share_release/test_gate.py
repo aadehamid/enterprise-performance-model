@@ -280,7 +280,7 @@ def test_short_and_wrapped_base64_payloads_are_decoded(tmp_path):
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the owner's name or handle"]
     (tmp_path / "page.html").write_text('<img src="data:image/png;base64,QUJD"> and Valero\n')  # "ABC"; the payload ends at the quote and the text after it is scanned as text
     assert {h["reason"] for h in gate.scan(str(tmp_path))} == {"a peer named"}
-    (tmp_path / "page.html").write_text('<img src="data:image/png;base64,QWRhIExvdmVsYWNl">\n')  # unpadded, as a browser accepts
+    (tmp_path / "page.html").write_text('<img src="data:image/png;base64,QWRhIExvdmVsYWNl">\n')  # unpadded: forgiving-base64 decode accepts it (WHATWG Infra Standard, Living Standard as of 19 October 2026, read 2026-11-01)
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the owner's name or handle"]
 
 
@@ -359,3 +359,16 @@ def test_html_character_references_nested_payloads_and_nul_delimited_names_are_f
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
     assert gate.readable(b"\0\0CVR\0\0") == "CVR" and gate.readable(b"plain text with Valero in it") == "plain text with Valero in it"
     assert "CVI" not in gate.readable(b"\xff\xd8\xff\xe0\x10CVI\x12\x9a")  # three letters between arbitrary bytes are an image's chance, not a string
+
+
+def test_entity_encoded_text_inside_a_decoded_payload_is_scanned_at_every_depth(tmp_path):
+    import base64
+    clean(tmp_path)
+    inner = base64.b64encode(b"<p>compared with &#67;hevron</p>").decode()  # "C" as a numeric character reference
+    (tmp_path / "page.html").write_text(f'<iframe src="data:text/html;base64,{inner}"></iframe>\n')
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    (tmp_path / "page.html").write_text('<iframe src="data:text/html,%3Cp%3Eby%20&#65;da%20Lovelace%3C/p%3E"></iframe>\n')  # percent-encoded payload, entity inside
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the owner's name or handle"]
+    outer = base64.b64encode(f'<iframe src="data:text/html;base64,{inner}"></iframe>'.encode()).decode()
+    (tmp_path / "page.html").write_text(f'<iframe src="data:text/html;base64,{outer}"></iframe>\n')  # two layers down
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]

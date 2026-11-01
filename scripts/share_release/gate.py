@@ -71,12 +71,16 @@ FIXTURE_FILES = re.compile(r"^(?:skills/ontology-to-lpg/scripts/test_[^/]+|busin
 TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".sql", ".sh", ".yml", ".yaml", ".txt",
             ".nt", ".toml", ".example", ".cypher", ".jsonl", ".css", ".svg", ".cfg", ".ini", ".lock"}
 OFFICE_EXT = {".xlsx", ".docx", ".pptx"}
-# A data: URL (RFC 2397, "The 'data' URL scheme", August 1998, read 2026-11-01): an optional media type with
-# parameters, an optional ";base64" in any case, a comma, the payload. The URL runs to what delimits it where it
-# stands: the quote that opened it, the ")" of a Markdown link, else the next whitespace, "<" or ">"; inside that
-# run a "#" starts a fragment and ends the URL, and a base64 payload ends at the first character that is not base64,
-# "=", "%" or whitespace (a Markdown link's title, for example). A browser strips whitespace and decodes
-# percent-encoding inside a base64 payload before decoding it, so the gate does too.
+# A data: URL: dataurl := "data:" [ mediatype ] [ ";base64" ] "," data, where ";base64" means the data is base64
+# and otherwise octets outside the safe URL characters use "the standard %xx hex encoding of URLs" (RFC 2397, "The
+# 'data' URL scheme", August 1998, section 3, read 2026-11-01). The URL runs to what delimits it where it stands: the
+# quote that opened it, the ")" of a Markdown link, else the next whitespace, "<" or ">"; inside that run a "#"
+# starts a fragment and ends the URL, and a base64 payload ends at the first character that is not base64, "=", "%"
+# or whitespace (a Markdown link's title, for example). Before base64 decoding, "%XX" is percent-decoded (WHATWG URL
+# Standard, section 1.3 "Percent-encoded bytes", "percent-decode", Living Standard as of 19 October 2026, read
+# 2026-11-01) and ASCII whitespace is removed, as the forgiving-base64 decode a browser uses does (WHATWG Infra
+# Standard, "forgiving-base64 decode", Living Standard as of 19 October 2026, read 2026-11-01: "Remove all ASCII
+# whitespace from data").
 DATA_URL = re.compile(r"(?P<open>[\"'(]?)data:(?P<head>[^,\"'\s<>()]*),", re.I)
 CSS_COLOUR = re.compile(r"(?<=[:\s(,])#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b(?=[;\s)}\],!\"'])")
 STYLE_SPAN = re.compile(r"<style\b[^>]*>.*?</style>|\bstyle\s*=\s*\"[^\"]*\"|\bstyle\s*=\s*'[^']*'", re.S | re.I)
@@ -92,10 +96,10 @@ NAMESPACE_NOTE = "Data, Analytics and Insight"
 PROBLEM = "PROBLEM:"  # a label prefix: the text could not be read, which is itself a failure
 
 
-def strings_of(data, pattern=PRINTABLE_RUN):
+def strings_of(data):
     """The runs of printable text inside bytes (what `strings` prints), one per line: words in a PDF's metadata, an
     image's comment or a binary's strings are scanned; random bytes between them are not."""
-    return "\n".join(m.group(0).decode("ascii") for m in pattern.finditer(data))
+    return "\n".join(m.group(0).decode("ascii") for m in PRINTABLE_RUN.finditer(data))
 
 
 def mask_colours(text, ext):
@@ -143,8 +147,10 @@ def data_urls(text):
 
 def decoded_data_urls(text, depth=1, prefix=""):
     """Each data: URL in a page, decoded: (label suffix, text) for a payload read, or a problem when it cannot be.
-    A base64 payload is read to its delimiter, its whitespace stripped and percent-encoding decoded as a browser
-    does, then decoded whatever its length ("Q1ZS" is "CVR"), with missing padding supplied; a payload that is
+    A base64 payload is read to its delimiter, its whitespace stripped and percent-encoding decoded (the WHATWG URL
+    and Infra Standards cited at DATA_URL), then decoded whatever its length ("Q1ZS" is "CVR"), with missing padding
+    supplied (forgiving-base64 decode removes one or two trailing "=" and fails only on a length that leaves a
+    remainder of 1 when divided by 4; Infra Standard, same section and date); a payload that is
     base64-shaped but does not decode fails the file; a payload that is not base64-shaped at all (a code template's
     "{b64}") is read as the text it is, since the scan of the file's text covers it. A decoded payload is itself a
     document (an iframe's HTML holding another data: URL), so it is unescaped and scanned the same way, down to
@@ -164,11 +170,10 @@ def decoded_data_urls(text, depth=1, prefix=""):
             decoded = readable(raw)
         else:
             decoded = urllib.parse.unquote(payload)
-        yield label, decoded
-        if depth < DATA_URL_DEPTH:
-            inner = html.unescape(decoded)
-            if "data:" in inner.lower():
-                yield from decoded_data_urls(inner, depth + 1, label + " > ")
+        inner = html.unescape(decoded)  # a payload is a document too: its character references are decoded before it is read (the HTML Standard sections cited in texts())
+        yield label, inner
+        if depth < DATA_URL_DEPTH and "data:" in inner.lower():
+            yield from decoded_data_urls(inner, depth + 1, label + " > ")
 
 
 def without_data_urls(text):
@@ -238,7 +243,11 @@ def texts(path):
     if ext in TEXT_EXT or b"\0" not in data[:4096]:
         text = data.decode("utf-8", "replace")
         if ext in (".html", ".md", ".svg"):
-            text = html.unescape(text)  # a browser reads "&#44;" as "," before it parses a URL, so the gate does too
+            # The tokenizer decodes a character reference in an attribute value before the value is used ("&#44;" is ","):
+            # WHATWG HTML Standard, sections 13.2.5.77 "Character reference state", 13.2.5.78 "Named character reference
+            # state", 13.2.5.80 "Numeric character reference state" and 13.2.5.84 "Numeric character reference end state",
+            # Living Standard as of 30 October 2026, read 2026-11-01. So the gate decodes them before it looks for a URL.
+            text = html.unescape(text)
         if ext in (".html", ".css", ".svg", ".md"):
             text = mask_colours(text, ext)
         for label, decoded in decoded_data_urls(text):

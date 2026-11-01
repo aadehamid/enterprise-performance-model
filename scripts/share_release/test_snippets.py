@@ -216,3 +216,13 @@ def test_a_git_line_is_listed_and_never_run_even_inside_a_git_checkout():
         r = snippets.run_shell("git status --porcelain\ngit diff --no-color\ngit log --oneline\ngit show HEAD", tree, {}, state)
         assert all(x["ran"] is False and "not a Git checkout" in x["reason"] for x in r["lines"]), r["lines"]
         assert r["failed"] == [] and not os.path.exists(marker)
+
+
+def test_every_git_line_gets_the_checkout_reason():
+    with tempfile.TemporaryDirectory() as tree:
+        state = {}
+        r = snippets.run_shell("git\ngit status\ngit branch\ngit status --porcelain\ngit push origin main\ngitk", tree, {}, state)
+        for x in r["lines"][:5]:
+            assert x["ran"] is False and x["reason"] == snippets.GIT_REASON, x
+        assert r["lines"][5]["ran"] is False and r["lines"][5]["reason"] != snippets.GIT_REASON  # gitk is another word
+        assert r["failed"] == []
