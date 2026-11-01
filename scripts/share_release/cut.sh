@@ -98,10 +98,17 @@ step "gate again"; find "$OUT" -type d \( -name __pycache__ -o -name .pytest_cac
 step "zip"; within "$OUT-zip.log" python3 -I "$HERE/publish.py" zip --release "$OUT" --out "$OUT.zip" > /dev/null || { tail -20 "$OUT-zip.log"; exit 1; }; tail -1 "$OUT-zip.log"
 if [ "$CLEANROOM" = 1 ]; then step "clean room"; python3 "$HERE/cleanroom.py" "$OUT.zip" --log "$OUT-cleanroom.log" --timeout "$STEP_TIMEOUT" > /dev/null || { tail -20 "$OUT-cleanroom.log"; exit 1; }; tail -2 "$OUT-cleanroom.log"; fi
 if [ -n "$BASELINE" ]; then
-  step "report"; python3 - "$OUT-tree.json" "$OUT-stores.json" "$OUT-release.json" <<'PY'
+  step "report"; python3 - "$OUT-tree.json" "$OUT-stores.json" "$OUT-release.json" "$OUT-check.log" <<'PY'
 import json, sys
 t, s = json.load(open(sys.argv[1])), json.load(open(sys.argv[2]))
-t["rows"].update(s["rows"]); json.dump(t, open(sys.argv[3], "w"), indent=1)
+t["rows"].update(s["rows"])
+# The release's own check.sh ran as a step of the cut, not as a validate row: its result is the "checks" row here,
+# so the report compares it with main's checks row instead of reporting it as not run on the release.
+log = open(sys.argv[4], encoding="utf-8", errors="replace").read().rstrip().split("\n")
+last = log[-1] if log else ""
+t["rows"]["checks"] = {"ok": last == "all checks passed", "command": "bash scripts/check.sh (the release's own, run by the cut)",
+                       "tail": "\n".join(log[-20:])}
+json.dump(t, open(sys.argv[3], "w"), indent=1)
 PY
   within "$OUT-report.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" report "$BASELINE" "$OUT-release.json" "$OUT-compare.json" --out "$OUT-VALIDATION.md" > /dev/null || { tail -20 "$OUT-report.log"; exit 1; }; tail -1 "$OUT-report.log"
 fi
