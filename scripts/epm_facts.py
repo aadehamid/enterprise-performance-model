@@ -1407,6 +1407,32 @@ def cmd_modules(args):
     return 0
 
 
+def projection_figures():
+    """The last load, from the committed report and manifest (projection/README.md): what the graph stores hold."""
+    folder = os.path.join(ROOT, "business_architecture", "ontology", "projection")
+    with open(os.path.join(folder, "projection-report.json"), encoding="utf-8") as f:
+        report = json.load(f)
+    with open(os.path.join(folder, "projection-manifest.json"), encoding="utf-8") as f:
+        manifest = json.load(f)
+    relationships = report["relationships"]
+    return {"nodes": report["nodes"], "relationships": relationships,
+            "schema_relationships": report["schema_relationships"], "inferred_triples": manifest["inferred_triples"],
+            "content_relationships": relationships - report["schema_relationships"] - manifest["inferred_triples"],
+            "triples": manifest["loadable_triples"], "in_graph_constraints": report["in_graph_shape_constraints"],
+            "method": report["versions"]["method"]}
+
+
+def cmd_projection(args):
+    f = projection_figures()
+    print(f"commit {commit()}: the last load, by {f['method']}")
+    print(f"  {f['nodes']:,} nodes and {f['relationships']:,} relationships from {f['triples']:,} triples and "
+          f"{f['inferred_triples']} inferred")
+    print(f"  of the relationships: {f['content_relationships']:,} from the releases' triples, "
+          f"{f['schema_relationships']} schema, {f['inferred_triples']} from inferences")
+    print(f"  {f['in_graph_constraints']} in-graph constraints")
+    return 0
+
+
 PROCESS = "https://w3id.org/lsc/ontology/process/"
 MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
 # What a process can have, the module that says so, the predicates (each read from that module's
@@ -1529,10 +1555,11 @@ def main(argv=None):
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
     sub.add_parser("citations", help="check words other documents attribute to the decision owner against the source each names (exit 1)")
     sub.add_parser("modules", help="each released module: newest and earlier releases, what it requires, triples, built from (manifest) or sources (builder today)")
+    sub.add_parser("projection", help="the last load: nodes, relationships, triples and in-graph constraints (committed report)")
     p = sub.add_parser("coverage", help="how many processes have a RACI assignment, system, KPI, lane, value-stream step, data product")
     p.add_argument("--processes", default="core", help="core (default), module:<name>, lifecycle or stage:<name>")
     args = parser.parse_args(argv)
-    return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
+    return {"projection": cmd_projection, "counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
             "quotes": cmd_quotes, "names": cmd_names, "citations": cmd_citations, "sweep": cmd_sweep,
             "modules": cmd_modules, "coverage": cmd_coverage}[args.cmd](args)
 

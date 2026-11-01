@@ -1,0 +1,42 @@
+# One environment for rebuild_stores.py. Copy it outside the repository, fill it in, and run chmod 600 on it.
+# QA and production are two such files. Every key is optional except where a comment says so, and each default is shown.
+# Never commit a filled copy.
+
+# The folder holding the ontology-to-lpg and rdf-store skills. Default: skills/ in the release, else ~/.agents/skills.
+# EPM_SKILLS=<folder>
+# ROBOT 1.9.10, needed for the local Neo4j.
+# EPM_ROBOT_JAR=~/epm-lpg/robot.jar
+# Where a run writes; it must be outside the repository.
+# EPM_OUT=~/lpg-out/epm
+
+# The containers and ports of the local stores. Change them when the machine holds another environment's.
+# EPM_NEO4J_PROJECT=lpg-local
+# EPM_NEO4J_PORT=17711
+# EPM_JENA_PROJECT=epm-jena
+# EPM_JENA_PORT=13031
+# EPM_EXPLORE_PROJECT=lpg-explore
+# EPM_EXPLORE_PORT=13032
+# EPM_TRIPLESTORE_PROJECT=lpg-triplestore
+# EPM_TRIPLESTORE_PORT=13030
+
+# AuraDB, needed for --store aura: here, or in the file EPM_AURA_ENV names.
+# NEO4J_URI=neo4j+s://<instance-id>.databases.neo4j.io
+# NEO4J_USERNAME=neo4j
+# NEO4J_PASSWORD=<password>
+# NEO4J_DATABASE=neo4j
+# EPM_AURA_ENV=<file>
+
+# Databricks, needed for --store databricks: here, or in the file EPM_DATABRICKS_ENV names.
+# DATABRICKS_HOST=https://<workspace>.cloud.databricks.com
+# DATABRICKS_TOKEN=<token>
+# DATABRICKS_HTTP_PATH=/sql/1.0/warehouses/<warehouse-id>
+# DATABRICKS_CATALOG=<catalog>
+# DATABRICKS_SCHEMA=<schema>
+# EPM_DATABRICKS_ENV=<file>
+# EPM_TRIPLES_TABLE=epm_triples
+
+# The demo, with Databricks. Without SOURCE_PG_DSN the run starts the demo's local Postgres; without DEMO_CATALOG it builds in idp_sbx.
+# SOURCE_PG_DSN=postgresql://<user>:<password>@<host>:<port>
+# DEMO_CATALOG=<catalog>
+# How long to wait for Unity Catalog's lineage to arrive after the demo's build.
+# EPM_LINEAGE_WAIT_SECONDS=900

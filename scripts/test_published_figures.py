@@ -351,3 +351,33 @@ def test_guide_module_figures_match_the_newest_releases():
     assert all(totals), "a statement of the total moved; update this test with it"
     assert {num(t.group(1)) for t in totals} == {len(whole)}
     assert num(re.search(r"Modules (\d+) each released", text).group(1)) == len(newest)
+
+
+def test_the_stores_pages_give_the_last_loads_figures():
+    """The pages that state the local Neo4j's figures as current give what epm_facts.py projection prints."""
+    if os.path.isfile(os.path.join(ROOT, "release.json")):
+        pytest.skip("the share release carries its own run's figures and leaves STORE-INVENTORY.md out")
+    f = epm_facts.projection_figures()
+    nodes, rels = f"{f['nodes']:,}", f"{f['relationships']:,}"
+    folder = os.path.join(ROOT, "business_architecture", "ontology", "projection")
+    with open(os.path.join(folder, "README.md"), encoding="utf-8") as page:
+        readme = page.read()
+    assert (f"{nodes} nodes and {rels} relationships from {f['triples']:,} triples and {f['inferred_triples']} inferred, "
+            f"no SHACL violation in the graph over {f['in_graph_constraints']} in-graph constraints") in readme
+    assert (f"{f['content_relationships']:,} come from the releases' triples, {f['schema_relationships']} are schema "
+            f"relationships from the ontology import, and {f['inferred_triples']} come from inferences") in readme
+    with open(os.path.join(folder, "STORE-INVENTORY.md"), encoding="utf-8") as page:
+        inventory = page.read()
+    assert f"| Relationships between `Resource` nodes | {rels} |" in inventory
+    assert f"| Nodes labelled `Resource` (the ontology) | {nodes} |" in inventory
+    assert f"Expect {nodes} nodes and {rels} relationships" in inventory
+
+
+def test_the_walkthroughs_connect_section_gives_the_last_loads_figures():
+    if os.path.isfile(os.path.join(ROOT, "release.json")):
+        pytest.skip("the share release carries its own run's figures")
+    f = epm_facts.projection_figures()
+    with open(os.path.join(ROOT, "business_architecture", "ontology", "epm-walkthrough.html"), encoding="utf-8") as page:
+        section = page.read().split('<section id="connect"')[1].split("</section>")[0]
+    assert f"{f['nodes']:,} and {f['relationships']:,} on these releases" in section
+

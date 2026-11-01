@@ -1,6 +1,6 @@
-"""Tests for the Step 12 projection pipeline (EPM-DEC-001-0036). They need no Neo4j: they check the
-rules (Step 1), the build and its manifest (Step 3), the comparison rules of the round trip, and that
-the committed Step 5 report describes the current inputs and passed.
+"""Tests for the Step 12 projection's checks and record (EPM-DEC-001-0036, 0111). They need no Neo4j: they check the
+rules (Step 1), the build and its manifest (Step 3), that a driver run's result is taken in only when it read this
+tree's inputs and passed, and that the committed report describes the current inputs and passed.
 
 Run: python3 -m pytest test_pipeline.py (needs rdflib, pyshacl).
 """
@@ -8,7 +8,6 @@ import json
 import os
 import sys
 import tempfile
-import types
 import unittest
 from unittest import mock
 
@@ -185,259 +184,6 @@ class Build(unittest.TestCase):
             self.assertFalse(str(o).startswith((str(OWL), str(RDFS))))
 
 
-class RoundTripRules(unittest.TestCase):
-    def test_a_plain_and_an_xsd_string_literal_compare_equal(self):
-        self.assertEqual(pl.canonical(Literal("a")), pl.canonical(Literal("a", datatype=XSD.string)))
-
-    def test_integer_and_long_compare_equal(self):
-        self.assertEqual(pl.canonical(Literal("5", datatype=XSD.integer)), pl.canonical(Literal("5", datatype=XSD.long)))
-
-    def test_decimal_and_double_compare_by_value(self):
-        self.assertEqual(pl.canonical(Literal("0.64", datatype=XSD.decimal)), pl.canonical(Literal("0.64", datatype=XSD.double)))
-        self.assertNotEqual(pl.canonical(Literal("0.64", datatype=XSD.decimal)), pl.canonical(Literal("0.65", datatype=XSD.double)))
-
-    def test_a_language_tag_is_kept(self):
-        self.assertNotEqual(pl.canonical(Literal("a", lang="en")), pl.canonical(Literal("a")))
-        self.assertEqual(pl.LANG_SUFFIX.match("Refinery Scheduler@en").groups(), ("Refinery Scheduler", "en"))
-
-    def test_in_graph_shapes_drop_what_n10s_cannot_check(self):
-        g = pl.in_graph_shapes(SHAPES)
-        self.assertNotIn((None, pl.SH.datatype, RDF.langString), g)
-        for p in pl.N10S_UNSUPPORTED:
-            self.assertNotIn((None, p, None), g)
-        self.assertTrue(set(g.subjects(pl.SH.targetClass, None)))
-
-    def test_in_graph_shapes_drop_a_literal_list_but_keep_an_iri_list(self):
-        # market-data's sh:in (true) on mkt:legsUnstated goes; party's list of entity classes stays.
-        g = pl.in_graph_shapes(SHAPES)
-        lists = [pl.Collection(g, o) for o in g.objects(None, pl.SH["in"])]
-        self.assertTrue(lists)
-        self.assertFalse(any(isinstance(m, Literal) for c in lists for m in c))
-        party = URIRef("https://w3id.org/lsc/ontology/modules/party/Party")
-        self.assertTrue(any(party in list(c) for c in lists))
-
-
-class OntologyLabelsOnly(unittest.TestCase):
-    """The pricing demo's technical graph shares the local Neo4j stores under the label Tech: its edges start at Tech
-    nodes and end at Tech or ontology nodes (EPM-DEC-001-0109, decision 6). The projection's counts and hash come from
-    graph_hash and its round trip from roundtrip; this pins the exact Cypher those two send, which reads :Resource
-    nodes and the edges between them, so Tech nodes change none of them. It says nothing of other queries."""
-
-    class Session:
-        def __init__(self):
-            self.queries = []
-
-        def run(self, query, **params):
-            self.queries.append(query)
-            return types.SimpleNamespace(data=lambda: [])
-
-    def queries(self, function):
-        session = self.Session()
-        function(session)
-        return session.queries
-
-    def test_the_counts_and_the_hash_read_resource_nodes_and_the_edges_between_them(self):
-        self.assertEqual(self.queries(pl.graph_hash), [
-            "MATCH (n:Resource) RETURN n.uri AS uri, labels(n) AS l, properties(n) AS p ORDER BY uri",
-            "MATCH (a:Resource)-[r]->(b:Resource) RETURN a.uri AS s, type(r) AS t, b.uri AS o, r.uri AS u ORDER BY s, t, o, u",
-        ])
-
-    def test_the_round_trip_reads_resource_nodes_and_the_edges_between_them(self):
-        self.assertEqual(self.queries(pl.roundtrip), [
-            "CALL n10s.rdf.export.cypher('MATCH (n:Resource) OPTIONAL MATCH (n)-[r]->(m:Resource) RETURN n, r, m') "
-            "YIELD subject, predicate, object, isLiteral, literalType, literalLang "
-            "RETURN subject, predicate, object, isLiteral, literalType, literalLang",
-        ])
-
-
-class RenameSession:
-    """A fake Neo4j session: nodes and edges in memory, answering the queries rename_separator sends. `lossy`
-    makes the property renames drop their values, as a broken APOC call would."""
-
-    class Result:
-        def __init__(self, rows=None, row=None):
-            self.rows, self.row = rows, row
-
-        def data(self):
-            return self.rows
-
-        def single(self):
-            return self.row
-
-        def consume(self):
-            return None
-
-    def __init__(self, nodes, edges, lossy=False):
-        self.nodes, self.edges, self.lossy = nodes, edges, lossy
-
-    def run(self, query, **params):
-        R, n, e = self.Result, self.nodes, self.edges
-        if "UNWIND labels(n)" in query:
-            return R(row={"l": sorted({l for x in n for l in x["l"]})})
-        if "collect(DISTINCT type(r))" in query:
-            return R(row={"l": sorted({x["t"] for x in e})})
-        if "UNWIND keys(n)" in query:
-            return R(row={"l": sorted({k for x in n for k in x["p"]})})
-        if "UNWIND keys(r)" in query:
-            return R(row={"l": sorted({k for x in e for k in x["p"]})})
-        if query.startswith("MATCH (n:Resource) RETURN n.uri AS uri, labels(n) AS l, properties(n) AS p"):
-            return R(rows=[{"uri": x["uri"], "l": list(x["l"]), "p": dict(x["p"])} for x in sorted(n, key=lambda x: x["uri"])])
-        if "properties(r) AS p" in query:
-            return R(rows=[{"s": x["s"], "t": x["t"], "o": x["o"], "p": dict(x["p"])} for x in sorted(e, key=lambda x: (x["s"], x["t"], x["o"]))])
-        old, new = params["o"], params["n"]
-        if "rename.label" in query:
-            for x in n:
-                x["l"] = [new if l == old else l for l in x["l"]]
-        elif "rename.type(" in query:
-            for x in e:
-                x["t"] = new if x["t"] == old else x["t"]
-        elif "rename.nodeProperty" in query or "rename.typeProperty" in query:
-            for x in n if "node" in query else e:
-                if old in x["p"]:
-                    value = x["p"].pop(old)
-                    x["p"][new] = None if self.lossy else value
-        else:
-            raise AssertionError(query)
-        return R()
-
-
-class Rename(unittest.TestCase):
-    """The share release's rename (EPM-DEC-001-0110): every label, relationship type and property key with the n10s
-    separator takes one underscore, nothing else changes, and the dump before, renamed in expectation, equals the
-    dump after. On main nothing is renamed; the committed report says so."""
-
-    def graph(self):
-        nodes = [{"uri": "u1", "l": ["Resource", "lib__Thing"], "p": {"uri": "u1", "lib__prefLabel": "A"}},
-                 {"uri": "u2", "l": ["Resource", "Tech"], "p": {"uri": "u2", "name": "x"}}]
-        edges = [{"s": "u1", "t": "lib__usedBy", "o": "u2", "p": {"lib__source": "s"}},
-                 {"s": "u2", "t": "IMPLEMENTS", "o": "u1", "p": {}}]
-        return nodes, edges
-
-    def test_every_kind_is_renamed_and_the_rest_is_untouched(self):
-        session = RenameSession(*self.graph())
-        with mock.patch.object(pl, "SEP", "_"):
-            counts, lossless = pl.rename_separator(session)
-        self.assertEqual(counts, {"labels": 1, "rels": 1, "keys": 2})
-        self.assertTrue(lossless)
-        self.assertEqual(session.nodes[0]["l"], ["Resource", "lib_Thing"])
-        self.assertEqual(session.nodes[0]["p"], {"uri": "u1", "lib_prefLabel": "A"})
-        self.assertEqual(session.nodes[1], {"uri": "u2", "l": ["Resource", "Tech"], "p": {"uri": "u2", "name": "x"}})
-        self.assertEqual([x["t"] for x in session.edges], ["lib_usedBy", "IMPLEMENTS"])
-        self.assertEqual(session.edges[0]["p"], {"lib_source": "s"})
-        self.assertFalse(any("__" in l for x in session.nodes for l in list(x["l"]) + list(x["p"])))
-        self.assertFalse(any("__" in k for x in session.edges for k in [x["t"]] + list(x["p"])))
-
-    def test_a_name_the_rename_would_collide_with_stops_it(self):
-        nodes, edges = self.graph()
-        nodes[1]["l"].append("lib_Thing")  # already there in the one-underscore form
-        with mock.patch.object(pl, "SEP", "_"), self.assertRaisesRegex(RuntimeError, "collides in labels"):
-            pl.rename_separator(RenameSession(nodes, edges))
-
-    def test_a_rename_that_loses_a_value_is_not_lossless(self):
-        session = RenameSession(*self.graph(), lossy=True)
-        with mock.patch.object(pl, "SEP", "_"):
-            counts, lossless = pl.rename_separator(session)
-        self.assertEqual(counts["keys"], 2)
-        self.assertFalse(lossless)
-
-    def test_on_main_nothing_is_renamed(self):
-        with mock.patch.object(pl, "SEP", pl.N10S_SEP):
-            self.assertEqual(pl.rename_if_share(RenameSession(*self.graph())), ({}, True))
-
-    def load_verify(self, first, second):
-        """Run load_verify against a fake driver, with the two renames answering `first` and `second`."""
-        class Session:
-            def __enter__(self):
-                return self
-
-            def __exit__(self, *a):
-                return False
-
-            def run(self, query, **params):
-                return types.SimpleNamespace(consume=lambda: None, data=lambda: [],
-                                             single=lambda: {"n": 0, "uri": "u", "label": "l"})
-
-        driver = types.SimpleNamespace(session=Session, close=lambda: None)
-        neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda bolt, auth: driver))
-        renames = iter([({}, first), ({"labels": 1}, second)])
-        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict(sys.modules, {"neo4j": neo4j}), \
-                mock.patch.object(pl, "build", lambda: ("", "", None)), mock.patch.object(pl, "graph", lambda paths: Graph()), \
-                mock.patch.object(pl, "cypher_setup", lambda d, s: ""), mock.patch.object(pl, "in_graph_shapes", lambda s: Graph()), \
-                mock.patch.object(pl, "load", lambda s, name, setup: None), mock.patch.object(pl, "graph_hash", lambda s: ("h", 1, 1)), \
-                mock.patch.object(pl, "roundtrip", lambda s: Graph()), mock.patch.object(pl, "shapes_fingerprint", lambda: "f"), \
-                mock.patch.object(pl, "rename_if_share", lambda s: next(renames)):
-            return pl.load_verify("bolt://fake", "pw", tmp)
-
-    def test_both_loads_must_be_lossless(self):
-        # load_verify renames after each load; a loss in either fails the run, and the counts are the kept graph's.
-        for first, second, expected in ((True, True, True), (False, True, False), (True, False, False)):
-            with self.subTest(first=first, second=second):
-                report = self.load_verify(first, second)
-                self.assertIs(report["rename_lossless"], expected)
-                self.assertEqual(report["renamed"], {"labels": 1})
-
-
-class Password(unittest.TestCase):
-    """load-verify reads the Neo4j password from the environment variable NEO4J_PASSWORD and has no argument for it;
-    the runner and the README pass it that way."""
-
-    def test_load_verify_has_no_password_argument(self):
-        args = pl.parser().parse_args(["load-verify", "--bolt", "bolt://x", "--import-dir", "d"])
-        self.assertFalse(hasattr(args, "password"))
-        with mock.patch("sys.stderr", new_callable=lambda: __import__("io").StringIO()):
-            with self.assertRaises(SystemExit):
-                pl.parser().parse_args(["load-verify", "--bolt", "b", "--password", "p", "--import-dir", "d"])
-
-    def test_the_password_comes_from_the_environment(self):
-        with mock.patch.dict(os.environ, {"NEO4J_PASSWORD": "from-env"}):
-            self.assertEqual(pl.neo4j_password(), "from-env")
-        with mock.patch.dict(os.environ, {}, clear=True):
-            with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
-                pl.neo4j_password()
-        with mock.patch.dict(os.environ, {"NEO4J_PASSWORD": ""}):
-            with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
-                pl.neo4j_password()
-
-    def test_the_runner_the_readme_and_the_usage_pass_it_in_the_environment(self):
-        here = os.path.dirname(os.path.abspath(pl.__file__))
-        for name in ("run_local.sh", "README.md"):
-            with open(os.path.join(here, name)) as f:
-                text = f.read()
-            self.assertNotIn("--password", text, name)
-            self.assertIn("NEO4J_PASSWORD", text, name)
-        self.assertIn("NEO4J_PASSWORD in the environment", pl.__doc__)
-        self.assertNotIn("--password", pl.__doc__)
-        with open(os.path.join(here, "README.md")) as f:
-            readme = f.read()
-        self.assertIn("read -rs NEO4J_PASSWORD && export NEO4J_PASSWORD", readme)
-        self.assertNotIn("<password>", readme)
-
-    def run_main(self, argv, env):
-        """main() with the given arguments and environment, load_verify replaced by a recorder of the password it got."""
-        got = []
-
-        def fake_load_verify(bolt, password, import_dir):
-            got.append((bolt, password, import_dir))
-            return {"shacl_violations_in_graph": 0, "in_graph_mutant_violations": 1, "roundtrip_lost": 0,
-                    "roundtrip_added": 0, "determinism_hash_sorted": "h", "determinism_hash_shuffled": "h",
-                    "rename_lossless": True, "nodes": 1, "relationships": 1, "samples": {}, "versions": {}}
-        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(sys, "argv", ["pipeline.py"] + argv), \
-                mock.patch.dict(os.environ, env, clear=True), mock.patch.object(pl, "load_verify", fake_load_verify), \
-                mock.patch.object(pl, "REPORT", os.path.join(tmp, "report.json")), \
-                mock.patch("sys.stdout", new_callable=lambda: __import__("io").StringIO()), \
-                mock.patch("sys.stderr", new_callable=lambda: __import__("io").StringIO()):
-            pl.main()
-        return got
-
-    def test_main_hands_load_verify_the_password_from_the_environment(self):
-        argv = ["load-verify", "--bolt", "bolt://x", "--import-dir", "d"]
-        self.assertEqual(self.run_main(argv, {"NEO4J_PASSWORD": "from-env"}), [("bolt://x", "from-env", "d")])
-        with self.assertRaisesRegex(SystemExit, "NEO4J_PASSWORD"):
-            self.run_main(argv, {})
-        with self.assertRaises(SystemExit):  # the argument is gone: the parser refuses it
-            self.run_main(argv + ["--password", "given"], {"NEO4J_PASSWORD": "from-env"})
-
-
 class Report(unittest.TestCase):
     def test_a_shape_change_makes_the_report_stale(self):
         from unittest import mock
@@ -458,9 +204,9 @@ class Report(unittest.TestCase):
             report = json.load(f)
         loadable, inferred, _ = pl.build()
         self.assertEqual(report["input_fingerprint"], pl.sha(loadable, inferred),
-                         "projection-report.json is stale: rerun pipeline.py load-verify")
+                         "projection-report.json is stale: run the driver, then pipeline.py record")
         self.assertEqual(report["shapes_fingerprint"], pl.shapes_fingerprint(),
-                         "a shape file changed since the last Step 5 run: rerun pipeline.py load-verify")
+                         "a shape file changed since the last load: run the driver, then pipeline.py record")
         self.assertEqual(report["shacl_violations_in_graph"], 0)
         self.assertGreater(report["in_graph_mutant_violations"], 0)
         self.assertEqual((report["roundtrip_lost"], report["roundtrip_added"]), (0, 0))
@@ -469,6 +215,72 @@ class Report(unittest.TestCase):
         self.assertEqual(report["separator"], pl.SEP)
         if not pl.SHARE_RELEASE:
             self.assertEqual((report["separator"], report["renamed"]), ("__", {}))  # main keeps the n10s names
+
+
+class Record(unittest.TestCase):
+    """pipeline.py record takes a driver run's result into this folder only when the run read this tree's inputs and
+    its report passed. A stand-in run folder, with this folder's paths pointed at a temporary copy."""
+
+    REPORT_OK = {"passed": True, "shacl_violations_in_graph": 0, "in_graph_shape_constraints": 7, "in_graph_mutant_violations": 1,
+                 "roundtrip_lost": 0, "roundtrip_added": 0, "determinism_hash_sorted": "h", "determinism_hash_shuffled": "h",
+                 "nodes": 3, "relationships": 2, "schema_relationships": 1, "export_rows": 5, "schema_rows_skipped": 1,
+                 "separator": pl.SEP, "renamed": {}, "rename_lossless": True, "versions": {"method": "m"},
+                 "compiled": ["left in the driver's folder"]}
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.run_dir = os.path.join(self.tmp.name, "run")
+        os.makedirs(self.run_dir)
+        for name in ("INFERRED", "MANIFEST", "REPORT"):
+            patcher = mock.patch.object(pl, name, os.path.join(self.tmp.name, name.lower()))
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        files = [{"sha256": pl.sha(open(os.path.join(pl.ONTOLOGY, p)).read())} for p in pl.INPUTS + pl.SHAPES]
+        self.write_run(files, self.REPORT_OK, pl.sorted_nt(pl.graph(pl.INPUTS)))
+
+    def write_run(self, files, report, loaded):
+        for name, text in (("run-manifest.json", json.dumps({"data": files[:1], "shapes": files[1:]})),
+                           ("projection-report.json", json.dumps(report)), ("inferred.nt", ""), ("loadable.nt", loaded)):
+            with open(os.path.join(self.run_dir, name), "w") as f:
+                f.write(text)
+
+    def test_a_run_of_this_tree_writes_the_three_files_and_only_the_summary(self):
+        with mock.patch("sys.stdout", new_callable=lambda: __import__("io").StringIO()):
+            pl.record(self.run_dir)
+        with open(pl.REPORT) as f:
+            report = json.load(f)
+        loadable, inferred, manifest = pl.build()
+        self.assertEqual(report["input_fingerprint"], pl.sha(loadable, inferred))
+        self.assertEqual(report["shapes_fingerprint"], pl.shapes_fingerprint())
+        self.assertEqual((report["nodes"], report["relationships"]), (3, 2))
+        self.assertNotIn("compiled", report)
+        with open(pl.MANIFEST) as f:
+            self.assertEqual(f.read(), manifest)
+
+    def test_a_run_of_other_inputs_is_refused_and_writes_nothing(self):
+        with open(os.path.join(self.run_dir, "run-manifest.json"), "w") as f:
+            json.dump({"data": [{"sha256": "other"}], "shapes": []}, f)
+        with self.assertRaisesRegex(SystemExit, "other inputs"):
+            pl.record(self.run_dir)
+        self.assertFalse(os.path.exists(pl.REPORT))
+
+    def test_a_run_that_loaded_other_triples_is_refused(self):
+        with open(os.path.join(self.run_dir, "loadable.nt"), "w") as f:
+            f.write("<urn:a> <urn:b> <urn:c> .\n")
+        with self.assertRaisesRegex(SystemExit, "other triples"):
+            pl.record(self.run_dir)
+
+    def test_each_failed_check_stops_the_record(self):
+        for change in ({"passed": False}, {"shacl_violations_in_graph": 1}, {"in_graph_mutant_violations": 0},
+                       {"roundtrip_lost": 1}, {"roundtrip_added": 1}, {"determinism_hash_shuffled": "other"},
+                       {"rename_lossless": False}):
+            with self.subTest(change=change):
+                with open(os.path.join(self.run_dir, "projection-report.json"), "w") as f:
+                    json.dump({**self.REPORT_OK, **change}, f)
+                with self.assertRaisesRegex(SystemExit, "cannot stand"):
+                    pl.record(self.run_dir)
+                self.assertFalse(os.path.exists(pl.REPORT))
 
 
 if __name__ == "__main__":

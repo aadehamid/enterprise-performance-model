@@ -47,6 +47,11 @@ EPM_RULES = [
     ("out", f"{ONT}/projection/skill-run/store-tests-*.md"),
     ("out", f"{ONT}/projection/LOCAL-STORES.md"),  # the stores on the author's machine, with their login files
     ("out", f"{ONT}/projection/STORE-INVENTORY.md"),  # what those stores held when last audited
+    # The one command a recipient runs, and what it reads; named so that a later rule cannot drop them.
+    ("ship", f"{ONT}/projection/rebuild_stores.py"),
+    ("ship", f"{ONT}/projection/empty_stores.py"),
+    ("ship", f"{ONT}/projection/skill-run/environment.example"),
+    ("ship", "demos/downstream-pricing-databricks-free/graph/lineage-known.json"),
     # Business process, schema, reference, domain.
     ("ship", "business_architecture/business_process/*"),
     ("ship", "business_architecture/schema/*.schema.json"),

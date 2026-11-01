@@ -640,7 +640,7 @@ def graph_answer():
     views, the measures they implement with their identifiers, the roles that use them, and the agents that bind them."""
     from neo4j import GraphDatabase
     from .tech_graph import neo4j_login
-    uri, user, password = neo4j_login("pipeline")
+    uri, user, password = neo4j_login("driver")
     with GraphDatabase.driver(uri, auth=(user, password)) as driver, driver.session() as session:
         rows = session.run(GRAPH_WALK).data()
     lines = [f"{r['view']}: measures {', '.join(sorted(r['identifiers']))}; used by {', '.join(sorted(str(x) for x in r['roles']))}; "

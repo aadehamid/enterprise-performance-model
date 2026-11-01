@@ -1,0 +1,2 @@
+<https://w3id.org/lsc/ontology/modules/ref-mpc/mpc> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/lsc/ontology/modules/party/Party> .
+<https://w3id.org/lsc/ontology/modules/ref-mpc/mplx> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/lsc/ontology/modules/party/Party> .

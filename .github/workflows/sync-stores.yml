@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: ${{ github.repository_owner }}/personal-agent-skills
-          ref: 6742df7aecc269d79d222e187dad35c4b2d3d002  # pinned: move it when the driver changes
+          ref: e61fd958898d099e1f127473e3b3cab3bc20a351  # pinned: move it when the driver changes
           token: ${{ secrets.EPM_SKILLS_TOKEN }}
           path: personal-agent-skills
       - if: steps.logins.outputs.ready == 'true'

@@ -56,3 +56,21 @@ def test_a_triple_the_release_no_longer_holds_fails(tmp_path):
     (folder / "lane.ttl").write_text("<urn:p> <urn:officeLane> <urn:front> .\n")
     assert missing_triples("lane", "<urn:p> <urn:officeLane> <urn:front> .\n", str(tmp_path)) == []
     assert missing_triples("lane", "<urn:p> <urn:officeLane> <urn:back> .\n", str(tmp_path)) != []
+
+
+def test_the_files_table_lists_what_the_builder_packages():
+    """"The three files of each package": every part and shape file the module builder names is in its module's row."""
+    import ast
+    with open(epm_facts.MODULE_BUILDER, encoding="utf-8") as f:
+        tree = ast.parse(f.read())
+    modules = next(ast.literal_eval(n.value) for n in tree.body
+                   if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", None) == "MODULES")
+    with open(GUIDE, encoding="utf-8") as f:
+        rows = {cells[1].strip("` "): cells for cells in (line.split("|") for line in f if line.startswith("| `"))}
+    for module, spec in modules.items():
+        for part in spec["parts"]:
+            assert f"`{part}`" in rows[module][3], (module, part)
+        for shape in spec["shapes"]:
+            if not shape.startswith("releases/"):  # a pinned module's shapes, named in words
+                assert f"`{shape}`" in rows[module][4], (module, shape)
+    assert set(rows) >= set(modules) | {"core"}
