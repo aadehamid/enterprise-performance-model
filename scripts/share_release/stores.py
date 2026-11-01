@@ -309,6 +309,8 @@ def row_projection_driver(tree, env):
     ledger(env, "file", test_cfg, "the driver's test run configuration (removed after the run)")
     ledger(env, "folder", out, "driver output"); ledger(env, "folder", out + "-rebuild", "driver rebuild output")
     ledger(env, "databricks-table", cfg["databricks"]["table"]); ledger(env, "compose-project", cfg["neo4j"]["compose_project"])
+    for key in ("jena", "explore_fuseki", "triplestore_fuseki"):
+        ledger(env, "compose-project", cfg[key]["compose_project"], "the driver row's Fuseki")
     if env.get("AURA_ENV"):
         ledger(env, "aura", "the owner's AuraDB", "emptied and loaded by the driver; reloaded from main at the end (the brief)")
     r = sh(["uv", "run", "--no-project", "--with", "rdflib", "--with", "pyshacl", "--with", "neo4j", "--with", "requests",

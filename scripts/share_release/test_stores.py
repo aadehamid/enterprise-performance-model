@@ -135,6 +135,9 @@ def test_the_driver_row_never_starts_the_run_configuration_s_own_jena(tmp_path, 
     live = json.loads(shipped)["jena"]
     assert seen["jena"]["compose_project"] != live["compose_project"] and seen["jena"]["port"] != live["port"]
     assert seen["keep_jena"] is False
+    with open(env["LEDGER_FILE"]) as f:
+        ledgered = {json.loads(line)["name"] for line in f if json.loads(line)["kind"] == "compose-project"}
+    assert {seen[k]["compose_project"] for k in ("jena", "explore_fuseki", "triplestore_fuseki")} <= ledgered  # cleanup removes what the ledger names
 
 
 def test_the_files_the_recipient_runs_ship():
