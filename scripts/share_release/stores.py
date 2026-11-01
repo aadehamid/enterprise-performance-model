@@ -320,8 +320,7 @@ def row_demo_offline(tree, env):
     demo = os.path.join(tree, DEMO)
     out = {"steps": []}
     # uv's environment for the demo's project goes outside the tree: a .venv inside the release would be a defect.
-    import tempfile as _tf
-    venv = os.path.join(_tf.gettempdir(), "epm-share-release-demo-venv")
+    venv = demo_venv()
     ledger(env, "folder", venv, "the demo's virtual environment for the validation")
     r = sh(["uv", "run", "python", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_demo.py"], demo,
            env={**release_env(tree), "UV_PROJECT_ENVIRONMENT": venv}); out["steps"].append(r)
@@ -350,6 +349,17 @@ def row_demo_offline(tree, env):
     out["rejudged"] = rejudged
     out["ok"] = demo_offline_ok(r["returncode"], rejudged)
     return out
+
+
+def demo_venv(create=True):
+    """Where the demo's virtual environment for the validation lives: under the tool's own folder in the temp dir,
+    <tmp>/epm-share-release/demo-venv, so the ledgered path has at least three components wherever the temp dir is
+    (on Linux /tmp alone would leave two, which cleanup.py's unsafe() refuses, as it should)."""
+    import tempfile
+    path = os.path.join(tempfile.gettempdir(), "epm-share-release", "demo-venv")
+    if create:
+        os.makedirs(path, exist_ok=True)
+    return path
 
 
 def rejudge_pair(fresh, recorded):

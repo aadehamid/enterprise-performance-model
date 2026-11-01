@@ -235,16 +235,7 @@ def compare(main, release, out):
     result = {"main": main, "release": release, "rows": {}}
 
     # 1. The business-process JSON: main's files after the rules equal the release's, byte for byte.
-    diffs, same = [], 0
-    for path in sorted(glob.glob(os.path.join(main, "business_architecture/business_process/*.json"))):
-        rel = os.path.relpath(path, main)
-        with open(path, encoding="utf-8") as f:
-            expected, _ = rules.apply(f.read(), rel, dates)
-        with open(os.path.join(release, rel), encoding="utf-8") as f:
-            got = f.read()
-        (diffs if expected != got else [None]) and (diffs.append(rel) if expected != got else None)
-        same += expected == got
-    result["rows"]["business-process-json"] = {"equal": same, "different": diffs, "ok": not diffs}
+    result["rows"]["business-process-json"] = compare_business_process(main, release, dates)
 
     # 2. Each newest module's Turtle: main's after the rules is isomorphic to the release's, with the same triple count.
     from rdflib import Graph, URIRef
@@ -279,6 +270,24 @@ def compare(main, release, out):
     with open(out, "w") as f:
         json.dump(result, f, indent=1, default=str)
     return result
+
+
+def compare_business_process(main, release, dates):
+    """Main's business-process JSON after the rewrite rules must equal the release's copy byte for byte; every file
+    that differs is recorded and fails the row."""
+    import rules
+    diffs, same = [], 0
+    for path in sorted(glob.glob(os.path.join(main, "business_architecture/business_process/*.json"))):
+        rel = os.path.relpath(path, main)
+        with open(path, encoding="utf-8") as f:
+            expected, _ = rules.apply(f.read(), rel, dates)
+        with open(os.path.join(release, rel), encoding="utf-8") as f:
+            got = f.read()
+        if expected != got:
+            diffs.append(rel)
+        else:
+            same += 1
+    return {"equal": same, "different": diffs, "ok": not diffs}
 
 
 def newest_versions(release):

@@ -172,3 +172,18 @@ def test_a_rows_crash_is_recorded_without_its_secret(tmp_path, monkeypatch):
     finally:
         scrubbing.SECRETS.discard("pw-crash-secret")
     assert result["rows"]["boom"]["ok"] is False and "pw-crash-secret" not in result["rows"]["boom"]["error"] and "***" in result["rows"]["boom"]["error"]
+
+
+def test_a_process_map_that_does_not_match_the_release_fails_the_comparison(tmp_path):
+    main, release = tmp_path / "main", tmp_path / "release"
+    for tree in (main, release):
+        (tree / "business_architecture" / "business_process").mkdir(parents=True)
+    (main / "business_architecture/business_process/map.json").write_text('{"name": "LSC map", "n": 1}\n')
+    (release / "business_architecture/business_process/map.json").write_text('{"name": "MPC map", "n": 1}\n')  # what the rules give
+    (main / "business_architecture/business_process/lanes.json").write_text('{"lanes": 3}\n')
+    (release / "business_architecture/business_process/lanes.json").write_text('{"lanes": 4}\n')  # a rewrite that does not match
+    row = validate.compare_business_process(str(main), str(release), {})
+    assert row["different"] == ["business_architecture/business_process/lanes.json"] and row["equal"] == 1 and row["ok"] is False
+    (release / "business_architecture/business_process/lanes.json").write_text('{"lanes": 3}\n')
+    row = validate.compare_business_process(str(main), str(release), {})
+    assert row == {"equal": 2, "different": [], "ok": True}

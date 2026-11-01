@@ -212,3 +212,17 @@ def test_inherited_and_short_secrets_are_scrubbed_too(monkeypatch):
         assert scrubbing.scrub("buzz zz") == "bu*** ***"  # the cost of a short secret: its letters go wherever they occur
     finally:
         scrubbing.SECRETS.discard("zz")
+
+
+def test_the_ledgered_demo_venv_is_a_path_cleanup_may_remove(tmp_path, monkeypatch):
+    """On Linux the temp folder is /tmp, two components short of what cleanup's unsafe() allows; the venv must sit
+    one folder deeper, under the tool's own folder in the temp dir."""
+    import tempfile
+    import cleanup
+    monkeypatch.setattr(tempfile, "gettempdir", lambda: "/tmp")
+    path = stores.demo_venv(create=False)
+    assert path.startswith("/tmp/") and len([p for p in path.split("/") if p]) >= 3, path
+    assert cleanup.unsafe(path, []) is None
+    monkeypatch.setattr(tempfile, "gettempdir", lambda: str(tmp_path))
+    path = stores.demo_venv()
+    assert os.path.isdir(path) and path == os.path.join(str(tmp_path), "epm-share-release", "demo-venv")
