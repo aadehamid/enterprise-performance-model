@@ -23,6 +23,8 @@ python3 scripts/share_release/export.py --epm . --skills ../personal-agent-skill
   (the peer evidence folder becomes `reference/industry-view/`, the previous release of each module moves
   under `releases/previous/`, the skills land under `skills/<name>/`).
 - `rules.py` holds the rewrite rules, in order, each named. `test_rules.py` pins each one on a planted line.
+- `owner.py` reads the owner's names and handle from `EPM_RELEASE_OWNER_NAMES` or `~/.config/epm/owner-names.txt`,
+  never from a tracked file; the export and the gate refuse to run without them.
 - `export.py` copies the allowlist, applies the rules to every text file, keeps binaries byte for byte, and
   writes `<out>-report.json` beside the release with every rule's count per file, so each difference between
   `main` and the release traces to a rule. It reads no Git history.

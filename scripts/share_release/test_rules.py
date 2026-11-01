@@ -1,5 +1,7 @@
 """Each rewrite rule, on a planted line, by hand."""
 import os
+
+os.environ["EPM_RELEASE_OWNER_NAMES"] = "Ada Lovelace,Ada,adalove"  # a stand-in: no test names a person
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -91,7 +93,7 @@ def test_walkthrough_rows_for_the_review_loop_are_dropped():
 
 
 def test_repository_names_and_home_paths():
-    out, _ = run("clone https://github.com/aadehamid/enterprise-performance-model.git; `~/workspace/ontology-build`; $HOME/Dropbox/1_PROJECTS/Enterprise Performance Model; ~/.agents/skills/ontology-to-lpg")
+    out, _ = run("clone https://github.com/adalove/enterprise-performance-model.git; `~/workspace/ontology-build`; $HOME/Dropbox/1_PROJECTS/Enterprise Performance Model; ~/.agents/skills/ontology-to-lpg")
     assert out == "clone this repository; `build/work`; $EPM; skills/ontology-to-lpg"
 
 
@@ -164,7 +166,7 @@ def test_the_playbook_builder_names_the_release_layout():
 
 
 def test_owner_name_in_skills():
-    out, _ = run("Ha" + "mid Ade" + "sokan's guideline, by Ha" + "mid (aade" + "ha" + "mid)")
+    out, _ = run("Ada Lovelace's guideline, by Ada (adalove)")
     assert out == "the author's guideline, by the author (the author)"
 
 
@@ -237,3 +239,19 @@ def test_the_earlier_core_builders_commands_become_notes():
 def test_the_skills_layout_rule_covers_path_join_tuples():
     out, _ = rules.apply('sys.path.insert(0, os.path.join(HERE, "..", "skills", "data", "ontology", "scripts"))\n', "skills/scripts/test_playbook_html.py")
     assert out == 'sys.path.insert(0, os.path.join(HERE, "..", "ontology", "scripts"))\n'
+
+
+def test_the_owners_names_come_from_the_configuration_and_become_the_author():
+    out, _ = run("Ada Lovelace's note; by Ada Lovelace; Ada asked; handle adalove; Adam stays")
+    assert out == "the author's note; by the author; the author asked; handle the author; Adam stays"
+
+
+def test_the_pages_mentions_of_the_store_notes_go():
+    src = ('<tr><td><code>business_architecture/ontology/projection/LOCAL-STORES.html</code></td><td>x</td></tr>\n'
+           '<tr><td><code>a.html</code></td><td>y</td></tr>\nFigures from <code>LOCAL-STORES.md</code>, <code>MODULES.md</code>; '
+           'Ports and names from <code>LOCAL-STORES.md</code>; comes from <code>business_architecture/ontology/projection/LOCAL-STORES.md</code> and the demo; '
+           'Start with <code>projection/README.md</code>, <code>LOCAL-STORES.md</code>, then <code>pipeline.py</code>')
+    out, _ = rules.apply(src, "business_architecture/ontology/epm-walkthrough.html")
+    assert out == ('<tr><td><code>a.html</code></td><td>y</td></tr>\nFigures from <code>MODULES.md</code>; '
+                   'Ports and names from the stores runbook; comes from the stores runbook and the demo; '
+                   'Start with <code>projection/README.md</code>, then <code>pipeline.py</code>')

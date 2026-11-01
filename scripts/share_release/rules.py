@@ -17,11 +17,13 @@ The rules, in order:
  10. peers:        the nine company names -> U.S. refining peers; the peer evidence folder -> industry view;
                    the peer-tier wording -> the agreed source wording.
  11. underscores:  prefix__name -> prefix_name for the graph's prefixes, outside Python's own names.
- 12. names:        the owner's name and handle in the skills -> the author.
+ 12. names:        the owner's names and handle (from owner.py's configuration, never a tracked file) -> the author.
  13. left-out:     the rows and sentences that point at documents the release leaves out (the store notes, the
                    superseded projection guideline).
 """
 import re
+
+import owner
 
 # Rule 11's prefixes: the projection's fixed prefixes plus n10s's schema and SHACL prefixes.
 GRAPH_PREFIXES = ("core", "orgm", "kpi", "pop", "party", "dp", "vs", "sys", "lane", "mkt", "plc", "auth", "con",
@@ -160,11 +162,12 @@ def rule_hosts(text, ctx):
 
 def rule_repository(text, ctx):
     n = 0
-    text, k = _count(r"https?://github\.com/aadehamid/enterprise-performance-model[A-Za-z0-9/_.#?=-]*", "this repository", text); n += k
-    text, k = _count(r"https?://github\.com/aadehamid/personal-agent-skills[A-Za-z0-9/_.#?=-]*", "the skills folder", text); n += k
-    text, k = _count(r"https?://github\.com/aadehamid/[A-Za-z0-9/_.#?=-]*", "another repository", text); n += k
-    text, k = _count(r"\baadehamid/enterprise-performance-model\b", "this repository", text); n += k
-    text, k = _count(r"\baadehamid/personal-agent-skills\b", "the skills folder", text); n += k
+    account = "(?:" + "|".join(re.escape(x) for x in owner.owner_names()) + ")"  # the GitHub account, from the configuration
+    text, k = _count(r"https?://github\.com/" + account + r"/enterprise-performance-model[A-Za-z0-9/_.#?=-]*", "this repository", text); n += k
+    text, k = _count(r"https?://github\.com/" + account + r"/personal-agent-skills[A-Za-z0-9/_.#?=-]*", "the skills folder", text); n += k
+    text, k = _count(r"https?://github\.com/" + account + r"/[A-Za-z0-9/_.#?=-]*", "another repository", text); n += k
+    text, k = _count(r"\b" + account + r"/enterprise-performance-model\b", "this repository", text); n += k
+    text, k = _count(r"\b" + account + r"/personal-agent-skills\b", "the skills folder", text); n += k
     text, k = _count(r"\benterprise-performance-model\b", "this repository", text); n += k
     text, k = _count(r"\bpersonal-agent-skills\b", "the skills folder", text); n += k
     for pat, rep in HOME_PATHS:
@@ -215,6 +218,11 @@ def rule_left_out(text, ctx):
     """Sentences and table rows that point at documents the release leaves out (rule 13)."""
     n = 0
     text, k = _count(r"^\| `(?:LOCAL-STORES|STORE-INVENTORY)\.md` \|.*\n", "", text, re.M); n += k
+    text, k = _count(r"<tr><td><code>business_architecture/ontology/projection/(?:LOCAL-STORES|STORE-INVENTORY)\.(?:md|html)</code></td>.*?</tr>\n?", "", text, re.S); n += k
+    text, k = _count(r"Figures from <code>LOCAL-STORES\.md</code>, ", "Figures from ", text); n += k
+    text, k = _count(r"Ports and names from <code>LOCAL-STORES\.md</code>;", "Ports and names from the stores runbook;", text); n += k
+    text, k = _count(r"comes from <code>business_architecture/ontology/projection/LOCAL-STORES\.md</code> and the demo", "comes from the stores runbook and the demo", text); n += k
+    text, k = _count(r"<code>projection/README\.md</code>, <code>LOCAL-STORES\.md</code>, then", "<code>projection/README.md</code>, then", text); n += k
     text, k = _count(r"following the guideline in `\.\./lpg-projection/` \(v2\.2\)", "following the projection guideline, version 2.2,", text); n += k
     text, k = _count(r", and `\.\./lpg-projection/` keeps the v2\.2 copy as superseded evidence;", " (the v2.2 copy is not part of this release);", text); n += k
     # The walkthrough's commands for core's earlier builders: they read the earlier packages, which the release
@@ -235,11 +243,9 @@ def rule_underscores(text, ctx):
 
 def rule_names(text, ctx):
     n = 0
-    text, k = _count("Ha" + "mid Ade" + "sokan's", "the author's", text); n += k
-    text, k = _count("Ha" + "mid's", "the author's", text); n += k
-    text, k = _count("Ha" + "mid Ade" + "sokan", "the author", text); n += k
-    text, k = _count(r"\bHa" + r"mid\b", "the author", text); n += k
-    text, k = _count("aade" + "ha" + "mid", "the author", text); n += k
+    for name in owner.owner_names():
+        text, k = _count(r"\b" + re.escape(name) + r"'s\b", "the author's", text); n += k
+        text, k = _count(r"\b" + re.escape(name) + r"\b", "the author", text); n += k
     return text, n
 
 

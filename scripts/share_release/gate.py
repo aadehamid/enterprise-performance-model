@@ -15,8 +15,11 @@ import re
 import sys
 import zipfile
 
-# Each pattern with its reason. The owner's name and handle are built from fragments so this file does not match itself.
-OWNER = "|".join(["ha" + "mid", "ade" + "sokan", "aade" + "ha" + "mid"])
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import owner as _owner  # noqa: E402
+
+# Each pattern with its reason. The owner's names and handle come from owner.py's configuration, never from this file.
+OWNER = "|".join(re.escape(n) for n in _owner.owner_names())
 PEERS = r"valero|phillips\s?66|\bpbf\b|hf\s?sinclair|hollyfrontier|par\s+pacific|\bdelek\b|\bcvr\b|chevron|exxon"
 PATTERNS = [
     ("the owner's name or handle", re.compile(OWNER, re.I)),

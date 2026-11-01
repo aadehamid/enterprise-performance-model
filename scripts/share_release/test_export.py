@@ -1,6 +1,8 @@
 """The export copies the allowlist, rewrites text, keeps binaries byte for byte, and reports outside the release."""
 import json
 import os
+
+os.environ["EPM_RELEASE_OWNER_NAMES"] = "Ada Lovelace,Ada,adalove"  # a stand-in: no test names a person
 import subprocess
 import sys
 
@@ -31,7 +33,7 @@ def test_export_rewrites_copies_and_reports(tmp_path):
         "AGENTS.md": "agent rules\n",
     })
     skills = tmp_path / "skills"
-    make_tree(str(skills), {"skills/data/ontology/SKILL.md": "By Ha" + "mid.\n",
+    make_tree(str(skills), {"skills/data/ontology/SKILL.md": "By Ada.\n",
                             "skills/writing/clear-writing/calibration.md": "personal\n"})
     out = tmp_path / "release"
     report = export.export(str(epm), str(skills), str(out))

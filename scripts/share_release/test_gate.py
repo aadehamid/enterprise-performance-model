@@ -1,5 +1,7 @@
 """The leak gate fails on each kind of planted leak, in text, in a page's data, in an XLSX and in a path."""
 import os
+
+os.environ["EPM_RELEASE_OWNER_NAMES"] = "Ada Lovelace,Ada,adalove"  # a stand-in: no test names a person
 import sys
 import zipfile
 
@@ -8,7 +10,7 @@ sys.path.insert(0, HERE)
 import gate  # noqa: E402
 
 PLANTS = {
-    "the owner's name or handle": "written by Ha" + "mid Ade" + "sokan",
+    "the owner's name or handle": "written by Ada Lovelace",
     "this account's repositories": "see enterprise-performance-model on GitHub",
     "a decision record number": "approved under EPM-DEC-001-0044",
     "the saved answers folder": "recorded in answers-2026-10-18-night.md",
