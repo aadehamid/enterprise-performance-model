@@ -192,18 +192,22 @@ def rule_approvals(text, ctx):
     return text, n
 
 
+DEMO_README = "demos/downstream-pricing-databricks-free/README.md"
+
+
 def rule_hosts(text, ctx):
     n = 0
     text, k = _count(r"<tr>(?:(?!</tr>).)*?(?:~/\.claude/handoffs|~/\.claude/plugins|~/\.local/bin/cursor-agent)(?:(?!</tr>).)*?</tr>\n?", "", text, re.S); n += k
     # The demo's README tells a reader where the source databases run: this release's reader uses the local container.
-    text, k = _count(r" Since [\d-]+ the source databases \([^)]*\) also run on an exe\.dev VM,.*?The local container stays as the fallback\.", "", text, re.S); n += k
-    text, k = _count(r"\bthe VM run\b", "the remote-host run", text); n += k
-    text, k = _count(r"`replicate` from the VM\b", "`replicate` from that host", text); n += k
-    text, k = _count(r"\bthe tunnel to `decision_truth`", "the connection to `decision_truth`", text); n += k
-    text, k = _count(r"\((?:the |an )?exe\.dev (?:VM|machine) through an SSH tunnel; the local Docker container is the fallback\)",
-                     "(the local Docker container; `SOURCE_PG_DSN` names another host)", text); n += k
-    text, k = _count(r"\b(?:the |an )?exe\.dev (?:VM|machine) through (?:an SSH|the|its) tunnel\b", "a remote host", text); n += k
-    text, k = _count(r"\bthrough an SSH tunnel\b", "", text); n += k
+    if ctx.get("path", "") == DEMO_README:
+        text, k = _count(r" Since [\d-]+ the source databases \([^)]*\) also run on an exe\.dev VM,.*?The local container stays as the fallback\.", "", text, re.S); n += k
+        text, k = _count(r"\bthe VM run\b", "the remote-host run", text); n += k
+        text, k = _count(r"`replicate` from the VM\b", "`replicate` from that host", text); n += k
+        text, k = _count(r"\bthe tunnel to `decision_truth`", "the connection to `decision_truth`", text); n += k
+        text, k = _count(r"\((?:the |an )?exe\.dev (?:VM|machine) through an SSH tunnel; the local Docker container is the fallback\)",
+                         "(the local Docker container; `SOURCE_PG_DSN` names another host)", text); n += k
+        text, k = _count(r"\b(?:the |an )?exe\.dev (?:VM|machine) through (?:an SSH|the|its) tunnel\b", "a remote host", text); n += k
+        text, k = _count(r"\bthrough an SSH tunnel\b", "", text); n += k
     text, k = _count(r"databases\.exe\.xyz", "source-postgres-host", text); n += k
     text, k = _count(r"\b(?:the |an )?exe\.dev VM\b", "a remote host", text); n += k
     text, k = _count(r"\bexe\.dev\b", "a remote host", text); n += k
