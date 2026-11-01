@@ -79,6 +79,25 @@ class Drift(unittest.TestCase):
     def test_every_store_is_reported(self):
         self.assertEqual([s for s, _, _ in ss.drift({}, {}, self.want)], list(ss.STORES))
 
+    def test_check_reads_and_judges_only_the_stores_named(self):
+        # check --store pipeline --store driver: the release validation's test stores are the two local Neo4j stores,
+        # so AuraDB and Databricks, outside that test, are neither read nor judged. The default is every store.
+        self.assertEqual([s for s, _, _ in ss.drift({}, {}, self.want, ("pipeline", "driver"))], ["pipeline", "driver"])
+
+        def no_login(store):
+            raise FileNotFoundError(store)
+
+        def databricks_read():
+            raise AssertionError("Databricks was read for a check that did not name it")
+        with mock.patch.object(ss, "neo4j_session", no_login), mock.patch.object(ss, "databricks", databricks_read):
+            markers, live = ss.read_markers_and_counts(("pipeline", "driver"))
+        self.assertEqual(set(markers), {"pipeline", "driver"})
+        self.assertEqual(live, {"pipeline": "unreachable (FileNotFoundError)", "driver": "unreachable (FileNotFoundError)"})
+        with mock.patch.object(ss, "neo4j_session", no_login), mock.patch.object(ss, "databricks", databricks_read):
+            markers, live = ss.read_markers_and_counts()  # the default reads every store, Databricks included
+        self.assertEqual(set(markers), set(ss.STORES))
+        self.assertEqual(live["databricks"], "unreachable (AssertionError)")  # it was read, and the reader reported it
+
 
 class Plan(unittest.TestCase):
     def cmds(self, behind, cloud):

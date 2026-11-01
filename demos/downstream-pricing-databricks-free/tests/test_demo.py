@@ -349,45 +349,69 @@ def test_finding_11_one_catalog_rule_for_every_step():
     assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["replica_landing"]), env) == "idp_sbx"
 
 
+class FakeCursor:
+    """A Databricks cursor that records every statement; SHOW CATALOGS is refused, because an explicit catalog is
+    used without asking the workspace."""
+
+    def __init__(self):
+        self.statements = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def execute(self, statement, params=None):
+        if statement == "SHOW CATALOGS":
+            raise AssertionError("the workspace was asked for its catalogs although DEMO_CATALOG is set")
+        self.statements.append(statement)
+
+    def fetchall(self):
+        return [(0,)] if self.statements[-1].startswith("SELECT COUNT") else []
+
+    def fetchone(self):
+        return (0,)
+
+
+class FakeConn:
+    def __init__(self, cur):
+        self.cur = cur
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def cursor(self):
+        return self.cur
+
+
+def fake_connection(monkeypatch, catalog):
+    cur = FakeCursor()
+    e = {"DEMO_CATALOG": catalog, "DATABRICKS_HOST": "https://h", "DATABRICKS_TOKEN": "t", "DATABRICKS_HTTP_PATH": "/p",
+         "EPM_TRIPLES": "workspace.epm_ontology.epm_triples"}
+    monkeypatch.setattr(databricks, "connect", lambda: (FakeConn(cur), e))
+    return cur, e
+
+
 def test_an_explicit_demo_catalog_is_used_as_given_and_idp_sbx_only_when_it_is_unset(monkeypatch):
-    # The release validation set DEMO_CATALOG=epm_validate and must build there, never in the shared idp_sbx: every
-    # step's choice (current_catalog, which setup, upload, build, counts, purge and tech_graph's sync all call) takes
-    # the value as given without a query, and setup creates that catalog. Without DEMO_CATALOG the choice is idp_sbx.
-    class NoQuery:
-        def execute(self, q):
-            raise AssertionError(f"a query was sent to pick the catalog: {q}")
-
-    class Creates:
-        def __init__(self, refuse=False):
-            self.refuse, self.statements = refuse, []
-
-        def execute(self, q):
-            self.statements.append(q)
-            if self.refuse and q.startswith("CREATE CATALOG"):
-                raise RuntimeError("no create rights")
-
-        def fetchall(self):
-            return []
-
+    # The release validation set DEMO_CATALOG=epm_validate and must build there, never in the shared idp_sbx: the one
+    # rule (current_catalog) takes the value as given without a query; without DEMO_CATALOG the choice is idp_sbx.
     given = {"DEMO_CATALOG": "epm_validate"}
     assert databricks.explicit_catalog(given) == "epm_validate"
     assert databricks.explicit_catalog({"DEMO_CATALOG": None}) is None and databricks.explicit_catalog({}) is None
-    assert databricks.current_catalog(NoQuery(), given) == "epm_validate"
+    assert databricks.current_catalog(FakeCursor(), given) == "epm_validate"
     assert databricks.chosen_catalog is databricks.current_catalog
-    cur = Creates()
-    assert databricks.catalog(cur, given) == "epm_validate"
-    assert cur.statements[0].startswith("CREATE CATALOG IF NOT EXISTS epm_validate ")
-    assert databricks.catalog(Creates(refuse=True), given) == "epm_validate"  # it may exist without create rights
-    cur = Creates()
-    assert databricks.catalog(cur, {"DEMO_CATALOG": None}) == "idp_sbx"
-    assert cur.statements[0].startswith("CREATE CATALOG IF NOT EXISTS idp_sbx ")
-    assert databricks.catalog(Creates(refuse=True), {}) == "workspace"
-    for name in ("setup", "upload", "build", "counts", "purge"):
-        assert name in databricks.__doc__ or hasattr(databricks, name)
-    for name in ("upload", "build", "counts", "purge"):
-        assert "current_catalog(cur, e)" in inspect.getsource(getattr(databricks, name)), name
-    with open(os.path.join(config.ROOT, "pricing_demo", "tech_graph.py")) as f:
-        assert f.read().count("current_catalog(cur, e)") >= 1
+
+    class Refuses(FakeCursor):
+        def execute(self, statement, params=None):
+            if statement.startswith("CREATE CATALOG"):
+                raise RuntimeError("no create rights")
+            super().execute(statement)
+    assert databricks.catalog(Refuses(), given) == "epm_validate"  # it may exist without create rights
+    assert databricks.catalog(Refuses(), {}) == "workspace"  # the default, when idp_sbx cannot be created
     # databricks_env passes DEMO_CATALOG through as given, and leaves it None when nothing sets it.
     base = {"DATABRICKS_HOST": "x.cloud.databricks.com", "DATABRICKS_TOKEN": "t", "DATABRICKS_HTTP_PATH": "/sql/1"}
     monkeypatch.setattr(config.os.path, "exists", lambda path: False)  # no epm.env
@@ -395,6 +419,79 @@ def test_an_explicit_demo_catalog_is_used_as_given_and_idp_sbx_only_when_it_is_u
     assert config.databricks_env()["DEMO_CATALOG"] == "epm_validate"
     monkeypatch.setattr(config, "env", lambda name, default=None: base.get(name, default))
     assert config.databricks_env()["DEMO_CATALOG"] is None
+
+
+def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys):
+    # setup, upload, build, counts, purge and tech_graph's sync, each run against a fake workspace with
+    # DEMO_CATALOG=epm_validate: every statement, path and drop names that catalog and none names idp_sbx.
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    assert databricks.setup() == "epm_validate"
+    assert cur.statements[0].startswith("CREATE CATALOG IF NOT EXISTS epm_validate ")
+    assert {f"CREATE SCHEMA IF NOT EXISTS epm_validate.{s}" for s in databricks.SCHEMAS} <= set(cur.statements)
+    assert "CREATE VOLUME IF NOT EXISTS epm_validate.replica_landing.raw" in cur.statements
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    (tmp_path / "replica" / "price_assessment").mkdir(parents=True)
+    (tmp_path / "replica" / "price_assessment" / "t.parquet").write_bytes(b"PAR1")
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    monkeypatch.setattr(replicate, "check_replica", lambda: {"price_assessment/t": {"rows": 1}})
+    uploads = []
+    client = types.SimpleNamespace(files=types.SimpleNamespace(upload=lambda target, data, overwrite: uploads.append(target)))
+    sdk = types.SimpleNamespace(WorkspaceClient=lambda host, token: client)
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setitem(sys.modules, "databricks", types.SimpleNamespace(sdk=sdk))
+        mp.setitem(sys.modules, "databricks.sdk", sdk)
+        assert databricks.upload() == 1
+    assert uploads == ["/Volumes/epm_validate/replica_landing/raw/price_assessment/t.parquet"]
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    sql = tmp_path / "03_silver.sql"
+    sql.write_text("-- a layer\nCREATE OR REPLACE TABLE ${catalog}.silver_udm_core.t AS SELECT 1;\n")
+    checked = []
+    monkeypatch.setattr(databricks, "check_built", lambda cur, cat: checked.append(cat))
+    databricks.build(files=[str(sql)])
+    assert cur.statements == ["CREATE OR REPLACE TABLE epm_validate.silver_udm_core.t AS SELECT 1"]
+    assert checked == ["epm_validate"]
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    assert databricks.counts() == {}
+    shows = [st for st in cur.statements if st.startswith("SHOW TABLES")]
+    assert shows and all(st.startswith("SHOW TABLES IN epm_validate.") for st in shows)
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    databricks.purge(execute=False, connection=(FakeConn(cur), e))
+    out = capsys.readouterr().out
+    assert "catalog epm_validate" in out
+    drops = [line for line in out.splitlines() if line.startswith("DROP ")]
+    assert drops and all("epm_validate." in d for d in drops)
+
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    monkeypatch.setattr(tech_graph, "neo4j_login", lambda store: ("bolt://fake", "neo4j", "pw"))
+
+    class Driver:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def execute_query(self, query, **params):
+            return [], None, None
+    neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver()))
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setitem(sys.modules, "neo4j", neo4j)
+        assert tech_graph.sync("pipeline") == (0, 0)
+    assert "DELETE FROM epm_validate.tech_graph.tech_graph_nodes" in cur.statements
+    assert "SELECT COUNT(*) FROM epm_validate.tech_graph.tech_graph_edges" in cur.statements
+    assert not any("idp_sbx" in st for st in cur.statements)
+
+
+def test_without_demo_catalog_setup_builds_in_idp_sbx(monkeypatch):
+    cur = FakeCursor()
+    monkeypatch.setattr(databricks, "connect", lambda: (FakeConn(cur), {"DEMO_CATALOG": None}))
+    assert databricks.setup() == "idp_sbx"
+    assert cur.statements[:2] == [f"CREATE CATALOG IF NOT EXISTS idp_sbx COMMENT '{databricks.DEMO_COMMENT}'",
+                                  "CREATE SCHEMA IF NOT EXISTS idp_sbx.replica_landing"]
 
 
 def test_finding_20_a_database_commits_only_after_every_table_loaded(monkeypatch):

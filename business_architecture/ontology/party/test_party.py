@@ -75,11 +75,25 @@ class ChangeNotes(unittest.TestCase):
             bp.add_change_notes((g,))
         return list(g.objects(term, SKOS.changeNote))
 
-    def test_a_record_citation_passes_in_both_modes(self):
+    @staticmethod
+    def record_citations_missing():
+        """True in release mode when the decision records are not in the tree: the release rewrites every record
+        number to its date, so a note citing a record is tested only where the records are."""
         sys.path.insert(0, os.path.join(HERE, "..", "release"))
         import build_module as bm
-        if bm.SHARE_RELEASE:
-            self.skipTest("the record citations do not ship: the release rewrites every record number to its date")
+        return bm.SHARE_RELEASE and not os.path.isdir(os.path.join(bm.ROOT, "business_architecture", "domain", "decisions"))
+
+    def test_the_skip_needs_release_mode_and_the_records_missing(self):
+        from unittest import mock
+        sys.path.insert(0, os.path.join(HERE, "..", "release"))
+        import build_module as bm
+        for share, records, missing in ((False, True, False), (False, False, False), (True, True, False), (True, False, True)):
+            with mock.patch.object(bm, "SHARE_RELEASE", share), mock.patch.object(os.path, "isdir", lambda path: records):
+                self.assertEqual(self.record_citations_missing(), missing, (share, records))
+
+    def test_a_record_citation_passes_in_both_modes(self):
+        if self.record_citations_missing():
+            self.skipTest("the decision records are not in this tree, and the release rewrites every record number to its date")
         note = "2026-10-27: renamed from lead (EPM-DEC-001-0108)."
         for share in (False, True):
             self.assertEqual(self.notes(note, share), [Literal(note, lang="en")], share)
