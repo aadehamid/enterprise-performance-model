@@ -93,7 +93,11 @@ def read_logins(s, stores):
         if not os.path.isfile(path):
             problems.append(f"{store}: no login file at {path}")
             continue
+        if stat.S_IMODE(os.stat(path).st_mode) & 0o077:
+            problems.append(f"{store}: {path} is readable by others: run chmod 600 on it")
+            continue
         found = read_env_file(path)
+        problems += [f"{store}: {path}: the key {k} is not one this tool reads" for k in sorted(set(found) - KNOWN)]
         problems += [f"{store}: {path} lacks {k}" for k in keys if not found.get(k)]
         logins.update({k: found[k] for k in keys if found.get(k)})
     return logins, problems
@@ -212,22 +216,40 @@ def plan(s, stores, config_path, empty):
     return steps
 
 
+def containers(project, runner=subprocess.run):
+    """The containers of a compose project, running or stopped: what the load would remove."""
+    done = runner(["docker", "ps", "-aq", "--filter", f"label=com.docker.compose.project={project}"],
+                  stdin=subprocess.DEVNULL, capture_output=True, text=True)
+    return done.stdout.split()
+
+
 def holding(s, stores, env, runner=subprocess.run):
-    """[(store, what it holds)] for the chosen stores that hold anything, and the problems. A local store that cannot be
-    read has nothing to lose: the run creates it. A cloud store that cannot be read is a problem now, not ten minutes on."""
+    """[(store, what it holds)] for the chosen stores that hold anything, and the problems. Every store must answer the
+    count, because a failed count is not an empty store. The one exception is a local store with no container at all: it
+    has nothing to lose, and the run creates it. A stopped container may hold data, and the load would remove it."""
     py = ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "neo4j"] + (["--with", "databricks-sql-connector"] if "databricks" in stores else [])
     named = [a for store in stores for a in ("--store", store)]
     done = runner([*py, "python", "empty_stores.py", *named], cwd=HERE, env=env, stdin=subprocess.DEVNULL, capture_output=True, text=True)
-    held, problems = [], []
+    if done.returncode != 0:
+        return [], [f"the count of what the stores hold failed (exit {done.returncode}); nothing was changed"]
+    rows = {}
     for line in done.stdout.splitlines():
-        if not line.startswith("{"):
-            continue
-        row = json.loads(line)
-        if "unreachable" in row:
-            if row["store"] in ("aura", "databricks"):
-                problems.append(f"{row['store']}: could not be reached ({row['unreachable']}); check its login values")
+        if line.startswith("{"):
+            row = json.loads(line)
+            rows[row["store"]] = row
+    held, problems = [], []
+    projects = {"driver": s["EPM_NEO4J_PROJECT"], "jena": s["EPM_JENA_PROJECT"]}
+    for store in stores:
+        row = rows.get(store)
+        if row is None:
+            problems.append(f"{store}: the count gave no result; nothing was changed")
+        elif "unreachable" in row:
+            if store not in projects:
+                problems.append(f"{store}: could not be reached ({row['unreachable']}); check its login values")
+            elif containers(projects[store], runner):
+                held.append((store, f"a container that did not answer, {row['unreachable']}"))
         elif row.get("held"):
-            held.append((row["store"], row["held"]))
+            held.append((store, row["held"]))
     return held, problems
 
 

@@ -93,6 +93,27 @@ class Preflight(Base):
         self.assertIn("aura is a copy of the local Neo4j: name driver too", rb.preflight(s, ("aura",), which=lambda tool: tool))
 
 
+class LoginFiles(Base):
+    def separate(self, text, mode=0o600):
+        path = os.path.join(self.tmp, "aura.env")
+        with open(path, "w") as f:
+            f.write(text)
+        os.chmod(path, mode)
+        s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\nEPM_AURA_ENV={path}\n"))
+        return rb.read_logins(s, ("aura",))[1], path
+
+    def test_a_separate_login_file_others_can_read_is_refused(self):
+        problems, path = self.separate(AURA, 0o644)
+        self.assertEqual(problems, [f"aura: {path} is readable by others: run chmod 600 on it"])
+
+    def test_a_separate_login_file_with_an_unknown_key_is_refused(self):
+        problems, path = self.separate(AURA + "NEO4J_PASWORD=x\n")
+        self.assertEqual(problems, [f"aura: {path}: the key NEO4J_PASWORD is not one this tool reads"])
+
+    def test_a_correct_separate_login_file_passes(self):
+        self.assertEqual(self.separate(AURA + "AURA_INSTANCEID=x\n")[0], [])
+
+
 class Plan(Base):
     def names(self, stores, empty=True, extra=""):
         s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\n" + AURA + DBX + extra))
@@ -147,14 +168,36 @@ class Plan(Base):
 
 
 class Running(Base):
-    def test_holding_data_is_named_and_a_lost_local_store_is_not_a_problem(self):
+    def holding(self, lines, code=0, containers=""):
+        def fake(cmd, **k):
+            if cmd[0] == "docker":
+                return types.SimpleNamespace(stdout=containers, returncode=0)
+            return types.SimpleNamespace(stdout="\n".join(json.dumps(x) for x in lines), returncode=code)
+        s = rb.settings(self.env_file(""))
+        return rb.holding(s, ALL, {}, runner=fake)
+
+    def test_holding_data_is_named_and_a_store_with_no_container_is_not_a_problem(self):
         lines = [{"store": "driver", "unreachable": "ServiceUnavailable"}, {"store": "jena", "held": 3},
                  {"store": "aura", "unreachable": "AuthError"}, {"store": "databricks", "held": 0}]
-        fake = lambda *a, **k: types.SimpleNamespace(stdout="\n".join(json.dumps(x) for x in lines))  # noqa: E731
-        s = rb.settings(self.env_file(""))
-        held, problems = rb.holding(s, ALL, {}, runner=fake)
+        held, problems = self.holding(lines)
         self.assertEqual(held, [("jena", 3)])
         self.assertEqual(problems, ["aura: could not be reached (AuthError); check its login values"])
+
+    def test_a_stopped_container_counts_as_holding_data(self):
+        lines = [{"store": "driver", "unreachable": "ServiceUnavailable"}, {"store": "jena", "held": 0},
+                 {"store": "aura", "held": 0}, {"store": "databricks", "held": 0}]
+        held, problems = self.holding(lines, containers="abc123\n")
+        self.assertEqual(held, [("driver", "a container that did not answer, ServiceUnavailable")])
+        self.assertEqual(problems, [])
+
+    def test_a_failed_count_is_not_an_empty_store(self):
+        held, problems = self.holding([], code=1)
+        self.assertEqual(held, [])
+        self.assertIn("the count of what the stores hold failed", problems[0])
+
+    def test_a_store_with_no_count_result_is_a_problem(self):
+        held, problems = self.holding([{"store": "driver", "held": 0}])
+        self.assertEqual(problems, [f"{store}: the count gave no result; nothing was changed" for store in ALL[1:]])
 
     def run_with(self, codes):
         calls = []
