@@ -309,3 +309,17 @@ def test_a_graph_name_is_not_excused_by_a_python_name_inside_the_same_word(tmp_p
     assert [h["match"] for h in gate.scan(str(tmp_path))] == ["core__P"]
     (tmp_path / "a.py").write_text("metric_time__day __init__.py __main__\n")
     assert gate.scan(str(tmp_path)) == []
+
+
+def test_a_base64_payload_hides_nothing_after_a_space_or_percent_encoding(tmp_path):
+    clean(tmp_path)
+    chevron = "Q2hldnJvbg=="  # "Chevron"
+    for spelt in (chevron[:4] + " " + chevron[4:], chevron[:4] + "%64" + chevron[5:], chevron[:3] + "%20" + chevron[3:], chevron[:6] + "\n   " + chevron[6:]):
+        (tmp_path / "page.html").write_text(f'<img src="data:image/png;base64,{spelt}">\n')
+        assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"], spelt
+        (tmp_path / "page.md").write_text(f"![x](data:image/png;base64,{spelt}) text\n")  # a Markdown link: the payload ends at ")"
+        (tmp_path / "page.html").unlink()
+        assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"], spelt
+        (tmp_path / "page.md").unlink()
+    (tmp_path / "page.html").write_text(f'<img src="data:image/png;base64,{chevron}" alt="Exxon">\n')  # the payload ends at its quote; the alt is prose
+    assert sorted(h["reason"] for h in gate.scan(str(tmp_path))) == ["a peer named", "a peer named"]

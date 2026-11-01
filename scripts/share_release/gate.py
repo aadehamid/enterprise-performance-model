@@ -71,9 +71,10 @@ TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".
             ".nt", ".toml", ".example", ".cypher", ".jsonl", ".css", ".svg", ".cfg", ".ini", ".lock"}
 OFFICE_EXT = {".xlsx", ".docx", ".pptx"}
 # A data: URL (RFC 2397, "The 'data' URL scheme", August 1998, read 2026-11-01): an optional media type with
-# parameters, an optional ";base64" in any case, a comma, the payload. A base64 payload may be wrapped over lines
-# (line breaks only; a space ends it).
-DATA_URL = re.compile(r"data:((?:[^,;\"'\s<>()]*)(?:;[^,;\"'\s<>()]*)*;base64),([A-Za-z0-9+/=\r\n]*)|data:([^,\"'\s<>()]*),([^\"'\s<>()]*)", re.I)
+# parameters, an optional ";base64" in any case, a comma, the payload. The URL runs to what delimits it where it
+# stands: the quote that opened it, the ")" of a Markdown link, else the next whitespace, "<" or ">". A browser
+# strips whitespace and decodes percent-encoding inside a base64 payload before decoding it, so the gate does too.
+DATA_URL = re.compile(r"(?P<open>[\"'(]?)data:(?P<head>[^,\"'\s<>()]*),", re.I)
 CSS_COLOUR = re.compile(r"(?<=[:\s(,])#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b(?=[;\s)}\],!\"'])")
 STYLE_SPAN = re.compile(r"<style\b[^>]*>.*?</style>|\bstyle\s*=\s*\"[^\"]*\"|\bstyle\s*=\s*'[^']*'", re.S | re.I)
 PRINTABLE_RUN = re.compile(rb"[\x20-\x7e\t]{6,}")
@@ -112,15 +113,30 @@ def readable(raw):
     return strings_of(raw)
 
 
+def data_urls(text):
+    """Each data: URL in the text: (start, end, head, payload), the payload read to the URL's own delimiter."""
+    for m in DATA_URL.finditer(text):
+        opener = m.group("open")
+        closer = {'"': '"', "'": "'", "(": ")"}.get(opener)
+        start = m.end()
+        if closer:
+            end = text.find(closer, start)
+            end = len(text) if end < 0 else end
+        else:
+            n = re.search(r"[\s<>]", text[start:])
+            end = start + n.start() if n else len(text)
+        yield m.start() + len(opener), end, m.group("head"), text[start:end]  # the opener stays in the text
+
+
 def decoded_data_urls(text):
     """Each data: URL in a page, decoded: (label suffix, text) for a payload read, or a problem when it cannot be.
-    Every base64 payload that is valid base64 is decoded, whatever its length ("Q1ZS" is "CVR"), with missing
-    padding supplied as a browser does; a payload that is base64-shaped but does not decode fails the file; a
-    payload that is not base64-shaped at all (a code template's "{b64}") is read as the text it is, since the scan of
-    the file's text covers it."""
-    for i, m in enumerate(DATA_URL.finditer(text), 1):
-        if m.group(1) is not None:
-            payload = re.sub(r"\s", "", m.group(2))
+    A base64 payload is read to its delimiter, its whitespace stripped and percent-encoding decoded as a browser
+    does, then decoded whatever its length ("Q1ZS" is "CVR"), with missing padding supplied; a payload that is
+    base64-shaped but does not decode fails the file; a payload that is not base64-shaped at all (a code template's
+    "{b64}") is read as the text it is, since the scan of the file's text covers it."""
+    for i, (start, end, head, payload) in enumerate(data_urls(text), 1):
+        if re.search(r"(?:^|;)base64$", head, re.I):
+            payload = re.sub(r"\s", "", urllib.parse.unquote(payload))
             if not BASE64_SHAPED.match(payload):
                 yield f"data URI {i}", payload
                 continue
@@ -131,7 +147,16 @@ def decoded_data_urls(text):
                 continue
             yield f"data URI {i}", readable(raw)
         else:
-            yield f"data URI {i}", urllib.parse.unquote(m.group(4))
+            yield f"data URI {i}", urllib.parse.unquote(payload)
+
+
+def without_data_urls(text):
+    """The text with each data: URL's payload removed, so the encoded form is not scanned as prose."""
+    out, pos = [], 0
+    for start, end, head, payload in data_urls(text):
+        out.append(text[pos:start]); out.append("data:removed"); pos = end
+    out.append(text[pos:])
+    return "".join(out)
 
 
 def inflate(data, cap=None):
@@ -195,7 +220,7 @@ def texts(path):
             text = mask_colours(text, ext)
         for label, decoded in decoded_data_urls(text):
             yield (label, decoded) if label.startswith(PROBLEM) else (f"{path} ({label}) (binary)", decoded)
-        yield path, DATA_URL.sub("data:removed", text)
+        yield path, without_data_urls(text)
     else:
         yield path + " (binary)", strings_of(data)
 

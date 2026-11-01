@@ -134,7 +134,8 @@ def run_sparql(text, tree, rel=""):
         prepareQuery(query)
     except Exception as exc:
         if REFERENCE_DOCS.match(rel):
-            return {"ran": False, "reason": f"a query fragment shown in a reference; it does not parse alone: {str(exc)[:120]}"}
+            where = ", ".join(f"{k} {getattr(exc, k)}" for k in ("lineno", "col") if getattr(exc, k, None) is not None) or f"position {getattr(exc, 'loc', '?')}"
+            return {"ran": False, "reason": f"not run: the block did not parse ({where}: {str(exc)[:120]}); in a reference a query fragment shown in pieces is listed, not failed, and a malformed one shows here with its position"}
         raise
     if "g" not in _GRAPH:
         g = Graph()
@@ -168,6 +169,14 @@ FILE_TOOLS = {
 PYTHON_MODULES = {"pytest", "unittest"}
 UV_OPTIONS = {"-q", "--no-project", "--with:", "--group:", "--python:", "--project:", "--frozen", "--offline", "-B"}
 PYTHON_OPTIONS = {"-B", "-I", "-q", "-m:"}
+# git may only read, with options that read: no --ext-diff, --textconv, -c, --config-env or pager setting (each runs a program).
+GIT_OPTIONS = {"log": {"--oneline", "-n:", "--stat", "--name-only", "--format=", "--pretty=", "--", "--no-color"},
+               "status": {"-s", "--short", "--porcelain", "--no-color"},
+               "show": {"--stat", "--name-only", "-s", "--format=", "--pretty=", "--no-color", "--"},
+               "diff": {"--stat", "--name-only", "--cached", "--no-color", "--"}}
+# A document's own variable is never exported under a name a tool reads for a program or a path to one.
+NOT_EXPORTED = re.compile(r"^(?:GIT_|PYTHON|UV_|LD_|DYLD_|PIP_|SSL_|PATH$|HOME$|TMPDIR$|SHELL$|ENV$|BASH_ENV$|IFS$|VIRTUAL_ENV$)")
+PACKAGE_SPEC = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*(?:\[[A-Za-z0-9,._-]+\])?(?:[=<>!~]=?[A-Za-z0-9.*,<>=!~ -]*)?$")
 
 
 def option_ok(word, allowed):
@@ -255,6 +264,16 @@ def policy(argv, cwd, tree):
             ok, takes = option_ok(rest[i], UV_OPTIONS)
             if not ok:
                 return f"option {rest[i]} is not on the policy for uv run"
+            if takes:  # an option's value is checked like any operand: a package name, a version, a folder inside the tree
+                value = rest[i + 1] if i + 1 < len(rest) else ""
+                if rest[i] == "--with" and (not PACKAGE_SPEC.match(value) or "/" in value or ":" in value):
+                    return f"--with {value} is not a package name"
+                if rest[i] == "--python" and not re.match(r"^(?:python)?3(?:\.\d+)*$", value):
+                    return f"--python {value} is not a version (a path to an interpreter is not allowed)"
+                if rest[i] == "--group" and not re.match(r"^[A-Za-z0-9_-]+$", value):
+                    return f"--group {value} is not a group name"
+                if rest[i] == "--project" and operands_inside([value if path_like(value) else "./" + value], cwd, tree):
+                    return f"--project {value} is outside the tree"
             i += 2 if takes else 1
         if i < len(rest) and rest[i] in ("python", "python3"):
             return python_policy(rest[i + 1:], cwd, tree)
@@ -271,10 +290,22 @@ def policy(argv, cwd, tree):
             return None
         return "docker may only list (ps, compose ls)"
     if exe == "git":
-        if rest[:1] and rest[0] in ("log", "status", "show", "diff") and all(not w.startswith("--output") for w in rest):
-            bad = operands_inside([w for w in rest[1:] if not w.startswith("-")], cwd, tree)
-            return f"the operand {bad} is outside the tree" if bad else None
-        return "git may only read (log, status, show, diff)"
+        if not rest or rest[0] not in GIT_OPTIONS:
+            return "git may only read (log, status, show, diff)"
+        allowed, i, operands = GIT_OPTIONS[rest[0]], 1, []
+        while i < len(rest):
+            w = rest[i]
+            if w.startswith("-") and w != "--":
+                ok, takes = option_ok(w, allowed)
+                if not ok:
+                    return f"option {w} is not on the policy for git {rest[0]}"
+                i += 2 if takes else 1
+                continue
+            if w != "--":
+                operands.append(w)
+            i += 1
+        bad = operands_inside(operands, cwd, tree)
+        return f"the operand {bad} is outside the tree" if bad else None
     if exe == "curl":
         if all(w in ("-s", "-S", "-f", "-sS", "-sf", "-I") or re.match(r"^https?://(?:localhost|127\.0\.0\.1)(?::\d+)?(?:/|$)", w) for w in rest):
             return None
@@ -288,8 +319,10 @@ def reader_variables(tree):
 
 
 def expand(text, variables):
-    """$VAR and ${VAR} from the block's own variables (unknown ones stay, so the runner can say so), then ~."""
-    return os.path.expanduser(re.sub(r"\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?", lambda v: variables.get(v.group(1), v.group(0)), text))
+    """$VAR and ${VAR} from the block's own variables (unknown ones stay, so the runner can say so). "~" is not
+    expanded here: a path operand is expanded where it is then confined to the tree (operands_inside, inside), and an
+    operand that is only printed (echo ~) stays a tilde, so the home folder's path never reaches a result."""
+    return re.sub(r"\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?", lambda v: variables.get(v.group(1), v.group(0)), text)
 
 
 def inside(tree, target):
@@ -299,12 +332,14 @@ def inside(tree, target):
 
 
 def minimal_env(variables, release):
-    """What a command sees: the shell's basics, the block's variables, release mode; no login of this machine."""
+    """What a command sees: the shell's basics, the block's variables, release mode; no login of this machine, and
+    none of the block's variables under a name a tool reads for a program or a path (GIT_*, PYTHON*, UV_*, PATH,
+    LD_*, DYLD_*, and the like), so a document cannot point git or Python at a program of its choosing."""
     e = {k: os.environ[k] for k in KEEP_ENV if k in os.environ}
     e["PYTHONDONTWRITEBYTECODE"] = "1"
     if release:
         e["EPM_SHARE_RELEASE"] = "1"
-    e.update(variables)
+    e.update({k: v for k, v in variables.items() if not NOT_EXPORTED.match(k)})
     return e
 
 
@@ -329,7 +364,7 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
             if ROOT_WORDS.match(folder):
                 cwd = tree
                 continue
-            target = inside(tree, os.path.join(tree, expand(folder, variables)))
+            target = inside(tree, os.path.join(tree, os.path.expanduser(expand(folder, variables))))
             if target:
                 cwd = target
             else:
@@ -362,7 +397,7 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
             results.append({"line": line, "ran": False, "reason": "shell syntax (a separator, pipe, redirection or substitution); no line reaches a shell"})
             continue
         if line.startswith("cd "):
-            target = inside(tree, os.path.join(cwd, expand(line[3:].strip().strip('"'), variables)))
+            target = inside(tree, os.path.join(cwd, os.path.expanduser(expand(line[3:].strip().strip('"'), variables))))
             if target:
                 cwd = target; results.append({"line": line, "ran": True})
             else:

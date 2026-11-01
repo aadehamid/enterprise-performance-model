@@ -203,12 +203,21 @@ def test_the_ref_update_is_guarded_and_each_publication_has_its_own_index(tmp_pa
         th.join()
     assert not errors and git("show", "share/one:which.txt") == "one" and git("show", "share/two:which.txt") == "two"
     assert not [f for f in os.listdir(os.path.join(repo, ".git")) if f.startswith("share-release-index")]
-    stale = git("rev-parse", "share/one")
-    git("update-ref", "refs/heads/share/one", git("rev-parse", "share/two"))  # someone moved the ref after it was read
+    stale, other = git("rev-parse", "share/one"), git("rev-parse", "share/two")
+    run_git = lambda *a, **k: subprocess.run(["git", "-C", repo, *a], check=True, capture_output=True, text=True)
+    git("update-ref", "refs/heads/share/one", other)  # someone moved share/one after its value was read
     try:
-        publish.guarded_update_ref(lambda *a, **k: subprocess.run(["git", "-C", repo, *a], check=True, capture_output=True, text=True),
-                                   "one", stale, stale)  # expects the old value, which is gone
+        publish.guarded_update_ref(run_git, "share/one", stale, stale)  # expects the value it read, which is gone
         assert False, "the stale update went through"
     except subprocess.CalledProcessError:
         pass
-    assert git("rev-parse", "share/one") == git("rev-parse", "share/two")  # untouched by the losing writer
+    assert git("rev-parse", "refs/heads/share/one") == other  # untouched by the losing writer
+    publish.guarded_update_ref(run_git, "share/one", stale, other)  # expecting the current value, the update goes through
+    assert git("rev-parse", "refs/heads/share/one") == stale
+    try:
+        publish.guarded_update_ref(run_git, "share/new", stale, "")  # "" means the ref must not exist: it does not, so it is created
+        assert git("rev-parse", "refs/heads/share/new") == stale
+        publish.guarded_update_ref(run_git, "share/new", other, "")  # and a second creation of an existing ref is refused
+        assert False, "a second creation went through"
+    except subprocess.CalledProcessError:
+        pass

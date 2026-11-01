@@ -26,8 +26,8 @@
 # release name, the mode text, a date; nothing else is accepted). The owner's names are checked before anything
 # is removed, so a cut that would refuse removes nothing.
 #
-# Deadlines: every long step (the rebuild, each validation run, the release's check.sh, the comparison, the
-# snippets, both gates, the report and the clean room) runs under cleanroom.py's deadline (STEP_TIMEOUT seconds
+# Deadlines: every step (the export, the rebuild, each validation run, the release's check.sh, the comparison, the
+# snippets, both gates, the zip, the report and the clean room) runs under cleanroom.py's deadline (STEP_TIMEOUT seconds
 # each, default 7200; the whole process group is killed on expiry and the clean room removes its container), so
 # a stalled download, store or daemon is a failed step, never a hung cut.
 set -euo pipefail
@@ -81,7 +81,7 @@ sys.exit(1 if not rows or any(not v.get("ok") for v in rows.values()) else 0)
 PY
 }
 
-step "export"; rm -rf "$OUT"; python3 -I "$HERE/export.py" --epm "$EPM" --skills "$SKILLS" --out "$OUT" | tail -1
+step "export"; rm -rf "$OUT"; within "$OUT-export.log" python3 -I "$HERE/export.py" --epm "$EPM" --skills "$SKILLS" --out "$OUT" > /dev/null || { tail -20 "$OUT-export.log"; exit 1; }; tail -1 "$OUT-export.log"
 step "rebuild"; within "$OUT-rebuild.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/rebuild.py" --release "$OUT" --epm "$EPM" > /dev/null || { tail -20 "$OUT-rebuild.log"; exit 1; }; tail -1 "$OUT-rebuild.log"
 step "gate"; within "$OUT-gate.log" python3 -I "$HERE/gate.py" "$OUT" > /dev/null || { tail -20 "$OUT-gate.log"; exit 1; }; tail -1 "$OUT-gate.log"
 step "store rows ($STORE_ROWS)"; within "$OUT-stores.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" run --tree "$OUT" --out "$OUT-stores.json" --env "$ENVF" \
@@ -95,7 +95,7 @@ step "compare"; within "$OUT-compare.log" uv run -q --no-project --with rdflib -
 rows_ok "$OUT-compare.json" "comparison"
 step "snippets"; within "$OUT-snippets.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/snippets.py" --tree "$OUT" --out "$OUT-snippets.json" --env "$ENVF" > /dev/null || { tail -20 "$OUT-snippets.log"; exit 1; }; head -1 "$OUT-snippets.log"
 step "gate again"; find "$OUT" -type d \( -name __pycache__ -o -name .pytest_cache -o -name .venv \) -prune -exec rm -rf {} +; within "$OUT-gate2.log" python3 -I "$HERE/gate.py" "$OUT" > /dev/null || { tail -20 "$OUT-gate2.log"; exit 1; }; tail -1 "$OUT-gate2.log"
-step "zip"; python3 -I "$HERE/publish.py" zip --release "$OUT" --out "$OUT.zip" | tail -1
+step "zip"; within "$OUT-zip.log" python3 -I "$HERE/publish.py" zip --release "$OUT" --out "$OUT.zip" > /dev/null || { tail -20 "$OUT-zip.log"; exit 1; }; tail -1 "$OUT-zip.log"
 if [ "$CLEANROOM" = 1 ]; then step "clean room"; python3 "$HERE/cleanroom.py" "$OUT.zip" --log "$OUT-cleanroom.log" --timeout "$STEP_TIMEOUT" > /dev/null || { tail -20 "$OUT-cleanroom.log"; exit 1; }; tail -2 "$OUT-cleanroom.log"; fi
 if [ -n "$BASELINE" ]; then
   step "report"; python3 - "$OUT-tree.json" "$OUT-stores.json" "$OUT-release.json" <<'PY'

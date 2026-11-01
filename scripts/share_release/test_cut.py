@@ -61,3 +61,14 @@ def test_the_header_says_what_the_command_leaves_to_later_steps():
     with open(CUT) as f:
         head = f.read().split("set -euo pipefail")[0]
     assert "projection-driver, demo-live, tech-graph, sync" in head and "Step 9" in head and "Step 10" in head and "cleanup.py" in head and "publish.py branch" in head
+
+
+def test_a_hanging_export_is_stopped_by_the_deadline(tmp_path):
+    epm = tmp_path / "epm"; (epm / "business_architecture" / "ontology").mkdir(parents=True)
+    os.mkfifo(str(epm / "business_architecture" / "ontology" / "README.md"))  # a reader of this file blocks forever
+    (tmp_path / "skills").mkdir()
+    (tmp_path / "stores.env").write_text("LEDGER_FILE=" + str(tmp_path / "ledger.jsonl") + "\n")
+    env = {**os.environ, "EPM_RELEASE_OWNER_NAMES": "Ada Lovelace", "STEP_TIMEOUT": "2"}
+    r = subprocess.run(["bash", CUT, "--epm", str(epm), "--skills", str(tmp_path / "skills"), "--out", str(tmp_path / "out"), "--env", str(tmp_path / "stores.env"), "--no-cleanroom"],
+                       env=env, capture_output=True, text=True, timeout=60)
+    assert r.returncode == 1 and "=== export" in r.stdout and "deadline of 2 s passed" in (tmp_path / "out-export.log").read_text()
