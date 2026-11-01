@@ -323,3 +323,16 @@ def test_a_base64_payload_hides_nothing_after_a_space_or_percent_encoding(tmp_pa
         (tmp_path / "page.md").unlink()
     (tmp_path / "page.html").write_text(f'<img src="data:image/png;base64,{chevron}" alt="Exxon">\n')  # the payload ends at its quote; the alt is prose
     assert sorted(h["reason"] for h in gate.scan(str(tmp_path))) == ["a peer named", "a peer named"]
+
+
+def test_a_base64_payload_ends_at_a_fragment_or_a_markdown_title_and_is_still_decoded(tmp_path):
+    clean(tmp_path)
+    chevron = "Q2hldnJvbg=="  # "Chevron"
+    (tmp_path / "page.md").write_text(f'![x](data:image/png;base64,{chevron} "a title")\n')  # the title is not the payload
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    (tmp_path / "page.md").write_text(f"see data:image/png;base64,{chevron}#fragment here\n")  # a fragment is not the payload
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    (tmp_path / "page.md").write_text(f'<a href="data:image/png;base64,{chevron}#x">x</a>\n')
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    (tmp_path / "page.md").write_text(f'![x](data:image/png;base64,{chevron} "Exxon")\n')  # and the title is scanned as prose
+    assert sorted(h["reason"] for h in gate.scan(str(tmp_path))) == ["a peer named", "a peer named"]

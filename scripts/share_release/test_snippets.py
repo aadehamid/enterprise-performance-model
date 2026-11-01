@@ -201,3 +201,31 @@ def test_a_complete_query_with_trailing_text_in_a_reference_is_listed_with_the_p
         assert r["ran"] is False and "did not parse" in r["reason"] and ("lineno" in r["reason"] or "position" in r["reason"] or "col" in r["reason"])
         with pytest.raises(Exception):
             snippets.run_sparql(text, tree, "business_architecture/ontology/README.md")  # the tree's own document: a failure
+
+
+def test_git_runs_with_no_document_variable_and_no_configuration_of_this_machine():
+    import subprocess
+    with tempfile.TemporaryDirectory() as tree:
+        repo = os.path.join(tree, "repo"); os.makedirs(repo)
+        g = lambda *a: subprocess.run(["git", "-C", repo, *a], check=True, capture_output=True, text=True)
+        g("init", "-q"); g("config", "user.name", "x"); g("config", "user.email", "x@example.com")
+        with open(os.path.join(repo, "f.txt"), "w") as f:
+            f.write("one\n")
+        g("add", "f.txt"); g("commit", "-q", "-m", "one")
+        with open(os.path.join(repo, "f.txt"), "w") as f:
+            f.write("two\n")
+        evil = os.path.join(tree, "evil.sh"); marker = os.path.join(tree, "ran.txt")
+        with open(evil, "w") as f:
+            f.write("#!/bin/sh\necho EVIL-RAN > " + marker + "\necho EVIL-RAN\n")
+        os.chmod(evil, 0o755)
+        os.makedirs(os.path.join(tree, "xdg", "git"))
+        with open(os.path.join(tree, "xdg", "git", "config"), "w") as f:
+            f.write(f"[diff]\n\texternal = {evil}\n[core]\n\tpager = {evil}\n")
+        with open(os.path.join(repo, ".git", "config"), "a") as f:
+            f.write(f"[diff]\n\texternal = {evil}\n")  # even the repository's own config may not run a program
+        state = {}
+        r = snippets.run_shell("XDG_CONFIG_HOME=$EPM/xdg\nHOME=$EPM/xdg\nGIT_CONFIG_GLOBAL=$EPM/xdg/git/config\ncd repo\ngit diff --no-color\ngit log --oneline", tree, {}, state)
+        diff, log = r["lines"][-2], r["lines"][-1]
+        assert diff["ran"] and diff["returncode"] == 0 and "-one" in diff["tail"] and "+two" in diff["tail"], diff
+        assert log["returncode"] == 0 and "one" in log["tail"]
+        assert not os.path.exists(marker) and "EVIL" not in str(r)

@@ -1,6 +1,7 @@
 """cut.sh refuses an output folder that holds anything else before it removes anything."""
 import os
 import subprocess
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CUT = os.path.join(HERE, "cut.sh")
@@ -72,3 +73,18 @@ def test_a_hanging_export_is_stopped_by_the_deadline(tmp_path):
     r = subprocess.run(["bash", CUT, "--epm", str(epm), "--skills", str(tmp_path / "skills"), "--out", str(tmp_path / "out"), "--env", str(tmp_path / "stores.env"), "--no-cleanroom"],
                        env=env, capture_output=True, text=True, timeout=60)
     assert r.returncode == 1 and "=== export" in r.stdout and "deadline of 2 s passed" in (tmp_path / "out-export.log").read_text()
+
+
+def test_a_hanging_zip_is_stopped_by_the_deadline(tmp_path):
+    """cut.sh runs the zip through the same `within` as the export; the zip is run here as cut.sh runs it, over a
+    release holding a FIFO, which a zip writer reads forever."""
+    rel = tmp_path / "rel"; rel.mkdir()
+    (rel / "README.md").write_text("x\n")
+    os.mkfifo(str(rel / "blocking.ttl"))
+    with open(CUT) as f:
+        zip_line = next(l for l in f if l.startswith('step "zip"'))
+    assert 'within "$OUT-zip.log" python3 -I "$HERE/publish.py" zip' in zip_line  # the wrapper cut.sh uses
+    r = subprocess.run([sys.executable, os.path.join(HERE, "cleanroom.py"), "run", "--timeout", "2", "--log", str(tmp_path / "zip.log"), "--",
+                        sys.executable, "-I", os.path.join(HERE, "publish.py"), "zip", "--release", str(rel), "--out", str(tmp_path / "rel.zip")],
+                       capture_output=True, text=True, timeout=60)
+    assert r.returncode == 1 and "deadline of 2 s passed" in (tmp_path / "zip.log").read_text()

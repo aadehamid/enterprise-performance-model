@@ -72,8 +72,10 @@ TEXT_EXT = {".md", ".html", ".ttl", ".jsonld", ".json", ".csv", ".py", ".rq", ".
 OFFICE_EXT = {".xlsx", ".docx", ".pptx"}
 # A data: URL (RFC 2397, "The 'data' URL scheme", August 1998, read 2026-11-01): an optional media type with
 # parameters, an optional ";base64" in any case, a comma, the payload. The URL runs to what delimits it where it
-# stands: the quote that opened it, the ")" of a Markdown link, else the next whitespace, "<" or ">". A browser
-# strips whitespace and decodes percent-encoding inside a base64 payload before decoding it, so the gate does too.
+# stands: the quote that opened it, the ")" of a Markdown link, else the next whitespace, "<" or ">"; inside that
+# run a "#" starts a fragment and ends the URL, and a base64 payload ends at the first character that is not base64,
+# "=", "%" or whitespace (a Markdown link's title, for example). A browser strips whitespace and decodes
+# percent-encoding inside a base64 payload before decoding it, so the gate does too.
 DATA_URL = re.compile(r"(?P<open>[\"'(]?)data:(?P<head>[^,\"'\s<>()]*),", re.I)
 CSS_COLOUR = re.compile(r"(?<=[:\s(,])#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b(?=[;\s)}\],!\"'])")
 STYLE_SPAN = re.compile(r"<style\b[^>]*>.*?</style>|\bstyle\s*=\s*\"[^\"]*\"|\bstyle\s*=\s*'[^']*'", re.S | re.I)
@@ -125,7 +127,10 @@ def data_urls(text):
         else:
             n = re.search(r"[\s<>]", text[start:])
             end = start + n.start() if n else len(text)
-        yield m.start() + len(opener), end, m.group("head"), text[start:end]  # the opener stays in the text
+        payload = text[start:end].split("#", 1)[0]  # a fragment is not part of the URL's data
+        if re.search(r"(?:^|;)base64$", m.group("head"), re.I):
+            payload = re.match(r"[A-Za-z0-9+/=%\s]*", payload).group(0)  # the payload ends where the base64 alphabet does
+        yield m.start() + len(opener), start + len(payload), m.group("head"), payload  # the opener stays in the text
 
 
 def decoded_data_urls(text):

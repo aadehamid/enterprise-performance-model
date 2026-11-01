@@ -175,7 +175,13 @@ GIT_OPTIONS = {"log": {"--oneline", "-n:", "--stat", "--name-only", "--format=",
                "show": {"--stat", "--name-only", "-s", "--format=", "--pretty=", "--no-color", "--"},
                "diff": {"--stat", "--name-only", "--cached", "--no-color", "--"}}
 # A document's own variable is never exported under a name a tool reads for a program or a path to one.
-NOT_EXPORTED = re.compile(r"^(?:GIT_|PYTHON|UV_|LD_|DYLD_|PIP_|SSL_|PATH$|HOME$|TMPDIR$|SHELL$|ENV$|BASH_ENV$|IFS$|VIRTUAL_ENV$)")
+NOT_EXPORTED = re.compile(r"^(?:GIT_|PYTHON|UV_|LD_|DYLD_|PIP_|SSL_|XDG_|PATH$|HOME$|TMPDIR$|SHELL$|ENV$|BASH_ENV$|IFS$|VIRTUAL_ENV$)")
+# git reads programs to run from its configuration (diff.external, core.pager, textconv) wherever it finds a config
+# file, so it runs with a fixed environment that carries no document variable at all: no system or global config,
+# a throwaway HOME and XDG folder, no pager and no hooks, and on diff, log and show git's own --no-ext-diff and
+# --no-textconv, which override diff.external and a driver's textconv wherever they are configured.
+GIT_ARGV_PREFIX = ("--no-pager", "-c", "core.pager=cat", "-c", "core.hooksPath=/dev/null")
+GIT_DIFF_GUARDS = ("--no-ext-diff", "--no-textconv")
 PACKAGE_SPEC = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*(?:\[[A-Za-z0-9,._-]+\])?(?:[=<>!~]=?[A-Za-z0-9.*,<>=!~ -]*)?$")
 
 
@@ -331,6 +337,16 @@ def inside(tree, target):
     return real if os.path.isdir(real) and (real == root or real.startswith(root + os.sep)) else None
 
 
+def git_env():
+    """The environment git runs in: the shell's basics and nothing of the document or of this user's git setup."""
+    import tempfile
+    empty = tempfile.mkdtemp(prefix="epm-snippet-git-")
+    e = {k: os.environ[k] for k in ("PATH", "LANG", "LC_ALL", "TERM") if k in os.environ}
+    e.update({"HOME": empty, "XDG_CONFIG_HOME": empty, "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null",
+              "GIT_PAGER": "cat", "PAGER": "cat", "GIT_TERMINAL_PROMPT": "0"})
+    return e
+
+
 def minimal_env(variables, release):
     """What a command sees: the shell's basics, the block's variables, release mode; no login of this machine, and
     none of the block's variables under a name a tool reads for a program or a path (GIT_*, PYTHON*, UV_*, PATH,
@@ -421,7 +437,11 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
             results.append({"line": line, "ran": False, "reason": f"not on the runner's command policy: {why}"})
             continue
         try:
-            r = procs.run(argv, timeout=900, cwd=cwd, env=minimal_env(variables, manifest.is_release(tree)))
+            if argv[0] == "git":
+                guards = GIT_DIFF_GUARDS if argv[1:2] and argv[1] in ("diff", "log", "show") else ()
+                argv = [argv[0], *GIT_ARGV_PREFIX, *argv[1:2], *guards, *argv[2:]]
+            env_for = git_env() if argv[0] == "git" else minimal_env(variables, manifest.is_release(tree))
+            r = procs.run(argv, timeout=900, cwd=cwd, env=env_for)
             results.append({"line": line, "ran": True, "returncode": r.returncode, "tail": (r.stdout + r.stderr)[-300:]})
         except procs.Expired:
             results.append({"line": line, "ran": True, "returncode": -1, "tail": "timed out"})
