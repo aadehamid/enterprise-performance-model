@@ -62,7 +62,7 @@ Run it after any input or shape changes. You need Docker, [uv](https://docs.astr
 
 `python3 scripts/epm_facts.py projection`, from the repository root, prints the committed figures.
 
-The last load, on every released package with `kpi` 1.3.0 (2026-11-01, by the driver, on test containers): 4,193 nodes and 22,142 relationships from 36,951 triples and 2 inferred, no SHACL violation in the graph over 762 in-graph constraints, the deliberate mutant still caught, 0 lost and 0 added in the round trip, equal hashes for the sorted and shuffled loads, and no release gap listed. Of the relationships, 21,767 come from the releases' triples, 373 are schema relationships from the ontology import, and 2 come from inferences.
+The last run, on every released package with `kpi` 1.3.0 (2026-11-01, by the driver, on test containers): 4,193 nodes and 22,142 relationships from 36,951 triples and 2 inferred, no SHACL violation in the graph over 762 in-graph constraints, the deliberate mutant still caught, 0 lost and 0 added in the round trip, equal hashes for the sorted and shuffled loads, and no release gap listed. Of the relationships, 21,767 come from the releases' triples, 373 are schema relationships from the ontology import, and 2 come from inferences.
 
 The figures below are dated records from before 2026-11-01, when an earlier loader wrote no schema nodes and found no inferences.
 

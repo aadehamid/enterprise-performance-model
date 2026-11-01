@@ -224,6 +224,9 @@ details.fm:not([open])>:not(summary){display:none}
         <li><a href="#machinery">The build and release machinery</a></li>
         <li><a href="#projections">Projections and stores</a></li>
         <li><a href="#store-holds">What each store holds</a></li>
+        <li><a href="#connect">Connect and load every store</a></li>
+        <li><a href="#tech-build">Build the technical graph</a></li>
+        <li><a href="#meaning">How the ontology gives Databricks objects their meaning</a></li>
         <li><a href="#demo">The pricing demo, file by file</a></li>
         <li><a href="#graphs">Git, the two graphs and the measures</a></li>
         <li><a href="#sync">The in-sync strategy</a></li>
@@ -901,6 +904,325 @@ uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connec
   <p class="rise">Two labels on a class do not mean two nodes. A class is one node with <code>owl__Class</code>, from its own triple, and <code>n4sch__Class</code>, from n10s's ontology import. 46 classes carry both. Count classes with one of them.</p>
   <h3 class="rise" data-ss-id="one-local-neo4j-plus-jena">One local Neo4j plus Jena</h3>
   <p class="rise">The standard is one local Neo4j plus a standing Jena (EPM-DEC-001-0111). AuraDB copies the local Neo4j's form, and its graph hash must equal the local graph's. One run of the <code>ontology-to-lpg</code> skill's driver loads them all. Jena's dataset is in memory, so a restart empties it; <code>sync_stores.py check</code> then reads <code>empty</code>, and <code>sync_stores.py sync</code> reloads it with the driver's <code>jena</code> step alone.</p>
+</section>
+
+<section id="connect" data-ss-id="section-connect" data-ss-section>
+  <h2 class="rise" data-ss-id="connect-and-load-every-store">Connect and load every store</h2>
+  <p class="section-lede rise">This section takes you from nothing to the local Neo4j, Jena, AuraDB and the Databricks table, each loaded from the releases and proven. Follow it in order. Every path is relative to the release's root. Every value on this page is a placeholder: put your real values only in the files named here, which sit outside the release.</p>
+
+  <h3 class="rise" data-ss-id="connect-have-first">1. What to have first</h3>
+  <div class="tbl rise" data-ss-id="connect-have-table"><table class="gapt"><thead><tr><th>For</th><th>What you need</th><th>Version and check</th></tr></thead><tbody>
+<tr><td>Every store</td><td data-k="What you need">Docker, running, and <a href="https://docs.astral.sh/uv/">uv</a>, which fetches each script's Python packages</td><td data-k="Version and check"><code>docker version</code>, <code>uv --version</code></td></tr>
+<tr><td>The local Neo4j</td><td data-k="What you need">Java, for ROBOT, and ROBOT itself, at <code>~/epm-lpg/robot.jar</code></td><td data-k="Version and check">Java 11 or later. ROBOT 1.9.10, SHA-256 <code>16a73c074f3df359a7338a84b4e0788785fe06117f931bb9796e9619ea776105</code>. The run refuses another file</td></tr>
+<tr><td>The local Neo4j</td><td data-k="What you need">Neo4j, n10s and APOC. The run fetches all three, from <code>skills/ontology-to-lpg/docker/compose.yaml</code></td><td data-k="Version and check">Neo4j 2025.06.2, n10s 2025.06.1 (SHA-256 <code>4c461087e08405c7cb472ecfefc043e9e8ed93628ed74988e4fda1f1bac54b3e</code>, checked at each start), APOC as Neo4j's image supplies it</td></tr>
+<tr><td>Jena</td><td data-k="What you need">Nothing to install. The run builds Fuseki from <code>skills/rdf-store/docker/compose.yaml</code></td><td data-k="Version and check">Jena Fuseki 6.2.0; its Dockerfile checks each download's SHA-256</td></tr>
+<tr><td>AuraDB</td><td data-k="What you need">A Neo4j Aura account and one AuraDB instance, created in the <a href="https://console.neo4j.io/">Aura console</a>, that holds nothing you need: the copy deletes everything in it first. Download the credentials file when the instance is created, because Aura shows the password only then (<a href="https://neo4j.com/docs/aura/getting-started/create-instance/">Neo4j, "Create an instance"</a>, read 2026-11-01)</td><td data-k="Version and check">The login needs to read, write and create a constraint. The instance's default admin login can</td></tr>
+<tr><td>Databricks</td><td data-k="What you need">A workspace with Unity Catalog, a SQL warehouse, a catalog and a schema, and a personal access token. Free Edition is enough. Create the schema first: <code>CREATE SCHEMA IF NOT EXISTS &lt;catalog&gt;.&lt;schema&gt;</code></td><td data-k="Version and check">The token's user must be able to use the warehouse, and to create, fill, replace and drop tables in the schema</td></tr>
+  </tbody></table></div>
+  <p class="rise">Fetch ROBOT once:</p>
+<pre class="rise"><code>mkdir -p ~/epm-lpg
+curl -L -o ~/epm-lpg/robot.jar https://github.com/ontodev/robot/releases/download/v1.9.10/robot.jar
+shasum -a 256 ~/epm-lpg/robot.jar   # the SHA-256 above</code></pre>
+  <p class="rise">Then set these once per terminal, from the release's root. Every command below reads them, so another environment changes only this block (step 6). <code>EPM_SKILLS</code> is the folder that holds <code>ontology-to-lpg</code> and <code>rdf-store</code>.</p>
+<pre class="rise"><code>export EPM_ROOT="$PWD"
+export EPM_SKILLS="$EPM_ROOT/skills"
+export EPM_RUN="$EPM_ROOT/business_architecture/ontology/projection/skill-run/epm-run.json"
+export EPM_OUT=~/lpg-out/epm
+export EPM_NEO4J=lpg-local-neo4j-1
+export EPM_JENA=http://127.0.0.1:13031/ds</code></pre>
+
+  <h3 class="rise" data-ss-id="connect-values">2. Every connection value</h3>
+  <p class="rise"><strong>The local Neo4j and Jena need no value from you.</strong> The run generates the local Neo4j's password and writes it to <code>$EPM_OUT/neo4j-run/run.env</code>, mode 600, with <code>PROJECT</code>, <code>PORT</code> and <code>PASSWORD</code>. A full run ends with the rebuild's login instead, at <code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code>. Each run writes a new password. The local Neo4j's Bolt port is 17711, with no browser port. Jena has no login; its endpoints are <code>$EPM_JENA/query</code>, <code>/data</code> and <code>/update</code>.</p>
+  <p class="rise"><strong>AuraDB:</strong> <code>~/.config/neo4j/aura.env</code>, mode 600. Aura's downloaded credentials file already has this form, so save it under this name, then run <code>chmod 600</code> on it.</p>
+  <div class="tbl rise" data-ss-id="connect-aura-table"><table class="gapt"><thead><tr><th>Variable</th><th>What it is</th><th>Format</th><th>Where to find it</th><th>Needed</th></tr></thead><tbody>
+<tr><td><code>NEO4J_URI</code></td><td data-k="What it is">The instance's address</td><td data-k="Format"><code>neo4j+s://&lt;instance-id&gt;.databases.neo4j.io</code></td><td data-k="Where to find it">The credentials file, or the instance's card in the Aura console</td><td data-k="Needed">Yes</td></tr>
+<tr><td><code>NEO4J_USERNAME</code></td><td data-k="What it is">The login</td><td data-k="Format"><code>neo4j</code></td><td data-k="Where to find it">The credentials file</td><td data-k="Needed">Yes</td></tr>
+<tr><td><code>NEO4J_PASSWORD</code></td><td data-k="What it is">The login's password</td><td data-k="Format"><code>&lt;password&gt;</code></td><td data-k="Where to find it">The credentials file. Aura shows it only when it creates the instance</td><td data-k="Needed">Yes</td></tr>
+<tr><td><code>NEO4J_DATABASE</code></td><td data-k="What it is">The database</td><td data-k="Format"><code>neo4j</code></td><td data-k="Where to find it">The credentials file</td><td data-k="Needed">Optional; without it the server's default is used</td></tr>
+<tr><td><code>AURA_INSTANCEID</code>, <code>AURA_INSTANCENAME</code></td><td data-k="What it is">The instance's ID and name</td><td data-k="Format"><code>&lt;instance-id&gt;</code>, <code>&lt;name&gt;</code></td><td data-k="Where to find it">The credentials file</td><td data-k="Needed">No script reads them; they may stay</td></tr>
+  </tbody></table></div>
+  <p class="rise"><strong>Databricks:</strong> <code>~/.config/databricks/epm.env</code>, mode 600. Create it yourself. All five values are required, and the catalog and schema take letters, digits and underscores only.</p>
+  <div class="tbl rise" data-ss-id="connect-databricks-table"><table class="gapt"><thead><tr><th>Variable</th><th>What it is</th><th>Format</th><th>Where to find it</th></tr></thead><tbody>
+<tr><td><code>DATABRICKS_HOST</code></td><td data-k="What it is">The workspace's address</td><td data-k="Format"><code>https://&lt;workspace&gt;.cloud.databricks.com</code></td><td data-k="Where to find it">SQL Warehouses, your warehouse, Connection Details, Server hostname (<a href="https://docs.databricks.com/aws/en/integrations/compute-details">Databricks, "Get connection details"</a>, read 2026-11-01)</td></tr>
+<tr><td><code>DATABRICKS_TOKEN</code></td><td data-k="What it is">The personal access token</td><td data-k="Format"><code>&lt;token&gt;</code></td><td data-k="Where to find it">Your username in the top bar, Settings, Developer, Access tokens, Manage, Generate new token (<a href="https://docs.databricks.com/aws/en/dev-tools/auth/pat">Databricks, "Personal access tokens"</a>, updated 2026-10-07)</td></tr>
+<tr><td><code>DATABRICKS_HTTP_PATH</code></td><td data-k="What it is">The warehouse's path</td><td data-k="Format"><code>/sql/1.0/warehouses/&lt;warehouse-id&gt;</code></td><td data-k="Where to find it">The same Connection Details tab, HTTP path</td></tr>
+<tr><td><code>DATABRICKS_CATALOG</code></td><td data-k="What it is">The catalog that holds the triple table</td><td data-k="Format"><code>&lt;catalog&gt;</code></td><td data-k="Where to find it">Catalog Explorer, or your own choice</td></tr>
+<tr><td><code>DATABRICKS_SCHEMA</code></td><td data-k="What it is">The schema that holds it. It must exist</td><td data-k="Format"><code>&lt;schema&gt;</code></td><td data-k="Where to find it">The schema you created in step 1</td></tr>
+  </tbody></table></div>
+<pre class="rise"><code>mkdir -p ~/.config/neo4j ~/.config/databricks
+chmod 600 ~/.config/neo4j/aura.env ~/.config/databricks/epm.env</code></pre>
+  <p class="rise"><strong>The pricing demo:</strong> <code>demos/downstream-pricing-databricks-free/.env</code>. Copy it from <code>.env.example</code> beside it. Git ignores it. The technical graph's <code>load</code> below needs none of it. Each setting is read from the environment first, then this file, and the three Databricks logins last from <code>epm.env</code>.</p>
+  <div class="tbl rise" data-ss-id="connect-demo-table"><table class="gapt"><thead><tr><th>Variable</th><th>What it is</th><th>Needed</th></tr></thead><tbody>
+<tr><td><code>SOURCE_PG_DSN</code></td><td data-k="What it is">The demo's Postgres, as <code>.env.example</code> shows it</td><td data-k="Needed">To load or replicate the demo's sources</td></tr>
+<tr><td><code>DATABRICKS_HOST</code>, <code>DATABRICKS_TOKEN</code>, <code>DATABRICKS_HTTP_PATH</code></td><td data-k="What it is">As above</td><td data-k="Needed">For the demo's Databricks steps</td></tr>
+<tr><td><code>DEMO_CATALOG</code></td><td data-k="What it is">The catalog the demo builds in</td><td data-k="Needed">Optional; unset, it is <code>idp_sbx</code></td></tr>
+<tr><td><code>EPM_TRIPLES</code></td><td data-k="What it is">The full name of the triple table the definitions views read</td><td data-k="Needed">Optional; unset, it is <code>epm.env</code>'s catalog and schema, then <code>epm_triples</code></td></tr>
+<tr><td><code>EIA_API_KEY</code>, <code>PARALLEL_API_KEY</code></td><td data-k="What it is">Keys to refresh the public data. They may also sit in <code>~/.config/eia/api.env</code> and <code>~/.config/parallel/api.env</code></td><td data-k="Needed">Optional; the committed data is enough to run the demo</td></tr>
+  </tbody></table></div>
+  <p class="rise"><strong>A Databricks job that reads AuraDB:</strong> <code>uv run python -m pricing_demo.aura_test</code>, from the demo's folder, writes the login from <code>aura.env</code> into the workspace's secret scope <code>epm-neo4j</code>, as the keys <code>uri</code>, <code>username</code> and <code>password</code>. Only that test needs the scope.</p>
+  <p class="rise"><strong>Set by you only to run a script by hand:</strong> <code>NEO4J_PASSWORD</code>, which a script given <code>--uri</code> reads from the environment. No script takes a password as an argument.</p>
+
+  <h3 class="rise" data-ss-id="connect-commands">3. The commands, in order</h3>
+  <p class="rise">One run loads every store its settings reach. Choose what it should load. The first form needs neither AuraDB nor Databricks, so start there.</p>
+  <div class="tbl rise" data-ss-id="connect-runs-table"><table class="gapt"><thead><tr><th>To load</th><th>Add to the run command</th><th>Then the current login is in</th></tr></thead><tbody>
+<tr><td>The local Neo4j and Jena</td><td data-k="Add"><code>--skip copy,databricks,rebuild</code></td><td data-k="Login"><code>$EPM_OUT/neo4j-run/run.env</code></td></tr>
+<tr><td>Those, and AuraDB</td><td data-k="Add"><code>--skip databricks,rebuild</code></td><td data-k="Login"><code>$EPM_OUT/neo4j-run/run.env</code></td></tr>
+<tr><td>Those, Databricks, and a rebuild from Databricks that proves it holds the whole ontology</td><td data-k="Add">Nothing</td><td data-k="Login"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code></td></tr>
+  </tbody></table></div>
+  <p class="rise"><strong>Load.</strong> The local form takes about five minutes and a full run about fifteen, and each replaces what the stores it reaches hold. <code>--plan</code> lists the steps and runs nothing. The run ends with <code>every step passed; outputs in</code> and the output folder.</p>
+<pre class="rise"><code>cd "$EPM_SKILLS/ontology-to-lpg/scripts"
+uv run --no-project --with rdflib python3 run_projection.py --config "$EPM_RUN" --plan
+uv run --no-project --with rdflib python3 run_projection.py --config "$EPM_RUN" --skip copy,databricks,rebuild</code></pre>
+  <p class="rise"><strong>Record the result.</strong> This takes the run's inferences and a summary of its report into the projection folder. It refuses a run that read other files or did not pass. It prints <code>recorded:</code> and the figures.</p>
+<pre class="rise"><code>cd "$EPM_ROOT/business_architecture/ontology/projection"
+uv run -q --no-project --with rdflib --with pyshacl python pipeline.py record --run "$EPM_OUT"
+cd "$EPM_ROOT"
+python3 scripts/epm_facts.py projection</code></pre>
+  <p class="rise"><strong>Validate the local Neo4j.</strong> The run has already checked the graph; this counts it yourself. Expect the nodes and relationships <code>epm_facts.py projection</code> printed, 4,193 and 22,142 on these releases, and 11 release records, each with <code>TRUE</code> and 0 violations. After a full run, read the password from the <code>epm-rebuild</code> file instead.</p>
+<pre class="rise"><code>export NEO4J_PASSWORD=$(grep '^PASSWORD=' "$EPM_OUT/neo4j-run/run.env" | cut -d= -f2-)
+docker exec -e NEO4J_PASSWORD "$EPM_NEO4J" cypher-shell -u neo4j \
+  "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]-&gt;(:Resource) RETURN count(r) AS relationships; MATCH (r:ModuleRelease) RETURN r.module, r.version, r.conforms, r.violations ORDER BY r.module;"</code></pre>
+  <p class="rise"><strong>Validate Jena.</strong> Expect 33 graphs and 40,169 triples on these releases: three graphs for each of 11 modules.</p>
+<pre class="rise"><code>curl -s "$EPM_JENA/query" --data-urlencode 'query=SELECT (COUNT(DISTINCT ?g) AS ?graphs) (COUNT(*) AS ?triples) WHERE { GRAPH ?g { ?s ?p ?o } }' -H 'Accept: text/csv'</code></pre>
+  <p class="rise"><strong>Validate AuraDB and Databricks,</strong> when the run reached them. The run's copy step has required AuraDB's graph hash to equal the local one, and its round trip has required the table's RDFC-1.0 hash to equal the release files'. In the Aura console's query tool, run the same three queries as for the local Neo4j. In the Databricks SQL editor, this returns 40169 and 33:</p>
+<pre class="rise"><code>SELECT count(*), count(DISTINCT graph) FROM &lt;catalog&gt;.&lt;schema&gt;.epm_triples;</code></pre>
+  <p class="rise"><strong>Load the technical graph.</strong> A run empties each Neo4j store, so load the demo's technical graph again. Name each store the run reached: <code>driver</code> is the local Neo4j and <code>aura</code> is AuraDB. It prints how many nodes and edges it loaded.</p>
+<pre class="rise"><code>cd "$EPM_ROOT/demos/downstream-pricing-databricks-free"
+uv run --group graph python -m pricing_demo.tech_graph load --store driver</code></pre>
+  <p class="rise"><strong>Mark and check.</strong> <code>mark</code> checks each store against the release before it writes a marker, and refuses one that differs. <code>check</code> then reads every store you name. Name <code>aura</code> and <code>databricks</code> too when the run reached them, and add <code>--with databricks-sql-connector</code> for Databricks. Expect <code>current</code> on each line.</p>
+<pre class="rise"><code>cd "$EPM_ROOT/business_architecture/ontology/projection"
+uv run -q --no-project --with rdflib --with neo4j python sync_stores.py mark --store driver --store jena
+uv run -q --no-project --with rdflib --with neo4j python sync_stores.py check --ref worktree --store driver --store jena</code></pre>
+
+  <h3 class="rise" data-ss-id="connect-scripts">4. The scripts</h3>
+  <p class="rise">The run calls the scripts under <code>skills/</code> for you. Each can also run alone: its first lines give its usage.</p>
+  <div class="tbl rise" data-ss-id="connect-scripts-table"><table class="gapt"><thead><tr><th>Script</th><th>What it does</th><th>What it proves</th></tr></thead><tbody>
+<tr><td><code>skills/ontology-to-lpg/scripts/run_projection.py</code></td><td data-k="Does">Runs every step below from one run configuration</td><td data-k="Proves">Every step passed; it removes what the configuration does not keep</td></tr>
+<tr><td><code>business_architecture/ontology/projection/skill-run/epm-run.json</code>, <code>epm-config.json</code>, <code>inputs.py</code>, <code>queries.json</code></td><td data-k="Does">The run configuration, the projection's rules and prefixes, the input list and the saved walks</td><td data-k="Proves">Nothing by itself; <code>test_skill_run.py</code> beside them checks them</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/check_projection_rules.py</code></td><td data-k="Does">Checks the design rules and the version pins</td><td data-k="Proves">Every predicate can be mapped with no guess</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/validate_data.py</code></td><td data-k="Does">Runs every shape with pySHACL</td><td data-k="Proves">The content meets the rules before any load</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/build.py</code></td><td data-k="Does">Merges, serialises, writes the manifest, checks the report</td><td data-k="Proves">The loaded files are clean, and the report describes these inputs</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/in_graph_shapes.py</code></td><td data-k="Does">Writes the shapes n10s can import</td><td data-k="Proves">Nothing by itself; the load's check reads back what compiled</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/load_verify.py</code></td><td data-k="Does">Loads Neo4j with n10s, then checks it</td><td data-k="Proves">No violation in the graph, a failure case for each compiled shape, 0 lost and 0 added in the round trip, equal hashes for two load orders</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/model_review.py</code></td><td data-k="Does">Reviews the loaded graph against modelling anti-patterns</td><td data-k="Proves">No finding at ERROR level</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/module_tags.py</code></td><td data-k="Does">Tags each node and relationship with its release, and builds the module graph</td><td data-k="Proves">Each carries exactly one tag, equal to its package</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/release_record.py</code></td><td data-k="Does">Writes one <code>ModuleRelease</code> node per module</td><td data-k="Proves">Each field reads back, and the graph hash did not move</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/triplestore.py</code></td><td data-k="Does">Counts the same files in a Fuseki</td><td data-k="Proves">Per-graph and per-predicate counts tie to the report</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/copy_graph.py</code></td><td data-k="Does">Copies the verified graph to AuraDB with plain Cypher</td><td data-k="Proves">The target's graph hash equals the source's and the report's</td></tr>
+<tr><td><code>skills/rdf-store/scripts/rdfstore.py</code></td><td data-k="Does">Loads Jena and the Delta table, and exports them back</td><td data-k="Proves">The store's export has the files' RDFC-1.0 hash</td></tr>
+<tr><td><code>skills/ontology-to-lpg/scripts/explore.py</code></td><td data-k="Does">Walks from a node across modules, in Neo4j and in Jena</td><td data-k="Proves">Every saved walk gives the same answer in both</td></tr>
+<tr><td><code>business_architecture/ontology/projection/pipeline.py</code></td><td data-k="Does"><code>build</code>, <code>build --verify</code> and <code>record</code></td><td data-k="Proves">The manifest is current, and a recorded run read these inputs and passed</td></tr>
+<tr><td><code>business_architecture/ontology/projection/sync_stores.py</code></td><td data-k="Does"><code>mark</code>, <code>check</code>, <code>sync</code></td><td data-k="Proves">Each store holds the newest releases, or says what it lacks</td></tr>
+<tr><td><code>demos/downstream-pricing-databricks-free/pricing_demo/tech_graph.py</code></td><td data-k="Does">Loads the technical graph beside the ontology</td><td data-k="Proves">Every link finds its ontology node, and the projection's counts do not move</td></tr>
+<tr><td><code>scripts/epm_facts.py</code>, <code>scripts/check.sh</code></td><td data-k="Does">Print the figures, and run every check that needs no store</td><td data-k="Proves">The documents' figures equal the tree's, and the tests pass</td></tr>
+  </tbody></table></div>
+
+  <h3 class="rise" data-ss-id="connect-success">5. What success looks like, and common failures</h3>
+  <p class="rise">Success is: <code>every step passed</code> from the run; 0 violations, 0 lost, 0 added and two equal hashes in <code>$EPM_OUT/projection-report.json</code>; the counts above; and <code>current</code> on each line of <code>check</code>.</p>
+  <div class="tbl rise" data-ss-id="connect-failures-table"><table class="gapt"><thead><tr><th>What you see</th><th>Why</th><th>What to do</th></tr></thead><tbody>
+<tr><td><code>the ROBOT jar's SHA-256 is not the pinned one</code></td><td data-k="Why">Another file is at <code>~/epm-lpg/robot.jar</code></td><td data-k="Do">Fetch it again, as in step 1</td></tr>
+<tr><td><code>docker compose up (Neo4j) exited 1</code>, or a port <code>already allocated</code></td><td data-k="Why">Another container holds the name or the port</td><td data-k="Do">Find it with <code>docker ps -a</code>, and remove it if it is yours, or use other ports (step 6)</td></tr>
+<tr><td><code>Neo4j did not start</code>, <code>Fuseki did not start</code></td><td data-k="Why">Docker is out of disk or memory, or the image could not download</td><td data-k="Do">Read <code>docker logs</code> for the container, free the space, and run again</td></tr>
+<tr><td><code>the local Neo4j is not up: run the load step in this run</code></td><td data-k="Why">A step that reads the local graph ran in a run without <code>load</code></td><td data-k="Do">Leave <code>load</code> in the run</td></tr>
+<tr><td><code>the target ... holds N nodes; pass --replace</code></td><td data-k="Why">AuraDB holds data and <code>replace_target</code> is off</td><td data-k="Do">Empty it yourself, or set <code>replace_target</code> if you mean it to go</td></tr>
+<tr><td><code>the env file lacks NEO4J_PASSWORD</code>, or <code>epm.env lacks DATABRICKS_TOKEN</code></td><td data-k="Why">A variable in step 2 is missing or empty</td><td data-k="Do">Add it. The message names the variable, never a value</td></tr>
+<tr><td><code>unreachable (AuthError)</code> from <code>check</code>, or a refused login</td><td data-k="Why">Each run writes a new local password, or an Aura password changed</td><td data-k="Do">Use the login file the table in step 3 names; for Aura, update <code>aura.env</code></td></tr>
+<tr><td><code>unreachable (ServiceUnavailable)</code></td><td data-k="Why">The store is stopped, or a free Aura instance is paused</td><td data-k="Do"><code>docker start</code> the container, or resume the instance in the Aura console</td></tr>
+<tr><td><code>unreachable (FileNotFoundError)</code></td><td data-k="Why">The login file is not there</td><td data-k="Do">Create it (step 2), or run the load that writes it</td></tr>
+<tr><td><code>jena empty</code></td><td data-k="Why">Jena's dataset is in memory, so a restart emptied it</td><td data-k="Do">Add <code>--only jena</code> to the run command, in place of <code>--skip</code>. It loads Jena alone</td></tr>
+<tr><td><code>driver unmarked</code></td><td data-k="Why">A load removed the marker</td><td data-k="Do">Run <code>mark</code></td></tr>
+<tr><td><code>not the last load's ... relationships</code>, or <code>release record(s) are not one for each</code>, from <code>mark</code></td><td data-k="Why">The store does not hold what the recorded run loaded</td><td data-k="Do">Run the load again, then <code>record</code>, then <code>mark</code></td></tr>
+<tr><td><code>that run read other inputs</code>, from <code>record</code></td><td data-k="Why">A release file changed after the run</td><td data-k="Do">Run the load again on these files</td></tr>
+<tr><td><code>the run configuration has a key it does not know</code></td><td data-k="Why">The skills folder is older than the run configuration</td><td data-k="Do">Point <code>EPM_SKILLS</code> at the skills that came with this release</td></tr>
+<tr><td><code>Databricks ... lacks</code>, a schema not found, or a permission error from the round trip</td><td data-k="Why">The schema does not exist, or the token's user lacks a right from step 1</td><td data-k="Do">Create the schema, grant the right, and run again. The old table stays until a checked copy replaces it</td></tr>
+  </tbody></table></div>
+
+  <h3 class="rise" data-ss-id="connect-environments">6. Moving to QA or production</h3>
+  <p class="rise"><strong>What stays the same:</strong> the releases, the scripts, the checks and the expected figures. A store in any environment must give the same counts and hashes. <strong>What changes:</strong> the connection values, the catalog and schema, and the instances. Give each environment its own AuraDB instance, its own workspace or catalog and schema, and its own token.</p>
+  <ol class="rise">
+    <li>Keep one folder of login files per environment, outside the release, each mode 600. For example <code>~/.config/epm/qa/aura.env</code> and <code>~/.config/epm/qa/epm.env</code>. Nothing in them enters Git.</li>
+    <li>Copy <code>epm-run.json</code> beside itself as <code>epm-run.qa.json</code>, because its relative paths are read from its own folder. It holds paths and names and no secret. Change <code>out</code>, <code>target_env</code>, <code>databricks.env</code>, <code>databricks.table</code> and <code>rebuild.out</code>. On a machine that also holds another environment's stores, also change <code>neo4j</code>, <code>jena</code>, <code>explore_fuseki</code> and <code>triplestore_fuseki</code>, each a compose project and a port.</li>
+    <li>Change the settings block from step 1: <code>EPM_RUN</code>, <code>EPM_OUT</code>, <code>EPM_JENA</code>, and <code>EPM_NEO4J</code>, which is the Neo4j compose project followed by <code>-neo4j-1</code>.</li>
+    <li>Point the store tools at the same stores, with this variable, which <code>sync_stores.py</code> and <code>tech_graph.py</code> read. Each key is optional. It names files and addresses, never a secret:</li>
+  </ol>
+<pre class="rise"><code>export EPM_STORES_JSON='{
+  "driver": {"bolt": "bolt://127.0.0.1:&lt;bolt-port&gt;", "env": ["&lt;out&gt;/neo4j-run/run.env"]},
+  "aura": {"env": ["~/.config/epm/qa/aura.env"]},
+  "jena": {"query": "http://127.0.0.1:&lt;jena-port&gt;/ds/query"},
+  "databricks_env": "~/.config/epm/qa/epm.env",
+  "run_config": "&lt;path to epm-run.qa.json&gt;",
+  "driver_out": "&lt;out&gt;",
+  "triples_table": "&lt;table&gt;"
+}'</code></pre>
+  <p class="rise"><strong>What stays fixed in the scripts.</strong> The label names in the graph are fixed. In the demo, <code>aura_test</code> reads <code>~/.config/neo4j/aura.env</code> and writes the secret scope <code>epm-neo4j</code>, and the demo's Databricks settings fall back to <code>~/.config/databricks/epm.env</code>. So for the demo, set <code>DATABRICKS_HOST</code>, <code>DATABRICKS_TOKEN</code>, <code>DATABRICKS_HTTP_PATH</code>, <code>DEMO_CATALOG</code> and <code>EPM_TRIPLES</code> in its environment or its <code>.env</code>, and run <code>aura_test</code> only with that environment's login at the default path. The marker table <code>epm_store_markers</code> sits in the schema <code>epm.env</code> names.</p>
+</section>
+
+<section id="tech-build" data-ss-id="section-tech-build" data-ss-section>
+  <h2 class="rise" data-ss-id="build-the-technical-graph">Build the technical graph</h2>
+  <p class="section-lede rise">The technical graph describes the demo's pipeline: its source databases, tables, metric views, Genie agents, steps and checks. This section builds it from Databricks and loads it beside the ontology. Every path is relative to the release's root, and the commands run from <code>demos/downstream-pricing-databricks-free/</code>, called the demo's folder here.</p>
+
+  <h3 class="rise" data-ss-id="tech-today">What it is today</h3>
+  <ul class="rise">
+    <li><strong>It is not an ontology module.</strong> It has no release, no <code>shapes.ttl</code> and no <code>catalog.ttl</code>.</li>
+    <li><strong>Where it lives.</strong> It is Turtle in <code>graph/tech-graph.ttl</code> and <code>graph/decision-trail.ttl</code>. It is loaded into the local Neo4j and AuraDB as nodes labelled <code>Tech</code>, and copied from Neo4j to two Delta tables. It is not in Jena or <code>epm_triples</code>.</li>
+    <li><strong>How it touches the ontology.</strong> Its nodes have no <code>Resource</code> label. Its edges start at <code>Tech</code> nodes and end at <code>Tech</code> or ontology nodes. No edge leaves an ontology node for it, so it moves none of the projection's counts or hashes, and <code>load</code> stops if they move.</li>
+    <li><strong>A load removes it.</strong> A run that loads Neo4j empties the store, so run <code>load</code> again after each.</li>
+  </ul>
+  <p class="rise"><strong>Planned, not done:</strong> the technical graph is to become a released module. It would then have the three files of every module, its shapes would validate it, and Jena and <code>epm_triples</code> would hold it. Nothing on this page assumes that.</p>
+
+  <h3 class="rise" data-ss-id="tech-have-first">1. What to have first</h3>
+  <ul class="rise">
+    <li>Everything in "Connect and load every store" for the stores you will load, with the ontology already loaded there. <code>load</code> links to ontology nodes, and <code>collect</code> reads <code>epm_triples</code>.</li>
+    <li>Java 11 or later, because SPARQL Anything 1.3.0.0 runs on it. <code>uv run --group graph</code> installs it, with the Neo4j driver 5.28.1 and rdflib 7.1.4, and SPARQL Anything downloads its jar on first use.</li>
+    <li>The demo's Postgres. <code>docker compose -f docker/docker-compose.yml up -d</code> starts it on <code>127.0.0.1:55432</code> with a throwaway login. Any Postgres that holds the same eight databases will do: name it in <code>SOURCE_PG_DSN</code>. Nothing else names the host, and no tunnel or particular machine is needed.</li>
+    <li>The demo built in your workspace, as the demo's <code>README.md</code>, "Run it", gives it: <code>load_postgres</code>, <code>replicate</code>, <code>databricks setup</code>, <code>upload</code>, <code>build</code> and <code>genie</code>. <code>build</code> runs <code>sql/07_tech_graph.sql</code>, which creates the two Delta tables empty.</li>
+    <li>For the lineage check, read access to Unity Catalog's system table <code>system.access.table_lineage</code>. Without it <code>collect</code> still runs, and the check reads <code>skipped</code> with the reason.</li>
+  </ul>
+
+  <h3 class="rise" data-ss-id="tech-values">2. Every connection value</h3>
+  <p class="rise">No value is new except the first. Settings are read from the environment first, then the demo's <code>.env</code>, and the three Databricks logins last from <code>~/.config/databricks/epm.env</code>.</p>
+  <div class="tbl rise" data-ss-id="tech-values-table"><table class="gapt"><thead><tr><th>Value</th><th>What it is</th><th>Format</th><th>Where it goes</th><th>Needed by</th></tr></thead><tbody>
+<tr><td><code>SOURCE_PG_DSN</code></td><td data-k="What it is">The Postgres server. <code>collect</code> adds each database's name after it</td><td data-k="Format"><code>postgresql://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;</code>, with no database at the end</td><td data-k="Where it goes">The demo's <code>.env</code>. Unset, it is the local container's</td><td data-k="Needed by"><code>collect</code></td></tr>
+<tr><td><code>DATABRICKS_HOST</code>, <code>DATABRICKS_TOKEN</code>, <code>DATABRICKS_HTTP_PATH</code></td><td data-k="What it is">As in "Connect and load every store"</td><td data-k="Format">The same</td><td data-k="Where it goes">The environment, the demo's <code>.env</code> or <code>epm.env</code></td><td data-k="Needed by"><code>collect</code>, <code>sync</code></td></tr>
+<tr><td><code>DEMO_CATALOG</code></td><td data-k="What it is">The catalog the demo built in</td><td data-k="Format"><code>&lt;catalog&gt;</code>. Unset, it is <code>idp_sbx</code></td><td data-k="Where it goes">The environment or the demo's <code>.env</code></td><td data-k="Needed by"><code>collect</code>, <code>sync</code></td></tr>
+<tr><td><code>EPM_TRIPLES</code></td><td data-k="What it is">The ontology's triple table</td><td data-k="Format"><code>&lt;catalog&gt;.&lt;schema&gt;.&lt;table&gt;</code>. Unset, it is <code>epm.env</code>'s catalog and schema, then <code>epm_triples</code></td><td data-k="Where it goes">The environment or the demo's <code>.env</code></td><td data-k="Needed by"><code>collect</code></td></tr>
+<tr><td>The local Neo4j's login</td><td data-k="What it is">The file the last run wrote</td><td data-k="Format"><code>PROJECT</code>, <code>PORT</code>, <code>PASSWORD</code></td><td data-k="Where it goes"><code>~/lpg-out/epm-rebuild/neo4j-run/run.env</code> or <code>~/lpg-out/epm/neo4j-run/run.env</code>, whichever is newer</td><td data-k="Needed by"><code>load</code>, <code>sync</code>, <code>walk</code></td></tr>
+<tr><td>AuraDB's login</td><td data-k="What it is"><code>NEO4J_URI</code>, <code>NEO4J_USERNAME</code>, <code>NEO4J_PASSWORD</code></td><td data-k="Format">As in "Connect and load every store"</td><td data-k="Where it goes"><code>~/.config/neo4j/aura.env</code></td><td data-k="Needed by"><code>load --store aura</code></td></tr>
+<tr><td>Secret scope <code>epm-neo4j</code></td><td data-k="What it is">AuraDB's login inside Databricks, as <code>uri</code>, <code>username</code> and <code>password</code>. <code>pricing_demo/aura_test.py</code> writes it and runs <code>pricing_demo/aura_probe.py</code> as a one-time job</td><td data-k="Format">No value to type</td><td data-k="Where it goes">The workspace</td><td data-k="Needed by">Optional: only the check <code>databricks-reaches-auradb</code>, which appears when <code>out/tech/aura-test.json</code> exists</td></tr>
+  </tbody></table></div>
+
+  <h3 class="rise" data-ss-id="tech-commands">3. The commands, in order</h3>
+<pre class="rise"><code>cd "$EPM_ROOT/demos/downstream-pricing-databricks-free"
+uv run --group graph python -m pricing_demo.tech_graph collect
+uv run --group graph python -m pricing_demo.tech_graph build
+uv run --group graph python -m pricing_demo.tech_graph load --store driver --store aura
+uv run --group graph python -m pricing_demo.tech_graph sync
+uv run --group graph python -m pricing_demo.tech_graph walk</code></pre>
+  <div class="tbl rise" data-ss-id="tech-steps-table"><table class="gapt"><thead><tr><th>Step</th><th>What it does</th><th>Reads</th><th>Writes</th><th>Expect</th></tr></thead><tbody>
+<tr><td><code>collect</code></td><td data-k="Does">Reads the live facts, runs the checks and compares the lineage</td><td data-k="Reads">Postgres, Databricks, <code>out/replica/manifest.json</code> (<code>--manifest</code> names another)</td><td data-k="Writes"><code>out/tech/live.json</code>, <code>out/tech/lineage.json</code></td><td data-k="Expect">One <code>check</code> line per check, then <code>wrote</code> with 8 databases, 10 decisions and 22 evidence items</td></tr>
+<tr><td><code>build</code></td><td data-k="Does">Runs <code>sparql/objects.rq</code>, <code>runtime.rq</code>, <code>links.rq</code>, <code>steps.rq</code> and <code>decisions.rq</code> through SPARQL Anything, then <code>wiring.rq</code></td><td data-k="Reads">The SQL files, the README's run commands, <code>live.json</code>, the ontology's CSV tables</td><td data-k="Writes"><code>graph/tech-graph.ttl</code>, <code>graph/decision-trail.ttl</code></td><td data-k="Expect"><code>wrote graph/tech-graph.ttl</code> and the same for the trail, each with its nodes and edges</td></tr>
+<tr><td><code>load</code></td><td data-k="Does">Replaces the <code>Tech</code> nodes in each store. Name no <code>--store</code> and it loads both</td><td data-k="Reads"><code>graph/*.ttl</code></td><td data-k="Writes">Neo4j, AuraDB</td><td data-k="Expect"><code>driver: 142 Tech nodes, 407 edges between them, 133 to ontology nodes; ontology unchanged at</code> and the counts from "Connect and load every store", then the same line for <code>aura</code></td></tr>
+<tr><td><code>sync</code></td><td data-k="Does">Copies the <code>Tech</code> nodes and edges from the local Neo4j to Delta. It must run after every <code>databricks build</code>, which empties the tables</td><td data-k="Reads">The local Neo4j</td><td data-k="Writes"><code>&lt;catalog&gt;.tech_graph.tech_graph_nodes</code>, <code>tech_graph_edges</code></td><td data-k="Expect">Each table's row count, equal to Neo4j's</td></tr>
+<tr><td><code>walk</code></td><td data-k="Does">Walks from a gold table to its metric views, measures and agents</td><td data-k="Reads">The local Neo4j</td><td data-k="Writes">Nothing</td><td data-k="Expect">One row per metric view and measure</td></tr>
+  </tbody></table></div>
+  <p class="rise">The committed <code>graph/*.ttl</code> are enough to run <code>load</code> and <code>walk</code>, so you can see the graph before you have a workspace. <code>out/tech/live.json</code> is not committed, so <code>build</code> needs a <code>collect</code> first, and <code>collect</code> needs Postgres and Databricks.</p>
+
+  <h3 class="rise" data-ss-id="tech-scripts">4. The scripts and queries</h3>
+  <div class="tbl rise" data-ss-id="tech-scripts-table"><table class="gapt"><thead><tr><th>File, in the demo's folder</th><th>What it does</th><th>What it proves</th></tr></thead><tbody>
+<tr><td><code>pricing_demo/tech_graph.py</code></td><td data-k="Does">The five steps above</td><td data-k="Proves">Every edge finds its target, and the ontology's counts do not move</td></tr>
+<tr><td><code>sparql/objects.rq</code></td><td data-k="Does">Tables and views, and what each reads, from the <code>CREATE</code> statements in <code>sql/</code></td><td data-k="Proves">Nothing by itself: this is what the SQL says</td></tr>
+<tr><td><code>sparql/runtime.rq</code></td><td data-k="Does">Row counts, refresh times, check results, agents and source databases, from <code>live.json</code></td><td data-k="Proves">What the last <code>collect</code> saw</td></tr>
+<tr><td><code>sparql/links.rq</code></td><td data-k="Does">The links to the ontology, through the deployed tag and the ontology's CSV tables</td><td data-k="Proves">Each link names a term the ontology holds, because <code>load</code> stops when one does not</td></tr>
+<tr><td><code>sparql/steps.rq</code></td><td data-k="Does">The pipeline's steps, from the README's run commands</td><td data-k="Proves">Nothing by itself</td></tr>
+<tr><td><code>sparql/wiring.rq</code></td><td data-k="Does">The edges that join those parts</td><td data-k="Proves">Nothing by itself</td></tr>
+<tr><td><code>sparql/decisions.rq</code></td><td data-k="Does">The decision trail as PROV-O, from the two decision tables the agents may see</td><td data-k="Proves">Nothing by itself</td></tr>
+<tr><td><code>sql/05_metric_views.sql</code>, <code>sql/06_definitions.sql</code>, <code>sql/07_tech_graph.sql</code></td><td data-k="Does">The metric views and their tags, the definitions views, and the two empty Delta tables</td><td data-k="Proves"><code>tests/test_demo.py</code> checks each measure's identifiers against <code>kpi</code></td></tr>
+<tr><td><code>pricing_demo/aura_test.py</code>, <code>pricing_demo/aura_probe.py</code></td><td data-k="Does">Try reaching AuraDB from a Databricks job</td><td data-k="Proves">The DNS lookup, the connection and a query succeed from inside Databricks</td></tr>
+<tr><td><code>tests/test_demo.py</code></td><td data-k="Does">The demo's offline tests: <code>uv run --with pytest python -m pytest -q tests</code></td><td data-k="Proves">The committed files agree with each other, with no store</td></tr>
+  </tbody></table></div>
+
+  <h3 class="rise" data-ss-id="tech-success">5. What success looks like, and common failures</h3>
+  <p class="rise">Success is a <code>load</code> line that ends <code>ontology unchanged</code>, Delta row counts equal to Neo4j's, and these <code>collect</code> checks: <code>built-objects-hold-rows</code>, <code>decision-truth-hidden</code>, <code>metric-views-tagged</code>, <code>replica-matches-manifest</code> and <code>rows-labelled</code> at <code>pass</code>. <code>designed-vs-observed-lineage</code> reads <code>differs</code> on this demo, for the reasons in the next section. That is its expected result, not a pass.</p>
+  <div class="tbl rise" data-ss-id="tech-failures-table"><table class="gapt"><thead><tr><th>What you see</th><th>Why</th><th>What to do</th></tr></thead><tbody>
+<tr><td><code>N ontology edges found no target</code>, from <code>load</code></td><td data-k="Why">The store does not hold the ontology release the graph links to</td><td data-k="Do">Load the ontology first, or run <code>collect</code> and <code>build</code> again on this release</td></tr>
+<tr><td><code>the ontology's counts changed</code>, from <code>load</code></td><td data-k="Why">Something else wrote to the store during the load</td><td data-k="Do">Stop the other writer, then reload the store from the release</td></tr>
+<tr><td><code>Databricks settings missing</code></td><td data-k="Why">A value in the table above is missing</td><td data-k="Do">Add it; the message names it</td></tr>
+<tr><td><code>none of ... exists</code>, from a login file</td><td data-k="Why">No run has written the local login, or <code>aura.env</code> is absent</td><td data-k="Do">Load the store, or name only the stores you have with <code>--store</code></td></tr>
+<tr><td><code>designed-vs-observed-lineage: skipped</code></td><td data-k="Why">The workspace or the token cannot read <code>system.access.table_lineage</code></td><td data-k="Do">Grant it, or accept that the lineage is then not compared</td></tr>
+<tr><td>A Postgres connection error from <code>collect</code></td><td data-k="Why"><code>SOURCE_PG_DSN</code> is wrong, or the container is stopped</td><td data-k="Do"><code>docker start pricing-demo-sources</code>, or correct the value</td></tr>
+<tr><td><code>tech_graph_nodes holds N rows; Neo4j has M</code>, from <code>sync</code></td><td data-k="Why">The copy did not finish</td><td data-k="Do">Run <code>sync</code> again</td></tr>
+<tr><td>A <code>java</code> error from <code>build</code></td><td data-k="Why">Java is missing, or SPARQL Anything could not download its jar</td><td data-k="Do">Install Java 11 or later, and allow the download once</td></tr>
+  </tbody></table></div>
+
+  <h3 class="rise" data-ss-id="tech-environments">6. Moving to QA or production</h3>
+  <p class="rise"><strong>What changes:</strong> <code>SOURCE_PG_DSN</code>, the three Databricks logins, <code>DEMO_CATALOG</code> and <code>EPM_TRIPLES</code>, set in that environment's shell or a <code>.env</code> Git ignores, and the stores, through <code>EPM_STORES_JSON</code> as in "Connect and load every store". <code>--manifest</code> names a replica manifest kept elsewhere. <strong>What stays the same:</strong> the SQL files, the queries and the checks. <strong>What is fixed in the scripts:</strong> the output folder <code>out/tech/</code> and the graph folder <code>graph/</code> sit in the demo's folder, so <code>build</code> rewrites the same committed files in every environment. Keep one checkout per environment, or restore them with Git. The secret scope's name, <code>epm-neo4j</code>, and the file <code>aura_test</code> reads, <code>~/.config/neo4j/aura.env</code>, are also fixed.</p>
+</section>
+
+<section id="meaning" data-ss-id="section-meaning" data-ss-section>
+  <h2 class="rise" data-ss-id="how-the-ontology-gives-meaning">How the ontology gives Databricks objects their meaning</h2>
+  <p class="section-lede rise">Unity Catalog knows that a metric view reads a table. It does not know what the number means, who uses it, or what it must not be mistaken for. The ontology holds that. This section walks one real chain, from the measure <code>KPI-0001</code>, Crack Spreads Pricing, down to the source systems, and says where each link comes from today.</p>
+  <figure class="rise" data-ss-id="meaning-figure">
+    <svg viewBox="0 0 1000 250" role="img" aria-label="One chain. In the ontology, the measure Crack Spreads Pricing, KPI-0001, links to its process, personas and market-data series. In the technical graph, a metric view implements that measure, reads a gold table, which reads silver tables, which read replica tables, which copy source databases that stand for systems. A Genie agent binds the metric view and a definitions view, which reads the triple table." style="width:100%;height:auto">
+      <g font-size="14" fill="currentColor" stroke="currentColor" stroke-width="0">
+        <g fill="none" stroke="currentColor" stroke-width="1.2">
+          <rect x="20" y="24" width="210" height="72"/><rect x="290" y="24" width="210" height="72"/><rect x="290" y="150" width="130" height="72"/><rect x="450" y="150" width="130" height="72"/><rect x="610" y="150" width="130" height="72"/><rect x="770" y="150" width="210" height="72"/><rect x="560" y="24" width="190" height="72"/><rect x="790" y="24" width="190" height="72"/>
+          <path d="M290 60H230M355 150V96M420 186H450M580 186H610M740 186H770M560 60H500M790 60H750"/>
+        </g>
+        <text x="32" y="50" font-weight="700">kpi: KPI-0001</text><text x="32" y="72">process, personas,</text><text x="32" y="90">series, definition</text>
+        <text x="302" y="50" font-weight="700">Metric view</text><text x="302" y="72">tag, comment, synonyms</text><text x="302" y="90">IMPLEMENTS the measure</text>
+        <text x="300" y="176" font-weight="700">Gold table</text><text x="300" y="198">READS_FROM</text>
+        <text x="460" y="176" font-weight="700">Silver tables</text><text x="460" y="198">READS_FROM</text>
+        <text x="620" y="176" font-weight="700">Replica tables</text><text x="620" y="198">COPIES</text>
+        <text x="782" y="176" font-weight="700">Source databases</text><text x="782" y="198">STANDS_FOR a system</text>
+        <text x="572" y="50" font-weight="700">Genie agent</text><text x="572" y="72">BINDS the view and</text><text x="572" y="90">the definitions view</text>
+        <text x="802" y="50" font-weight="700">Definitions view</text><text x="802" y="72">reads epm_triples</text><text x="802" y="90">in Delta</text>
+      </g>
+    </svg>
+    <figcaption>One chain. Everything but the left box and the triple table is the technical graph.</figcaption>
+  </figure>
+
+  <h3 class="rise" data-ss-id="meaning-chain">The chain, end to end</h3>
+  <ol class="rise">
+    <li><strong>The measure.</strong> <code>kpi</code> holds <code>measure:crack-spreads</code>, with the identifier <code>KPI-0001</code> and the label Crack Spreads Pricing. Its definition is "Benchmark crack spreads: the market value of products made from a set ratio of crude, less the crude's price." Its scope note says "Not realized refinery margin, not margin capture, and not MPC's R&amp;M Margin Indicator." It names what it is not to be confused with, and its grain, daily by market hub.</li>
+    <li><strong>What it links to.</strong> It informs the process <code>CM-1-1-4-7-4</code>, is used by the distribution, prompt and short-term planner personas, is the measure of series in <code>market-data</code>, and appears in two measure links in <code>value-stream</code>. In <code>data-product</code>, the table <code>view-mpr-mips-crack-spread-price-fact-metrics-vw</code> serves it through <code>dp:servesMeasure</code>.</li>
+    <li><strong>The metric view.</strong> <code>semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw</code>, in <code>sql/05_metric_views.sql</code>. Its comment begins "Implements KPI-0001: Crack Spreads Pricing". Its measure <code>Avg_Crack_Spread</code> has the display name "KPI-0001 Crack Spreads Pricing" and the synonyms "KPI-0001" and "crack spread". The view carries the tag <code>epm_measure_identifiers = 'KPI-0001'</code>.</li>
+    <li><strong>The edge into the ontology.</strong> <code>collect</code> reads that tag as deployed. <code>sparql/links.rq</code> joins it to <code>kpi/measure-identifiers.csv</code>, which gives <code>IMPLEMENTS</code> from the view's <code>Tech</code> node to the measure's <code>Resource</code> node.</li>
+    <li><strong>The tables under it.</strong> <code>READS_FROM</code> runs from the view to the gold table <code>gold_commercial_core.mpr_mips_crack_spread_price_fact</code>, then to silver tables, then to replica tables, which <code>COPIES</code> links to their source databases. <code>STANDS_FOR</code> links a source database to the system <code>system</code> holds, where it holds one.</li>
+    <li><strong>Designed against observed lineage.</strong> <code>data-product</code> states each table's design with <code>prov:wasDerivedFrom</code>, from <code>data-product/pricing/lineage.csv</code>. <code>collect</code> compares that with <code>system.access.table_lineage</code>, keeping for each table the edges within <code>LINEAGE_WINDOW_MINUTES</code>, 10 minutes, of its latest build.</li>
+    <li><strong>The definitions view.</strong> <code>ontology_definitions.crack_spread_definitions_vw</code>, from <code>sql/06_definitions.sql</code>, reads the ontology's triples from <code>epm_triples</code> in Delta and returns the measure's identifier, label, definition, grain, basis and what not to confuse it with. So SQL users read the ontology's own words.</li>
+    <li><strong>The agents.</strong> The Genie agent Crack Spread Price Analytics <code>BINDS</code> the metric view and the definitions view, both named in <code>pricing_demo/genie.py</code>. The orchestrator, <code>pricing_demo/supervisor.py</code>, builds each agent's description from the definitions views and <code>ROUTES_TO</code> the agents.</li>
+  </ol>
+  <p class="rise">This query returns the chain from the local Neo4j or AuraDB:</p>
+<pre class="rise"><code>MATCH (m:Resource {dcterms__identifier: 'KPI-0001'})&lt;-[:IMPLEMENTS]-(v:MetricView)
+MATCH (v)-[:READS_FROM]-&gt;(g:GoldTable)-[:READS_FROM]-&gt;(s:SilverTable)-[:READS_FROM]-&gt;(r:ReplicaTable)-[:COPIES]-&gt;(d:SourceDatabase)
+OPTIONAL MATCH (d)-[:STANDS_FOR]-&gt;(sys:Resource)
+OPTIONAL MATCH (a:GenieAgent)-[:BINDS]-&gt;(v)
+OPTIONAL MATCH (m)-[:kpi__informsProcess]-&gt;(p:Resource)
+OPTIONAL MATCH (m)-[:kpi__usedBy]-&gt;(u:Resource)
+RETURN m.dcterms__identifier AS measure, m.skos__prefLabel AS label, v.name AS metric_view, g.name AS gold,
+       collect(DISTINCT s.name) AS silver, collect(DISTINCT r.name) AS replica, collect(DISTINCT d.name) AS source_databases,
+       collect(DISTINCT sys.skos__prefLabel) AS systems, collect(DISTINCT a.name) AS agents,
+       collect(DISTINCT p.skos__notation) AS processes, collect(DISTINCT u.skos__prefLabel) AS personas;</code></pre>
+  <p class="rise">It returns two rows, because two metric views implement <code>KPI-0001</code>: this one, through <code>gold_commercial_core.mpr_mips_crack_spread_price_fact</code>, and <code>semantic_sem_commercial.mips_mpr_executive_summary_fact_vw</code>, through its own gold table. For the crack-spread view it lists five silver tables and seven replica tables, the source databases <code>price_assessment</code> and <code>price_reference</code>, the systems MIPS and MPR, the agent Crack Spread Price Analytics, the process CM 1.1.4.7.4 and the three planner personas.</p>
+  <p class="rise">In the Databricks SQL editor, the ontology's words and the number sit side by side:</p>
+<pre class="rise"><code>SELECT Identifier, Label, Definition, Grain, Not_To_Be_Confused_With
+FROM &lt;catalog&gt;.ontology_definitions.crack_spread_definitions_vw;
+
+SELECT MEASURE(Avg_Crack_Spread)
+FROM &lt;catalog&gt;.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw;</code></pre>
+
+  <h3 class="rise" data-ss-id="meaning-links">Each link, and what carries it</h3>
+  <div class="tbl rise" data-ss-id="meaning-links-table"><table class="gapt"><thead><tr><th>Databricks object</th><th>Ontology term</th><th>What carries the link</th><th>How it is checked</th><th>What the ontology adds</th></tr></thead><tbody>
+<tr><td>Metric view</td><td data-k="Ontology term"><code>kpi</code> measure</td><td data-k="Carries">The tag <code>epm_measure_identifiers</code>, set in <code>sql/05_metric_views.sql</code>; the edge <code>IMPLEMENTS</code></td><td data-k="Checked"><code>metric-views-tagged</code> in <code>collect</code>; <code>tests/test_demo.py</code>; <code>load</code> stops on an edge with no target</td><td data-k="Adds">The definition, the scope, and what the measure is not</td></tr>
+<tr><td>A metric-view measure</td><td data-k="Ontology term"><code>dcterms:identifier</code> and label</td><td data-k="Carries">Its comment, display name and synonyms, written by hand in the SQL file</td><td data-k="Checked"><code>tests/test_demo.py</code>, against <code>kpi</code>'s identifiers. A reworded definition in a comment is not caught</td><td data-k="Adds">One identifier across BI tools and agents</td></tr>
+<tr><td>Definitions view</td><td data-k="Ontology term">The measure's own triples</td><td data-k="Carries"><code>sql/06_definitions.sql</code>, reading <code>epm_triples</code></td><td data-k="Checked"><code>tests/test_demo.py</code> on the SQL; <code>built-objects-hold-rows</code> in <code>collect</code></td><td data-k="Adds">The ontology's words, live in SQL</td></tr>
+<tr><td>Gold, silver and replica tables</td><td data-k="Ontology term"><code>data-product</code> tables</td><td data-k="Carries">The edge <code>DESIGNED_AS</code>, matched by name in <code>sparql/links.rq</code> to <code>data-product/pricing/tables.csv</code></td><td data-k="Checked"><code>designed-vs-observed-lineage</code> in <code>collect</code></td><td data-k="Adds">The intended design, to compare with what ran</td></tr>
+<tr><td>Source database</td><td data-k="Ontology term"><code>system</code> term</td><td data-k="Carries">The edge <code>STANDS_FOR</code>, from a mapping written by hand in <code>sparql/links.rq</code></td><td data-k="Checked"><code>load</code> stops on an edge with no target. Nothing checks that the mapping is right</td><td data-k="Adds">The real system a source stands for, which Databricks cannot see</td></tr>
+<tr><td>Genie agent</td><td data-k="Ontology term"><code>data-product</code> agent</td><td data-k="Carries">The edge <code>DESIGNED_AS</code>, through <code>data-product/pricing/agents.csv</code>; <code>BINDS</code> from <code>pricing_demo/genie.py</code></td><td data-k="Checked"><code>tests/test_demo.py</code></td><td data-k="Adds">The agent's place in the portfolio, and its description from the definitions</td></tr>
+  </tbody></table></div>
+
+  <h3 class="rise" data-ss-id="meaning-question">One question, with and without the ontology</h3>
+  <p class="rise"><strong>The question:</strong> "Is this crack spread our refining margin, and who relies on it?"</p>
+  <p class="rise"><strong>Without the ontology,</strong> Unity Catalog returns a view, its column <code>Avg_Crack_Spread</code>, and its lineage back to a table. The name suggests a margin, and nothing there says otherwise or names a user.</p>
+  <p class="rise"><strong>With the ontology,</strong> the answer is no. It is a benchmark, "Not realized refinery margin, not margin capture, and not MPC's R&amp;M Margin Indicator". <code>kpi</code> names those three as measures not to confuse it with. The distribution, prompt and short-term planners use it, in process <code>CM-1-1-4-7-4</code>.</p>
+
+  <h3 class="rise" data-ss-id="meaning-limits">The limits: what is not automatic</h3>
+  <p class="rise">A link on this page is not automatic unless the table below says so. A new metric view reaches the graph only when someone writes its SQL and tag and runs the steps again.</p>
+  <div class="tbl rise" data-ss-id="meaning-hops-table"><table class="gapt"><thead><tr><th>Hop</th><th>Where it comes from today</th><th>Does Databricks record it?</th></tr></thead><tbody>
+<tr><td>Measure to metric view</td><td data-k="From">The deployed tag, joined to <code>kpi/measure-identifiers.csv</code></td><td data-k="Records">Yes, as a tag</td></tr>
+<tr><td>Metric view to gold</td><td data-k="From"><code>sparql/objects.rq</code>, over the SQL files</td><td data-k="Records">Yes, in <code>system.access.table_lineage</code>, which the graph does not read for this</td></tr>
+<tr><td>Gold to silver to replica</td><td data-k="From">The same SQL files</td><td data-k="Records">Yes, with columns for tables in <code>system.access.column_lineage</code>, which held no rows for metric views when checked on 2026-10-31</td></tr>
+<tr><td>Replica to volume file</td><td data-k="From">The same SQL files</td><td data-k="Records">Yes</td></tr>
+<tr><td>Volume file to source database</td><td data-k="From">The replica manifest</td><td data-k="Records">No: the copy runs outside Databricks</td></tr>
+<tr><td>Source database to system</td><td data-k="From">A mapping kept by hand, in <code>sparql/links.rq</code></td><td data-k="Records">No</td></tr>
+<tr><td>Designed lineage</td><td data-k="From"><code>data-product</code>, from the subject matter expert's inputs</td><td data-k="Records">It is the design to compare with</td></tr>
+  </tbody></table></div>
+  <ul class="rise">
+    <li><strong>The lineage check does not pass.</strong> The graph's last check, on 2026-10-29, read <code>differs</code>: 26 edges match, 5 are designed only, 0 are observed only, and 9 designed edges touch a table the demo does not build. The 5 are places where the demo is simpler than the design: its silver price master reads one replica, not four, and its crack-spread gold table reads neither the price batch dimension nor the assessment fact. <code>collect</code> gives the figures for your workspace.</li>
+    <li><strong>The window can hide an edge.</strong> A table built twice, more than 10 minutes apart, keeps only the newer build's edges, so an edge only the older build made reads as designed only.</li>
+    <li><strong>Lineage appears only after a run,</strong> and Unity Catalog's system tables keep a limited history.</li>
+    <li><strong>Nothing checks the technical graph for drift.</strong> <code>sync_stores.py check</code> reads the ontology's counts and markers, so a <code>Tech</code> graph that is missing or stale does not show. Nothing runs that check by itself, and <code>sync_stores.py sync</code> reloads <code>Tech</code> nodes only into a store it has just reloaded. It does not run <code>tech_graph sync</code>, so the Delta copy can lag Neo4j. <code>graph/*.ttl</code> needs live logins to rebuild, so no offline check compares it with a fresh build.</li>
+  </ul>
 </section>
 
 <section id="demo" data-ss-id="section-demo" data-ss-section>

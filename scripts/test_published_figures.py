@@ -355,6 +355,8 @@ def test_guide_module_figures_match_the_newest_releases():
 
 def test_the_stores_pages_give_the_last_loads_figures():
     """The pages that state the local Neo4j's figures as current give what epm_facts.py projection prints."""
+    if os.path.isfile(os.path.join(ROOT, "release.json")):
+        pytest.skip("the share release carries its own run's figures and leaves STORE-INVENTORY.md out")
     f = epm_facts.projection_figures()
     nodes, rels = f"{f['nodes']:,}", f"{f['relationships']:,}"
     folder = os.path.join(ROOT, "business_architecture", "ontology", "projection")
@@ -369,4 +371,13 @@ def test_the_stores_pages_give_the_last_loads_figures():
     assert f"| Relationships between `Resource` nodes | {rels} |" in inventory
     assert f"| Nodes labelled `Resource` (the ontology) | {nodes} |" in inventory
     assert f"Expect {nodes} nodes and {rels} relationships" in inventory
+
+
+def test_the_walkthroughs_connect_section_gives_the_last_loads_figures():
+    if os.path.isfile(os.path.join(ROOT, "release.json")):
+        pytest.skip("the share release carries its own run's figures")
+    f = epm_facts.projection_figures()
+    with open(os.path.join(ROOT, "business_architecture", "ontology", "epm-walkthrough.html"), encoding="utf-8") as page:
+        section = page.read().split('<section id="connect"')[1].split("</section>")[0]
+    assert f"{f['nodes']:,} and {f['relationships']:,} on these releases" in section
 

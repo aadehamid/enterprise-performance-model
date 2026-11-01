@@ -322,6 +322,14 @@ class StoreOverrides(unittest.TestCase):
             self.assertEqual(mod.NEO4J_STORES["driver"], ("bolt://127.0.0.1:17899", ("/tmp/x.env",)))
             self.assertEqual(mod.NEO4J_STORES["aura"], (None, ("~/.config/neo4j/aura.env",)))
             self.assertEqual(mod.JENA_QUERY, "http://127.0.0.1:13999/ds/query")
+
+    def test_another_environment_names_its_run_configuration_output_and_table(self):
+        with stores_env(json.dumps({"run_config": "/qa/run.json", "driver_out": "~/qa", "triples_table": "qa_triples"})):
+            mod = importlib.reload(ss)
+            cmds = [" ".join(c) for _, c in mod.plan(["driver"], False, "~/skills")[0]]
+            self.assertIn("--config /qa/run.json", cmds[0])
+            self.assertTrue(cmds[1].endswith("record --run ~/qa"))
+            self.assertEqual(mod.TRIPLES_TABLE, "qa_triples")
             self.assertEqual(mod.DATABRICKS_ENV, "/tmp/d.env")
 
     def test_the_callers_value_is_put_back(self):

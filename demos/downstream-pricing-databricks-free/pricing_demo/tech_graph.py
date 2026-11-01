@@ -3,7 +3,7 @@
 
     uv run --group graph python -m pricing_demo.tech_graph collect   # live facts -> out/tech/live.json; checks; lineage
     uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything over the demo's files -> graph/*.ttl
-    uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j stores and AuraDB
+    uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j and AuraDB
     uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> Delta tech_graph_nodes, tech_graph_edges
     uv run --group graph python -m pricing_demo.tech_graph walk      # the Cypher walk from a gold table to its measures
 

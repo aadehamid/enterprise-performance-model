@@ -41,7 +41,9 @@ NEO4J_STORES = {  # LOCAL-STORES.md; the driver's login is in whichever of its t
 }
 JENA_QUERY = "http://127.0.0.1:13031/ds/query"  # skill-run/epm-run.json's "jena"
 DATABRICKS_ENV = "~/.config/databricks/epm.env"
-DRIVER_OUT = "~/lpg-out/epm"  # skill-run/epm-run.json's "out"
+RUN_CONFIG = os.path.join(HERE, "skill-run", "epm-run.json")
+DRIVER_OUT = "~/lpg-out/epm"  # the run configuration's "out"
+TRIPLES_TABLE = "epm_triples"  # the run configuration's "databricks" table
 RELEASE_GRAPHS = ("shapes", "catalog")  # skill-run/epm-run.json's "release_graphs"
 STORES = (*NEO4J_STORES, "jena", "databricks")
 MARKER_FIELDS = ("catalog_datasets", "catalog_digest", "input_fingerprint")
@@ -50,8 +52,9 @@ MARKER_FIELDS = ("catalog_datasets", "catalog_digest", "input_fingerprint")
 def apply_store_overrides():
     """EPM_STORES_JSON names other stores for a test run, so the test never points at the loaded ones (the share
     release's validation): {"driver": {"bolt": ..., "env": [...]}, "aura": {"env": [...]}, "jena": {"query": ...},
-    "databricks_env": "..."}. Each key is optional."""
-    global JENA_QUERY, DATABRICKS_ENV
+    "databricks_env": "...", "run_config": "...", "driver_out": "...", "triples_table": "..."}. Each key is optional; the
+    same keys point the tool at another environment's stores."""
+    global JENA_QUERY, DATABRICKS_ENV, RUN_CONFIG, DRIVER_OUT, TRIPLES_TABLE
     raw = os.environ.get("EPM_STORES_JSON")
     if not raw:
         return
@@ -63,8 +66,10 @@ def apply_store_overrides():
             NEO4J_STORES[store] = (bolt, envs)
     if "jena" in over:
         JENA_QUERY = over["jena"].get("query", JENA_QUERY)
-    if "databricks_env" in over:
-        DATABRICKS_ENV = over["databricks_env"]
+    DATABRICKS_ENV = over.get("databricks_env", DATABRICKS_ENV)
+    RUN_CONFIG = over.get("run_config", RUN_CONFIG)
+    DRIVER_OUT = over.get("driver_out", DRIVER_OUT)
+    TRIPLES_TABLE = over.get("triples_table", TRIPLES_TABLE)
 
 
 apply_store_overrides()
@@ -240,7 +245,7 @@ def read_markers_and_counts(stores=STORES):
     try:
         conn, schema = databricks()
         with conn, conn.cursor() as cur:
-            cur.execute(f"SELECT count(*) FROM {schema}.epm_triples")
+            cur.execute(f"SELECT count(*) FROM {schema}.{TRIPLES_TABLE}")
             live["databricks"] = [cur.fetchone()[0]]
             try:
                 cur.execute(f"SELECT marker FROM {schema}.epm_store_markers WHERE store = 'databricks'")
@@ -288,12 +293,12 @@ def neo4j_checked(store, session, want):
 
 
 def databricks_checked(cur, schema, want):
-    cur.execute(f"SELECT DISTINCT graph FROM {schema}.epm_triples")
+    cur.execute(f"SELECT DISTINCT graph FROM {schema}.{TRIPLES_TABLE}")
     graphs = {r[0] for r in cur.fetchall()}
     missing = [g for g in want["newest"] if g not in graphs]
     if missing:
-        raise SystemExit(f"databricks: epm_triples lacks the newest release of {len(missing)} module(s), e.g. {missing[:3]}")
-    cur.execute(f"SELECT count(*) FROM {schema}.epm_triples")
+        raise SystemExit(f"databricks: {TRIPLES_TABLE} lacks the newest release of {len(missing)} module(s), e.g. {missing[:3]}")
+    cur.execute(f"SELECT count(*) FROM {schema}.{TRIPLES_TABLE}")
     return [cur.fetchone()[0]]
 
 
@@ -332,7 +337,7 @@ def plan(behind, cloud, skills):
     Jena alone needs only the driver's jena step. A run that loads Neo4j takes its result into this folder."""
     steps, reloaded = [], []
     driver_cmd = ["uv", "run", "--no-project", "--with", "rdflib", "python3", "run_projection.py",
-                  "--config", os.path.join(HERE, "skill-run", "epm-run.json")]
+                  "--config", RUN_CONFIG]
     driver_dir = os.path.join(os.path.expanduser(skills), "ontology-to-lpg", "scripts")
     cloud_behind = [s for s in ("aura", "databricks") if s in behind]
     if cloud and cloud_behind:
