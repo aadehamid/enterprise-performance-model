@@ -83,6 +83,24 @@ Step 1's inventory of every tracked path found eleven points the plan did not se
 - **The test stores (Claude's build choice, under EPM-DEC-001-0028):** AuraDB as the decision owner directed in item 12; Databricks keeps the existing Free Edition workspace and uses its own catalog and schema names for the test, deleted afterwards, in place of the separate workspace recommendation (10) named, since the live acceptance run, the one heavy use of the workspace, is skipped.
 - **The acceptance tests:** the live run is skipped on the release and its README says so; the offline re-judge of the ten recorded runs runs if it needs no Databricks; the code and the recorded runs ship. With the live run out, the validation no longer depends on Databricks Free Edition's daily limit.
 
+## Amendment, 2026-11-01: the release is a base its readers update, and it names no agent
+
+A trial of the cut found that a recipient could make four ordinary changes only by editing code and tests, and that `check.sh` went green only with 22 tests excluded. The decision owner then set what the release is for (`answers-2026-11-01-share-release-recipients.md`, blocks 1 to 4):
+
+1. **The release's job:** "The releseas I share will b ethe base for them. So what I really wants to communictae out is how they can update what they get." The readers are not told to cut a release; they are told how to add a module, change a module and change a definition.
+2. **No agent named:** "We should also not name any agents (e.g. claude, cursor and so on) in the release." This supersedes amendment item 2 above ("Tool names"), for agents and review tools. Other tools the build uses keep their names.
+3. **The reader:** "whoever is going to consume it is not aware of the work we did here. So all agents name or anything related to agents must be neutral . and all decisions by SME."
+4. **The fixes:** "I am am aligned with your recommendation. All must be throughly validated." The recommendation was the list that follows.
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+- **`main` keeps its history unchanged; only the release is neutral.** A rule rewrites agent names and agent work in the release, and the leak gate fails a cut in which a name or an agent-work phrase survives. A draft keeps its status, so it never reads as approved. The demo's Genie agents and supervisor, `prov:Agent` and `prov:SoftwareAgent` as W3C terms, and the database `cursor` stay.
+- **Documents that are only build history stay out:** the rest of the decision packages and the worklog. This supersedes the "Decision packages (6)" answer of amendment item 7 above, for the reason in the decision owner's third sentence. The pull request that lands this lists each file. `reference/`'s evidence stays.
+- **The release passes its checks from a Git clone and from a plain folder,** and the cut's validation runs both.
+- **The tests that pin the release to its first state are a separate, optional group.** The release's `check.sh` proves the ontology is valid; whether it still equals the release as shipped is a question only until the recipient's first change.
+- **Builders, the regression and tests read the newest version on disk,** `--write` refuses to overwrite a released package whose version was not bumped, and `main` keeps every check it has today.
+- **The release's guide** (`HOW-TO-UPDATE.md`) replaces the walkthrough's instructions in the release only, through a template in `scripts/share_release/`. Step 9 of the tool reloads the stores from the release, not from `main`, on the decision owner's instruction recorded in the tool's README.
+
 ## Alternatives considered
 
 - **An ordinary branch merged from `main`.** Not chosen: rewritten text conflicts on every merge, and the branch's history carries author names, PR numbers and peer mentions.
@@ -117,6 +135,14 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 - "Records do not ship; every citation comes out (Recommended)"
 - "Yes, drop it; the check script says why (Recommended)"
 - "Skip the live run only (Recommended)"
+
+From `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-11-01-share-release-recipients.md`:
+
+- "what i really want is not to tell people to do release cut like we did here."
+- "The releseas I share will b ethe base for them. So what I really wants to communictae out is how they can update what they get."
+- "We should also not name any agents (e.g. claude, cursor and so on) in the release."
+- "So all agents name or anything related to agents must be neutral . and all decisions by SME."
+- "I am am aligned with your recommendation. All must be throughly validated."
 
 ## Evidence
 
