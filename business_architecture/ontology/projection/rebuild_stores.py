@@ -296,13 +296,17 @@ def run_steps(steps, env, report, logs, runner=subprocess.run):
     return None
 
 
-def main(argv=None):
+def parser():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--env", required=True, help="the environment file")
     ap.add_argument("--store", action="append", choices=STORES, help="a target; repeat it (default: all four)")
     ap.add_argument("--empty", action="store_true", help="replace what the chosen stores hold; without it a store that holds data is refused")
     ap.add_argument("--plan", action="store_true", help="print the steps and run nothing")
-    args = ap.parse_args(argv)
+    return ap
+
+
+def main(argv=None):
+    args = parser().parse_args(argv)
     stores = tuple(s for s in STORES if s in (args.store or STORES))
     try:
         s = settings(args.env)
