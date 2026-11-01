@@ -273,13 +273,20 @@ def compare(main, release, out):
 
 
 def compare_business_process(main, release, dates):
-    """Main's business-process JSON after the rewrite rules must equal the release's copy byte for byte; every file
-    that differs is recorded and fails the row."""
+    """Main's business-process JSON after the rewrite rules must equal the release's copy byte for byte; the two
+    folders must hold the same files (the manifest ships the whole folder). Every file that differs, or exists on
+    one side only, is recorded and fails the row."""
     import rules
+    folder = "business_architecture/business_process"
+    names = sorted({os.path.basename(p) for tree in (main, release) for p in glob.glob(os.path.join(tree, folder, "*.json"))})
     diffs, same = [], 0
-    for path in sorted(glob.glob(os.path.join(main, "business_architecture/business_process/*.json"))):
-        rel = os.path.relpath(path, main)
-        with open(path, encoding="utf-8") as f:
+    for name in names:
+        rel = f"{folder}/{name}"
+        on_main, on_release = os.path.isfile(os.path.join(main, rel)), os.path.isfile(os.path.join(release, rel))
+        if not (on_main and on_release):
+            diffs.append(f"{rel} (only on {'main' if on_main else 'the release'})")
+            continue
+        with open(os.path.join(main, rel), encoding="utf-8") as f:
             expected, _ = rules.apply(f.read(), rel, dates)
         with open(os.path.join(release, rel), encoding="utf-8") as f:
             got = f.read()

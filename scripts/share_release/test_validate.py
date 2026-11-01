@@ -187,3 +187,18 @@ def test_a_process_map_that_does_not_match_the_release_fails_the_comparison(tmp_
     (release / "business_architecture/business_process/lanes.json").write_text('{"lanes": 3}\n')
     row = validate.compare_business_process(str(main), str(release), {})
     assert row == {"equal": 2, "different": [], "ok": True}
+
+
+def test_a_process_map_on_one_side_only_fails_the_comparison(tmp_path):
+    main, release = tmp_path / "main", tmp_path / "release"
+    for tree in (main, release):
+        (tree / "business_architecture" / "business_process").mkdir(parents=True)
+        (tree / "business_architecture/business_process/map.json").write_text('{"n": 1}\n')
+    (release / "business_architecture/business_process/extra.json").write_text('{"n": 2}\n')  # a map main never had
+    row = validate.compare_business_process(str(main), str(release), {})
+    assert row["different"] == ["business_architecture/business_process/extra.json (only on the release)"]
+    assert row["equal"] == 1 and row["ok"] is False
+    (release / "business_architecture/business_process/extra.json").unlink()
+    (main / "business_architecture/business_process/lanes.json").write_text('{"lanes": 3}\n')  # a map the release lacks
+    row = validate.compare_business_process(str(main), str(release), {})
+    assert row["different"] == ["business_architecture/business_process/lanes.json (only on main)"] and row["ok"] is False
