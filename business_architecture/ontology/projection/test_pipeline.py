@@ -306,9 +306,9 @@ class Rename(unittest.TestCase):
     dump after. On main nothing is renamed; the committed report says so."""
 
     def graph(self):
-        nodes = [{"uri": "u1", "l": ["Resource", "kpi__MeasureDefinition"], "p": {"uri": "u1", "skos__prefLabel": "A"}},
+        nodes = [{"uri": "u1", "l": ["Resource", "lib__Thing"], "p": {"uri": "u1", "lib__prefLabel": "A"}},
                  {"uri": "u2", "l": ["Resource", "Tech"], "p": {"uri": "u2", "name": "x"}}]
-        edges = [{"s": "u1", "t": "kpi__usedBy", "o": "u2", "p": {"dcterms__source": "s"}},
+        edges = [{"s": "u1", "t": "lib__usedBy", "o": "u2", "p": {"lib__source": "s"}},
                  {"s": "u2", "t": "IMPLEMENTS", "o": "u1", "p": {}}]
         return nodes, edges
 
@@ -318,17 +318,17 @@ class Rename(unittest.TestCase):
             counts, lossless = pl.rename_separator(session)
         self.assertEqual(counts, {"labels": 1, "rels": 1, "keys": 2})
         self.assertTrue(lossless)
-        self.assertEqual(session.nodes[0]["l"], ["Resource", "kpi_MeasureDefinition"])
-        self.assertEqual(session.nodes[0]["p"], {"uri": "u1", "skos_prefLabel": "A"})
+        self.assertEqual(session.nodes[0]["l"], ["Resource", "lib_Thing"])
+        self.assertEqual(session.nodes[0]["p"], {"uri": "u1", "lib_prefLabel": "A"})
         self.assertEqual(session.nodes[1], {"uri": "u2", "l": ["Resource", "Tech"], "p": {"uri": "u2", "name": "x"}})
-        self.assertEqual([x["t"] for x in session.edges], ["kpi_usedBy", "IMPLEMENTS"])
-        self.assertEqual(session.edges[0]["p"], {"dcterms_source": "s"})
+        self.assertEqual([x["t"] for x in session.edges], ["lib_usedBy", "IMPLEMENTS"])
+        self.assertEqual(session.edges[0]["p"], {"lib_source": "s"})
         self.assertFalse(any("__" in l for x in session.nodes for l in list(x["l"]) + list(x["p"])))
         self.assertFalse(any("__" in k for x in session.edges for k in [x["t"]] + list(x["p"])))
 
     def test_a_name_the_rename_would_collide_with_stops_it(self):
         nodes, edges = self.graph()
-        nodes[1]["l"].append("kpi_MeasureDefinition")  # already there in the one-underscore form
+        nodes[1]["l"].append("lib_Thing")  # already there in the one-underscore form
         with mock.patch.object(pl, "SEP", "_"), self.assertRaisesRegex(RuntimeError, "collides in labels"):
             pl.rename_separator(RenameSession(nodes, edges))
 
