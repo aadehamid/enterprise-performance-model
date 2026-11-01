@@ -14,6 +14,7 @@ Exit 1 with one line per hit. The leak vocabulary it shares with the rewrite rul
 import argparse
 import base64
 import binascii
+import html
 import json
 import os
 import re
@@ -80,6 +81,10 @@ DATA_URL = re.compile(r"(?P<open>[\"'(]?)data:(?P<head>[^,\"'\s<>()]*),", re.I)
 CSS_COLOUR = re.compile(r"(?<=[:\s(,])#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b(?=[;\s)}\],!\"'])")
 STYLE_SPAN = re.compile(r"<style\b[^>]*>.*?</style>|\bstyle\s*=\s*\"[^\"]*\"|\bstyle\s*=\s*'[^']*'", re.S | re.I)
 PRINTABLE_RUN = re.compile(rb"[\x20-\x7e\t]{6,}")
+# In a decoded binary payload a short string between NULs ("\0CVR\0", a C string) counts from three characters; a
+# three-letter run with arbitrary bytes around it is what an image's bytes form by chance, so it does not.
+NUL_STRING = re.compile(rb"(?:^|\x00)([\x20-\x7e\t]{3,5})(?=\x00|$)")
+DATA_URL_DEPTH = 4  # a decoded payload is itself scanned for data: URLs, this many layers down
 PDF_STREAM = re.compile(rb"stream(?:\r\n|\r|\n)(.*?)(?:\r\n|\r|\n)endstream", re.S)  # a stream ends with CR, LF or CRLF (PDF 32000-1:2008, 7.3.8)
 INFLATE_CAP = 64 * 1024 * 1024  # bytes one stream or one Office part may inflate to; past it the file fails rather than exhaust memory
 PDF_IMAGE_FILTERS = (b"/DCTDecode", b"/JPXDecode", b"/CCITTFaxDecode", b"/JBIG2Decode")
@@ -87,10 +92,10 @@ NAMESPACE_NOTE = "Data, Analytics and Insight"
 PROBLEM = "PROBLEM:"  # a label prefix: the text could not be read, which is itself a failure
 
 
-def strings_of(data):
+def strings_of(data, pattern=PRINTABLE_RUN):
     """The runs of printable text inside bytes (what `strings` prints), one per line: words in a PDF's metadata, an
     image's comment or a binary's strings are scanned; random bytes between them are not."""
-    return "\n".join(m.group(0).decode("ascii") for m in PRINTABLE_RUN.finditer(data))
+    return "\n".join(m.group(0).decode("ascii") for m in pattern.finditer(data))
 
 
 def mask_colours(text, ext):
@@ -105,14 +110,17 @@ BASE64_SHAPED = re.compile(r"^[A-Za-z0-9+/]+={0,2}$")
 
 
 def readable(raw):
-    """Decoded bytes as the text to scan: the whole text when it is text (UTF-8 without a NUL), else its printable
-    runs. A short payload ("CVR") is text in full, never lost to the run length."""
-    if b"\0" not in raw:
-        try:
-            return raw.decode("utf-8")
-        except UnicodeDecodeError:
-            pass
-    return strings_of(raw)
+    """A decoded payload as the text to scan: the whole text when it is mostly printable (UTF-8, nine in ten
+    characters printable), else its printable runs of three characters or more, so a short name between NULs
+    ("\0CVR\0") is not lost to the run length a binary file gets."""
+    try:
+        text = raw.decode("utf-8")
+        if text and sum(c.isprintable() or c in "\n\r\t" for c in text) >= 0.9 * len(text):
+            return text
+    except UnicodeDecodeError:
+        pass
+    short = [m.group(1).decode("ascii") for m in NUL_STRING.finditer(raw)]
+    return "\n".join([strings_of(raw)] + short).strip("\n")
 
 
 def data_urls(text):
@@ -133,26 +141,34 @@ def data_urls(text):
         yield m.start() + len(opener), start + len(payload), m.group("head"), payload  # the opener stays in the text
 
 
-def decoded_data_urls(text):
+def decoded_data_urls(text, depth=1, prefix=""):
     """Each data: URL in a page, decoded: (label suffix, text) for a payload read, or a problem when it cannot be.
     A base64 payload is read to its delimiter, its whitespace stripped and percent-encoding decoded as a browser
     does, then decoded whatever its length ("Q1ZS" is "CVR"), with missing padding supplied; a payload that is
     base64-shaped but does not decode fails the file; a payload that is not base64-shaped at all (a code template's
-    "{b64}") is read as the text it is, since the scan of the file's text covers it."""
+    "{b64}") is read as the text it is, since the scan of the file's text covers it. A decoded payload is itself a
+    document (an iframe's HTML holding another data: URL), so it is unescaped and scanned the same way, down to
+    DATA_URL_DEPTH layers."""
     for i, (start, end, head, payload) in enumerate(data_urls(text), 1):
+        label = f"{prefix}data URI {i}"
         if re.search(r"(?:^|;)base64$", head, re.I):
             payload = re.sub(r"\s", "", urllib.parse.unquote(payload))
             if not BASE64_SHAPED.match(payload):
-                yield f"data URI {i}", payload
+                yield label, payload
                 continue
             try:
                 raw = base64.b64decode(payload.rstrip("=") + "=" * (-len(payload.rstrip("=")) % 4), validate=True)
             except (binascii.Error, ValueError):
-                yield f"{PROBLEM}a data URI's base64 payload could not be decoded", f"data URI {i}"
+                yield f"{PROBLEM}a data URI's base64 payload could not be decoded", label
                 continue
-            yield f"data URI {i}", readable(raw)
+            decoded = readable(raw)
         else:
-            yield f"data URI {i}", urllib.parse.unquote(payload)
+            decoded = urllib.parse.unquote(payload)
+        yield label, decoded
+        if depth < DATA_URL_DEPTH:
+            inner = html.unescape(decoded)
+            if "data:" in inner.lower():
+                yield from decoded_data_urls(inner, depth + 1, label + " > ")
 
 
 def without_data_urls(text):
@@ -221,6 +237,8 @@ def texts(path):
         return
     if ext in TEXT_EXT or b"\0" not in data[:4096]:
         text = data.decode("utf-8", "replace")
+        if ext in (".html", ".md", ".svg"):
+            text = html.unescape(text)  # a browser reads "&#44;" as "," before it parses a URL, so the gate does too
         if ext in (".html", ".css", ".svg", ".md"):
             text = mask_colours(text, ext)
         for label, decoded in decoded_data_urls(text):
@@ -271,9 +289,12 @@ def scan(release):
                         if reason.startswith("the graph's") and allowed_double(rel, text, m):
                             continue
                         line = text.count("\n", 0, m.start()) + 1
-                        shown = re.sub(r"( \([^()]*\))? \(binary\)$", "", label)
-                        hits.append({"file": os.path.relpath(shown, release) if shown.startswith(release) else shown,
-                                     "line": line, "reason": reason, "match": m.group(0)[:60]})
+                        shown = re.sub(r"( \([^()]*(?:\([^()]*\)[^()]*)*\))? \(binary\)$", "", label)
+                        hit = {"file": os.path.relpath(shown, release) if shown.startswith(release) else shown,
+                               "line": line, "reason": reason, "match": m.group(0)[:60]}
+                        if shown != label:
+                            hit["where"] = label[len(shown) + 1:]  # which decoded payload or stream of the file
+                        hits.append(hit)
                         if sum(1 for h in hits if h["file"] == rel and h["reason"] == reason) >= 5:
                             break
     if not note_found:

@@ -15,7 +15,8 @@ its reason. No line reaches a shell: a command is split into words (shlex), its 
 (never this machine's environment), and it runs with a minimal environment that carries no login; a line with
 shell syntax (";", "|", redirection, a substitution) is listed as not run, and "a && b" runs a then b. What may
 run is a closed policy (POLICY): a named executable with its allowed options, every path-like operand resolved and
-required inside the tree, a Python script only from the tree and never "-c", and nothing else. A folder a block names that is not in the tree,
+required inside the tree, a Python script only from the tree and never "-c", and nothing else; a git line is always listed, not run (the
+release tree is not a Git checkout). A folder a block names that is not in the tree,
 or outside it, stops the block there: in the tree's own documents that is a failure (the document points
 nowhere), in a skill's reference it is an example folder and the rest of the block is listed as not run.
 The result names each snippet by file and line, so a failing one is a release defect with an address. --list
@@ -169,11 +170,6 @@ FILE_TOOLS = {
 PYTHON_MODULES = {"pytest", "unittest"}
 UV_OPTIONS = {"-q", "--no-project", "--with:", "--group:", "--python:", "--project:", "--frozen", "--offline", "-B"}
 PYTHON_OPTIONS = {"-B", "-I", "-q", "-m:"}
-# git may only read, with options that read: no --ext-diff, --textconv, -c, --config-env or pager setting (each runs a program).
-GIT_OPTIONS = {"log": {"--oneline", "-n:", "--stat", "--name-only", "--format=", "--pretty=", "--", "--no-color"},
-               "status": {"-s", "--short", "--porcelain", "--no-color"},
-               "show": {"--stat", "--name-only", "-s", "--format=", "--pretty=", "--no-color", "--"},
-               "diff": {"--stat", "--name-only", "--cached", "--no-color", "--"}}
 # A document's own variable is never exported under a name a tool reads for a program or a path to one.
 NOT_EXPORTED = re.compile(r"^(?:GIT_|PYTHON|UV_|LD_|DYLD_|PIP_|SSL_|XDG_|PATH$|HOME$|TMPDIR$|SHELL$|ENV$|BASH_ENV$|IFS$|VIRTUAL_ENV$)")
 # git reads programs to run from its configuration (diff.external, core.pager, textconv) wherever it finds a config
@@ -296,22 +292,10 @@ def policy(argv, cwd, tree):
             return None
         return "docker may only list (ps, compose ls)"
     if exe == "git":
-        if not rest or rest[0] not in GIT_OPTIONS:
-            return "git may only read (log, status, show, diff)"
-        allowed, i, operands = GIT_OPTIONS[rest[0]], 1, []
-        while i < len(rest):
-            w = rest[i]
-            if w.startswith("-") and w != "--":
-                ok, takes = option_ok(w, allowed)
-                if not ok:
-                    return f"option {w} is not on the policy for git {rest[0]}"
-                i += 2 if takes else 1
-                continue
-            if w != "--":
-                operands.append(w)
-            i += 1
-        bad = operands_inside(operands, cwd, tree)
-        return f"the operand {bad} is outside the tree" if bad else None
+        # The release tree is not a Git checkout, so a document's git line can never run there as written; and git reads
+        # programs to run from its configuration and attributes (diff.external, core.fsmonitor, clean filters), which no
+        # option set closes. Every git line is listed, never run.
+        return "the release tree is not a Git checkout"
     if exe == "curl":
         if all(w in ("-s", "-S", "-f", "-sS", "-sf", "-I") or re.match(r"^https?://(?:localhost|127\.0\.0\.1)(?::\d+)?(?:/|$)", w) for w in rest):
             return None
@@ -335,16 +319,6 @@ def inside(tree, target):
     """The folder a block names, resolved, when it is inside the tree; None when it is not (or not a folder)."""
     real, root = os.path.realpath(target), os.path.realpath(tree)
     return real if os.path.isdir(real) and (real == root or real.startswith(root + os.sep)) else None
-
-
-def git_env():
-    """The environment git runs in: the shell's basics and nothing of the document or of this user's git setup."""
-    import tempfile
-    empty = tempfile.mkdtemp(prefix="epm-snippet-git-")
-    e = {k: os.environ[k] for k in ("PATH", "LANG", "LC_ALL", "TERM") if k in os.environ}
-    e.update({"HOME": empty, "XDG_CONFIG_HOME": empty, "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null",
-              "GIT_PAGER": "cat", "PAGER": "cat", "GIT_TERMINAL_PROMPT": "0"})
-    return e
 
 
 def minimal_env(variables, release):
@@ -437,11 +411,7 @@ def run_shell(text, tree, env, state=None, strict=True, cwd=None):
             results.append({"line": line, "ran": False, "reason": f"not on the runner's command policy: {why}"})
             continue
         try:
-            if argv[0] == "git":
-                guards = GIT_DIFF_GUARDS if argv[1:2] and argv[1] in ("diff", "log", "show") else ()
-                argv = [argv[0], *GIT_ARGV_PREFIX, *argv[1:2], *guards, *argv[2:]]
-            env_for = git_env() if argv[0] == "git" else minimal_env(variables, manifest.is_release(tree))
-            r = procs.run(argv, timeout=900, cwd=cwd, env=env_for)
+            r = procs.run(argv, timeout=900, cwd=cwd, env=minimal_env(variables, manifest.is_release(tree)))
             results.append({"line": line, "ran": True, "returncode": r.returncode, "tail": (r.stdout + r.stderr)[-300:]})
         except procs.Expired:
             results.append({"line": line, "ran": True, "returncode": -1, "tail": "timed out"})

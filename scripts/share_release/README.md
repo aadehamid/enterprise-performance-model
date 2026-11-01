@@ -39,9 +39,8 @@ python3 scripts/share_release/export.py --epm . --skills ../personal-agent-skill
   `templates/check.sh`, with the test files found in the tree and the skills' checks from `validate.SKILL_CHECKS`,
   the one table the `skills-tests` row runs too (`skill_checks.py`). Its freeze step and the builders' release
   mode (`frozen_sources.py`, `build_module.package_folder`, `scripts/conftest.py`) are not on `main` yet: they are
-  pending in the branch `release/builders-frozen-sources`, whose pull request (not yet opened on 2026-11-01; add
-  its number here when it is) merges before this tool's. Until then a cut from this branch alone stops at the
-  rebuild's freeze step.
+  pending in the branch `release/builders-frozen-sources`, pull request #460, which merges before this tool's.
+  Until then a cut from this branch alone stops at the rebuild's freeze step.
 - `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing), record number
   (full or short form), issue number, left-out document or double-underscore graph name; names match whole words;
   binaries and base64 data are read as the printable text inside them.

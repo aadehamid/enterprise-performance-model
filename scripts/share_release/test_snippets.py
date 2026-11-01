@@ -147,24 +147,19 @@ def test_an_assignment_expands_only_the_blocks_own_variables():
         assert r["lines"][1]["ran"] and r["lines"][1]["tail"].strip() == os.path.join(tree, "a")
 
 
-def test_git_may_not_run_a_program_and_a_documents_variable_is_not_exported_under_a_tools_name():
+def test_a_documents_variable_is_not_exported_under_a_tools_name():
     with tempfile.TemporaryDirectory() as tree:
         with open(os.path.join(tree, "env.py"), "w") as f:
             f.write("import os\nprint(sorted(os.environ))\n")
         state = {}
-        for line in ("git diff --ext-diff", "git diff --textconv", "git log --no-pager", "git diff --output=/tmp/x", "git show --ext-diff HEAD"):
-            r = snippets.run_shell(line, tree, {}, state)
-            assert r["lines"][0]["ran"] is False and "policy" in r["lines"][0]["reason"], (line, r["lines"][0])
-        for line in ("git -c core.pager=x log", "git --config-env=x log"):  # an option before the subcommand: refused as not read-only
-            assert snippets.run_shell(line, tree, {}, state)["lines"][0]["ran"] is False, line
         evil = os.path.join(tree, "evil.sh")
         with open(evil, "w") as f:
             f.write("#!/bin/sh\necho EVIL-RAN > " + os.path.join(tree, "ran.txt") + "\n")
         os.chmod(evil, 0o755)
-        r = snippets.run_shell(f"GIT_EXTERNAL_DIFF={evil}\nPYTHONSTARTUP={evil}\nUV_PYTHON={evil}\nPATH=/nowhere\nFOO=bar\npython3 env.py --list", tree, {}, state)
+        r = snippets.run_shell(f"GIT_EXTERNAL_DIFF={evil}\nPYTHONSTARTUP={evil}\nUV_PYTHON={evil}\nXDG_CONFIG_HOME={tree}\nPATH=/nowhere\nFOO=bar\npython3 env.py --list", tree, {}, state)
         names = r["lines"][-1]["tail"]
         assert r["lines"][-1]["returncode"] == 0 and "'FOO'" in names  # a plain variable is exported
-        assert not any(n in names for n in ("GIT_EXTERNAL_DIFF", "PYTHONSTARTUP", "UV_PYTHON")) and "/nowhere" not in names  # a tool's name is not
+        assert not any(n in names for n in ("GIT_EXTERNAL_DIFF", "PYTHONSTARTUP", "UV_PYTHON", "XDG_CONFIG_HOME")) and "/nowhere" not in names  # a tool's name is not
         assert not os.path.exists(os.path.join(tree, "ran.txt"))
 
 
@@ -203,29 +198,21 @@ def test_a_complete_query_with_trailing_text_in_a_reference_is_listed_with_the_p
             snippets.run_sparql(text, tree, "business_architecture/ontology/README.md")  # the tree's own document: a failure
 
 
-def test_git_runs_with_no_document_variable_and_no_configuration_of_this_machine():
+def test_a_git_line_is_listed_and_never_run_even_inside_a_git_checkout():
     import subprocess
     with tempfile.TemporaryDirectory() as tree:
-        repo = os.path.join(tree, "repo"); os.makedirs(repo)
-        g = lambda *a: subprocess.run(["git", "-C", repo, *a], check=True, capture_output=True, text=True)
-        g("init", "-q"); g("config", "user.name", "x"); g("config", "user.email", "x@example.com")
-        with open(os.path.join(repo, "f.txt"), "w") as f:
-            f.write("one\n")
-        g("add", "f.txt"); g("commit", "-q", "-m", "one")
-        with open(os.path.join(repo, "f.txt"), "w") as f:
-            f.write("two\n")
+        subprocess.run(["git", "init", "-q", tree], check=True)
         evil = os.path.join(tree, "evil.sh"); marker = os.path.join(tree, "ran.txt")
         with open(evil, "w") as f:
-            f.write("#!/bin/sh\necho EVIL-RAN > " + marker + "\necho EVIL-RAN\n")
+            f.write("#!/bin/sh\necho EVIL-RAN > " + marker + "\n")
         os.chmod(evil, 0o755)
-        os.makedirs(os.path.join(tree, "xdg", "git"))
-        with open(os.path.join(tree, "xdg", "git", "config"), "w") as f:
-            f.write(f"[diff]\n\texternal = {evil}\n[core]\n\tpager = {evil}\n")
-        with open(os.path.join(repo, ".git", "config"), "a") as f:
-            f.write(f"[diff]\n\texternal = {evil}\n")  # even the repository's own config may not run a program
+        with open(os.path.join(tree, ".git", "config"), "a") as f:
+            f.write(f"[core]\n\tfsmonitor = {evil}\n[diff]\n\texternal = {evil}\n[filter \"x\"]\n\tclean = {evil}\n")
+        with open(os.path.join(tree, ".gitattributes"), "w") as f:
+            f.write("* filter=x\n")
+        with open(os.path.join(tree, "f.txt"), "w") as f:
+            f.write("x\n")
         state = {}
-        r = snippets.run_shell("XDG_CONFIG_HOME=$EPM/xdg\nHOME=$EPM/xdg\nGIT_CONFIG_GLOBAL=$EPM/xdg/git/config\ncd repo\ngit diff --no-color\ngit log --oneline", tree, {}, state)
-        diff, log = r["lines"][-2], r["lines"][-1]
-        assert diff["ran"] and diff["returncode"] == 0 and "-one" in diff["tail"] and "+two" in diff["tail"], diff
-        assert log["returncode"] == 0 and "one" in log["tail"]
-        assert not os.path.exists(marker) and "EVIL" not in str(r)
+        r = snippets.run_shell("git status --porcelain\ngit diff --no-color\ngit log --oneline\ngit show HEAD", tree, {}, state)
+        assert all(x["ran"] is False and "not a Git checkout" in x["reason"] for x in r["lines"]), r["lines"]
+        assert r["failed"] == [] and not os.path.exists(marker)

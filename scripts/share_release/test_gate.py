@@ -336,3 +336,26 @@ def test_a_base64_payload_ends_at_a_fragment_or_a_markdown_title_and_is_still_de
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
     (tmp_path / "page.md").write_text(f'![x](data:image/png;base64,{chevron} "Exxon")\n')  # and the title is scanned as prose
     assert sorted(h["reason"] for h in gate.scan(str(tmp_path))) == ["a peer named", "a peer named"]
+
+
+def test_html_character_references_nested_payloads_and_nul_delimited_names_are_found(tmp_path):
+    import base64
+    clean(tmp_path)
+    inner = base64.b64encode(b"<p>compared with Chevron</p>").decode()
+    (tmp_path / "page.html").write_text(f'<iframe src="data:text/html;base64&#44;{inner}"></iframe>\n')  # &#44; is the comma
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    (tmp_path / "page.html").write_text(f'<iframe src="data&#58;text/html;base64,{inner}"></iframe>\n')
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    outer = base64.b64encode(f'<iframe src="data:text/html;base64,{inner}"></iframe>'.encode()).decode()  # a data URL inside a data URL
+    (tmp_path / "page.html").write_text(f'<iframe src="data:text/html;base64,{outer}"></iframe>\n')
+    hits = gate.scan(str(tmp_path))
+    assert [h["reason"] for h in hits] == ["a peer named"] and "data URI 1 > data URI 1" in hits[0]["where"]
+    layer = inner
+    for _ in range(gate.DATA_URL_DEPTH + 2):  # deeper than the cap: the gate stops at the cap and does not loop
+        layer = base64.b64encode(f'<iframe src="data:text/html;base64,{layer}"></iframe>'.encode()).decode()
+    (tmp_path / "page.html").write_text(f'<iframe src="data:text/html;base64,{layer}"></iframe>\n')
+    assert gate.scan(str(tmp_path)) == []
+    (tmp_path / "page.html").write_text('<img src="data:image/png;base64,' + base64.b64encode(b"\0\0CVR\0\0").decode() + '">\n')  # NUL-delimited, shorter than a binary's run
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a peer named"]
+    assert gate.readable(b"\0\0CVR\0\0") == "CVR" and gate.readable(b"plain text with Valero in it") == "plain text with Valero in it"
+    assert "CVI" not in gate.readable(b"\xff\xd8\xff\xe0\x10CVI\x12\x9a")  # three letters between arbitrary bytes are an image's chance, not a string
