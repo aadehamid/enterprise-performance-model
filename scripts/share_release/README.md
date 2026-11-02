@@ -59,7 +59,7 @@ A new cut is a small edit: `manifest.py` holds its facts in one place (`RELEASE_
 - `vocabulary.py` holds the leak vocabulary the rules and the gate share (peers' tickers and EDGAR filers, with
   their source, the other repositories, the graph prefixes) and `MARKET_NEWS`, the market news whose peer names
   stay: the demo's cached Parallel search results and its `SCENARIO.md` (EPM-DEC-001-0112, point 7). The peer rule
-  leaves those files as they are and the gate's three peer checks skip them; every other check still runs on them.
+  leaves those files as they are and the gate's three peer text checks skip them (a file name is still checked); every other check still runs on them.
 - `cleanup.py` removes only what the ledger names, refuses the root, the home folder, any folder holding a checkout
   and any catalog this run did not create (a test catalog's name starts with `epm_release_validate_`), and exits 0 only with proof that everything is gone.
 
