@@ -9,7 +9,7 @@
 
 ## Context
 
-EPM 1.0 was cut from `main`, published as `share/epm-1.0` in the private release repository, and every store was reloaded from it. The decision owner confirmed it on 2026-11-02 (block 6). EPM-DEC-001-0110 plans a second release, the full version, after three pieces of work: a vocabulary module for the technical graph, lineage from Databricks (#457) and the in-sync plan (#455, #426). The plan (`release-cut/PLAN.md`, "After the first release"; a local file outside the repository, as EPM-DEC-001-0110 says) says the module's competency questions are "locked by the owner" and its `1.0.0` needs the decision owner's approval.
+EPM 1.0 was cut from `main`, published as `share/epm-1.0` in the private release repository, and every store was reloaded from it. The decision owner confirmed it on 2026-11-02 (block 6). EPM-DEC-001-0110 plans a second release, the full version, after three pieces of work: a vocabulary module for the technical graph, lineage from Databricks (#457) and the in-sync plan (#455, #426) (*2026-11-02:* and the logical-model module, whose `1.0.0` the cut waits for: EPM-DEC-001-0113, point 10). The plan (`release-cut/PLAN.md`, "After the first release"; a local file outside the repository, as EPM-DEC-001-0110 says) says the module's competency questions are "locked by the owner" and its `1.0.0` needs the decision owner's approval.
 
 The demo's technical graph (`demos/downstream-pricing-databricks-free/graph/tech-graph.ttl`) uses 13 node kinds and 23 properties in the demo's own namespace, `urn:pricing-demo:tech-vocab#` (the release tooling also writes it, in `scripts/share_release/stores.py`). The demo's decision trail, `graph/decision-trail.ttl`, uses the same namespace for its own terms. Its node kinds name a layer (`SilverTable`, `GoldTable`), and it records no owner.
 
@@ -59,4 +59,4 @@ This supersedes, for market news, EPM-DEC-001-0110's amendment item 4 (rewrite t
 
 - The technical-graph module is the first test of the `ontology` skill's `references/new-module.md`, which is adjusted so a module can pass on its package plus a conforming example.
 - The demo's technical graph, its loader and its checks move to the module's terms; the lineage, in-sync and release work that follows builds on them.
-- The follow-up release is cut once the module exists, and replaces EPM 1.0 as `share/epm-1.0`.
+- The follow-up release is cut once the module exists, and replaces EPM 1.0 as `share/epm-1.0` (*2026-11-02:* and once the logical-model module is approved as `1.0.0`: EPM-DEC-001-0113, point 10).
