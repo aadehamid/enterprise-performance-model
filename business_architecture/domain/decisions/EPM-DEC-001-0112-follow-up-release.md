@@ -5,7 +5,7 @@
 | Status | Decided (the decision owner, 2026-11-02, for the ten points below; the build choices delegated under EPM-DEC-001-0028; the module's `1.0.0` stays with the decision owner) |
 | Date | 2026-11-02 |
 | Questions | Claude asked ten questions in two rounds, each with a recommendation, to open the follow-up release that EPM-DEC-001-0110 plans |
-| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-follow-up-release.md`, blocks 1 to 6 |
+| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-follow-up-release.md`, blocks 1 to 7 |
 
 ## Context
 
@@ -23,7 +23,7 @@ The demo's technical graph (`demos/downstream-pricing-databricks-free/graph/tech
 4. **The module** is named `technical-graph`, with its terms under `https://w3id.org/lsc/ontology/modules/technical-graph/`. A small example graph cut from the demo's graph ships with it as test data, not as ontology content, and the regression runs the six questions on the module plus that example. The demo moves from `tv:` to the module's terms, so the live graph meets the same shapes.
 5. **Stores.** The module's vocabulary loads into all four stores, `epm_triples` included, like every module. The technical graph's records (nodes, refresh times and check results) stay out of `epm_triples`; its Delta copy stays as it is (EPM-DEC-001-0110, decision 14 and "What follows", item 9).
 6. **The `1.0.0` approval.** The decision owner owns the module. Claude builds it as a candidate through its pull requests and sends the decision owner one page with the terms, the six questions and their results on the example. The release is `1.0.0` when the decision owner replies to approve it, and that reply is recorded word for word.
-7. **Peer names in market news stay.** "if this is from the Decision API search for what is going on in the market at the time, we should leave them in". Sunoco appears in the cached Parallel search results under `data/parallel/`; BP, Shell and Chevron appear in `SCENARIO.md`, the decision owner's briefing collection on the market in October 2026. Both stay, and the release README's statement that no peer is named is to be reworded, in the follow-up release, to say peers are named only in market news; the rewrite rules and the leak gate are to leave market news in place: "yes, keep them and reword the README line." In the same message the decision owner asked what the scenario's briefings are; Claude answered (six dated executive briefings on North American downstream markets, October 5 to 23, 2026, whose figures calibrate the demo's synthesized data) before the summary that block 3 approved.
+7. **Peer names in market news stay; the ontology still names no peer.** The decision owner (block 7): "by the way no peer name in the ontology though as discussed. just wants to make sure". Point 7 reaches only the demo's market news; every ontology module keeps EPM-DEC-001-0110's rule, with peer evidence read as industry view. "if this is from the Decision API search for what is going on in the market at the time, we should leave them in". Sunoco appears in the cached Parallel search results under `data/parallel/`; BP, Shell and Chevron appear in `SCENARIO.md`, the decision owner's briefing collection on the market in October 2026. Both stay, and the release README's statement that no peer is named is to be reworded, in the follow-up release, to say peers are named only in market news; the rewrite rules and the leak gate are to leave market news in place: "yes, keep them and reword the README line." In the same message the decision owner asked what the scenario's briefings are; Claude answered (six dated executive briefings on North American downstream markets, October 5 to 23, 2026, whose figures calibrate the demo's synthesized data) before the summary that block 3 approved.
 8. **Preflight refuses Databricks without AuraDB.** Choosing Databricks without AuraDB failed tech-compare on a fresh copy; `rebuild_stores.py`'s preflight refuses that choice before any work starts, with a message that says to add AuraDB.
 9. **The walkthrough** gets the content changes this release needs, such as the new module and the in-sync steps, and no design pass.
 10. **Question 17** (EPM-DEC-001-0086) is asked again before anything is shared.
@@ -52,6 +52,8 @@ This supersedes, for market news, EPM-DEC-001-0110's amendment item 4 (rewrite t
 > Goal set: treat the plan as agreed on as a goal until done. use /night-run as well
 
 > Confirm EPM 1.0 (Recommended)
+
+> by the way no peer name in the ontology though as discussed. just wants to make sure
 
 ## Consequences
 
