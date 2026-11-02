@@ -387,7 +387,7 @@ IDENT = r"(?:[a-z_]\w*|`(?:[^`]|``)+`)"  # a bare identifier, or a backtick-quot
 THREE_PART = re.compile(rf"(?<![\w.`])({IDENT})\.({IDENT})\.({IDENT})(?![\w.`])")
 VOLUME_PATH = re.compile(r"/volumes/([a-z_]\w*)/")
 # A statement on a schema or volume names catalog.schema: the name after the verb must start with the catalog.
-SCHEMA_LEVEL = re.compile(rf"^(?:create schema if not exists|show tables in|drop schema if exists|drop volume if exists|"
+SCHEMA_LEVEL = re.compile(rf"^(?:create schema if not exists|alter schema|show tables in|drop schema if exists|drop volume if exists|"
                           rf"create volume if not exists)\s+({IDENT})\.")
 # Inside a string literal a token (a run without spaces) that is a URL or a path may hold dots: the IRIs the
 # definitions views hold ('http://www.w3.org/...'), and volume paths. Any other token is read for three-part names.
@@ -578,6 +578,8 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     assert databricks.setup() == "epm_validate"
     assert cur.statements == ([f"CREATE CATALOG IF NOT EXISTS epm_validate COMMENT '{databricks.DEMO_COMMENT}'"]
                               + [f"CREATE SCHEMA IF NOT EXISTS epm_validate.{s}" for s in databricks.SCHEMAS]
+                              + [f"ALTER SCHEMA epm_validate.replica_{d} SET TAGS ('epm_source_system' = '{s}')"
+                                 for d, s in config.SYSTEM_MODULE.items()]
                               + ["CREATE VOLUME IF NOT EXISTS epm_validate.replica_landing.raw"])
     only_catalog(cur.statements, "epm_validate")
 
@@ -2328,29 +2330,80 @@ def test_lineage_wait_reads_again_until_the_events_arrive_or_the_time_runs_out(m
     def sleep(seconds):
         slept.append(seconds)
         now[0] += seconds
-    result = tech_graph.lineage_check(None, "c", "t", ["a", "b", "c"], wait=300, sleep=sleep, clock=lambda: now[0])
+    result, inputs = tech_graph.lineage_check(None, "c", "t", ["a", "b", "c"], wait=300, sleep=sleep, clock=lambda: now[0])
     assert result["result"] == "pass" and len(slept) == 2
+    assert inputs["observed"] == [("a", "b"), ("b", "c")] and json.load(open(tech_graph.LINEAGE))["designed"] == [["a", "b"], ["b", "c"]]
     reads[:] = [{("a", "b")}] * 3
     now[0], slept[:] = 0, []
-    result = tech_graph.lineage_check(None, "c", "t", ["a", "b", "c"], wait=60, sleep=sleep, clock=lambda: now[0])
+    result, _ = tech_graph.lineage_check(None, "c", "t", ["a", "b", "c"], wait=60, sleep=sleep, clock=lambda: now[0])
     assert result["result"] == "differs" and len(slept) == 1  # bounded: it reports what it has when the time runs out
 
 
 def test_the_lineage_gate_fails_only_on_what_the_release_does_not_state():
-    known = {"designed_only": [["a", "b"]], "observed_only": [], "designed_not_built": [["x", "y"]]}
-    same = {"matched": [], "designed_only": [["a", "b"]], "observed_only": [], "designed_not_built": [["x", "y"]]}
-    assert tech_graph.lineage_gate(same, known) == []
+    known = {"designed_only": [["a", "b"]], "sql_and_observed": [["s", "t"]], "designed_not_built": [["x", "y"]]}
+    same = {"in_all_three": [["m", "n"]], "designed_only": [["a", "b"]], "sql_and_observed": [["s", "t"]], "designed_not_built": [["x", "y"]]}
+    assert tech_graph.lineage_gate(same, known) == []  # an edge in all three sources is no difference
     assert tech_graph.lineage_gate({**same, "observed_only": [["p", "q"]]}, known) == ["observed_only: new p -> q"]
     assert tech_graph.lineage_gate({**same, "designed_only": []}, known) == ["designed_only: no longer a -> b"]
+    assert tech_graph.lineage_gate({**same, "designed_and_sql": [["c", "d"]]}, known) == ["designed_and_sql: new c -> d"]
 
 
-def test_the_known_lineage_differences_are_the_ones_the_committed_check_counted():
+def test_lineage_sets_each_edge_beside_the_sources_that_hold_it():
+    found = tech_graph.confirm_lineage(
+        designed_tables={"a", "b", "c", "d", "x"}, designed={("a", "b"), ("b", "c"), ("c", "d"), ("x", "b")},
+        sql={("a", "b"), ("b", "c"), ("d", "a"), ("z", "b")}, observed={("a", "b"), ("c", "d"), ("d", "a"), ("c", "a")},
+        present={"a", "b", "c", "d", "z"})
+    assert found == {"in_all_three": [["a", "b"]], "designed_and_sql": [["b", "c"]], "designed_and_observed": [["c", "d"]],
+                     "sql_and_observed": [["d", "a"]], "designed_only": [], "sql_only": [], "observed_only": [["c", "a"]],
+                     "designed_not_built": [["x", "b"]]}  # z is outside the design; x is not built
+    assert tech_graph.CATEGORIES[0] == "in_all_three" and len(tech_graph.CATEGORIES) == 7
+
+
+def _offline_lineage():
+    """The designed lineage from data-product's pricing.ttl and the SQL lineage and built objects from the shipped graph."""
+    from rdflib import Graph, URIRef
+    dp = Graph().parse(os.path.join(ONTOLOGY, "data-product", "pricing.ttl"))
+    tables, designed = tech_graph.designed_from(
+        [(str(s), str(o)) for s, o in dp.subject_objects(URIRef(tech_graph.FULL_NAME)) if str(s).startswith(tech_graph.TABLE)],
+        [(str(o), str(s)) for s, o in dp.subject_objects(URIRef(tech_graph.WAS_DERIVED_FROM))])
+    g = _graph("tech-graph.ttl")
+    present = {n["props"]["name"] for n in tech_graph.graph_rows(g)[0] if OBJECT_CLASSES & set(n["labels"])}
+    return tables, designed, tech_graph.sql_lineage(g), present
+
+
+def test_the_known_lineage_is_what_the_design_and_the_sql_files_hold_with_the_observed_side_the_last_collect_saw():
+    # The designed and SQL sides are computed here, offline. The observed side is the 2026-10-29 collect's, which only
+    # a live collect can confirm: Unity Catalog observed exactly the edges the design and the SQL files share.
     from rdflib import Graph, Namespace
+    tables, designed, sql, present = _offline_lineage()
+    expected = tech_graph.confirm_lineage(tables, designed, sql, designed & sql, present)
     known = json.load(open(tech_graph.KNOWN_LINEAGE))
+    assert {k: v for k, v in known.items() if k != "note"} == {k: v for k, v in expected.items() if k != "in_all_three"}
+    assert tech_graph.lineage_gate(expected, known) == []
     detail = str(Graph().parse(os.path.join(ROOT, "graph", "tech-graph.ttl")).value(
         rdflib_uri("urn:pricing-demo:tech:check/designed-vs-observed-lineage"), Namespace(tech_graph.VOCAB).detail))
-    assert detail == (f"26 edges match; {len(known['designed_only'])} designed only; {len(known['observed_only'])} observed only; "
-                      f"{len(known['designed_not_built'])} designed edges touch a table the demo does not build")
+    designed_only = len(expected["designed_only"]) + len(expected["designed_and_sql"])
+    observed_only = len(expected["observed_only"]) + len(expected["sql_and_observed"])
+    assert detail == (f"{len(expected['in_all_three'])} edges match; {designed_only} designed only; {observed_only} observed only; "
+                      f"{len(expected['designed_not_built'])} designed edges touch a table the demo does not build")
+
+
+def test_the_lineage_step_reads_the_sql_edges_from_the_graph_and_fails_on_an_unstated_edge(monkeypatch, tmp_path):
+    tables, designed, sql, present = _offline_lineage()
+    observed = designed & sql
+    inputs = {"designed_tables": sorted(tables), "designed": sorted(designed), "observed": sorted(observed), "present": sorted(present)}
+    monkeypatch.setattr(tech_graph, "LINEAGE", str(tmp_path / "lineage.json"))
+    monkeypatch.setattr(tech_graph, "read_graph", lambda folder=None: _graph("tech-graph.ttl"))
+    (tmp_path / "lineage.json").write_text(json.dumps(inputs))
+    tech_graph.lineage()
+    written = json.load(open(tmp_path / "lineage.json"))
+    assert len(written["edges"]["in_all_three"]) == 26 and written["observed"] == json.loads(json.dumps(inputs["observed"]))
+    stray = ["silver_mdm_core.mips_price_batch_dim", "gold_commercial_core.mips_mpr_executive_summary_fact"]
+    assert stray in [list(e) for e in sql]  # an edge the SQL files hold that Unity Catalog stopped observing
+    (tmp_path / "lineage.json").write_text(json.dumps({**inputs, "observed": [e for e in inputs["observed"] if list(e) != stray]}))
+    with pytest.raises(SystemExit):
+        tech_graph.lineage()
+    assert json.load(open(tmp_path / "lineage.json"))["edges"]["designed_and_sql"] == [stray]
 
 
 def rdflib_uri(iri):
@@ -2399,3 +2452,59 @@ def test_jena_load_looks_for_targets_only_in_current_release_graphs_and_writes_n
     monkeypatch.setattr(tech_graph.urllib.request, "urlopen", lambda *a, **k: pytest.fail("Jena was written to"))
     with pytest.raises(SystemExit, match="1 edge target"):
         tech_graph.load_jena(str(tmp_path))
+
+
+# ---- #457 (2026-11-02): lineage confirmed three ways, new measures from Databricks, tags, proposals ----
+
+def test_a_new_metric_view_reaches_the_graph_from_its_tag_and_unity_catalog_with_no_code_per_view():
+    # A view made in the workspace, which no SQL file creates, with its tag and Unity Catalog's lineage from a gold table.
+    from rdflib import RDF, URIRef
+    g = _graph("tech-graph.ttl")
+    shipped = len(g)
+    objects = [{"id": n["props"]["name"]} for n in tech_graph.graph_rows(g)[0] if OBJECT_CLASSES & set(n["labels"])]
+    assert tech_graph.databricks_only(g, objects, []) == [] and len(g) == shipped  # every shipped object is in a SQL file
+    view, gold = "semantic_sem_commercial.new_margin_vw", "gold_commercial_core.mips_mpr_executive_summary_fact"
+    added = tech_graph.databricks_only(g, objects + [{"id": view}], [[gold, view], [gold, "elsewhere.x"]])
+    iri = URIRef(tech_graph.TECH + "object/" + view)
+    assert added == [view] and (iri, RDF.type, URIRef(TV + "MetricView")) in g
+    assert set(g.objects(iri, URIRef(TV + "readsFrom"))) == {URIRef(tech_graph.TECH + "object/" + gold)}
+    g.add((iri, URIRef(TV + "implements"), URIRef(tech_graph.ONTOLOGY + "modules/kpi/measure/crack-spreads")))  # as links.rq adds it
+    kept = tech_graph.typed_only(g, set(g.subjects(RDF.type, None)))
+    assert (iri, URIRef(TV + "implements"), None) in kept and view not in {s for s, _ in tech_graph.sql_lineage(kept)}
+    # The tag's unknown identifier and the undesigned view become proposals, with the observed edge behind them.
+    tags = [{"view": view, "identifiers": "KPI-0001 KPI-9999"}]
+    drafted = tech_graph.proposals(tags, [{"id": view}], {"designed_tables": [gold], "observed": [[gold, view]]},
+                                   set(IDENTIFIERS.values()))
+    assert drafted == [
+        {"module": "kpi", "draft": "a measure with the identifier KPI-9999", "identifier": "KPI-9999", "view": view,
+         "observed_lineage": [[gold, view]]},
+        {"module": "data-product", "draft": f"a table design for {view}", "table": view, "observed_lineage": [[gold, view]]}]
+    assert [p["module"] for p in tech_graph.proposals(tags, [{"id": view}], None, set(IDENTIFIERS.values()))] == ["kpi"]
+
+
+def test_the_layers_databricks_only_objects_take_are_the_ones_objects_rq_gives():
+    text = open(os.path.join(tech_graph.SPARQL, "objects.rq")).read()
+    for prefix, layer, cls in tech_graph.LAYERS:
+        assert f'("{layer}" tv:{cls})' in text and (not prefix or f'"{prefix}' in text), (layer, cls)
+
+
+def test_proposals_are_written_beside_the_live_facts_never_into_the_ontology():
+    assert tech_graph.PROPOSALS.startswith(os.path.join(config.OUT, "tech"))
+    source = inspect.getsource(tech_graph.collect)
+    assert "PROPOSALS" in source and "business_architecture" not in source
+
+
+def test_the_source_system_comes_from_the_schema_tag_and_the_readme_map_is_the_fallback_and_a_disagreement_fails():
+    readme = open(os.path.join(ROOT, "README.md")).read()
+    section = readme.split("## The source systems")[1].split("\n## ")[0]
+    mapped = {r[0]: r[2] for r in re.findall(r"^\| `(\w+)` \| ([^|]+) \| ([^|]+) \|", section, flags=re.M)}
+    slugs = {r["slug"] for f in ("systems.csv", "other-systems.csv") for r in csv.DictReader(open(os.path.join(ONTOLOGY, "system", f)))}
+    assert config.SYSTEM_MODULE == {d: s.strip().lower() for d, s in mapped.items() if s.strip().lower() in slugs}
+    assert tech_graph.source_systems({}) == [{"database": d, "system": s, "from": "README.md"} for d, s in sorted(config.SYSTEM_MODULE.items())]
+    tagged = tech_graph.source_systems({"rightangle": "rightangle", "aspen_pims": "pims"})
+    assert {"database": "rightangle", "system": "rightangle", "from": "tag"} in tagged
+    assert {"database": "aspen_pims", "system": "pims", "from": "tag"} in tagged  # a tag where README.md maps nothing
+    assert tech_graph.systems_disagree({"rightangle": "rightangle", "aspen_pims": "pims"}) is None
+    assert tech_graph.systems_disagree({"price_reference": "mips"}) == "price_reference: tag mips, README.md mpr"
+    links = open(os.path.join(tech_graph.SPARQL, "links.rq")).read()
+    assert "xyz:source_systems" in links and '"price_assessment"' not in links  # the map lives in config, read through live.json

@@ -4,7 +4,8 @@
 # - a demo table or view is the one the data-product module designs (data-product/pricing/tables.csv), matched by
 #   name; the demo's replica schemas follow its source databases' names (README.md, "The source systems");
 # - a Genie agent the module records (data-product/pricing/agents.csv) is that agent;
-# - a source database stands for the real system the README maps it to, where the system module holds one.
+# - a source database stands for the system its replica schema's epm_source_system tag names, or, with no tag, the one
+#   README.md maps it to, where the system module holds one (live.json's source_systems, which collect writes, #457).
 # %REPO% is the repository root and %LIVE% the live facts file, filled in by tech_graph.py.
 PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
@@ -57,9 +58,9 @@ WHERE {
     BIND(IRI(CONCAT("urn:pricing-demo:tech:agent/", ?agentSlug)) AS ?agent)
     BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/data-product/agent/", ?agentSlug)) AS ?designedAgent)
   } UNION {
-    # README.md, "The source systems"; Aspen PIMS, production accounting and EIA's data have no system in the module.
-    VALUES (?dbName ?systemSlug) {
-      ("price_assessment" "mips") ("price_reference" "mpr") ("reference_data_hub" "kittyhawk") ("rightangle" "rightangle")
+    SERVICE <x-sparql-anything:> {
+      fx:properties fx:location "%LIVE%" ; fx:media-type "application/json" .
+      ?root xyz:source_systems ?systems . ?systems ?k ?s . ?s xyz:database ?dbName ; xyz:system ?systemSlug .
     }
     BIND(IRI(CONCAT("urn:pricing-demo:tech:database/", ?dbName)) AS ?db)
     BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/system/system/", ?systemSlug)) AS ?system)
