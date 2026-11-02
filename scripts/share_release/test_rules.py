@@ -430,10 +430,11 @@ def test_agent_work_in_a_decision_package_the_walkthrough_and_the_tests_is_neutr
 
 
 def test_the_paths_the_agent_rules_name_are_files_of_main():
-    # Each path-bound rule above stops firing with no failure if its file moves.
+    # A path-bound rule stops firing if its file moves, and for most of them the gate would not notice.
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
     for path in ("business_architecture/ontology/epm-walkthrough.html", "business_architecture/ontology/kpi/test_measures.py",
-                 "business_architecture/ontology/release/test_build_module.py", "scripts/test_published_figures.py"):
+                 "business_architecture/ontology/release/test_build_module.py", "scripts/test_published_figures.py",
+                 "scripts/test_epm_facts.py"):
         assert os.path.exists(os.path.join(root, path)), path
 
 

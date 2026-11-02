@@ -108,3 +108,10 @@ def test_current_prints_the_version_an_entry_holds(tmp_path, capsys):
     assert capsys.readouterr().out.strip() == "4.5.6"
     with pytest.raises(SystemExit):
         nv.current(type("A", (), {"module": "c"}), ontology=str(tmp_path))
+
+
+def test_current_names_an_entry_with_no_version_even_when_a_later_entry_has_one(tmp_path):
+    (tmp_path / "release").mkdir()
+    (tmp_path / "release" / "build_module.py").write_text('MODULES = {\n    "a": {\n        "title": "A",\n    },\n    "b": {\n        "version": "4.5.6",\n    },\n}\n')
+    with pytest.raises(SystemExit, match="a's entry has no version"):
+        nv.current(type("A", (), {"module": "a"}), ontology=str(tmp_path))

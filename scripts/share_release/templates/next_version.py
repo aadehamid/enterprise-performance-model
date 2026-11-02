@@ -116,7 +116,7 @@ def current(a, ontology=ONTOLOGY):
     start_at = text.find(f'    "{a.module}": {{\n')
     if start_at < 0:
         raise SystemExit(f"{a.module} has no entry in MODULES")
-    found = re.search(r'"version": "([^"]+)"', text[start_at:])
+    found = re.search(r'"version": "([^"]+)"', text[start_at:text.index("\n    },\n", start_at)])
     if not found:
         raise SystemExit(f"{a.module}'s entry has no version")
     print(found.group(1))
