@@ -70,6 +70,10 @@ def test_augment_without_the_decision_owners_approval_is_refused(tmp_path):
     elsewhere.write_text(WORDS + "\n")
     with pytest.raises(SystemExit, match="not a file of the answers folder"):
         augment.approval(epm, str(elsewhere), WORDS)
+    for unrelated in ("go ahead", "yes to all", "approve 1.0.0", "do not approve logical-model 1.0.0 yet"):
+        epm, path = answers(tmp_path, "Block 1:\n\n> " + unrelated + "\n")
+        with pytest.raises(SystemExit, match="do not approve logical-model 1.0.0 by name"):
+            augment.approval(epm, path, unrelated)  # words in the file that approve something else, or refuse
     epm, path = answers(tmp_path, "Block 1:\n\n> " + WORDS + "\n")
     assert augment.approval(epm, path, WORDS) == (f"{augment.ANSWERS}/answers-2026-11-03-logical-model-release.md", WORDS)
 
@@ -169,8 +173,11 @@ def test_the_package_is_built_registered_and_counted(tmp_path, folder):
     approved = (f"{augment.ANSWERS}/answers-2026-11-03-logical-model-release.md", WORDS)
     ctx = augment.context(str(rel), str(tmp_path), approved, str(folder), {"EPM-DEC-001-0113": "2026-11-02"}, issued="2026-11-03")
     augment.write_changelog(str(rel), ctx, {})
+    before = {p: (rel / p).read_text(encoding="utf-8") for p, _ in augment.REGISTRATION}
     places = augment.apply(str(rel), augment.REGISTRATION, ctx)
     assert len(places) == len(augment.REGISTRATION)
+    unchanged = [p for p in before if (rel / p).read_text(encoding="utf-8") == before[p]]
+    assert unchanged == [], unchanged  # Codex's round 1: every registration place is written, not only called
     (rel / "release.json").write_text(json.dumps(manifest.marker("2026-11-03")))  # release mode, as the cut's rebuild runs it
     r = run(["build_module.py", augment.MODULE, "--write"], f"{ONT}/release")
     assert r.returncode == 0, r.stdout + r.stderr
@@ -253,3 +260,16 @@ def test_a_rule_that_touched_er_studios_namespace_would_stop_the_stage(tmp_path,
     monkeypatch.setattr(rules, "apply", lambda text, path, dates: (text.replace("www.erstudio.com", "example.org"), {}))
     with pytest.raises(SystemExit, match="ER Studio's namespace"):
         augment.stage(str(tmp_path / "rel"), str(folder), {})
+
+
+def test_the_rebuilds_release_marker_lists_the_augment_folders_files(tmp_path, folder):
+    # Codex's round 1: the marker the cut writes, not one built by hand, carries the outside files and their hashes.
+    rel = tmp_path / "release"
+    rel.mkdir()
+    rebuild.Rebuild(str(rel), str(tmp_path), augment_folder=str(folder), approval=("a.md", WORDS)).release_marker()
+    marker = json.loads((rel / "release.json").read_text())
+    expected = {"module": augment.MODULE, "version": augment.VERSION, "files": augment.inputs(str(folder))}
+    assert marker == manifest.marker(marker["built"], expected)
+    rebuild.Rebuild(str(rel), str(tmp_path)).release_marker()
+    marker = json.loads((rel / "release.json").read_text())
+    assert marker == manifest.marker(marker["built"])

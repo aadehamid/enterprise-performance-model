@@ -18,7 +18,7 @@
 # registers the module, release.json and the package's manifest list each outside file with its SHA-256, and the gate,
 # the checks, the comparison and the clone's check run on it. The cut refuses --augment, before anything is removed,
 # until --approval names the decision owner's saved answers file in the checkout's answers folder and
-# --approval-words is a sentence of its body that approves the package. Without --augment the cut is unchanged.
+# --approval-words is a sentence of its body that approves logical-model 1.0.0 by name and refuses nothing. Without --augment the cut is unchanged.
 #
 # What this command does not do, by the plan:
 # - The store rows that need Databricks (projection-driver, demo-live, tech-graph, sync) run only when the

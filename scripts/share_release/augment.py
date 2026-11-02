@@ -23,7 +23,7 @@ What the cut does with it, in order:
 - The leak gate and the release's own checks then run on everything, the built module included.
 
 The package names the decision owner's approval: the cut refuses `--augment` until `--approval` names the saved
-answers file, in the main checkout's answers folder, whose text holds the `--approval-words` (EPM-DEC-001-0113,
+answers file, in the main checkout's answers folder, whose text holds the `--approval-words`, which must approve logical-model 1.0.0 by name (EPM-DEC-001-0113,
 decision 10: the module's 1.0.0 waits for the decision owner's approval from one page).
 """
 import datetime
@@ -82,6 +82,11 @@ def inputs(folder):
     return out
 
 
+# An approval names the release it approves (Codex's round 1: an unrelated "go ahead" must not pass the gate).
+APPROVES = re.compile(r"\bapprov\w*\b.*\blogical-model\b.*\b1\.0\.0\b", re.I | re.S)
+REFUSES = re.compile(r"\b(?:not|don't|do not|no|hold|reject\w*|wait)\b", re.I)
+
+
 def approval(epm, path, words):
     """(the approval file relative to the ontology folder, the words) once the decision owner's approval is given:
     the file is a saved answers file of the main checkout and its body holds the words. Raises with what is missing."""
@@ -96,6 +101,9 @@ def approval(epm, path, words):
         raise AugmentError(f"refusing --augment: --approval {path} is not a file of the answers folder. {hint}")
     with open(real, encoding="utf-8") as f:
         body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)  # the decision owner's words sit in the body
+    if not APPROVES.search(words) or REFUSES.search(words):
+        raise AugmentError(f"refusing --augment: the words {words!r} do not approve logical-model 1.0.0 by name; the decision "
+                           f"owner's approval names the release, such as \"approve logical-model 1.0.0\". {hint}")
     if words not in body:
         raise AugmentError(f"refusing --augment: the words {words!r} are not in the body of {os.path.basename(real)}. {hint}")
     return f"{ANSWERS}/{os.path.basename(real)}", words

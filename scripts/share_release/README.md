@@ -41,7 +41,7 @@ module's own `lm:` IRIs and the link targets to `w3id.org/mpc`; ER Studio's name
 `https://www.erstudio.com/semanticmodel/`, is never rewritten, and the gate does not treat its host as a host of the
 build. The package names the decision owner's approval, so the cut refuses `--augment`, before it removes anything,
 until `--approval` names a saved answers file in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/`
-of the `--epm` checkout and `--approval-words` is a sentence of that file's body (EPM-DEC-001-0113, decision 10).
+of the `--epm` checkout and `--approval-words` is a sentence of that file's body that approves logical-model 1.0.0 by name, such as "approve logical-model 1.0.0"; an unrelated "go ahead" or a refusal does not pass (EPM-DEC-001-0113, decision 10).
 Without `--augment` the cut is unchanged. The release's `README.md`, `HOW-TO-UPDATE.md` ("Add a logical model") and
 the walkthrough's "How to change the ontology" carry their augment parts (between `<!-- augment -->` lines in
 `templates/`) only in a release cut with `--augment`.
