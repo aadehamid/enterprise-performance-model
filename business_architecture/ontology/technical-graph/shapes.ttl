@@ -30,7 +30,7 @@ shp:TechnicalObject a sh:NodeShape ;
                   sh:message "A technical object is produced by at most one pipeline step." ] ;
     sh:property [ sh:path tg:designedAs ; sh:maxCount 1 ;
                   sh:or ( [ sh:class skos:Concept ] [ sh:class prov:SoftwareAgent ] ) ;
-                  sh:message "A technical object builds at most one design: a platform table or an agent of data-product." ] .
+                  sh:message "A technical object builds at most one design: a platform table, a data product or an agent of data-product." ] .
 
 shp:DataObject a sh:NodeShape ;
     sh:targetClass tg:DataObject ;
