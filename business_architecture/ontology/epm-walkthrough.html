@@ -673,9 +673,9 @@ details.fm:not([open])>:not(summary){display:none}
 
 <section id="modules" data-ss-id="section-modules" data-ss-section>
   <h2 class="rise" data-ss-id="the-ontology-module-by-module">The ontology, module by module</h2>
-  <p class="section-lede rise"><code>core</code> is the process map. Most modules add one kind of thing and link it to core's processes; <code>market-data</code> links to <code>kpi</code>, <code>ref-mpc</code> holds the company facts, and <code>integration</code> holds rules about the other modules' links (<code>MODULES.md</code>).</p>
+  <p class="section-lede rise"><code>core</code> is the process map. Most modules add one kind of thing and link it to core's processes; <code>market-data</code> links to <code>kpi</code>, <code>ref-mpc</code> holds the company facts, <code>integration</code> holds rules about the other modules' links, and <code>technical-graph</code> links what is built on a data platform to <code>data-product</code>, <code>kpi</code> and <code>system</code> (<code>MODULES.md</code>).</p>
   <figure class="rise">
-    <svg viewBox="0 0 1000 380" role="img" aria-label="Module map: core in the centre; organization, party, kpi, data-product, value-stream, system and lane link to core's processes; market-data links to kpi; ref-mpc uses organization and party terms; integration holds rules over the others' links.">
+    <svg viewBox="0 0 1000 380" role="img" aria-label="Module map: core in the centre; organization, party, kpi, data-product, value-stream, system and lane link to core's processes; market-data links to kpi; ref-mpc uses organization and party terms; integration holds rules over the others' links. Not drawn: technical-graph, released 2026-11-02, which links to data-product, kpi and system.">
       <rect width="1000" height="380" fill="#f2f4f7"/>
       <g font-family="Source Sans 3, sans-serif" font-size="15" fill="#1b1d21">
         <rect x="420" y="160" width="160" height="56" fill="#0b5cad"/><text x="452" y="186" font-weight="700" fill="#fff">core 2.4.0</text><text x="436" y="206" font-size="13" fill="#fff">the process map</text>
@@ -698,10 +698,10 @@ details.fm:not([open])>:not(summary){display:none}
       </g>
       <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#4a4f57"/></marker></defs>
     </svg>
-    <figcaption>Newest release of each module, from <code>releases/catalog.ttl</code>. Arrows follow the links <code>MODULES.md</code> quotes; for what each release requires, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</figcaption>
+    <figcaption>Newest release of each module, from <code>releases/catalog.ttl</code>, as of 2026-10-31; <code>technical-graph</code>, released 2026-11-02, is not drawn (the guide's module map shows it). Arrows follow the links <code>MODULES.md</code> quotes; for what each release requires, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</figcaption>
   </figure>
 
-  <p class="rise">Every module folder has the same shape: CSV tables (the data the decision owner or the sources gave), a <code>build_*.py</code> that turns them into Turtle, a <code>vocabulary.ttl</code> for its terms, a <code>shapes.ttl</code> for its SHACL shapes, and a <code>test_*.py</code>. Its released packages are in <code>business_architecture/ontology/releases/&lt;module&gt;/&lt;version&gt;/</code>. Three source folders ship together as <code>integration</code> (<code>placement/</code>, <code>authority/</code>, <code>consumer/</code>), and <code>population/</code> ships in <code>kpi</code>.</p>
+  <p class="rise">Every module folder but <code>technical-graph</code> has the same shape: CSV tables (the data the decision owner or the sources gave), a <code>build_*.py</code> that turns them into Turtle, a <code>vocabulary.ttl</code> for its terms, a <code>shapes.ttl</code> for its SHACL shapes, and a <code>test_*.py</code>. Its released packages are in <code>business_architecture/ontology/releases/&lt;module&gt;/&lt;version&gt;/</code>. Three source folders ship together as <code>integration</code> (<code>placement/</code>, <code>authority/</code>, <code>consumer/</code>), and <code>population/</code> ships in <code>kpi</code>. <code>technical-graph/</code> holds only its vocabulary and shapes, with an example graph built from the demo's technical graph as test data.</p>
 
   <div class="tbl rise"><table>
     <thead><tr><th>Module</th><th>What it holds</th><th>Read first</th><th>Links</th></tr></thead>
@@ -717,6 +717,7 @@ details.fm:not([open])>:not(summary){display:none}
       <tr><td><code>market-data</code></td><td>Recipes of market series (legs and region), never prices</td><td><code>market-data/build_market_data.py</code>, <code>series.csv</code></td><td><code>seriesOf</code> to kpi</td></tr>
       <tr><td><code>ref-mpc</code></td><td>The only company-specific module: MPC, MPLX, control, segments, refineries, brands</td><td><code>ref-mpc/ref-mpc.ttl</code></td><td>uses organization and party terms</td></tr>
       <tr><td><code>integration</code></td><td>Rules: placement kinds, source tiers, consumer rules</td><td><code>placement/</code>, <code>authority/build_source_tiers.py</code>, <code>consumer/</code></td><td>over the others' links</td></tr>
+      <tr><td><code>technical-graph</code></td><td>The vocabulary of what was built on a data platform: tables, views, metric views, pipeline steps, quality checks, agents; definitions only, never the built records</td><td><code>technical-graph/vocabulary.ttl</code>; its example graph, test data, from <code>build_example.py</code></td><td><code>designedAs</code> to data-product, <code>implements</code> to kpi, <code>standsFor</code> to system</td></tr>
     </tbody>
   </table></div>
 
