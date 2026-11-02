@@ -4,15 +4,20 @@
     uv run --group graph python -m pricing_demo.tech_graph collect   # live facts -> out/tech/live.json; checks; lineage
     uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything over the demo's files -> out/tech/graph/*.ttl
     uv run --group graph python -m pricing_demo.tech_graph compare   # the refreshed graph's structure against graph/*.ttl
-    uv run --group graph python -m pricing_demo.tech_graph lineage   # the last collect's lineage against graph/lineage-known.json
+    uv run --group graph python -m pricing_demo.tech_graph lineage   # designed, SQL and observed lineage against graph/lineage-known.json
     uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j and AuraDB, named graphs in Jena
     uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> Delta tech_graph_nodes, tech_graph_edges
     uv run --group graph python -m pricing_demo.tech_graph walk      # the Cypher walk from a gold table to its measures
 
 collect reads Postgres (SOURCE_PG_DSN: the exe.dev VM through its tunnel, or the local container), Databricks and
 the replica manifest, runs the data-quality checks, compares the ontology's designed lineage with Unity Catalog's
-observed lineage, and writes the facts as JSON. build runs the SPARQL Anything queries in sparql/ over the SQL files,
-the README's run commands, that JSON and the ontology's CSV tables, then wiring.rq over the result, and writes Turtle.
+observed lineage, and writes the facts as JSON. It also writes out/tech/proposals.json: what it saw with no ontology
+match, drafted for kpi or data-product with the observed lineage behind it. Databricks writes to the technical graph,
+never to the ontology (#457). build runs the SPARQL Anything queries in sparql/ over the SQL files, the README's run
+commands, that JSON and the ontology's CSV tables, then wiring.rq over the result, and writes Turtle; an object
+Databricks holds that no SQL file creates gets its node from collect's facts. lineage sets each edge between the
+design's tables beside the sources that hold it: the design (data-product), the SQL files (the graph's readsFrom) and
+Unity Catalog.
 load gives every node the label Tech and no Resource label, and starts every edge at a Tech node (ending at another
 Tech node or an ontology node), so the projection's counts and hashes, which read :Resource nodes and the edges between them, do not change;
 load checks that on each store. A driver run empties its store, so run load again after one. In Jena each file is its
@@ -26,11 +31,14 @@ Logins come from the files LOCAL-STORES.md names; no secret is printed.
 Sources: SPARQL Anything documentation, v1.3.0 ("Introduction": Facade-X, fx:properties, the location and content
 options; the text, CSV and JSON triplifiers); Neo4j Cypher Manual 25, "CREATE" (dynamic labels and relationship types
 with $()); Databricks, "Lineage system tables reference" (updated 2026-09-28: one record per read or write of a table,
-with its source, target and event time).
+with its source, target and event time); "SCHEMA_TAGS" (updated 2026-09-11: catalog_name, schema_name, tag_name,
+tag_value).
 """
 import argparse
+import csv
 import datetime as dt
 import glob
+import itertools
 import json
 import os
 import re
@@ -40,7 +48,7 @@ import urllib.request
 from decimal import Decimal
 
 from .aura_test import read_env
-from .config import GRAPH_SEP, HIDDEN_SYSTEMS, OUT, PROVENANCE, ROOT, SYSTEMS, source_dsn
+from .config import GRAPH_SEP, HIDDEN_SYSTEMS, OUT, PROVENANCE, ROOT, SOURCE_TAG, SYSTEM_MODULE, SYSTEMS, source_dsn
 
 REPO = os.path.abspath(os.path.join(ROOT, "..", ".."))
 SPARQL = os.path.join(ROOT, "sparql")
@@ -52,6 +60,8 @@ JENA_GRAPHS = {"tech-graph.ttl": "urn:pricing-demo:graph:tech-graph", "decision-
 JENA_QUERY = "http://127.0.0.1:13031/ds/query"  # projection/skill-run/epm-run.json's "jena"
 LIVE = os.path.join(OUT, "tech", "live.json")
 LINEAGE = os.path.join(OUT, "tech", "lineage.json")
+PROPOSALS = os.path.join(OUT, "tech", "proposals.json")
+MEASURE_IDENTIFIERS = os.path.join(REPO, "business_architecture", "ontology", "kpi", "measure-identifiers.csv")
 AURA_TEST = os.path.join(OUT, "tech", "aura-test.json")
 MANIFEST = os.path.join(OUT, "replica", "manifest.json")
 TECH = "urn:pricing-demo:tech:"
@@ -69,6 +79,11 @@ FULL_NAME = ONTOLOGY + "modules/data-product/fullName"
 TABLE = ONTOLOGY + "modules/data-product/table/"
 LINEAGE_WINDOW_MINUTES = 10  # observed edges count from a target's latest build: its statement's edges share one time
 LINEAGE_POLL_SECONDS = 60  # how often collect --lineage-wait reads Unity Catalog's lineage again
+SOURCES = ("designed", "sql", "observed")  # where lineage reads an edge: data-product, the SQL files, Unity Catalog
+# A schema's layer and class, as sparql/objects.rq gives them; the last entry takes any other schema.
+LAYERS = (("replica_", "replica", "ReplicaTable"), ("silver_", "silver", "SilverTable"), ("gold_", "gold", "GoldTable"),
+          ("semantic_sem_commercial", "metric-view", "MetricView"), ("ontology_definitions", "definitions", "DefinitionsView"),
+          ("", "tech-graph", "TechGraphTable"))
 STORES = {  # the stores LOCAL-STORES.md lists, with their login files; the newest file that exists is the live one
     # a full driver run writes the rebuild's login; a run with --skip rebuild writes only the first container's
     "driver": ("bolt://127.0.0.1:17711", ("~/lpg-out/epm-rebuild/neo4j-run/run.env", "~/lpg-out/epm/neo4j-run/run.env")),
@@ -151,7 +166,7 @@ def check(cid, label, covers, fn):
     return {"id": cid, "label": label, "result": result, "detail": detail, "checked_at": now(), "covers": covers}
 
 
-def quality_checks(cur, cat, objects, manifest, tags):
+def quality_checks(cur, cat, objects, manifest, tags, source_tags):
     from . import databricks as dbx
     ids = [o["id"] for o in objects]
     in_layer = lambda *prefixes: [i for i in ids if i.startswith(prefixes)]
@@ -189,15 +204,37 @@ def quality_checks(cur, cat, objects, manifest, tags):
               in_layer("silver_", "gold_"), labelled),
         check("decision-truth-hidden", "No table of decision_truth reaches Databricks, and no SQL file names it",
               ["database:decision_truth"], hidden),
+        check("source-systems-agree", "Each replica schema's epm_source_system tag names the system README.md maps its database to",
+              [f"database:{d}" for d in sorted(source_tags)], lambda: systems_disagree(source_tags)),
     ]
+
+
+def source_systems(source_tags):
+    """The system each source database stands for: its replica schema's epm_source_system tag as deployed, or, with no
+    tag, README.md's map (config.SYSTEM_MODULE). links.rq reads this list from live.json."""
+    found = {**{d: (s, "README.md") for d, s in SYSTEM_MODULE.items()}, **{d: (s, "tag") for d, s in source_tags.items()}}
+    return [{"database": d, "system": s, "from": source} for d, (s, source) in sorted(found.items())]
+
+
+def systems_disagree(source_tags):
+    """A tag that names another system than README.md's map does for the same database."""
+    bad = [f"{d}: tag {s}, README.md {SYSTEM_MODULE[d]}" for d, s in sorted(source_tags.items())
+           if d in SYSTEM_MODULE and s != SYSTEM_MODULE[d]]
+    return "; ".join(bad) or None
 
 
 def designed_lineage(cur, triples):
     """The data-product module's table lineage from the ontology's triple table, in the demo's schema.name form."""
     from .databricks import run
-    names = dict(run(cur, f"SELECT DISTINCT subject, object FROM {triples} WHERE predicate = '{FULL_NAME}' AND subject LIKE '{TABLE}%'"))
+    names = run(cur, f"SELECT DISTINCT subject, object FROM {triples} WHERE predicate = '{FULL_NAME}' AND subject LIKE '{TABLE}%'")
     edges = run(cur, f"SELECT DISTINCT object, subject FROM {triples} WHERE predicate = '{WAS_DERIVED_FROM}' "
                      f"AND subject LIKE '{TABLE}%' AND object LIKE '{TABLE}%'")
+    return designed_from(names, edges)
+
+
+def designed_from(names, edges):
+    """(table IRI, fullName) rows and (source IRI, target IRI) rows -> the designed tables and edges in schema.name form."""
+    names = dict(names)
     return {demo_name(names[s]) for s in names}, {(demo_name(names[s]), demo_name(names[t])) for s, t in edges if s in names and t in names}
 
 
@@ -251,17 +288,19 @@ def lineage_check(cur, cat, triples, present, wait=0, sleep=time.sleep, clock=ti
     except Exception as err:  # Free Edition may lack the system tables: the test is skipped with the reason
         return {"id": "designed-vs-observed-lineage", "label": "Designed lineage matches Unity Catalog's observed lineage",
                 "result": "skipped", "detail": f"{type(err).__name__}: {str(err).splitlines()[0][:300]}", "checked_at": now(),
-                "covers": []}
+                "covers": []}, None
+    # What lineage compares with the SQL files once build has run: every observed edge in the catalog, not only the design's.
+    inputs = {"designed_tables": sorted(tables), "designed": sorted(designed), "observed": sorted(observed), "present": sorted(present)}
     os.makedirs(os.path.dirname(LINEAGE), exist_ok=True)
     with open(LINEAGE, "w") as f:
-        json.dump(found, f, indent=2)
+        json.dump(inputs, f, indent=2)
     differs = found["designed_only"] or found["observed_only"]
     detail = (f"{len(found['matched'])} edges match; {len(found['designed_only'])} designed only; "
               f"{len(found['observed_only'])} observed only; {len(found['designed_not_built'])} designed edges touch "
               "a table the demo does not build")
     covered = sorted({n for e in found["matched"] + found["designed_only"] + found["observed_only"] for n in e} & set(present))
     return {"id": "designed-vs-observed-lineage", "label": "Designed lineage matches Unity Catalog's observed lineage",
-            "result": "differs" if differs else "pass", "detail": detail, "checked_at": now(), "covers": covered}
+            "result": "differs" if differs else "pass", "detail": detail, "checked_at": now(), "covers": covered}, inputs
 
 
 def aura_check():
@@ -283,29 +322,83 @@ def aura_check():
             "covers": ["epm_triples"]}
 
 
+def category(sources):
+    """The name of the sources that hold an edge: all three, one (designed_only) or two (designed_and_sql)."""
+    return "in_all_three" if len(sources) == 3 else f"{sources[0]}_only" if len(sources) == 1 else "_and_".join(sources)
+
+
+CATEGORIES = [category(c) for n in (3, 2, 1) for c in itertools.combinations(SOURCES, n)]
+
+
+def sql_lineage(g):
+    """The graph's readsFrom edges that objects.rq read from the SQL files (the reader has tv:definedIn), as
+    (source, target) in schema.name form."""
+    from rdflib import URIRef
+    obj = TECH + "object/"
+    defined = set(g.subjects(URIRef(VOCAB + "definedIn"), None))
+    return {(str(o)[len(obj):], str(s)[len(obj):]) for s, o in g.subject_objects(URIRef(VOCAB + "readsFrom"))
+            if s in defined and str(o).startswith(obj)}
+
+
+def confirm_lineage(designed_tables, designed, sql, observed, present):
+    """Each edge between tables the design names, under the sources that hold it. A designed edge to or from a table
+    the demo does not build can be neither built nor observed, so it is listed apart, as designed_not_built."""
+    designed = {tuple(e) for e in designed}
+    absent = {e for e in designed if e[0] not in present or e[1] not in present}
+    inside = lambda edges: {tuple(e) for e in edges if e[0] in designed_tables and e[1] in designed_tables}
+    held = {"designed": designed - absent, "sql": inside(sql), "observed": inside(observed)}
+    found = {c: [] for c in CATEGORIES}
+    for e in sorted(set().union(*held.values())):
+        found[category([s for s in SOURCES if e in held[s]])].append(list(e))
+    return {**found, "designed_not_built": [list(e) for e in sorted(absent)]}
+
+
 def lineage_gate(found, known):
     """What differs between a lineage comparison and the differences the release states it expects: the demo is simpler
-    than the design in known places. Empty means the comparison holds nothing new."""
+    than the design in known places. Empty means the comparison holds nothing new. An edge in all three sources is no
+    difference."""
     problems = []
-    for key in ("designed_only", "observed_only", "designed_not_built"):
-        got, want = {tuple(e) for e in found[key]}, {tuple(e) for e in known[key]}
+    for key in CATEGORIES[1:] + ["designed_not_built"]:
+        got, want = {tuple(e) for e in found.get(key, [])}, {tuple(e) for e in known.get(key, [])}
         problems += [f"{key}: new {e[0]} -> {e[1]}" for e in sorted(got - want)]
         problems += [f"{key}: no longer {e[0]} -> {e[1]}" for e in sorted(want - got)]
     return problems
 
 
 def lineage():
-    """Fails on a lineage difference graph/lineage-known.json does not state."""
+    """Sets each edge beside the sources that hold it: the last collect's designed and observed lineage, and the SQL
+    files' as the graph build wrote it (or as the release ships it). Writes the result into out/tech/lineage.json and
+    fails on a difference graph/lineage-known.json does not state."""
     if not os.path.exists(LINEAGE):
         raise SystemExit(f"no {LINEAGE}: the lineage check was skipped or collect has not run")
-    found, known = json.load(open(LINEAGE)), json.load(open(KNOWN_LINEAGE))
+    inputs, known = json.load(open(LINEAGE)), json.load(open(KNOWN_LINEAGE))
+    found = confirm_lineage(set(inputs["designed_tables"]), inputs["designed"], sql_lineage(read_graph()), inputs["observed"],
+                            set(inputs["present"]))
+    with open(LINEAGE, "w") as f:
+        json.dump({**inputs, "edges": found}, f, indent=2)
     problems = lineage_gate(found, known)
     for problem in problems:
         print(f"FAIL {problem}")
-    print(f"{len(found['matched'])} edges match; {len(found['designed_only'])} designed only; {len(found['observed_only'])} observed only; "
-          f"{len(found['designed_not_built'])} touch a table the demo does not build; {len(problems)} not stated in {os.path.basename(KNOWN_LINEAGE)}")
+    print("; ".join(f"{len(found[c])} {c}" for c in CATEGORIES + ["designed_not_built"])
+          + f"; {len(problems)} not stated in {os.path.basename(KNOWN_LINEAGE)}")
     if problems:
         raise SystemExit(1)
+
+
+def proposals(tags, objects, inputs, identifiers):
+    """What collect saw with no ontology match, drafted for a person to take to kpi or data-product: an identifier a
+    metric view's tag lists that no kpi measure carries, and a built table or view the data-product design does not
+    name (known only when the lineage check ran). Each carries the observed edges into it. Nothing writes to the ontology."""
+    observed = [tuple(e) for e in (inputs or {}).get("observed", [])]
+    into = lambda name: [[s, t] for s, t in observed if t == name]
+    found = [{"module": "kpi", "draft": f"a measure with the identifier {i}", "identifier": i, "view": t["view"],
+              "observed_lineage": into(t["view"])}
+             for t in tags for i in str(t["identifiers"]).split() if i not in identifiers]
+    if inputs:
+        designed = set(inputs["designed_tables"])
+        found += [{"module": "data-product", "draft": f"a table design for {o['id']}", "table": o["id"],
+                   "observed_lineage": into(o["id"])} for o in objects if o["id"] not in designed]
+    return found
 
 
 def collect(manifest_path=MANIFEST, lineage_wait=0):
@@ -321,18 +414,28 @@ def collect(manifest_path=MANIFEST, lineage_wait=0):
         tags = [{"view": f"{s}.{t}", "identifiers": v} for s, t, v in run(
             cur, f"SELECT schema_name, table_name, tag_value FROM {cat}.information_schema.table_tags "
                  "WHERE tag_name = 'epm_measure_identifiers' ORDER BY 1, 2")]
-        checks = quality_checks(cur, cat, objects, manifest, tags)
-        checks.append(lineage_check(cur, cat, e["EPM_TRIPLES"], [o["id"] for o in objects], lineage_wait))
+        source_tags = {s[len("replica_"):]: v for s, v in run(
+            cur, f"SELECT schema_name, tag_value FROM {cat}.information_schema.schema_tags "
+                 f"WHERE tag_name = '{SOURCE_TAG}' ORDER BY 1") if s.startswith("replica_")}
+        checks = quality_checks(cur, cat, objects, manifest, tags, source_tags)
+        lineage_result, inputs = lineage_check(cur, cat, e["EPM_TRIPLES"], [o["id"] for o in objects], lineage_wait)
+        checks.append(lineage_result)
     aura = aura_check()
     if aura:
         checks.append(aura)
     agents = [{"slug": slug(title), "title": title, "views": [t for t, _ in spec["tables"]]} for title, spec in genie.AGENTS.items()]
     live = {"collected_at": now(), "catalog": cat, "triples": e["EPM_TRIPLES"], "host": host_of(dsn),
             "replicated_at": manifest["replicated_at"], "databases": databases, "objects": objects, "tags": tags,
-            "agents": agents, "checks": checks, "decisions": decisions, "evidence": evidence}
+            "source_systems": source_systems(source_tags), "agents": agents, "checks": checks, "decisions": decisions,
+            "evidence": evidence}
     os.makedirs(os.path.dirname(LIVE), exist_ok=True)
     with open(LIVE, "w") as f:
         json.dump(live, f, indent=2, default=str)
+    identifiers = {row["identifier"] for row in csv.DictReader(open(MEASURE_IDENTIFIERS))}
+    drafted = proposals(tags, objects, inputs, identifiers)
+    with open(PROPOSALS, "w") as f:
+        json.dump(drafted, f, indent=2)
+    print(f"wrote {PROPOSALS}: {len(drafted)} proposals for kpi or data-product, for a person to review")
     for c in checks:
         print(f"check {c['id']}: {c['result']} ({c['detail'][:160]})")
     print(f"wrote {LIVE}: {len(databases)} databases, {len(objects)} objects, {len(decisions)} decisions, {len(evidence)} evidence items")
@@ -381,10 +484,32 @@ def typed_only(g, typed):
     return g
 
 
+def databricks_only(g, objects, observed):
+    """Objects Databricks holds that no SQL file creates, such as a metric view made in the workspace: each gets its
+    class and layer from its schema, as objects.rq gives the rest, and reads what Unity Catalog's lineage says it reads.
+    links.rq links its tag's identifiers as for any view. Returns their names."""
+    from rdflib import RDF, Literal, URIRef
+    typed, added = set(g.subjects(RDF.type, None)), []
+    for o in objects:
+        iri = URIRef(TECH + "object/" + o["id"])
+        if iri not in typed:
+            layer, cls = next((layer, cls) for prefix, layer, cls in LAYERS if o["id"].startswith(prefix))
+            g.add((iri, RDF.type, URIRef(VOCAB + cls)))
+            g.add((iri, URIRef(VOCAB + "name"), Literal(o["id"])))
+            g.add((iri, URIRef(VOCAB + "layer"), Literal(layer)))
+            added.append(o["id"])
+    for source, target in observed:
+        if target in added:
+            g.add((URIRef(TECH + "object/" + target), URIRef(VOCAB + "readsFrom"), URIRef(TECH + "object/" + source)))
+    return added
+
+
 def build(to_repo=False):
     from rdflib import RDF, Namespace
     graph = construct(GRAPH_QUERIES)
     graph += graph.query(open(os.path.join(SPARQL, "wiring.rq")).read()).graph
+    observed = json.load(open(LINEAGE)).get("observed", []) if os.path.exists(LINEAGE) else []
+    databricks_only(graph, json.load(open(LIVE))["objects"], observed)
     trail = construct(TRAIL_QUERIES)
     typed = set(graph.subjects(RDF.type, None)) | set(trail.subjects(RDF.type, None))
     folder = GRAPH if to_repo else REFRESHED

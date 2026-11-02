@@ -1,6 +1,6 @@
 """Run the Databricks side: the catalog and schemas, the upload to a volume, the SQL layers, the metric views.
 
-    uv run python -m pricing_demo.databricks setup     # catalog, schemas, volume
+    uv run python -m pricing_demo.databricks setup     # catalog, schemas and their epm_source_system tags, volume
     uv run python -m pricing_demo.databricks upload    # out/replica/*.parquet to the volume
     uv run python -m pricing_demo.databricks build     # sql/02 to sql/07: replica, silver, gold, metric views, definitions, tech_graph tables
     uv run python -m pricing_demo.databricks counts    # row counts of every table and view
@@ -14,7 +14,8 @@ source databases' names since 2026-10-28 (README.md, "The source systems"). One 
 (chosen_catalog); without DEMO_CATALOG, idp_sbx counts only if it holds this demo's landing schema, which setup
 creates (Kimi round 1, finding 11).
 Upload refuses an incomplete replica, and build checks each replica table against the replica's manifest (finding 5).
-Secrets stay in variables.
+Secrets stay in variables. The schema tags follow Databricks, "ALTER SCHEMA" (updated 2026-09-16: SET TAGS, in
+Databricks SQL and Runtime 13.3 LTS and above).
 """
 import argparse
 import glob
@@ -23,7 +24,7 @@ import os
 import re
 
 from . import replicate
-from .config import OUT, SQL, SYSTEMS, databricks_env
+from .config import OUT, SOURCE_TAG, SQL, SYSTEM_MODULE, SYSTEMS, databricks_env
 
 SCHEMAS = (("replica_landing",) + tuple(f"replica_{s}" for s in SYSTEMS)
            + ("silver_udm_core", "silver_mdm_core", "gold_commercial_core", "semantic_sem_commercial",
@@ -102,6 +103,8 @@ def setup():
                 cat = FALLBACK_CATALOG
         for s in SCHEMAS:
             run(cur, f"CREATE SCHEMA IF NOT EXISTS {cat}.{s}")
+        for database, system in SYSTEM_MODULE.items():  # Databricks cannot see what a replica copies; its owner says so
+            run(cur, f"ALTER SCHEMA {cat}.replica_{database} SET TAGS ('{SOURCE_TAG}' = '{system}')")
         run(cur, f"CREATE VOLUME IF NOT EXISTS {cat}.{VOLUME}")
         print(f"catalog {cat}: {len(SCHEMAS)} schemas, volume {cat}.{VOLUME}")
         return cat

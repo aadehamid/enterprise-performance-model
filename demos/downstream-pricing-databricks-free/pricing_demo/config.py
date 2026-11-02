@@ -36,6 +36,12 @@ SYSTEMS = {
     "eia_weekly": "EIA Weekly Petroleum Status Report, by PADD (public data)",
 }
 
+# The real system each source database stands for, as the system module's slug (README.md, "The source systems").
+# Aspen PIMS, production accounting and EIA's data have no system in the module. setup writes these as each replica
+# schema's epm_source_system tag; tech_graph takes a tag as deployed first and this map where there is none (#457).
+SYSTEM_MODULE = {"price_assessment": "mips", "price_reference": "mpr", "reference_data_hub": "kittyhawk", "rightangle": "rightangle"}
+SOURCE_TAG = "epm_source_system"
+
 # Databases the loader fills but the replication never reads: the decision dossiers, the hidden truth the tests check
 # the agents' answers against (README.md, "Use cases"; DATA.md, "decision_truth"). Nothing downstream may see them.
 HIDDEN_SYSTEMS = {

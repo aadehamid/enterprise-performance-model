@@ -1,5 +1,8 @@
 {
- "note": "The differences between the data-product module's designed lineage and what the demo builds, which the demo states it expects: it is simpler than the design in these places. tech_graph lineage fails on any other.",
+ "note": "The lineage differences the demo states it expects, by the sources that hold each edge: designed (the data-product module), sql (the graph's readsFrom, from the SQL files) and observed (Unity Catalog). The demo is simpler than the design in these places. The designed and sql sides follow from graph/tech-graph.ttl and data-product's pricing.ttl, and a test computes them. The observed side is the 2026-10-29 collect's: every edge the design and the SQL files share was observed, and nothing else, which only a live collect can confirm. tech_graph lineage fails on any other difference.",
+ "designed_and_sql": [],
+ "designed_and_observed": [],
+ "sql_and_observed": [],
  "designed_only": [
   [
    "replica_reference_data_hub.deliveryperiodcategory",
@@ -22,6 +25,7 @@
    "gold_commercial_core.mpr_mips_crack_spread_price_fact"
   ]
  ],
+ "sql_only": [],
  "observed_only": [],
  "designed_not_built": [
   [
