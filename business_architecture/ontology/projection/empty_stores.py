@@ -6,7 +6,8 @@
 Without --yes it writes nothing. It takes the stores from sync_stores.py, so EPM_STORES_JSON names another environment's.
 In Neo4j and AuraDB it deletes every node in the database. In Jena it drops every graph. In Databricks it drops only
 the triple table and the marker table, and leaves the demo's tables and anything else in the schema. Prints one JSON
-line per store, with no login value; a store that cannot be read says "unreachable" and the error's name.
+line per store, with no login value; a store that cannot be read says "unreachable" and the error's name, and the local
+Neo4j says "no_login" when the output folder holds no login for it yet.
 Needs neo4j for the Neo4j stores and databricks-sql-connector for Databricks (uv run --with ...).
 """
 import argparse
@@ -81,7 +82,10 @@ def main(argv=None):
         except Exception as err:  # the reason, never a value: a driver's message can carry a URI
             # A local store that is not running has nothing to delete, and the load creates it. A cloud store must answer.
             failed = failed or (args.yes and store in ("aura", "databricks"))
-            print(json.dumps({"store": store, "unreachable": type(err).__name__}))
+            if store == "driver" and isinstance(err, FileNotFoundError):  # sync_stores.newest: no run.env in the output folder
+                print(json.dumps({"store": store, "no_login": "the output folder holds no login yet; the load creates one"}))
+            else:
+                print(json.dumps({"store": store, "unreachable": type(err).__name__}))
     return 1 if failed else 0
 
 

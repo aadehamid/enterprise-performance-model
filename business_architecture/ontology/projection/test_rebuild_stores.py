@@ -92,6 +92,15 @@ class Preflight(Base):
         s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\n" + AURA))
         self.assertIn("aura is a copy of the local Neo4j: name driver too", rb.preflight(s, ("aura",), which=lambda tool: tool))
 
+    def test_databricks_without_aura_is_refused_and_told_to_add_aura(self):
+        # EPM-DEC-001-0112 point 8: without the AuraDB probe, tech-compare fails on a fresh copy
+        s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\n" + DBX))
+        refusal = [p for p in rb.preflight(s, ("jena", "databricks"), which=lambda tool: tool) if p.startswith("databricks needs aura")]
+        self.assertEqual(len(refusal), 1)
+        self.assertIn("add --store aura", refusal[0])
+        s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\n" + AURA + DBX))
+        self.assertFalse([p for p in rb.preflight(s, ("driver", "aura", "databricks"), which=lambda tool: tool) if "needs aura" in p])
+
 
 class LoginFiles(Base):
     def separate(self, text, mode=0o600):
@@ -147,6 +156,11 @@ class Plan(Base):
         s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\n" + AURA + DBX))
         self.assertEqual(rb.child_env(s, ALL, "/c.json")["EPM_AURA_ENV"], s["EPM_AURA_ENV"])
 
+    def test_the_steps_learn_when_the_run_started_so_collect_ignores_an_older_probe_result(self):
+        s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\n" + AURA + DBX))
+        started = rb.child_env(s, ALL, "/c.json")["EPM_RUN_STARTED"]
+        self.assertRegex(started, r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$")  # the format aura_test writes, so the strings compare
+
     def test_a_named_postgres_starts_no_container(self):
         _, names, _ = self.names(ALL, extra="SOURCE_PG_DSN=postgresql://u:p@h:1\n")
         self.assertNotIn("demo-postgres", names)
@@ -196,6 +210,13 @@ class Running(Base):
         held, problems = self.holding(lines)
         self.assertEqual(held, [("jena", 3)])
         self.assertEqual(problems, ["aura: could not be reached (AuthError); check its login values"])
+
+    def test_a_local_neo4j_with_no_login_yet_is_checked_for_a_container_like_one_that_did_not_answer(self):
+        lines = [{"store": "driver", "no_login": "the output folder holds no login yet; the load creates one"},
+                 {"store": "jena", "held": 0}, {"store": "aura", "held": 0}, {"store": "databricks", "held": 0}]
+        self.assertEqual(self.holding(lines), ([], []))
+        held, problems = self.holding(lines, containers="abc123\n")
+        self.assertEqual((held[0][0], problems), ("driver", []))
 
     def test_a_stopped_container_counts_as_holding_data(self):
         lines = [{"store": "driver", "unreachable": "ServiceUnavailable"}, {"store": "jena", "held": 0},
@@ -248,6 +269,21 @@ class Running(Base):
         with contextlib.redirect_stderr(err), mock.patch.object(rb, "holding", side_effect=AssertionError("no store is read")):
             self.assertEqual(rb.main(["--env", self.env_file(f"EPM_SKILLS={self.tmp}/none\n")]), 2)
         self.assertIn("REFUSED EPM_SKILLS", err.getvalue())
+
+    def test_main_preflights_exactly_the_stores_chosen_in_their_fixed_order(self):
+        env = self.env_file(f"EPM_SKILLS={self.skills()}\nEPM_OUT={self.tmp}/out\n" + AURA + DBX)
+        seen = []
+        with contextlib.redirect_stdout(io.StringIO()), mock.patch.object(rb, "preflight", lambda s, stores: seen.append(stores) or []):
+            self.assertEqual(rb.main(["--env", env, "--store", "jena", "--store", "driver", "--plan"]), 0)
+            self.assertEqual(rb.main(["--env", env, "--plan"]), 0)
+        self.assertEqual(seen, [("driver", "jena"), ALL])
+
+    def test_main_refuses_databricks_without_aura_before_any_store_is_read(self):
+        env = self.env_file(f"EPM_SKILLS={self.skills()}\nEPM_OUT={self.tmp}/out\n" + DBX)
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err), mock.patch.object(rb, "holding", side_effect=AssertionError("no store is read")):
+            self.assertEqual(rb.main(["--env", env, "--store", "jena", "--store", "databricks"]), 2)
+        self.assertIn("REFUSED databricks needs aura too", err.getvalue())
 
     def test_main_refuses_a_store_that_holds_data_without_empty(self):
         env = self.env_file(f"EPM_SKILLS={self.skills()}\nEPM_OUT={self.tmp}/out\n")
@@ -308,6 +344,16 @@ class Empty(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()), mock.patch.object(es.ss, "neo4j_session", down):
             self.assertEqual(es.main(["--store", "driver", "--yes"]), 0)  # not running: nothing to delete, and the load creates it
             self.assertEqual(es.main(["--store", "aura", "--yes"]), 1)    # a cloud store must answer before it is replaced
+
+    def test_a_local_neo4j_with_no_login_yet_says_so_instead_of_unreachable(self):
+        # the load writes the login; before the first load the output folder holds none, and nothing is lost
+        out = io.StringIO()
+
+        def no_login(store):
+            raise FileNotFoundError("none of ~/lpg-out/epm/neo4j-run/run.env exists")
+        with contextlib.redirect_stdout(out), mock.patch.object(es.ss, "neo4j_session", no_login):
+            self.assertEqual(es.main(["--store", "driver", "--yes"]), 0)
+        self.assertEqual(json.loads(out.getvalue()), {"store": "driver", "no_login": "the output folder holds no login yet; the load creates one"})
 
 
 if __name__ == "__main__":

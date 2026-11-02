@@ -265,9 +265,16 @@ def lineage_check(cur, cat, triples, present, wait=0, sleep=time.sleep, clock=ti
 
 
 def aura_check():
+    """The AuraDB probe's result as a check, or None when there is none. A result from before the run that
+    EPM_RUN_STARTED names (rebuild_stores.py and the share-release validation set it) is an earlier run's: it does not
+    count, so a stale out/tech/aura-test.json cannot stand in for this run's probe."""
     if not os.path.exists(AURA_TEST):
         return None
     result = json.load(open(AURA_TEST))
+    run_started = os.environ.get("EPM_RUN_STARTED")
+    if run_started and result.get("started", "") < run_started:
+        print(f"{AURA_TEST} is from {result.get('started')}, before this run started at {run_started}: not counted")
+        return None
     probe = result.get("probe") or {}
     ok = bool(probe) and all(step["ok"] for step in probe.values())
     detail = "; ".join(f"{k}: {'ok' if v['ok'] else v['error']}" for k, v in sorted(probe.items())) or "no probe result"
