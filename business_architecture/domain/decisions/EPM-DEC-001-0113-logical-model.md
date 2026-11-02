@@ -5,7 +5,7 @@
 | Status | Decided (the decision owner, 2026-11-02, for the module, its two views, the customer model's place and the five competency questions; the build choices delegated under EPM-DEC-001-0028; the module's `1.0.0` stays with the decision owner, not delegated: *2026-11-02:* approved by the decision owner, "I approve logical-model 1.0.0,", amendment below) |
 | Date | 2026-11-02 |
 | Questions | Claude asked thirteen questions in two rounds, each with a recommendation, about a logical data model the decision owner exported from ER Studio Data Architect |
-| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-logical-model.md`, blocks 1 to 6; `answers-2026-11-02-logical-model-release.md`, block 1 |
+| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-logical-model.md`, blocks 1 to 6; `answers-2026-11-02-logical-model-release.md`, blocks 1 and 2 |
 
 ## Context
 
@@ -61,4 +61,7 @@ The decision owner approved the module's first release (`answers-2026-11-02-logi
 
 > I approve logical-model 1.0.0,
 
-The approval came before Claude sent the one-page summary. Under point 8, the doubtful links ship unlinked: only asserted links become triples, and the doubtful ones are listed in the release with their evidence; settling any of them later is a minor release. `cut.sh --augment` names this file and these words as the package's approval.
+> accept the recommendations.
+> I dont have the expansion for this yet.
+
+The approval came before Claude sent the one-page summary. Claude then showed the 16 doubtful links with a recommendation for each, and the decision owner settled them (block 2): "accept the recommendations." Fourteen links are asserted as drafted; the concept links of two entities are dropped (one named only by its table name, one carrying another entity's description), so they keep only their source system. All 44 entities' rows are asserted, and none is doubtful. What TDL stands for is not known yet ("I dont have the expansion for this yet."), so the TDL exchange entity keeps the source system its name gives. To link a lookup table to a whole `party` code list, `lm:describes` also accepts a `party` concept scheme. `cut.sh --augment` names this file and these words as the package's approval.
