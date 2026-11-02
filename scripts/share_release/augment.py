@@ -356,7 +356,7 @@ def patch_guide(text, ctx):
     return _edits(text, "the guide", [
         ("the title's module count", r"(why it is split into )\w+( modules)", lambda m: f"{m.group(1)}{w}{m.group(2)}"),
         ("the snapshot notice", r"(the store figures are still those of the last load, of the \w+ earlier modules\.)",
-         lambda m: (f"{m.group(1)} In this release they also count <code>{MODULE}</code> {VERSION}, added in this "
+         lambda m: (f"{m.group(1)} The module and triple counts on this page also count <code>{MODULE}</code> {VERSION}, added in this "
                     "release, which the module map does not draw; the copy section's and the catalog's figures are "
                     "those of this release's own <code>releases/</code> folder.")),
         ("the module count", r'(<div class="k">Modules</div><div class="v">)\d+(</div>)', lambda m: f"{m.group(1)}{n}{m.group(2)}"),
@@ -404,8 +404,6 @@ def patch_walkthrough(text, ctx):
         ("the overview's catalog", r'(font-weight="700" fill="#fff">)\d+( releases</text>)', lambda m: f"{m.group(1)}{ctx['catalog']}{m.group(2)}"),
         ("the module map's caption", r"(is not drawn \(the guide's module map shows it\)\.)",
          lambda m: f"{m.group(1)} <code>{MODULE}</code> {VERSION}, added in this release, is drawn in neither map."),
-        ("the module folders", r"(Every module folder but <code>technical-graph</code>)( has the same shape)",
-         lambda m: f"{m.group(1)} and <code>{MODULE}</code>{m.group(2)}"),
         ("the module table", r"(\n      <tr><td><code>technical-graph</code></td>[^\n]*\n)", lambda m: m.group(1) + row),
         ("the CI's packages", r"(checks the same )(\w+)( packages in CI) \((\w+) until ([^)]*)\)",
          lambda m: f"{m.group(1)}{w}{m.group(3)} in this release, with {added} ({m.group(2)} on main; {m.group(4)} until {m.group(5)})"),

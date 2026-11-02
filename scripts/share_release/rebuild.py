@@ -319,7 +319,7 @@ class Rebuild:
         self.run("logical models", augment.builder_args(ctx["slugs"], "--write"), lm)
         augment.write_changelog(self.release, ctx, dates)
         places = augment.apply(self.release, augment.REGISTRATION, ctx)
-        self.run(f"module {augment.MODULE}", ["build_module.py", augment.MODULE, "--write"], f"{ONT}/release")
+        self.run(f"module {augment.MODULE}", ["build_module.py", augment.MODULE, "--write", "--rebuild-released"], f"{ONT}/release")
         self.augment_ctx = ctx
         self.steps.append({"step": "augment", "models": ctx["slugs"], "registered": places, "returncode": 0})
 

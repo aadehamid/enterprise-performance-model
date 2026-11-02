@@ -403,11 +403,10 @@ FIGURE_CLASSES = {
 # where a map does not draw it.
 ADDED = {
     "epm-ontology-guide.html": [r"logical-model 1\.0\.0 {a_triples} triples Holds", r"logical-model 1\.0\.0 {a_requires}",
-                                r"In this release they also count logical-model 1\.0\.0",
+                                r"The module and triple counts on this page also count logical-model 1\.0\.0",
                                 r"logical-model 1\.0\.0, added in this release, is not drawn; it requires {a_requires}\.",
                                 r"every one except ref-mpc , technical-graph and logical-model ;"],
     "epm-walkthrough.html": [r"logical-model 1\.0\.0, added in this release, is drawn in neither map\.",
-                             r"Every module folder but technical-graph and logical-model has the same shape",
                              r"logical-model Logical data models exported from ER Studio Data Architect"],
 }
 
