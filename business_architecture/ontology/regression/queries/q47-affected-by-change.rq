@@ -1,10 +1,9 @@
-# Q47 What is affected if this table or system changes: for each system, and each table, every data object built from it, with the measures those compute and the agents bound to them.
+# Q47 What is affected if this table or system changes: for each system, the tables that copy its data and every data object built from them; for each table, every data object built from it; with the measures those compute and the agents bound to them.
 PREFIX tg: <https://w3id.org/lsc/ontology/modules/technical-graph/>
 SELECT ?changed ?affected ?measure ?agent WHERE {
-  { ?database tg:standsFor ?changed . ?start tg:copies ?database . }
+  { ?database tg:standsFor ?changed . ?start tg:copies ?database . ?affected tg:readsFrom* ?start . }
   UNION
-  { ?changed a tg:Table . BIND(?changed AS ?start) }
-  ?affected tg:readsFrom+ ?start .
+  { ?changed a tg:Table . ?affected tg:readsFrom+ ?changed . }
   OPTIONAL { ?affected tg:implements ?measure }
   OPTIONAL { ?agent tg:binds ?affected }
 }

@@ -85,6 +85,16 @@ class Example(unittest.TestCase):
         self.assertTrue(ok, text)
 
 
+class Questions(unittest.TestCase):
+    def test_q47_lists_the_table_that_copies_a_changed_systems_data(self):
+        # The Cursor verdict on #468: a change to a system first affects the tables that copy its data.
+        with open(os.path.join(ONTOLOGY, "regression", "queries", "q47-affected-by-change.rq")) as f:
+            rows = {(str(r.changed), str(r.affected)) for r in (VOCAB + EXAMPLE).query(f.read())}
+        copies = {(str(s), str(t)) for t, db in EXAMPLE.subject_objects(TG.copies) for s in EXAMPLE.objects(db, TG.standsFor)}
+        self.assertTrue(copies)
+        self.assertLessEqual(copies, rows)
+
+
 class Shapes(unittest.TestCase):
     """Each shape rejects what it forbids (the ontology skill's negative tests)."""
 
