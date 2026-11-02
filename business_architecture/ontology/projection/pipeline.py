@@ -31,7 +31,7 @@ ONTOLOGY = os.path.join(HERE, "..")
 # while data-product, value-stream, market-data and integration still require kpi 1.2.0.
 PACKAGES = [("core", "2.4.0"), ("organization", "2.2.0"), ("ref-mpc", "1.3.0"), ("kpi", "1.3.0"), ("party", "2.1.0"),
             ("data-product", "1.2.0"), ("value-stream", "1.2.0"), ("system", "1.5.0"), ("lane", "1.1.0"),
-            ("market-data", "1.1.0"), ("integration", "2.5.0")]
+            ("market-data", "1.1.0"), ("integration", "2.5.0"), ("technical-graph", "1.0.0")]
 INPUTS = [f"releases/{m}/{v}/{m}.ttl" for m, v in PACKAGES]
 # Each package's own shapes. core 2.4.0's, as 2.3.0's, 2.2.0's and 2.1.0's, carry the controlled-value shapes
 # (EPM-DEC-001-0044), so validation/controlled-values.ttl is not listed again.
@@ -46,7 +46,7 @@ MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
 # Our own namespaces, one per module.
 OWN = tuple(MODULES_NS + m + "/" for m in ("core", "organization", "kpi", "population", "party", "data-product",
                                            "value-stream", "system", "lane", "market-data", "placement",
-                                           "authority", "consumer"))
+                                           "authority", "consumer", "technical-graph"))
 # Fixed prefixes (Rule 3). n10s gets exactly these, in this order, so no ns0-style prefix is invented.
 PREFIXES = {
     "core": "https://w3id.org/lsc/ontology/modules/core/",
@@ -62,6 +62,7 @@ PREFIXES = {
     "plc": "https://w3id.org/lsc/ontology/modules/placement/",
     "auth": "https://w3id.org/lsc/ontology/modules/authority/",
     "con": "https://w3id.org/lsc/ontology/modules/consumer/",
+    "tg": "https://w3id.org/lsc/ontology/modules/technical-graph/",
     "skos": str(SKOS), "dcterms": "http://purl.org/dc/terms/", "org": "http://www.w3.org/ns/org#",
     "rdfs": str(RDFS), "owl": str(OWL), "rdf": str(RDF), "prov": "http://www.w3.org/ns/prov#",
     # The party products' SKOS mappings point to Open Energy Ontology classes (EPM-DEC-001-0092).

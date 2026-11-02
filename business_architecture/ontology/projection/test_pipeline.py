@@ -154,7 +154,7 @@ class Build(unittest.TestCase):
         self.assertEqual(pl.PACKAGES, [
             ("core", "2.4.0"), ("organization", "2.2.0"), ("ref-mpc", "1.3.0"), ("kpi", "1.3.0"), ("party", "2.1.0"),
             ("data-product", "1.2.0"), ("value-stream", "1.2.0"), ("system", "1.5.0"), ("lane", "1.1.0"),
-            ("market-data", "1.1.0"), ("integration", "2.5.0")])
+            ("market-data", "1.1.0"), ("integration", "2.5.0"), ("technical-graph", "1.0.0")])
         import glob, os
         newest = {}
         for d in glob.glob(os.path.join(pl.ONTOLOGY, "releases", "*", "*", "")):

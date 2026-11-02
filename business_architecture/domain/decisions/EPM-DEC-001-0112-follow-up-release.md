@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (the decision owner, 2026-11-02, for the ten points below; the build choices delegated under EPM-DEC-001-0028; the module's `1.0.0` stays with the decision owner) |
+| Status | Decided (the decision owner, 2026-11-02, for the ten points below; the build choices delegated under EPM-DEC-001-0028; the module's `1.0.0` stays with the decision owner, not delegated: *2026-11-02:* approved by the decision owner, "1. approve 1.0.0", amendment below) |
 | Date | 2026-11-02 |
 | Questions | Claude asked ten questions in two rounds, each with a recommendation, to open the follow-up release that EPM-DEC-001-0110 plans |
-| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-follow-up-release.md`, blocks 1 to 7 |
+| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-follow-up-release.md`, blocks 1 to 8 |
 
 ## Context
 
@@ -60,3 +60,15 @@ This supersedes, for market news, EPM-DEC-001-0110's amendment item 4 (rewrite t
 - The technical-graph module is the first test of the `ontology` skill's `references/new-module.md`, which is adjusted so a module can pass on its package plus a conforming example.
 - The demo's technical graph, its loader and its checks move to the module's terms; the lineage, in-sync and release work that follows builds on them.
 - The follow-up release is cut once the module exists, and replaces EPM 1.0 as `share/epm-1.0` (*2026-11-02:* and once the logical-model module is approved as `1.0.0`: EPM-DEC-001-0113, point 10).
+
+## Amendment, 2026-11-02 (later): technical-graph 1.0.0, the store secrets and the drift check
+
+The decision owner's answers (block 8), to three questions Claude asked during the build:
+
+1. **technical-graph 1.0.0 is approved:** "1. approve 1.0.0", to the one page with the module's terms, its six questions and their results on the example graph (item 6). The candidate of #468 is released as `1.0.0`, a major the decision owner approved.
+2. **The store logins become GitHub secrets (#426):** "2. Yes we should do do this . I want to know how to do this as well". Claude is to set the six AuraDB and Databricks secrets from the local login files without printing them, with the in-sync change (pending, #426); the seventh, `EPM_SKILLS_TOKEN`, is a read-only token for the skills repository that only the decision owner can create.
+3. **The drift check stays manual (#455):** "3. Aligned on #455", to the recommendation to make `sync_stores.py check` a written step of each release, with no scheduled workflow, which would use paid Actions minutes.
+
+> 1. approve 1.0.0
+> 2. Yes we should do do this . I want to know how to do this as well
+> 3. Aligned on #455

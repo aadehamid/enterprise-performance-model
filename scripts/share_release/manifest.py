@@ -14,7 +14,9 @@ RELEASE_NAME = "EPM 1.0"
 RELEASE_BRANCH = "share/epm-1.0"  # publish.py's default branch name
 CHECK_MINUTES = "10"  # how long the release's check.sh takes, for the guide: the time of the last cut's check step
 
-# The 11 modules and the versions the release ships: (newest, previous). main at 0ad29381, 2026-10-31.
+# The 12 modules and the versions the release ships: (newest, previous). main at 0ad29381, 2026-10-31; technical-graph
+# added on 2026-11-02 (EPM-DEC-001-0112). A module with one release has no previous: None, and nothing moves to the
+# history folder for it.
 MODULES = {
     "core": ("2.4.0", "2.3.0"),
     "data-product": ("1.2.0", "1.1.0"),
@@ -27,6 +29,7 @@ MODULES = {
     "ref-mpc": ("1.3.0", "1.2.0"),
     "system": ("1.5.0", "1.4.0"),
     "value-stream": ("1.2.0", "1.1.0"),
+    "technical-graph": ("1.0.0", None),
 }
 ONT = "business_architecture/ontology"
 
@@ -89,7 +92,8 @@ EPM_RULES = [
 ]
 for m, (newest, previous) in MODULES.items():
     EPM_RULES.append(("ship", f"{ONT}/releases/{m}/{newest}/*"))
-    EPM_RULES.append(("ship", f"{ONT}/releases/{m}/{previous}/*"))
+    if previous:
+        EPM_RULES.append(("ship", f"{ONT}/releases/{m}/{previous}/*"))
     EPM_RULES.append(("ship", f"{ONT}/releases/{m}/CHANGELOG*.md"))
 EPM_RULES.append(("ship", f"{ONT}/releases/catalog.ttl"))
 
@@ -117,7 +121,8 @@ PATH_RENAMES = [
 ]
 # The previous release of each module moves under releases/previous/.
 for m, (newest, previous) in MODULES.items():
-    PATH_RENAMES.append((f"{ONT}/releases/{m}/{previous}/", f"{ONT}/releases/previous/{m}/{previous}/"))
+    if previous:
+        PATH_RENAMES.append((f"{ONT}/releases/{m}/{previous}/", f"{ONT}/releases/previous/{m}/{previous}/"))
 
 # Skills land under skills/<name>/ in the release.
 SKILLS_PREFIX = "skills/"

@@ -67,6 +67,10 @@ APPROVALS["ref-mpc"] = BRANDS
 APPROVALS["party"] = DELEGATED  # party 2.1.0, EPM-DEC-001-0099, amendment of 2026-10-28
 APPROVALS["integration"] = DELEGATED  # integration 2.5.0, EPM-DEC-001-0099, amendment of 2026-10-28
 APPROVALS["kpi"] = DELEGATED  # kpi 1.3.0, the KPI and OPM identifiers, EPM-DEC-001-0109
+# technical-graph 1.0.0, the follow-up release's new module, a major the decision owner approved (EPM-DEC-001-0112,
+# amendment of 2026-11-02, later).
+APPROVALS["technical-graph"] = ("step4/review-evidence/decision-owner-answers/answers-2026-11-02-follow-up-release.md",
+                                "1. approve 1.0.0")
 
 
 def approval_holds(name, m):

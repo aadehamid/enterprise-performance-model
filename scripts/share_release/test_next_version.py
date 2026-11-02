@@ -20,7 +20,7 @@ def modules_of(text):
     raise AssertionError("no MODULES")
 
 
-@pytest.mark.parametrize("module", ["kpi", "data-product", "market-data", "ref-mpc", "lane", "organization", "party", "system", "value-stream", "integration"])
+@pytest.mark.parametrize("module", ["kpi", "data-product", "market-data", "ref-mpc", "lane", "organization", "party", "system", "value-stream", "integration", "technical-graph"])
 def test_it_changes_one_real_entry_and_keeps_the_rest(module):
     with open(BUILD_MODULE, encoding="utf-8") as f:
         text = f.read()

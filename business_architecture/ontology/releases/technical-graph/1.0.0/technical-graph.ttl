@@ -1,0 +1,275 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix result: <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix tg: <https://w3id.org/lsc/ontology/modules/technical-graph/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/technical-graph> a owl:Ontology ;
+    dcterms:description "The kinds of thing a technical graph records about a data platform as built: hosts, source databases, tables, views, metric views, pipeline steps, quality checks and agents, and the links between them; each built thing points to its design in data-product, the measure it computes in kpi and the system it copies from in system. Definitions only, never the graph's records."@en ;
+    dcterms:issued "2026-11-02"^^xsd:date ;
+    dcterms:modified "2026-11-02"^^xsd:date ;
+    dcterms:requires dp:1.2.0,
+        kpi:1.3.0,
+        sys:1.5.0 ;
+    dcterms:title "LSC Technical Graph Module"@en ;
+    owl:versionIRI tg:1.0.0 ;
+    owl:versionInfo "1.0.0" .
+
+tg:DefinitionsView a owl:Class ;
+    rdfs:label "definitions view"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2; EPM-DEC-001-0109"@en ;
+    rdfs:subClassOf tg:View ;
+    skos:definition "A view that publishes ontology definitions, such as measure definitions, on the data platform, so that agents read the definitions beside the data."@en .
+
+tg:binds a owl:ObjectProperty ;
+    rdfs:label "binds"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (which agent or report answers for this measure)"@en ;
+    rdfs:domain tg:Agent ;
+    rdfs:range tg:DataObject ;
+    skos:definition "A data object the agent is bound to and answers from."@en .
+
+tg:checkedAt a owl:DatatypeProperty ;
+    rdfs:label "checked at"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (can I trust it today)"@en ;
+    rdfs:domain tg:QualityCheck ;
+    rdfs:range xsd:dateTime ;
+    skos:definition "When the quality check last ran."@en .
+
+tg:checks a owl:ObjectProperty ;
+    rdfs:label "checks"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (can I trust it today)"@en ;
+    rdfs:domain tg:QualityCheck ;
+    rdfs:range tg:TechnicalObject ;
+    skos:definition "A technical object the quality check tests."@en .
+
+tg:copies a owl:ObjectProperty ;
+    rdfs:label "copies"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1"@en ;
+    rdfs:domain tg:Table ;
+    rdfs:range tg:SourceDatabase ;
+    skos:definition "The source database whose records the table copies."@en .
+
+tg:definedIn a owl:DatatypeProperty ;
+    rdfs:label "defined in"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (is it built as designed)"@en ;
+    rdfs:domain tg:DataObject ;
+    rdfs:range xsd:string ;
+    skos:definition "The file, relative to the pipeline's folder, whose code creates the data object."@en .
+
+tg:designedAs a owl:ObjectProperty ;
+    rdfs:label "designed as"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, items 1 (is it built as designed; who answers for it) and 3"@en ;
+    rdfs:domain tg:TechnicalObject ;
+    skos:definition "The design in data-product that the technical object builds: a platform table or a data product (both concepts) or an agent (a PROV software agent) of the data-product module. No range is stated, because the designs are of different kinds. A built object with none was built without a recorded design."@en .
+
+tg:detail a owl:DatatypeProperty ;
+    rdfs:label "detail"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:domain tg:QualityCheck ;
+    rdfs:range xsd:string ;
+    skos:definition "What the quality check reported, in its own words."@en .
+
+tg:hidden a owl:DatatypeProperty ;
+    rdfs:label "hidden"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:domain tg:SourceDatabase ;
+    rdfs:range xsd:boolean ;
+    skos:definition "True when the source database must never reach the data platform, such as the answers a test keeps from the agents it tests."@en .
+
+tg:hostedOn a owl:ObjectProperty ;
+    rdfs:label "hosted on"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (what is affected if this system changes)"@en ;
+    rdfs:domain tg:SourceDatabase ;
+    rdfs:range tg:Host ;
+    skos:definition "The host that runs the source database."@en .
+
+tg:implements a owl:ObjectProperty ;
+    rdfs:label "implements"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (where does this number come from); EPM-DEC-001-0109"@en ;
+    rdfs:domain tg:MetricView ;
+    rdfs:range kpi:MeasureDefinition ;
+    skos:definition "A measure whose kpi definition the metric view computes."@en .
+
+tg:lastRefresh a owl:DatatypeProperty ;
+    rdfs:label "last refresh"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (can I trust it today: last refresh)"@en ;
+    rdfs:domain tg:DataObject ;
+    rdfs:range xsd:dateTime ;
+    skos:definition "When the data object was last built."@en .
+
+tg:layer a owl:ObjectProperty ;
+    rdfs:label "layer"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2; data-product's dp:Layer (EPM-DEC-001-0097, item 8)"@en ;
+    rdfs:domain tg:DataObject ;
+    rdfs:range skos:Concept ;
+    skos:definition "The platform layer the data object is built in, from data-product's layer code list: replica, silver, gold or metric view. A data object outside those layers, such as a definitions view, has none."@en .
+
+tg:name a owl:DatatypeProperty ;
+    rdfs:label "name"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:domain tg:TechnicalObject ;
+    rdfs:range xsd:string ;
+    skos:definition "The name the platform or the pipeline gives the technical object, such as a table's schema and name."@en .
+
+tg:next a owl:ObjectProperty ;
+    rdfs:label "next"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:domain tg:PipelineStep ;
+    rdfs:range tg:PipelineStep ;
+    skos:definition "The pipeline step that runs after this one."@en .
+
+tg:order a owl:DatatypeProperty ;
+    rdfs:label "order"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:domain tg:PipelineStep ;
+    rdfs:range xsd:integer ;
+    skos:definition "The pipeline step's place in the order of steps, from 1."@en .
+
+tg:producedBy a owl:ObjectProperty ;
+    rdfs:label "produced by"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:domain tg:TechnicalObject ;
+    rdfs:range tg:PipelineStep ;
+    skos:definition "The pipeline step that last built, loaded or recorded the technical object."@en .
+
+tg:readsFrom a owl:ObjectProperty ;
+    rdfs:label "reads from"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (where does this number come from); EPM-DEC-001-0110"@en ;
+    rdfs:domain tg:DataObject ;
+    rdfs:range tg:DataObject ;
+    skos:definition "A data object the subject is built from, as built: the as-built lineage of one step. Designed lineage is data-product's."@en .
+
+tg:result a owl:ObjectProperty ;
+    rdfs:label "result"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (checks passed)"@en ;
+    rdfs:domain tg:QualityCheck ;
+    rdfs:range skos:Concept ;
+    skos:definition "What the quality check found when it last ran, from the check-result code list."@en .
+
+tg:routesTo a owl:ObjectProperty ;
+    rdfs:label "routes to"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:domain tg:Orchestrator ;
+    rdfs:range tg:Agent ;
+    skos:definition "An agent the orchestrator passes questions to."@en .
+
+tg:rows a owl:DatatypeProperty ;
+    rdfs:label "rows"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (can I trust it today)"@en ;
+    rdfs:domain tg:TechnicalObject ;
+    rdfs:range xsd:decimal ;
+    skos:definition "How many rows the data object or source database held when last recorded."@en .
+
+tg:standsFor a owl:ObjectProperty ;
+    rdfs:label "stands for"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (what is affected if this table or system changes)"@en ;
+    rdfs:domain tg:SourceDatabase ;
+    rdfs:range sys:System ;
+    skos:definition "The system of the system module whose records the source database holds, or stands in for."@en .
+
+tg:tables a owl:DatatypeProperty ;
+    rdfs:label "tables"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:domain tg:SourceDatabase ;
+    rdfs:range xsd:decimal ;
+    skos:definition "How many tables the source database held when last recorded."@en .
+
+tg:Host a owl:Class ;
+    rdfs:label "host"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:subClassOf tg:TechnicalObject ;
+    skos:definition "A machine or service that runs one or more source databases."@en .
+
+tg:MetricView a owl:Class ;
+    rdfs:label "metric view"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2; EPM-DEC-001-0109"@en ;
+    rdfs:subClassOf tg:View ;
+    skos:definition "A view that computes measures, each defined once, over a table, for agents and reports to query. The measures it computes are kpi measure definitions, by IRI."@en .
+
+tg:Orchestrator a owl:Class ;
+    rdfs:label "orchestrator"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2; EPM-DEC-001-0109 (one Genie agent per subject area under a supervisor agent)"@en ;
+    rdfs:subClassOf tg:Agent ;
+    skos:definition "An agent that passes each question to the agent suited to answer it."@en .
+
+tg:Table a owl:Class ;
+    rdfs:label "table"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:subClassOf tg:DataObject ;
+    skos:definition "A data object that stores rows."@en .
+
+result:differs a skos:Concept ;
+    skos:definition "The check compared two accounts of the same thing, such as designed and observed lineage, and found a difference that is not on its list of known differences."@en ;
+    skos:inScheme tg:CheckResults ;
+    skos:notation "differs" ;
+    skos:prefLabel "Differs"@en ;
+    skos:topConceptOf tg:CheckResults .
+
+result:fail a skos:Concept ;
+    skos:definition "The check found a problem the platform must fix."@en ;
+    skos:inScheme tg:CheckResults ;
+    skos:notation "fail" ;
+    skos:prefLabel "Fail"@en ;
+    skos:topConceptOf tg:CheckResults .
+
+result:pass a skos:Concept ;
+    skos:definition "The check found no problem."@en ;
+    skos:inScheme tg:CheckResults ;
+    skos:notation "pass" ;
+    skos:prefLabel "Pass"@en ;
+    skos:topConceptOf tg:CheckResults .
+
+tg:View a owl:Class ;
+    rdfs:label "view"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:subClassOf tg:DataObject ;
+    skos:definition "A data object defined by a query over other data objects, which stores no rows of its own."@en .
+
+tg:Agent a owl:Class ;
+    rdfs:label "agent"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, items 1 and 2 (which agent or report answers for this measure)"@en ;
+    rdfs:subClassOf tg:TechnicalObject ;
+    skos:definition "An AI agent or a report that answers people's questions from the data objects it is bound to."@en .
+
+tg:PipelineStep a owl:Class ;
+    rdfs:label "pipeline step"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:subClassOf tg:TechnicalObject ;
+    skos:definition "One step of the pipeline that builds or loads the platform, in the order it runs."@en .
+
+tg:QualityCheck a owl:Class ;
+    rdfs:label "quality check"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, items 1 and 2 (can I trust it today)"@en ;
+    rdfs:subClassOf tg:TechnicalObject ;
+    skos:definition "A named test of one or more technical objects, as last run: when it ran and what it found."@en .
+
+tg:SourceDatabase a owl:Class ;
+    rdfs:label "source database"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2"@en ;
+    rdfs:subClassOf tg:TechnicalObject ;
+    skos:definition "A database that holds an operational system's records, or a stand-in for them, which the data platform copies from."@en .
+
+tg:CheckResults a skos:ConceptScheme ;
+    rdfs:label "check results"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 1 (checks passed)"@en ;
+    skos:definition "What a quality check found when it last ran."@en ;
+    skos:hasTopConcept result:differs,
+        result:fail,
+        result:pass .
+
+tg:DataObject a owl:Class ;
+    rdfs:label "data object"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, item 2; data-product's dp:Layer (EPM-DEC-001-0097, item 8)"@en ;
+    rdfs:subClassOf tg:TechnicalObject ;
+    skos:definition "A table or view on the data platform, named by its full name. Its platform layer, where it has one, is a value of data-product's layer code list."@en .
+
+tg:TechnicalObject a owl:Class ;
+    rdfs:label "technical object"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0112, items 2 and 4; EPM-DEC-001-0109"@en ;
+    skos:definition "A thing built or run on a data platform, or feeding it, that the technical graph records as it is: a host, a source database, a table, a view, a pipeline step, a quality check or an agent. A record of what was built, never its design: the design is in data-product."@en .
+

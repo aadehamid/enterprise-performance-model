@@ -57,6 +57,7 @@ CORE_BUILDER="$(cd $ONT/release && python3 -c 'import newest; print(newest.core_
 (cd $ONT/release && run with_deps python build_module.py lane --verify)
 (cd $ONT/release && run with_deps python build_module.py market-data --verify)
 (cd $ONT/release && run with_deps python build_module.py integration --verify)
+(cd $ONT/release && run with_deps python build_module.py technical-graph --verify)
 (cd $ONT/release && run with_deps python build_catalog.py --verify)
 # The competency questions the release can answer must still answer.
 (cd $ONT/regression && run with_deps python run.py)

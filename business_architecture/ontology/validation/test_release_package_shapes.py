@@ -33,7 +33,7 @@ PACKAGES = [
     ("lane", "1.0.0"), ("lane", "1.1.0"), ("market-data", "1.0.0"), ("market-data", "1.1.0"),
     ("organization", "1.0.0"), ("organization", "2.0.0"), ("organization", "2.1.0"), ("organization", "2.2.0"), ("party", "1.0.0"), ("party", "1.1.0"), ("party", "1.2.0"), ("party", "1.3.0"), ("party", "1.4.0"), ("party", "2.0.0"), ("party", "2.1.0"),
     ("ref-mpc", "1.0.0"), ("ref-mpc", "1.1.0"), ("ref-mpc", "1.2.0"), ("ref-mpc", "1.3.0"),
-    ("system", "1.0.0"), ("system", "1.1.0"), ("system", "1.2.0"), ("system", "1.3.0"), ("system", "1.4.0"), ("system", "1.5.0"), ("value-stream", "1.0.0"), ("value-stream", "1.1.0"), ("value-stream", "1.2.0"),
+    ("system", "1.0.0"), ("system", "1.1.0"), ("system", "1.2.0"), ("system", "1.3.0"), ("system", "1.4.0"), ("system", "1.5.0"), ("technical-graph", "1.0.0"), ("value-stream", "1.0.0"), ("value-stream", "1.1.0"), ("value-stream", "1.2.0"),
 ]
 
 
@@ -163,7 +163,8 @@ class ReleaseInventory(unittest.TestCase):
         self.assertTrue(newest <= expected)
         self.assertIn(("core", "2.3.0"), expected)
         self.assertIn(("kpi", "1.2.0"), expected)
-        self.assertEqual(len(expected), 2 * len(newest))  # every module has a version before its newest
+        # every module has a version before its newest, except technical-graph, whose 1.0.0 is its only release (EPM-DEC-001-0112)
+        self.assertEqual(len(expected), 2 * len(newest) - 1)
         self.assertTrue(expected <= packages_on_disk())  # main holds every version, so it holds these
 
     def test_a_tree_missing_a_previous_package_is_found_out(self):
