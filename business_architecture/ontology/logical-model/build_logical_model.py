@@ -14,7 +14,8 @@ What it does, and when it fails:
   space, so the layer is keyed on (model, the identifier of an owl:Class), never on the identifier alone. The builder
   finds each entity's current IRI from its identifier, so an entity renamed in ER Studio keeps its annotations.
 - It fails when a row of the links file names an identifier no entity of the export has (an annotated entity has
-  gone), when a link target is not in the newest release of its module, or when two entities share an identifier.
+  gone), when an entity of the export has no row (a new entity is drafted, even as doubtful, before it ships), when a
+  link target is not in the newest release of its module, or when two entities share an identifier.
 - Only `asserted` rows become triples. `doubtful` rows are printed for the decision owner and produce none.
 - Every entity of the export gets lm:inModel, and the layer holds the model's lm:LogicalModel individual,
   lm:model/<slug>.
@@ -221,6 +222,9 @@ def build(models, out, ontology=ONTOLOGY):
                               "it: the annotated entity has gone from the export")
             elif r["status"] == "asserted":
                 check_targets(r, linked, errors)
+        missing = sorted(set(found) - {r["erstudio_id"] for r in rows}, key=lambda i: (len(i), i))
+        if missing:  # a new entity is drafted, even as doubtful, before it ships (Codex's review of the method)
+            errors.append(f"{slug}: entities with no row in the links file: identifiers {', '.join(missing)}")
         if errors:
             continue
         g = layer(slug, title, export, rows, found)

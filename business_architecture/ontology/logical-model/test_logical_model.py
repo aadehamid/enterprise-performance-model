@@ -123,6 +123,10 @@ class Build(unittest.TestCase):
                 with self.assertRaises(blm.BuildError):
                     self.build(links_text=self.links(lambda rows: rows[0].update({column: value})))
 
+    def test_an_entity_with_no_row_fails(self):
+        with self.assertRaises(blm.BuildError):
+            self.build(links_text=self.links(lambda rows: rows.pop()))
+
     def test_an_empty_source_system_fails(self):
         # Codex's quick check: an empty column could be a mistake, so the row must say which case it is.
         with self.assertRaises(blm.BuildError):

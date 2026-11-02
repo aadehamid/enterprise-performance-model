@@ -14,7 +14,7 @@ It answers competency questions 51 to 55 (`../competency-questions.md`, section 
 
 ## The links file
 
-The layer's input is a CSV file kept beside the export, one row per entity. For the customer model it sits in the augment folder, not in `main`. Its columns are:
+The layer's input is a CSV file kept beside the export, one row per entity; the build fails when an entity of the export has no row, so a new entity is drafted, even as doubtful, before it ships. For the customer model it sits in the augment folder, not in `main`. Its columns are:
 
 | Column | What |
 |---|---|
