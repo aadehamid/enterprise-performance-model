@@ -282,6 +282,25 @@ tg:standsFor rdfs:domain tg:SourceDatabase ;
     rdfs:range sys:System .
 ```
 
+### logical-model: logical data models
+
+*2026-11-02:* not released in `main`; its first model, the customer logical model, ships only in the release (EPM-DEC-001-0113). The module keeps each logical data model exported from ER Studio Data Architect as two views. The first is ER Studio's export, unchanged, in ER Studio's namespace and its own named graph. The second is an annotation layer in the module's namespace, keyed on ER Studio's identifier for each entity. The layer links each entity to three modules by IRI: `lm:sourceSystem` to a system of `system` or a customer system of `party`, `lm:describes` to a `party` concept or class, and `lm:implementedBy` to a `data-product` platform table or data product. `lm:inModel` names the model the entity belongs to. Here the subject is ER Studio's own entity IRI, and nothing is re-minted. The guide's "Adding a logical model" gives the method for any later model.
+
+Because the module has no release in `main`, this quote is from the layer of the made-up example model, `logical-model/example/example-logical-model.layer.ttl`, which `scripts/check.sh` verifies; it is not a release.
+
+```text
+@prefix lm: <https://w3id.org/lsc/ontology/modules/logical-model/> .
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
+@prefix product: <https://w3id.org/lsc/ontology/modules/data-product/product/> .
+@prefix er: <https://www.erstudio.com/semanticmodel/> .
+
+er:example_core_Example_Account_Dim lm:describes party:CustomerAccount ;
+    lm:implementedBy product:customer-master ;
+    lm:inModel <https://w3id.org/lsc/ontology/modules/logical-model/model/example-logical-model> ;
+    lm:sourceSystem system:profisee .
+```
+
 ### integration: rules that apply across modules
 
 `integration` adds no new facts. It packages three sets of rules that apply to the other modules' links, sources and bindings:

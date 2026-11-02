@@ -210,7 +210,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="17" cy="6" r="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/><circle cx="11" cy="17" r="3" fill="var(--accent)"/><path d="M7.4 7.8 9.6 14.3M14.6 7.8 12.4 14.3M8 6h6" stroke="var(--accent)" stroke-width="1.6"/></svg>
   <span class="name">EPM</span><span class="scope">Ontology guide</span>
   <nav aria-label="Sections">
-    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#questions">Questions</a><a href="#stores">Stores</a><a href="#holds">What each holds</a><a href="#graphs">Graphs</a><a href="#sync">In sync</a><a href="#where">Where things live</a><a href="#standards">Standards</a><a href="#copy">Copy</a><a href="#tools">Tools</a><a href="#open">Open</a>
+    <a href="#purpose">Purpose</a><a href="#why-modules">Why modules</a><a href="#map">Module map</a><a href="#thread">The crack spread</a><a href="#modules">Each module</a><a href="#questions">Questions</a><a href="#logical-model">Logical models</a><a href="#stores">Stores</a><a href="#holds">What each holds</a><a href="#graphs">Graphs</a><a href="#sync">In sync</a><a href="#where">Where things live</a><a href="#standards">Standards</a><a href="#copy">Copy</a><a href="#tools">Tools</a><a href="#open">Open</a>
   </nav>
 </header>
 
@@ -235,6 +235,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <a class="sub-a" href="#m-lane">lane</a>
   <a class="sub-a" href="#m-integration">integration</a>
   <a href="#questions">The competency questions</a>
+  <a href="#logical-model">Adding a logical model</a>
   <a href="#stores">How it reaches the stores</a>
   <a href="#graphs">Git, the two graphs and the measures</a>
   <a href="#sync">The in-sync strategy</a>
@@ -835,6 +836,65 @@ OPTIONAL MATCH (db)-[:STANDS_FOR]-&gt;(sys:Resource)
 RETURN m.skos__prefLabel AS measure, g.name AS gold, collect(DISTINCT db.name) AS sources, collect(DISTINCT sys.skos__prefLabel) AS systems;</code></pre><p><strong>Can I trust it today?</strong> 569,976 rows, refreshed on 2026-10-29. <code>built-objects-hold-rows</code> and <code>rows-labelled</code> pass. <code>designed-vs-observed-lineage</code> says differs: the demo is simpler than the design.</p><pre><code>MATCH (c:QualityCheck)-[:CHECKS]-&gt;(g:GoldTable {name: 'gold_commercial_core.mpr_mips_crack_spread_price_fact'})
 RETURN g.rows AS rows, g.lastRefresh AS refreshed, collect(c.name + ': ' + c.result) AS checks;</code></pre><p><strong>What is affected if this source changes?</strong> For <code>price_reference</code>, six measures: Additional Market Prices, Crack Spreads Pricing, Crude Market Pricing, Distillate Market Pricing, Gasoline Market Pricing and Price Comparison.</p><pre><code>MATCH (db:SourceDatabase {name: 'price_reference'})&lt;-[:COPIES]-(:ReplicaTable)&lt;-[:READS_FROM*1..3]-(:MetricView)-[:IMPLEMENTS]-&gt;(m)
 RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre>
+<h2 id="logical-model">Adding a logical model</h2>
+<p class="lead">A logical data model joins the ontology as two views of one model. The modelling tool's export stays exactly as the tool wrote it, and a small layer of annotations links each of its entities to the modules that already hold the systems, the party concepts and the platform tables. This section is the pattern for every logical model added from now on. The made-up example in <code>logical-model/example/</code> shows it working, and the module's own <code>README.md</code> gives the detail.</p>
+
+<div class="two">
+<div>
+<h3>What a logical model export is</h3>
+<p>A logical data model names the entities a business keeps data about, their attributes and keys, and how they relate, one level above the tables a data platform builds. ER Studio Data Architect, a relational modelling tool, exports one as Turtle. It writes each entity as an <code>owl:Class</code> and each attribute as an <code>owl:DatatypeProperty</code>, in its own namespace, <code>https://www.erstudio.com/semanticmodel/</code>, with a SHACL shape for each primary and alternate key. An entity's name says which source system its data comes from, and the <code>system</code> and <code>party</code> modules already hold those systems.</p>
+<h3>The two views</h3>
+<ul>
+<li><strong>The tool's view.</strong> The export, kept byte for byte in its own file and its own named graph, with the tool's namespace, classes, properties and shapes. Nothing is re-minted, and no namespace rewrite touches it.</li>
+<li><strong>The annotation layer.</strong> Four annotation properties in the module's namespace, set on the tool's own entity IRIs: <code>lm:inModel</code> gives the model the entity belongs to, <code>lm:sourceSystem</code> the system its data comes from (a system of <code>system</code>, or a customer system of <code>party</code>), <code>lm:describes</code> the <code>party</code> concept or class it holds data about, and <code>lm:implementedBy</code> the <code>data-product</code> platform table or data product that builds it.</li>
+</ul>
+<p>The layer uses annotation properties because OWL gives annotations no logical meaning. A reasoner reads no axioms into the links, and the tool's classes stay plain classes.</p>
+</div>
+<div class="card story">
+<p class="story-h">In the made-up example</p>
+<p>The example export holds three invented entities. Its links file asserts the links of two and marks the third doubtful. From those, the builder writes the layer. The account entity gets four links:</p>
+<pre><code>er:example_core_Example_Account_Dim
+    lm:inModel        &lt;…/logical-model/model/example-logical-model&gt; ;
+    lm:sourceSystem   system:profisee ;
+    lm:describes      party:CustomerAccount ;
+    lm:implementedBy  product:customer-master .</code></pre>
+<p>Here <code>er:</code> is ER Studio's namespace, <code>system:</code> the <code>system</code> module's systems, and <code>product:</code> the <code>data-product</code> module's data products.</p>
+<p>The third entity, a region reference with no description, gets only <code>lm:inModel</code> until the decision owner settles its links.</p>
+</div>
+</div>
+
+<h3>What keeps a re-export from breaking it</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Safeguard</th><th>Why</th><th>What the builder does</th></tr></thead><tbody>
+<tr><td>Key on the tool's identifier</td><td data-k="Why">ER Studio builds an entity's IRI from its name, so a link keyed on the IRI would point at nothing after a rename</td><td data-k="What the builder does">Keys each row on the model and the entity's <code>dcterms:identifier</code>, and finds the entity's current IRI at each build. It looks among the export's classes only, because entities and attributes share one number space. It fails when a row names an identifier no entity has, when an entity has no row, and when two entities share an identifier</td></tr>
+<tr><td>One named graph per model</td><td data-k="Why">Every ER Studio export uses the same namespace and the same header node, so two models loaded into one graph would merge</td><td data-k="What the builder does">Fails on any IRI two models both define, except ER Studio's shared vocabulary and a glossary term both describe the same way. It checks each export's header in that model's own graph, and copies the model's title and creation time onto the model's own individual, <code>lm:model/&lt;slug&gt;</code></td></tr>
+<tr><td>Link only to released terms</td><td data-k="Why">A link to a term no release holds is a dangling fact</td><td data-k="What the builder does">Fails when a link target is not in the newest release of <code>party</code>, <code>system</code> or <code>data-product</code>. The module's shapes then check each target is of the right kind</td></tr>
+<tr><td>Keep the tool's shapes as data</td><td data-k="Why">ER Studio's key shapes constrain records, such as rows of a customer table, and the ontology holds no records</td><td data-k="What the builder does">Checks their structure instead: each names a key type, targets one entity of the export and constrains only that entity's attributes. They stay out of the whole-graph gate</td></tr>
+</tbody></table></div>
+
+<h3>The links file and the decision owner's review</h3>
+<p>The layer's input is a CSV file kept beside the export, one row per entity, with the model, the entity's identifier, its source system, the concept it describes, what implements it, a status and the evidence. Claude drafts the rows from each entity's name and description. A link is <code>asserted</code> only when the name, the description or the tool's own metadata makes it clear; every other row is <code>doubtful</code>. Only asserted rows become triples. The builder prints each doubtful row with its evidence, and the list goes on the one page the decision owner approves the module's release from. A row changes status only after the decision owner's answer is recorded (EPM-DEC-001-0113, decision 8).</p>
+
+<h3>The questions it answers</h3>
+<p>Competency questions 51 to 55 belong to this module: which entities hold data about a party concept, which source system each entity comes from, which attributes identify a customer in each system, which attributes stand for a business term, and which data product or platform table implements each entity. In <code>main</code> they run on the made-up example, which <code>scripts/check.sh</code> rebuilds and verifies on every push. To ask one, run this from <code>business_architecture/ontology/regression</code>:</p>
+<pre><code>uv run --with rdflib python ask.py q51-entities-about-party</code></pre>
+
+<h3>A confidential export stays outside the repository</h3>
+<p>A model the decision owner wants only in the release never enters <code>main</code>. Its export and links file sit in <code>release-cut/augment/logical-model/</code>, a folder Git ignores, and the builder writes the model's two graphs beside them. <code>main</code> holds the module's vocabulary, shapes, builder, tests and the made-up example. The release cut reads the augment folder and builds the package, so the release holds one module more than <code>main</code> releases. The cut's option for this, <code>cut.sh --augment</code>, is pending in PR #474. The builder takes the export's location as an input, so the same build runs from <code>main</code> if the decision owner later moves a model there (EPM-DEC-001-0113, decisions 2 and 6).</p>
+
+<h3>Cleaning an export that passed through email or a word processor</h3>
+<p>The first export arrived inside an RTF document sent by email, and a mail filter had rewritten its namespace IRIs into tracking links (EPM-DEC-001-0113, "Context"). A rewritten link still parses as an IRI, so a parse alone does not catch it. Before you use such an export:</p>
+<ol class="steps">
+<li>Extract the Turtle from the document wrapper.</li>
+<li>Restore every IRI the mail filter rewrote, from the original target the tracking link encodes.</li>
+<li>Replace non-breaking spaces with plain ones and remove any heading the wrapper added. Leave every character inside a literal as written.</li>
+<li>Parse the file, and check that every IRI is in ER Studio's namespace or a vocabulary you expect, and that the counts of classes and datatype properties match what ER Studio reports.</li>
+<li>Keep the cleaned file beside the original, outside the repository, and record each change. Ask for a direct export when one is possible.</li>
+</ol>
+
+<h3>Approval and release</h3>
+<p>The module's first release, <code>logical-model 1.0.0</code>, needs the decision owner's approval, given from one page that also lists every doubtful link. Until then it is built as a candidate. A later model joins the same module as another named model, not a new module, and ships as a minor release. A re-export that drops or renames an entity removes an IRI that consumers may rely on, so it gets the meaning-change test before release and may be a major.</p>
+<p class="note">The method is the <code>ontology</code> skill's <code>references/logical-model.md</code>, in 14 rules. The decision is EPM-DEC-001-0113. The walkthrough's "Add a logical model" gives the commands, step by step.</p>
+
 <h2 id="stores">How it reaches the stores</h2>
 <div class="two">
 <div>

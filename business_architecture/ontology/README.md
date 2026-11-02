@@ -26,6 +26,7 @@ roles, and a fourth to read first if you are new (`epm-ontology-guide.html`, bel
 | What does the finished ontology hold, and why these modules? | `epm-ontology-guide.html`, then `MODULES.md` |
 | How do I load it into a store and query it? | `projection/ontology-stores-runbook.html` |
 | How do I change the ontology, or add a module? | `epm-walkthrough.html`, "How to change the ontology" |
+| How do I add a logical data model, such as an ER Studio export? | `epm-ontology-guide.html`, "Adding a logical model", for the design; `epm-walkthrough.html`, "Add a logical model", for the steps; the `ontology` skill's `references/logical-model.md` for the method |
 | Why is something the way it is? | `../domain/decisions/` |
 | What is still open on the ontology, and what do we need from the business? | `OPEN-ITEMS.md`, with the full wording in `business-closeout.md` |
 

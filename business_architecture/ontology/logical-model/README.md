@@ -49,6 +49,6 @@ ER Studio marks an attribute's link to a business glossary with `:businessTerm`,
 
 ## Adding a logical model
 
-A new logical model joins this module as another model; it does not become a new module (EPM-DEC-001-0113, decision 3). Draft its links file, run the builder with a new slug, and resolve every `doubtful` row with the decision owner. The full method is in EPM-DEC-001-0113, which records how a logical model is kept, linked and released.
+A new logical model joins this module as another model; it does not become a new module (EPM-DEC-001-0113, decision 3). Clean its export if it passed through email or a word processor, draft its links file, run the builder with a new slug, and resolve every `doubtful` row with the decision owner. The method is the `ontology` skill's `references/logical-model.md`. The guide, `../epm-ontology-guide.html`, explains the design in "Adding a logical model", with this module's made-up example. The walkthrough, `../epm-walkthrough.html`, gives the steps and commands in "Add a logical model". EPM-DEC-001-0113 records the decision.
 
 **Status:** not released in `main`. *2026-11-02:* `main` holds the module's machinery and the made-up example only. The package `logical-model 1.0.0`, which holds the customer model, is built only when the release is cut, in a later change. The decision owner approves it from one page (EPM-DEC-001-0113, decision 10). Until then it has no package in `../releases/`, and it is not in `build_module.py`'s modules, the catalog or the projection's inputs.
