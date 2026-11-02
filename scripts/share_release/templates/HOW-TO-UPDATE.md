@@ -208,14 +208,14 @@ A package names the exact version of each module it requires. So a new version o
   cd $ONT/release
   moved=""
   list="$(py dependents.py core)"
-  for m in $list; do
+  for m in $(echo "$list"); do
     old=$(py next_version.py current "$m"); new="${old%.*}.$(( ${old##*.} + 1 ))"
     py next_version.py start "$m" "$new" patch --why "Takes the new version of what it requires; nothing else changes." \
         --approver "Your ontology owner" --where "approvals/your-file.md" --words "The sentence that approved it."
     py build_module.py "$m" --write
     moved="$moved $m:$old"
   done
-  for pair in $moved; do py next_version.py finish "${pair%:*}" "${pair#*:}"; done
+  for pair in $(echo "$moved"); do py next_version.py finish "${pair%:*}" "${pair#*:}"; done
 )
 ```
 
