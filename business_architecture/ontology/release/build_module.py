@@ -301,6 +301,15 @@ def share_release(root=ROOT):
 SHARE_RELEASE = share_release()
 
 
+def recorded_where(path, release_mode=None):
+    """The path a manifest names for where an approval is recorded, or None to leave the field out. In a share release
+    the build's answers files do not ship and the sources name a subject matter expert's review comments in their place,
+    which is a sentence, not a path: the field then comes out, as it does from the history folder's manifests (the
+    decision of 2026-10-31, amendment: approval.file comes out). A file that is in the tree is always named."""
+    release_mode = SHARE_RELEASE if release_mode is None else release_mode
+    return path if not release_mode or os.path.isfile(os.path.join(ONTOLOGY, path)) else None
+
+
 def package_folder(module, version):
     """The released package's folder, in releases/<module>/<version>/ or, in the share release, in its history
     folder releases/previous/<module>/<version>/; None when the package did not ship."""
@@ -486,7 +495,8 @@ def package(name, g):
         "module": name, "version": lab, "release_candidate": m["stage"] is not None,
         "ontology_iri": MODULES_NS + name, "version_iri": f"{MODULES_NS}{name}/{lab}",
         "depends_on": dependencies(name), "decisions": m["decisions"], "triples": len(g),
-        "approved_by": None if m["stage"] else {"who": m.get("approver", "The decision owner"), "recorded_in": m["approval"][0],
+        "approved_by": None if m["stage"] else {"who": m.get("approver", "The decision owner"),
+                                                 **({"recorded_in": where} if (where := recorded_where(m["approval"][0])) else {}),
                                                  **({"words": m["approval"][1]} if SHARE_RELEASE else {})},
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
