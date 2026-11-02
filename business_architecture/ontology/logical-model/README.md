@@ -45,7 +45,7 @@ Question 53 reads the key shapes, so the builder checks their structure instead.
 
 ## Business terms
 
-ER Studio marks an attribute's link to a business glossary with `:businessTerm`, and sets `:externalTermLinkMissing` to true when it has none. The made-up example links one attribute to a glossary term so that question 54 has a term to find. The form of that link (an IRI of a `skos:Concept` in ER Studio's glossary scheme) is assumed, because no export seen so far has one. Question 54's second query lists the attributes with no `:businessTerm`, and reports the flag beside each one.
+ER Studio marks an attribute's link to a business glossary with `:businessTerm`, and sets `:externalTermLinkMissing` to true when it has none. The made-up example links one attribute to a glossary term so that question 54 has a term to find. The form of that link (an IRI of a `skos:Concept` in ER Studio's glossary scheme) is assumed: check how your export writes it before relying on question 54's first query. Question 54's second query lists the attributes with no `:businessTerm`, and reports the flag beside each one.
 
 ## Adding a logical model
 
