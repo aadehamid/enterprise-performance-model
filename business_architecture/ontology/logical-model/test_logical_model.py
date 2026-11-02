@@ -123,9 +123,14 @@ class Build(unittest.TestCase):
                 with self.assertRaises(blm.BuildError):
                     self.build(links_text=self.links(lambda rows: rows[0].update({column: value})))
 
-    def test_an_asserted_row_may_leave_an_unheld_system_empty(self):
+    def test_an_empty_source_system_fails(self):
+        # Codex's quick check: an empty column could be a mistake, so the row must say which case it is.
+        with self.assertRaises(blm.BuildError):
+            self.build(links_text=self.links(lambda rows: rows[0].update(source_system="")))
+
+    def test_an_asserted_row_may_say_no_module_holds_its_system(self):
         # Decided under EPM-DEC-001-0028: when neither module holds the entity's system, its other links still count.
-        files, _ = self.build(links_text=self.links(lambda rows: rows[0].update(source_system="")))
+        files, _ = self.build(links_text=self.links(lambda rows: rows[0].update(source_system=blm.NO_SYSTEM)))
         layer = self.layer_of(files)
         entity = next(iter(layer.subjects(LM.describes, None)))
         self.assertIsNone(layer.value(entity, LM.sourceSystem))

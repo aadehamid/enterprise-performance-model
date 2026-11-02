@@ -47,6 +47,7 @@ LM = Namespace("https://w3id.org/lsc/ontology/modules/logical-model/")
 SYS = Namespace("https://w3id.org/lsc/ontology/modules/system/")
 PARTY = Namespace("https://w3id.org/lsc/ontology/modules/party/")
 DP = Namespace("https://w3id.org/lsc/ontology/modules/data-product/")
+NO_SYSTEM = "none"  # the source_system value that says neither module holds the entity's system
 COLUMNS = ["model", "erstudio_id", "source_system", "describes", "implemented_by", "status", "evidence"]
 STATUSES = ("asserted", "doubtful")
 SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
@@ -101,7 +102,9 @@ def check_targets(row, linked, errors):
     """A link target must be in the newest release of its module, as the right kind of thing."""
     where = f"identifier {row['erstudio_id']}"
     system = row["source_system"]
-    if system and not ((URIRef(system), RDF.type, SYS.System) in linked or (URIRef(system), RDF.type, PARTY.CustomerSystem) in linked):
+    if not system:
+        errors.append(f"{where}: an asserted row names its source system, or {NO_SYSTEM!r} when neither module holds it")
+    elif system != NO_SYSTEM and not ((URIRef(system), RDF.type, SYS.System) in linked or (URIRef(system), RDF.type, PARTY.CustomerSystem) in linked):
         errors.append(f"{where}: source system {system} is not a system of the newest system or party release")
     concept = row["describes"]
     if concept and not (concept.startswith(str(PARTY)) and ((URIRef(concept), RDF.type, OWL.Class) in linked
@@ -157,7 +160,7 @@ def layer(slug, title, export, rows, found):
         if r["status"] != "asserted":
             continue
         entity = found[r["erstudio_id"]]
-        if r["source_system"]:  # empty when neither the system nor the party module holds the entity's system
+        if r["source_system"] != NO_SYSTEM:  # NO_SYSTEM: neither the system nor the party module holds it
             g.add((entity, LM.sourceSystem, URIRef(r["source_system"])))
         if r["describes"]:
             g.add((entity, LM.describes, URIRef(r["describes"])))

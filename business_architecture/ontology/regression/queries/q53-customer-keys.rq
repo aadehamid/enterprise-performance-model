@@ -1,10 +1,10 @@
-# Q53 Which attributes identify a customer in each system: the primary and alternate key attributes of each entity that describes a party concept, by source system, read from ER Studio's key shapes.
+# Q53 Which attributes identify a customer in each system: the primary and alternate key attributes of each entity that describes a party concept, by source system where one is known, read from ER Studio's key shapes.
 PREFIX lm: <https://w3id.org/lsc/ontology/modules/logical-model/>
 PREFIX er: <https://www.erstudio.com/semanticmodel/>
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 SELECT ?system ?entity ?concept ?keyType ?attribute WHERE {
-  ?entity lm:sourceSystem ?system ;
-          lm:describes ?concept .
+  ?entity lm:describes ?concept .
+  OPTIONAL { ?entity lm:sourceSystem ?system }
   ?key sh:targetClass ?entity ;
        er:keyType ?keyType ;
        sh:property/sh:path ?property .
