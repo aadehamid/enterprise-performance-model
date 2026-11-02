@@ -31,7 +31,7 @@ import vocabulary as V  # noqa: E402
 # "Delegation" stays where it is a business term: the delegation of authority, the documented delegation.
 AGENT_NAMES = (r"\b(?:claude|codex|bugbot|kimi|anthropic|chatgpt|herdr|openai|copilot|gemini|gpt-\d[\w.-]*|pi-review|rex-review)\b"
                r"|\bAGENTS\.md\b|\bPi,? round\b|\bPi review")
-AGENT_WORK = (r"\b[Ii]ndependent review|\b[Rr]eview rounds?\b|\b[Rr]ound \d+,? (?:on|finding)|\(findings? \d+|\bPR verdict|\bapproval agent\b"
+AGENT_WORK = (r"\bretro of \d{4}|\bnight[ _]brief\b|\b[Ii]ndependent review|\b[Rr]eview rounds?\b|\b[Rr]ound \d+,? (?:on|finding)|\(findings? \d+|\bPR verdict|\bapproval agent\b"
               r"|\b[Uu]nder the delegation\b(?! of\b)|\b[Uu]nder their (?:recorded )?delegation\b|\b(?:expert|owner)'s delegation\b"
               r"|\b[Dd]elegated under\b|\bdelegate as described\b|\bcoding agents?\b|\bKailey\b")
 # Each pattern with its reason. The owner's names and handle come from owner.py's configuration, never from this file.

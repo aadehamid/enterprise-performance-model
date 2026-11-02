@@ -530,6 +530,9 @@ def rule_agents(text, ctx):
     if path.endswith("scripts/test_published_figures.py"):
         text, k = _count(r" \(the retro of\s+2026-10-28 left this gate.*?\)\.", ".", text, re.S); n += k
         text, k = _count(r"\(retro on [^:\n]*: ", "(", text); n += k
+    if path.endswith(".py"):
+        text, k = _count(r" \(retro of \d{4}-\d{2}-\d{2}\)", "", text); n += k
+        text, k = _count(r"; retro of \d{4}-\d{2}-\d{2}", "", text); n += k
     if ctx.get("path", "") == "scripts/test_epm_facts.py":  # a fixture's second speaker, in the check's own test
         text, k = _count(r"\bCodex\b", "Reviewer", text); n += k
     return text, n

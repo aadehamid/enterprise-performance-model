@@ -427,3 +427,15 @@ def test_agent_work_in_a_decision_package_the_walkthrough_and_the_tests_is_neutr
     assert "NIGHT" not in out and "night" not in out
     out = rules.apply("moves (the retro of\n    2026-10-28 left this gate for later; x).\n(retro on a change: words)\n", "scripts/test_published_figures.py")[0]
     assert "retro" not in out
+
+
+def test_the_paths_the_agent_rules_name_are_files_of_main():
+    # Each path-bound rule above stops firing with no failure if its file moves.
+    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
+    for path in ("business_architecture/ontology/epm-walkthrough.html", "business_architecture/ontology/kpi/test_measures.py",
+                 "business_architecture/ontology/release/test_build_module.py", "scripts/test_published_figures.py"):
+        assert os.path.exists(os.path.join(root, path)), path
+
+
+def test_a_retro_citation_goes_from_python():
+    assert rules.apply("x (retro of 2026-10-28) y; z (a; retro of 2026-10-26).\n", "scripts/a.py")[0] == "x y; z (a).\n"

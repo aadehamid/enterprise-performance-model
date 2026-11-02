@@ -200,20 +200,22 @@ bash scripts/check.sh
 
 ## The cascade
 
-A package names the exact version of each module it requires. So a new version of a module means a new version of every module that depends on it. `dependents.py` lists them, each after what it requires. Raise each version before you write its package, and write them in that order. A module that only takes the new version of what it requires gets a patch, with a changelog line that says so. A change to `core` reaches every module, so use a loop. It patches each module on the list and then finishes them all. For any other module, change the list to `py dependents.py <module> | tail -n +2`, which leaves out the module you released yourself.
+A package names the exact version of each module it requires. So a new version of a module means a new version of every module that depends on it. `dependents.py` lists them, each after what it requires. Raise each version before you write its package, and write them in that order. A module that only takes the new version of what it requires gets a patch, with a changelog line that says so. A change to `core` reaches every module, so use a loop. It patches each module on the list and then finishes them all, and it stops at the first failing step. For any other module, change the list to `py dependents.py <module> | tail -n +2`, which leaves out the module you released yourself.
 
 ```sh
-cd $ONT/release
-moved=""
-for m in $(py dependents.py core); do
-  old=$(py next_version.py current "$m"); new="${old%.*}.$(( ${old##*.} + 1 ))"
-  py next_version.py start "$m" "$new" patch --why "Takes the new version of what it requires; nothing else changes." \
-      --approver "Your ontology owner" --where "approvals/your-file.md" --words "The sentence that approved it."
-  py build_module.py "$m" --write
-  moved="$moved $m:$old"
-done
-for pair in $moved; do py next_version.py finish "${pair%:*}" "${pair#*:}"; done
-cd ../../..
+(
+  set -e
+  cd $ONT/release
+  moved=""
+  for m in $(py dependents.py core); do
+    old=$(py next_version.py current "$m"); new="${old%.*}.$(( ${old##*.} + 1 ))"
+    py next_version.py start "$m" "$new" patch --why "Takes the new version of what it requires; nothing else changes." \
+        --approver "Your ontology owner" --where "approvals/your-file.md" --words "The sentence that approved it."
+    py build_module.py "$m" --write
+    moved="$moved $m:$old"
+  done
+  for pair in $moved; do py next_version.py finish "${pair%:*}" "${pair#*:}"; done
+)
 ```
 
 ## Keep the catalog, regression and projection current
