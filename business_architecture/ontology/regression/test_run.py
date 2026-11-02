@@ -1,4 +1,4 @@
-"""Tests for run.py: expected.csv covers the 44 locked questions, every query file is
+"""Tests for run.py: expected.csv covers the 50 locked questions (44 until 2026-11-02), every query file is
 used, the release passes, and a broken graph fails."""
 import os
 import re

@@ -171,7 +171,7 @@ tg:layer a owl:ObjectProperty ;
 tg:designedAs a owl:ObjectProperty ;
     rdfs:label "designed as"@en ;
     rdfs:domain tg:TechnicalObject ;
-    skos:definition "The design in data-product that the technical object builds: a platform table (a concept) or an agent (a PROV software agent) of the data-product module. No range is stated, because the two designs are of different kinds. A built object with none was built without a recorded design."@en ;
+    skos:definition "The design in data-product that the technical object builds: a platform table or a data product (both concepts) or an agent (a PROV software agent) of the data-product module. No range is stated, because the designs are of different kinds. A built object with none was built without a recorded design."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0112, items 1 (is it built as designed; who answers for it) and 3"@en .
 
 tg:implements a owl:ObjectProperty ;

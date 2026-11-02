@@ -93,7 +93,7 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 | `step4/evidence-discipline.md` | The approved Step 4 evidence discipline text, moved word for word from the playbook on 2026-10-05 |
 | `lpg-projection/` | The superseded v2.2 copy of the ontology-to-LPG projection guideline, kept as evidence of what Step 12 followed (EPM-DEC-001-0020, 0021). Since 2026-10-23 the method is the `ontology-to-lpg` skill in personal-agent-skills, at `da75164`; the folder's README points to it (EPM-DEC-001-0095) |
 | `../domain/decisions/` | Project decision records (EPM-DEC-001) |
-| `competency-questions.md` | The 44-question acceptance baseline, tested by the Step 11 regression in `regression/` |
+| `competency-questions.md` | The 50-question acceptance baseline (44 until 2026-11-02, when the technical-graph module's six were added: EPM-DEC-001-0112), tested by the Step 11 regression in `regression/` |
 | `projection/` | Step 12: the pipeline that projects the ontology into Neo4j, its manifest and its last report (EPM-DEC-001-0036) |
 | `validation/` | Step 9 shapes run against the released modules: controlled values (EPM-DEC-001-0035) |
 | `provenance/` | The Step 6 definition-to-run pattern: the shapes a consumer's run must meet, an example run and tests (EPM-DEC-001-0034) |
@@ -170,7 +170,8 @@ exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
   five releases carry the pricing measures' bindings, prices, platform tables and lineage (EPM-DEC-001-0097, 0100). *2026-10-26:* system 1.3.0, party 1.3.0 and integration 2.3.0 carry the internal systems' descriptions, drafted from the repository (EPM-DEC-001-0103). Lane 1.1.0, organization 2.1.0 and value-stream 1.2.0 carry the deferred qSKOS top-concept fixes (EPM-DEC-001-0098, item 5; EPM-DEC-001-0106). core 2.4.0 renames the 25 processes that shared seven names (MPC-P12) and carries core's qSKOS fixes (EPM-DEC-001-0098, 0105). System 1.4.0 and party 1.4.0 carry MPC-P11, which the decision owner accepted, and party's shape message without an apostrophe (EPM-DEC-001-0104). *2026-10-27:* party 2.0.0 (a major the decision owner approved), system 1.5.0 and integration 2.4.0 carry the decision owner's customer inputs of that day (EPM-DEC-001-0108). ref-mpc 1.3.0 adds MPC's brands Marathon, ARCO and Tesoro, which the decision owner confirmed as brand values later that day (EPM-DEC-001-0108, amendment of 2026-10-27). *2026-10-28:* organization 2.2.0 carries the decision owner's close-out answers: PSM expanded as Process Safety Management, and the Crude RFC reading and Business Planning and Analysis's definition confirmed (EPM-DEC-001-0045, amendment of 2026-10-28). Party 2.1.0 defines Drop Tank, GasBuddy and the DTN File Server from their vendors' own published words (Drop Tank's from a 2018 press release) and notes the decision owner's belief that Polaris is bought; integration 2.5.0 tiers the three new sources (EPM-DEC-001-0099, amendment of 2026-10-28).
 - **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);
   the competency regression has 43 questions answerable, 0 partial,
-  0 waiting and 1 parked (Q17, EPM-DEC-001-0086); the Neo4j projection of every released package passes,
+  0 waiting and 1 parked (Q17, EPM-DEC-001-0086) (*2026-11-02:* 49 answerable, with questions 45 to 50 of the
+  technical-graph candidate answered on its example graph, EPM-DEC-001-0112); the Neo4j projection of every released package passes,
   with no rule gap listed (16 before value-stream 1.1.0, 14 before party
   1.1.0, 6 before kpi 1.1.1, 5 before integration 2.0.0)
   (EPM-DEC-001-0036).

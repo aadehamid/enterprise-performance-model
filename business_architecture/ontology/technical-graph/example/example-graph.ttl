@@ -4,6 +4,7 @@
 @prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
 @prefix layer: <https://w3id.org/lsc/ontology/modules/data-product/layer/> .
 @prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix ns1: <https://w3id.org/lsc/ontology/modules/authority/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix result: <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -122,17 +123,20 @@
     tg:routesTo <urn:pricing-demo:tech:agent/crack-spread-price-analytics>,
         <urn:pricing-demo:tech:agent/executive-summary-kpis-analytics> .
 
-<urn:example:technical-graph:design/gold-table> a skos:Concept,
-        dp:PlatformDataProduct,
-        dp:PlatformTable ;
-    dcterms:isPartOf <urn:example:technical-graph:product/example-data-product> ;
-    skos:prefLabel "An example gold table, designed as part of the customer master"@en ;
-    dp:layer layer:gold .
-
 <urn:example:technical-graph:product/example-data-product> a skos:Concept,
         dp:DataProduct ;
+    dcterms:source <urn:example:technical-graph:source/example-graph> ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/data-product/line/marketing-sales> ;
+    skos:definition "A data product that exists only in this example, so that question 49 has an owner to find."@en ;
+    skos:inScheme dp:DataProducts ;
+    skos:notation "example-data-product"^^xsd:string ;
     skos:prefLabel "An example data product"@en ;
+    dp:portfolioStatus <https://w3id.org/lsc/ontology/modules/data-product/status/active> ;
     dp:producedBy <https://w3id.org/lsc/ontology/process/CM-1-1-2-1> .
+
+<urn:example:technical-graph:source/example-graph> a dcterms:BibliographicResource ;
+    dcterms:title "EPM-DEC-001-0112, item 4: the technical-graph module's example graph, test data"@en ;
+    ns1:evidenceTier <https://w3id.org/lsc/ontology/modules/authority/tier/process-authority> .
 
 <urn:pricing-demo:tech:agent/crack-spread-price-analytics> a tg:Agent ;
     tg:binds <urn:pricing-demo:tech:object/ontology_definitions.crack_spread_definitions_vw>,
@@ -273,7 +277,7 @@
 
 <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact> a tg:Table ;
     tg:definedIn "sql/04_gold.sql" ;
-    tg:designedAs <urn:example:technical-graph:design/gold-table> ;
+    tg:designedAs <urn:example:technical-graph:product/example-data-product> ;
     tg:lastRefresh "2026-10-29T17:01:27+00:00"^^xsd:dateTime ;
     tg:layer layer:gold ;
     tg:name "gold_commercial_core.mips_mpr_executive_summary_fact" ;

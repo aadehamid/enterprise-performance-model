@@ -1,6 +1,6 @@
 # Step 11: competency regression
 
-The 44 competency questions (`../competency-questions.md`, locked 2026-09-18) are the ontology's acceptance test. EPM-DEC-001-0019 defines "all green": every question is answerable from the published release, or parked by a recorded decision. For questions 40 and 43, only the part the graph supplies is tested: every live concept has one definition (Q40 excludes the retired concept, the concept on implementation hold, and CM-1-1-3-5-3, the intentional business-evidence hold), and none has a second copy (Q43).
+The 50 competency questions (`../competency-questions.md`, locked 2026-09-18; questions 45 to 50, the technical-graph module's, locked 2026-11-02, EPM-DEC-001-0112) are the ontology's acceptance test. EPM-DEC-001-0019 defines "all green": every question is answerable from the published release, or parked by a recorded decision. For questions 40 and 43, only the part the graph supplies is tested: every live concept has one definition (Q40 excludes the retired concept, the concept on implementation hold, and CM-1-1-3-5-3, the intentional business-evidence hold), and none has a second copy (Q43).
 
 - `expected.csv` gives each question a status:
   - `answerable`: its queries run on the release.

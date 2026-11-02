@@ -138,6 +138,42 @@ class Shapes(unittest.TestCase):
         orchestrator = self.first(TG.Orchestrator)
         self.assertFalse(self.broken(lambda g: g.remove((orchestrator, TG.routesTo, None))))
 
+    def test_a_check_result_with_two_labels_fails(self):
+        result = URIRef("https://w3id.org/lsc/ontology/modules/technical-graph/check-result/pass")
+        self.assertFalse(self.broken(lambda g: g.add((result, SKOS.prefLabel, Literal("Passed", lang="en")))))
+
+    def test_a_table_copying_two_databases_fails(self):
+        table = next(t for t in sorted(EXAMPLE.subjects(TG.copies, None)))
+        other = next(d for d in sorted(EXAMPLE.subjects(RDF.type, TG.SourceDatabase)) if (table, TG.copies, d) not in EXAMPLE)
+        self.assertFalse(self.broken(lambda g: g.add((table, TG.copies, other))))
+
+    def test_an_agent_bound_to_a_non_data_object_fails(self):
+        agent = self.first(TG.Agent)
+        self.assertFalse(self.broken(lambda g: g.add((agent, TG.binds, self.first(TG.PipelineStep)))))
+
+    def test_two_producing_steps_fail(self):
+        table = next(t for t in sorted(EXAMPLE.subjects(TG.producedBy, None)) if (t, RDF.type, TG.Table) in EXAMPLE)
+        other = next(s for s in sorted(EXAMPLE.subjects(RDF.type, TG.PipelineStep)) if (table, TG.producedBy, s) not in EXAMPLE)
+        self.assertFalse(self.broken(lambda g: g.add((table, TG.producedBy, other))))
+
+    def test_a_design_that_is_neither_a_concept_nor_an_agent_fails(self):
+        table = self.first(TG.Table)
+        self.assertFalse(self.broken(lambda g: (g.remove((table, TG.designedAs, None)),
+                                                g.add((table, TG.designedAs, URIRef("urn:example:not-a-design"))))))
+
+    def test_a_check_testing_nothing_fails(self):
+        check = self.first(TG.QualityCheck)
+        self.assertFalse(self.broken(lambda g: g.remove((check, TG.checks, None))))
+
+    def test_a_refresh_that_is_not_a_time_fails(self):
+        table = next(t for t in sorted(EXAMPLE.subjects(TG.lastRefresh, None)))
+        self.assertFalse(self.broken(lambda g: (g.remove((table, TG.lastRefresh, None)),
+                                                g.add((table, TG.lastRefresh, Literal("yesterday"))))))
+
+    def test_a_database_on_two_hosts_fails(self):
+        db = next(d for d in sorted(EXAMPLE.subjects(TG.hostedOn, None)))
+        self.assertFalse(self.broken(lambda g: g.add((db, TG.hostedOn, URIRef("urn:example:another-host")))))
+
     def test_a_name_in_two_forms_fails(self):
         table = self.first(TG.Table)
         self.assertFalse(self.broken(lambda g: g.add((table, TG.name, Literal("another name")))))

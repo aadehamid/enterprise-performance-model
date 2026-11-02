@@ -1,4 +1,4 @@
-# Q49 Who answers for it: the role accountable for the process that produces the data product a built object's design belongs to.
+# Q49 Who answers for it: the role accountable for the process that produces the data product a built object is designed as, or its design belongs to.
 PREFIX tg: <https://w3id.org/lsc/ontology/modules/technical-graph/>
 PREFIX dp: <https://w3id.org/lsc/ontology/modules/data-product/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
@@ -6,7 +6,7 @@ PREFIX orgm: <https://w3id.org/lsc/ontology/modules/organization/>
 PREFIX raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/>
 SELECT ?object ?design ?product ?process ?role WHERE {
   ?object tg:designedAs ?design .
-  ?design dcterms:isPartOf ?product .
+  ?design dcterms:isPartOf? ?product .
   ?product dp:producedBy ?process .
   ?assignment orgm:forProcess ?process ;
               orgm:raciLevel raci:accountable ;
