@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (the decision owner, 2026-11-02, for the module, its two views, the customer model's place and the five competency questions; the build choices delegated under EPM-DEC-001-0028; the module's `1.0.0` stays with the decision owner, not delegated: *2026-11-02:* approved by the decision owner, "I approve logical-model 1.0.0,", amendment below) |
+| Status | Decided (the decision owner, 2026-11-02, for the module, its two views, the customer model's place and the five competency questions; the build choices delegated under EPM-DEC-001-0028; the module's `1.0.0` stays with the decision owner, not delegated: *2026-11-02:* approved by the decision owner, "I approve logical-model 1.0.0,", amendment below; *2026-11-02:* how the four stores hold the release's logical models, decided by the decision owner, amendment "the stores") |
 | Date | 2026-11-02 |
 | Questions | Claude asked thirteen questions in two rounds, each with a recommendation, about a logical data model the decision owner exported from ER Studio Data Architect |
-| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-logical-model.md`, blocks 1 to 6; `answers-2026-11-02-logical-model-release.md`, blocks 1 and 2 |
+| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-logical-model.md`, blocks 1 to 6; `answers-2026-11-02-logical-model-release.md`, blocks 1 and 2; `answers-2026-11-02-logical-model-stores.md`, blocks 1 to 3 |
 
 ## Context
 
@@ -65,3 +65,22 @@ The decision owner approved the module's first release (`answers-2026-11-02-logi
 > I dont have the expansion for this yet.
 
 The approval came before Claude sent the one-page summary. Claude then showed the 16 doubtful links with a recommendation for each, and the decision owner settled them (block 2): "accept the recommendations." Fourteen links are asserted as drafted; the concept links of two entities are dropped (one named only by its table name, one carrying another entity's description), so they keep only their source system. All 44 entities' rows are asserted, and none is doubtful. What TDL stands for is not known yet ("I dont have the expansion for this yet."), so the TDL exchange entity keeps the source system its name gives. To link a lookup table to a whole `party` code list, `lm:describes` also accepts a `party` concept scheme. `cut.sh --augment` names this file and these words as the package's approval.
+
+## Amendment, 2026-11-02 (later): the stores
+
+Claude asked whether the release's logical models load into the four ontology stores. It recommended that Jena and Delta hold every graph and that Neo4j and AuraDB hold the vocabulary and the layer, not ER Studio's export. The decision owner agreed (`answers-2026-11-02-logical-model-stores.md`, block 1), then asked:
+
+> does this mean Neo4j and Aura will not have logical model. Why do you think this is good?
+
+Claude answered that without the export each entity would be a node with links and no name, description, attributes or keys, and that its two cautions were weak: the export is small next to the ontology, and the projection's round-trip checks need not read it if it sits apart. It recommended the full model as its own subgraph instead. The decision owner answered (block 3):
+
+> yes, go with the full model as its own subgraph
+
+So, when a release holds `logical-model`:
+
+1. **Jena and Delta** hold every graph of the package as a named graph: the module's vocabulary, and each model's ER Studio export and annotation layer.
+2. **Neo4j and AuraDB** hold the module's vocabulary through the projection, like every other package, and each model in full as its own subgraph, apart from the ontology's `Resource` nodes, as the technical graph is: the model, each entity with its name and description, its attributes and keys, and the relationships between entities. Each entity has an edge to each ontology node its layer links it to (its source system, the `party` term it describes and what implements it in `data-product`).
+3. **The ontology's round-trip checks do not read the subgraph**, so they stay exact. A drift check compares the subgraph with the package's graphs, as the technical graph's does.
+
+How the subgraph is labelled and loaded is Claude's build choice, delegated under EPM-DEC-001-0028.
+
