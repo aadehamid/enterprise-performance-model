@@ -447,7 +447,8 @@ def test_the_agent_fails_only_in_a_decision_package(tmp_path):
 
 
 @pytest.mark.parametrize("text", ["def test_bugbot_380_x(): pass", "each_edge_codex_found", "built_by_Ada_Lovelace_here", "pbf_margin",
-                                  "Phillips-66-Market-Indicators.pdf", "a U.S. refining peer, Phillips"])
+                                  "Phillips-66-Market-Indicators.pdf", "a U.S. refining peer, Phillips", "test_pi_review.py",
+                                  "scripts/test_rex_review.py", "gpt_4_eval", "cursor_agent_380", "kailey_plan"])
 def test_a_name_joined_by_an_underscore_or_a_hyphen_fails(tmp_path, text):
     clean(tmp_path)
     (tmp_path / "doc.md").write_text(text + "\n")

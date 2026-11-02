@@ -44,7 +44,7 @@ A new cut is a small edit: `manifest.py` holds its facts in one place (`RELEASE_
   release mode (`frozen_sources.py`, `build_module.package_folder`, `scripts/conftest.py`), merged into `main` by
   pull request #460 on 2026-11-01.
 - `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing), record number
-  (full or short form), issue number, left-out document, agent or review tool, agent-work phrase or double-underscore graph name; names match whole words;
+  (full or short form), issue number, left-out document, agent or review tool, agent-work phrase or double-underscore graph name; a name matches when no letter or digit touches it, so it also fails inside an identifier such as `test_x_y`, and "Adam" or "metadata" do not match;
   binaries and base64 data are read as the printable text inside them.
 - `validate.py`, `stores.py` and `snippets.py` are the validation: each row judges what it finds (a planted
   violation fails it), every command exits nonzero on a failure, and no output file holds a password: every

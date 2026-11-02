@@ -30,14 +30,14 @@ import vocabulary as V  # noqa: E402
 # Agents and review tools the build used, and the words for what they did (the decision's amendment of 2026-11-01).
 # "Delegation" stays where it is a business term: the delegation of authority, the documented delegation.
 # The boundary is "no letter or digit", not \b, because an underscore is a word character: test_bugbot_380 must fail.
-AGENT_NAMES = (r"(?<![A-Za-z0-9])(?:claude|codex|bugbot|kimi|anthropic|chatgpt|herdr|openai|copilot|gemini|gpt-\d[\w.-]*|pi-review|rex-review)(?![A-Za-z0-9])"
+AGENT_NAMES = (r"(?<![A-Za-z0-9])(?:claude|codex|bugbot|kimi|anthropic|chatgpt|herdr|openai|copilot|gemini|gpt[-_ ]\d[\w.-]*|pi[-_ ]review|rex[-_ ]review)(?![A-Za-z0-9])"
                r"|\bAGENTS\.md\b|\bPi,? round\b|\bPi review")
 AGENT_WORK = (r"\bretro of \d{4}|\bnight[ _]brief\b|\b[Ii]ndependent review|\b[Rr]eview rounds?\b|\b[Rr]ound \d+,? (?:on|finding)|\(findings? \d+|\bPR verdict|\bapproval agent\b"
               r"|\b[Uu]nder the delegation\b(?! of\b)|\b[Uu]nder their (?:recorded )?delegation\b|\b(?:expert|owner)'s delegation\b"
-              r"|\b[Dd]elegated under\b|\bdelegate as described\b|\bcoding agents?\b|\bKailey\b")
+              r"|\b[Dd]elegated under\b|\bdelegate as described\b|\bcoding agents?\b|(?<![A-Za-z0-9])(?i:kailey)(?![A-Za-z0-9])")
 # Each pattern with its reason. The owner's names and handle come from owner.py's configuration, never from this file.
-# A name matches as a whole word only ("Ada" is a hit; "Adam", "metadata" and "adapt" are not); a handle may hold
-# punctuation and sit inside an identifier, so the boundary is "no letter or digit on either side" rather than \b.
+# A name matches when no letter or digit touches it ("Ada" and "by_Ada_here" are hits; "Adam", "metadata" and "adapt"
+# are not). A handle may hold punctuation, and \b treats an underscore as a word character, so \b will not do.
 OWNER = r"(?<![A-Za-z0-9])(?:" + "|".join(re.escape(n) for n in _owner.owner_names()) + r")(?![A-Za-z0-9])"
 PEERS = (r"valero|phillips[-_\s]?66|\bphillips\b|(?<![A-Za-z0-9])pbf(?![A-Za-z0-9])|hf\s?sinclair|hollyfrontier|par\s+pacific"
          r"|(?<![A-Za-z0-9])delek(?![A-Za-z0-9])|(?<![A-Za-z0-9])cvr(?![A-Za-z0-9])|chevron|exxon")
@@ -63,7 +63,7 @@ PATTERNS = [
     ("an issue or pull request number", re.compile(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+|(?<![&\w-])#\d{3}\b(?![\da-fA-F])")),
     ("the graph's double-underscore separator", re.compile(r"\b[a-z][a-z0-9]*__[A-Za-z]")),
     ("an agent or review tool named", re.compile(AGENT_NAMES, re.I)),
-    ("the agent called Cursor", re.compile(r"\bCursor\b|\bcursor/|/cursor\b|\bcursor-agent\b|\.cursor/")),
+    ("the agent called Cursor", re.compile(r"\bCursor\b|\bcursor/|/cursor\b|(?<![A-Za-z0-9])cursor[-_]agent(?![A-Za-z0-9])|\.cursor/")),
     ("a pull request of the build", re.compile(r"\bPRs\b|(?<!\.\d )(?<!\()\bPR\b(?! campaigns?\b| program\b| all\b|\)| strategy\b)|\b[Pp]ull requests?\b")),
     ("the work of an agent", re.compile(AGENT_WORK)),
     ("the agent, in a decision package", re.compile(r"\b[Tt]he agent\b")),

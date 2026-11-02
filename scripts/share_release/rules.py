@@ -280,7 +280,7 @@ def rule_peers(text, ctx):
     text, k = _count(r"\bthe Sinclair brand\b", "its brand", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")'s\b", "a U.S. refining peer's", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")\b", "a U.S. refining peer", text); n += k
-    text, k = _count(r"(a U\.S\. refining peer), Phillips\b", r"\1", text); n += k  # a headline that names the second peer without its number
+    text, k = _count(r"(threaten to follow a U\.S\. refining peer), Phillips\b", r"\1", text); n += k  # a headline that names the second peer without its number
     # The tickers: a list ("PSX, VLO and MPC" keeps MPC), a ticker after a name ("a U.S. refining peer (VLO)"), one alone.
     text, k = _count(r"\b(?:a U\.S\. refining peer|U\.S\. refining peers) \(" + TICKER_OR_DK + r"\)", "a U.S. refining peer", text); n += k
     text, k = _count(r"\b" + TICKER_OR_DK + r"(?:" + TICKER_SEP + TICKER_OR_DK + r")+(?:'s)?\b", "U.S. refining peers", text); n += k
@@ -396,7 +396,7 @@ AGENT_TEXT = [
     (r" \(Claude\)", ""),
     (r"\bClaude Code session of\b", "session of"),
     (r"(?:<strong>)?\*{0,2}Built with:\*{0,2}(?:</strong>)? Kailey and Claude Code\.\s*", ""),
-    (r"\bKailey\b", "a subject matter expert"),
+    (r"(?<![A-Za-z0-9])(?i:kailey)(?![A-Za-z0-9])", "a subject matter expert"),
     # The skills' instructions: what to do, with the tool left open.
     (r"\(skills, CLAUDE\.md, AGENTS\.md\)", "(skills and instruction files)"),
     (r"\(a skill, CLAUDE\.md, AGENTS\.md, a prompt\)", "(a skill, an instruction file, a prompt)"),
