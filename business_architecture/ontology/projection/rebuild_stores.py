@@ -11,7 +11,8 @@ The steps, each stopping the run when it fails: preflight, empty, load, record; 
 aura-test with AuraDB too (a Databricks job tries to reach AuraDB with the login file EPM_AURA_ENV names; a failed probe
 is a result, which collect records as the check databricks-reaches-auradb), then collect, tech-build, tech-compare and
 lineage, in that order, because Unity Catalog's lineage keeps only recent builds; then tech-load, tech-sync, mark and
-check. Without Databricks the technical graph loads from what the release ships.
+check. Without Databricks the technical graph loads from what the release ships. With Databricks and no AuraDB,
+tech-compare fails on a copy that has never run aura-test, because the shipped graph holds that check.
 
 Exit 0: every step passed. 1: a step failed, and the last line names it. 2: the input is wrong, and each problem is named
 before anything changes. It writes <out>-rebuild-report.json (steps, status, seconds, log file; no value from a login)

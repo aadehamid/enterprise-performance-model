@@ -13,8 +13,12 @@ Each row runs against test stores named in the --env file, never the loaded ones
     DRIVER_PROJECT=lpg-validate
     DRIVER_OUT=<folder>              the driver's output folder (outside both trees)
     AURA_ENV=~/.config/neo4j/aura.env        the owner's AuraDB, authorized for this run (the brief); omit to skip the copy step
+                                             and the tech-graph row's AuraDB probe
     DATABRICKS_ENV=~/.config/databricks/epm.env
     DATABRICKS_TABLE=epm_triples_validate    the ontology's test table
+    DATABRICKS_TRIPLES_TABLE_FULL=workspace.epm_ontology.epm_triples_validate   the same table by its full name, for the
+                                             demo (EPM_TRIPLES); unset, the demo reads epm.env's table, and the tech-graph
+                                             row's compare accepts no difference
     DEMO_CATALOG=epm_release_validate_demo                the demo's test catalog
     DEMO_PG_PORT=55433                       the demo's Postgres test container port (compose project DEMO_PROJECT)
     DEMO_PROJECT=pricing-validate
