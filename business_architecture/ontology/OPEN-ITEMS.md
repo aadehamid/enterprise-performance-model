@@ -1,6 +1,6 @@
 # What is open on the ontology
 
-The ontology is done (EPM-DEC-001-0107), and this page lists what stays open on it. Each row points to the record that holds the detail; where they differ, the record wins. It leaves out the pricing demo's work and the repository's own tooling. Last checked on 2026-10-31.
+The ontology is done (EPM-DEC-001-0107), and this page lists what stays open on it. Each row points to the record that holds the detail; where they differ, the record wins. It leaves out the pricing demo's work and the repository's own tooling. Last checked on 2026-10-31; the technical-graph row was added on 2026-11-02.
 
 ## Decisions for the decision owner
 
