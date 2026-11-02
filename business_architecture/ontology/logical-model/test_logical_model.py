@@ -212,6 +212,19 @@ class Build(unittest.TestCase):
                       os.path.join(self.tmp, "out"))
 
 
+    def test_a_reused_attribute_described_identically_builds_and_one_described_differently_fails(self):
+        # The skill's logical-model.md, rule 6: a reused term both models describe identically is not a collision.
+        shared = '\n<https://www.erstudio.com/semanticmodel/shared_attribute> a owl:DatatypeProperty ; rdfs:label "{}" .\n'
+        other = read(EXPORT).replace("example_core_", "other_core_").replace("2026-01-01", "2026-02-01")
+        build = lambda label: blm.build(
+            [(self.write("first.ttl", read(EXPORT) + shared.format("Shared")), self.write("a.csv", self.links()), SLUG, TITLE),
+             (self.write("second.ttl", other + shared.format(label)), self.write("b.csv", self.links(slug="other-model")),
+              "other-model", "Another")], os.path.join(self.tmp, label))
+        build("Shared")
+        with self.assertRaises(blm.BuildError):
+            build("Different")
+
+
 class Example(unittest.TestCase):
     def test_the_example_is_current(self):
         files, _ = blm.build([(EXPORT, LINKS, SLUG, TITLE)], EXAMPLE)
