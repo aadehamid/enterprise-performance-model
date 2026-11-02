@@ -1,0 +1,11 @@
+# Q54 Which attributes have no business term: each attribute of a logical model's entity with no glossary term, with ER Studio's flag that says the link is missing.
+PREFIX lm: <https://w3id.org/lsc/ontology/modules/logical-model/>
+PREFIX er: <https://www.erstudio.com/semanticmodel/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?model ?entity ?attribute ?linkMissing WHERE {
+  ?entity lm:inModel ?model .
+  ?property rdfs:domain ?entity ;
+            er:sourceAttribute ?attribute .
+  FILTER NOT EXISTS { ?attribute er:businessTerm ?term }
+  OPTIONAL { ?attribute er:externalTermLinkMissing ?linkMissing }
+}

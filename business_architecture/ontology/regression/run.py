@@ -1,6 +1,6 @@
 """Step 11 regression: run the competency-question queries against a release (EPM-DEC-001-0019).
 
-expected.csv gives each of the 50 questions in competency-questions.md a status:
+expected.csv gives each of the 55 questions in competency-questions.md a status:
 answerable (its queries must run), partial (the graph part's queries must run;
 waits_for names the rest), waits:<step or decision> (no query yet), or
 parked:<decision> (parked by a recorded decision, which counts as green; no query). A query
@@ -37,6 +37,11 @@ MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl
     + [os.path.join(HERE, "..", "party", n) for n in ("vocabulary.ttl", "code-lists.ttl", "systems.ttl", "lifecycle.ttl")] \
     + [os.path.join(HERE, "..", "ref-mpc", "reference-parties.ttl")] \
     + [os.path.join(HERE, "..", "technical-graph", n) for n in ("vocabulary.ttl", os.path.join("example", "example-graph.ttl"))]  # Step 7 overlays and rules; Steps 5 to 7: the `party` module; MPC and MPLX as parties (EPM-DEC-001-0075); the technical-graph module and its example graph, test data that answers questions 45 to 50 (EPM-DEC-001-0112)
+# The logical-model module and its made-up example model, test data that answers questions 51 to 55 (EPM-DEC-001-0113):
+# ER Studio's export as it is and the annotation layer, both built by build_logical_model.py.
+MODULES += [os.path.join(HERE, "..", "logical-model", n) for n in (
+    "vocabulary.ttl", os.path.join("example", "example-logical-model.erstudio.ttl"),
+    os.path.join("example", "example-logical-model.layer.ttl"))]
 QUESTIONS = os.path.join(HERE, "..", "competency-questions.md")
 
 

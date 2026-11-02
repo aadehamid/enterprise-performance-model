@@ -730,10 +730,10 @@ RETURN m.skos__prefLabel AS measure,
 </section>
 
 <h2 id="questions">The competency questions</h2>
-<p class="lead">These 50 questions are the ontology's acceptance test: if the model cannot answer one, the model is incomplete, and not the question. The decision owner locked the first 44 on 2026-09-18, before modelling, and questions 45 to 50, the technical-graph module's, on 2026-11-02 (EPM-DEC-001-0112). 49 are answerable today, questions 45 to 50 on the module's example graph, and one, question 17 (who owns each concept's meaning), is parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).</p>
+<p class="lead">These 55 questions are the ontology's acceptance test: if the model cannot answer one, the model is incomplete, and not the question. The decision owner locked the first 44 on 2026-09-18, before modelling, questions 45 to 50, the technical-graph module's, on 2026-11-02 (EPM-DEC-001-0112), and questions 51 to 55, the logical-model module's, the same day (EPM-DEC-001-0113). 54 are answerable today, questions 45 to 50 on the technical-graph module's example graph and 51 to 55 on the logical-model module's made-up example model, and one, question 17 (who owns each concept's meaning), is parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).</p>
 <p>Each answerable question has queries in <code>regression/queries/</code>, and <code>scripts/check.sh</code> runs them on every push. To ask one yourself, run this from <code>business_architecture/ontology/regression</code>:</p>
 <pre><code># from business_architecture/ontology/regression
-uv run --with rdflib python ask.py                   # list the 73 queries, each named for its question
+uv run --with rdflib python ask.py                   # list the 80 queries, each named for its question
 uv run --with rdflib python ask.py q36-the-crack     # ask one</code></pre>
 <h3>I. Process structure &amp; navigation</h3>
 <div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
@@ -817,6 +817,14 @@ uv run --with rdflib python ask.py q36-the-crack     # ask one</code></pre>
 <tr><td>48</td><td data-k="Asks">Is it built as designed?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
 <tr><td>49</td><td data-k="Asks">Who answers for it?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
 <tr><td>50</td><td data-k="Asks">Which agent or report answers for this measure?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
+</tbody></table></div>
+<h3>XII. Logical models — how a modelling tool's design links to the ontology</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>51</td><td data-k="Asks">Which logical entities hold data about a party concept?</td><td data-k="Status">Answerable, on the module's made-up example model</td></tr>
+<tr><td>52</td><td data-k="Asks">Which source system does each entity come from, and which entities does each system feed?</td><td data-k="Status">Answerable, on the module's made-up example model</td></tr>
+<tr><td>53</td><td data-k="Asks">Which attributes identify a customer in each system (primary and alternate keys)?</td><td data-k="Status">Answerable, on the module's made-up example model</td></tr>
+<tr><td>54</td><td data-k="Asks">Which attributes stand for a business term, and which have none?</td><td data-k="Status">Answerable, on the module's made-up example model</td></tr>
+<tr><td>55</td><td data-k="Asks">Which data product or platform table implements each entity, and which have none?</td><td data-k="Status">Answerable, on the module's made-up example model</td></tr>
 </tbody></table></div>
 <p class="note">The list comes from <code>competency-questions.md</code>, which holds the wording and sources, and each status from <code>regression/expected.csv</code>.</p>
 

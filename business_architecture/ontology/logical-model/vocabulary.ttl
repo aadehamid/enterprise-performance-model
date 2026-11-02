@@ -1,0 +1,39 @@
+# The logical-model module's vocabulary (EPM-DEC-001-0113): a named logical data model exported from a modelling
+# tool, and the annotations that link the tool's own entities to the ontology. The export itself is kept as the tool
+# wrote it, in the tool's namespace, in its own graph; these annotations sit in a separate layer on the tool's IRIs.
+# They are annotation properties, so the tool's entities stay plain OWL classes and nothing is re-minted. Its five
+# competency questions are 51 to 55.
+@prefix lm: <https://w3id.org/lsc/ontology/modules/logical-model/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# ---- Class ----
+
+lm:LogicalModel a owl:Class ;
+    rdfs:label "logical model"@en ;
+    skos:definition "A named logical data model exported from a data modelling tool, such as ER Studio Data Architect: a set of entities, their attributes, keys and relationships, designed one level above the tables a data platform builds. Each model is one individual of this class, and the entities of its export belong to it."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0113, decisions 3 and 4"@en .
+
+# ---- Annotations the layer puts on the modelling tool's entities ----
+
+lm:inModel a owl:AnnotationProperty ;
+    rdfs:label "in model"@en ;
+    skos:definition "The logical model an entity of an export belongs to. The subject is the modelling tool's own entity IRI, found from the tool's identifier of the entity at each build; the value is a logical model. Every entity of a model has exactly one."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0113, decisions 4 and 5"@en .
+
+lm:sourceSystem a owl:AnnotationProperty ;
+    rdfs:label "source system"@en ;
+    skos:definition "The system whose records the entity holds data from: a system of the system module, or a customer system of the party module, which says where the two are the same system. It is drafted from the entity's name."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0113, decisions 4 and 8"@en .
+
+lm:describes a owl:AnnotationProperty ;
+    rdfs:label "describes"@en ;
+    skos:definition "The concept or class of the party module that the entity holds data about, such as a customer account. Asserted only where the entity's name and description make the link clear; a doubtful link goes to the decision owner instead."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0113, decisions 4 and 8"@en .
+
+lm:implementedBy a owl:AnnotationProperty ;
+    rdfs:label "implemented by"@en ;
+    skos:definition "The platform table or data product of the data-product module that builds the entity on the data platform. An entity with none has no recorded implementation."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0113, decisions 4 and 9 (question 55)"@en .

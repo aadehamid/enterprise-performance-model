@@ -1,0 +1,4 @@
+model,erstudio_id,source_system,describes,implemented_by,status,evidence
+example-logical-model,101,https://w3id.org/lsc/ontology/modules/system/system/profisee,https://w3id.org/lsc/ontology/modules/party/CustomerAccount,https://w3id.org/lsc/ontology/modules/data-product/product/customer-master,asserted,Made up: the entity's name and description say it is an account
+example-logical-model,102,https://w3id.org/lsc/ontology/modules/party/system/gravitate,https://w3id.org/lsc/ontology/modules/party/ContactPoint,,asserted,Made up: the entity's description says it holds the ways to reach an account
+example-logical-model,103,https://w3id.org/lsc/ontology/modules/system/system/mips,,,doubtful,Made up: no description and no system in the name; listed for the decision owner

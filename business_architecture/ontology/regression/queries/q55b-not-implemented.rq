@@ -1,0 +1,6 @@
+# Q55 Which logical entities have no implementation: no platform table or data product of data-product builds them.
+PREFIX lm: <https://w3id.org/lsc/ontology/modules/logical-model/>
+SELECT ?model ?entity WHERE {
+  ?entity lm:inModel ?model .
+  FILTER NOT EXISTS { ?entity lm:implementedBy ?implementation }
+}

@@ -1,6 +1,6 @@
 # Competency Questions — Baseline
 
-**Status:** Locked 2026-09-18. *2026-11-02:* questions 45 to 50, the technical-graph module's, added and locked by the decision owner (EPM-DEC-001-0112).
+**Status:** Locked 2026-09-18. *2026-11-02:* questions 45 to 50, the technical-graph module's, added and locked by the decision owner (EPM-DEC-001-0112). *2026-11-02:* questions 51 to 55, the logical-model module's, added and locked by the decision owner (EPM-DEC-001-0113).
 **Purpose:** the acceptance test for the ontology. If the model cannot
 answer a question here, the model is incomplete — not the question.
 The Step 11 SPARQL regression in `regression/` tests them.
@@ -140,3 +140,14 @@ live, the same queries run on the technical graph.
 48. Is it built as designed?
 49. Who answers for it?
 50. Which agent or report answers for this measure?
+
+## XII. Logical models — how a modelling tool's design links to the ontology (added 2026-11-02, EPM-DEC-001-0113)
+The logical-model module's questions, locked by the decision owner (EPM-DEC-001-0113, decision 9). Each is
+asked of a logical data model exported from ER Studio Data Architect and its annotation layer. A model's
+export is not ontology content in `main`, so the regression runs them on the module plus a made-up example
+model; the customer model's answers come from the release, which holds it.
+51. Which logical entities hold data about a party concept?
+52. Which source system does each entity come from, and which entities does each system feed?
+53. Which attributes identify a customer in each system (primary and alternate keys)?
+54. Which attributes stand for a business term, and which have none?
+55. Which data product or platform table implements each entity, and which have none?
