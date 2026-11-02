@@ -21,6 +21,12 @@ To understand it, start with `business_architecture/ontology/epm-ontology-guide.
 | `HOW-TO-UPDATE.md` | How to change what you received, with worked commands |
 | `KNOWN-OPEN-ITEMS.md` | What is open, and what was not run on this release |
 
+<!-- augment -->
+## One module from outside these sources
+
+Everything here was built from one set of sources, except one module. `logical-model 1.0.0` holds logical data models exported from ER Studio Data Architect. Their files were kept apart from those sources and added when this release was cut. Each model's export and links file are in `business_architecture/ontology/logical-model/models/`, beside the two graphs built from them: `<model>.erstudio.ttl`, ER Studio's export in ER Studio's own namespace, and `<model>.layer.ttl`, the annotations that link its entities to `party`, `system` and `data-product`. The package is in `business_architecture/ontology/releases/logical-model/1.0.0/`. Its `manifest.json` and `release.json`, at the top of this folder, list each original file under `augment`, with its SHA-256. The ontology's rewrite of its own IRIs applied to the links file; ER Studio's namespace, `https://www.erstudio.com/semanticmodel/`, is ER Studio's and was not changed. The made-up model in `logical-model/example/` is test data. To add a model, see "Add a logical model" in `HOW-TO-UPDATE.md`.
+
+<!-- /augment -->
 ## Before you run anything
 
 - Python 3.12 and [uv](https://docs.astral.sh/uv/) run every script and test with their dependencies.

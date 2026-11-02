@@ -2,7 +2,8 @@
 # The one command that cuts the share release from a main checkout (plan steps 3 to 7, and step 10's zip):
 #
 #   scripts/share_release/cut.sh --epm <main checkout> --skills <skills checkout> --out <folder> \
-#       --env <stores env> [--baseline <main's validate json>] [--store-rows <rows>|all] [--no-cleanroom] [--replace]
+#       --env <stores env> [--baseline <main's validate json>] [--store-rows <rows>|all] [--no-cleanroom] [--replace] \
+#       [--augment <folder> --approval <answers file> --approval-words <words>]
 #
 # In order: export (the allowlist and the rewrite rules); rebuild inside the release; the leak gate; the store
 # rows on the test stores named in --env (the release's own rebuild_stores.py writes its report and
@@ -10,6 +11,14 @@
 # the zip; the clean room on the zip; and, with --baseline, the validation report. Each step writes beside the
 # output folder (<out>-<step>.json or .log). The first failing step stops the cut: a release with a failing
 # check is not cut.
+#
+# --augment <folder> adds files kept outside the repository: each logical model in the folder (<slug>.ttl, ER Studio's
+# export, and <slug>.links.csv) becomes part of a logical-model 1.0.0 package built inside the release, registered as
+# one more module (augment.py). The export copies the files in through the rewrite rules, the rebuild builds and
+# registers the module, release.json and the package's manifest list each outside file with its SHA-256, and the gate,
+# the checks, the comparison and the clone's check run on it. The cut refuses --augment, before anything is removed,
+# until --approval names the decision owner's saved answers file in the checkout's answers folder and
+# --approval-words is a sentence of its body that approves the package. Without --augment the cut is unchanged.
 #
 # What this command does not do, by the plan:
 # - The store rows that need Databricks (projection-driver, demo-live, tech-graph, sync) run only when the
@@ -32,21 +41,28 @@
 # a stalled download, store or daemon is a failed step, never a hung cut.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
-EPM=""; SKILLS=""; OUT=""; ENVF=""; BASELINE=""; CLEANROOM=1; REPLACE=0; STEP_TIMEOUT="${STEP_TIMEOUT:-7200}"; STORE_ROWS="projection-pipeline,underscores,demo-offline,store-map"
+EPM=""; SKILLS=""; OUT=""; ENVF=""; BASELINE=""; CLEANROOM=1; REPLACE=0; AUGMENT=""; APPROVAL=""; APPROVAL_WORDS=""; STEP_TIMEOUT="${STEP_TIMEOUT:-7200}"; STORE_ROWS="projection-pipeline,underscores,demo-offline,store-map"
 ALL_STORE_ROWS="projection-pipeline,underscores,projection-driver,demo-offline,demo-live,tech-graph,sync,store-map"
 while [ $# -gt 0 ]; do
   case "$1" in
     --epm) EPM="$2"; shift 2;; --skills) SKILLS="$2"; shift 2;; --out) OUT="$2"; shift 2;;
     --env) ENVF="$2"; shift 2;; --baseline) BASELINE="$2"; shift 2;; --no-cleanroom) CLEANROOM=0; shift;;
     --store-rows) STORE_ROWS="$2"; shift 2;; --replace) REPLACE=1; shift;;
+    --augment) AUGMENT="$2"; shift 2;; --approval) APPROVAL="$2"; shift 2;; --approval-words) APPROVAL_WORDS="$2"; shift 2;;
     *) echo "unknown option: $1" >&2; exit 2;;
   esac
 done
-[ -n "$EPM" ] && [ -n "$SKILLS" ] && [ -n "$OUT" ] && [ -n "$ENVF" ] || { sed -n '2,12p' "$0"; exit 2; }
+[ -n "$EPM" ] && [ -n "$SKILLS" ] && [ -n "$OUT" ] && [ -n "$ENVF" ] || { sed -n '2,13p' "$0"; exit 2; }
 [ "$STORE_ROWS" = all ] && STORE_ROWS="$ALL_STORE_ROWS"
 [ -n "$STORE_ROWS" ] || { echo "--store-rows names no row; a cut with no store row is not a cut" >&2; exit 2; }
 EPM="$(cd "$EPM" && pwd -P)"; SKILLS="$(cd "$SKILLS" && pwd -P)"; OUT="$(python3 -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$OUT")"
 ENVF="$(cd "$(dirname "$ENVF")" && pwd -P)/$(basename "$ENVF")"
+AUGMENT_ARGS=(); APPROVAL_ARGS=()
+if [ -n "$AUGMENT" ]; then
+  [ -d "$AUGMENT" ] || { echo "refusing --augment $AUGMENT: not a folder" >&2; exit 2; }
+  AUGMENT="$(cd "$AUGMENT" && pwd -P)"; [ -z "$APPROVAL" ] || APPROVAL="$(cd "$(dirname "$APPROVAL")" 2>/dev/null && pwd -P)/$(basename "$APPROVAL")"
+  AUGMENT_ARGS=(--augment "$AUGMENT"); APPROVAL_ARGS=(--approval "$APPROVAL" --approval-words "$APPROVAL_WORDS")
+fi
 export PYTHONDONTWRITEBYTECODE=1
 unset GIT_DIR GIT_INDEX_FILE GIT_WORK_TREE
 
@@ -67,6 +83,10 @@ if [ -e "$OUT" ]; then
   fi
 fi
 python3 -I -c 'import sys; sys.path.insert(0, sys.argv[1]); import owner; owner.owner_names()' "$HERE" || exit 2  # the names, before anything is removed
+if [ -n "$AUGMENT" ]; then  # the folder's models and the decision owner's approval, before anything is removed
+  python3 -I -c 'import sys; sys.path.insert(0, sys.argv[1]); import augment; augment.models(sys.argv[2]); augment.approval(*sys.argv[3:6])' \
+    "$HERE" "$AUGMENT" "$EPM" "$APPROVAL" "$APPROVAL_WORDS" || exit 2
+fi
 LEDGER="$(grep -E '^LEDGER_FILE=' "$ENVF" | tail -1 | cut -d= -f2- || true)"; LEDGER="${LEDGER:-validate-ledger.jsonl}"
 
 uvpy() { uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$@"; }
@@ -81,18 +101,18 @@ sys.exit(1 if not rows or any(not v.get("ok") for v in rows.values()) else 0)
 PY
 }
 
-step "export"; rm -rf "$OUT"; within "$OUT-export.log" python3 -I "$HERE/export.py" --epm "$EPM" --skills "$SKILLS" --out "$OUT" > /dev/null || { tail -20 "$OUT-export.log"; exit 1; }; tail -1 "$OUT-export.log"
-step "rebuild"; within "$OUT-rebuild.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/rebuild.py" --release "$OUT" --epm "$EPM" > /dev/null || { tail -20 "$OUT-rebuild.log"; exit 1; }; tail -1 "$OUT-rebuild.log"
+step "export"; rm -rf "$OUT"; within "$OUT-export.log" python3 -I "$HERE/export.py" --epm "$EPM" --skills "$SKILLS" --out "$OUT" ${AUGMENT_ARGS[@]+"${AUGMENT_ARGS[@]}"} > /dev/null || { tail -20 "$OUT-export.log"; exit 1; }; tail -1 "$OUT-export.log"
+step "rebuild"; within "$OUT-rebuild.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/rebuild.py" --release "$OUT" --epm "$EPM" ${AUGMENT_ARGS[@]+"${AUGMENT_ARGS[@]}"} ${APPROVAL_ARGS[@]+"${APPROVAL_ARGS[@]}"} > /dev/null || { tail -20 "$OUT-rebuild.log"; exit 1; }; tail -1 "$OUT-rebuild.log"
 step "gate"; within "$OUT-gate.log" python3 -I "$HERE/gate.py" "$OUT" > /dev/null || { tail -20 "$OUT-gate.log"; exit 1; }; tail -1 "$OUT-gate.log"
 step "store rows ($STORE_ROWS)"; within "$OUT-stores.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" run --tree "$OUT" --out "$OUT-stores.json" --env "$ENVF" \
   --rows "$STORE_ROWS" > /dev/null || { tail -20 "$OUT-stores.log"; exit 1; }
 rows_ok "$OUT-stores.json" "store rows"
 step "check.sh"; (cd "$OUT" && within "$OUT-check.log" bash scripts/check.sh > /dev/null) || { tail -30 "$OUT-check.log"; exit 1; }; tail -1 "$OUT-check.log"
-step "check.sh from a Git clone"; (within "$OUT-clone.log" python3 "$HERE/clonecheck.py" --release "$OUT" --log "$OUT-clone-check.log" --timeout "$STEP_TIMEOUT" > /dev/null) || { tail -30 "$OUT-clone-check.log"; exit 1; }; tail -1 "$OUT-clone-check.log"
+step "check.sh from a Git clone"; (within "$OUT-clone.log" python3 "$HERE/clonecheck.py" --release "$OUT" --log "$OUT-clone-check.log" --timeout "$STEP_TIMEOUT" ${AUGMENT_ARGS[@]+"${AUGMENT_ARGS[@]}"} > /dev/null) || { tail -30 "$OUT-clone-check.log"; exit 1; }; tail -1 "$OUT-clone-check.log"
 step "tree rows"; within "$OUT-tree.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" run --tree "$OUT" --out "$OUT-tree.json" --env "$ENVF" \
   --rows regression,docs-links,skills-tests,iri-base,gate > /dev/null || { tail -20 "$OUT-tree.log"; exit 1; }
 rows_ok "$OUT-tree.json" "tree rows"
-step "compare"; within "$OUT-compare.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" compare --main "$EPM" --release "$OUT" --out "$OUT-compare.json" > /dev/null || { tail -20 "$OUT-compare.log"; exit 1; }
+step "compare"; within "$OUT-compare.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" compare --main "$EPM" --release "$OUT" --out "$OUT-compare.json" ${AUGMENT_ARGS[@]+"${AUGMENT_ARGS[@]}"} > /dev/null || { tail -20 "$OUT-compare.log"; exit 1; }
 rows_ok "$OUT-compare.json" "comparison"
 step "snippets"; within "$OUT-snippets.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/snippets.py" --tree "$OUT" --out "$OUT-snippets.json" --env "$ENVF" > /dev/null || { tail -20 "$OUT-snippets.log"; exit 1; }; head -1 "$OUT-snippets.log"
 step "gate again"; find "$OUT" -type d \( -name __pycache__ -o -name .pytest_cache -o -name .venv \) -prune -exec rm -rf {} +; within "$OUT-gate2.log" python3 -I "$HERE/gate.py" "$OUT" > /dev/null || { tail -20 "$OUT-gate2.log"; exit 1; }; tail -1 "$OUT-gate2.log"

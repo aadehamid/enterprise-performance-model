@@ -431,7 +431,10 @@ def check(name, g):
     the concepts a module refers to, the pinned organization release for ref-mpc, and the released
     data-product and kpi packages for value-stream and market-data."""
     # advanced=True: SHACL-AF targets such as sh:SPARQLTarget run, as in every other check (EPM-DEC-001-0094).
-    conforms, _, text = validate(validation_graph(name, g), shacl_graph=parse(MODULES[name]["shapes"]), advanced=True)
+    data = validation_graph(name, g)
+    for path in MODULES[name].get("graphs", []):  # a module's own graphs kept as files (graphs, below) are data for its shapes
+        data.parse(os.path.join(ONTOLOGY, path))
+    conforms, _, text = validate(data, shacl_graph=parse(MODULES[name]["shapes"]), advanced=True)
     return conforms, text
 
 
@@ -464,7 +467,7 @@ def catalog(name):
     if m["issued"]:
         g.add((dataset, DCTERMS.issued, Literal(m["issued"], datatype=XSD.date)))
     for fname, media in ((f"{name}.ttl", "text/turtle"), (f"{name}.jsonld", "application/ld+json"),
-                         ("shapes.ttl", "text/turtle")):
+                         ("shapes.ttl", "text/turtle"), *((os.path.basename(p), "text/turtle") for p in m.get("graphs", []))):
         dist = URIRef(f"{base}/{fname}")
         g.add((dataset, DCAT.distribution, dist))
         g.add((dist, RDF.type, DCAT.Distribution))
@@ -482,12 +485,21 @@ def package(name, g):
              "shapes.ttl": shapes.serialize(format="turtle"), "catalog.ttl": catalog(name)}
     with open(os.path.join(ONTOLOGY, "releases", name, "CHANGELOG.md")) as f:
         files["CHANGELOG.md"] = f.read()
+    # "graphs": files the package carries as they are, each in its own graph beside <name>.ttl, such as a logical model's
+    # export and its annotation layer (EPM-DEC-001-0113). No module in main has any; the share release's cut adds the
+    # logical-model module with them (scripts/share_release/augment.py).
+    for path in m.get("graphs", []):
+        with open(os.path.join(ONTOLOGY, path), encoding="utf-8") as f:
+            files[os.path.basename(path)] = f.read()
     files["manifest.json"] = json.dumps({
         "module": name, "version": lab, "release_candidate": m["stage"] is not None,
         "ontology_iri": MODULES_NS + name, "version_iri": f"{MODULES_NS}{name}/{lab}",
         "depends_on": dependencies(name), "decisions": m["decisions"], "triples": len(g),
         "approved_by": None if m["stage"] else {"who": m.get("approver", "The decision owner"), "recorded_in": m["approval"][0],
                                                  **({"words": m["approval"][1]} if SHARE_RELEASE else {})},
+        # "augment": the files from outside the repository the package was built from, each with its SHA-256 (the cut's
+        # --augment folder, EPM-DEC-001-0113); only a module the share release's cut adds has it.
+        **({"augment": m["augment"]} if m.get("augment") else {}),
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
 

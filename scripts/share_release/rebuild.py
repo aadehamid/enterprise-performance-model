@@ -2,12 +2,14 @@
 """Rebuild inside the exported release, so every hash in it is true of the release (plan step 4).
 
     python3 scripts/share_release/rebuild.py --release <exported folder> --epm <main checkout>
+        [--augment <folder> --approval <answers file> --approval-words <words>]
 
 In order: freeze the process map at the commits the core builders read (from the main checkout's Git into
 the release's release/frozen/); set EPM_SHARE_RELEASE so pins move to the newest set; rebuild every module's
 source Turtle from its CSV; rebuild core 2.4.0 and each module's newest package; rebuild the catalog;
 recompute the previous packages' manifest hashes; rebuild the projection manifest; rebuild the generated
-pages; then verify each builder. First of all it writes release.json at the tree's root, and after the freeze it adds a
+pages; then verify each builder. With --augment, after the modules it builds each logical model the export staged, registers
+the logical-model module in every place the release lists its modules and builds its package (augment.py). First of all it writes release.json at the tree's root, and after the freeze it adds a
 dated note to the CHANGELOG of each module whose pins move, and re-pins the demo test's hash of the rewritten scenario. Writes `<release>-rebuild.json` beside the release with every step's
 command, exit code and output tail. Exit 1 when any step fails.
 """
@@ -23,6 +25,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import augment  # noqa: E402
 import manifest  # noqa: E402
 import procs  # noqa: E402
 import scrubbing  # noqa: E402
@@ -95,8 +98,9 @@ def provenance_removed(manifest):
 
 
 class Rebuild:
-    def __init__(self, release, epm):
+    def __init__(self, release, epm, augment_folder=None, approval=None):
         self.release, self.epm = os.path.abspath(release), os.path.abspath(epm)
+        self.augment, self.approval = augment_folder, approval  # approval: (file relative to the ontology folder, words)
         self.steps = []
         self.env = dict(os.environ, EPM_SHARE_RELEASE="1", PYTHONDONTWRITEBYTECODE="1")
         for k in list(self.env):
@@ -174,6 +178,8 @@ class Rebuild:
             text = (f.read().replace("{{TEST_FILES}}", " \\\n".join("  " + shlex.quote(t) for t in tests))
                     .replace("{{SKILL_CHECKS}}", skill_checks.render()))
         text = manifest.fill(text)
+        if self.augment:  # the logical-model package and its models' build, before the catalog's verify
+            text = augment.patch_check_sh(text, {"slugs": augment.staged_slugs(self.release)})
         out = os.path.join(self.release, "scripts", "check.sh")
         os.makedirs(os.path.dirname(out), exist_ok=True)
         with open(out, "w") as f:
@@ -196,7 +202,7 @@ class Rebuild:
         and the glossary's one definition of "decision owner"."""
         for name, dest in TEMPLATES:
             with open(os.path.join(HERE, "templates", name)) as f:
-                text = manifest.fill(f.read())
+                text = self.augment_blocks(manifest.fill(f.read()))
             if name == "README.md":
                 text = drop_dead_links(text, self.release)
             out = os.path.join(self.release, dest)
@@ -228,7 +234,7 @@ class Rebuild:
         with open(path, encoding="utf-8") as f:
             page = f.read()
         with open(os.path.join(HERE, "templates", "walkthrough-change.html"), encoding="utf-8") as f:
-            section = f.read()
+            section = self.augment_blocks(f.read())
         page, n = re.subn(r'<section id="change".*?</section>\n?', lambda m: section, page, count=1, flags=re.S)
         if n != 1:
             raise SystemExit('the walkthrough has no section id="change"')
@@ -241,7 +247,8 @@ class Rebuild:
         """release.json at the tree's root: what this tree is. The builders, the projection and the demo read release
         mode from it (build_module.SHARE_RELEASE), so no environment variable is needed to use the release. It names
         no folder of the machine it was cut on: the checkout's name could be the repository's."""
-        marker = manifest.marker(datetime.date.today().isoformat())  # the exact marker cut.sh and every reader accept
+        files = {"module": augment.MODULE, "version": augment.VERSION, "files": augment.inputs(self.augment)} if self.augment else None
+        marker = manifest.marker(datetime.date.today().isoformat(), files)  # the exact marker cut.sh and every reader accept
         with open(os.path.join(self.release, "release.json"), "w") as f:
             f.write(json.dumps(marker, indent=2) + "\n")
         self.steps.append({"step": "release.json", "returncode": 0})
@@ -295,6 +302,35 @@ class Rebuild:
             f.write(text)
         self.steps.append({"step": "scenario pin", "was": m.group(2), "now": digest, "returncode": 0})
 
+    def augment_blocks(self, text):
+        """A template's parts that describe the augment folder's module (between <!-- augment --> and <!-- /augment -->,
+        each on its own line) stay, without the marker lines, only in a release cut with --augment."""
+        block = re.compile(r"^<!-- augment -->\n(.*?)^<!-- /augment -->\n", re.S | re.M)
+        return block.sub(lambda m: m.group(1) if self.augment else "", text)
+
+    def augment_module(self):
+        """The logical-model package from the models the export staged (augment.py): build each model's graphs with the
+        release's own builder, register the module, build its package, then the guide's figures."""
+        import export as ex
+        dates = ex.record_dates(self.epm)
+        ctx = augment.context(self.release, self.epm, self.approval, self.augment, dates)
+        lm = f"{ONT}/logical-model"
+        self.run("logical models", augment.builder_args(ctx["slugs"], "--write"), lm)
+        augment.write_changelog(self.release, ctx, dates)
+        places = augment.apply(self.release, augment.REGISTRATION, ctx)
+        self.run(f"module {augment.MODULE}", ["build_module.py", augment.MODULE, "--write"], f"{ONT}/release")
+        code = ("import json, rdflib, sys\nsys.path.insert(0, 'scripts')\nimport epm_facts\n"
+                "mods = epm_facts.module_releases()\nwhole = rdflib.Graph()\n"
+                "for m in mods: whole += epm_facts.newest_graph(m['module'])\n"
+                f"lm = next(m for m in mods if m['module'] == {augment.MODULE!r})\n"
+                "print(json.dumps({'total': len(whole), 'triples': lm['triples'], 'requires': lm['requires']}))\n")
+        r = self.run("figures", ["-c", code], ".")
+        fig = json.loads(r.stdout.strip().splitlines()[-1])
+        ctx.update(total=fig["total"], triples=fig["triples"],
+                   requires=", ".join(f"{d} {v}" for d, v in fig["requires"].items()))
+        places += augment.apply(self.release, augment.FIGURES, ctx)
+        self.steps.append({"step": "augment", "models": ctx["slugs"], "registered": places, "figures": fig, "returncode": 0})
+
     def all(self):
         self.release_marker()
         self.freeze()
@@ -310,6 +346,8 @@ class Rebuild:
         self.run("core 2.4.0", ["build_core_2_4.py", "--write", "--rebuild-released"], f"{ONT}/release")
         for m in MODULE_ORDER:
             self.run(f"module {m}", ["build_module.py", m, "--write", "--rebuild-released"], f"{ONT}/release")
+        if self.augment:
+            self.augment_module()
         self.run("catalog", ["build_catalog.py", "--write"], f"{ONT}/release")
         self.run("projection manifest", ["pipeline.py", "build"], f"{ONT}/projection")
         self.run("pages", ["scripts/build_docs_html.py"], ".")
@@ -319,8 +357,11 @@ class Rebuild:
         for folder, script in SOURCE_BUILDERS:
             self.run(f"verify {folder}/{script}", [script, "--verify"], f"{ONT}/{folder}")
         self.run("verify core 2.4.0", ["build_core_2_4.py", "--verify"], f"{ONT}/release")
-        for m in MODULE_ORDER:
+        for m in MODULE_ORDER + ([augment.MODULE] if self.augment else []):
             self.run(f"verify module {m}", ["build_module.py", m, "--verify"], f"{ONT}/release")
+        if self.augment:
+            self.run("verify logical models", augment.builder_args(augment.staged_slugs(self.release), "--verify"),
+                     f"{ONT}/logical-model")
         self.run("verify catalog", ["build_catalog.py", "--verify"], f"{ONT}/release")
         self.run("verify projection manifest", ["pipeline.py", "build", "--verify"], f"{ONT}/projection")
         self.run("verify pages", ["scripts/build_docs_html.py", "--check"], ".")
@@ -334,8 +375,12 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--release", required=True)
     ap.add_argument("--epm", required=True, help="the main checkout, read for the frozen process maps")
+    ap.add_argument("--augment", default="", help="the folder of logical models the export staged (augment.py)")
+    ap.add_argument("--approval", default="", help="with --augment: the decision owner's saved answers file")
+    ap.add_argument("--approval-words", default="", help="with --augment: the words in it that approve logical-model 1.0.0")
     a = ap.parse_args(argv)
-    rb = Rebuild(a.release, a.epm)
+    approval = augment.approval(a.epm, a.approval, a.approval_words) if a.augment else None
+    rb = Rebuild(a.release, a.epm, a.augment or None, approval)
     try:
         rb.all()
     finally:

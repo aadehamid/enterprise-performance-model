@@ -2,14 +2,16 @@
 """Validation after the cut (plan step 7): the same rows on main and on the release, so the two can be compared.
 
     python3 scripts/share_release/validate.py run --tree <checkout or release> --out <json> [--rows checks,regression,...]
-    python3 scripts/share_release/validate.py compare --main <checkout> --release <release> --out <json>
+    python3 scripts/share_release/validate.py compare --main <checkout> --release <release> --out <json> [--augment <folder>]
     python3 scripts/share_release/validate.py report <baseline json> <release json> [<compare json>]
 
 `run` records each row's result for one tree: its exit code, the figures it prints, the time it took. The
 baseline is `run` on a checkout of main; the release gets the same `run`. `compare` reads both trees at once
 for the rows that are a comparison by nature: the business-process JSON after the rewrite rules, each newest
 module's Turtle after the rules (graph isomorphism and triple counts), the newest packages' pins, the IRI base
-in every file, and the leak gate. `report` writes the table the plan asks for: every row with main's result,
+in every file, and the leak gate. A release cut with --augment is compared with --augment and the same folder: the
+"augment" row checks that each outside file still has the hash release.json and the package's manifest record and
+that the release's copy is that file after the rules, and the catalog must list the module the cut added. `report` writes the table the plan asks for: every row with main's result,
 the release's result, and whether a rewrite rule explains any difference.
 
 The rows that need stores (the projection pipeline and driver, the technical graph, the store sync, the live
@@ -227,7 +229,38 @@ def run(tree, out, rows, env):
 
 # ---------- the comparison rows ----------
 
-def compare(main, release, out):
+def augment_row(release, folder, dates):
+    """The augment folder against the release: the same files as release.json and the package's manifest record, each
+    with the same SHA-256, and each staged copy equal to the folder's file after the rules. A release cut with an
+    augment folder fails without one, and the reverse."""
+    import augment
+    import rules
+    with open(os.path.join(release, manifest.RELEASE_MARKER), encoding="utf-8") as f:
+        recorded = json.load(f).get("augment")
+    if not folder or not recorded:
+        problem = ("the release was cut with an augment folder: compare with --augment" if recorded
+                   else "no augment folder in the release's release.json")
+        return {"ok": False, "problems": [problem]}
+    problems = []
+    files = augment.inputs(folder)
+    if files != recorded["files"]:
+        problems.append("the folder's files or their hashes differ from release.json's record")
+    with open(os.path.join(release, ONT, "releases", recorded["module"], recorded["version"], "manifest.json"), encoding="utf-8") as f:
+        if json.load(f).get("augment") != recorded["files"]:
+            problems.append(f"{recorded['module']} {recorded['version']}'s manifest does not list the same files")
+    for slug, export, links in augment.models(folder):
+        for src, name in ((export, f"{slug}.erstudio.ttl"), (links, f"{slug}.links.csv")):
+            rel = f"{augment.MODELS}/{name}"
+            with open(src, encoding="utf-8") as f:
+                expected, _ = rules.apply(f.read(), rel, dates)
+            path = os.path.join(release, rel)
+            if not os.path.isfile(path) or open(path, encoding="utf-8").read() != expected:
+                problems.append(f"{rel} is not the folder's {os.path.basename(src)} after the rules")
+    return {"ok": not problems, "module": recorded["module"], "version": recorded["version"],
+            "files": [f["path"] for f in files], "problems": problems}
+
+
+def compare(main, release, out, augment_folder=None):
     import rules
     from export import record_dates
     main, release = os.path.abspath(main), os.path.abspath(release)
@@ -259,10 +292,17 @@ def compare(main, release, out):
                                           "ok": all(c["isomorphic"] or c["explained_by_pin_move"] for c in content.values())}
 
     # 3. The newest packages' pins name only newest versions, of the same dependencies as on main; the catalog lists
-    # exactly the newest set.
+    # exactly the newest set, with the module an augment folder added.
     newest = {m: content[m]["version"] for m in MODULES}
-    bad = latest_links(main, release, newest)
+    added = {}
+    with open(os.path.join(release, manifest.RELEASE_MARKER), encoding="utf-8") as f:
+        recorded = json.load(f).get("augment")
+    if recorded:
+        added[recorded["module"]] = recorded["version"]
+    bad = latest_links(main, release, newest, added)
     result["rows"]["latest-links"] = {"problems": bad, "ok": not bad}
+    if augment_folder or recorded:
+        result["rows"]["augment"] = augment_row(release, augment_folder, dates)
 
     # 4. The gate.
     r = sh([sys.executable, os.path.join(HERE, "gate.py"), release], release)
@@ -340,10 +380,17 @@ def explained_by_pin_move(only_main, only_release, module, newest):
             and all(newest.get(d) == v for d, v in rel))
 
 
-def latest_links(main, release, newest):
+def latest_links(main, release, newest, added=None):
     """What is wrong with the newest packages' links: a pin that is not the newest version, a dependency added or
-    dropped against main's manifest, or a catalog that does not list exactly the newest set."""
+    dropped against main's manifest, or a catalog that does not list exactly the newest set. `added`: the module an
+    augment folder added ({module: version}), which main does not have: its pins must name newest versions too."""
     bad = []
+    for m, v in (added or {}).items():
+        with open(os.path.join(release, ONT, "releases", m, v, "manifest.json")) as f:
+            for dep, dv in (json.load(f).get("depends_on") or {}).items():
+                if newest.get(dep) != dv:
+                    bad.append(f"{m} {v} requires {dep} {dv}, newest is {newest.get(dep)}")
+    newest = {**newest, **(added or {})}
     for m in MODULES:
         with open(os.path.join(release, ONT, "releases", m, newest[m], "manifest.json")) as f:
             deps = json.load(f).get("depends_on") or {}
@@ -418,13 +465,14 @@ def main(argv=None):
     p = sub.add_parser("run"); p.add_argument("--tree", required=True); p.add_argument("--out", required=True)
     p.add_argument("--rows", default=",".join(ROWS)); p.add_argument("--env", default="")
     p = sub.add_parser("compare"); p.add_argument("--main", required=True); p.add_argument("--release", required=True); p.add_argument("--out", required=True)
+    p.add_argument("--augment", default="", help="the augment folder the cut used (augment.py)")
     p = sub.add_parser("report"); p.add_argument("baseline"); p.add_argument("release"); p.add_argument("comparison", nargs="?"); p.add_argument("--out", default="VALIDATION.md")
     a = ap.parse_args(argv)
     if a.cmd == "run":
         result = run(a.tree, a.out, [r for r in a.rows.split(",") if r], read_env(a.env))
         return 1 if any(v.get("ok") is False for v in result["rows"].values()) else 0
     elif a.cmd == "compare":
-        result = compare(a.main, a.release, a.out)
+        result = compare(a.main, a.release, a.out, a.augment or None)
         return 1 if any(not v.get("ok") for v in result["rows"].values()) else 0
     else:
         return 1 if report(a.baseline, a.release, a.comparison, a.out) else 0
