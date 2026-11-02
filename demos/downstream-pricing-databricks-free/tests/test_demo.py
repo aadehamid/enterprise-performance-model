@@ -2554,3 +2554,18 @@ def test_the_source_system_comes_from_the_schema_tag_and_the_readme_map_is_the_f
     assert tech_graph.systems_disagree({"price_reference": "mips"}) == "price_reference: tag mips, README.md mpr"
     links = open(os.path.join(tech_graph.SPARQL, "links.rq")).read()
     assert "xyz:source_systems" in links and '"price_assessment"' not in links  # the map lives in config, read through live.json
+
+
+def test_a_skipped_check_stays_out_of_the_graph():
+    """Free Edition may lack the lineage system tables. The check is then skipped, and since the module's code list has
+    no 'skipped', collect keeps it out of live.json's checks (which runtime.rq reads) and reports it apart."""
+    class Failing:
+        def execute(self, *a, **k):
+            raise RuntimeError("system.access.table_lineage not found")
+    skipped, inputs = tech_graph.lineage_check(Failing(), "cat", "cat.triples.epm_triples", [])
+    assert skipped["result"] == "skipped" and inputs is None
+    ran = {"id": "a", "label": "A", "result": "pass", "detail": "ok", "checked_at": "t", "covers": []}
+    checks, apart = tech_graph.split_skipped([ran, skipped])
+    assert checks == [ran] and apart == [skipped]
+    assert {c["result"] for c in checks} <= {"pass", "fail", "differs"}
+    assert "skipped_checks" in inspect.getsource(tech_graph.collect)

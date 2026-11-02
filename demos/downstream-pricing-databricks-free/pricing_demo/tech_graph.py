@@ -432,10 +432,11 @@ def collect(manifest_path=MANIFEST, lineage_wait=0):
     aura = aura_check()
     if aura:
         checks.append(aura)
+    checks, skipped = split_skipped(checks)
     agents = [{"slug": slug(title), "title": title, "views": [t for t, _ in spec["tables"]]} for title, spec in genie.AGENTS.items()]
     live = {"collected_at": now(), "catalog": cat, "triples": e["EPM_TRIPLES"], "host": host_of(dsn),
             "replicated_at": manifest["replicated_at"], "databases": databases, "objects": objects, "tags": tags,
-            "source_systems": source_systems(source_tags), "agents": agents, "checks": checks, "decisions": decisions,
+            "source_systems": source_systems(source_tags), "agents": agents, "checks": checks, "skipped_checks": skipped, "decisions": decisions,
             "evidence": evidence}
     os.makedirs(os.path.dirname(LIVE), exist_ok=True)
     with open(LIVE, "w") as f:
@@ -447,8 +448,16 @@ def collect(manifest_path=MANIFEST, lineage_wait=0):
     print(f"wrote {PROPOSALS}: {len(drafted)} proposals for kpi or data-product, for a person to review")
     for c in checks:
         print(f"check {c['id']}: {c['result']} ({c['detail'][:160]})")
+    for c in skipped:
+        print(f"check {c['id']}: skipped, not in the graph ({c['detail'][:160]})")
     print(f"wrote {LIVE}: {len(databases)} databases, {len(objects)} objects, {len(decisions)} decisions, {len(evidence)} evidence items")
     return live
+
+
+def split_skipped(checks):
+    """(checks that ran, checks that were skipped). A skipped check has no result in the module's code list (pass, fail,
+    differs), so it stays out of the graph; collect reports it and live.json keeps it apart, under skipped_checks."""
+    return [c for c in checks if c["result"] != "skipped"], [c for c in checks if c["result"] == "skipped"]
 
 
 def slug(title):
