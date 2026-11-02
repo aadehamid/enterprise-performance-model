@@ -513,6 +513,23 @@ def rule_agents(text, ctx):
         text, k = _count(PR_WORD, "change", text); n += k
     if ctx.get("path", "").endswith(".py"):  # the period a removed citation leaves at the start of a line
         text, k = _count(r'(?m)^([ \t]*(?:#[ \t]*)?)\.(?= |"""|$)', r"\1", text); n += k
+    path = ctx.get("path", "")
+    if path.startswith("business_architecture/domain/decision-packages/"):  # the questions read as put by whoever modelled it
+        text, k = _count(r"\bthe agent\b", "the modeller", text); n += k
+        text, k = _count(r"\bThe agent\b", "The modeller", text); n += k
+    if path.endswith("epm-walkthrough.html"):
+        text, k = _count(r"\bOne command takes you, or an agent, from", "One command takes you from", text); n += k
+        text, k = _count(r"\ba person or an agent\b", "a person", text); n += k
+    if path.endswith("kpi/test_measures.py"):  # hashes of people's names can be reversed by guessing; the check stays, for a reader's own list
+        text, k = _count(r"# sha256 \(first 16 hex digits\)[^\n]*\n#[^\n]*\nNAME_HASHES = \{[^}]*\}",
+                         "# sha256 (first 16 hex digits) of lower-cased names that must stay out of this copy. Add your own.\nNAME_HASHES = set()", text); n += k
+    if path.endswith("release/test_build_module.py"):  # a build's working names
+        text, k = _count(r"\bNIGHT_BRIEF\b", "BRIEF", text); n += k
+        text, k = _count(r"\bNIGHT\b", "RECORDED", text); n += k
+        text, k = _count(r"(?<![a-z])night[ _]brief(?![a-z])", lambda m: m.group(0).replace("night_", "").replace("night ", ""), text); n += k
+    if path.endswith("scripts/test_published_figures.py"):
+        text, k = _count(r" \(the retro of\s+2026-10-28 left this gate.*?\)\.", ".", text, re.S); n += k
+        text, k = _count(r"\(retro on [^:\n]*: ", "(", text); n += k
     if ctx.get("path", "") == "scripts/test_epm_facts.py":  # a fixture's second speaker, in the check's own test
         text, k = _count(r"\bCodex\b", "Reviewer", text); n += k
     return text, n

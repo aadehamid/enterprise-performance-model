@@ -9,9 +9,11 @@ This release is your starting point. Your copy is yours to change: add a module,
 Commands below start from the top folder of your copy unless they say otherwise. They use this shorthand, so define it first:
 
 ```sh
-py() { uv run -q --no-project --with rdflib --with pyshacl --with openpyxl --with jsonschema --with "markdown-it-py>=4,<5" python3 -B "$@"; }
+py() { uv run -q --no-project --with rdflib --with pyshacl --with openpyxl --with jsonschema --with pytest --with "markdown-it-py>=4,<5" python3 -B "$@"; }
 ONT=business_architecture/ontology
 ```
+
+The versions in the worked commands are those of this release as you received it. After your first change, read the one you hold, from `$ONT/release`: `py next_version.py current kpi`.
 
 ## Start here
 
@@ -22,7 +24,7 @@ ONT=business_architecture/ontology
    bash scripts/check.sh
    ```
 
-3. Run `scripts/check.sh` again after each change. It proves your copy is valid: every package equals a fresh build of its sources, the shapes conform, the competency questions answer and the tests pass. Do not share a change until it passes. In a Git copy, run `git add -A` first, because one test reads which generated pages Git tracks. The log shows skipped tests and a line that starts `FAIL a store request`. Both are expected. Most skipped tests read what this release does not hold, a few depend on your machine, and adding `-rs` to the script's pytest line prints each reason. The `FAIL` line is a test of a failure. The last line, `all checks passed`, tells you the result.
+3. Run `scripts/check.sh` again after each change. It proves your copy is valid: every package equals a fresh build of its sources, the shapes conform, the competency questions answer and the tests pass. Do not share a change until it passes. In a Git copy, run `git add -A` first, because one test reads which generated pages Git tracks. The log shows skipped tests and a line that starts `FAIL a store request`. Both are expected. Most skipped tests read what this release does not hold, a few depend on your machine, and adding `-rs` to the script's pytest line prints each reason. The `FAIL` line is a test of a failure. The last line, `all checks passed`, tells you the result. Do not edit files while the script runs: it compares the tree at its start and end, and a change fails the run. Commit when it passes. To try one test file first, run `py -m pytest -q <file>`, which takes seconds.
 
 ## Patch, minor or major
 
@@ -42,7 +44,7 @@ Use this test: would every query, report and answer made under the old definitio
 
 Every change below ends with these steps. Run them once for the module you changed and once for each module that depends on it.
 
-1. List the modules to release, in order. The first line is the one you changed. For `core`, the list holds the modules that depend on it, and `core` itself comes first:
+1. List the modules to release, in order. The first line is the one you changed. `core` is the exception: its list holds only the modules that depend on it, because you release `core` by hand first ("Change a process"):
 
    ```sh
    (cd $ONT/release && py dependents.py kpi)
@@ -59,7 +61,7 @@ Every change below ends with these steps. Run them once for the module you chang
    cd ../../..
    ```
 
-   `start` sets `version`, `issued`, `approver` and `approval` in the module's entry in `build_module.py`, and adds a section to the top of `$ONT/releases/<module>/CHANGELOG.md`, carrying forward any known gap. Edit that section when you have more to say. **The write stops if the version is already released and the content differs.** Raise the version first, because a released package never changes. Before the package is shared, you may correct it with `--rebuild-released`.
+   `start` sets `version`, `issued`, `approver` and `approval` in the module's entry in `build_module.py`, and adds a section to the top of `$ONT/releases/<module>/CHANGELOG.md`, carrying forward any known gap. Edit that section when you have more to say. `start` leaves the entry's `decisions` list alone, so add your approval file there if you want the package's manifest to name it. Nothing fails without it. **The write stops if the version is already released and the content differs.** Raise the version first, because a released package never changes. Before the package is shared, you may correct it with `--rebuild-released`.
 
 4. When every module in the list is written, finish each one. This moves the old package to `$ONT/releases/previous/<module>/`, which keeps every earlier package, and changes the version in `$ONT/projection/pipeline.py` (`PACKAGES`) and `$ONT/projection/skill-run/epm-config.json` (`packages`):
 
@@ -83,7 +85,7 @@ Every change below ends with these steps. Run them once for the module you chang
 
 The worked example changes the definition of the measure Unit Utilization in `kpi`. The wording changes and the meaning does not, so it is a patch.
 
-1. Find where the definition lives. A release is built from tables and Turtle files in the module's folder, never edited in `releases/`. Search the module's folder for the text:
+1. Find where the definition lives. A release is built from its sources, never edited in `releases/`. Most sources are tables and Turtle files in the module's folder, so search there for the text. A file that starts "Built by" is generated: edit the source it names. For `lane`, that is `business_architecture/business_process/office_lanes.json`, and rewording a lane there is still a release of `lane`.
 
    ```sh
    grep -n "unit-utilization" $ONT/kpi/measure-details.csv
@@ -111,7 +113,7 @@ The worked example adds a property `kpi:reviewCadence`. It adds and removes noth
 
 1. Add the term to the module's `vocabulary.ttl`, with `rdfs:label`, `skos:definition`, and its source in `dcterms:bibliographicCitation`. Copy a neighbouring term of the same kind, because the module's tests may ask for more: `kpi`'s ask for one `rdfs:range` and one kind. When the source is your owner's request, cite the file that holds their approval.
 2. Add what checks it to the module's `shapes.ttl`. Each property on a class states its cardinality in a `sh:property` line on that class's shape. If the module also has a closed shape, add the property to its `sh:ignoredProperties` list too. `kpi/shapes.ttl` needs both: the `sh:property` line on `shp:Measure`, and the list on `shp:NoValuesOnMeasures`.
-3. For a value on instances, add a column to the module's table and to its builder, then run the builder with `--write`. A concept in a code list is a new row in that table.
+3. For a value on instances, add a column to the module's table and to its builder, then run the builder with `--write`. Use the table that holds fields of the same kind, such as `kpi/measure-details.csv` for a measure's `grain` and `basis`. Give every row the column, even when it is empty, because a short row passes with no warning. A concept in a code list is a new row in that table.
 4. Add a test that names the term, in the module's `test_*.py`.
 5. Follow the release steps for the module.
 
@@ -119,9 +121,9 @@ The worked example adds a property `kpi:reviewCadence`. It adds and removes noth
 
 The process map is the source of the taxonomy in `core`. Every module depends on `core`, so this is the widest change. A change to an existing process's meaning is a major. A new process is a minor.
 
-1. Add the node to `business_architecture/business_process/downstream_process_map.json`, with its `id`, `level`, `name` and `description`.
+1. Add the node to `business_architecture/business_process/downstream_process_map.json`, with its `id`, `level`, `name` and `description`. The builder makes the description's first sentence the definition and the rest the scope note, so put the whole definition in the first sentence.
 2. Add its row to `$ONT/build/output/step2-identity-map.json`, beside its siblings, with the same fields as they have. The description belongs in the map only. Copy `minted` and `deprecated` from a sibling: `false` for an ordinary new process.
-3. Save the approval, as the release steps say, because the builder below names it. Commit, and note the commit before your change and the commit of the change. The builder compares the two copies of the map. In a plain folder with no Git, choose a label for each instead, at least 12 letters or digits long.
+3. Save the approval, as the release steps say, because the builder below names it. Commit, and note the commit before your change and the commit of the change. `scripts/check.sh` does not pass on this commit, because the map has a node that `core` lacks yet, so do not share it. The builder compares the two copies of the map. In a plain folder with no Git, choose a label for each instead, at least 12 letters or digits long.
 4. Save both copies under `$ONT/release/frozen/`. Each file's name starts with the first 12 characters of its commit or label:
 
    ```sh
@@ -136,7 +138,9 @@ The process map is the source of the taxonomy in `core`. Every module depends on
    cp $ONT/release/build_core_template.py $ONT/release/build_core_2_5.py
    ```
 
-6. Write its changelog, `$ONT/releases/core/CHANGELOG-2.5.0.md`: a title line `# core changelog`, then a section in the form above.
+   These names are for the first change to this release. A later change raises them. A patch of `core` is a new builder too, named for its major and minor.
+
+6. Write its changelog, `$ONT/releases/core/CHANGELOG-2.5.0.md`, in the form of `CHANGELOG-2.4.0.md` beside it: the title line `# core changelog`, a heading with the version and date, one sentence on the kind of release, and a line per change.
 7. Add a short test, `$ONT/release/test_build_core_2_5.py`, that says what the release adds and that it removes no IRI. Add it to the test list in `scripts/check.sh`.
 8. Write the package and move the old one:
 
@@ -151,7 +155,7 @@ The process map is the source of the taxonomy in `core`. Every module depends on
 
 ## Add a module
 
-Copy `$ONT/lane/`, the smallest module: a README, `vocabulary.ttl`, `shapes.ttl`, a build script, its output and its test. Read `skills/ontology/references/new-module.md` first. It says when a new module is the right answer, and it holds the full method for a large module. For a small module, this section is enough. Name the competency question the existing modules cannot answer. Your ontology owner approves a module's first release, and names its owner.
+Copy `$ONT/lane/`, the smallest module: a README, `vocabulary.ttl`, `shapes.ttl`, a build script, its output and its test. Keep the shape of its build script and test, and rewrite their content: `test_lanes.py` pins `lane`'s versions, and `build_lanes.py` reads two JSON files outside the folder. Read `skills/ontology/references/new-module.md` first. It says when a new module is the right answer, and it holds the full method for a large module. For a small module, this section is enough. Name the competency question the existing modules cannot answer. Your ontology owner approves a module's first release, and names its owner. Write that name in the approval file, because no other field holds it.
 
 `next_version.py` works on modules already in `MODULES`, so write this first entry and changelog by hand. Each module has a table or a Turtle source and one builder. `build_lanes.py` is in the `lane` folder, and `kpi` is built by `build_measures.py`. Name yours for what it builds, and give it `--write` and `--verify`.
 
@@ -166,9 +170,9 @@ Register the module in every place below. A place you miss fails a check or leav
 | `$ONT/projection/skill-run/epm-config.json` | The version under `packages`, the namespace under `own_namespaces`, the prefix under `prefixes` |
 | `$ONT/regression/` | Its questions in `expected.csv`, a query in `queries/`, and the module's files in the list in `run.py` |
 | `$ONT/validation/test_all_module_shapes.py` | Its `shapes.ttl` in `SHAPE_FILES` |
-| `$ONT/competency-questions.md` | Each new question, numbered after the last. "Locked" there, and "44 questions" there and in `$ONT/epm-ontology-guide.html` and `$ONT/regression/run.py`, describe this release's set: your owner may add to it |
+| `$ONT/competency-questions.md` | Each new question, numbered after the last, in the section it fits or a new one. "Locked" there, and "44 questions" in `$ONT/epm-ontology-guide.html` and `$ONT/regression/run.py`, describe this release's set: your owner may add to it. No check reads the count, so change it where your readers use it |
 | `scripts/epm_facts.py` | An entry in the `coverage` table, if processes link to the module |
-| `$ONT/MODULES.md` | A section on the module, with a `<!-- module: name -->` example |
+| `$ONT/MODULES.md` | A section on the module, with a `<!-- module: name -->` example, and a row in the table under "The three files of each package" |
 | `scripts/build_docs_html.py` | The module's folder in `MODULE_READMES`, then run the builder for its HTML page |
 | `$ONT/authority/source-tiers.csv` | A row with its evidence tier, for each `dcterms:source` the module cites; `build_source_tiers.py` and `vocabulary.ttl` in that folder define the five tiers: 1 process authority, 2 MPC, 3 peers, 4 industry and 5 framework. Choose the tier of the kind of source it is. Run `build_source_tiers.py --write` in that folder. This table is part of `integration`, so release `integration` as a minor after your module. A source written only as a `dcterms:bibliographicCitation` needs no row |
 | `$ONT/placement/vocabulary.ttl` | Optional. A placement kind for a property that links to a process, as `lane:officeLane` has, if a competency question reads it |
@@ -182,6 +186,7 @@ Then build, in this order, starting with the module's own builder:
 (cd $ONT/release && py build_module.py <module> --write)
 # Only if you added a row to source-tiers.csv: rebuild the table and release integration, as the release steps say.
 (cd $ONT/authority && py build_source_tiers.py --write)
+# 2.6.0 and 2.5.0 fit the release as you received it. Read yours: next_version.py current integration.
 (cd $ONT/release && py next_version.py start integration 2.6.0 minor --why "Adds the new module's source." --approver "Your ontology owner" --where "approvals/your-file.md" --words "The sentence that approved it.")
 (cd $ONT/release && py build_module.py integration --write)
 (cd $ONT/release && py next_version.py finish integration 2.5.0)
@@ -195,7 +200,21 @@ bash scripts/check.sh
 
 ## The cascade
 
-A package names the exact version of each module it requires. So a new version of a module means a new version of every module that depends on it. `dependents.py` lists them, each after what it requires. Raise each version before you write its package, and write them in that order. A module that only takes the new version of what it requires gets a patch, with a changelog line that says so. A change to `core` reaches every module, so use `next_version.py` in a loop.
+A package names the exact version of each module it requires. So a new version of a module means a new version of every module that depends on it. `dependents.py` lists them, each after what it requires. Raise each version before you write its package, and write them in that order. A module that only takes the new version of what it requires gets a patch, with a changelog line that says so. A change to `core` reaches every module, so use a loop. It patches each module on the list and then finishes them all. For any other module, change the list to `py dependents.py <module> | tail -n +2`, which leaves out the module you released yourself.
+
+```sh
+cd $ONT/release
+moved=""
+for m in $(py dependents.py core); do
+  old=$(py next_version.py current "$m"); new="${old%.*}.$(( ${old##*.} + 1 ))"
+  py next_version.py start "$m" "$new" patch --why "Takes the new version of what it requires; nothing else changes." \
+      --approver "Your ontology owner" --where "approvals/your-file.md" --words "The sentence that approved it."
+  py build_module.py "$m" --write
+  moved="$moved $m:$old"
+done
+for pair in $moved; do py next_version.py finish "${pair%:*}" "${pair#*:}"; done
+cd ../../..
+```
 
 ## Keep the catalog, regression and projection current
 
@@ -205,7 +224,7 @@ A package names the exact version of each module it requires. So a new version o
 
 ## Project into Neo4j and Jena
 
-The packages are the source. Neo4j and Jena are copies that you can empty and reload. `scripts/check.sh` does not need them: when the stores are behind, it prints a note and still passes. One command, `rebuild_stores.py`, loads both from an environment file. You need Docker, Java 11 or later and ROBOT 1.9.10. `$ONT/epm-walkthrough.html`, "Connect and load every store", says how to get ROBOT and explains each step, and `$ONT/projection/ontology-stores-runbook.html` shows each store hands on.
+The packages are the source. Neo4j and Jena are copies that you can empty and reload. `scripts/check.sh` does not need them: when the stores are behind, it prints a note and still passes. One command, `rebuild_stores.py`, loads both from an environment file, in about five minutes. You need Docker, Java 11 or later and ROBOT 1.9.10 at `~/epm-lpg/robot.jar`; the script refuses any other file. By default the local Neo4j listens on port 17711 and Jena on 13031. `$ONT/epm-walkthrough.html`, "Connect and load every store", says how to get ROBOT and explains each step, and `$ONT/projection/ontology-stores-runbook.html` shows each store hands on.
 
 1. Copy the environment file outside your copy, and let only yourself read it. The script refuses a file that others can read. Every key has a default, so for these two stores you can leave the file as it is.
 
@@ -215,7 +234,7 @@ The packages are the source. Neo4j and Jena are copies that you can empty and re
    chmod 600 ~/.config/epm/qa.env
    ```
 
-2. List the steps. This changes nothing:
+2. List the steps. This changes nothing. Name the two stores, because the default is all four, and the other two need logins:
 
    ```sh
    python3 $ONT/projection/rebuild_stores.py --env ~/.config/epm/qa.env --store driver --store jena --plan

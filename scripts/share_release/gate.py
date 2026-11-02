@@ -64,6 +64,7 @@ PATTERNS = [
     ("the agent called Cursor", re.compile(r"\bCursor\b|\bcursor/|/cursor\b|\bcursor-agent\b|\.cursor/")),
     ("a pull request of the build", re.compile(r"\bPRs\b|(?<!\.\d )(?<!\()\bPR\b(?! campaigns?\b| program\b| all\b|\)| strategy\b)|\b[Pp]ull requests?\b")),
     ("the work of an agent", re.compile(AGENT_WORK)),
+    ("the agent, in a decision package", re.compile(r"\b[Tt]he agent\b")),
     ("the namespace note is missing", None),  # checked once, below
 ]
 # The method's own words on delegation and on a remote's pull requests, in the skills that teach any project: the skill
@@ -320,6 +321,8 @@ def scan(release):
                         continue  # two capital letters in a binary's bytes are chance
                     for m in pattern.finditer(text):
                         if reason.startswith("the graph's") and allowed_double(rel, text, m):
+                            continue
+                        if reason == "the agent, in a decision package" and "decision-packages/" not in rel:
                             continue
                         if reason == "the agent called Cursor" and code_cursor(rel, text, m):
                             continue

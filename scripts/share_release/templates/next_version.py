@@ -5,10 +5,11 @@
         --approver "<who>" --where "<where the approval is recorded>" --words "<the sentence that approved it>" [--date YYYY-MM-DD]
     python3 build_module.py <module> --write
     python3 next_version.py finish <module> <old version>
+    python3 next_version.py current <module>
 
 `start` sets the entry in build_module.py's MODULES (version, issued, approver, approval) and adds a section at the top of
 the module's CHANGELOG.md, carrying forward its open gaps. `finish` moves the old package to releases/previous/ and
-changes the version in projection/pipeline.py and projection/skill-run/epm-config.json. You may do any of this by hand.
+changes the version in projection/pipeline.py and projection/skill-run/epm-config.json. `current` prints the version the entry holds. You may do any of this by hand.
 """
 import argparse
 import datetime
@@ -110,6 +111,14 @@ def finish(a, ontology=ONTOLOGY):
     print(f"{a.module} {a.old} moved to releases/previous/; the projection's lists name {new}")
 
 
+def current(a, ontology=ONTOLOGY):
+    text = read(os.path.join(ontology, "release", "build_module.py"))
+    start_at = text.find(f'    "{a.module}": {{\n')
+    if start_at < 0:
+        raise SystemExit(f"{a.module} has no entry in MODULES")
+    print(re.search(r'"version": "([^"]+)"', text[start_at:]).group(1))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -120,8 +129,10 @@ def main(argv=None):
     s.add_argument("--date", default=datetime.date.today().isoformat())
     f = sub.add_parser("finish")
     f.add_argument("module"); f.add_argument("old")
+    c = sub.add_parser("current")
+    c.add_argument("module")
     a = ap.parse_args(argv)
-    (start if a.cmd == "start" else finish)(a)
+    {"start": start, "finish": finish, "current": current}[a.cmd](a)
 
 
 if __name__ == "__main__":

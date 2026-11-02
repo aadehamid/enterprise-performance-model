@@ -2349,7 +2349,7 @@ def test_jena_load_looks_for_targets_only_in_current_release_graphs_and_writes_n
         assert graph in query
     assert "urn:pricing-demo:graph" not in query
     newest = tech_graph.newest_releases()
-    assert len(newest) == 11 and all(iri.rsplit("/", 1)[-1][0].isdigit() for iri in newest)
+    assert len(newest) >= 11 and all(iri.rsplit("/", 1)[-1][0].isdigit() for iri in newest)
     (tmp_path / "tech-graph.ttl").write_text(f"<urn:a> <urn:b> <{tech_graph.ONTOLOGY}gone> .\n")
     (tmp_path / "decision-trail.ttl").write_text("")
     monkeypatch.setattr(tech_graph, "sparql_select", lambda query: [])

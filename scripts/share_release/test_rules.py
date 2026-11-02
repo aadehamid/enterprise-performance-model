@@ -413,3 +413,17 @@ def test_the_demos_tunnel_instructions_go():
     src = ("change `SOURCE_PG_DSN`; nothing else names the host. Since 2026-10-28 the source databases (seven, with `x`) also run on an exe.dev VM, "
            "`databases.exe.xyz`, where Postgres listens only on the VM's localhost. Open a tunnel, `ssh -N -L 1:2 databases.exe.xyz`. The local container stays as the fallback.")
     assert run(src, "demos/downstream-pricing-databricks-free/README.md")[0] == "change `SOURCE_PG_DSN`; nothing else names the host."
+
+
+def test_agent_work_in_a_decision_package_the_walkthrough_and_the_tests_is_neutral():
+    package = "business_architecture/domain/decision-packages/2026-10-14/x.md"
+    assert rules.apply("You ask the agent. The agent drafts it.", package)[0] == "You ask the modeller. The modeller drafts it."
+    page = "business_architecture/ontology/epm-walkthrough.html"
+    assert rules.apply("One command takes you, or an agent, from a file; a person or an agent starts it.", page)[0] == "One command takes you from a file; a person starts it."
+    hashes = '# sha256 (first 16 hex digits) of the\n# list, so.\nNAME_HASHES = {"aa", "bb",\n   "cc"}\n'
+    out = rules.apply(hashes, "business_architecture/ontology/kpi/test_measures.py")[0]
+    assert "NAME_HASHES = set()" in out and '"aa"' not in out
+    out = rules.apply("NIGHT = 1\nNIGHT_BRIEF = 2\ndef test_carry_the_night_brief(): pass\n", "business_architecture/ontology/release/test_build_module.py")[0]
+    assert "NIGHT" not in out and "night" not in out
+    out = rules.apply("moves (the retro of\n    2026-10-28 left this gate for later; x).\n(retro on a change: words)\n", "scripts/test_published_figures.py")[0]
+    assert "retro" not in out

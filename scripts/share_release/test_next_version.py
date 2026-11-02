@@ -99,3 +99,12 @@ def test_finish_moves_nothing_when_a_write_fails(tmp_path, monkeypatch):
     with pytest.raises(OSError):
         nv.finish(type("A", (), {"module": "kpi", "old": "1.3.0"}), str(ont))
     assert (ont / "releases" / "kpi" / "1.3.0").is_dir() and (ont / "projection" / "pipeline.py").read_text() == '("kpi", "1.3.0")'
+
+
+def test_current_prints_the_version_an_entry_holds(tmp_path, capsys):
+    (tmp_path / "release").mkdir()
+    (tmp_path / "release" / "build_module.py").write_text('MODULES = {\n    "a": {\n        "version": "1.2.3",\n    },\n    "b": {\n        "version": "4.5.6",\n    },\n}\n')
+    nv.current(type("A", (), {"module": "b"}), ontology=str(tmp_path))
+    assert capsys.readouterr().out.strip() == "4.5.6"
+    with pytest.raises(SystemExit):
+        nv.current(type("A", (), {"module": "c"}), ontology=str(tmp_path))

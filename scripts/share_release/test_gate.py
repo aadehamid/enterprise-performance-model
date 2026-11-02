@@ -434,3 +434,13 @@ def test_the_skills_may_teach_pull_requests_and_delegation(tmp_path):
 def test_a_left_out_document_fails(tmp_path):
     (tmp_path / "a.md").write_text("see step4/playbook/ontology-worklog.md and pr-reviews-262-266-269.md\n")
     assert any(h["reason"] == "a document the release leaves out" for h in gate.scan(str(tmp_path)))
+
+
+def test_the_agent_fails_only_in_a_decision_package(tmp_path):
+    clean(tmp_path)
+    (tmp_path / "other.md").write_text("the agent's filters name the price\n")
+    assert gate.scan(str(tmp_path)) == []
+    folder = tmp_path / "business_architecture" / "domain" / "decision-packages"
+    folder.mkdir(parents=True)
+    (folder / "x.md").write_text("You ask the agent to draft it.\n")
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the agent, in a decision package"]
