@@ -180,7 +180,9 @@ class Package(unittest.TestCase):
                 body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)
             self.assertIn(words, body)
         manifest = json.loads(self.FILES["manifest.json"])
-        self.assertEqual(manifest["approval"], {"who": b.APPROVER, "file": path, "words": words})
+        # The share release names no file it does not ship: the field comes out there (bm.recorded_where).
+        file = {"file": path} if bm.recorded_where(path) else {}
+        self.assertEqual(manifest["approval"], {"who": b.APPROVER, **file, "words": words})
         self.assertFalse(manifest["release_candidate"])
 
     def test_the_proposal_acceptance_is_the_decision_owners_words(self):

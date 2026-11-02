@@ -484,3 +484,97 @@ def test_market_news_still_gets_every_other_rule():
     out, counts = run("approved under EPM-DEC-001-0044 on the exe.dev VM; Valero", MARKET_NEWS[1])
     assert out == "approved under the decision of 2026-10-18 on a remote host; Valero"
     assert set(counts) == {"records", "hosts"}
+
+
+def test_a_record_id_pattern_in_code_stays_a_pattern():
+    # The series name as a prefix in a regex, a glob or an f-string is code, not prose: it becomes a neutral prefix.
+    src = ('DEC_ID = re.compile(r"(?<![\\w/#-])EPM-DEC-001-(\\d{4})(?![\\w-])")\n'
+           'records = glob.glob(os.path.join(folder, "EPM-DEC-001-*.md"))\n'
+           'name = f"EPM-DEC-001-{number:04d}"\n'
+           'amended.update(re.findall(r"(?:EPM-DEC-001-)?\\b(\\d{4})\\b", clause))\n')
+    out, _ = run(src, "scripts/epm_facts.py")
+    assert "the decision records" not in out
+    assert out == ('DEC_ID = re.compile(r"(?<![\\w/#-])DEC-(\\d{4})(?![\\w-])")\n'
+                   'records = glob.glob(os.path.join(folder, "DEC-*.md"))\n'
+                   'name = f"DEC-{number:04d}"\n'
+                   'amended.update(re.findall(r"(?:DEC-)?\\b(\\d{4})\\b", clause))\n')
+    out, _ = run("check the EPM-DEC-001 records; under EPM-DEC-001-0044")
+    assert out == "check the decision records; under the decision of 2026-10-18"
+
+
+@pytest.mark.parametrize("src,expected", [
+    ("REL-00190, the 11 #204 batch 1 trigger rows, the 10 newly emitting #206 sweep rows and the",
+     "REL-00190, the 11 batch 1 trigger rows, the 10 newly emitting sweep rows and the"),
+    ("12 #203, 8 #210, 41 #202, 41 #209 and 84 #201 sweep rows emit core facts; the 17 #205 scoped rows emit nodes",
+     "12, 8, 41, 41 and 84 sweep rows emit core facts; the 17 scoped rows emit nodes"),
+    ("under the decision owner's version-specific #205 rule; every #201 row; the reverse #202 row REL-00476",
+     "under the decision owner's version-specific rule; every row; the reverse row REL-00476"),
+    ("Basis of #305 and #306; and 2, #301/#302): comment 7000001, #301, #302)",
+     "Basis of earlier items; and 2, earlier items): comment 7000001, earlier items)"),
+    ("the method (version 2.3, personal-agent-skills #67) runs; done: personal-agent-skills pull request #45 merged; "
+     "personal-agent-skills #50 to #52",
+     "the method (version 2.3, a change to the skills folder) runs; done: a change to the skills folder merged; "
+     "changes to the skills folder"),
+    ("Recheck rdflib issue #3524 and the RDF 1.2 status; n10s (neosemantics issue #237, open)",
+     "Recheck rdflib issue 3524 and the RDF 1.2 status; n10s (neosemantics issue 237, open)"),
+    ("| Issue #237, https://github.com/neo4j-labs/neosemantics/issues/237, and PR #361, https://github.com/neo4j-labs/neosemantics/pull/361 |",
+     "| Issue 237, https://github.com/neo4j-labs/neosemantics/issues/237, and PR 361, https://github.com/neo4j-labs/neosemantics/pull/361 |"),
+    # A number standing for a change on its own still reads as one.
+    ("394 until #344 dropped 28 checks; merged in #262.", "394 until an earlier change dropped 28 checks; merged in an earlier change."),
+])
+def test_a_removed_number_leaves_a_sentence_that_reads(src, expected):
+    out, _ = run(src, "skills/ontology-to-lpg/README.md" if "rdflib" in src or "neosemantics" in src else "doc.md")
+    assert out == expected
+
+
+def test_a_source_author_answer_iri_loses_its_issue_number():
+    out, _ = run('a,b,urn:epm:issue:205:comment:6116668059\n<urn:epm:issue:226:comment:6123946413> dcterms:title '
+                 '"Source-author answer, GitHub issue #205, comment 6115309253"@en ; urn:epm:pull:1:comment:7000001', "x.ttl")
+    assert out == ('a,b,urn:epm:comment:6116668059\n<urn:epm:comment:6123946413> dcterms:title '
+                   '"Source-author answer, comment 6115309253"@en ; urn:epm:comment:7000001')
+    # The core builder that describes each answer page matches the new IRI and writes the same title.
+    code = ('        m = re.match(r"urn:epm:issue:(\\d+):comment:(\\d+)$", str(page))\n'
+            '            out.add((page, DCTERMS.title, en(f"Source-author answer, GitHub issue #{m.group(1)}, comment {m.group(2)}")))\n')
+    out, _ = run(code, "business_architecture/ontology/release/build_core.py")
+    assert out == ('        m = re.match(r"urn:epm:comment:(\\d+)$", str(page))\n'
+                   '            out.add((page, DCTERMS.title, en(f"Source-author answer, comment {m.group(1)}")))\n')
+    import re as _re
+    m = _re.match(r"urn:epm:comment:(\d+)$", "urn:epm:comment:6115309253")
+    assert f"Source-author answer, comment {m.group(1)}" == "Source-author answer, comment 6115309253"
+
+
+def test_a_shipped_skill_names_no_skill_the_release_leaves_out():
+    import pathlib
+    # The skills repository beside this checkout, where it is (the export reads it from --skills).
+    skills = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parents[2] / "personal-agent-skills" / "skills" / "data" / "ontology"
+    lines = {
+        "skills/ontology/SKILL.md": "- **Governance:** read `references/governance.md` before you start a new ontology, record a decision, work under a delegation, set up checks, review a change, release or publish. It says what to do with and without the `way-of-working` skill.\n",
+        "skills/ontology/README.md": "The skill works on its own. If the `way-of-working` skill is installed too, the agent follows it for decision records, the pull-request loop, the check script's design and a shared tool for figures; `references/governance.md` says what changes without it.\n"
+                                     "| `references/governance.md` | agent | Intake and requirements, privacy, and claims; with and without `way-of-working`. |\n",
+        "skills/ontology/references/governance.md": (
+            "This file holds what an ontology build adds to general engineering practice. Where the `way-of-working` skill is installed, it is the home for decision records, the pull-request loop, the check script's design and the shared figures tool: follow it, and use this file for the additions. Where it is not installed, each section below says what to do instead, and the templates carry the rules you need.\n"
+            "Record rules (one record per decision; amend, never rewrite) live in `way-of-working`, `references/deciding.md`. Without that skill, `templates/decision-record.md` carries them. Copy the template either way.\n"
+            "Status say which. What a merge does and does not decide: `way-of-working`, SKILL.md, rule 1 (\"On the record\"), where installed. *Why:* a reviewer\n"
+            "Keep project rulings in records, never in the method (`way-of-working`, `references/documents.md`). *Why:*\n"
+            "The check script's design (one script that CI and the pre-push hook both run; wiring the hook) lives in `way-of-working`, `references/guardrails.md`. Without that skill, `templates/check.sh` carries the guard. Copy the template either way and fill every TODO.\n"
+            "Compute every figure with committed code: the shared tool where `way-of-working` provides one, otherwise a script in the repository, never memory.\n"
+            "20. **Have a reviewer read every change.** Where `way-of-working` is installed, its review loop is the rule: who reviews and the round limits are in its `references/before-push.md` (\"Re-review after fixing\") and `references/changing.md` (\"Who reviews\"); AGENTS.md names the tools. Without it, the reviewer is a person or a different model from the author. *Why:*\n"),
+        "skills/ontology/templates/check.sh": "# Rules: references/governance.md. The no-writes guard below is the\n# four-snapshot guard of the way-of-working skill's references/guardrails.md, written out so the\n# script works without that skill.\n"
+                                              "#    (short scripts, or the way-of-working skill's shared figures tool) and name them here.\n",
+        "skills/ontology/templates/decision-record.md": "<!-- Copy this file when you record one decision. Rules: references/governance.md, \"Decisions\" and \"Delegation\"; where the way-of-working skill is installed, its references/deciding.md is the home of the record rules this template carries. The Decision section holds only the owner's answer. -->\n",
+    }
+    for path, text in lines.items():
+        out, counts = run(text, path)
+        assert "way-of-working" not in out, (path, out)
+        assert "  " not in out.replace("\n", " ").replace("#    ", "#").replace("# ", "#"), (path, out)
+    out, _ = run(lines["skills/ontology/references/governance.md"], "skills/ontology/references/governance.md")
+    assert "Each section below says what to do, and the templates carry the rules you need." in out
+    assert "Record rules (one record per decision; amend, never rewrite) are carried by `templates/decision-record.md`. Copy the template." in out
+    assert "The reviewer is a person or a different model from the author." in out
+    # Every sentence of the skill's own files that names the left-out skill is rewritten (when the skills folder is here).
+    if skills.is_dir():
+        for f in sorted(skills.rglob("*")):
+            if f.is_file() and f.suffix in (".md", ".sh") and "way-of-working" in f.read_text(encoding="utf-8", errors="ignore"):
+                rel = "skills/ontology/" + str(f.relative_to(skills))
+                out, _ = run(f.read_text(encoding="utf-8"), rel)
+                assert "way-of-working" not in out, rel
