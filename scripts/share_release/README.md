@@ -29,10 +29,14 @@ from the release, not from main (the owner's instruction of 2026-11-01), and ste
 registers the module in every place the release lists its modules (`augment.REGISTRATION`: `build_module.py`'s
 `MODULES` and its test's approvals, the projection's `PACKAGES`, `OWN` and `PREFIXES`, `epm-config.json`, the module
 lists and counts that `test_epm_facts.py` and `test_release_package_shapes.py` pin, `MODULES.md`, the module's README,
-`OPEN-ITEMS.md`, the walkthrough's and the guide's module counts, and the guide's card, total and table of newest
-versions), builds the package with `build_module.py` (the vocabulary as `logical-model.ttl`, the shapes, each model's
-two graphs as they are, `catalog.ttl`, `CHANGELOG.md`, `manifest.json`) and adds its two checks to the release's
-`check.sh`. So the release counts one module more than `main`. Each patch stops the cut when its anchor is not found.
+`OPEN-ITEMS.md`), builds the package with `build_module.py` (the vocabulary as `logical-model.ttl`, the shapes, each
+model's two graphs as they are, `catalog.ttl`, `CHANGELOG.md`, `manifest.json`) and adds its two checks to the
+release's `check.sh`. After the catalog is built, it rewrites each figure of the guide and the walkthrough that states
+the release set (`augment.FIGURES`: module counts, the total, the catalog, the `releases/` folder's versions, files
+and size, the graphs and triples the stores load, the release records) to the figure `augment.release_figures` reads
+from the release tree, adds the module's card and rows, and keeps the figure it replaces beside it where the sentence
+dates it. So the release counts one module more than `main`. Each patch stops the cut when its anchor is not found.
+`test_augment.py`'s `FIGURE_CLASSES` lists every figure of the two pages, with that rewrite or why it stays.
 `release.json` and the package's `manifest.json` list each outside file under `augment`, with its path relative to
 the folder and its SHA-256, never the folder's own path. The gate, the release's checks, the comparison
 (`validate.py compare --augment`, whose `augment` row checks the hashes and the staged copies) and the clone's check

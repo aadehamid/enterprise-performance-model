@@ -19,7 +19,8 @@ What the cut does with it, in order:
   the package `releases/logical-model/1.0.0/` with the release's `build_module.py`: the module's vocabulary as
   `logical-model.ttl`, its shapes, each model's two graphs as they are, `catalog.ttl`, `CHANGELOG.md` and
   `manifest.json`, which lists each outside file with its path relative to the folder and its SHA-256. `release.json`
-  lists them too.
+  lists them too. After the catalog is built, it rewrites every figure of the guide and the walkthrough that states
+  the release set (FIGURES) to the figure of the release tree (release_figures).
 - The leak gate and the release's own checks then run on everything, the built module included.
 
 The package names the decision owner's approval: the cut refuses `--augment` until `--approval` names the saved
@@ -150,11 +151,12 @@ def staged_slugs(release):
 
 # ---- Registration: the places a release lists its modules, each patched with an anchor that must be found ----
 
-def _sub(text, pattern, repl, where, flags=0):
-    new, n = re.subn(pattern, repl, text, count=1, flags=flags)
-    if n != 1:
-        raise AugmentError(f"registering {MODULE}: {where}: the anchor {pattern!r} was not found")
-    return new
+def _sub(text, pattern, repl, where, flags=0, count=1):
+    """Replace the anchor, which must occur exactly `count` times."""
+    found = len(re.findall(pattern, text, flags))
+    if found != count:
+        raise AugmentError(f"registering {MODULE}: {where}: the anchor {pattern!r} was found {found} times, not {count}")
+    return re.sub(pattern, repl, text, flags=flags)
 
 
 def entry(slugs, approved, files, issued, dates):
@@ -199,9 +201,9 @@ def number_word(n):
     return WORDS[n] if 0 <= n < len(WORDS) else str(n)
 
 
-def recount(text, old, new):
-    """"eleven modules" -> "twelve modules", "the eleven newest releases", "the same eleven packages"."""
-    return re.sub(rf"\b{number_word(old)}\b(?=(?: newest)? (?:modules|releases|packages)\b)", number_word(new), text)
+def word_number(w):
+    """"twelve" -> 12, "12" -> 12."""
+    return int(w.replace(",", "")) if w.replace(",", "").isdigit() else WORDS.index(w.lower())
 
 
 def patch_build_module(text, ctx):
@@ -279,34 +281,66 @@ def patch_open_items(text, ctx):
     return _sub(text, r"\n\| Releasing the logical-model module \|[^\n]*\n", lambda m: "\n", "OPEN-ITEMS.md, the logical-model row")
 
 
+# ---- Figures: every statement of the guide and the walkthrough that names the release set ----
+#
+# Each figure that states the release set as it is (module counts, the catalog, the releases folder, the total, the
+# graphs a store holds from the releases) is rewritten to the figure of this release's tree, computed by
+# release_figures after the package and the catalog are built; the figure it replaces stays beside it as history where
+# the sentence dates it. Each edit is anchored and stops the cut when its anchor is missing. test_augment.py's
+# FIGURE_CLASSES lists every figure of the two pages, with this rewrite or the reason it stays.
+
+def release_figures(release):
+    """The figures the guide and walkthrough state, from the release tree as built: the modules and their newest
+    releases (epm_facts.py's module list), the triples of the newest releases loaded together, the catalog's
+    datasets, the releases folder's version folders, files and size, and the named graphs and triples the stores
+    load from the releases (each newest module's Turtle and, beside it, each release graph epm-run.json names)."""
+    import importlib
+    import sys
+    import rdflib
+    releases = os.path.join(release, ONT, "releases")
+    sys.path.insert(0, os.path.join(release, "scripts"))
+    try:
+        facts = importlib.import_module("epm_facts")
+        mods = facts.module_releases(releases, os.path.join(release, ONT, "release", "build_module.py"))
+    finally:
+        sys.path.pop(0)
+        sys.modules.pop("epm_facts", None)
+    whole = rdflib.Graph()
+    with open(os.path.join(release, ONT, "projection", "skill-run", "epm-run.json"), encoding="utf-8") as f:
+        release_graphs = json.load(f)["release_graphs"]
+    graphs = quads = 0
+    for m in mods:
+        folder = os.path.join(releases, m["module"], m["newest"])
+        whole += rdflib.Graph().parse(os.path.join(folder, f"{m['module']}.ttl"), format="turtle")
+        for name in [m["module"], *release_graphs]:
+            quads += len(rdflib.Graph().parse(os.path.join(folder, f"{name}.ttl"), format="turtle"))
+            graphs += 1
+    catalog = rdflib.Graph().parse(os.path.join(releases, "catalog.ttl"), format="turtle")
+    versions = files = size = 0
+    for root, dirs, names in os.walk(releases):
+        versions += sum(1 for d in dirs if re.fullmatch(r"\d+\.\d+\.\d+", d))
+        files += len(names)
+        size += sum(os.path.getsize(os.path.join(root, n)) for n in names)
+    lm = next((m for m in mods if m["module"] == MODULE), {})  # none in main's tree
+    return {"modules": len(mods), "total": len(whole), "triples": lm.get("triples"), "requires": lm.get("requires"),
+            "catalog": len(set(catalog.objects(None, rdflib.URIRef("http://www.w3.org/ns/dcat#dataset")))),
+            "versions": versions, "files": files, "mb": round(size / 1e7) * 10,
+            "graphs_per_module": 1 + len(release_graphs), "graphs": graphs, "quads": quads}
+
+
+def _edits(text, page, edits):
+    for where, pattern, repl, *opts in edits:
+        text = _sub(text, pattern, repl, f"{page}, {where}", *opts)
+    return text
+
+
+def _added():
+    return f"{MODULE} {VERSION}"
+
+
 def patch_guide(text, ctx):
-    old, new = ctx["count_main"], ctx["count_release"]
-    text = _sub(text, rf'(<div class="k">Modules</div><div class="v">){old}(</div>)', lambda m: f"{m.group(1)}{new}{m.group(2)}",
-                "the guide's module count")
-    text = recount(text, old, new)
-    total = re.search(r'<div class="k">Triples</div><div class="v">([\d,]+)</div>', text)
-    if not total:
-        raise AugmentError(f"registering {MODULE}: the guide's total was not found")
-    old_total, new_total = total.group(1), f"{ctx['total']:,}"
-    # Each statement of the total is rewritten on purpose (the Cursor HOLD on #474): the stat, the script's printout and
-    # the whole-ontology table name today's total; the "since" sentence keeps the earlier total as its history.
-    text = _sub(text, r'(<div class="k">Triples</div><div class="v">)[\d,]+(</div>)',
-                lambda m: f"{m.group(1)}{new_total}{m.group(2)}", "the guide's total")
-    text = _sub(text, rf"(which prints ){re.escape(old_total)}( triples)", lambda m: f"{m.group(1)}{new_total}{m.group(2)}",
-                "the guide's script printout")
-    text = _sub(text, rf"(for the whole ontology \(){re.escape(old_total)}( triples\))",
-                lambda m: f"{m.group(1)}{new_total}{m.group(2)}", "the guide's whole-ontology total")
-    text = _sub(text, rf"(loaded together, ){re.escape(old_total)}( triples since )",
-                lambda m: f"{m.group(1)}{new_total}{m.group(2)}{MODULE} {VERSION} (in this release; {old_total} since ",
-                "the guide's dated total")
-    # The copy section's inventory: the package adds a module, a version folder and its files (Codex's quick check).
-    added = ctx.get("added_files", 0)
-    text = re.sub(r"(\d+) modules · (\d+) versions · (\d+) files",
-                  lambda m: f"{int(m.group(1)) + 1} modules · {int(m.group(2)) + 1} versions · {int(m.group(3)) + added} files", text)
-    text = _sub(text, r"(\d+) modules, (\d+) version folders and (\d+) files(, about [^(]*)\(since ",
-                lambda m: (f"{int(m.group(1)) + 1} modules, {int(m.group(2)) + 1} version folders and {int(m.group(3)) + added} files"
-                           f"{m.group(4)}(in this release, with {MODULE} {VERSION}; {m.group(1)} modules, {m.group(2)} version "
-                           f"folders and {m.group(3)} files since "), "the guide's copy inventory")
+    n, w, added = ctx["modules"], number_word(ctx["modules"]), _added()
+    total = f"{ctx['total']:,}"
     card = (f'\n<section class="mod" id="m-{MODULE}">\n<h3>{MODULE} <span class="pill">{VERSION}</span> '
             f'<span class="pill">{ctx["triples"]:,} triples</span></h3>\n<div class="two">\n<div>\n'
             "<p><strong>Holds</strong> logical data models exported from ER Studio Data Architect, each as two graphs: "
@@ -318,17 +352,83 @@ def patch_guide(text, ctx):
             "</div>\n</div>\n"
             f"<p class=\"note\">Links: <code>lm:sourceSystem</code>, <code>lm:describes</code> and <code>lm:implementedBy</code> "
             f"from an ER Studio entity to the ontology. Requires {ctx['requires']}.</p>\n</section>\n")
-    text = _sub(text, r'\n<h2 id="questions">', lambda m: card + '\n<h2 id="questions">', "the guide's module cards")
-    row = (f'<tr><td>{MODULE}</td><td class="n" data-k="Newest">{VERSION}</td><td data-k="Requires">{ctx["requires"]}</td></tr>\n')
-    return _sub(text, r"(The newest version of each module, from its manifest\.(?:(?!</tbody>).)*?)(</tbody>)",
-                lambda m: m.group(1) + row + m.group(2), "the guide's table of newest versions", re.S)
+    row = f'<tr><td>{MODULE}</td><td class="n" data-k="Newest">{VERSION}</td><td data-k="Requires">{ctx["requires"]}</td></tr>\n'
+    return _edits(text, "the guide", [
+        ("the title's module count", r"(why it is split into )\w+( modules)", lambda m: f"{m.group(1)}{w}{m.group(2)}"),
+        ("the snapshot notice", r"(the store figures are still those of the last load, of the \w+ earlier modules\.)",
+         lambda m: (f"{m.group(1)} In this release they also count <code>{MODULE}</code> {VERSION}, added in this "
+                    "release, which the module map does not draw; the copy section's and the catalog's figures are "
+                    "those of this release's own <code>releases/</code> folder.")),
+        ("the module count", r'(<div class="k">Modules</div><div class="v">)\d+(</div>)', lambda m: f"{m.group(1)}{n}{m.group(2)}"),
+        ("the total", r'(<div class="k">Triples</div><div class="v">)[\d,]+(</div><div class="d">in the )\w+( newest releases together)',
+         lambda m: f"{m.group(1)}{total}{m.group(2)}{w}{m.group(3)}"),
+        ("why modules", r"(It is )\w+( modules because)", lambda m: f"{m.group(1)}{w}{m.group(2)}"),
+        ("the module map's lead", r"(every one except <code>ref-mpc</code>) and (<code>technical-graph</code>);",
+         lambda m: f"{m.group(1)}, {m.group(2)} and <code>{MODULE}</code>;"),
+        ("the module map's caption", r"(<figcaption>Teal marks <code>kpi</code>.*?)(</figcaption>)",
+         lambda m: f"{m.group(1)} <code>{MODULE}</code> {VERSION}, added in this release, is not drawn; it requires {ctx['requires']}.{m.group(2)}", re.S),
+        ("the walk's total", r"(It runs over the )\w+( newest releases loaded together, )([\d,]+)( triples since )([^;(]*?) \((\d{4}-\d{2}-\d{2}); ([^)]*)\)",
+         lambda m: (f"{m.group(1)}{w}{m.group(2)}{total}{m.group(4)}{added}, in this release ({m.group(3)} since "
+                    f"{m.group(5)}, {m.group(6)}; {m.group(7)})")),
+        ("the script's printout", r"(which prints )([\d,]+)( triples and \d+ rows) \(([^)]*)\)",
+         lambda m: f"{m.group(1)}{total}{m.group(3)} in this release ({m.group(2)} before {added}; {m.group(4)})"),
+        ("the module cards", r'\n<h2 id="questions">', lambda m: card + m.group(0)),
+        ("the stores' master copy", r"(as Turtle: )(\w+)( modules since )([^(]*?) \((\d{4}-\d{2}-\d{2})\)(, and the stores hold)",
+         lambda m: f"{m.group(1)}{w}{m.group(3)}{added}, in this release ({m.group(2)} since {m.group(4)}, {m.group(5)}){m.group(6)}"),
+        ("the copy bundle", r"(In all: )(\d+)( files and three links\. That is )(\d+)( release files, )(\d+)( pages and data files to understand it, and )(\d+)( files)",
+         lambda m: (f"{m.group(1)}{ctx['files'] + int(m.group(6)) + int(m.group(8))}{m.group(3)}{ctx['files']}{m.group(5)}"
+                    f"{m.group(6)}{m.group(7)}{m.group(8)}{m.group(9)}")),
+        ("the copy diagram's label", r"(the releases folder with )\w+( modules)", lambda m: f"{m.group(1)}{w}{m.group(2)}"),
+        ("the copy diagrams", r"\d+ modules · \d+ versions · \d+ files",
+         lambda m: f"{n} modules · {ctx['versions']} versions · {ctx['files']} files", 0, 2),
+        ("the releases folder", r"(\d+) modules, (\d+) version folders and (\d+) files, about \d+ MB \(since ([^)]*)\)",
+         lambda m: (f"{n} modules, {ctx['versions']} version folders and {ctx['files']} files, about {ctx['mb']} MB, in this "
+                    f"release ({m.group(1)} modules, {m.group(2)} version folders and {m.group(3)} files on main since {m.group(4)})")),
+        ("the catalog's packages", r"(The DCAT catalog of all )\d+( released packages)",
+         lambda m: f"{m.group(1)}{ctx['catalog']}{m.group(2)} in this release"),
+        ("the whole-ontology total", r"(for the whole ontology \()[\d,]+( triples\))", lambda m: f"{m.group(1)}{total}{m.group(2)}"),
+        ("the table of newest versions", r"(The newest version of each module, from its manifest\.(?:(?!</tbody>).)*?)(</tbody>)",
+         lambda m: m.group(1) + row + m.group(2), re.S),
+    ])
 
 
 def patch_walkthrough(text, ctx):
-    new = recount(text, ctx["count_main"], ctx["count_release"])
-    if new == text:
-        raise AugmentError(f"registering {MODULE}: the walkthrough states no module count")
-    return new
+    n, w, added = ctx["modules"], number_word(ctx["modules"]), _added()
+    per = number_word(ctx["graphs_per_module"])
+    row = (f"      <tr><td><code>{MODULE}</code></td><td>Logical data models exported from ER Studio Data Architect, each as "
+           "two graphs: ER Studio's export as it is and a layer of annotations; added in this release</td><td><code>"
+           f"{MODULE}/README.md</code>, <code>build_logical_model.py</code></td><td><code>sourceSystem</code> to system, "
+           "<code>describes</code> to party, <code>implementedBy</code> to data-product</td></tr>\n")
+    return _edits(text, "the walkthrough", [
+        ("the overview's modules", r'(font-weight="700">)\d+( modules</text>)', lambda m: f"{m.group(1)}{n}{m.group(2)}"),
+        ("the overview's catalog", r'(font-weight="700" fill="#fff">)\d+( releases</text>)', lambda m: f"{m.group(1)}{ctx['catalog']}{m.group(2)}"),
+        ("the module map's caption", r"(is not drawn \(the guide's module map shows it\)\.)",
+         lambda m: f"{m.group(1)} <code>{MODULE}</code> {VERSION}, added in this release, is drawn in neither map."),
+        ("the module folders", r"(Every module folder but <code>technical-graph</code>)( has the same shape)",
+         lambda m: f"{m.group(1)} and <code>{MODULE}</code>{m.group(2)}"),
+        ("the module table", r"(\n      <tr><td><code>technical-graph</code></td>[^\n]*\n)", lambda m: m.group(1) + row),
+        ("the CI's packages", r"(checks the same )(\w+)( packages in CI) \((\w+) until ([^)]*)\)",
+         lambda m: f"{m.group(1)}{w}{m.group(3)} in this release, with {added} ({m.group(2)} on main; {m.group(4)} until {m.group(5)})"),
+        ("the local Neo4j's expectation", r"(printed), ([\d,]+) and ([\d,]+) on these releases, and (\d+) release records",
+         lambda m: (f"{m.group(1)} ({m.group(2)} and {m.group(3)} on main's {number_word(word_number(m.group(4)))} modules, "
+                    f"before {added} was added in this release), and {n} release records")),
+        ("Jena's expectation", r"Expect (\d+) graphs and ([\d,]+) triples on these releases: (\w+) graphs for each of (\d+) modules \((\d+) and ([\d,]+) for the (\w+) before ([^)]*)\)",
+         lambda m: (f"Expect {ctx['graphs']} graphs and {ctx['quads']:,} triples on these releases: {per} graphs for each of "
+                    f"{n} modules ({m.group(1)} and {m.group(2)} for the {number_word(word_number(m.group(4)))} before {added}, "
+                    f"added in this release; {m.group(5)} and {m.group(6)} for the {m.group(7)} before {m.group(8)})")),
+        ("Databricks' expectation", r"this returns (\d+) and (\d+) for these releases \((\d+) and (\d+) for the (\w+) before ([^,]*), (which the table holds until its next reload)\)",
+         lambda m: (f"this returns {ctx['quads']} and {ctx['graphs']} for these releases ({m.group(1)} and {m.group(2)} before "
+                    f"{added}, added in this release; {m.group(3)} and {m.group(4)} for the {m.group(5)} before {m.group(6)}, "
+                    f"{m.group(7)})")),
+        ("the catalog's releases", r"(The catalog lists )(\d+)( releases) \((\d+) until ([^;]*); ",
+         lambda m: f"{m.group(1)}{ctx['catalog']}{m.group(3)} in this release (on main, {m.group(2)} since {m.group(5)}, and {m.group(4)} until then; "),
+        ("the module list", r"(Expect )(\w+)( modules, newest [^(]*)\((\w+) until ([^)]*)\)",
+         lambda m: f"{m.group(1)}{w}{m.group(3)}({m.group(2)} until {added}, added in this release; {m.group(4)} until {m.group(5)})"),
+        ("the record's figures", r"(after a record), ([\d,]+) nodes, ([\d,]+) relationships, ([\d,]+) triples and (\d+) inferred \(since ([^)]*)\)",
+         lambda m: (f"{m.group(1)} on this release, the run's nodes, relationships and inferences over {ctx['total']:,} "
+                    f"triples (on main since {m.group(6)}: {m.group(2)} nodes, {m.group(3)} relationships, {m.group(4)} "
+                    f"triples and {m.group(5)} inferred)")),
+    ])
 
 
 def patch_check_sh(text, ctx):
@@ -340,8 +440,9 @@ def patch_check_sh(text, ctx):
                 lambda m: "\n" + lines + m.group(0), "check.sh, before the catalog's verify")
 
 
-# Every place the release lists its modules, in the order they are patched. The first group comes before the builds
-# (the builder, its tests and the documents that need no figure); the guide needs the built package's figures.
+# Every place the release lists its modules, in the order they are patched, before the builds (the builder, its tests
+# and the documents that state no figure). The guide and the walkthrough state figures, so FIGURES patches them after
+# the package and the catalog are built.
 REGISTRATION = [
     (f"{ONT}/release/build_module.py", patch_build_module),
     (f"{ONT}/release/test_build_module.py", patch_test_build_module),
@@ -353,9 +454,9 @@ REGISTRATION = [
     (f"{ONT}/MODULES.md", patch_modules_md),
     (f"{ONT}/logical-model/README.md", patch_module_readme),
     (f"{ONT}/OPEN-ITEMS.md", patch_open_items),
-    (f"{ONT}/epm-walkthrough.html", patch_walkthrough),
 ]
-FIGURES = [(f"{ONT}/epm-ontology-guide.html", patch_guide)]
+# The pages' figures, once the package and the catalog are built (rebuild.py's augment_figures).
+FIGURES = [(f"{ONT}/epm-ontology-guide.html", patch_guide), (f"{ONT}/epm-walkthrough.html", patch_walkthrough)]
 
 
 def apply(release, places, ctx):

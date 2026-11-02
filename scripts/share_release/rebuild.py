@@ -9,7 +9,8 @@ the release's release/frozen/); set EPM_SHARE_RELEASE so pins move to the newest
 source Turtle from its CSV; rebuild core 2.4.0 and each module's newest package; rebuild the catalog;
 recompute the previous packages' manifest hashes; rebuild the projection manifest; rebuild the generated
 pages; then verify each builder. With --augment, after the modules it builds each logical model the export staged, registers
-the logical-model module in every place the release lists its modules and builds its package (augment.py). First of all it writes release.json at the tree's root, and after the freeze it adds a
+the logical-model module in every place the release lists its modules and builds its package, and after the catalog it
+rewrites the guide's and the walkthrough's figures from the release tree (augment.py). First of all it writes release.json at the tree's root, and after the freeze it adds a
 dated note to the CHANGELOG of each module whose pins move, and re-pins the demo test's hash of the rewritten scenario. Writes `<release>-rebuild.json` beside the release with every step's
 command, exit code and output tail. Exit 1 when any step fails.
 """
@@ -310,7 +311,7 @@ class Rebuild:
 
     def augment_module(self):
         """The logical-model package from the models the export staged (augment.py): build each model's graphs with the
-        release's own builder, register the module, build its package, then the guide's figures."""
+        release's own builder, register the module and build its package. augment_figures patches the pages after the catalog."""
         import export as ex
         dates = ex.record_dates(self.epm)
         ctx = augment.context(self.release, self.epm, self.approval, self.augment, dates)
@@ -319,19 +320,19 @@ class Rebuild:
         augment.write_changelog(self.release, ctx, dates)
         places = augment.apply(self.release, augment.REGISTRATION, ctx)
         self.run(f"module {augment.MODULE}", ["build_module.py", augment.MODULE, "--write"], f"{ONT}/release")
-        code = ("import json, rdflib, sys\nsys.path.insert(0, 'scripts')\nimport epm_facts\n"
-                "mods = epm_facts.module_releases()\nwhole = rdflib.Graph()\n"
-                "for m in mods: whole += epm_facts.newest_graph(m['module'])\n"
-                f"lm = next(m for m in mods if m['module'] == {augment.MODULE!r})\n"
-                "print(json.dumps({'total': len(whole), 'triples': lm['triples'], 'requires': lm['requires']}))\n")
+        self.augment_ctx = ctx
+        self.steps.append({"step": "augment", "models": ctx["slugs"], "registered": places, "returncode": 0})
+
+    def augment_figures(self):
+        """The guide's and the walkthrough's figures, from the release tree once the package and the catalog are built
+        (augment.release_figures): each statement of the release set says this release's figure."""
+        code = (f"import json, sys\nsys.path.insert(0, {HERE!r})\nimport augment\n"
+                "print(json.dumps(augment.release_figures('.')))\n")
         r = self.run("figures", ["-c", code], ".")
         fig = json.loads(r.stdout.strip().splitlines()[-1])
-        package_dir = os.path.join(self.release, ONT, "releases", augment.MODULE)
-        ctx["added_files"] = sum(len(files) for _, _, files in os.walk(package_dir))  # the package and its changelog
-        ctx.update(total=fig["total"], triples=fig["triples"],
-                   requires=", ".join(f"{d} {v}" for d, v in fig["requires"].items()))
-        places += augment.apply(self.release, augment.FIGURES, ctx)
-        self.steps.append({"step": "augment", "models": ctx["slugs"], "registered": places, "figures": fig, "returncode": 0})
+        ctx = dict(self.augment_ctx, **fig, requires=", ".join(f"{d} {v}" for d, v in fig["requires"].items()))
+        places = augment.apply(self.release, augment.FIGURES, ctx)
+        self.steps.append({"step": "augment figures", "figures": fig, "patched": places, "returncode": 0})
 
     def all(self):
         self.release_marker()
@@ -351,6 +352,8 @@ class Rebuild:
         if self.augment:
             self.augment_module()
         self.run("catalog", ["build_catalog.py", "--write"], f"{ONT}/release")
+        if self.augment:
+            self.augment_figures()
         self.run("projection manifest", ["pipeline.py", "build"], f"{ONT}/projection")
         self.run("pages", ["scripts/build_docs_html.py"], ".")
         if os.path.exists(os.path.join(self.release, "skills", "scripts", "build_playbook_html.py")):

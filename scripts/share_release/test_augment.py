@@ -5,6 +5,7 @@ its manifest and release.json hold the outside files' hashes, and --augment with
 refused before anything is removed."""
 import ast
 import hashlib
+import html
 import json
 import os
 import re
@@ -210,29 +211,31 @@ def test_the_package_is_built_registered_and_counted(tmp_path, folder):
         sys.modules.pop("epm_facts", None)
     assert augment.MODULE in [x["module"] for x in mods]
     assert ctx["count_release"] == len(manifest.MODULES) + 1
-    page = (rel / ONT / "epm-ontology-guide.html").read_text()
-    today = re.search(r'<div class="k">Triples</div><div class="v">([\d,]+)</div>', page).group(1)
-    inventory = re.search(r"(\d+) modules, (\d+) version folders and (\d+) files", re.sub(r"<[^>]+>", " ", page))
-    ctx.update(total=12345, triples=m["triples"], requires="party 2.1.0, system 1.5.0, data-product 1.2.0", added_files=7)
-    augment.apply(str(rel), augment.FIGURES, ctx)
-    guide = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", (rel / ONT / "epm-ontology-guide.html").read_text()))
-    assert f"logical-model 1.0.0 {m['triples']} triples" in guide
-    assert f"Modules {ctx['count_release']} each released" in guide and "Triples 12,345 in the" in guide
-    assert f"{augment.number_word(ctx['count_release'])} newest releases" in guide
-    # Each statement of the total says today's total, and the dated one keeps the earlier total as its history.
-    assert f"which prints 12,345 triples" in guide and "for the whole ontology (12,345 triples)" in guide
-    assert f"loaded together, 12,345 triples since logical-model 1.0.0 (in this release; {today} since " in guide
-    assert guide.count(today) == 1, "the earlier total survives only in the dated sentence"
-    n, v, f = (int(x) for x in inventory.groups())
-    assert f"{n + 1} modules · {v + 1} versions · {f + 7} files" in guide
-    assert f"{n + 1} modules, {v + 1} version folders and {f + 7} files" in guide and f"{n} modules · {v} versions" not in guide
+    # Figured: the catalog is rebuilt, and every figure of the pages comes from the tree (Codex's review of #474).
+    r = run(["build_catalog.py", "--write"], f"{ONT}/release")
+    assert r.returncode == 0, r.stdout + r.stderr
+    main, fig = augment.release_figures(ROOT), augment.release_figures(str(rel))
+    package_files = sum(len(f) for _, _, f in os.walk(rel / ONT / "releases" / augment.MODULE))
+    assert (fig["modules"], fig["catalog"], fig["versions"]) == (main["modules"] + 1, main["catalog"] + 1, main["versions"] + 1)
+    assert fig["files"] == main["files"] + package_files and fig["graphs"] == main["graphs"] + fig["graphs_per_module"]
+    assert fig["quads"] > main["quads"] and fig["total"] >= main["total"] and fig["triples"] == m["triples"]
+    ctx.update(fig, requires=", ".join(f"{d} {v}" for d, v in fig["requires"].items()))
+    assert augment.apply(str(rel), augment.FIGURES, ctx) == [p for p, _ in augment.FIGURES]
+    guide = visible((rel / ONT / "epm-ontology-guide.html").read_text())
+    walk = visible((rel / ONT / "epm-walkthrough.html").read_text())
+    assert f"logical-model 1.0.0 {m['triples']} triples" in guide and f"Modules {fig['modules']} each released" in guide
+    assert f"Triples {fig['total']:,} in the {augment.number_word(fig['modules'])} newest releases" in guide
+    assert f"{fig['modules']} modules · {fig['versions']} versions · {fig['files']} files" in guide
+    assert f"catalog of all {fig['catalog']} released packages in this release" in guide
+    assert f"Expect {fig['graphs']} graphs and {fig['quads']:,} triples on these releases" in walk
+    assert f"The catalog lists {fig['catalog']} releases in this release" in walk
 
 
 def test_a_missing_anchor_stops_the_registration():
     with pytest.raises(SystemExit, match="pipeline.py PACKAGES"):
         augment.patch_pipeline("PACKAGES = []\n", {})
-    with pytest.raises(SystemExit, match="the walkthrough states no module count"):
-        augment.patch_walkthrough("no count here", {"count_main": 11, "count_release": 12})
+    with pytest.raises(SystemExit, match="the walkthrough, the overview's modules: the anchor"):
+        augment.patch_walkthrough("no count here", dict(MADE_UP, slugs=[SLUG]))
 
 
 def small_release(tmp_path, folder):
@@ -283,3 +286,172 @@ def test_the_rebuilds_release_marker_lists_the_augment_folders_files(tmp_path, f
     rebuild.Rebuild(str(rel), str(tmp_path)).release_marker()
     marker = json.loads((rel / "release.json").read_text())
     assert marker == manifest.marker(marker["built"])
+
+
+# ---- Every figure of the guide and the walkthrough that could name the release set, classified ----
+
+def visible(page):
+    """The text a reader sees, aria-labels included, on one line."""
+    page = re.sub(r"<(style|script)\b.*?</\1>", " ", page, flags=re.S)
+    page = re.sub(r'src="data:[^"]*"', "", page)
+    page = re.sub(r'aria-label="([^"]*)"', r"> \1 <", page)
+    return html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page)))
+
+
+# A made-up augmented release: every figure differs from main's, so a figure the patches miss still reads main's.
+MADE_UP = {"modules": len(manifest.MODULES) + 1, "total": 12345, "triples": 99, "catalog": 61, "versions": 60, "files": 400,
+           "mb": 70, "graphs_per_module": 3, "graphs": 45, "quads": 54321,
+           "requires": "data-product 1.2.0, party 2.1.0, system 1.5.0"}
+
+# What could state the release set: a count of modules, releases, packages, versions, files, triples, quads, graphs or
+# rows, at least as large as the smallest module count the pages give (eleven), a stat of the guide, or one of main's
+# own figures written anywhere. Each hit must lie inside a pattern of FIGURE_CLASSES.
+UNITS = r"(?:newest |released |earlier |versioned, checked )?(?:modules?|releases?|packages?|versions?|version folders|release files|release records|files|triples|quads|named graphs|graphs|rows)\b"
+
+# (class, pattern before, pattern after). The patterns are on the visible text after the rewrite rules, formatted with
+# main's figures (m_*, from the tree) and the made-up release's (a_*). "present" states the release set as it is: the
+# patch rewrites it, so the before pattern is gone and the after pattern is there as often. Every other class stays as
+# it is: "history" is dated, "stores" is what a store held at its last load (the next reload holds the release's
+# figure), "other" counts something the release set does not change.
+FIGURE_CLASSES = {
+    "epm-ontology-guide.html": [
+        ("present", r"split into {m_w} modules", r"split into {a_w} modules"),
+        ("history", r"of the {m_w1} earlier modules\.", None),
+        ("present", r"Modules {m_n} each released", r"Modules {a_n} each released"),
+        ("present", r"Triples {m_total} in the {m_w} newest releases together", r"Triples {a_total} in the {a_w} newest releases together"),
+        ("present", r"It is {m_w} modules because", r"It is {a_w} modules because"),
+        ("present", r"It runs over the {m_w} newest releases loaded together, {m_total} triples since technical-graph 1\.0\.0 \(",
+         r"It runs over the {a_w} newest releases loaded together, {a_total} triples since logical-model 1\.0\.0, in this release "
+         r"\({m_total} since technical-graph 1\.0\.0, 2026-11-02; 36,951 since kpi 1\.3\.0 before it\)"),
+        ("history", r"over 36,901 triples, after that day's releases", None),
+        ("present", r"which prints {m_total} triples and 14 rows \(36,951 before",
+         r"which prints {a_total} triples and 14 rows in this release \({m_total} before logical-model 1\.0\.0; 36,951 before"),
+        # The query reads no statement of logical-model's vocabulary, so its output keeps its 14 rows.
+        ("other", r"MPR 14 rows\. The Gulf Coast filter", None),
+        # Each module card's own count; the patch adds logical-model's card (ADDED).
+        ("other", r"\b(?:core|kpi|market-data|data-product|system|organization|value-stream|party|ref-mpc|lane|integration|technical-graph) \d+\.\d+\.\d+ [\d,]+ triples Holds", None),
+        ("other", r"569,976 rows, refreshed", None),
+        ("other", r"142 and 540 rows", None),
+        ("present", r"as Turtle: {m_w} modules since technical-graph 1\.0\.0 \(2026-11-02\)",
+         r"as Turtle: {a_w} modules since logical-model 1\.0\.0, in this release \({m_w} since technical-graph 1\.0\.0, 2026-11-02\)"),
+        ("stores", r"over 36,951 triples Two loads", None),
+        ("stores", r"40,169 quads in 33 graphs", None),
+        ("stores", r"40,169 rows in 33 named graphs", None),
+        ("stores", r"11 Module and 11 ModuleRelease nodes", None),
+        ("stores", r"33 named graphs, three per module, 40,169 quads", None),
+        ("present", r"In all: {m_all} files and three links\. That is {m_files} release files",
+         r"In all: {a_all} files and three links\. That is {a_files} release files"),
+        ("present", r"the releases folder with {m_w} modules", r"the releases folder with {a_w} modules"),
+        ("present", r"releases/ {m_n} modules · {m_versions} versions · {m_files} files", r"releases/ {a_n} modules · {a_versions} versions · {a_files} files"),
+        ("present", r"releases/ : {m_n} modules, {m_versions} version folders and {m_files} files, about {m_mb} MB \(since technical-graph",
+         r"releases/ : {a_n} modules, {a_versions} version folders and {a_files} files, about {a_mb} MB, in this release "
+         r"\({m_n} modules, {m_versions} version folders and {m_files} files on main since technical-graph"),
+        ("present", r"catalog of all {m_catalog} released packages:", r"catalog of all {a_catalog} released packages in this release:"),
+        ("present", r"for the whole ontology \({m_total} triples\)", r"for the whole ontology \({a_total} triples\)"),
+    ],
+    "epm-walkthrough.html": [
+        ("present", r"L0 to L6 {m_n} modules Turtle in git", r"L0 to L6 {a_n} modules Turtle in git"),
+        ("present", r"Turtle in git {m_catalog} releases one DCAT catalog", r"Turtle in git {a_catalog} releases one DCAT catalog"),
+        ("stores", r"Delta, 40,169 rows", None),
+        ("history", r"ended as 50 versioned, checked releases \({m_catalog} since technical-graph 1\.0\.0, 2026-11-02\)", None),
+        ("history", r"first catalog of 19 releases on 2026-10-22", None),
+        ("history", r"kpi 1\.3\.0 and 50 releases on 2026-10-28", None),
+        ("history", r"10-28 kpi 1\.3\.0; 50 releases", None),
+        ("present", r"checks the same {m_w} packages in CI \(eleven until technical-graph",
+         r"checks the same {a_w} packages in CI in this release, with logical-model 1\.0\.0 \({m_w} on main; eleven until technical-graph"),
+        ("stores", r"from {m_total} triples and 2 inferred, every check passing", None),
+        ("stores", r"epm_triples at 40,169 quads", None),
+        ("present", r"printed, 4,234 and 22,302 on these releases, and {m_n} release records",
+         r"printed \(4,234 and 22,302 on main's {m_w} modules, before logical-model 1\.0\.0 was added in this release\), and {a_n} release records"),
+        ("present", r"Expect {m_graphs} graphs and {m_quads} triples on these releases: three graphs for each of {m_n} modules \(33 and 40,169 for the eleven before",
+         r"Expect {a_graphs} graphs and {a_quads} triples on these releases: three graphs for each of {a_n} modules \({m_graphs} and {m_quads} "
+         r"for the {m_w} before logical-model 1\.0\.0, added in this release; 33 and 40,169 for the eleven before"),
+        ("present", r"this returns {m_quads_plain} and {m_graphs} for these releases \(40169 and 33",
+         r"this returns {a_quads_plain} and {a_graphs} for these releases \({m_quads_plain} and {m_graphs} before logical-model 1\.0\.0, added in this release; 40169 and 33"),
+        ("other", r"returns two rows|it returned 11 rows|this returned 11 rows|the walk 11 rows|Expect 11 rows", None),
+        ("other", r"up to 500 rows as whole JSON, up from a cut at 20 rows", None),
+        ("stores", r"over 36,951 triples Two loads", None),
+        ("stores", r"40,169 quads in 33 graphs", None),
+        ("stores", r"40,169 rows in 33 named graphs", None),
+        ("stores", r"11 Module and 11 ModuleRelease nodes", None),
+        ("stores", r"33 named graphs, three per module, 40,169 quads", None),
+        ("other", r"142 and 540 rows", None),
+        ("other", r"91 rows \(90 until 2026-11-02", None),
+        ("other", r"569,976 rows, refreshed", None),
+        ("other", r"steps 7-12 Modules steps 13-20", None),
+        ("other", r"707 concepts, 14,659 triples", None),
+        ("other", r"Expect 33 rows", None),
+        ("present", r"The catalog lists {m_catalog} releases \(50 until technical-graph 1\.0\.0, 2026-11-02;",
+         r"The catalog lists {a_catalog} releases in this release \(on main, {m_catalog} since technical-graph 1\.0\.0, 2026-11-02, and 50 until then;"),
+        ("present", r"Expect {m_w} modules, newest core 2\.4\.0 and kpi 1\.3\.0 \(eleven until",
+         r"Expect {a_w} modules, newest core 2\.4\.0 and kpi 1\.3\.0 \({m_w} until logical-model 1\.0\.0, added in this release; eleven until"),
+        ("present", r"after a record, 4,234 nodes, 22,302 relationships, {m_total} triples and 2 inferred",
+         r"after a record on this release, the run's nodes, relationships and inferences over {a_total} triples \(on main since "
+         r"technical-graph 1\.0\.0, 2026-11-02: 4,234 nodes, 22,302 relationships, {m_total} triples and 2 inferred\)"),
+        ("stores", r"epm_triples 40,169 quads, hash equal; 14 walks equal; the Jena walk store 37,089 quads", None),
+        ("other", r"crack-spread gold table of 108,204 rows", None),
+        # The file map's rows: each folder's own files, and each module's own packages, which the release set does not change.
+        ("other", r"\(\d+ files(?:: Turtle, JSON-LD, shapes, DCAT record, manifest)?\)|\(109 files,", None),
+    ],
+}
+
+
+# What the patches add for the module: its card, its row of the newest versions and of the module table, and a word
+# where a map does not draw it.
+ADDED = {
+    "epm-ontology-guide.html": [r"logical-model 1\.0\.0 {a_triples} triples Holds", r"logical-model 1\.0\.0 {a_requires}",
+                                r"In this release they also count logical-model 1\.0\.0",
+                                r"logical-model 1\.0\.0, added in this release, is not drawn; it requires {a_requires}\.",
+                                r"every one except ref-mpc , technical-graph and logical-model ;"],
+    "epm-walkthrough.html": [r"logical-model 1\.0\.0, added in this release, is drawn in neither map\.",
+                             r"Every module folder but technical-graph and logical-model has the same shape",
+                             r"logical-model Logical data models exported from ER Studio Data Architect"],
+}
+
+
+def figure_values(fig, prefix):
+    out = {f"{prefix}_{k}": v for k, v in fig.items() if isinstance(v, int)}
+    out.update({f"{prefix}_n": fig["modules"], f"{prefix}_w": augment.number_word(fig["modules"]),
+                f"{prefix}_w1": augment.number_word(fig["modules"] - 1), f"{prefix}_total": f"{fig['total']:,}",
+                f"{prefix}_quads": f"{fig['quads']:,}", f"{prefix}_quads_plain": str(fig["quads"])})
+    return out
+
+
+def test_every_figure_of_the_pages_is_classified_and_an_augmented_release_rewrites_the_present_ones():
+    """The real guide and walkthrough, as the cut has them (after the rewrite rules), patched for a made-up augmented
+    release: each figure that states the release set reads the release's figure, no present figure keeps main's, and
+    every other figure stays. A figure added to a page later fails here until it is classified."""
+    main = augment.release_figures(ROOT)
+    dates = export.record_dates(ROOT)
+    with open(os.path.join(ROOT, ONT, "epm-ontology-guide.html"), encoding="utf-8") as f:
+        guide = rules.apply(f.read(), f"{ONT}/epm-ontology-guide.html", dates)[0]
+    copy = re.search(r"In all: (\d+) files and three links\. That is (\d+) release files", visible(guide))
+    others = int(copy.group(1)) - int(copy.group(2))  # the pages and the files for using it, which the release set does not change
+    values = figure_values(main, "m") | figure_values(MADE_UP, "a")
+    values.update(m_all=main["files"] + others, a_all=MADE_UP["files"] + others, a_requires=re.escape(MADE_UP["requires"]))
+    ctx = dict(MADE_UP, slugs=[SLUG])
+    big = [augment.number_word(n) for n in range(main["modules"] - 1, len(augment.WORDS))]
+    own = sorted({f"{main[k]:,}" for k in ("total", "quads", "files")} | {str(main["quads"]), str(main["total"]), str(values["m_all"])}, key=len, reverse=True)
+    detect = re.compile(rf"(?<![\w.,-])(\d[\d,]*|{'|'.join(big)}) {UNITS}|\b(?:Modules|Triples) \d[\d,]*|(?<![\d,])(?:{'|'.join(map(re.escape, own))})(?![\d,])", re.I)
+    for name, fn in (("epm-ontology-guide.html", augment.patch_guide), ("epm-walkthrough.html", augment.patch_walkthrough)):
+        path = f"{ONT}/{name}"
+        with open(os.path.join(ROOT, path), encoding="utf-8") as f:
+            page = rules.apply(f.read(), path, dates)[0]
+        before, after = visible(page), visible(fn(page, ctx))
+        classes = [(cls, b.format(**values), a and a.format(**values)) for cls, b, a in FIGURE_CLASSES[name]]
+        spans = [m.span() for _, b, _ in classes for m in re.finditer(b, before)]
+        for m in detect.finditer(before):
+            if m.group(1) and m.group(1)[0].isdigit() and int(m.group(1).replace(",", "")) < main["modules"] - 1:
+                continue  # a count smaller than any module count the pages give
+            assert any(s <= m.start() and m.end() <= e for s, e in spans), (
+                f"{name}: {before[max(0, m.start() - 80):m.end() + 40]!r} states a figure no class in FIGURE_CLASSES covers")
+        for added in ADDED[name]:
+            assert len(re.findall(added.format(**values), after)) == 1, f"{name}: the augmented release does not say {added!r}"
+        for cls, b, a in classes:
+            found = len(re.findall(b, before))
+            assert found, f"{name}: the {cls} figure {b!r} is not on the page; update FIGURE_CLASSES"
+            if cls == "present":
+                assert not re.search(b, after), f"{name}: {b!r} still states main's figure in an augmented release"
+                assert len(re.findall(a, after)) == found, f"{name}: the augmented release does not say {a!r}"
+            else:
+                assert len(re.findall(b, after)) == found, f"{name}: the {cls} figure {b!r} changed"
