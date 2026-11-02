@@ -326,6 +326,8 @@ class Rebuild:
                 "print(json.dumps({'total': len(whole), 'triples': lm['triples'], 'requires': lm['requires']}))\n")
         r = self.run("figures", ["-c", code], ".")
         fig = json.loads(r.stdout.strip().splitlines()[-1])
+        package_dir = os.path.join(self.release, ONT, "releases", augment.MODULE)
+        ctx["added_files"] = sum(len(files) for _, _, files in os.walk(package_dir))  # the package and its changelog
         ctx.update(total=fig["total"], triples=fig["triples"],
                    requires=", ".join(f"{d} {v}" for d, v in fig["requires"].items()))
         places += augment.apply(self.release, augment.FIGURES, ctx)

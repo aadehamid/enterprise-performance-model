@@ -299,6 +299,14 @@ def patch_guide(text, ctx):
     text = _sub(text, rf"(loaded together, ){re.escape(old_total)}( triples since )",
                 lambda m: f"{m.group(1)}{new_total}{m.group(2)}{MODULE} {VERSION} (in this release; {old_total} since ",
                 "the guide's dated total")
+    # The copy section's inventory: the package adds a module, a version folder and its files (Codex's quick check).
+    added = ctx.get("added_files", 0)
+    text = re.sub(r"(\d+) modules · (\d+) versions · (\d+) files",
+                  lambda m: f"{int(m.group(1)) + 1} modules · {int(m.group(2)) + 1} versions · {int(m.group(3)) + added} files", text)
+    text = _sub(text, r"(\d+) modules, (\d+) version folders and (\d+) files(, about [^(]*)\(since ",
+                lambda m: (f"{int(m.group(1)) + 1} modules, {int(m.group(2)) + 1} version folders and {int(m.group(3)) + added} files"
+                           f"{m.group(4)}(in this release, with {MODULE} {VERSION}; {m.group(1)} modules, {m.group(2)} version "
+                           f"folders and {m.group(3)} files since "), "the guide's copy inventory")
     card = (f'\n<section class="mod" id="m-{MODULE}">\n<h3>{MODULE} <span class="pill">{VERSION}</span> '
             f'<span class="pill">{ctx["triples"]:,} triples</span></h3>\n<div class="two">\n<div>\n'
             "<p><strong>Holds</strong> logical data models exported from ER Studio Data Architect, each as two graphs: "

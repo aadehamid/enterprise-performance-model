@@ -212,7 +212,8 @@ def test_the_package_is_built_registered_and_counted(tmp_path, folder):
     assert ctx["count_release"] == len(manifest.MODULES) + 1
     page = (rel / ONT / "epm-ontology-guide.html").read_text()
     today = re.search(r'<div class="k">Triples</div><div class="v">([\d,]+)</div>', page).group(1)
-    ctx.update(total=12345, triples=m["triples"], requires="party 2.1.0, system 1.5.0, data-product 1.2.0")
+    inventory = re.search(r"(\d+) modules, (\d+) version folders and (\d+) files", re.sub(r"<[^>]+>", " ", page))
+    ctx.update(total=12345, triples=m["triples"], requires="party 2.1.0, system 1.5.0, data-product 1.2.0", added_files=7)
     augment.apply(str(rel), augment.FIGURES, ctx)
     guide = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", (rel / ONT / "epm-ontology-guide.html").read_text()))
     assert f"logical-model 1.0.0 {m['triples']} triples" in guide
@@ -222,6 +223,9 @@ def test_the_package_is_built_registered_and_counted(tmp_path, folder):
     assert f"which prints 12,345 triples" in guide and "for the whole ontology (12,345 triples)" in guide
     assert f"loaded together, 12,345 triples since logical-model 1.0.0 (in this release; {today} since " in guide
     assert guide.count(today) == 1, "the earlier total survives only in the dated sentence"
+    n, v, f = (int(x) for x in inventory.groups())
+    assert f"{n + 1} modules · {v + 1} versions · {f + 7} files" in guide
+    assert f"{n + 1} modules, {v + 1} version folders and {f + 7} files" in guide and f"{n} modules · {v} versions" not in guide
 
 
 def test_a_missing_anchor_stops_the_registration():
