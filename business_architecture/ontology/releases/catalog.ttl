@@ -53,6 +53,7 @@
         <https://w3id.org/lsc/ontology/modules/system/1.3.0>,
         <https://w3id.org/lsc/ontology/modules/system/1.4.0>,
         <https://w3id.org/lsc/ontology/modules/system/1.5.0>,
+        <https://w3id.org/lsc/ontology/modules/technical-graph/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/value-stream/1.0.0>,
         <https://w3id.org/lsc/ontology/modules/value-stream/1.1.0>,
         <https://w3id.org/lsc/ontology/modules/value-stream/1.2.0> .
@@ -488,6 +489,15 @@
     dcat:distribution <https://w3id.org/lsc/ontology/modules/system/releases/1.5.0/shapes.ttl>,
         <https://w3id.org/lsc/ontology/modules/system/releases/1.5.0/system.jsonld>,
         <https://w3id.org/lsc/ontology/modules/system/releases/1.5.0/system.ttl> .
+
+<https://w3id.org/lsc/ontology/modules/technical-graph/1.0.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/technical-graph> ;
+    dcterms:issued "2026-11-02"^^xsd:date ;
+    dcterms:title "LSC Technical Graph Module 1.0.0"@en ;
+    owl:versionInfo "1.0.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/shapes.ttl>,
+        <https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/technical-graph.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/technical-graph.ttl> .
 
 <https://w3id.org/lsc/ontology/modules/value-stream/1.0.0> a dcat:Dataset ;
     dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/value-stream> ;
@@ -1098,6 +1108,18 @@
 
 <https://w3id.org/lsc/ontology/modules/system/releases/1.5.0/system.ttl> a dcat:Distribution ;
     dcat:downloadURL <https://w3id.org/lsc/ontology/modules/system/releases/1.5.0/system.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/technical-graph.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/technical-graph.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/technical-graph.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/technical-graph/releases/1.0.0/technical-graph.ttl> ;
     dcat:mediaType "text/turtle" .
 
 <https://w3id.org/lsc/ontology/modules/value-stream/releases/1.0.0/shapes.ttl> a dcat:Distribution ;

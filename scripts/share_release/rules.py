@@ -338,6 +338,8 @@ def rule_previous_paths(text, ctx):
         return text, 0  # code resolves a package's path itself (build_module.resolve) and is not rewritten by pattern
     n = 0
     for m, (newest, previous) in manifest.MODULES.items():
+        if not previous:
+            continue  # a module with one release has no history folder
         text, k = _count(rf"(?<!previous/)\breleases/{re.escape(m)}/{re.escape(previous)}(?![\d.])", f"releases/previous/{m}/{previous}", text); n += k
     return text, n
 

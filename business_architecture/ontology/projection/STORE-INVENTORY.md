@@ -2,17 +2,17 @@
 
 This page lists what each store should hold, what should not be in it, and the commands to check it yourself. `LOCAL-STORES.md` says where each store lives and how to refresh it, `README.md`, "What each store holds", gives the policy for each module's three graphs, and `../../../demos/downstream-pricing-databricks-free/DATA.md` says how the demo's tables are generated. This page answers a different question: is the data in each store the latest, and is anything old left beside it?
 
-**Figures from the last load:** `python3 scripts/epm_facts.py projection`, from the repository root, prints them. The ontology stores below take these figures at their next reload (*2026-11-01:* the last load ran on test containers). The `Postgres`, `Databricks` and `Docker` counts are from the last audit, on 2026-10-29 at main `0b5d6051`; that audit was read-only, and the leftovers it found were removed afterwards at the decision owner's word, as those sections say.
+**Figures from the last load:** `python3 scripts/epm_facts.py projection`, from the repository root, prints them. The ontology stores below take these figures at their next reload (*2026-11-01:* the last load ran on test containers; *2026-11-02:* so did the load with technical-graph 1.0.0, the twelfth module, so until the next reload the stores hold the eleven earlier modules: 4,193 nodes, 22,142 relationships, 11 release records, and 33 named graphs and 40,169 triples in Jena and `epm_triples`). The `Postgres`, `Databricks` and `Docker` counts are from the last audit, on 2026-10-29 at main `0b5d6051`; that audit was read-only, and the leftovers it found were removed afterwards at the decision owner's word, as those sections say.
 
 ## Local Neo4j (container `lpg-local-neo4j-1`)
 
 | What | Count | Where it comes from |
 |---|---|---|
-| Nodes labelled `Resource` (the ontology) | 4,193 | The driver's `rebuild` step, from `epm_triples` |
-| Relationships between `Resource` nodes | 22,142 | The same load: 21,767 from the releases' triples, 373 schema relationships from the ontology import, and 2 from inferences |
-| Nodes labelled `ModuleRelease` | 11, one per module | The driver's `release-record` step |
+| Nodes labelled `Resource` (the ontology) | 4,234 | The driver's `rebuild` step, from `epm_triples` |
+| Relationships between `Resource` nodes | 22,302 | The same load: 21,873 from the releases' triples, 427 schema relationships from the ontology import, and 2 from inferences |
+| Nodes labelled `ModuleRelease` | 12, one per module | The driver's `release-record` step |
 | Nodes labelled `Tech` (the technical graph and decision trail) | 142, each with its own `uri` | `pricing_demo.tech_graph load` |
-| Nodes labelled `Module` | 11 | The driver's module tags |
+| Nodes labelled `Module` | 12 | The driver's module tags |
 | `EpmStoreMarker` | 1 (`store: driver`) | `sync_stores.py mark` |
 | n10s configuration nodes (`_GraphConfig`, `_NsPrefDef`, `_n10sValidatorConfig`) | 1 each | The n10s load |
 
@@ -20,7 +20,7 @@ Should not be there: nodes from an earlier release beside the current ones, a se
 
 ## Jena (container `epm-jena-fuseki-1`)
 
-All three graphs of each newest release: 33 named graphs and 40,169 triples, as in `epm_triples`. Each module has its content under its version IRI, and `<version IRI>/shapes` and `<version IRI>/catalog`. Beside them it holds the technical graph, as `urn:pricing-demo:graph:tech-graph` and `urn:pricing-demo:graph:decision-trail`. It holds no marker: the drift check compares its graph names and each graph's triple count with the files.
+All three graphs of each newest release: 36 named graphs and 40,565 triples, as in `epm_triples`. Each module has its content under its version IRI, and `<version IRI>/shapes` and `<version IRI>/catalog`. Beside them it holds the technical graph, as `urn:pricing-demo:graph:tech-graph` and `urn:pricing-demo:graph:decision-trail`. It holds no marker: the drift check compares its graph names and each graph's triple count with the files.
 
 Should not be there: a graph of an older release, any other graph, or a triple in the default graph. The dataset is in memory, so a restart empties it, and `sync_stores.py check` then reads `empty`. `sync_stores.py sync` reloads it.
 
@@ -28,10 +28,10 @@ Should not be there: a graph of an older release, any other graph, or a triple i
 
 AuraDB holds a copy of the local Neo4j, in one database. Its counts match the local store's, without the n10s configuration nodes:
 
-- 4,193 `Resource` nodes, with 22,142 relationships between them;
-- 11 `ModuleRelease` nodes, the same records as the local store's;
+- 4,234 `Resource` nodes, with 22,302 relationships between them;
+- 12 `ModuleRelease` nodes, the same records as the local store's;
 - 142 `Tech` nodes, each with its own `uri`;
-- 11 `Module` nodes;
+- 12 `Module` nodes;
 - one `EpmStoreMarker` (`store: aura`).
 
 ## Local Postgres (container `pricing-demo-sources`) and the exe.dev VM
@@ -60,7 +60,7 @@ Should not be there: databases under the source names used before 2026-10-28. No
 
 | Table | Rows | Where it comes from |
 |---|---|---|
-| `epm_triples` | 40,169 quads in 33 named graphs | The driver's `databricks` step, from the newest release of each module |
+| `epm_triples` | 40,565 quads in 36 named graphs | The driver's `databricks` step, from the newest release of each module |
 | `epm_store_markers` | 1 (`store: databricks`) | `sync_stores.py mark` |
 
 **`idp_sbx`** holds the pricing demo: exactly the 69 objects the demo's SQL creates (`databricks.created_objects()`). Row counts per object are in `DATA.md`.
@@ -111,7 +111,7 @@ docker exec -e NEO4J_PASSWORD lpg-local-neo4j-1 cypher-shell -u neo4j \
   "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]->(:Resource) RETURN count(r) AS relationships; MATCH (r:ModuleRelease) RETURN count(r) AS releases; MATCH (t:Tech) RETURN count(t) AS tech, count(DISTINCT t.uri) AS distinct_uris; MATCH (m:EpmStoreMarker) RETURN m.store, m.marked_at;"
 ```
 
-Expect 4,193 nodes and 22,142 relationships in both stores; 11 release records; 142 Tech nodes with 142 distinct URIs; one marker naming the store.
+Expect 4,234 nodes and 22,302 relationships in both stores; 12 release records; 142 Tech nodes with 142 distinct URIs; one marker naming the store.
 
 Jena: the release's graphs and triples, leaving out the technical graph's two.
 

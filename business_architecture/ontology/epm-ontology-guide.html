@@ -251,18 +251,18 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 <div class="title-row">
   <div>
     <h1>The EPM ontology</h1>
-    <p class="sub">A guide to the ontology of Marathon Petroleum's downstream business: what it is for, why it is split into eleven modules, what each module holds and how the modules connect. One pricing measure, the crack spread, runs through every section to show the modules working together.</p>
+    <p class="sub">A guide to the ontology of Marathon Petroleum's downstream business: what it is for, why it is split into twelve modules, what each module holds and how the modules connect. One pricing measure, the crack spread, runs through every section to show the modules working together.</p>
   </div>
   <a class="btn" href="#copy">Copy the ontology</a>
 </div>
 
 <p class="notice">This guide covers the finished ontology. For the story behind it, from the business processes and their gaps through the build to the demo, read the walkthrough: <code>business_architecture/ontology/epm-walkthrough.html</code>, or the <a href="https://spacesheep.dev/space/6cb4e7f9-6357-40b5-81f2-ff8ac05a44d9">same page published</a> (private; ask the decision owner for access). For how the process definitions were decided, read <code>business_architecture/ontology/business-process-architecture-playbook.md</code>. For the method, read the <code>ontology</code> skill's guide and, for the projection, the <code>ontology-to-lpg</code> skill's playbook.</p>
 
-<p class="notice">A snapshot: every figure is from the newest release of each module at commit <code>40b3082</code>, on the branch that releases kpi 1.3.0 (2026-10-28, EPM-DEC-001-0109), which follows party 2.1.0 and integration 2.5.0 (EPM-DEC-001-0099), organization 2.2.0 (EPM-DEC-001-0045) and the releases of 2026-10-27 that bring in the decision owner's customer inputs of that day (EPM-DEC-001-0108). Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
+<p class="notice">A snapshot: every figure is from the newest release of each module at commit <code>40b3082</code>, on the branch that releases kpi 1.3.0 (2026-10-28, EPM-DEC-001-0109), which follows party 2.1.0 and integration 2.5.0 (EPM-DEC-001-0099), organization 2.2.0 (EPM-DEC-001-0045) and the releases of 2026-10-27 that bring in the decision owner's customer inputs of that day (EPM-DEC-001-0108). <em>2026-11-02:</em> the module counts, triple totals, module map, module cards and newest-versions table also count technical-graph 1.0.0, the twelfth module, which the decision owner approved (EPM-DEC-001-0112); the store figures are still those of the last load, of the eleven earlier modules. Each new release changes them. For current figures, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</p>
 
 <div class="stats">
-  <div class="stat"><div class="k">Modules</div><div class="v">11</div><div class="d">each released and versioned on its own</div></div>
-  <div class="stat"><div class="k">Triples</div><div class="v">36,951</div><div class="d">in the eleven newest releases together</div></div>
+  <div class="stat"><div class="k">Modules</div><div class="v">12</div><div class="d">each released and versioned on its own</div></div>
+  <div class="stat"><div class="k">Triples</div><div class="v">37,176</div><div class="d">in the twelve newest releases together</div></div>
   <div class="stat"><div class="k">Processes</div><div class="v">463</div><div class="d">in <code>core</code>, with 640 evidenced relationships</div></div>
   <div class="stat"><div class="k">Measures</div><div class="v">41</div><div class="d">defined in <code>kpi</code>; values stay in the systems</div></div>
 </div>
@@ -299,7 +299,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 
 
 <h2 id="why-modules">Why modules</h2>
-<p class="lead">The ontology could have been one large file. It is eleven modules because each part has its own owner, its own sources and its own pace of change.</p>
+<p class="lead">The ontology could have been one large file. It is twelve modules because each part has its own owner, its own sources and its own pace of change.</p>
 <div class="two">
   <div>
     <p>The <code>ontology</code> skill's playbook, "Why split an ontology into modules", gives the reasons, and the build followed each one:</p>
@@ -322,7 +322,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 <h2 id="map">The module map</h2>
 <p class="lead"><code>core</code>, the process map, is at the bottom. Most modules add one kind of thing and link it to core's processes. An arrow points from a module to a module it requires, as each release's manifest records. <code>integration</code> requires nine modules, every one except <code>ref-mpc</code>; its arrows are dashed.</p>
 <figure>
-<div class="diagram wide" role="img" aria-label="Module map: integration on top requires core, organization, kpi, data-product, value-stream, system, lane, market-data and party, not ref-mpc; value-stream requires data-product, kpi and core; ref-mpc requires party and organization; market-data requires kpi; data-product requires kpi, system and core; party requires system and core; lane, kpi, system and organization require core.">
+<div class="diagram wide" role="img" aria-label="Module map: integration on top requires core, organization, kpi, data-product, value-stream, system, lane, market-data and party, not ref-mpc; value-stream requires data-product, kpi and core; technical-graph requires data-product, kpi and system; ref-mpc requires party and organization; market-data requires kpi; data-product requires kpi, system and core; party requires system and core; lane, kpi, system and organization require core.">
 <svg viewBox="0 0 1040 530" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head" d="M0 0 10 5 0 10z"/></marker>
@@ -333,11 +333,11 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <!-- edges -->
   <path class="e int" d="M145 80 V238" marker-end="url(#a1)"/>
   <path class="e int" d="M385 80 V128" marker-end="url(#a1)"/>
-  <path class="e int" d="M515 80 V238" marker-end="url(#a1)"/>
+  <path class="e int" d="M480 80 V238" marker-end="url(#a1)"/>
   <path class="e int" d="M775 80 V238" marker-end="url(#a1)"/>
   <path class="e int" d="M50 80 V348" marker-end="url(#a1)"/>
   <path class="e int" d="M290 80 V365 H298" marker-end="url(#a1)"/>
-  <path class="e int" d="M645 80 V348" marker-end="url(#a1)"/>
+  <path class="e int" d="M670 80 V348" marker-end="url(#a1)"/>
   <path class="e int" d="M1005 80 V377 H992" marker-end="url(#a1)"/>
   <path class="e int" d="M1022 80 V492 H662" marker-end="url(#a1)"/>
   <path class="e" d="M385 184 V348" marker-end="url(#a1)"/>
@@ -355,8 +355,12 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
   <path class="e" d="M400 404 L430 438" marker-end="url(#a1)"/>
   <path class="e" d="M630 404 L600 438" marker-end="url(#a1)"/>
   <path class="e" d="M905 404 V478 H662" marker-end="url(#a1)"/>
+  <path class="e" d="M560 184 V238" marker-end="url(#a1)"/>
+  <path class="e" d="M640 184 V348" marker-end="url(#a1)"/>
+  <path class="e" d="M500 184 C 480 215 420 205 415 240 V348" marker-end="url(#a1)"/>
   <!-- nodes -->
   <rect class="node" x="300" y="130" width="170" height="54" rx="6"/><text class="t" x="314" y="153">value-stream 1.2.0</text><text class="m" x="314" y="172">vs:</text>
+  <rect class="node" x="490" y="130" width="160" height="54" rx="6"/><text class="t" x="502" y="153">technical-graph 1.0.0</text><text class="m" x="502" y="172">tg:</text>
   <rect class="node" x="820" y="130" width="170" height="54" rx="6"/><text class="t" x="834" y="153">ref-mpc 1.3.0</text><text class="m" x="834" y="172">refmpc:</text>
   <rect class="node key" x="60" y="240" width="170" height="54" rx="6"/><text class="t" x="74" y="263">market-data 1.1.0</text><text class="m" x="74" y="282">mkt:</text>
   <rect class="node key" x="430" y="240" width="170" height="54" rx="6"/><text class="t" x="444" y="263">data-product 1.2.0</text><text class="m" x="444" y="282">dp:</text>
@@ -369,19 +373,20 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 </svg>
 </div>
 <div class="diagram tall" role="img" aria-label="Module map as a list, top to bottom.">
-<svg viewBox="0 0 360 700" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 360 760" xmlns="http://www.w3.org/2000/svg">
   <rect class="lane" x="10" y="10" width="340" height="56" rx="8"/><text class="t" x="24" y="34">integration 2.5.0</text><text class="s" x="24" y="53">requires every module below except ref-mpc</text>
   <g>
-  <rect class="node" x="10" y="80" width="340" height="50" rx="6"/><text class="t" x="24" y="101">value-stream 1.2.0</text><text class="s" x="24" y="119">requires data-product, kpi, core</text>
-  <rect class="node" x="10" y="140" width="340" height="50" rx="6"/><text class="t" x="24" y="161">ref-mpc 1.3.0</text><text class="s" x="24" y="179">requires organization, party</text>
-  <rect class="node key" x="10" y="200" width="340" height="50" rx="6"/><text class="t" x="24" y="221">market-data 1.1.0</text><text class="s" x="24" y="239">requires kpi</text>
-  <rect class="node key" x="10" y="260" width="340" height="50" rx="6"/><text class="t" x="24" y="281">data-product 1.2.0</text><text class="s" x="24" y="299">requires core, kpi, system</text>
-  <rect class="node" x="10" y="320" width="340" height="50" rx="6"/><text class="t" x="24" y="341">party 2.1.0</text><text class="s" x="24" y="359">requires core, system</text>
-  <rect class="node store" x="10" y="380" width="340" height="50" rx="6"/><text class="t" x="24" y="401">kpi 1.3.0</text><text class="s" x="24" y="419">requires core</text>
-  <rect class="node key" x="10" y="440" width="340" height="50" rx="6"/><text class="t" x="24" y="461">system 1.5.0</text><text class="s" x="24" y="479">requires core</text>
-  <rect class="node" x="10" y="500" width="340" height="50" rx="6"/><text class="t" x="24" y="521">organization 2.2.0</text><text class="s" x="24" y="539">requires core</text>
-  <rect class="node" x="10" y="560" width="340" height="50" rx="6"/><text class="t" x="24" y="581">lane 1.1.0</text><text class="s" x="24" y="599">requires core</text>
-  <rect class="node key" x="10" y="620" width="340" height="66" rx="6"/><text class="t" x="24" y="644">core 2.4.0</text><text class="s" x="24" y="664">the process map; requires nothing</text>
+  <rect class="node" x="10" y="80" width="340" height="50" rx="6"/><text class="t" x="24" y="101">technical-graph 1.0.0</text><text class="s" x="24" y="119">requires data-product, kpi, system</text>
+  <rect class="node" x="10" y="140" width="340" height="50" rx="6"/><text class="t" x="24" y="161">value-stream 1.2.0</text><text class="s" x="24" y="179">requires data-product, kpi, core</text>
+  <rect class="node" x="10" y="200" width="340" height="50" rx="6"/><text class="t" x="24" y="221">ref-mpc 1.3.0</text><text class="s" x="24" y="239">requires organization, party</text>
+  <rect class="node key" x="10" y="260" width="340" height="50" rx="6"/><text class="t" x="24" y="281">market-data 1.1.0</text><text class="s" x="24" y="299">requires kpi</text>
+  <rect class="node key" x="10" y="320" width="340" height="50" rx="6"/><text class="t" x="24" y="341">data-product 1.2.0</text><text class="s" x="24" y="359">requires core, kpi, system</text>
+  <rect class="node" x="10" y="380" width="340" height="50" rx="6"/><text class="t" x="24" y="401">party 2.1.0</text><text class="s" x="24" y="419">requires core, system</text>
+  <rect class="node store" x="10" y="440" width="340" height="50" rx="6"/><text class="t" x="24" y="461">kpi 1.3.0</text><text class="s" x="24" y="479">requires core</text>
+  <rect class="node key" x="10" y="500" width="340" height="50" rx="6"/><text class="t" x="24" y="521">system 1.5.0</text><text class="s" x="24" y="539">requires core</text>
+  <rect class="node" x="10" y="560" width="340" height="50" rx="6"/><text class="t" x="24" y="581">organization 2.2.0</text><text class="s" x="24" y="599">requires core</text>
+  <rect class="node" x="10" y="620" width="340" height="50" rx="6"/><text class="t" x="24" y="641">lane 1.1.0</text><text class="s" x="24" y="659">requires core</text>
+  <rect class="node key" x="10" y="680" width="340" height="66" rx="6"/><text class="t" x="24" y="704">core 2.4.0</text><text class="s" x="24" y="724">the process map; requires nothing</text>
   </g>
 </svg>
 </div>
@@ -441,7 +446,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 </figure>
 
 <h3>The walk, as one query</h3>
-<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the eleven newest releases loaded together, 36,951 triples since kpi 1.3.0; the output below is what it returned on 2026-10-27, over 36,901 triples, after that day's releases. The releases of 2026-10-28 (organization 2.2.0, party 2.1.0, integration 2.5.0, kpi 1.3.0) change no statement the query reads.</p>
+<p>This SPARQL query walks the measure's neighbourhood across seven modules: kpi, core, market-data, data-product, system, value-stream and organization. It runs over the twelve newest releases loaded together, 37,176 triples since technical-graph 1.0.0 (2026-11-02; 36,951 since kpi 1.3.0 before it); the output below is what it returned on 2026-10-27, over 36,901 triples, after that day's releases. The releases of 2026-10-28 (organization 2.2.0, party 2.1.0, integration 2.5.0, kpi 1.3.0) and technical-graph 1.0.0 change no statement the query reads.</p>
 <pre><code>PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
 PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt;
 PREFIX kpi: &lt;https://w3id.org/lsc/ontology/modules/kpi/&gt;
@@ -474,7 +479,7 @@ SELECT ?hop ?label WHERE {
           BIND("RACI on a process MPR supports (organization)" AS ?hop) BIND(CONCAT(?pl, ": ", ?lvl, " ", ?role) AS ?label) }
 }
 ORDER BY ?hop ?label</code></pre>
-<p><strong>This query is SPARQL, so it does not run in Neo4j or AuraDB.</strong> Run it on the Turtle releases with this script, which prints 36,951 triples and 14 rows:</p>
+<p><strong>This query is SPARQL, so it does not run in Neo4j or AuraDB.</strong> Run it on the Turtle releases with this script, which prints 37,176 triples and 14 rows (36,951 before technical-graph 1.0.0, 2026-11-02):</p>
 <pre><code># Save the query above as crack.rq and this as run_rq.py. From the repository root:
 # uv run --no-project --with rdflib python run_rq.py crack.rq
 import glob, os, re, sys
@@ -709,8 +714,23 @@ RETURN m.skos__prefLabel AS measure,
 <p class="note">Requires core, organization, kpi, data-product, value-stream, system, lane, market-data and party; not ref-mpc, though its authority tiers cover ref-mpc's sources. No catalog row publishes the crack-spread measure yet; the binding is the view's <code>dp:servesMeasure</code> (EPM-DEC-001-0100, item 4).</p>
 </section>
 
+<section class="mod" id="m-technical-graph">
+<h3>technical-graph <span class="pill">1.0.0</span> <span class="pill">225 triples</span></h3>
+<div class="two">
+<div>
+<p><strong>Holds</strong> the vocabulary of what was built on the data platform: 12 classes, such as host, source database, table, metric view, pipeline step, quality check and agent; the check-result code list (pass, fail, differs); and 22 properties. Definitions only: the technical graph's nodes, row counts, refresh times and check results stay in the technical graph, never in the ontology (EPM-DEC-001-0112).</p>
+<p><strong>Why:</strong> the other modules say what was designed; this one names what was built, so a question such as "where does this number come from" or "is it built as designed" can be asked of the platform itself. It answers competency questions 45 to 50.</p>
+</div>
+<div class="card story">
+<p class="story-h">In the crack spread's story</p>
+<p>In a technical graph, the metric view <code>semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw</code> is a <code>tg:MetricView</code> that <code>tg:implements</code> <code>measure:crack-spreads</code> and is <code>tg:designedAs</code> the view data-product defines. The module's example graph, test data cut from the pricing demo and kept out of the package, holds that record.</p>
+</div>
+</div>
+<p class="note">Links: <code>tg:implements</code> to kpi's measures, <code>tg:standsFor</code> to system's systems, <code>tg:designedAs</code> and <code>tg:layer</code> to data-product's designs and layers. Requires data-product 1.2.0, kpi 1.3.0 and system 1.5.0.</p>
+</section>
+
 <h2 id="questions">The competency questions</h2>
-<p class="lead">These 50 questions are the ontology's acceptance test: if the model cannot answer one, the model is incomplete, and not the question. The decision owner locked the first 44 on 2026-09-18, before modelling, and questions 45 to 50, the technical-graph candidate module's, on 2026-11-02 (EPM-DEC-001-0112). 49 are answerable today, questions 45 to 50 on the module's example graph, and one, question 17 (who owns each concept's meaning), is parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).</p>
+<p class="lead">These 50 questions are the ontology's acceptance test: if the model cannot answer one, the model is incomplete, and not the question. The decision owner locked the first 44 on 2026-09-18, before modelling, and questions 45 to 50, the technical-graph module's, on 2026-11-02 (EPM-DEC-001-0112). 49 are answerable today, questions 45 to 50 on the module's example graph, and one, question 17 (who owns each concept's meaning), is parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).</p>
 <p>Each answerable question has queries in <code>regression/queries/</code>, and <code>scripts/check.sh</code> runs them on every push. To ask one yourself, run this from <code>business_architecture/ontology/regression</code>:</p>
 <pre><code># from business_architecture/ontology/regression
 uv run --with rdflib python ask.py                   # list the 73 queries, each named for its question
@@ -810,7 +830,7 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre>
 <h2 id="stores">How it reaches the stores</h2>
 <div class="two">
 <div>
-<p>The eleven releases are the master copy, as Turtle. From them, one loader, the <code>ontology-to-lpg</code> skill's driver, builds a Neo4j property graph in the local Neo4j and copies it to AuraDB. It writes all three graphs of each package to Jena and to the Databricks table <code>workspace.epm_ontology.epm_triples</code>, and it rebuilds the graph from that table to prove it holds the whole ontology. In CI, <code>pipeline.py build --verify</code> checks the same inputs with no database.</p>
+<p>The releases are the master copy, as Turtle: twelve modules since technical-graph 1.0.0 (2026-11-02), and the stores hold the eleven earlier ones until the next load. From them, one loader, the <code>ontology-to-lpg</code> skill's driver, builds a Neo4j property graph in the local Neo4j and copies it to AuraDB. It writes all three graphs of each package to Jena and to the Databricks table <code>workspace.epm_ontology.epm_triples</code>, and it rebuilds the graph from that table to prove it holds the whole ontology. In CI, <code>pipeline.py build --verify</code> checks the same inputs with no database.</p>
 <p class="notice"><em>2026-10-28:</em> the four ontology stores were reloaded, as the first step of Part 2, from that day's releases with <code>kpi</code> 1.3.0; every count and hash check passed (the runbook's Stores section gives the figures). <em>2026-10-27:</em> the four ontology stores are empty. With the decision owner's approval, "Yes, purge those four (Recommended)", both local Neo4j stores, AuraDB and the Databricks table were purged that day. The decision owner then chose "Wait, reload at Part 2 (Recommended)": the stores stay empty, and the reload is the first step of Part 2, after the close-out answers ship, with the counts and hash checks (<code>step4/review-evidence/decision-owner-answers/answers-2026-10-27-stores.md</code>). The runbook's Reload section gives the commands. <em>2026-11-01:</em> the standard is now one local Neo4j plus a standing Jena, which the next reload applies.</p>
 <p><em>2026-10-29:</em> each of the four ontology stores now records the release set it was loaded from: the catalog's datasets and the projection's input fingerprint, written only after the store is checked against the repository. <code>projection/sync_stores.py</code> reports which stores are behind main's newest catalog and reloads them with the driver, AuraDB and Databricks only when asked. A workflow on each release tag runs the driver for AuraDB and Databricks once the decision owner adds its logins as repository secrets; until then it does nothing. The runbook's "Keeping the stores in step" gives the commands.</p>
 <p>The next step was to link the metric views in Unity Catalog to the ontology's measures by KPI identifier, so that an agent working in Databricks can reach a measure's full context. <em>2026-10-29:</em> built in the pricing demo's E3. Each metric-view measure that implements a <code>kpi</code> measure carries its KPI or OPM identifier in its comment, display name and synonyms; the others, such as row counts, say in their comment that they have none. Each view has a tag listing its identifiers. Definitions views in the schema <code>ontology_definitions</code> read, from <code>epm_triples</code>, the definition, grain and basis of each measure that has an identifier. The Genie agents that read those views come in a later pull request. <em>2026-10-29, later:</em> they landed in E4. Each of the four Genie agents binds its subject area's definitions view, and an orchestrator routes questions between them with descriptions built from <code>epm_triples</code>. Free Edition refused the Agent Bricks Supervisor Agent, so the orchestrator is Databricks' documented multi-agent pattern, run from the laptop. <em>2026-10-29, later still:</em> E6 adds real outside events from Parallel's Decisions API beside the demo's synthetic data: a monthly scan of each MPC refining region, a diagnosis of each decision in the decision log, and a three-month forward look. Each answer links by IRI to <code>ref-mpc</code> refineries and a <code>market-data</code> crack series; scan answers also to <code>party</code> products and <code>kpi</code> measures, and forward answers to the products and measures their question names. Each is labelled observed, inferred or unknown. A forward signal is matched to past decisions through those refineries and measures, and any suggested action waits for a person. The demo's README, "The outside context (E6)", gives the run and its limits. <em>2026-10-29, E7:</em> each of the demo's 21 use cases now has an acceptance test. It passes when the orchestrator calls the agents the use case names, the answer holds the figures a SQL check computes, and the answer uses the ontology's identifiers, definitions or labels. On the first two live runs 3 and then 4 passed as first judged; judged again after review, with stricter checks and each test requiring exactly the agents its use case names, 2 passed on each. Most failures missed an agent, and the agents seldom read their definitions views, so the ontology's terms mostly did not reach the answers. The demo's README, "The acceptance tests (E7)", gives each result.</p>
@@ -1069,14 +1089,14 @@ RETURN v.name, collect(a.name);</code></pre><h3>The technical graph: its nodes</
 <tr><td><code>scripts/check.sh</code>, <code>epm_facts.py</code></td><td data-k="Its role here">Every check before a push; figures, sweeps and finds</td><td data-k="See it"><code>python3 ../../scripts/epm_facts.py counts</code></td></tr>
 </tbody></table></div>
 <h2 id="copy">Copy the ontology</h2>
-<p class="lead">To give a teammate 100% of the ontology and everything they need to understand and use it, copy the three groups below, keeping each repository path as it is. Every group is required. No scripts are needed: the ontology is the release files, and every document to read is an HTML page. In all: 370 files and three links. That is 329 release files, 34 pages and data files to understand it, and 7 files for using it.</p>
+<p class="lead">To give a teammate 100% of the ontology and everything they need to understand and use it, copy the three groups below, keeping each repository path as it is. Every group is required. No scripts are needed: the ontology is the release files, and every document to read is an HTML page. In all: 377 files and three links. That is 336 release files, 34 pages and data files to understand it, and 7 files for using it.</p>
 
 <figure>
-<div class="diagram wide" role="img" aria-label="The package to share has three groups: the releases folder with eleven modules, the HTML documents, and the files for using it in a graph and the method.">
+<div class="diagram wide" role="img" aria-label="The package to share has three groups: the releases folder with twelve modules, the HTML documents, and the files for using it in a graph and the method.">
 <svg viewBox="0 0 1040 380" xmlns="http://www.w3.org/2000/svg">
   <rect class="lane" x="20" y="14" width="1000" height="50" rx="8"/><text class="t" x="40" y="44">What you send: three groups, each at its repository path</text>
   <rect class="lane" x="20" y="80" width="320" height="286" rx="8"/><text class="lane-l" x="36" y="104">1. The ontology itself</text>
-  <rect class="node store" x="36" y="118" width="288" height="44" rx="6"/><text class="t" x="50" y="137">releases/</text><text class="m" x="50" y="154">11 modules · 50 versions · 329 files</text>
+  <rect class="node store" x="36" y="118" width="288" height="44" rx="6"/><text class="t" x="50" y="137">releases/</text><text class="m" x="50" y="154">12 modules · 51 versions · 336 files</text>
   <rect class="node" x="56" y="172" width="268" height="44" rx="6"/><text class="t" x="70" y="191">&lt;module&gt;/&lt;version&gt;/</text><text class="m" x="70" y="208">.ttl .jsonld shapes manifest …</text>
   <rect class="node" x="56" y="226" width="268" height="40" rx="6"/><text class="t" x="70" y="250">&lt;module&gt;/CHANGELOG.md</text>
   <rect class="node" x="56" y="276" width="268" height="40" rx="6"/><text class="t" x="70" y="300">releases/catalog.ttl</text>
@@ -1098,7 +1118,7 @@ RETURN v.name, collect(a.name);</code></pre><h3>The technical graph: its nodes</
 <div class="diagram tall" role="img" aria-label="The three groups to copy, as a list.">
 <svg viewBox="0 0 360 470" xmlns="http://www.w3.org/2000/svg">
   <rect class="lane" x="10" y="10" width="340" height="140" rx="8"/><text class="lane-l" x="24" y="34">1. The ontology itself</text>
-  <rect class="node store" x="24" y="46" width="312" height="44" rx="6"/><text class="t" x="38" y="65">releases/</text><text class="m" x="38" y="82">11 modules · 50 versions · 329 files</text>
+  <rect class="node store" x="24" y="46" width="312" height="44" rx="6"/><text class="t" x="38" y="65">releases/</text><text class="m" x="38" y="82">12 modules · 51 versions · 336 files</text>
   <text class="s" x="24" y="112">version folders, module changelogs,</text><text class="s" x="24" y="130">catalog.ttl; check with shasum</text>
   <rect class="lane" x="10" y="162" width="340" height="140" rx="8"/><text class="lane-l" x="24" y="186">2. The documents to understand it</text>
   <rect class="node key" x="24" y="198" width="312" height="44" rx="6"/><text class="t" x="38" y="217">epm-ontology-guide.html</text><text class="s" x="38" y="234">this page: start here</text>
@@ -1115,7 +1135,7 @@ RETURN v.name, collect(a.name);</code></pre><h3>The technical graph: its nodes</
 </figure>
 
 <h3>1. The ontology itself</h3>
-<p>Copy the whole folder <code>business_architecture/ontology/releases/</code>: 11 modules, 50 version folders and 329 files, about 50 MB. Copy every version, not only the newest: a module requires named versions of others (ref-mpc 1.2.0 requires organization 2.0.0 and party 1.0.0, for example), and each manifest points at them.</p>
+<p>Copy the whole folder <code>business_architecture/ontology/releases/</code>: 12 modules, 51 version folders and 336 files, about 50 MB (since technical-graph 1.0.0, 2026-11-02). Copy every version, not only the newest: a module requires named versions of others (ref-mpc 1.2.0 requires organization 2.0.0 and party 1.0.0, for example), and each manifest points at them.</p>
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Path</th><th>What it is, and why it is needed</th></tr></thead>
 <tbody>
@@ -1127,10 +1147,10 @@ RETURN v.name, collect(a.name);</code></pre><h3>The technical graph: its nodes</
 <tr><td><code>releases/&lt;module&gt;/&lt;version&gt;/CHANGELOG.md</code></td><td data-k="Why">What this version changed, who approved it, and its known gaps.</td></tr>
 <tr><td><code>releases/core/&lt;version&gt;/canonical-facts.csv</code>, <code>counts.json</code></td><td data-k="Why">Core's extras: the evidence row behind each approved process relationship, and the release's counts. Core 1.0.0 also holds <code>conservation.csv</code> and <code>label-dispositions.csv</code>, the ledger of how every source row was handled.</td></tr>
 <tr><td><code>releases/&lt;module&gt;/CHANGELOG.md</code></td><td data-k="Why">Each module's whole history in one file (every module but core; core's is <code>business_architecture/ontology/release/CHANGELOG.md</code>, listed in group 2 as HTML).</td></tr>
-<tr><td><code>releases/catalog.ttl</code></td><td data-k="Why">The DCAT catalog of all 50 released packages: the one file that lists what exists.</td></tr>
+<tr><td><code>releases/catalog.ttl</code></td><td data-k="Why">The DCAT catalog of all 51 released packages: the one file that lists what exists.</td></tr>
 </tbody></table></div>
 
-<p>The newest version of each module, from its manifest. Load these together for the whole ontology (36,951 triples):</p>
+<p>The newest version of each module, from its manifest. Load these together for the whole ontology (37,176 triples):</p>
 <div class="tblwrap"><table class="stack">
 <thead><tr><th>Module</th><th class="n">Newest</th><th>Requires</th></tr></thead>
 <tbody>
@@ -1145,6 +1165,7 @@ RETURN v.name, collect(a.name);</code></pre><h3>The technical graph: its nodes</
 <tr><td>lane</td><td class="n" data-k="Newest">1.1.0</td><td data-k="Requires">core 2.3.0</td></tr>
 <tr><td>market-data</td><td class="n" data-k="Newest">1.1.0</td><td data-k="Requires">kpi 1.2.0</td></tr>
 <tr><td>integration</td><td class="n" data-k="Newest">2.5.0</td><td data-k="Requires">core 2.4.0, organization 2.2.0, kpi 1.2.0, data-product 1.2.0, value-stream 1.2.0, system 1.5.0, lane 1.1.0, market-data 1.1.0, party 2.1.0</td></tr>
+<tr><td>technical-graph</td><td class="n" data-k="Newest">1.0.0</td><td data-k="Requires">data-product 1.2.0, kpi 1.3.0, system 1.5.0</td></tr>
 </tbody></table></div>
 <p>To check that a copied version folder is complete and unchanged, the teammate hashes its files and compares each hash with the <code>files</code> entry in that folder's <code>manifest.json</code>. For kpi 1.2.0, for example:</p>
 <pre><code>cd business_architecture/ontology/releases/kpi/1.2.0 &amp;&amp; shasum -a 256 kpi.ttl kpi.jsonld shapes.ttl catalog.ttl CHANGELOG.md</code></pre>

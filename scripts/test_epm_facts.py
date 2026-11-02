@@ -1041,7 +1041,7 @@ def test_module_map_follows_the_manifest_and_labels_the_builders_folders(tmp_pat
 def test_module_map_lists_the_released_modules():
     names = [m["module"] for m in epm_facts.module_releases()]
     assert names == ["core", "data-product", "integration", "kpi", "lane", "market-data", "organization", "party",
-                     "ref-mpc", "system", "value-stream"]
+                     "ref-mpc", "system", "technical-graph", "value-stream"]
 
 
 M = "https://w3id.org/lsc/ontology/modules/"

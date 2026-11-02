@@ -331,7 +331,7 @@ def test_guide_module_figures_match_the_newest_releases():
 
     A release that is not reflected in the guide fails here, so the guide moves with the release (the retro of
     2026-10-28 left this gate for later; six commits on main had moved the guide's figures by hand, one of them
-    after a Cursor HOLD). The total is the size of the eleven newest releases loaded into one graph, which is smaller than the
+    after a Cursor HOLD). The total is the size of the newest releases (twelve since technical-graph 1.0.0, 2026-11-02) loaded into one graph, which is smaller than the
     sum of the modules' counts because the modules share some triples. Not checked: the figures inside each
     module card (processes, measures, systems, roles), the requires column, and the dated query output, which
     states the graph of 2026-10-27 on purpose.

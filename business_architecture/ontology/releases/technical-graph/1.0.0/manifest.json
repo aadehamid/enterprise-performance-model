@@ -1,0 +1,27 @@
+{
+  "module": "technical-graph",
+  "version": "1.0.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/technical-graph",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/technical-graph/1.0.0",
+  "depends_on": {
+    "data-product": "1.2.0",
+    "kpi": "1.3.0",
+    "system": "1.5.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0112"
+  ],
+  "triples": 225,
+  "approved_by": {
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-11-02-follow-up-release.md"
+  },
+  "files": {
+    "CHANGELOG.md": "23b9605f3b389686b80acecbf926d945fe2d7aad284dc0fc4cc00d64995ee052",
+    "catalog.ttl": "ff79c96dd58dc01bfeec467c4f3418be98f104f4560ad5f8d26d881682dff04e",
+    "shapes.ttl": "52f401b15f55269d284f8c694aa541d2accbba8b2d4adca689d818fab7bfbbb6",
+    "technical-graph.jsonld": "ab5b603b798e64a1a431c7877beb5f18f740327d624413de63a471e9ab459724",
+    "technical-graph.ttl": "2d58a847633d335345f1553a5d862d72ba37fe370a8a2ad62eb2912fe83b2bce"
+  }
+}

@@ -14,7 +14,8 @@
     "https://w3id.org/lsc/ontology/modules/market-data/",
     "https://w3id.org/lsc/ontology/modules/placement/",
     "https://w3id.org/lsc/ontology/modules/authority/",
-    "https://w3id.org/lsc/ontology/modules/consumer/"
+    "https://w3id.org/lsc/ontology/modules/consumer/",
+    "https://w3id.org/lsc/ontology/modules/technical-graph/"
   ],
   "prefixes": {
     "core": "https://w3id.org/lsc/ontology/modules/core/",
@@ -30,6 +31,7 @@
     "plc": "https://w3id.org/lsc/ontology/modules/placement/",
     "auth": "https://w3id.org/lsc/ontology/modules/authority/",
     "con": "https://w3id.org/lsc/ontology/modules/consumer/",
+    "tg": "https://w3id.org/lsc/ontology/modules/technical-graph/",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
     "org": "http://www.w3.org/ns/org#",
@@ -129,9 +131,12 @@
     "system": "1.5.0",
     "lane": "1.1.0",
     "market-data": "1.1.0",
-    "integration": "2.5.0"
+    "integration": "2.5.0",
+    "technical-graph": "1.0.0"
   },
-  "release_exceptions": {},
+  "release_exceptions": {
+    "Rule 1: tg:designedAs has no single concrete range": "None planned: technical-graph 1.0.0 states no range on purpose, because a design in data-product is a platform table, a data product or an agent (EPM-DEC-001-0112). Each built thing is a node and tg:designedAs a relationship to its design, so the projection needs no range to name it."
+  },
   "versions": {
     "neo4j": "2025.06.2",
     "n10s": "2025.06.1",
