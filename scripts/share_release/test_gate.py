@@ -498,3 +498,12 @@ def test_market_news_still_fails_on_every_other_check(tmp_path):
         reasons = {h["reason"] for h in gate.scan(str(tmp_path))}
         assert reasons == {"the owner's name or handle", "a host of the build", "an issue or pull request number"}, (rel, reasons)
         path.unlink()
+
+
+def test_a_market_news_file_named_for_a_peer_still_fails(tmp_path):
+    # Only the text scan skips market news: a cached result whose file name names a peer still fails on the path.
+    clean(tmp_path)
+    path = plant(tmp_path, "demos/downstream-pricing-databricks-free/data/parallel/valero.json", "{}\n")
+    hits = gate.scan(str(tmp_path))
+    assert [(h["reason"], h.get("where")) for h in hits if h["reason"] == "a peer named"], hits
+    path.unlink()

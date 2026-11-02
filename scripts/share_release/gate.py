@@ -38,7 +38,7 @@ AGENT_NAMES = (r"(?<![A-Za-z0-9])(?:claude|codex|bugbot|kimi|anthropic|chatgpt|h
 AGENT_WORK = (r"\bretro of \d{4}|\bnight[ _]brief\b|\b[Ii]ndependent review|\b[Rr]eview rounds?\b|\b[Rr]ound \d+,? (?:on|finding)|\(findings? \d+|\bPR verdict|\bapproval agent\b"
               r"|\b[Uu]nder the delegation\b(?! of\b)|\b[Uu]nder their (?:recorded )?delegation\b|\b(?:expert|owner)'s delegation\b"
               r"|\b[Dd]elegated under\b|\bdelegate as described\b|\bcoding agents?\b|(?<![A-Za-z0-9])(?i:kailey)(?![A-Za-z0-9])")
-# The three peer checks, which market news (vocabulary.MARKET_NEWS) is exempt from.
+# The three peer checks, whose text scan market news (vocabulary.MARKET_NEWS) is exempt from; a file's name is still checked.
 PEER_REASONS = ("a peer named", "a peer's ticker", "a peer's filing on EDGAR")
 # Each pattern with its reason. The owner's names and handle come from owner.py's configuration, never from this file.
 # A name matches when no letter or digit touches it ("Ada" and "by_Ada_here" are hits; "Adam", "metadata" and "adapt"

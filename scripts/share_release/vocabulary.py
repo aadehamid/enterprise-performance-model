@@ -5,7 +5,7 @@ import re
 
 # Market news: the pricing demo's cached Decision API (Parallel) search results and the decision owner's briefing
 # collection, SCENARIO.md. Peer names in these files stay in the release (EPM-DEC-001-0112, point 7): the peer rule
-# leaves them as they are and the gate does not fail on a peer in them. Every other check still applies to them, and
+# leaves them as they are and the gate does not fail on a peer in their text (a file name that names a peer still fails). Every other check still applies to them, and
 # every other file, each ontology module and every other demo file included, names no peer.
 MARKET_NEWS = re.compile(r"^demos/downstream-pricing-databricks-free/(?:SCENARIO\.md|data/parallel/[^/]+\.json)$")
 
