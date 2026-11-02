@@ -1,6 +1,13 @@
 """The leak vocabulary the rewrite rules (rules.py) and the leak gate (gate.py) share, so a peer, a repository or a
 graph prefix added later reaches both at once. Nothing here names a person; the owner's names come from owner.py.
 """
+import re
+
+# Market news: the pricing demo's cached Decision API (Parallel) search results and the decision owner's briefing
+# collection, SCENARIO.md. Peer names in these files stay in the release (EPM-DEC-001-0112, point 7): the peer rule
+# leaves them as they are and the gate does not fail on a peer in them. Every other check still applies to them, and
+# every other file, each ontology module and every other demo file included, names no peer.
+MARKET_NEWS = re.compile(r"^demos/downstream-pricing-databricks-free/(?:SCENARIO\.md|data/parallel/[^/]+\.json)$")
 
 # The peers' stock tickers, as the cached market news and the evidence tables write them (case-sensitive: "psx" or
 # "dino" in lower case is not a ticker). DK (Delek) is two letters, so it counts only beside another ticker, MPC or

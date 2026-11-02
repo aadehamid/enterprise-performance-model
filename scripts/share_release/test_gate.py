@@ -453,3 +453,48 @@ def test_a_name_joined_by_an_underscore_or_a_hyphen_fails(tmp_path, text):
     clean(tmp_path)
     (tmp_path / "doc.md").write_text(text + "\n")
     assert gate.scan(str(tmp_path))
+
+
+MARKET_NEWS = ("demos/downstream-pricing-databricks-free/data/parallel/monthly-west-coast-2024-02.json",
+               "demos/downstream-pricing-databricks-free/SCENARIO.md")
+PEER_LINE = "Valero and Chevron cut runs; PSX, VLO and MPC in Focus; https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm\n"
+
+
+def plant(tmp_path, rel, text):
+    path = tmp_path / rel
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text)
+    return path
+
+
+def test_a_peer_in_market_news_passes(tmp_path):
+    # EPM-DEC-001-0112, point 7: peer names, tickers and filings in the cached Parallel search results and in
+    # SCENARIO.md stay in the release.
+    clean(tmp_path)
+    for rel in MARKET_NEWS:
+        plant(tmp_path, rel, PEER_LINE)
+    assert gate.scan(str(tmp_path)) == []
+
+
+def test_a_peer_outside_market_news_still_fails(tmp_path):
+    # A planted leak: the same line in an ontology module, another demo file, a look-alike path or a page of the
+    # parallel folder that is not a cached result fails on each peer check.
+    for rel in ("business_architecture/ontology/modules/kpi/kpi.ttl", "demos/downstream-pricing-databricks-free/README.md",
+                "demos/downstream-pricing-databricks-free/data/acceptance/run-1.json",
+                "demos/downstream-pricing-databricks-free/data/parallel/notes.md",
+                "demos/other/SCENARIO.md", "x/demos/downstream-pricing-databricks-free/SCENARIO.md"):
+        clean(tmp_path)
+        path = plant(tmp_path, rel, PEER_LINE)
+        reasons = {h["reason"] for h in gate.scan(str(tmp_path))}
+        assert reasons == {"a peer named", "a peer's ticker", "a peer's filing on EDGAR"}, rel
+        path.unlink()
+
+
+def test_market_news_still_fails_on_every_other_check(tmp_path):
+    # Only the peer checks skip market news: an owner's name, a host or an issue number there still fails.
+    for rel in MARKET_NEWS:
+        clean(tmp_path)
+        path = plant(tmp_path, rel, PEER_LINE + "written by Ada Lovelace on the exe.dev VM, fixed in issue #231\n")
+        reasons = {h["reason"] for h in gate.scan(str(tmp_path))}
+        assert reasons == {"the owner's name or handle", "a host of the build", "an issue or pull request number"}, (rel, reasons)
+        path.unlink()

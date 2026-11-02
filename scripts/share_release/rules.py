@@ -17,7 +17,8 @@ The rules, in order:
   9. numbers:      issue and pull request numbers -> plain words (a CSS colour such as "--text: #111" is not a number).
  10. peers:        the nine company names and their tickers -> U.S. refining peers; a peer's SEC filing link -> withheld
                    (MPC's and MPLX's own filings stay); the peer evidence folder -> industry view; the peer-tier
-                   wording -> the agreed source wording.
+                   wording -> the agreed source wording. Market news (vocabulary.MARKET_NEWS: the demo's cached
+                   Parallel search results and SCENARIO.md) keeps its peer names (EPM-DEC-001-0112, point 7).
  11. underscores:  prefix__name -> prefix_name for the graph's prefixes, outside Python's own names.
  12. names:        the owner's names and handle (from owner.py's configuration, never a tracked file) -> the author.
  13. left-out:     the rows and sentences that point at documents the release leaves out (the store notes, the
@@ -264,6 +265,8 @@ def rule_numbers(text, ctx):
 
 
 def rule_peers(text, ctx):
+    if V.MARKET_NEWS.match(ctx.get("path", "")):
+        return text, 0  # market news keeps its peer names (EPM-DEC-001-0112, point 7); every other file names none
     n = 0
     # The ontology skill's own test lists company names in a regex: it keeps the two it may name and a generic peer.
     skill_regex = ('r"\\bMPC\\b|Marathon|\\bMPLX\\b|Valero|Phillips\\s+66|\\bPBF\\b|HF\\s+Sinclair"\n'

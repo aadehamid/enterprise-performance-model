@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """The leak gate: fail on any name, handle, repository, host, peer, record number or issue number in the
 release, and on the graph's double-underscore separator (plan step 5; EPM-DEC-001-0110 and its amendment).
+A peer named in market news (vocabulary.MARKET_NEWS: the demo's cached Parallel search results and SCENARIO.md)
+is not a failure (EPM-DEC-001-0112, point 7); every other check still runs on those files, and a peer anywhere
+else fails.
 
     python3 scripts/share_release/gate.py <release folder> [--json]
 
@@ -35,6 +38,8 @@ AGENT_NAMES = (r"(?<![A-Za-z0-9])(?:claude|codex|bugbot|kimi|anthropic|chatgpt|h
 AGENT_WORK = (r"\bretro of \d{4}|\bnight[ _]brief\b|\b[Ii]ndependent review|\b[Rr]eview rounds?\b|\b[Rr]ound \d+,? (?:on|finding)|\(findings? \d+|\bPR verdict|\bapproval agent\b"
               r"|\b[Uu]nder the delegation\b(?! of\b)|\b[Uu]nder their (?:recorded )?delegation\b|\b(?:expert|owner)'s delegation\b"
               r"|\b[Dd]elegated under\b|\bdelegate as described\b|\bcoding agents?\b|(?<![A-Za-z0-9])(?i:kailey)(?![A-Za-z0-9])")
+# The three peer checks, which market news (vocabulary.MARKET_NEWS) is exempt from.
+PEER_REASONS = ("a peer named", "a peer's ticker", "a peer's filing on EDGAR")
 # Each pattern with its reason. The owner's names and handle come from owner.py's configuration, never from this file.
 # A name matches when no letter or digit touches it ("Ada" and "by_Ada_here" are hits; "Adam", "metadata" and "adapt"
 # are not). A handle may hold punctuation, and \b treats an underscore as a word character, so \b will not do.
@@ -321,6 +326,8 @@ def scan(release):
                         pattern = GRAPH_IN_BINARY
                     if binary and reason == "a pull request of the build":
                         continue  # two capital letters in a binary's bytes are chance
+                    if reason in PEER_REASONS and V.MARKET_NEWS.match(rel):
+                        continue  # market news keeps its peer names (EPM-DEC-001-0112, point 7)
                     for m in pattern.finditer(text):
                         if reason.startswith("the graph's") and allowed_double(rel, text, m):
                             continue

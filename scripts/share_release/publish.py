@@ -9,7 +9,8 @@ The zip holds the release tree and nothing else (no .git, no caches, no virtual 
 under the fixed root folder "epm-release", never the output folder's own name. The branch is an orphan built from
 the zip itself (unpacked to a temporary folder), so it holds exactly the files the gate and the clean room
 checked: one commit, no shared history, with a neutral author and committer ("EPM release", a no-reply address),
-so nothing in it carries a person's name, pull-request numbers or peer mentions from the build. Pushing it is
+so nothing in it carries a person's name, pull-request numbers or peer mentions from the build (the peers that
+market news names stay: EPM-DEC-001-0112, point 7). Pushing it is
 the owner's decision (the plan's step 10 waits for them), so --push is off by default. Updating the branch after
 a change on main means running the export again and this command again.
 
