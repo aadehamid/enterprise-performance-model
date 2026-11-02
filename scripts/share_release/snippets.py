@@ -92,11 +92,11 @@ def kind_of(b):
     if b["lang"] in ("cypher",) or first2.upper() in ("MATCH", "CALL", "RETURN", "WITH", "UNWIND", "PROFILE", "EXPLAIN"):
         return "cypher"
     body = "\n".join(l for l in b["text"].split("\n") if not l.strip().startswith("--"))
-    if first2.upper() == "SELECT" and (re.search(r"\bFROM\s+[a-z_]+\.[a-z_]+", body) or "MEASURE(" in body or "GROUP BY ALL" in body.upper()):
+    if first2.upper() == "SELECT" and (re.search(r"\bFROM\s+(?:[a-z_]+|<[a-z_]+>)\.(?:[a-z_]+|<[a-z_]+>)", body) or "MEASURE(" in body or "GROUP BY ALL" in body.upper()):
         return "sql"  # Databricks SQL over a catalog table or a metric view
     if b["lang"] in ("sparql",) or first2.upper() in ("PREFIX", "SELECT", "ASK", "CONSTRUCT", "DESCRIBE"):
         return "sparql"
-    if b["lang"] in ("bash", "sh", "shell", "console") or first2 in ("cd", "uv", "python3", "python", "docker", "./run_local.sh", "scripts/check.sh", "export", "set", "curl", "ls"):
+    if b["lang"] in ("bash", "sh", "shell", "console") or first2 in ("cd", "uv", "python3", "python", "docker", "scripts/check.sh", "export", "set", "curl", "ls"):
         return "shell"
     if b["lang"] in ("turtle", "ttl") or first2.startswith("@prefix"):
         return "turtle"
@@ -171,7 +171,7 @@ PYTHON_MODULES = {"pytest", "unittest"}
 UV_OPTIONS = {"-q", "--no-project", "--with:", "--group:", "--python:", "--project:", "--frozen", "--offline", "-B"}
 PYTHON_OPTIONS = {"-B", "-I", "-q", "-m:"}
 # A document's own variable is never exported under a name a tool reads for a program or a path to one.
-NOT_EXPORTED = re.compile(r"^(?:GIT_|PYTHON|UV_|LD_|DYLD_|PIP_|SSL_|XDG_|PATH$|HOME$|TMPDIR$|SHELL$|ENV$|BASH_ENV$|IFS$|VIRTUAL_ENV$)")
+NOT_EXPORTED = re.compile(r"^(?:GIT_|PYTHON|UV_|LD_|DYLD_|PIP_|SSL_|XDG_|PATH$|HOME$|PWD$|TMPDIR$|SHELL$|ENV$|BASH_ENV$|IFS$|VIRTUAL_ENV$)")
 # git never runs: every line whose first word is git is listed as not run with GIT_REASON, before any other
 # judgement. The release tree is not a Git checkout, so such a line could not run there as written; and git's
 # configuration names programs it runs, which a document's variables or a checkout's files could set: core.fsmonitor
@@ -306,7 +306,8 @@ def policy(argv, cwd, tree):
 
 def reader_variables(tree):
     """The variables the documents tell a reader to set to their own paths; here they are the tree's."""
-    return {"EPM": tree, "SKILLS": os.path.join(tree, "skills"), "DEMO": os.path.join(tree, "demos", "downstream-pricing-databricks-free")}
+    return {"EPM": tree, "SKILLS": os.path.join(tree, "skills"), "DEMO": os.path.join(tree, "demos", "downstream-pricing-databricks-free"),
+            "PWD": tree}  # the walkthrough's `export EPM_ROOT="$PWD"`, which a reader runs from the top folder
 
 
 def expand(text, variables):

@@ -300,3 +300,11 @@ def test_the_ledgered_demo_venv_is_a_path_cleanup_may_remove(tmp_path, monkeypat
     monkeypatch.setattr(tempfile, "gettempdir", lambda: str(tmp_path))
     path = stores.demo_venv()
     assert os.path.isdir(path) and path == os.path.join(str(tmp_path), "epm-share-release", "demo-venv")
+
+
+def test_a_catalog_is_absent_only_on_proof():
+    import stores
+    answer = lambda rc, tail: (lambda *a, **k: {"returncode": rc, "tail": tail})
+    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "absent\n")) is True
+    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "present\n")) is False
+    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(1, "absent\n")) is False

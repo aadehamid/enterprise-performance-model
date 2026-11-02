@@ -27,11 +27,20 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import owner as _owner  # noqa: E402
 import vocabulary as V  # noqa: E402
 
+# Agents and review tools the build used, and the words for what they did (the decision's amendment of 2026-11-01).
+# "Delegation" stays where it is a business term: the delegation of authority, the documented delegation.
+# The boundary is "no letter or digit", not \b, because an underscore is a word character: test_bugbot_380 must fail.
+AGENT_NAMES = (r"(?<![A-Za-z0-9])(?:claude|codex|bugbot|kimi|anthropic|chatgpt|herdr|openai|copilot|gemini|gpt[-_ ]\d[\w.-]*|pi[-_ ]review|rex[-_ ]review)(?![A-Za-z0-9])"
+               r"|\bAGENTS\.md\b|\bPi,? round\b|\bPi review")
+AGENT_WORK = (r"\bretro of \d{4}|\bnight[ _]brief\b|\b[Ii]ndependent review|\b[Rr]eview rounds?\b|\b[Rr]ound \d+,? (?:on|finding)|\(findings? \d+|\bPR verdict|\bapproval agent\b"
+              r"|\b[Uu]nder the delegation\b(?! of\b)|\b[Uu]nder their (?:recorded )?delegation\b|\b(?:expert|owner)'s delegation\b"
+              r"|\b[Dd]elegated under\b|\bdelegate as described\b|\bcoding agents?\b|(?<![A-Za-z0-9])(?i:kailey)(?![A-Za-z0-9])")
 # Each pattern with its reason. The owner's names and handle come from owner.py's configuration, never from this file.
-# A name matches as a whole word only ("Ada" is a hit; "Adam", "metadata" and "adapt" are not); a handle may hold
-# punctuation, so the boundary is "no letter, digit or underscore on either side" rather than \b.
-OWNER = r"(?<![A-Za-z0-9_])(?:" + "|".join(re.escape(n) for n in _owner.owner_names()) + r")(?![A-Za-z0-9_])"
-PEERS = r"valero|phillips\s?66|\bpbf\b|hf\s?sinclair|hollyfrontier|par\s+pacific|\bdelek\b|\bcvr\b|chevron|exxon"
+# A name matches when no letter or digit touches it ("Ada" and "by_Ada_here" are hits; "Adam", "metadata" and "adapt"
+# are not). A handle may hold punctuation, and \b treats an underscore as a word character, so \b will not do.
+OWNER = r"(?<![A-Za-z0-9])(?:" + "|".join(re.escape(n) for n in _owner.owner_names()) + r")(?![A-Za-z0-9])"
+PEERS = (r"valero|phillips[-_\s]?66|\bphillips\b|(?<![A-Za-z0-9])pbf(?![A-Za-z0-9])|hf\s?sinclair|hollyfrontier|par\s+pacific"
+         r"|(?<![A-Za-z0-9])delek(?![A-Za-z0-9])|(?<![A-Za-z0-9])cvr(?![A-Za-z0-9])|chevron|exxon")
 TICK = "|".join(V.PEER_TICKERS)
 LIST_TICK = TICK + "|" + "|".join(V.OWN_TICKERS)
 SEP = r"(?:,\s*|/|\s+and\s+|\s+or\s+)"
@@ -50,11 +59,19 @@ PATTERNS = [
     ("a peer's ticker", re.compile(TICKERS)),
     # A filer's CIK may be written with leading zeroes (EDGAR accepts both); the list is vocabulary.PEER_CIKS, cited there.
     ("a peer's filing on EDGAR", re.compile(r"sec\.gov/Archives/edgar/data/0*(?:" + "|".join(V.PEER_CIKS) + r")/|edgar/data/\d+/\S*/(?:" + "|".join(V.PEER_SLUGS) + r")-\d{8}\.", re.I)),
-    ("a document the release leaves out", re.compile(r"LOCAL-STORES\.(?:md|html)|STORE-INVENTORY\.(?:md|html)|business_architecture/ontology/lpg-projection|\.\./lpg-projection/|`lpg-projection/`|\(lpg-projection/")),
+    ("a document the release leaves out", re.compile(r"LOCAL-STORES\.(?:md|html)|STORE-INVENTORY\.(?:md|html)|ontology-worklog|pr-reviews-262-266-269|business_architecture/ontology/lpg-projection|\.\./lpg-projection/|`lpg-projection/`|\(lpg-projection/")),
     ("an issue or pull request number", re.compile(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+|(?<![&\w-])#\d{3}\b(?![\da-fA-F])")),
     ("the graph's double-underscore separator", re.compile(r"\b[a-z][a-z0-9]*__[A-Za-z]")),
+    ("an agent or review tool named", re.compile(AGENT_NAMES, re.I)),
+    ("the agent called Cursor", re.compile(r"\bCursor\b|\bcursor/|/cursor\b|(?<![A-Za-z0-9])cursor[-_]agent(?![A-Za-z0-9])|\.cursor/")),
+    ("a pull request of the build", re.compile(r"\bPRs\b|(?<!\.\d )(?<!\()\bPR\b(?! campaigns?\b| program\b| all\b|\)| strategy\b)|\b[Pp]ull requests?\b")),
+    ("the work of an agent", re.compile(AGENT_WORK)),
+    ("the agent, in a decision package", re.compile(r"\b[Tt]he agent\b")),
     ("the namespace note is missing", None),  # checked once, below
 ]
+# The method's own words on delegation and on a remote's pull requests, in the skills that teach any project: the skill
+# says what to do when a team delegates or uses pull requests, and names nothing of this build.
+METHOD_FILES = re.compile(r"^skills/")
 # In a binary's printable runs, the graph pattern needs a known prefix: random bytes form "h4i__z" by chance,
 # never "skos__Concept".
 GRAPH_IN_BINARY = re.compile(r"\b(?:" + "|".join(V.GRAPH_PREFIXES) + r")__[A-Za-z]")
@@ -271,6 +288,12 @@ def allowed_double(rel, text, m):
     return bool(FIXTURE_FILES.match(rel)) and m.group(0).split("__", 1)[0] in V.FIXTURE_PREFIXES
 
 
+def code_cursor(rel, text, m):
+    """A database cursor's test double in Python: `class Cursor` or a call `Cursor(`. Lower-case `cursor` in code and the
+    CSS property `cursor:` never match the pattern; every other capital Cursor is the agent."""
+    return rel.endswith(".py") and m.group(0) == "Cursor" and (text[max(0, m.start() - 6):m.start()] == "class " or text[m.end():m.end() + 1] == "(")
+
+
 def scan(release):
     hits = []
     note_found = False
@@ -296,8 +319,18 @@ def scan(release):
                         continue
                     if binary and reason.startswith("the graph's"):
                         pattern = GRAPH_IN_BINARY
+                    if binary and reason == "a pull request of the build":
+                        continue  # two capital letters in a binary's bytes are chance
                     for m in pattern.finditer(text):
                         if reason.startswith("the graph's") and allowed_double(rel, text, m):
+                            continue
+                        if reason == "the agent, in a decision package" and "decision-packages/" not in rel:
+                            continue
+                        if reason == "the agent called Cursor" and code_cursor(rel, text, m):
+                            continue
+                        if reason == "a pull request of the build" and METHOD_FILES.match(rel):
+                            continue
+                        if reason == "the work of an agent" and METHOD_FILES.match(rel) and "delegated under" in m.group(0).lower():
                             continue
                         line = text.count("\n", 0, m.start()) + 1
                         shown = re.sub(r"( \([^()]*(?:\([^()]*\)[^()]*)*\))? \(binary\)$", "", label)

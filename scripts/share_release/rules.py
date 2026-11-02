@@ -24,6 +24,8 @@ The rules, in order:
                    superseded projection guideline).
  14. previous-paths: a document's path to the release before the newest (releases/kpi/1.2.0/) -> its place in the
                    release, releases/previous/kpi/1.2.0/.
+ 15. agents:       agent names and agent work -> neutral wording, with every decision the subject matter expert's
+                   (the decision's amendment of 2026-11-01). A draft keeps its status.
 
 Rule 3 also rewrites the short forms that follow a citation ("EPM-DEC-001-0020, 0021 and 0036", "(0021)",
 "amending 0021") when the number is a record in the record-dates map; a four-digit number that is not a known
@@ -39,7 +41,7 @@ ONT = "business_architecture/ontology"
 
 # Rule 11's prefixes: the projection's fixed prefixes plus n10s's schema and SHACL prefixes (vocabulary.py).
 GRAPH_PREFIXES = V.GRAPH_PREFIXES
-PEER_NAMES = [r"Valero Energy Corporation", r"Valero Energy", r"Valero", r"Phillips ?66", r"PBF Energy", r"PBF",
+PEER_NAMES = [r"Valero Energy Corporation", r"Valero Energy", r"Valero", r"Phillips[- ]?66", r"PBF Energy", r"PBF",
               r"HF ?Sinclair", r"HollyFrontier", r"Par\s+Pacific", r"Delek US", r"Delek", r"CVR Energy", r"CVR",
               r"Chevron Corporation", r"Chevron", r"Exxon ?Mobil", r"ExxonMobil", r"Exxon"]
 # The peers' stock tickers (vocabulary.PEER_TICKERS; case-sensitive: "psx" or "dino" in lower case is not a ticker).
@@ -50,7 +52,7 @@ TICKER_OR_DK = r"(?:" + "|".join(V.PEER_TICKERS) + r"|DK)"
 LIST_TICKER = r"(?:" + "|".join(V.PEER_TICKERS + V.OWN_TICKERS) + r")"
 TICKER_SEP = r"(?:,\s*|/|\s+and\s+|\s+or\s+)"
 # A link whose address names a peer (a filing on EDGAR, a news slug, an investor site) is withheld with the name.
-PEER_URL = re.compile(r"https?://[^\s)\]\"'<>|]*(?:pbf|valero|phillips66|hfsinclair|hollyfrontier|parpacific|par-pacific|delek|cvrenergy|cvr-energy|chevron|exxon)[^\s)\]\"'<>|]*", re.I)
+PEER_URL = re.compile(r"https?://[^\s)\]\"'<>|]*(?:pbf|valero|phillips[-_]?66|hfsinclair|hollyfrontier|parpacific|par-pacific|delek|cvrenergy|cvr-energy|chevron|exxon)[^\s)\]\"'<>|]*", re.I)
 # A filing on SEC EDGAR is named by the filer's CIK (vocabulary.PEER_CIKS, cited there; EDGAR writes it with or without
 # leading zeroes) and the file by the ticker (vlo-20251231.htm): a peer's filing is withheld; MPC's, MPLX's and any
 # other filer's (an industry exhibit) stay.
@@ -190,9 +192,22 @@ def rule_approvals(text, ctx):
     return text, n
 
 
+DEMO_README = "demos/downstream-pricing-databricks-free/README.md"
+
+
 def rule_hosts(text, ctx):
     n = 0
     text, k = _count(r"<tr>(?:(?!</tr>).)*?(?:~/\.claude/handoffs|~/\.claude/plugins|~/\.local/bin/cursor-agent)(?:(?!</tr>).)*?</tr>\n?", "", text, re.S); n += k
+    # The demo's README tells a reader where the source databases run: this release's reader uses the local container.
+    if ctx.get("path", "") == DEMO_README:
+        text, k = _count(r" Since [\d-]+ the source databases \([^)]*\) also run on an exe\.dev VM,.*?The local container stays as the fallback\.", "", text, re.S); n += k
+        text, k = _count(r"\bthe VM run\b", "the remote-host run", text); n += k
+        text, k = _count(r"`replicate` from the VM\b", "`replicate` from that host", text); n += k
+        text, k = _count(r"\bthe tunnel to `decision_truth`", "the connection to `decision_truth`", text); n += k
+        text, k = _count(r"\((?:the |an )?exe\.dev (?:VM|machine) through an SSH tunnel; the local Docker container is the fallback\)",
+                         "(the local Docker container; `SOURCE_PG_DSN` names another host)", text); n += k
+        text, k = _count(r"\b(?:the |an )?exe\.dev (?:VM|machine) through (?:an SSH|the|its) tunnel\b", "a remote host", text); n += k
+        text, k = _count(r"\bthrough an SSH tunnel\b", "", text); n += k
     text, k = _count(r"databases\.exe\.xyz", "source-postgres-host", text); n += k
     text, k = _count(r"\b(?:the |an )?exe\.dev VM\b", "a remote host", text); n += k
     text, k = _count(r"\bexe\.dev\b", "a remote host", text); n += k
@@ -265,6 +280,7 @@ def rule_peers(text, ctx):
     text, k = _count(r"\bthe Sinclair brand\b", "its brand", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")'s\b", "a U.S. refining peer's", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")\b", "a U.S. refining peer", text); n += k
+    text, k = _count(r"(threaten to follow a U\.S\. refining peer), Phillips\b", r"\1", text); n += k  # a headline that names the second peer without its number
     # The tickers: a list ("PSX, VLO and MPC" keeps MPC), a ticker after a name ("a U.S. refining peer (VLO)"), one alone.
     text, k = _count(r"\b(?:a U\.S\. refining peer|U\.S\. refining peers) \(" + TICKER_OR_DK + r"\)", "a U.S. refining peer", text); n += k
     text, k = _count(r"\b" + TICKER_OR_DK + r"(?:" + TICKER_SEP + TICKER_OR_DK + r")+(?:'s)?\b", "U.S. refining peers", text); n += k
@@ -332,11 +348,207 @@ def rule_underscores(text, ctx):
     return _count(r"\b([a-z][a-z0-9]*)__([A-Za-z])", r"\1_\2", text)
 
 
+# Rule 15's patterns. A parenthetical, down to two levels of nesting (a quote that holds "(Recommended)").
+_PAREN = r"\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\)"
+_SME_DEC = "the subject matter expert's decision of"
+REVIEWERS = r"(?:Kimi|Codex|Bugbot|Cursor|Pi)"
+# What the build's agents and review tools did, as the release says it: (pattern, replacement), in order.
+AGENT_TEXT = [
+    # Approvals: the release's approver is the subject matter expert, with no route through a delegation.
+    (r"Approved by Claude under the (?:[\w ]+'s )?delegation(?: " + _PAREN + r")?(?:, (?:which lets it approve the queue's minor releases|with the decision owner's alignment with the plan that names it))?(?: " + _PAREN + r")?",
+     "Approved by a subject matter expert"),
+    (r"approved by Claude under the (?:[\w ]+'s )?delegation", "approved by a subject matter expert"),
+    (r"\b[Aa] minor Claude approved under the delegation\b", "a minor release a subject matter expert approved"),
+    (r"\b[Aa] minor Claude approved\b", "a minor release a subject matter expert approved"),
+    (r"Claude approved (those additions|it|the minor release) under the (?:[\w ]+'s )?delegation(?:, which lets it approve the queue's minor releases)?", r"a subject matter expert approved \1"),
+    (r"Claude approved\b", "a subject matter expert approved"),
+    (r"Claude approves\b", "the subject matter expert approves"),
+    (r"The decision owner, or Claude under their recorded delegation", "The decision owner"),
+    (r" or, under the delegation, by Claude\b", ""),
+    (r"; Claude asked the decision owner before every release", "; the decision owner approved every release"),
+    (r"Under the delegation, Claude applied", "The subject matter expert chose"),
+    (r"Under the delegation \((the decisions? of [^)]*)\)", r"By \1"),
+    (r"is Claude's, under the delegation \(([^)]*)\)", r"follows \1"),
+    (r"\band approved under the delegation\b", "and approved by a subject matter expert"),
+    (r"approved under the delegation\b", "approved by a subject matter expert"),
+    (r"Claude's choice, delegated under the decision of", _SME_DEC),
+    (r"Claude's design under the decision of", _SME_DEC),
+    (r"(?:[Dd]elegated|[Dd]ecided) under the decision of", "under " + _SME_DEC),
+    (r"\bClaude decides the open questions on the decision owner's behalf", "The subject matter expert decides the open questions"),
+    # Who drafted a text: the text keeps its status, and loses the name.
+    (r"\bDrafted by Claude\b", "Drafted"),
+    (r"\bdrafted by Claude\b", "drafted"),
+    (r"\bClaude drafted\b", "drafted"),
+    (r"\b(is|are) Claude's words\b", r"\1 written for this ontology"),
+    (r"\bClaude's words\b", "the ontology's own words"),
+    (r"\bClaude's EPM working definition\b", "the EPM working definition"),
+    (r"\bis Claude's, adapted\b", "is adapted"),
+    (r"\bwith Claude's definitions\b", "with definitions written for this ontology"),
+    (r"\bwith Claude's description\b", "with a description written for this ontology"),
+    (r", Claude's guess,", ", a guess,"),
+    (r"\bas Claude's guess\b", "as a guess"),
+    (r"a recommendation Claude called a guess", "a recommendation marked as a guess"),
+    (r"accepting Claude's recommendation on (\S+), which Claude said was a guess", r"accepting a recommendation on \1, marked as a guess"),
+    (r"\bClaude's recommendation\b", "a recommendation"),
+    (r"\bClaude's reading\b", "the reading"),
+    (r"\bClaude's context\b", "the context"),
+    (r",? by Claude\b", ""),
+    (r" \(Claude\)", ""),
+    (r"\bClaude Code session of\b", "session of"),
+    (r"(?:<strong>)?\*{0,2}Built with:\*{0,2}(?:</strong>)? Kailey and Claude Code\.\s*", ""),
+    (r"(?<![A-Za-z0-9])(?i:kailey)(?![A-Za-z0-9])", "a subject matter expert"),
+    # The skills' instructions: what to do, with the tool left open.
+    (r"\(skills, CLAUDE\.md, AGENTS\.md\)", "(skills and instruction files)"),
+    (r"\(a skill, CLAUDE\.md, AGENTS\.md, a prompt\)", "(a skill, an instruction file, a prompt)"),
+    (r"\bClaude is writing its own answer\b", "You are writing your own answer"),
+    (r"\bWhen Claude writes its own response\b", "When you write your own response"),
+    (r"sounds like ChatGPT/AI", "sounds like AI"),
+    (r"the one in the Anthropic skills directory \(rules 1 to 31\) and the Cursor fork in cursor/plugins \(rules 32 and 33, and the strict dash rule\)",
+     "a public skill of that name (rules 1 to 31) and a fork of it (rules 32 and 33, and the strict dash rule)"),
+    (r"^\| The user asks to tune, calibrate, or personalize these rules \|.*\n", ""),
+    (r' If the user says "calibrate my writing rules", "recalibrate", or "update my writing rules from my sessions", this skill owns that task\.', ""),
+    # A review cited as a parenthetical, or as the head of a comment, goes; what it found stays.
+    (REVIEWERS + r"'s review\b", "a review"),
+    (r"\bafter a Cursor HOLD\b", "after a later review"),
+    (r"[ \t]?\([^()\"\n]*\b" + REVIEWERS + r"\b(?:'s)?[^()\"\n]*\)", ""),
+    (r"[ \t]?\(" + REVIEWERS + r"\b(?:'s)?[^()\"\n]*\)", ""),
+    (r"[ \t]?\(findings? \d+[^()\"\n]*\)", ""),
+    (r"(?m)^([ \t]*#[ \t]*)(?:[^:\n]{0,40}\b)?" + REVIEWERS + r"\b[^:\n]*:[ \t]*", r"\1"),
+    (r"(?m)^([ \t]*#[ \t]*-*[ \t]*)" + REVIEWERS + r" round \d+ findings[ \t]*", r"\1Regressions "),
+    (r'("""[ \t]*)' + REVIEWERS + r" round \d+,? [^:\n]*:[ \t]*", r"\1"),
+    # What remains of the process that built this.
+    (r"\bAGENTS\.md\b", "the project's instructions"),
+    (r"\bCLAUDE\.md\b", "the project's instructions"),
+    (r"the project's instructions, Working rules \(evidence order\)", "the evidence order"),
+    (r"the project's instructions, Working rules", "the working rules"),
+    (r"the project's `the project's instructions`", "the project's instructions"),
+    (r"\bA pull request changes one module\b", "A release changes one module"),
+    (REVIEWERS + r" round \d+(?:,? findings? [\d, and]+)?\.?", ""),
+    (r"(?:of|in) (?:the first independent review|review round \d+)", "of an earlier review"),
+    (r"\bFrom review round \d+\b", "From a later review"),
+    (r"\b(?:review|Review) rounds?\b", "review"),
+    (r"\bthe independent review\b", "a review"),
+    (r"\ban independent review\b", "a review"),
+    (r"\bindependent (reviewers?|review)\b", r"\1"),
+    (r"\ba PR verdict\b", "a review"),
+    (r"\bthe PR verdict\b", "the review"),
+    (r", a review and the Cursor verdict pass\b", " and a review pass"),
+    # Delegation as the build used it. The business term stays: the delegation of authority, a documented delegation.
+    (r"Yes, delegate as described \(Recommended\)", "Approved as described"),
+    (r"Claude, under the delegation, (\w+)", r"The subject matter expert \1"),
+    (r"\bUnder the delegation, no\b", "No"),
+    (r"\bunder the (?:subject matter expert's|decision owner's) delegation\b", "on the subject matter expert's approval"),
+    (r",? under the delegation\b(?! of\b)", ""),
+    (r"(?:[Dd]elegated|[Dd]ecided) under\s+(?:#\s*)?the decision of", "under " + _SME_DEC),
+    # The build's pull requests.
+    (r"\b(noted|carried) in the batch (\d+) PR\b", r"\1 in batch \2 of the process-map work"),
+    (r"\bsee naming PR\b", "see the naming pass"),
+    (r"\bA change is a pull request and a release\b", "A change is a new release"),
+    (r"\bfails its PR\b", "fails its check"),
+    (r"\bso on every PR\b", "so on every change"),
+    (r"\bin the item G pull request, ", ""),
+    (r"\bthe same pull request\b", "the same change"),
+    (r"\bbefore opening a pull request\b", "before you share a change"),
+    (r"<h3([^>]*)>The agent skills and the review loop</h3>", r"<h3\1>The skills</h3>"),
+    (r"<code>the project's instructions</code> names the skills every agent loads: <code>clear-writing</code> for anything a person reads and <code>way-of-working</code> for any change\. ", ""),
+    (r" Every change went through a pull request: [^<]*?\(<code>the project's instructions</code>[^)]*\)\.", " Every change passed the checks and a review before it was accepted."),
+    (r"Every change goes through a pull request: [^<]*?\(the project's instructions\)\.", "Every change passes the checks and a review before it is accepted."),
+    (r"\bagent skills\b", "skills"),
+    (r"\bAgent skills\b", "Skills"),
+    (r" \((?:<code>)?the project's instructions(?:</code>)?(?:, \"Working rules\"(?: and \"Before every push\")?)?\)", ""),
+    (r"\ba subject matter expert approved by a subject matter expert\b", "a subject matter expert approved"),
+    (r", then <code>the project's instructions</code> \(how every change is made and reviewed\)", ""),
+    (r"\bthe evidence order in the project's instructions\b", "the evidence order"),
+    (r"<code>the skills folder/skills/", "<code>skills/"),
+    # The demo's scenario and its guard.
+    (r" \(the decision owner: \"Remove any mention of ChatGPT\", [\d-]+\)", ""),
+    (r"\(a subject matter expert[^()\n]{0,60}\"Remove any mention of ChatGPT\", [\d-]+\)", ""),
+    (r'"FACT" in body or "ChatGPT" in body', '"FACT" in body'),
+    (r'"FACT" not in body and "ChatGPT" not in body', '"FACT" not in body'),
+    (r"The template's databricks-claude-sonnet-4-5\s+(#\s*)?is not served here\.", r"The template's default model is not served here."),
+    (r"\ban OpenAI-style key\b", "a secret-key shape"),
+    # The worklog does not ship (the decision's amendment of 2026-11-01).
+    (r"the worklog \(the build record\),\s+", ""),
+    (r"^\|[^\n]*ontology-worklog[^\n]*\n", ""),
+    (r"^\|[^\n]*pr-reviews-262-266-269[^\n]*\n", ""),
+    (r"^- [^\n]*Cursor app merged[^\n]*\n", ""),
+    (r" Check what a private repo changes for the Cursor app and the CI runs before you choose this\.", ""),
+    (r' ?\(`business_architecture/ontology/step4/playbook/ontology-worklog\.md`, section "[^"]*"\.?\)', ""),
+    (r'; worklog entry "[^"]*", `business_architecture/ontology/step4/playbook/ontology-worklog\.md`, section "[^"]*"', ""),
+    (r"\s+and this project's decision records\s+\(`\.\./domain/decisions/`, the decision records\)", ""),
+    (r",? and\s+the worklog's plan table for where the build stands\. The worklog was named\s+`ontology-playbook\.md` until [\d-]+\.", "."),
+    (r"project decisions get an the decision records record and a dated worklog\s+entry,", "project decisions get a decision record,"),
+    (r"The worklog's plan\s+table \(`step4/playbook/ontology-worklog\.md` §2\) is authoritative for step\s+status: ", ""),
+    (r" \(`step4/playbook/ontology-worklog\.md`, 3d-c\)", ""),
+    (r' \(<code>step4/playbook/ontology-worklog\.md</code>, §1 "What we are building"; (the first sections of this page describe the map)\)', r" (\1)"),
+    (r' The worklog \(<code>[^<]*ontology-worklog\.md</code>, §2 "The plan"\) records how this build walked the steps\.', ""),
+    (r"<li><code>[^<]*ontology-worklog\.md, §1</code>:[^<]*</li>", ""),
+    (r"(?:,| and) <code>step4/playbook/ontology-worklog\.md</code>", ""),
+    (r"\|ontology-worklog\b", ""),
+    # The release keeps no saved answers, so its skill says where an approval is kept.
+    (r"and pin it in a test that reads it from the saved answer\.", "and keep the saved approval beside your decision records."),
+]
+# A row of a page's table that names an agent describes the build's own tooling: the row goes.
+AGENT_ROW = re.compile(r"<tr>(?:(?!</tr>).)*?(?:\b(?:Claude|Codex|Kimi|Bugbot|Herdr|herdr|Anthropic|OpenAI|ChatGPT|Rex)\b|Cursor (?:bot|PR|app)|way-of-working|rex-review|pi-review|gpt-\d|AGENTS\.md|CLAUDE\.md|APPROVAL_POLICY|REVIEW_STANDARDS|ontology-worklog)(?:(?!</tr>).)*?</tr>\n?", re.S)
+
+
+# "PR" is also public relations, in the APQC framework's names and the process map's text; those stay.
+PR_WORD = re.compile(r"(?<!\.\d )(?<!\()\bPR\b(?! campaigns?\b| program\b| all\b|\)| strategy\b)")
+
+
+def rule_agents(text, ctx):
+    """Agent names and agent work (rule 15): the release names no agent and no review tool, and every decision reads
+    as the subject matter expert's. A draft keeps its status. The demo's own Genie agents and supervisor, PROV-O's
+    prov:Agent and prov:SoftwareAgent, and a database cursor are not touched."""
+    n = 0
+    if ctx.get("path", "").endswith(".html"):
+        text, k = AGENT_ROW.subn("", text); n += k
+    for pattern, repl in AGENT_TEXT:
+        text, k = _count(pattern, repl, text, re.M); n += k
+    if not ctx.get("path", "").startswith("skills/"):  # the skills teach any project, which may use pull requests
+        text, k = _count(r"\bskills/(?:data|writing|engineering)/", "skills/", text); n += k
+        text, k = _count(r"\b[Pp]ull requests\b", "changes", text); n += k
+        text, k = _count(r"\bA pull request\b", "A change", text); n += k
+        text, k = _count(r"\b[Pp]ull request\b", "change", text); n += k
+        text, k = _count(r"\bPRs\b", "changes", text); n += k
+        text, k = _count(PR_WORD, "change", text); n += k
+    if ctx.get("path", "").endswith(".py"):  # the period a removed citation leaves at the start of a line
+        text, k = _count(r'(?m)^([ \t]*(?:#[ \t]*)?)\.(?= |"""|$)', r"\1", text); n += k
+    path = ctx.get("path", "")
+    if path.startswith("business_architecture/domain/decision-packages/"):  # the questions read as put by whoever modelled it
+        text, k = _count(r"\bthe agent\b", "the modeller", text); n += k
+        text, k = _count(r"\bThe agent\b", "The modeller", text); n += k
+    if path.endswith("epm-walkthrough.html"):
+        text, k = _count(r"\bOne command takes you, or an agent, from", "One command takes you from", text); n += k
+        text, k = _count(r"\ba person or an agent\b", "a person", text); n += k
+    if path.endswith("kpi/test_measures.py"):  # hashes of people's names can be reversed by guessing; the check stays, for a reader's own list
+        text, k = _count(r"# sha256 \(first 16 hex digits\)[^\n]*\n#[^\n]*\nNAME_HASHES = \{[^}]*\}",
+                         "# sha256 (first 16 hex digits) of lower-cased names that must stay out of this copy. Add your own.\nNAME_HASHES = set()", text); n += k
+    if path.endswith("release/test_build_module.py"):  # a build's working names
+        text, k = _count(r"\bNIGHT_BRIEF\b", "BRIEF", text); n += k
+        text, k = _count(r"\bNIGHT\b", "RECORDED", text); n += k
+        text, k = _count(r"(?<![a-z])night[ _]brief(?![a-z])", lambda m: m.group(0).replace("night_", "").replace("night ", ""), text); n += k
+    if path.endswith("tests/test_demo.py"):  # a test named for the tool that found the case
+        text, k = _count(r"\btest_bugbot_\d+_", "test_", text); n += k
+    if path.endswith("scripts/test_epm_facts.py"):
+        text, k = _count(r"each_edge_codex_found_in_round_2", "each_edge_found", text); n += k
+    if path.endswith("scripts/test_published_figures.py"):
+        text, k = _count(r" \(the retro of\s+2026-10-28 left this gate.*?\)\.", ".", text, re.S); n += k
+        text, k = _count(r"\(retro on [^:\n]*: ", "(", text); n += k
+    if path.endswith(".py"):
+        text, k = _count(r" \(retro of \d{4}-\d{2}-\d{2}\)", "", text); n += k
+        text, k = _count(r"; retro of \d{4}-\d{2}-\d{2}", "", text); n += k
+    if ctx.get("path", "") == "scripts/test_epm_facts.py":  # a fixture's second speaker, in the check's own test
+        text, k = _count(r"\bCodex\b", "Reviewer", text); n += k
+    return text, n
+
+
 def rule_names(text, ctx):
     n = 0
     for name in owner.owner_names():
-        text, k = _count(r"\b" + re.escape(name) + r"'s\b", "the author's", text); n += k
-        text, k = _count(r"\b" + re.escape(name) + r"\b", "the author", text); n += k
+        # An underscore is a word character, so a name inside an identifier needs a boundary of its own.
+        text, k = _count(r"(?<![A-Za-z0-9])" + re.escape(name) + r"'s\b", "the author's", text); n += k
+        text, k = _count(r"(?<![A-Za-z0-9])" + re.escape(name) + r"(?![A-Za-z0-9])", "the author", text); n += k
     return text, n
 
 
@@ -357,7 +569,7 @@ RULES = [
     ("iri", rule_iri), ("company", rule_company), ("records", rule_records), ("answers", rule_answers),
     ("attribution", rule_attribution), ("approvals", rule_approvals), ("hosts", rule_hosts),
     ("repository", rule_repository), ("numbers", rule_numbers), ("peers", rule_peers), ("left-out", rule_left_out),
-    ("previous-paths", rule_previous_paths), ("underscores", rule_underscores), ("names", rule_names),
+    ("previous-paths", rule_previous_paths), ("underscores", rule_underscores), ("agents", rule_agents), ("names", rule_names),
 ]
 
 

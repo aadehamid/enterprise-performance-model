@@ -5,6 +5,7 @@ file in that package, and it says nothing about a release that the package's own
 Run: python3 -m pytest test_build_catalog.py (needs rdflib).
 """
 import glob
+import importlib
 import os
 import unittest
 
@@ -12,8 +13,10 @@ from rdflib import Graph, URIRef
 from rdflib.namespace import DCTERMS, RDF
 
 import build_catalog as bc
-import build_core_2_4 as core  # the newest core builder: its version
 import build_module
+import newest
+
+core = importlib.import_module(newest.core_builder())  # the newest core builder: its version
 
 MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
 

@@ -9,6 +9,11 @@ import fnmatch
 import os
 import re
 
+# The facts of one cut, in one place: the next cut edits these and nothing else in this tool.
+RELEASE_NAME = "EPM 1.0"
+RELEASE_BRANCH = "share/epm-1.0"  # publish.py's default branch name
+CHECK_MINUTES = "10"  # how long the release's check.sh takes, for the guide: the time of the last cut's check step
+
 # The 11 modules and the versions the release ships: (newest, previous). main at 0ad29381, 2026-10-31.
 MODULES = {
     "core": ("2.4.0", "2.3.0"),
@@ -36,7 +41,6 @@ EPM_RULES = [
     # step4/target-report's tests import the gate's helpers, so it stays out; the label report is data core's first
     # builder reads (build_core.py's LABELS), so it ships.
     ("ship", f"{ONT}/step4/label-report/*"),
-    ("ship", f"{ONT}/step4/playbook/ontology-worklog.md"),
     ("out", f"{ONT}/step3c-*.md"),
     ("out", f"{ONT}/lpg-projection/*"),
     ("out", f"{ONT}/trials/*"),
@@ -57,6 +61,8 @@ EPM_RULES = [
     ("ship", "business_architecture/domain/customer_domain_problem_statement_v0.1.md"),
     ("ship", "business_architecture/domain/market-data-and-commercial-risk-draft.md"),
     ("ship", "business_architecture/domain/decision-packages/*"),
+    # Only about the agents' reviews and merges, so it cannot be made neutral (the decision's amendment of 2026-11-01).
+    ("out", "business_architecture/domain/decision-packages/2026-10-14/pr-reviews-262-266-269.md"),
     # The pricing demo (the owner, 2026-10-31: only the ontology and the pricing demo). The O2C demos stay out.
     ("ship", "demos/downstream-pricing-databricks-free/*"),
     # Scripts that build or validate.
@@ -93,6 +99,13 @@ SKILLS_RULES = [
     ("ship", "skills/data/rdf-store/*"),
     ("ship", "skills/writing/clear-writing/*"),
     ("out", "skills/writing/clear-writing/calibration.md"),
+    # The skill's upkeep: its evals and calibration read a person's own sessions, and README and SOURCES describe
+    # keeping it current upstream. The release writes a short SOURCES.md of its own (templates/).
+    ("out", "skills/writing/clear-writing/evals/*"),
+    ("out", "skills/writing/clear-writing/scripts/*"),
+    ("out", "skills/writing/clear-writing/references/calibrate.md"),
+    ("out", "skills/writing/clear-writing/README.md"),
+    ("out", "skills/writing/clear-writing/SOURCES.md"),
     ("ship", "scripts/build_playbook_html.py"),
     ("ship", "scripts/playbook_template.html"),
     ("ship", "scripts/test_playbook_html.py"),
@@ -161,10 +174,14 @@ def newest_on_disk(tree, module):
 # marker is exactly this; every reader of release mode in this tool asks is_release(); the builders read the same
 # file by its presence (build_module.SHARE_RELEASE).
 RELEASE_MARKER = "release.json"
-RELEASE_NAME = "EPM 1.0"
 RELEASE_MODE = ("share release: each module's builder builds against the newest package of every module it requires; "
                 "the Neo4j projection names labels, relationship types and property keys with one underscore")
 MARKER_KEYS = ("release", "built", "mode")
+
+
+def fill(text):
+    """A template with this cut's facts in place."""
+    return text.replace("{{RELEASE_NAME}}", RELEASE_NAME).replace("{{CHECK_MINUTES}}", CHECK_MINUTES)
 
 
 def marker(built):

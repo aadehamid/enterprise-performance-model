@@ -89,3 +89,26 @@ def test_a_missing_docker_is_no_proof_and_a_broken_symlink_is_removed_as_a_link(
     assert os.path.lexists(str(link))
     r = run(ledger, envf, env, "--yes")
     assert r.returncode == 0 and not os.path.lexists(str(link)) and "everything in the ledger is gone" in r.stdout
+
+
+def test_a_catalog_the_run_did_not_create_is_refused(tmp_path):
+    entries = [{"kind": "databricks-catalog", "name": "epm_release_validate_a"}]
+    ledger, envf, env = setup(tmp_path, entries)
+    r = run(ledger, envf, env, "--yes", "--tree", str(tmp_path))
+    assert r.returncode == 1 and "REFUSED databricks-catalog epm_release_validate_a" in r.stdout
+
+
+def test_a_shared_catalog_is_refused_whatever_the_line_says(tmp_path):
+    entries = [{"kind": "databricks-catalog", "name": "idp_sbx", "detail_created_by_run": True}]
+    ledger, envf, env = setup(tmp_path, entries)
+    r = run(ledger, envf, env, "--yes", "--tree", str(tmp_path))
+    assert r.returncode == 1 and "REFUSED databricks-catalog idp_sbx: it is a shared catalog" in r.stdout
+
+
+def test_a_catalog_the_run_created_may_be_purged():
+    sys.path.insert(0, HERE)
+    import cleanup
+    assert cleanup.catalog_refusal({"name": "epm_release_validate_a", "detail_created_by_run": True}) is None
+    assert cleanup.catalog_refusal({"name": "epm_release_validate_a", "detail_created_by_run": "yes"})  # only the literal true
+    assert cleanup.catalog_refusal({"name": "IDP_SBX", "detail_created_by_run": True})
+    assert cleanup.catalog_refusal({"name": "team_catalog", "detail_created_by_run": True})  # absence alone is not enough

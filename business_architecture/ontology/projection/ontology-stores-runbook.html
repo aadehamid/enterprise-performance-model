@@ -604,10 +604,8 @@ uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connec
 <div class="two">
   <div class="card">
     <h3>The local Neo4j and Jena</h3>
-<pre><code>cd ~/.agents/skills/ontology-to-lpg/docker
-docker compose -p lpg-local --profile neo4j --profile fuseki down -v
-cd ~/.agents/skills/rdf-store/docker
-docker compose -p epm-jena down -v</code></pre>
+<pre><code>docker compose -f ~/.agents/skills/ontology-to-lpg/docker/compose.yaml -p lpg-local --profile neo4j --profile fuseki down -v
+docker compose -f ~/.agents/skills/rdf-store/docker/compose.yaml -p epm-jena down -v</code></pre>
     <p><code>-v</code> also removes the container's data volume. The next driver run creates new containers, with a new password for Neo4j.</p>
   </div>
   <div class="card">

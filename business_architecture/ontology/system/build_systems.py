@@ -33,7 +33,9 @@ SYSTEMS = os.path.join(HERE, "systems.csv")
 DEFINITIONS = os.path.join(HERE, "definitions.csv")
 SOURCES = os.path.join(HERE, "sources.csv")
 OTHER = os.path.join(HERE, "other-systems.csv")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import newest  # noqa: E402
+CORE = newest.core_file()
 OUTPUT = os.path.join(HERE, "systems.ttl")
 
 SYS = Namespace("https://w3id.org/lsc/ontology/modules/system/")

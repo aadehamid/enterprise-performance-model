@@ -11,20 +11,20 @@ import publish  # noqa: E402
 
 
 def make_release(root):
-    os.makedirs(os.path.join(root, "business_architecture", "ontology", "projection"))
+    os.makedirs(os.path.join(root, "scripts"))
     for d in (".venv/bin", "__pycache__", "out", ".git", ".pytest_cache/v/cache"):
         os.makedirs(os.path.join(root, d))
-    files = {"README.md": "hello\n", "release.json": "{}\n", "business_architecture/ontology/projection/run_local.sh": "#!/bin/sh\necho hi\n",
+    files = {"README.md": "hello\n", "release.json": "{}\n", "scripts/check.sh": "#!/bin/sh\necho hi\n",
              ".venv/bin/activate": "secret token\n", "__pycache__/x.pyc": "pyc\n", ".DS_Store": "x", "out/report.json": "{}",
              ".git/config": "[user]\n\tname = Ada Lovelace\n", ".pytest_cache/v/cache/nodeids": "[]"}
     for rel, text in files.items():
         with open(os.path.join(root, rel), "w") as f:
             f.write(text)
-    os.chmod(os.path.join(root, "business_architecture/ontology/projection/run_local.sh"), 0o755)
+    os.chmod(os.path.join(root, "scripts/check.sh"), 0o755)
     return root
 
 
-SHIPPED = {"README.md", "release.json", "business_architecture/ontology/projection/run_local.sh"}
+SHIPPED = {"README.md", "release.json", "scripts/check.sh"}
 
 
 def test_the_zip_holds_the_shipped_files_and_extract_keeps_the_executable_bit(tmp_path):
@@ -38,9 +38,9 @@ def test_the_zip_holds_the_shipped_files_and_extract_keeps_the_executable_bit(tm
     room = tmp_path / "room"; room.mkdir()
     with zipfile.ZipFile(out) as z:
         z.extractall(str(room / "plain"))
-    assert not os.access(str(room / "plain" / "epm-release" / "business_architecture/ontology/projection/run_local.sh"), os.X_OK)  # what extractall does (CPython issue 59999), measured here
+    assert not os.access(str(room / "plain" / "epm-release" / "scripts/check.sh"), os.X_OK)  # what extractall does (CPython issue 59999), measured here
     publish.extract(out, str(room / "kept"))
-    script = str(room / "kept" / "epm-release" / "business_architecture/ontology/projection/run_local.sh")
+    script = str(room / "kept" / "epm-release" / "scripts/check.sh")
     assert stat.S_IMODE(os.stat(script).st_mode) == 0o755
     assert subprocess.run([script], capture_output=True, text=True).stdout == "hi\n"
 
@@ -64,7 +64,7 @@ def test_the_orphan_branch_holds_the_zips_files_with_a_neutral_identity(tmp_path
     assert git("show", "share/test:README.md") == "hello"
     assert git("rev-list", "--count", "share/test") == "1"  # an orphan: one commit, no history
     assert set(git("ls-tree", "-r", "--name-only", "share/test").split("\n")) == SHIPPED
-    assert "100755" in git("ls-tree", "share/test", "business_architecture/ontology/projection/run_local.sh")
+    assert "100755" in git("ls-tree", "share/test", "scripts/check.sh")
     assert git("log", "-1", "--format=%an|%ae|%cn|%ce", "share/test") == "EPM release|epm-release@noreply.invalid|EPM release|epm-release@noreply.invalid"
     assert "Ada" not in git("cat-file", "-p", commit)
     assert git("status", "--porcelain") == "" and not os.path.exists(os.path.join(repo, ".git", "share-release-index"))

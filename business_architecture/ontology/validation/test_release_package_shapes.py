@@ -5,6 +5,7 @@ whole-graph gate (test_all_module_shapes.py) runs the source files; this test ru
 Run: python3 -m pytest test_release_package_shapes.py (needs rdflib, pyshacl).
 """
 import glob
+import importlib
 import os
 import re
 import shutil
@@ -21,7 +22,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
 sys.path.insert(0, os.path.join(ONTOLOGY, "release"))
 import build_module  # noqa: E402
-import build_core_2_4 as core  # noqa: E402  (the newest core builder: its version and the version it builds from)
+import newest  # noqa: E402
+core = importlib.import_module(newest.core_builder())  # the newest core builder: its version and the version it builds from
 
 # Pinned by hand: a new release must join this list, so its package is checked here.
 PACKAGES = [
@@ -108,7 +110,16 @@ def conforms(name, version, data):
 class ReleasePackages(unittest.TestCase):
     def test_every_package_is_listed(self):
         # Keyed on folders, not manifests, so a package written without its manifest is not missed.
-        self.assertEqual(packages_on_disk(), set(PACKAGES))
+        on_disk = packages_on_disk()
+        if not build_module.SHARE_RELEASE:
+            self.assertEqual(on_disk, set(PACKAGES))
+            return
+        # A release keeps every earlier package under releases/previous/, however many a recipient's changes retire;
+        # outside it, a module's folder holds only its newest package.
+        self.assertEqual(set(PACKAGES) - on_disk, set())
+        for name, version in on_disk - set(PACKAGES):
+            self.assertTrue(os.path.isdir(os.path.join(ONTOLOGY, "releases", "previous", name, version)),
+                            f"{name} {version} is neither the newest nor in releases/previous/")
 
     def test_the_closure_is_loaded(self):
         # value-stream 1.0.0 links to data products and measures in other packages; alone, its shapes fail.

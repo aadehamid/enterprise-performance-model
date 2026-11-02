@@ -18,7 +18,9 @@ from collections import Counter
 from rdflib import Graph
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RELEASE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import newest  # noqa: E402
+RELEASE = newest.core_file()
 # The module graphs loaded with the release (Step 5: roles and RACI assignments; Step 7: the kpi, data-product, value-stream, system, lane and market-data modules; Steps 5 to 7: the `party` module).
 MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl", "roles.ttl", "assignments.ttl")] \
     + [os.path.join(HERE, "..", "kpi", n) for n in ("vocabulary.ttl", "measures.ttl")] \

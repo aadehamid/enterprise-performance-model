@@ -28,7 +28,9 @@ CLASSIFICATION = os.path.join(HERE, "measure-classification.csv")
 DETAILS = os.path.join(HERE, "measure-details.csv")
 PERSONAS = os.path.join(HERE, "personas.csv")
 IDENTIFIER_TABLE = os.path.join(HERE, "measure-identifiers.csv")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import newest  # noqa: E402
+CORE = newest.core_file()
 OUTPUT = os.path.join(HERE, "measures.ttl")
 
 KPI = Namespace("https://w3id.org/lsc/ontology/modules/kpi/")
@@ -143,7 +145,7 @@ def load():
         m = d["measure_id"]
         if not d["definition"]:
             problems.append(f"{m}: no definition")
-        problems += [f"{m}: process {p!r} is not in core 2.4.0" for p in split(d["informs_process"]) if p not in procs]
+        problems += [f"{m}: process {p!r} is not in the newest core" for p in split(d["informs_process"]) if p not in procs]
         problems += [f"{m}: confused-with {o!r} is not a measure" for o in split(d["not_to_be_confused_with"])
                      if o not in ids or o == m]
         if bool(d["not_to_be_confused_with"]) != bool(d["not_note"]) and d["not_to_be_confused_with"]:

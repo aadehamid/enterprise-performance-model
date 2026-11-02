@@ -21,6 +21,8 @@ from pyshacl import validate
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF, XSD
 
+import newest
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
 MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
@@ -298,9 +300,7 @@ def package_folder(module, version):
 
 
 def newest_on_disk(module):
-    folder = os.path.join(ONTOLOGY, "releases", module)
-    versions = [v for v in os.listdir(folder) if v[0].isdigit() and os.path.isfile(os.path.join(folder, v, "manifest.json"))]
-    return max(versions, key=lambda v: tuple(int(x) for x in v.split(".")))
+    return newest.newest_version(module, ONTOLOGY)
 
 
 def label(m):
@@ -472,7 +472,8 @@ def package(name, g):
         "module": name, "version": lab, "release_candidate": m["stage"] is not None,
         "ontology_iri": MODULES_NS + name, "version_iri": f"{MODULES_NS}{name}/{lab}",
         "depends_on": dependencies(name), "decisions": m["decisions"], "triples": len(g),
-        "approved_by": None if m["stage"] else {"who": m.get("approver", "The decision owner"), "recorded_in": m["approval"][0]},
+        "approved_by": None if m["stage"] else {"who": m.get("approver", "The decision owner"), "recorded_in": m["approval"][0],
+                                                 **({"words": m["approval"][1]} if SHARE_RELEASE else {})},
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
 
@@ -486,6 +487,7 @@ def main():
     ap.add_argument("module", choices=sorted(MODULES))
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--verify", action="store_true")
+    ap.add_argument("--rebuild-released", action="store_true", help="overwrite a released package: a rebuild of the whole set")
     args = ap.parse_args()
     g = build(args.module)
     conforms, text = check(args.module, g)
@@ -501,6 +503,8 @@ def main():
             sys.exit(f"{args.module} release package is not current: {stale}")
         print("release package is current")
     if args.write:
+        if MODULES[args.module]["stage"] is None:  # a candidate may change until it is released
+            newest.refuse_overwrite(out, files, f"{args.module} {label(MODULES[args.module])}", args.rebuild_released)
         os.makedirs(out, exist_ok=True)
         for n, t in files.items():
             with open(os.path.join(out, n), "w") as f:

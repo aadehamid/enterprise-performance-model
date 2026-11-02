@@ -582,6 +582,9 @@ def pages():
     specs = all_pages()
     if not SHARE_RELEASE:
         return specs
+    # The share release's own guide has its page there; on main it is a template in scripts/share_release/.
+    if os.path.exists(os.path.join(ROOT, "HOW-TO-UPDATE.md")):
+        specs = specs + [single("HOW-TO-UPDATE.md", "How to change what you received: a definition, a concept, a process or a module.", "This release")]
     return [s for s in specs if all(os.path.exists(os.path.join(ROOT, rel)) for rel in s["sources"] + ([s["intro"]] if "intro" in s else []))]
 
 

@@ -14,6 +14,7 @@ command, exit code and output tail. Exit 1 when any step fails.
 import argparse
 import datetime
 import hashlib
+import html
 import json
 import os
 import re
@@ -41,7 +42,43 @@ MODULE_ORDER = ["organization", "kpi", "system", "party", "ref-mpc", "data-produ
                 "market-data", "integration"]
 
 
+# The release's own documents and files: (template, where it lands in the release).
+TEMPLATES = [("README.md", "README.md"), ("KNOWN-OPEN-ITEMS.md", "KNOWN-OPEN-ITEMS.md"), ("HOW-TO-UPDATE.md", "HOW-TO-UPDATE.md"),
+             ("releases-previous-README.md", f"{ONT}/releases/previous/README.md"), ("root-conftest.py", "conftest.py"),
+             ("pinned-tests.txt", "scripts/pinned-tests.txt"), ("check-pinned.sh", "scripts/check-pinned.sh"),
+             ("build_core_template.py", f"{ONT}/release/build_core_template.py"),
+             ("next_version.py", f"{ONT}/release/next_version.py"),
+             ("clear-writing-SOURCES.md", "skills/clear-writing/SOURCES.md")]
 SME = "a subject matter expert reviewing the documents"
+FILE_MAP_ROW = re.compile(r"<tr><td><code>([^<]+)</code></td>.*?</tr>\n?")
+
+
+def drop_dead_links(readme, tree):
+    """A line of the README that links a walkthrough section goes when this tree's walkthrough has no such section."""
+    path = os.path.join(tree, ONT, "epm-walkthrough.html")
+    page = ""
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            page = f.read()
+
+    def keep(line):
+        return all(f'id="{anchor}"' in page for anchor in re.findall(r"epm-walkthrough\.html#([\w-]+)", line))
+    return "".join(line for line in readme.splitlines(True) if keep(line))
+
+
+def prune_file_map(page, tree):
+    """In the walkthrough's appendix, a row whose first cell names a path that is not in the tree goes. For a pattern
+    (`folder/*`), the row stays when its folder is in the tree."""
+    start = page.find('<section id="file-map"')
+    if start < 0:
+        return page
+    end = page.index("</section>", start)
+
+    def keep(row):
+        path = html.unescape(row.group(1))
+        base = path.split("*", 1)[0].rstrip("/")
+        return row.group(0) if os.path.exists(os.path.join(tree, base)) else ""
+    return page[:start] + FILE_MAP_ROW.sub(keep, page[start:end]) + page[end:]
 
 
 def provenance_removed(manifest):
@@ -135,6 +172,7 @@ class Rebuild:
         with open(os.path.join(HERE, "templates", "check.sh")) as f:
             text = (f.read().replace("{{TEST_FILES}}", " \\\n".join("  " + shlex.quote(t) for t in tests))
                     .replace("{{SKILL_CHECKS}}", skill_checks.render()))
+        text = manifest.fill(text)
         out = os.path.join(self.release, "scripts", "check.sh")
         os.makedirs(os.path.dirname(out), exist_ok=True)
         with open(out, "w") as f:
@@ -155,14 +193,17 @@ class Rebuild:
     def documents(self):
         """The newcomer's entry point (plan step 6): the root README, the known open items, the history folder's README,
         and the glossary's one definition of "decision owner"."""
-        for name, dest in (("README.md", "README.md"), ("KNOWN-OPEN-ITEMS.md", "KNOWN-OPEN-ITEMS.md"),
-                           ("releases-previous-README.md", f"{ONT}/releases/previous/README.md")):
+        for name, dest in TEMPLATES:
             with open(os.path.join(HERE, "templates", name)) as f:
-                text = f.read()
+                text = manifest.fill(f.read())
+            if name == "README.md":
+                text = drop_dead_links(text, self.release)
             out = os.path.join(self.release, dest)
-            os.makedirs(os.path.dirname(out), exist_ok=True)
+            os.makedirs(os.path.dirname(out) or self.release, exist_ok=True)
             with open(out, "w") as f:
                 f.write(text)
+            os.chmod(out, 0o755 if name.endswith((".sh", "next_version.py")) else 0o644)
+        self.walkthrough()
         glossary = os.path.join(self.release, "business_architecture", "domain", "business-glossary.md")
         with open(glossary) as f:
             text = f.read()
@@ -178,6 +219,22 @@ class Rebuild:
         with open(glossary, "w") as f:
             f.write(text)
         self.steps.append({"step": "documents", "returncode": 0})
+
+    def walkthrough(self):
+        """The release's own "How to change the ontology" replaces that section of the walkthrough (main's page keeps its
+        own), and the file map's rows name only files this tree holds."""
+        path = os.path.join(self.release, ONT, "epm-walkthrough.html")
+        with open(path, encoding="utf-8") as f:
+            page = f.read()
+        with open(os.path.join(HERE, "templates", "walkthrough-change.html"), encoding="utf-8") as f:
+            section = f.read()
+        page, n = re.subn(r'<section id="change".*?</section>\n?', lambda m: section, page, count=1, flags=re.S)
+        if n != 1:
+            raise SystemExit('the walkthrough has no section id="change"')
+        page = prune_file_map(page, self.release)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(page)
+        self.steps.append({"step": "walkthrough", "returncode": 0})
 
     def release_marker(self):
         """release.json at the tree's root: what this tree is. The builders, the projection and the demo read release
@@ -248,9 +305,9 @@ class Rebuild:
         self.previous_hashes()
         for folder, script in SOURCE_BUILDERS:
             self.run(f"source {folder}/{script}", [script, "--write"], f"{ONT}/{folder}")
-        self.run("core 2.4.0", ["build_core_2_4.py", "--write"], f"{ONT}/release")
+        self.run("core 2.4.0", ["build_core_2_4.py", "--write", "--rebuild-released"], f"{ONT}/release")
         for m in MODULE_ORDER:
-            self.run(f"module {m}", ["build_module.py", m, "--write"], f"{ONT}/release")
+            self.run(f"module {m}", ["build_module.py", m, "--write", "--rebuild-released"], f"{ONT}/release")
         self.run("catalog", ["build_catalog.py", "--write"], f"{ONT}/release")
         self.run("projection manifest", ["pipeline.py", "build"], f"{ONT}/projection")
         self.run("pages", ["scripts/build_docs_html.py"], ".")

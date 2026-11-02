@@ -5,6 +5,7 @@ conform, a value from the wrong list fails, and every code-list property of core
 Run: python3 -m pytest test_controlled_values.py (needs rdflib, pyshacl).
 """
 import os
+import sys
 import unittest
 
 from pyshacl import validate
@@ -19,7 +20,9 @@ ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
 SH = Namespace("http://www.w3.org/ns/shacl#")
 
 DATA = Graph()
-RELEASE = os.path.join(ONTOLOGY, "releases", "core", "2.4.0")
+sys.path.insert(0, os.path.join(ONTOLOGY, "release"))
+import newest  # noqa: E402
+RELEASE = os.path.dirname(newest.core_file())
 DATA.parse(os.path.join(RELEASE, "core.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "vocabulary.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "assignments.ttl"))

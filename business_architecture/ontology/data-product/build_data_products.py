@@ -27,7 +27,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 PORTFOLIO = os.path.join(REPO, "business_architecture", "business_process", "data_product_portfolio.json")
 LINKS = os.path.join(HERE, "links.csv")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import newest  # noqa: E402
+CORE = newest.core_file()
 OUTPUT = os.path.join(HERE, "data-products.ttl")
 
 DP = Namespace("https://w3id.org/lsc/ontology/modules/data-product/")
@@ -115,7 +117,7 @@ def load():
         if not row["source"]:
             problems.append(f"links.csv: {row['data_product']} -> {row['process']} cites no source")
         if not row["waits_for"] and len(by_key.get(row["process"], set())) != 1:
-            problems.append(f"links.csv: process {row['process']!r} is not in core 2.4.0, and the row names no release it waits for")
+            problems.append(f"links.csv: process {row['process']!r} is not in the newest core, and the row names no release it waits for")
         if row["waits_for"] and row["process"] in by_key:
             problems.append(f"links.csv: process {row['process']!r} is in core now; clear its waits_for so the link is emitted")
     for alias, target in portfolio.get("aliases", {}).items():

@@ -15,7 +15,7 @@ Each row runs against test stores named in the --env file, never the loaded ones
     AURA_ENV=~/.config/neo4j/aura.env        the owner's AuraDB, authorized for this run (the brief); omit to skip the copy step
     DATABRICKS_ENV=~/.config/databricks/epm.env
     DATABRICKS_TABLE=epm_triples_validate    the ontology's test table
-    DEMO_CATALOG=epm_validate                the demo's test catalog
+    DEMO_CATALOG=epm_release_validate_demo                the demo's test catalog
     DEMO_PG_PORT=55433                       the demo's Postgres test container port (compose project DEMO_PROJECT)
     DEMO_PROJECT=pricing-validate
     SKILLS_DIR=<folder holding ontology-to-lpg and rdf-store>   (the release's skills/, or ~/.agents/skills on main)
@@ -312,7 +312,7 @@ def row_projection_driver(tree, env):
     for key in ("jena", "explore_fuseki", "triplestore_fuseki"):
         ledger(env, "compose-project", cfg[key]["compose_project"], "the driver row's Fuseki")
     if env.get("AURA_ENV"):
-        ledger(env, "aura", "the owner's AuraDB", "emptied and loaded by the driver; reloaded from main at the end (the brief)")
+        ledger(env, "aura", "the owner's AuraDB", "emptied and loaded by the driver; emptied and reloaded from the release at the end (the owner, 2026-11-01)")
     r = sh(["uv", "run", "--no-project", "--with", "rdflib", "--with", "pyshacl", "--with", "neo4j", "--with", "requests",
             "python3", "run_projection.py", "--config", test_cfg], scripts, env=release_env(tree), timeout=14400)
     os.remove(test_cfg)
@@ -423,7 +423,7 @@ volumes:
 def demo_env(tree, env):
     """The demo's environment for the test: its own Postgres, catalog and triple table."""
     e = {**release_env(tree), "SOURCE_PG_DSN": f"postgresql://demo:demo@localhost:{env.get('DEMO_PG_PORT', '55433')}",
-         "DEMO_CATALOG": env.get("DEMO_CATALOG", "epm_validate")}
+         "DEMO_CATALOG": env.get("DEMO_CATALOG", "epm_release_validate_demo")}
     if env.get("DATABRICKS_TRIPLES_TABLE_FULL"):
         e["EPM_TRIPLES"] = env["DATABRICKS_TRIPLES_TABLE_FULL"]
     return e
@@ -450,7 +450,8 @@ def row_demo_live(tree, env):
         return {**out, "ok": False}
     time.sleep(8)
     e = demo_env(tree, env)
-    ledger(env, "databricks-catalog", e["DEMO_CATALOG"], "the demo's test catalog (purge with pricing_demo.databricks purge --yes --catalog)")
+    ledger(env, "databricks-catalog", e["DEMO_CATALOG"], "the demo's test catalog (purge with pricing_demo.databricks purge --yes --catalog)",
+           created_by_run=catalog_is_absent(demo, e))
     for step in (["python", "-m", "pricing_demo.load_postgres"], ["python", "-m", "pricing_demo.replicate"],
                  ["python", "-m", "pricing_demo.databricks", "setup"], ["python", "-m", "pricing_demo.databricks", "upload"],
                  ["python", "-m", "pricing_demo.databricks", "build"], ["python", "-m", "pricing_demo.databricks", "counts"]):
@@ -461,6 +462,17 @@ def row_demo_live(tree, env):
     out["genie_and_orchestrator"] = "not run: the Genie agents are found by title in the shared workspace; the live acceptance run is skipped (the owner, 2026-10-31)"
     out["ok"] = True
     return out
+
+
+CATALOG_LIST = ("import sys; from pricing_demo import databricks as d; conn, e = d.connect(); cur = conn.cursor(); "
+                "print('absent' if sys.argv[1] not in {r[0] for r in d.run(cur, 'SHOW CATALOGS')} else 'present')")
+
+
+def catalog_is_absent(demo, e, sh=None):
+    """True only on proof that the catalog is not there before this run creates it. A failed query proves nothing, so
+    cleanup.py then refuses to purge it."""
+    r = (sh or globals()["sh"])(["uv", "run", "python", "-c", CATALOG_LIST, e["DEMO_CATALOG"]], demo, env=e, timeout=600)
+    return r["returncode"] == 0 and r["tail"].strip().endswith("absent")
 
 
 def stores_json(env):

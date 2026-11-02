@@ -9,6 +9,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import manifest  # noqa: E402
 import rebuild  # noqa: E402
 import validate  # noqa: E402
 
@@ -72,5 +73,61 @@ def test_the_three_builder_lists_agree():
     expected = {f"{script}" for folder, script in rebuild.SOURCE_BUILDERS} | {"build_core_2_4.py", "build_catalog.py"} | {f"build_module.py {m}" for m in rebuild.MODULE_ORDER}
     template = verifies(os.path.join(HERE, "templates", "check.sh"))
     main = verifies(os.path.join(HERE, "..", "check.sh"))
-    assert template == expected, (template ^ expected)
+    assert template == expected - {"build_core_2_4.py"}, (template ^ expected)  # the template reads the newest core builder
+    assert 'python "$CORE_BUILDER.py" --verify' in open(os.path.join(HERE, "templates", "check.sh")).read()
     assert expected <= main, expected - main  # main also verifies the earlier core builders, which the release leaves out
+
+
+TEMPLATES = os.path.join(os.path.dirname(os.path.abspath(rebuild.__file__)), "templates")
+REPO = os.path.join(os.path.dirname(os.path.abspath(rebuild.__file__)), "..", "..")
+
+
+def test_each_pinned_test_exists_on_main():
+    with open(os.path.join(TEMPLATES, "pinned-tests.txt")) as f:
+        lines = [x.strip() for x in f if x.strip() and not x.startswith("#")]
+    assert lines
+    for line in lines:
+        path, name = line.split("::")
+        with open(os.path.join(REPO, path), encoding="utf-8") as f:
+            assert f"def {name}(" in f.read(), line
+
+
+def test_every_template_has_a_place():
+    placed = {name for name, dest in rebuild.TEMPLATES} | {"check.sh", "walkthrough-change.html"}
+    assert placed == set(os.listdir(TEMPLATES)) - {"__pycache__"}
+
+
+def test_the_guide_has_every_section_and_no_unfilled_fact():
+    with open(os.path.join(TEMPLATES, "HOW-TO-UPDATE.md")) as f:
+        text = manifest.fill(f.read())
+    assert "{{" not in text
+    for heading in ("Start here", "Patch, minor or major", "Change a concept's definition", "Add a concept or property", "Change a process",
+                    "Add a module", "The cascade", "Keep the catalog, regression and projection current", "Project into Neo4j and Jena",
+                    "The optional check against this release", "The namespace", "What you can ignore"):
+        assert f"## {heading}" in text, heading
+
+
+def test_the_file_map_keeps_only_what_is_in_the_tree(tmp_path):
+    (tmp_path / "here.md").write_text("x")
+    (tmp_path / "folder").mkdir()
+    page = ('<tr><td><code>outside.md</code></td><td>o</td></tr>\n<section id="file-map">'
+            "<tr><td><code>here.md</code></td><td>a</td></tr>\n<tr><td><code>gone.md</code></td><td>b</td></tr>\n"
+            "<tr><td><code>folder/*</code></td><td>c</td></tr>\n<tr><td><code>none/*</code></td><td>d</td></tr>\n</section>")
+    out = rebuild.prune_file_map(page, str(tmp_path))
+    assert "here.md" in out and "folder/*" in out and "outside.md" in out and "gone.md" not in out and "none/*" not in out
+
+
+def test_one_cut_is_one_place():
+    assert manifest.fill("{{RELEASE_NAME}}") == manifest.RELEASE_NAME
+    import publish
+    parser_default = manifest.RELEASE_BRANCH
+    assert parser_default.startswith("share/") and publish.manifest is manifest
+
+
+def test_a_readme_line_linking_a_missing_section_goes(tmp_path):
+    folder = tmp_path / rebuild.ONT
+    folder.mkdir(parents=True)
+    page = folder / "epm-walkthrough.html"
+    page.write_text('<section id="here"></section>')
+    text = "a\n- see epm-walkthrough.html#here\n- see epm-walkthrough.html#gone\n- epm-walkthrough.html#here and epm-walkthrough.html#gone\nb\n"
+    assert rebuild.drop_dead_links(text, str(tmp_path)) == "a\n- see epm-walkthrough.html#here\nb\n"

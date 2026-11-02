@@ -23,7 +23,9 @@ REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 BP = os.path.join(REPO, "business_architecture", "business_process")
 LANES = os.path.join(BP, "office_lanes.json")
 MAP = os.path.join(BP, "downstream_process_map.json")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.4.0", "core.ttl")
+sys.path.insert(0, os.path.join(HERE, "..", "release"))
+import newest  # noqa: E402
+CORE = newest.core_file()
 OUTPUT = os.path.join(HERE, "lanes.ttl")
 
 LANE = Namespace("https://w3id.org/lsc/ontology/modules/lane/")
@@ -54,7 +56,7 @@ def load():
     procs = {str(n): s for s, n in g.subject_objects(SKOS.notation) if str(s).startswith(str(PROC))}
     placed = placements()
     problems = [f"{pid}: lane {lane!r} is not in office_lanes.json" for pid, lane in placed if lane not in lanes]
-    problems += [f"{pid}: not in core 2.4.0" for pid, _ in placed if pid not in procs]
+    problems += [f"{pid}: not in the newest core" for pid, _ in placed if pid not in procs]
     if problems:
         sys.exit("lane sources do not reconcile:\n  " + "\n  ".join(problems))
     return lanes, placed, procs
