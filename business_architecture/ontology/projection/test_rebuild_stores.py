@@ -252,7 +252,9 @@ class Running(Base):
     def test_main_refuses_a_store_that_holds_data_without_empty(self):
         env = self.env_file(f"EPM_SKILLS={self.skills()}\nEPM_OUT={self.tmp}/out\n")
         err = io.StringIO()
-        with contextlib.redirect_stderr(err), mock.patch.object(rb, "holding", lambda *a: ([("jena", 3)], [])), \
+        # preflight is stubbed so the test reaches the refusal it checks on a machine without docker, uv or java
+        with contextlib.redirect_stderr(err), mock.patch.object(rb, "preflight", lambda *a: []), \
+                mock.patch.object(rb, "holding", lambda *a: ([("jena", 3)], [])), \
                 mock.patch.object(rb, "run_steps", side_effect=AssertionError("no step runs")):
             self.assertEqual(rb.main(["--env", env, "--store", "jena"]), 2)
         self.assertIn("jena holds data (3): pass --empty", err.getvalue())
