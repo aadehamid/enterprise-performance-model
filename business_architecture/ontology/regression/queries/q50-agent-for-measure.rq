@@ -1,0 +1,7 @@
+# Q50 Which agent or report answers for this measure: the agents bound to a metric view that computes it, and the orchestrator that routes questions to them.
+PREFIX tg: <https://w3id.org/lsc/ontology/modules/technical-graph/>
+SELECT ?measure ?view ?agent ?orchestrator WHERE {
+  ?view tg:implements ?measure .
+  ?agent tg:binds ?view .
+  OPTIONAL { ?orchestrator tg:routesTo ?agent }
+}

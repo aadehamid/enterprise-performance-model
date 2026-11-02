@@ -1,11 +1,12 @@
 # What is open on the ontology
 
-The ontology is done (EPM-DEC-001-0107), and this page lists what stays open on it. Each row points to the record that holds the detail; where they differ, the record wins. It leaves out the pricing demo's work and the repository's own tooling. Last checked on 2026-10-31.
+The ontology is done (EPM-DEC-001-0107), and this page lists what stays open on it. Each row points to the record that holds the detail; where they differ, the record wins. It leaves out the pricing demo's work and the repository's own tooling. Last checked on 2026-10-31; the technical-graph row was added on 2026-11-02.
 
 ## Decisions for the decision owner
 
 | Item | What is needed | Record |
 |---|---|---|
+| Releasing the technical-graph module | Approve its `1.0.0` from one page; a major release stays with the decision owner. *Added 2026-11-02.* | EPM-DEC-001-0112, item 6 |
 | Turning on the release-tag store sync | Add its seven repository secrets, or keep syncing by hand | #426 |
 
 ## What we need from the business

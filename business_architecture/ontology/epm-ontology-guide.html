@@ -710,10 +710,10 @@ RETURN m.skos__prefLabel AS measure,
 </section>
 
 <h2 id="questions">The competency questions</h2>
-<p class="lead">These 44 questions are the ontology's acceptance test: if the model cannot answer one, the model is incomplete, and not the question. The decision owner locked them on 2026-09-18, before modelling. 43 are answerable today, and one, question 17 (who owns each concept's meaning), is parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).</p>
+<p class="lead">These 50 questions are the ontology's acceptance test: if the model cannot answer one, the model is incomplete, and not the question. The decision owner locked the first 44 on 2026-09-18, before modelling, and questions 45 to 50, the technical-graph candidate module's, on 2026-11-02 (EPM-DEC-001-0112). 49 are answerable today, questions 45 to 50 on the module's example graph, and one, question 17 (who owns each concept's meaning), is parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).</p>
 <p>Each answerable question has queries in <code>regression/queries/</code>, and <code>scripts/check.sh</code> runs them on every push. To ask one yourself, run this from <code>business_architecture/ontology/regression</code>:</p>
 <pre><code># from business_architecture/ontology/regression
-uv run --with rdflib python ask.py                   # list the 66 queries, each named for its question
+uv run --with rdflib python ask.py                   # list the 73 queries, each named for its question
 uv run --with rdflib python ask.py q36-the-crack     # ask one</code></pre>
 <h3>I. Process structure &amp; navigation</h3>
 <div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
@@ -788,6 +788,15 @@ uv run --with rdflib python ask.py q36-the-crack     # ask one</code></pre>
 <tr><td>42</td><td data-k="Asks">What must that agent refuse (calculate a crack from legs, treat a report column as the KPI, answer "who is the customer" without a role)?</td><td data-k="Status">Answerable</td></tr>
 <tr><td>43</td><td data-k="Asks">How does in-platform assistance (Genie) get the same definition without becoming a second ontology?</td><td data-k="Status">Answerable</td></tr>
 <tr><td>44</td><td data-k="Asks">If two sources disagree, which definition is authoritative, and how is that marked?</td><td data-k="Status">Answerable</td></tr>
+</tbody></table></div>
+<h3>XI. The technical graph — what was built</h3>
+<div class="tblwrap"><table class="stack"><thead><tr><th>Question</th><th>Asks</th><th>Status</th></tr></thead><tbody>
+<tr><td>45</td><td data-k="Asks">Where does this number come from?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
+<tr><td>46</td><td data-k="Asks">Can I trust it today (last refresh, checks passed)?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
+<tr><td>47</td><td data-k="Asks">What is affected if this table or system changes?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
+<tr><td>48</td><td data-k="Asks">Is it built as designed?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
+<tr><td>49</td><td data-k="Asks">Who answers for it?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
+<tr><td>50</td><td data-k="Asks">Which agent or report answers for this measure?</td><td data-k="Status">Answerable, on the module's example graph</td></tr>
 </tbody></table></div>
 <p class="note">The list comes from <code>competency-questions.md</code>, which holds the wording and sources, and each status from <code>regression/expected.csv</code>.</p>
 
@@ -1035,7 +1044,7 @@ RETURN v.name, collect(a.name);</code></pre><h3>The technical graph: its nodes</
 <tr><td>OWL</td><td data-k="Its role here">The schema layer, used sparingly: classes, object and datatype properties, and <code>owl:deprecated</code>. No <code>owl:imports</code>; public ontologies are mapped</td><td data-k="Where">Each module's vocabulary</td><td data-k="See it"><code>grep -c 'owl:imports' releases/core/2.4.0/core.ttl   # 0</code></td></tr>
 <tr><td>SKOS</td><td data-k="Its role here">The taxonomy: one concept per process, with labels, definitions, scope notes and <code>skos:broader</code>; also mappings to public ontologies</td><td data-k="Where"><code>core</code>, code lists, <code>party</code></td><td data-k="See it"><code>grep -m1 'skos:broader' releases/core/2.4.0/core.ttl</code></td></tr>
 <tr><td>SHACL</td><td data-k="Its role here">The checks: what valid data must look like. Runs on each module, on the whole graph, and in Neo4j</td><td data-k="Where">Each package's <code>shapes.ttl</code></td><td data-k="See it"><code>uv run --with rdflib --with pyshacl python -m pyshacl -s releases/lane/1.1.0/shapes.ttl releases/lane/1.1.0/lane.ttl   # Conforms: True</code></td></tr>
-<tr><td>SPARQL</td><td data-k="Its role here">The tests: the competency questions as queries, run on every check</td><td data-k="Where"><code>regression/queries/</code></td><td data-k="See it"><code>cd regression && uv run --with rdflib python run.py   # 43 answerable, 1 parked</code></td></tr>
+<tr><td>SPARQL</td><td data-k="Its role here">The tests: the competency questions as queries, run on every check</td><td data-k="Where"><code>regression/queries/</code></td><td data-k="See it"><code>cd regression && uv run --with rdflib python run.py   # 43 answerable, 1 parked (49 since 2026-11-02)</code></td></tr>
 <tr><td>PROV-O</td><td data-k="Its role here">What happened and who vouches for it: a run links to its plan; the demo's decision trail</td><td data-k="Where"><code>provenance/run-shapes.ttl</code>; the demo's <code>graph/decision-trail.ttl</code></td><td data-k="See it"><code>grep -m1 'a prov:Activity' ../../demos/downstream-pricing-databricks-free/graph/decision-trail.ttl</code></td></tr>
 <tr><td>W3C ORG</td><td data-k="Its role here">Roles, so that RACI assignments name a role and never a person</td><td data-k="Where"><code>organization</code>, <code>ref-mpc</code></td><td data-k="See it"><code>grep -m1 'a org:Role' releases/organization/2.2.0/organization.ttl</code></td></tr>
 <tr><td>DCAT</td><td data-k="Its role here">Publishing: each release is a dataset in one catalog</td><td data-k="Where"><code>releases/catalog.ttl</code>, each package's <code>catalog.ttl</code></td><td data-k="See it"><code>grep -m1 'dcat:dataset' releases/kpi/1.3.0/catalog.ttl</code></td></tr>

@@ -166,11 +166,12 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <li class="l2"><a href="#viii-named-kpi-the-bind-to-the-store">VIII. Named KPI — the bind to the Store</a></li>
 <li class="l2"><a href="#ix-process-placement-where-the-work-sits">IX. Process placement — where the work sits</a></li>
 <li class="l2"><a href="#x-publication-and-agents-so-the-graph-is-usable">X. Publication and agents — so the graph is usable</a></li>
+<li class="l2"><a href="#xi-the-technical-graph-what-was-built-added-2026-11-02-epm-dec-001-0112">XI. The technical graph — what was built (added 2026-11-02, EPM-DEC-001-0112)</a></li>
         </ul>
       </details>
     </nav>
     <article>
-<p><strong>Status:</strong> Locked 2026-09-18. <strong>Purpose:</strong> the acceptance test for the ontology. If the model cannot answer a question here, the model is incomplete — not the question. The Step 11 SPARQL regression in <code>regression/</code> tests them.</p>
+<p><strong>Status:</strong> Locked 2026-09-18. <em>2026-11-02:</em> questions 45 to 50, the technical-graph module's, added and locked by the decision owner (<a href="../domain/decisions/decisions.html#EPM-DEC-001-0112">EPM-DEC-001-0112</a>). <strong>Purpose:</strong> the acceptance test for the ontology. If the model cannot answer a question here, the model is incomplete — not the question. The Step 11 SPARQL regression in <code>regression/</code> tests them.</p>
 <p><strong>Sources merged:</strong> the process-map question set (Kailey, 2026-09-17) and the decision owner's domain question set A–F (2026-09-18), minus the constraints section (parked 2026-09-18 — constraints are not being modeled). Light editorial merges are marked; the decision owner's wording is otherwise preserved verbatim.</p>
 <h2 id="i-process-structure-navigation">I. Process structure &amp; navigation<a class="hl" href="#i-process-structure-navigation" aria-label="Link to this section">#</a></h2>
 <ol><li>What are the child processes of X, and what is the full root-to-leaf path of process P?</li><li>Which processes are orphans — no parent, or no children where children are expected?</li></ol>
@@ -196,6 +197,9 @@ figure.pic figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
 <ol start="37"><li>What process (or capability) does a concept or Named KPI sit on?</li><li>Is that placement certification, or only context? <em>(If two processes use the same name, are they the same meaning — or the same label on different meanings?)</em></li><li>What breaks upstream or downstream if the meaning changes?</li></ol>
 <h2 id="x-publication-and-agents-so-the-graph-is-usable">X. Publication and agents — so the graph is usable<a class="hl" href="#x-publication-and-agents-so-the-graph-is-usable" aria-label="Link to this section">#</a></h2>
 <ol start="40"><li>Where is the official wording published for people (catalog / glossary), and what is only a copy?</li><li>What may a graph / meaning agent answer without reading a table or inventing a formula?</li><li>What must that agent refuse (calculate a crack from legs, treat a report column as the KPI, answer "who is the customer" without a role)?</li><li>How does in-platform assistance (Genie) get the same definition without becoming a second ontology?</li><li>If two sources disagree, which definition is authoritative, and how is that marked?</li></ol>
+<h2 id="xi-the-technical-graph-what-was-built-added-2026-11-02-epm-dec-001-0112">XI. The technical graph — what was built (added 2026-11-02, <a href="../domain/decisions/decisions.html#EPM-DEC-001-0112">EPM-DEC-001-0112</a>)<a class="hl" href="#xi-the-technical-graph-what-was-built-added-2026-11-02-epm-dec-001-0112" aria-label="Link to this section">#</a></h2>
+<p>The technical-graph module's questions, locked by the decision owner as the plan drafted them. Each is asked of a built thing: a table, a view, a metric view's measure or a source system. The module's vocabulary cannot answer them alone, so the regression runs them on the module plus its example graph; live, the same queries run on the technical graph.</p>
+<ol start="45"><li>Where does this number come from?</li><li>Can I trust it today (last refresh, checks passed)?</li><li>What is affected if this table or system changes?</li><li>Is it built as designed?</li><li>Who answers for it?</li><li>Which agent or report answers for this measure?</li></ol>
       <p class="end">Generated from <code>competency-questions.md</code> by <code>scripts/build_docs_html.py</code>. Start with the <a href="epm-ontology-guide.html">ontology guide</a>.</p>
     </article>
   </div>

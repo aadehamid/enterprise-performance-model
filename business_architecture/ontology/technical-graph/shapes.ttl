@@ -1,0 +1,91 @@
+# SHACL shapes for the technical-graph module (EPM-DEC-001-0112). The code-list shapes check the module's own
+# content. The other shapes check a technical graph that uses the vocabulary, such as the module's example graph
+# and the demo's live graph: validate the graph with the releases it links to (data-product, kpi, system) loaded,
+# so the links to other modules can be checked by class.
+@prefix tg: <https://w3id.org/lsc/ontology/modules/technical-graph/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/technical-graph/shapes/> .
+
+shp:CheckResultConcept a sh:NodeShape ;
+    sh:targetNode <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/pass>,
+        <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/fail>,
+        <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/differs> ;
+    sh:property [ sh:path skos:inScheme ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue tg:CheckResults ] ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:notation ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] .
+
+shp:TechnicalObject a sh:NodeShape ;
+    sh:targetClass tg:TechnicalObject ;
+    sh:property [ sh:path tg:name ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ;
+                  sh:message "A technical object has one name." ] ;
+    sh:property [ sh:path tg:producedBy ; sh:maxCount 1 ; sh:class tg:PipelineStep ;
+                  sh:message "A technical object is produced by at most one pipeline step." ] ;
+    sh:property [ sh:path tg:designedAs ; sh:maxCount 1 ;
+                  sh:or ( [ sh:class skos:Concept ] [ sh:class prov:SoftwareAgent ] ) ;
+                  sh:message "A technical object builds at most one design: a platform table, a data product or an agent of data-product." ] .
+
+shp:DataObject a sh:NodeShape ;
+    sh:targetClass tg:DataObject ;
+    sh:property [ sh:path tg:layer ; sh:maxCount 1 ;
+                  sh:node shp:Layer ;
+                  sh:message "A data object is in at most one layer, from the data-product layer code list." ] ;
+    sh:property [ sh:path tg:readsFrom ; sh:class tg:DataObject ;
+                  sh:message "A data object reads only from other data objects." ] ;
+    sh:property [ sh:path tg:lastRefresh ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
+    sh:property [ sh:path tg:rows ; sh:maxCount 1 ; sh:datatype xsd:decimal ] ;
+    sh:property [ sh:path tg:definedIn ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+shp:Layer a sh:NodeShape ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue dp:Layer ;
+                  sh:message "A layer is a value of the data-product layer code list." ] .
+
+shp:Table a sh:NodeShape ;
+    sh:targetClass tg:Table ;
+    sh:property [ sh:path tg:copies ; sh:maxCount 1 ; sh:class tg:SourceDatabase ;
+                  sh:message "A table copies at most one source database." ] .
+
+shp:MetricView a sh:NodeShape ;
+    sh:targetClass tg:MetricView ;
+    sh:property [ sh:path tg:implements ; sh:minCount 1 ; sh:class kpi:MeasureDefinition ;
+                  sh:message "A metric view computes at least one kpi measure definition." ] .
+
+shp:SourceDatabase a sh:NodeShape ;
+    sh:targetClass tg:SourceDatabase ;
+    sh:property [ sh:path tg:hostedOn ; sh:maxCount 1 ; sh:class tg:Host ] ;
+    sh:property [ sh:path tg:standsFor ; sh:maxCount 1 ; sh:class sys:System ;
+                  sh:message "A source database stands for at most one system of the system module." ] ;
+    sh:property [ sh:path tg:hidden ; sh:maxCount 1 ; sh:datatype xsd:boolean ] .
+
+shp:PipelineStep a sh:NodeShape ;
+    sh:targetClass tg:PipelineStep ;
+    sh:property [ sh:path tg:order ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ;
+                  sh:message "A pipeline step has one place in the order." ] ;
+    sh:property [ sh:path tg:next ; sh:maxCount 1 ; sh:class tg:PipelineStep ] .
+
+shp:QualityCheck a sh:NodeShape ;
+    sh:targetClass tg:QualityCheck ;
+    sh:property [ sh:path tg:checks ; sh:minCount 1 ; sh:class tg:TechnicalObject ;
+                  sh:message "A quality check tests at least one technical object." ] ;
+    sh:property [ sh:path tg:result ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/pass>
+                          <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/fail>
+                          <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/differs> ) ;
+                  sh:message "A quality check has one result: pass, fail or differs." ] ;
+    sh:property [ sh:path tg:checkedAt ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] .
+
+shp:Agent a sh:NodeShape ;
+    sh:targetClass tg:Agent ;
+    sh:property [ sh:path tg:binds ; sh:class tg:DataObject ] .
+
+shp:Orchestrator a sh:NodeShape ;
+    sh:targetClass tg:Orchestrator ;
+    sh:property [ sh:path tg:routesTo ; sh:minCount 1 ; sh:class tg:Agent ;
+                  sh:message "An orchestrator routes to at least one agent." ] .

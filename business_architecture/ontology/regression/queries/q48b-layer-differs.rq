@@ -1,0 +1,9 @@
+# Q48 (must be none) A built data object in a different layer from the layer its design names.
+PREFIX tg: <https://w3id.org/lsc/ontology/modules/technical-graph/>
+PREFIX dp: <https://w3id.org/lsc/ontology/modules/data-product/>
+SELECT ?object ?design ?builtLayer ?designedLayer WHERE {
+  ?object tg:designedAs ?design ;
+          tg:layer ?builtLayer .
+  ?design dp:layer ?designedLayer .
+  FILTER (?builtLayer != ?designedLayer)
+}

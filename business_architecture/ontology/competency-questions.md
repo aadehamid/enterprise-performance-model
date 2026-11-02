@@ -1,6 +1,6 @@
 # Competency Questions — Baseline
 
-**Status:** Locked 2026-09-18.
+**Status:** Locked 2026-09-18. *2026-11-02:* questions 45 to 50, the technical-graph module's, added and locked by the decision owner (EPM-DEC-001-0112).
 **Purpose:** the acceptance test for the ontology. If the model cannot
 answer a question here, the model is incomplete — not the question.
 The Step 11 SPARQL regression in `regression/` tests them.
@@ -128,3 +128,15 @@ verbatim.
     without becoming a second ontology?
 44. If two sources disagree, which definition is authoritative, and how is
     that marked?
+
+## XI. The technical graph — what was built (added 2026-11-02, EPM-DEC-001-0112)
+The technical-graph module's questions, locked by the decision owner as the plan drafted them. Each is
+asked of a built thing: a table, a view, a metric view's measure or a source system. The module's
+vocabulary cannot answer them alone, so the regression runs them on the module plus its example graph;
+live, the same queries run on the technical graph.
+45. Where does this number come from?
+46. Can I trust it today (last refresh, checks passed)?
+47. What is affected if this table or system changes?
+48. Is it built as designed?
+49. Who answers for it?
+50. Which agent or report answers for this measure?

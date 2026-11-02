@@ -35,7 +35,9 @@ class Tiers(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
     def test_every_cited_source_has_a_tier(self):
-        cited = set(GRAPH.objects(None, DCTERMS.source))
+        # The technical-graph example is test data that tiers its own source (EPM-DEC-001-0112, item 4); its urn:example:
+        # IRIs never join a package, so they stay out of the ontology's tier table.
+        cited = {s for s in GRAPH.objects(None, DCTERMS.source) if not str(s).startswith("urn:example:")}
         missing = {s for s in cited if TIERS.value(s, bt.AUTH.evidenceTier) is None}
         self.assertEqual(missing, set())
 

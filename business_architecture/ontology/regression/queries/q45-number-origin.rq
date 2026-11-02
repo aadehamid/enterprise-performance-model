@@ -1,0 +1,7 @@
+# Q45 Where does this number come from: for each measure a metric view computes, every data object it is built from, the source databases they copy and the systems those stand for.
+PREFIX tg: <https://w3id.org/lsc/ontology/modules/technical-graph/>
+SELECT ?measure ?view ?upstream ?database ?system WHERE {
+  ?view tg:implements ?measure ;
+        tg:readsFrom+ ?upstream .
+  OPTIONAL { ?upstream tg:copies ?database . OPTIONAL { ?database tg:standsFor ?system } }
+}
