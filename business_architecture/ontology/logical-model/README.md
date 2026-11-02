@@ -20,7 +20,7 @@ The layer's input is a CSV file kept beside the export, one row per entity. For 
 |---|---|
 | `model` | The model's slug, such as `customer-logical-model` |
 | `erstudio_id` | ER Studio's `dcterms:identifier` of the entity |
-| `source_system` | The IRI of the source system: a `sys:System` of the `system` module or a `party:CustomerSystem` of the `party` module. Most customer systems are only in `party`, which says which of them are the same as a `system` system (`skos:exactMatch`) |
+| `source_system` | The IRI of the source system: a `sys:System` of the `system` module or a `party:CustomerSystem` of the `party` module. Most customer systems are only in `party`, which says which of them are the same as a `system` system (`skos:exactMatch`). Empty when neither module holds the entity's system; the row's other links still count |
 | `describes` | The IRI of a `party` concept or class, or empty |
 | `implemented_by` | The IRI of a `data-product` platform table or data product, or empty |
 | `status` | `asserted` or `doubtful`. Only `asserted` rows become triples. The builder prints `doubtful` rows, with their evidence, for the decision owner |

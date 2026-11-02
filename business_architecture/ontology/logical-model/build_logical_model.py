@@ -101,9 +101,7 @@ def check_targets(row, linked, errors):
     """A link target must be in the newest release of its module, as the right kind of thing."""
     where = f"identifier {row['erstudio_id']}"
     system = row["source_system"]
-    if not system:
-        errors.append(f"{where}: an asserted row needs its source system")
-    elif not ((URIRef(system), RDF.type, SYS.System) in linked or (URIRef(system), RDF.type, PARTY.CustomerSystem) in linked):
+    if system and not ((URIRef(system), RDF.type, SYS.System) in linked or (URIRef(system), RDF.type, PARTY.CustomerSystem) in linked):
         errors.append(f"{where}: source system {system} is not a system of the newest system or party release")
     concept = row["describes"]
     if concept and not (concept.startswith(str(PARTY)) and ((URIRef(concept), RDF.type, OWL.Class) in linked
@@ -159,7 +157,8 @@ def layer(slug, title, export, rows, found):
         if r["status"] != "asserted":
             continue
         entity = found[r["erstudio_id"]]
-        g.add((entity, LM.sourceSystem, URIRef(r["source_system"])))
+        if r["source_system"]:  # empty when neither the system nor the party module holds the entity's system
+            g.add((entity, LM.sourceSystem, URIRef(r["source_system"])))
         if r["describes"]:
             g.add((entity, LM.describes, URIRef(r["describes"])))
         if r["implemented_by"]:

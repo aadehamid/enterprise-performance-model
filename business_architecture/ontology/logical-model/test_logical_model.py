@@ -115,7 +115,6 @@ class Build(unittest.TestCase):
     def test_a_bad_link_target_fails(self):
         for column, value in (("source_system", "https://w3id.org/lsc/ontology/modules/system/system/no-such-system"),
                               ("source_system", "https://w3id.org/lsc/ontology/modules/party/CustomerAccount"),
-                              ("source_system", ""),
                               ("describes", "https://w3id.org/lsc/ontology/modules/system/system/profisee"),
                               ("describes", "https://w3id.org/lsc/ontology/modules/party/NoSuchClass"),
                               ("implemented_by", "https://w3id.org/lsc/ontology/modules/data-product/product/no-such-product"),
@@ -123,6 +122,14 @@ class Build(unittest.TestCase):
             with self.subTest(column=column, value=value):
                 with self.assertRaises(blm.BuildError):
                     self.build(links_text=self.links(lambda rows: rows[0].update({column: value})))
+
+    def test_an_asserted_row_may_leave_an_unheld_system_empty(self):
+        # Decided under EPM-DEC-001-0028: when neither module holds the entity's system, its other links still count.
+        files, _ = self.build(links_text=self.links(lambda rows: rows[0].update(source_system="")))
+        layer = self.layer_of(files)
+        entity = next(iter(layer.subjects(LM.describes, None)))
+        self.assertIsNone(layer.value(entity, LM.sourceSystem))
+        self.assertIsNotNone(layer.value(entity, LM.describes))
 
     def test_a_system_of_either_module_is_accepted(self):
         files, _ = self.build()
