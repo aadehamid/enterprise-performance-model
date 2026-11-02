@@ -18,8 +18,8 @@ the store rows are the four that need no Databricks workspace; `--store-rows all
 the technical graph and the store sync when the workspace is reachable. The command refuses an `--out` that is
 the root, the home folder, a checkout or a parent of one, or a file; an existing folder that is not empty is
 removed only with `--replace`, and only when its `release.json` is exactly the marker this tool writes
-(`manifest.is_tool_marker`: the keys `release`, `built` and `mode`, the release name, the mode text, a date;
-nothing else is accepted). Its last line names the rows that did not run and the two steps that follow by hand:
+(`manifest.is_tool_marker`: the keys `release`, `built` and `mode`, the release name, the mode text, a date, and,
+for a cut with `--augment`, the key `augment` in the shape `manifest.marker` writes; nothing else is accepted). Its last line names the rows that did not run and the two steps that follow by hand:
 step 9, `cleanup.py --yes` from the ledger (`LEDGER_FILE` in `--env`), then, from the release's root, `python3 business_architecture/ontology/projection/rebuild_stores.py --env <file> --empty`, which empties and reloads the stores
 from the release, not from main (the owner's instruction of 2026-11-01), and step 10, `publish.py branch --zip` and the push, which wait for the owner. `--augment <folder>` adds files kept outside `main` (EPM-DEC-001-0113): each logical model in the folder, `<slug>.ttl`
 (ER Studio's export) with `<slug>.links.csv` beside it, joins the release in a `logical-model` 1.0.0 package that

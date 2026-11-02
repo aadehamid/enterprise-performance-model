@@ -287,7 +287,18 @@ def patch_guide(text, ctx):
     total = re.search(r'<div class="k">Triples</div><div class="v">([\d,]+)</div>', text)
     if not total:
         raise AugmentError(f"registering {MODULE}: the guide's total was not found")
-    text = text.replace(total.group(1), f"{ctx['total']:,}")
+    old_total, new_total = total.group(1), f"{ctx['total']:,}"
+    # Each statement of the total is rewritten on purpose (the Cursor HOLD on #474): the stat, the script's printout and
+    # the whole-ontology table name today's total; the "since" sentence keeps the earlier total as its history.
+    text = _sub(text, r'(<div class="k">Triples</div><div class="v">)[\d,]+(</div>)',
+                lambda m: f"{m.group(1)}{new_total}{m.group(2)}", "the guide's total")
+    text = _sub(text, rf"(which prints ){re.escape(old_total)}( triples)", lambda m: f"{m.group(1)}{new_total}{m.group(2)}",
+                "the guide's script printout")
+    text = _sub(text, rf"(for the whole ontology \(){re.escape(old_total)}( triples\))",
+                lambda m: f"{m.group(1)}{new_total}{m.group(2)}", "the guide's whole-ontology total")
+    text = _sub(text, rf"(loaded together, ){re.escape(old_total)}( triples since )",
+                lambda m: f"{m.group(1)}{new_total}{m.group(2)}{MODULE} {VERSION} (in this release; {old_total} since ",
+                "the guide's dated total")
     card = (f'\n<section class="mod" id="m-{MODULE}">\n<h3>{MODULE} <span class="pill">{VERSION}</span> '
             f'<span class="pill">{ctx["triples"]:,} triples</span></h3>\n<div class="two">\n<div>\n'
             "<p><strong>Holds</strong> logical data models exported from ER Studio Data Architect, each as two graphs: "

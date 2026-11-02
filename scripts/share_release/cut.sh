@@ -32,7 +32,7 @@
 # --out is written afresh. It is refused when it is "/", the home folder, the checkout or the skills checkout or
 # a parent of either, or a file. An existing folder that is not empty is removed only with --replace, and only
 # when its release.json is exactly the marker this tool writes (manifest.is_tool_marker: the fixed keys, the
-# release name, the mode text, a date; nothing else is accepted). The owner's names are checked before anything
+# release name, the mode text, a date, and the augment key in manifest.marker's shape; nothing else is accepted). The owner's names are checked before anything
 # is removed, so a cut that would refuse removes nothing.
 #
 # Deadlines: every step (the export, the rebuild, each validation run, the release's check.sh, the comparison, the

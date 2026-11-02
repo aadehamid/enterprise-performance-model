@@ -50,10 +50,10 @@ The decision owner exported a logical data model of the customer domain from ER 
 
 ## Consequences
 
-- The release is no longer built from `main` alone: the cut records each outside file's hash in the release manifest, the leak gate scans the module built from it, and the clean-room test needs the folder too.
+- The release is no longer built from `main` alone: the cut records each outside file's hash in the release manifest, the leak gate scans the module built from it, and `validate.py compare --augment` and `clonecheck.py --augment` check the folder's files against those hashes; the clean room proves the release from the zip alone (*2026-11-02:* EPM-DEC-001-0110, "What follows", item 8's dated note).
 - Documents in `main` count the modules `main` releases, twelve; the release's documents count one more, the logical-model module, thirteen in all (*2026-11-02:* technical-graph 1.0.0 merged (#472); until then `main` released eleven).
 - EPM-DEC-001-0110's "What follows" items 1 and 8 and its index row carry dated notes for the augment folder.
-- The module's `1.0.0` waits for the decision owner's approval from one page.
+- The module's `1.0.0` waits for the decision owner's approval from one page. *2026-11-02:* approved, "I approve logical-model 1.0.0," (amendment below).
 
 ## Amendment, 2026-11-02 (later): logical-model 1.0.0 approved
 
