@@ -235,6 +235,7 @@ details.fm:not([open])>:not(summary){display:none}
         <li><a href="#standards">The standards and tools, and where to see each</a></li>
         <li><a href="#ask">Ask the ontology a question</a></li>
         <li><a href="#change">How to change the ontology</a></li>
+        <li><a href="#logical-model">Add a logical model</a></li>
         <li><a href="#hands-on">Each store, hands on</a></li>
         <li><a href="#glossary">Glossary</a></li>
         <li><a href="#build">Part 2: Build it yourself</a></li>
@@ -1706,7 +1707,61 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre></sec
 <tr><td><code>scripts/epm_facts.py</code></td><td data-k="What to add">The <code>coverage</code> entry, if processes link to it</td></tr>
 <tr><td><code>MODULES.md</code>, the guide, this page</td><td data-k="What to add">A section on the module, and every figure that counts the modules. <code>scripts/test_modules_guide.py</code> and <code>test_published_figures.py</code> check part of this</td></tr>
 </tbody></table></div>
-  <p class="rise" data-ss-id="add-module-method">The <code>ontology</code> skill holds the method for each step, in <code>references/new-module.md</code>: whether it should be a new module, and what each step covers for it.</p>
+  <p class="rise" data-ss-id="add-module-method">The <code>ontology</code> skill holds the method for each step, in <code>references/new-module.md</code>: whether it should be a new module, and what each step covers for it. A logical data model is not a new module. It joins <code>logical-model</code>, as "Add a logical model" below says.</p>
+</section>
+
+<section id="logical-model" data-ss-id="section-logical-model" data-ss-section>
+  <h2 class="rise" data-ss-id="add-a-logical-model">Add a logical model</h2>
+  <p class="section-lede rise" data-ss-id="logical-model-lede">A logical data model exported from ER Studio Data Architect joins the <code>logical-model</code> module as one more named model, not as a module of its own. The export stays exactly as ER Studio wrote it, and an annotation layer links each entity to its model, its source system, the <code>party</code> concept, class or code list it describes, and the <code>data-product</code> table or data product that builds it. These steps take one export from the email it arrived in to the release. The commands use the made-up example in <code>logical-model/example/</code>, so you can run them as written.</p>
+  <p class="rise" data-ss-id="logical-model-why">The guide's "Adding a logical model" says why the module is built this way. The method is the <code>ontology</code> skill's <code>references/logical-model.md</code>, and the decision is EPM-DEC-001-0113.</p>
+
+  <h3 class="rise" data-ss-id="lm-clean">1. Clean the export</h3>
+  <p class="rise" data-ss-id="lm-clean-text">Skip this step for a file ER Studio wrote directly. An export that came through email or a word processor needs cleaning first, because a mail filter can rewrite IRIs into tracking links that still parse.</p>
+  <ol class="rise" data-ss-id="lm-clean-steps">
+    <li>Extract the Turtle from the document wrapper, such as an RTF file.</li>
+    <li>Restore every rewritten IRI from the original target its tracking link encodes.</li>
+    <li>Replace non-breaking spaces with plain ones and remove any heading the wrapper added. Leave every character inside a literal as written.</li>
+    <li>Parse it. Check that every IRI is in ER Studio's namespace or a vocabulary you expect, and that the counts of classes and datatype properties match ER Studio's.</li>
+    <li>Record each change, and keep the cleaned file beside the original.</li>
+  </ol>
+
+  <h3 class="rise" data-ss-id="lm-place">2. Place it in the augment folder</h3>
+  <p class="rise" data-ss-id="lm-place-text">A model that only the release may hold goes in <code>release-cut/augment/logical-model/</code> at the repository's root. Git ignores <code>release-cut/</code>, so the export never enters <code>main</code>. Choose a slug for the model, such as <code>example-logical-model</code>, in lower case with words joined by hyphens.</p>
+
+  <h3 class="rise" data-ss-id="lm-links">3. Draft the links file</h3>
+  <p class="rise" data-ss-id="lm-links-text">Write a CSV file beside the export with one row per entity. <code>logical-model/example/example-links.csv</code> is the pattern, and the module's <code>README.md</code>, "The links file", defines each column.</p>
+  <div class="tbl rise" data-ss-id="lm-links-table"><table class="gapt"><thead><tr><th>Column</th><th>What goes in it</th></tr></thead><tbody>
+<tr><td><code>model</code></td><td data-k="What">The model's slug</td></tr>
+<tr><td><code>erstudio_id</code></td><td data-k="What">The entity's <code>dcterms:identifier</code> in the export</td></tr>
+<tr><td><code>source_system</code></td><td data-k="What">The IRI of a system in <code>system</code> or a customer system in <code>party</code>, or <code>none</code> when neither holds it</td></tr>
+<tr><td><code>describes</code></td><td data-k="What">The IRI of a <code>party</code> concept, class or code list (a lookup table that holds a whole code list describes the list), or empty</td></tr>
+<tr><td><code>implemented_by</code></td><td data-k="What">The IRI of a <code>data-product</code> platform table or data product, or empty</td></tr>
+<tr><td><code>status</code></td><td data-k="What"><code>asserted</code> when the entity's name, description or ER Studio's metadata makes the links clear; otherwise <code>doubtful</code></td></tr>
+<tr><td><code>evidence</code></td><td data-k="What">Why the links hold, or why they are doubtful</td></tr>
+</tbody></table></div>
+
+  <h3 class="rise" data-ss-id="lm-build">4. Build the two graphs and verify them</h3>
+  <p class="rise" data-ss-id="lm-build-text">The builder writes <code>&lt;slug&gt;.erstudio.ttl</code>, a byte copy of the export, and <code>&lt;slug&gt;.layer.ttl</code>, the annotation layer, into the export's folder. <code>--verify</code> fails unless both equal a fresh build. Try it on a copy of the made-up example:</p>
+<pre class="rise"><code>cd "$EPM_ROOT/business_architecture/ontology/logical-model"
+mkdir -p /tmp/lm-try
+cp example/example-export.ttl example/example-links.csv /tmp/lm-try/
+uv run --with rdflib python build_logical_model.py --export /tmp/lm-try/example-export.ttl \
+  --links /tmp/lm-try/example-links.csv --model example-logical-model --title "An example logical model" --write
+uv run --with rdflib python build_logical_model.py --export /tmp/lm-try/example-export.ttl \
+  --links /tmp/lm-try/example-links.csv --model example-logical-model --title "An example logical model" --verify</code></pre>
+  <p class="rise" data-ss-id="lm-build-expect">Both runs print <code>example-logical-model: 3 entities; 2 asserted, 1 doubtful, 0 with no row; layer 12 triples</code>, then the doubtful row with its evidence. <code>--verify</code> ends with <code>the logical model's graphs are current</code>. For a real model, point <code>--export</code> and <code>--links</code> at its files in the augment folder and give its slug and title. To build two models together, repeat <code>--export</code>, <code>--links</code>, <code>--model</code> and <code>--title</code> once per model.</p>
+  <p class="rise" data-ss-id="lm-build-fails">The build fails, and names the cause, when a row's identifier matches no entity, when an entity has no row, when a link target is not in the newest release of <code>party</code>, <code>system</code> or <code>data-product</code>, or when two models define the same IRI (a term both describe the same way, such as a reused attribute, is allowed; an entity never is). Fix a links-file failure in the links file, never by editing the export; a collision between two models comes from the exports themselves, so take it to the decision owner. The builder keeps each export byte for byte and renames nothing, so the build passes again only when the exports no longer share that IRI: one model is changed in ER Studio and exported again.</p>
+  <p class="rise" data-ss-id="lm-ask">To see the model answer its questions, ask questions 51 to 55 from <code>business_architecture/ontology/regression</code>. In <code>main</code> they read the made-up example:</p>
+<pre class="rise"><code>uv run --with rdflib python ask.py q51-entities-about-party</code></pre>
+
+  <h3 class="rise" data-ss-id="lm-doubtful">5. Settle the doubtful links with the decision owner</h3>
+  <p class="rise" data-ss-id="lm-doubtful-text">Only asserted rows become triples. Put every doubtful row, with its evidence, before the decision owner. Record each answer in <code>step4/review-evidence/decision-owner-answers/</code> before you change the row's status, then build and verify again.</p>
+
+  <h3 class="rise" data-ss-id="lm-approve">6. Get the release approved</h3>
+  <p class="rise" data-ss-id="lm-approve-text">The decision owner approves a model's first release from one page, which lists the doubtful links that remain; until then the module is a candidate. The decision owner approved <code>logical-model 1.0.0</code> on 2026-11-02 (EPM-DEC-001-0113, amendment). A later model added to the module is a minor release. A re-export that drops or renames an entity removes an IRI, so apply the meaning-change test in "How to change the ontology" before you release it.</p>
+
+  <h3 class="rise" data-ss-id="lm-cut">7. Cut the release with the augment folder</h3>
+  <p class="rise" data-ss-id="lm-cut-text">The release is cut from <code>main</code>, with the augment folder read in: <code>cut.sh --augment release-cut/augment/logical-model/ --approval &lt;answers file&gt; --approval-words &lt;the approving sentence&gt;</code> (PR #474). The cut refuses <code>--augment</code> until the approval names a saved answers file and a sentence of it that approves <code>logical-model 1.0.0</code> by name. It records each outside file's SHA-256 in the release manifest and scans the module built from it for leaks. The clean room proves the release from the zip alone, since the zip holds the built module; <code>validate.py compare --augment</code> and <code>clonecheck.py --augment</code> check the folder's files against the recorded hashes (EPM-DEC-001-0110, item 8).</p>
 </section>
 
 <section id="hands-on" data-ss-id="section-hands-on" data-ss-section>
