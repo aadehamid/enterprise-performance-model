@@ -1478,6 +1478,22 @@ def test_e5_the_aura_test_writes_the_login_to_a_secret_scope_and_never_prints_it
     assert aura_test.probe_line('noise\nAURA_PROBE {"dns": {"ok": true}}\n') == {"dns": {"ok": True}}
 
 
+
+def test_e5_the_aura_login_file_is_the_one_epm_aura_env_names_and_epm_stores_json_still_overrides(monkeypatch, tmp_path):
+    """A recipient's AuraDB login is not at the owner's path: aura_test reads the file EPM_AURA_ENV names, as
+    rebuild_stores.py and the share-release tool pass it, and falls back to ~/.config/neo4j/aura.env."""
+    login = tmp_path / "aura.env"
+    login.write_text("NEO4J_URI=neo4j+s://x\nNEO4J_USERNAME=u\nNEO4J_PASSWORD=p\n")
+    monkeypatch.setenv("EPM_AURA_ENV", str(login))
+    assert aura_test.aura_env() == str(login) and set(aura_test.read_env(aura_test.aura_env())) == set(aura_test.KEYS.values())
+    monkeypatch.delenv("EPM_AURA_ENV")
+    assert aura_test.aura_env() == os.path.expanduser("~/.config/neo4j/aura.env")
+    monkeypatch.setattr(tech_graph, "STORES", {"aura": (None, (str(login),))})
+    monkeypatch.setenv("EPM_STORES_JSON", json.dumps({"aura": {"env": ["/elsewhere/aura.env"]}}))
+    monkeypatch.setattr(tech_graph, "JENA_QUERY", tech_graph.JENA_QUERY)
+    tech_graph.apply_store_overrides()
+    assert tech_graph.STORES["aura"] == (None, ("/elsewhere/aura.env",))
+
 def test_e5_the_tech_graph_tables_are_built_empty_and_purged_and_every_query_runs():
     made = set(databricks.created_objects())
     assert {("TABLE", "tech_graph", "tech_graph_nodes"), ("TABLE", "tech_graph", "tech_graph_edges")} <= made

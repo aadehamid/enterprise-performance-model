@@ -2,8 +2,8 @@
 
     uv run python -m pricing_demo.aura_test     # writes the secret scope, runs the probe in Databricks, prints the result
 
-It writes the AuraDB login from ~/.config/neo4j/aura.env into the Databricks secret scope epm-neo4j (keys uri, username,
-password) without printing a value, uploads aura_probe.py to the workspace, and runs it as a one-time serverless job
+It writes the AuraDB login from the file EPM_AURA_ENV names (as in projection/rebuild_stores.py; by default
+~/.config/neo4j/aura.env) into the Databricks secret scope epm-neo4j (keys uri, username, password) without printing a value, uploads aura_probe.py to the workspace, and runs it as a one-time serverless job
 with the neo4j driver. The probe's JSON line goes to out/tech/aura-test.json. Free Edition limits outbound access, so
 a failed step is a result, not an error here.
 Sources: Databricks, "Secret management" (updated 2026-09-11: Databricks-backed scopes, dbutils.secrets.get, values
@@ -17,10 +17,15 @@ import time
 from .config import OUT, ROOT, databricks_env
 
 SCOPE = "epm-neo4j"
-AURA_ENV = os.path.expanduser("~/.config/neo4j/aura.env")
+AURA_ENV = "~/.config/neo4j/aura.env"  # the default login file; EPM_AURA_ENV names another
 KEYS = {"uri": "NEO4J_URI", "username": "NEO4J_USERNAME", "password": "NEO4J_PASSWORD"}
 NEO4J_DRIVER = "neo4j==5.28.1"
 RESULT = os.path.join(OUT, "tech", "aura-test.json")
+
+
+def aura_env():
+    """The AuraDB login file: the one EPM_AURA_ENV names, or the default."""
+    return os.path.expanduser(os.environ.get("EPM_AURA_ENV") or AURA_ENV)
 
 
 def read_env(path):
@@ -46,7 +51,7 @@ def main():
     from databricks.sdk.service import compute, jobs, workspace
     e = databricks_env()
     w = WorkspaceClient(host=e["DATABRICKS_HOST"], token=e["DATABRICKS_TOKEN"])
-    login = read_env(AURA_ENV)
+    login = read_env(aura_env())
     if SCOPE not in {s.name for s in w.secrets.list_scopes()}:
         w.secrets.create_scope(scope=SCOPE)
     for key, name in KEYS.items():

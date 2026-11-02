@@ -489,15 +489,44 @@ def stores_json(env):
     return json.dumps(over)
 
 
+# The triple table's node keeps its IRI on the test stores; only its name differs from the one the release ships.
+TRIPLES_NAME = "urn:pricing-demo:tech:triples/epm_triples urn:pricing-demo:tech-vocab#name "
+SHIPPED_TRIPLES = "workspace.epm_ontology.epm_triples"
+
+
+def compare_ok(r, test_table):
+    """tech_graph compare on the test stores: it passes, or its only differences are the triple table's name, the
+    release's missing and the test table's new. Any other difference fails the row."""
+    if not r["returncode"]:
+        return True
+    expected = set() if not test_table or test_table == SHIPPED_TRIPLES else {
+        f"FAIL missing statement {TRIPLES_NAME}{SHIPPED_TRIPLES}", f"FAIL new statement {TRIPLES_NAME}{test_table}"}
+    lines = [line.strip() for line in r["tail"].splitlines()]
+    found = {line for line in lines if line.startswith("FAIL ")}
+    return (r["returncode"] == 1 and bool(expected) and found == expected
+            and f"{len(expected)} structural difference(s) between" in r["tail"])
+
+
 def row_tech_graph(tree, env):
-    """tech_graph collect, build, compare, lineage, load, sync, walk on the test stores, after the demo's live row."""
+    """aura_test (with an AuraDB login file, AURA_ENV), then tech_graph collect, build, compare, lineage, load, sync,
+    walk on the test stores, after the demo's live row. collect records the probe's result as a check the shipped graph
+    holds; compare may differ from the shipped graph only in the test triple table's name (compare_ok)."""
     demo = os.path.join(tree, DEMO)
     e = {**demo_env(tree, env), "EPM_STORES_JSON": stores_json(env)}
     out = {"steps": []}
+    if env.get("AURA_ENV"):
+        e["EPM_AURA_ENV"] = expand(env["AURA_ENV"])
+        r = sh(["uv", "run", "-q", "python", "-m", "pricing_demo.aura_test"], demo, env=e, timeout=3600)
+        out["steps"].append(r)
+        if r["returncode"]:
+            return {**out, "ok": False}
     stores = ["--store", "driver", "--store", "jena"] + (["--store", "aura"] if env.get("AURA_ENV") else [])
     for step in (["collect", "--lineage-wait", env.get("LINEAGE_WAIT_SECONDS", "900")], ["build"], ["compare"], ["lineage"], ["load", *stores], ["sync"], ["walk"]):
         r = sh(["uv", "run", "--group", "graph", "python", "-m", "pricing_demo.tech_graph", *step], demo, env=e, timeout=3600)
         out["steps"].append(r)
+        if step == ["compare"] and r["returncode"] and compare_ok(r, env.get("DATABRICKS_TRIPLES_TABLE_FULL")):
+            out["compare_expected"] = "only the test triple table's name differs from the shipped graph"
+            continue
         if r["returncode"]:
             return {**out, "ok": False}
     out["walk_rows"] = r["tail"].count("\n")

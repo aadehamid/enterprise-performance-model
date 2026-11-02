@@ -110,6 +110,8 @@ def test_every_call_a_row_makes_is_one_the_real_tool_accepts(tmp_path, monkeypat
     assert seen == {"pipeline.py", "rebuild_stores.py", "sync_stores.py"}
     steps = [a[a.index("pricing_demo.tech_graph") + 1:] for a in shell if "pricing_demo.tech_graph" in a]
     assert [s[0] for s in steps] == ["collect", "build", "compare", "lineage", "load", "sync", "walk"]
+    demo_calls = [a for a in shell if "pricing_demo.aura_test" in a or "pricing_demo.tech_graph" in a]
+    assert "pricing_demo.aura_test" in demo_calls[0] and len(demo_calls) == 8  # the probe first, so collect records it
     load = next(s for s in steps if s[0] == "load")
     assert all(a in (*tech_graph.STORES, "jena") for a, b in zip(load[1:], load) if b == "--store")
     assert sync_stores.STORES and all(s in sync_stores.STORES for s in stores.TEST_STORES)
@@ -308,3 +310,53 @@ def test_a_catalog_is_absent_only_on_proof():
     assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "absent\n")) is True
     assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "present\n")) is False
     assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(1, "absent\n")) is False
+
+
+TEST_TABLE = "workspace.epm_ontology.epm_triples_validate"
+NAME = "urn:pricing-demo:tech:triples/epm_triples urn:pricing-demo:tech-vocab#name"
+EXPECTED = [f"FAIL missing statement {NAME} workspace.epm_ontology.epm_triples", f"FAIL new statement {NAME} {TEST_TABLE}"]
+
+
+def compare_result(lines, code=1):
+    return {"command": "", "returncode": code, "seconds": 0,
+            "tail": "\n".join(lines + [f"{len(lines)} structural difference(s) between ../out/tech/graph and graph/"])}
+
+
+def test_compare_accepts_only_the_test_triple_table_s_name():
+    assert stores.compare_ok(compare_result(EXPECTED), TEST_TABLE)
+    assert stores.compare_ok(compare_result([], code=0), TEST_TABLE)
+    planted = EXPECTED + ["FAIL missing object urn:pricing-demo:tech:check/databricks-reaches-auradb"]
+    assert not stores.compare_ok(compare_result(planted), TEST_TABLE)  # a planted extra difference fails
+    assert not stores.compare_ok(compare_result(EXPECTED[:1]), TEST_TABLE)  # half the rename is not the rename
+    assert not stores.compare_ok(compare_result(EXPECTED), None)  # no test table: every difference fails
+    assert not stores.compare_ok(compare_result(EXPECTED), "workspace.epm_ontology.epm_triples")
+    assert not stores.compare_ok({**compare_result(EXPECTED), "returncode": 2}, TEST_TABLE)
+
+
+def run_tech_graph_row(tmp_path, monkeypatch, compare_lines):
+    """row_tech_graph with every command stubbed; compare answers with the given differences."""
+    tree = release_tree(tmp_path)
+    calls = []
+
+    def sh(args, cwd, env=None, **kw):
+        calls.append((args, env))
+        if args[-1] == "compare":
+            return compare_result(compare_lines)
+        return {"command": "", "returncode": 0, "seconds": 0, "tail": ""}
+    monkeypatch.setattr(stores, "sh", sh)
+    monkeypatch.setattr(stores, "demo_env", lambda tree, env: {"EPM_TRIPLES": env["DATABRICKS_TRIPLES_TABLE_FULL"]})
+    monkeypatch.setattr(stores, "stores_json", lambda env: "{}")
+    env = {"AURA_ENV": str(tmp_path / "aura.env"), "DATABRICKS_TRIPLES_TABLE_FULL": TEST_TABLE}
+    return stores.row_tech_graph(tree, env), calls
+
+
+def test_the_tech_graph_row_probes_aura_first_and_passes_the_test_table_s_rename(tmp_path, monkeypatch):
+    out, calls = run_tech_graph_row(tmp_path, monkeypatch, EXPECTED)
+    assert out["ok"] and out["compare_expected"]
+    assert calls[0][0][-1] == "pricing_demo.aura_test" and calls[0][1]["EPM_AURA_ENV"] == str(tmp_path / "aura.env")
+    assert [a[-1] if a[-1] != "--store" else a for a, _ in calls][-1] == "walk"  # every step after compare ran
+
+
+def test_the_tech_graph_row_fails_on_any_other_difference(tmp_path, monkeypatch):
+    out, calls = run_tech_graph_row(tmp_path, monkeypatch, EXPECTED + ["FAIL new object urn:pricing-demo:tech:job/planted"])
+    assert not out["ok"] and calls[-1][0][-1] == "compare"  # the row stops at compare

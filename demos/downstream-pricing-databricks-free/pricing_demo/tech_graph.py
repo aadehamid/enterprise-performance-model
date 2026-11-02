@@ -39,7 +39,7 @@ import urllib.parse
 import urllib.request
 from decimal import Decimal
 
-from .aura_test import read_env
+from .aura_test import aura_env, read_env
 from .config import GRAPH_SEP, HIDDEN_SYSTEMS, OUT, PROVENANCE, ROOT, SYSTEMS, source_dsn
 
 REPO = os.path.abspath(os.path.join(ROOT, "..", ".."))
@@ -72,7 +72,7 @@ LINEAGE_POLL_SECONDS = 60  # how often collect --lineage-wait reads Unity Catalo
 STORES = {  # the stores LOCAL-STORES.md lists, with their login files; the newest file that exists is the live one
     # a full driver run writes the rebuild's login; a run with --skip rebuild writes only the first container's
     "driver": ("bolt://127.0.0.1:17711", ("~/lpg-out/epm-rebuild/neo4j-run/run.env", "~/lpg-out/epm/neo4j-run/run.env")),
-    "aura": (None, ("~/.config/neo4j/aura.env",)),
+    "aura": (None, (aura_env(),)),  # EPM_AURA_ENV, as aura_test reads it; EPM_STORES_JSON overrides both
 }
 WALK = f"""MATCH (gold:Tech:GoldTable {{name: $gold}})<-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]->(m:Resource)
 OPTIONAL MATCH (agent:Tech:GenieAgent)-[:BINDS]->(view)

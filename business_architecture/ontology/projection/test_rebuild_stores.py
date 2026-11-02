@@ -122,7 +122,7 @@ class Plan(Base):
     def test_the_final_order_runs_the_build_right_before_the_lineage_check(self):
         _, names, _ = self.names(ALL)
         self.assertEqual(names, ["empty", "load", "record", "demo-postgres", "demo-sources", "demo-replicate", "demo-setup", "demo-upload",
-                                 "demo-build", "demo-genie", "collect", "tech-build", "tech-compare", "lineage", "tech-load", "tech-sync",
+                                 "demo-build", "demo-genie", "aura-test", "collect", "tech-build", "tech-compare", "lineage", "tech-load", "tech-sync",
                                  "mark", "check"])
 
     def test_the_local_part_runs_no_cloud_step(self):
@@ -132,6 +132,20 @@ class Plan(Base):
         text = " ".join(" ".join(c) for _, _, c in steps)
         self.assertNotIn("aura", text)
         self.assertNotIn("databricks-sql-connector", text)
+
+    def test_the_aura_probe_runs_before_collect_only_with_aura_and_databricks(self):
+        # collect records the probe's result as a check the shipped graph holds, so without it tech-compare fails
+        _, names, steps = self.names(ALL)
+        self.assertEqual(names[names.index("aura-test") + 1], "collect")
+        self.assertEqual(dict((n, c) for n, _, c in steps)["aura-test"][-1], "pricing_demo.aura_test")
+        self.assertNotIn("aura-test", self.names(("driver", "jena", "databricks"))[1])
+        self.assertNotIn("aura-test", self.names(("driver", "aura"))[1])
+
+    def test_the_aura_probe_reads_the_login_file_the_environment_names(self):
+        s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\n" + DBX + "EPM_AURA_ENV=/q/aura.env\n"))
+        self.assertEqual(rb.child_env(s, ALL, "/c.json")["EPM_AURA_ENV"], "/q/aura.env")
+        s = rb.settings(self.env_file(f"EPM_SKILLS={self.skills()}\n" + AURA + DBX))
+        self.assertEqual(rb.child_env(s, ALL, "/c.json")["EPM_AURA_ENV"], s["EPM_AURA_ENV"])
 
     def test_a_named_postgres_starts_no_container(self):
         _, names, _ = self.names(ALL, extra="SOURCE_PG_DSN=postgresql://u:p@h:1\n")
