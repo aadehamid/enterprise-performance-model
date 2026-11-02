@@ -5,7 +5,7 @@
 
 CREATE OR REPLACE TABLE ${catalog}.tech_graph.tech_graph_nodes (
   uri STRING COMMENT 'The node\'s IRI in the technical graph',
-  kind STRING COMMENT 'Its class: ReplicaTable, GoldTable, MetricView, PipelineStep, QualityCheck, Decision and so on',
+  kind STRING COMMENT 'Its class: Table, MetricView, PipelineStep, QualityCheck, Agent, Decision and so on',
   name STRING COMMENT 'The object, step, check or decision it stands for',
   properties STRING COMMENT 'Its other properties as JSON: rows, last refresh, a check\'s result',
   synced_at TIMESTAMP COMMENT 'When the sync copied it from Neo4j'

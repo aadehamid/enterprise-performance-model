@@ -4,9 +4,9 @@
 # path, filled in by tech_graph.py.
 PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX tv:  <urn:pricing-demo:tech-vocab#>
+PREFIX tg:  <https://w3id.org/lsc/ontology/modules/technical-graph/>
 
-CONSTRUCT { ?step a tv:PipelineStep ; tv:name ?command ; tv:order ?order . }
+CONSTRUCT { ?step a tg:PipelineStep ; tg:name ?command ; tg:order ?order . }
 WHERE {
   {
     SELECT ?command (MIN(?n) AS ?order) WHERE {

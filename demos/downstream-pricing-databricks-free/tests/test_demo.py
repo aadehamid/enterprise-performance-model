@@ -639,7 +639,7 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
 
         def execute_query(self, query, **params):
             if "MATCH (n:Tech)" in query:
-                return [{"uri": "u", "labels": ["Tech", "GoldTable"], "p": {"uri": "u", "name": "g"}}], None, None
+                return [{"uri": "u", "labels": ["Tech", "Table"], "p": {"uri": "u", "name": "g", "layer": "gold"}}], None, None
             return [{"s": "u", "t": "READS_FROM", "o": "o", "ontology": False}], None, None
     neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver()))
     with pytest.MonkeyPatch.context() as mp:
@@ -1340,8 +1340,13 @@ from decimal import Decimal  # noqa: E402
 
 from pricing_demo import aura_probe, aura_test, tech_graph  # noqa: E402
 
-TV = tech_graph.VOCAB
-OBJECT_CLASSES = {"ReplicaTable", "SilverTable", "GoldTable", "MetricView", "DefinitionsView", "TechGraphTable"}
+TV = tech_graph.VOCAB  # the decision trail's own terms
+TG = tech_graph.TG  # the technical-graph module's terms, which the technical graph uses (EPM-DEC-001-0112, item 4)
+OBJECT = tech_graph.TECH + "object/"  # a table or view of the demo's catalog; the triple table is a Table elsewhere
+
+
+def _objects(nodes):
+    return [n for n in nodes if n["props"]["uri"].startswith(OBJECT)]
 
 
 def _graph(*names):
@@ -1359,7 +1364,7 @@ def _name(iri):
 def _pairs(g, predicate):
     from rdflib import URIRef
     found = defaultdict(set)
-    for s, o in g.subject_objects(URIRef(TV + predicate)):
+    for s, o in g.subject_objects(URIRef(TG + predicate)):
         found[_name(s)].add(_name(o))
     return found
 
@@ -1367,13 +1372,18 @@ def _pairs(g, predicate):
 def test_e5_the_graph_holds_every_object_the_build_creates_with_its_rows_and_last_refresh():
     nodes, _ = tech_graph.graph_rows(_graph("tech-graph.ttl"))
     assert 90 <= len(nodes) <= 120  # "about 100 nodes" (EPM-DEC-001-0109, decision 6)
-    objects = {n["props"]["name"]: n for n in nodes if OBJECT_CLASSES & set(n["labels"])}
+    objects = {n["props"]["name"]: n for n in _objects(nodes)}
     assert set(objects) == {f"{s}.{n}" for _, s, n in databricks.created_objects()}
     assert all(isinstance(n["props"].get("rows"), int) and n["props"].get("lastRefresh") for n in objects.values())
     kinds = Counter(label for n in nodes for label in n["labels"][1:])
     assert kinds["SourceDatabase"] == len(config.SYSTEMS) + len(config.HIDDEN_SYSTEMS)
-    assert kinds["GenieAgent"] == len(genie.AGENTS) and kinds["Orchestrator"] == kinds["Host"] == kinds["TripleTable"] == 1
+    assert kinds["Agent"] == len(genie.AGENTS) and kinds["Orchestrator"] == kinds["Host"] == 1
+    triples = [n for n in nodes if n["props"]["uri"] == tech_graph.TECH + "triples/epm_triples"]
+    assert [n["labels"] for n in triples] == [["Tech", "Table"]] and "layer" not in triples[0]["props"]
     assert all(len(n["labels"]) == 2 for n in nodes)  # Tech and one class
+    # A replica, silver or gold table is a Table whose layer property names its layer, as the old classes did.
+    layers = Counter(n["props"].get("layer") for n in objects.values() if n["labels"][1] == "Table")
+    assert layers["replica"] == 28 and layers["silver"] == 22 and layers["gold"] == 6 and layers[None] == 2
 
 
 def test_e5_each_metric_view_implements_the_measures_of_its_identifiers():
@@ -1397,6 +1407,12 @@ def test_e5_a_gold_table_walks_to_the_measures_its_metric_views_implement():
     _, edges = tech_graph.graph_rows(g)
     for used in re.findall(r"\[:([A-Z_]+)\]", tech_graph.WALK):  # the walk names relationship types the loader makes
         assert used in {e["t"] for e in edges}, used
+    nodes, _ = tech_graph.graph_rows(g)
+    labels = {label for n in nodes for label in n["labels"]}
+    for used in re.findall(r":Tech:([A-Za-z]+)", tech_graph.WALK):  # and labels it gives
+        assert used in labels, used
+    start = [n for n in nodes if n["props"].get("name") == gold]
+    assert [n["labels"][1] for n in start] == ["Table"] and start[0]["props"]["layer"] == "gold" and "layer: 'gold'" in tech_graph.WALK
 
 
 def test_e5_only_tech_nodes_and_edges_out_of_them_so_the_projection_counts_cannot_move():
@@ -1420,6 +1436,33 @@ def test_e5_every_link_to_the_ontology_names_a_resource_it_holds():
     targets = {e["o"] for e in edges if e["ontology"]}
     missing = sorted(t for t in targets if (URIRef(t), None, None) not in held)
     assert targets and not missing, missing[:5]
+
+
+def test_e5_the_technical_graph_uses_the_modules_terms_and_meets_its_shapes():
+    # EPM-DEC-001-0112, item 4: the demo moved from its own vocabulary onto the technical-graph module's terms, so the
+    # live graph meets the module's shapes. Checked as the release ships it, with the modules it links to loaded.
+    pyshacl = pytest.importorskip("pyshacl")
+    from rdflib import Graph
+    sys.path.insert(0, os.path.join(ONTOLOGY, "release"))
+    import newest
+    shipped = _graph("tech-graph.ttl")
+    assert not {str(x) for triple in shipped for x in triple if str(x).startswith(TV)}
+    data = Graph().parse(os.path.join(ONTOLOGY, "technical-graph", "vocabulary.ttl"))
+    for module in ("data-product", "kpi", "system"):
+        data.parse(os.path.join(ONTOLOGY, "releases", module, newest.newest_version(module, ONTOLOGY), f"{module}.ttl"))
+    ok, _, text = pyshacl.validate(data + shipped, shacl_graph=Graph().parse(os.path.join(ONTOLOGY, "technical-graph", "shapes.ttl")),
+                                   inference="none")
+    assert ok, text
+    defined = set(data.subjects())
+    used = {p for p in shipped.predicates() if str(p).startswith(TG)} | {o for o in shipped.objects() if str(o).startswith(TG)}
+    assert used <= defined, sorted(used - defined)
+
+
+def test_e5_the_decision_trail_keeps_the_demos_own_terms_the_module_does_not_define():
+    trail = _graph("decision-trail.ttl")
+    own = {str(x)[len(TV):] for triple in trail for x in triple if str(x).startswith(TV)}
+    assert own == {"Decision", "EvidenceItem", "affects", "concerns", "domain", "kind", "name", "recordedIn", "selectedOption"}
+    assert not {str(x) for triple in trail for x in triple if str(x).startswith(TG)}
 
 
 def test_e5_the_decision_trail_is_prov_o_from_the_visible_tables_only():
@@ -1454,8 +1497,8 @@ def test_e5_the_lineage_comparison_names_edges_found_in_only_one_place():
 def test_e5_the_steps_follow_the_readme_run_block_and_each_points_to_the_next():
     from rdflib import URIRef
     g = _graph("tech-graph.ttl")
-    ordered = [str(n) for _, n in sorted((int(o), g.value(s, URIRef(TV + "name")))
-                                          for s, o in g.subject_objects(URIRef(TV + "order")))]
+    ordered = [str(n) for _, n in sorted((int(o), g.value(s, URIRef(TG + "name")))
+                                          for s, o in g.subject_objects(URIRef(TG + "order")))]
     readme = open(os.path.join(ROOT, "README.md")).read()
     commands = re.findall(r"(?m)^uv run (?:--group (?:graph|outside) )?python -m (pricing_demo\.[a-z_]+(?: [a-z]+(?= ))?)", readme)
     assert ordered == list(dict.fromkeys(commands))
@@ -1465,13 +1508,15 @@ def test_e5_the_steps_follow_the_readme_run_block_and_each_points_to_the_next():
 def test_e5_every_quality_check_has_a_result_and_covers_nodes_the_graph_holds():
     from rdflib import RDF, URIRef
     g = _graph("tech-graph.ttl")
-    checks = set(g.subjects(RDF.type, URIRef(TV + "QualityCheck")))
-    assert {str(g.value(c, URIRef(TV + "name"))) for c in checks} >= {
+    checks = set(g.subjects(RDF.type, URIRef(TG + "QualityCheck")))
+    assert {str(g.value(c, URIRef(TG + "name"))) for c in checks} >= {
         "replica-matches-manifest", "built-objects-hold-rows", "metric-views-tagged", "rows-labelled",
         "decision-truth-hidden", "designed-vs-observed-lineage"}
-    assert all(str(g.value(c, URIRef(TV + "result"))) in ("pass", "fail", "differs", "skipped") for c in checks)
+    # A result is a value of the module's check-result list; Neo4j holds its name, as before the move.
+    assert all(str(g.value(c, URIRef(TG + "result"))) in {tech_graph.RESULT + r for r in ("pass", "fail", "differs")} for c in checks)
+    assert {n["props"]["result"] for n in tech_graph.graph_rows(g)[0] if "QualityCheck" in n["labels"]} <= {"pass", "fail", "differs"}
     typed = set(g.subjects(RDF.type, None))
-    assert all(o in typed for c in checks for o in g.objects(c, URIRef(TV + "checks")))
+    assert all(o in typed for c in checks for o in g.objects(c, URIRef(TG + "checks")))
 
 
 def test_e5_literals_reach_neo4j_as_it_stores_them_and_edge_types_read_like_cypher():
@@ -1480,7 +1525,7 @@ def test_e5_literals_reach_neo4j_as_it_stores_them_and_edge_types_read_like_cyph
     assert tech_graph.neo4j_value(Decimal("2.5")) == 2.5
     assert tech_graph.neo4j_value(dt.datetime(2026, 10, 29, 12)) == "2026-10-29T12:00:00"
     assert tech_graph.edge_type(URIRef(tech_graph.PROV + "wasGeneratedBy")) == "WAS_GENERATED_BY"
-    assert tech_graph.edge_type(URIRef(TV + "readsFrom")) == "READS_FROM"
+    assert tech_graph.edge_type(URIRef(TG + "readsFrom")) == "READS_FROM"
 
 
 def test_e5_the_aura_test_writes_the_login_to_a_secret_scope_and_never_prints_it():
@@ -2367,7 +2412,7 @@ def _offline_lineage():
         [(str(s), str(o)) for s, o in dp.subject_objects(URIRef(tech_graph.FULL_NAME)) if str(s).startswith(tech_graph.TABLE)],
         [(str(o), str(s)) for s, o in dp.subject_objects(URIRef(tech_graph.WAS_DERIVED_FROM))])
     g = _graph("tech-graph.ttl")
-    present = {n["props"]["name"] for n in tech_graph.graph_rows(g)[0] if OBJECT_CLASSES & set(n["labels"])}
+    present = {n["props"]["name"] for n in _objects(tech_graph.graph_rows(g)[0])}
     return tables, designed, tech_graph.sql_lineage(g), present
 
 
@@ -2381,7 +2426,7 @@ def test_the_known_lineage_is_what_the_design_and_the_sql_files_hold_with_the_ob
     assert {k: v for k, v in known.items() if k != "note"} == {k: v for k, v in expected.items() if k != "in_all_three"}
     assert tech_graph.lineage_gate(expected, known) == []
     detail = str(Graph().parse(os.path.join(ROOT, "graph", "tech-graph.ttl")).value(
-        rdflib_uri("urn:pricing-demo:tech:check/designed-vs-observed-lineage"), Namespace(tech_graph.VOCAB).detail))
+        rdflib_uri("urn:pricing-demo:tech:check/designed-vs-observed-lineage"), Namespace(tech_graph.TG).detail))
     designed_only = len(expected["designed_only"]) + len(expected["designed_and_sql"])
     observed_only = len(expected["observed_only"]) + len(expected["sql_and_observed"])
     assert detail == (f"{len(expected['in_all_three'])} edges match; {designed_only} designed only; {observed_only} observed only; "
@@ -2413,17 +2458,17 @@ def rdflib_uri(iri):
 
 def structure_graph(text):
     from rdflib import Graph
-    return Graph().parse(data="@prefix tv: <urn:pricing-demo:tech-vocab#> . @prefix t: <urn:pricing-demo:tech:> .\n" + text, format="turtle")
+    return Graph().parse(data=f"@prefix tg: <{tech_graph.TG}> . @prefix t: <urn:pricing-demo:tech:> .\n" + text, format="turtle")
 
 
 def test_a_refresh_with_new_counts_is_no_structural_difference_and_a_new_edge_is():
-    base = 't:v a tv:MetricView ; tv:rows 1 ; tv:lastRefresh "x" ; tv:readsFrom t:g ; tv:hostedOn t:h1 . t:g a tv:GoldTable . t:h1 a tv:Host ; tv:name "vm" .'
-    fresh = 't:v a tv:MetricView ; tv:rows 2 ; tv:lastRefresh "y" ; tv:readsFrom t:g ; tv:hostedOn t:h2 . t:g a tv:GoldTable . t:h2 a tv:Host ; tv:name "local" .'
+    base = 't:v a tg:MetricView ; tg:rows 1 ; tg:lastRefresh "x" ; tg:readsFrom t:g ; tg:hostedOn t:h1 . t:g a tg:Table . t:h1 a tg:Host ; tg:name "vm" .'
+    fresh = 't:v a tg:MetricView ; tg:rows 2 ; tg:lastRefresh "y" ; tg:readsFrom t:g ; tg:hostedOn t:h2 . t:g a tg:Table . t:h2 a tg:Host ; tg:name "local" .'
     assert tech_graph.compare_structure(structure_graph(fresh), structure_graph(base)) == []
-    moved = fresh + " t:v tv:readsFrom t:z . t:z a tv:GoldTable ."
+    moved = fresh + " t:v tg:readsFrom t:z . t:z a tg:Table ."
     lines = tech_graph.compare_structure(structure_graph(moved), structure_graph(base))
-    assert lines == ["new object urn:pricing-demo:tech:z", f"new statement urn:pricing-demo:tech:v {tech_graph.VOCAB}readsFrom urn:pricing-demo:tech:z"]
-    renamed = base.replace('t:v a tv:MetricView ;', 't:v a tv:MetricView ; tv:name "another name" ;')
+    assert lines == ["new object urn:pricing-demo:tech:z", f"new statement urn:pricing-demo:tech:v {tech_graph.TG}readsFrom urn:pricing-demo:tech:z"]
+    renamed = base.replace('t:v a tg:MetricView ;', 't:v a tg:MetricView ; tg:name "another name" ;')
     assert tech_graph.compare_structure(structure_graph(renamed), structure_graph(base))[0].startswith("new statement urn:pricing-demo:tech:v")
     assert tech_graph.compare_structure(structure_graph(base), structure_graph(moved))[0] == "missing object urn:pricing-demo:tech:z"
 
@@ -2461,16 +2506,17 @@ def test_a_new_metric_view_reaches_the_graph_from_its_tag_and_unity_catalog_with
     from rdflib import RDF, URIRef
     g = _graph("tech-graph.ttl")
     shipped = len(g)
-    objects = [{"id": n["props"]["name"]} for n in tech_graph.graph_rows(g)[0] if OBJECT_CLASSES & set(n["labels"])]
+    objects = [{"id": n["props"]["name"]} for n in _objects(tech_graph.graph_rows(g)[0])]
     assert tech_graph.databricks_only(g, objects, []) == [] and len(g) == shipped  # every shipped object is in a SQL file
     view, gold = "semantic_sem_commercial.new_margin_vw", "gold_commercial_core.mips_mpr_executive_summary_fact"
     added = tech_graph.databricks_only(g, objects + [{"id": view}], [[gold, view], [gold, "elsewhere.x"]])
     iri = URIRef(tech_graph.TECH + "object/" + view)
-    assert added == [view] and (iri, RDF.type, URIRef(TV + "MetricView")) in g
-    assert set(g.objects(iri, URIRef(TV + "readsFrom"))) == {URIRef(tech_graph.TECH + "object/" + gold)}
-    g.add((iri, URIRef(TV + "implements"), URIRef(tech_graph.ONTOLOGY + "modules/kpi/measure/crack-spreads")))  # as links.rq adds it
+    assert added == [view] and (iri, RDF.type, URIRef(TG + "MetricView")) in g
+    assert (iri, URIRef(TG + "layer"), URIRef(tech_graph.LAYER + "metric-view")) in g
+    assert set(g.objects(iri, URIRef(TG + "readsFrom"))) == {URIRef(tech_graph.TECH + "object/" + gold)}
+    g.add((iri, URIRef(TG + "implements"), URIRef(tech_graph.ONTOLOGY + "modules/kpi/measure/crack-spreads")))  # as links.rq adds it
     kept = tech_graph.typed_only(g, set(g.subjects(RDF.type, None)))
-    assert (iri, URIRef(TV + "implements"), None) in kept and view not in {s for s, _ in tech_graph.sql_lineage(kept)}
+    assert (iri, URIRef(TG + "implements"), None) in kept and view not in {s for s, _ in tech_graph.sql_lineage(kept)}
     # The tag's unknown identifier and the undesigned view become proposals, with the observed edge behind them.
     tags = [{"view": view, "identifiers": "KPI-0001 KPI-9999"}]
     drafted = tech_graph.proposals(tags, [{"id": view}], {"designed_tables": [gold], "observed": [[gold, view]]},
@@ -2484,8 +2530,8 @@ def test_a_new_metric_view_reaches_the_graph_from_its_tag_and_unity_catalog_with
 
 def test_the_layers_databricks_only_objects_take_are_the_ones_objects_rq_gives():
     text = open(os.path.join(tech_graph.SPARQL, "objects.rq")).read()
-    for prefix, layer, cls in tech_graph.LAYERS:
-        assert f'("{layer}" tv:{cls})' in text and (not prefix or f'"{prefix}' in text), (layer, cls)
+    for prefix, layer, cls, value in tech_graph.LAYERS:
+        assert f'("{layer}" tg:{cls} {"layer:" + value if value else "UNDEF"})' in text and (not prefix or f'"{prefix}' in text), (layer, cls)
 
 
 def test_proposals_are_written_beside_the_live_facts_never_into_the_ontology():

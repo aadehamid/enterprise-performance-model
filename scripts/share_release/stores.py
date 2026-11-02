@@ -505,7 +505,7 @@ def stores_json(env):
 
 
 # The triple table's node keeps its IRI on the test stores; only its name differs from the one the release ships.
-TRIPLES_NAME = "urn:pricing-demo:tech:triples/epm_triples urn:pricing-demo:tech-vocab#name "
+TRIPLES_NAME = "urn:pricing-demo:tech:triples/epm_triples https://w3id.org/lsc/ontology/modules/technical-graph/name "
 SHIPPED_TRIPLES = "workspace.epm_ontology.epm_triples"
 
 

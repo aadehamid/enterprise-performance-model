@@ -630,7 +630,7 @@ class Context:
 GRAPH_WALK = f"""MATCH (db:Tech:SourceDatabase {{name: 'price_reference'}})<-[:COPIES]-(:Tech)<-[:READS_FROM*1..6]-(v:Tech:MetricView)
 OPTIONAL MATCH (v)-[:IMPLEMENTS]->(m:Resource)
 OPTIONAL MATCH (m)-[:kpi{GRAPH_SEP}usedBy]->(role:Resource)
-OPTIONAL MATCH (a:Tech:GenieAgent)-[:BINDS]->(v)
+OPTIONAL MATCH (a:Tech:Agent)-[:BINDS]->(v)
 RETURN v.name AS view, collect(DISTINCT m.dcterms{GRAPH_SEP}identifier) AS identifiers,
        collect(DISTINCT role.skos{GRAPH_SEP}prefLabel) AS roles, collect(DISTINCT a.name) AS agents ORDER BY view"""
 
