@@ -3,6 +3,10 @@
 
     python3 scripts/share_release/export.py --epm <path to main> --skills <path to skills main> --out <folder>
 
+With --augment <folder>, each logical model in that folder (<slug>.ttl and <slug>.links.csv, kept outside the
+repository) is copied in through the same rules (augment.py), and the report lists each outside file with its path
+relative to the folder and its SHA-256.
+
 Steps: copy the allowlist (manifest.py), apply the rewrite rules (rules.py) to every text file, write
 `<out>-report.json` beside the output with every rule's count per file and every path's source,
 so a difference between main and the release is traceable to a rule. The rebuild of packages, pages and
@@ -20,6 +24,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import augment  # noqa: E402
 import manifest  # noqa: E402
 import owner  # noqa: E402
 import procs  # noqa: E402
@@ -91,13 +96,15 @@ def record_dates(epm):
     return dates
 
 
-def export(epm, skills, out, remove_internal=False):
+def export(epm, skills, out, remove_internal=False, augment_folder=None):
     if os.path.exists(out):
         raise SystemExit(f"{out} exists; export writes a fresh folder")
     owner.owner_names()  # fail closed before anything is written: a release cut without the names would leak them
     dates = record_dates(epm)
     report = {"epm": os.path.abspath(epm), "skills": os.path.abspath(skills), "files": {}, "rule_totals": {},
               "remove_internal": remove_internal}
+    if augment_folder:
+        augment.models(augment_folder)  # fail on a malformed folder before anything is written
     sources = [("epm", epm, manifest.EPM_RULES)]
     if skills:
         sources.append(("skills", skills, manifest.SKILLS_RULES))
@@ -138,6 +145,12 @@ def export(epm, skills, out, remove_internal=False):
             with open(dest, "rb") as f:
                 entry["sha256"] = hashlib.sha256(f.read()).hexdigest()
             report["files"][path] = entry
+    if augment_folder:
+        staged = augment.stage(out, augment_folder, dates)
+        report["augment"] = {"files": augment.inputs(augment_folder), "staged": staged}
+        for entry in staged.values():
+            for k, v in entry["rules"].items():
+                report["rule_totals"][k] = report["rule_totals"].get(k, 0) + v
     # The report sits beside the release, never inside it: it names the source trees and the original paths.
     report["epm"] = os.path.basename(os.path.abspath(epm)); report["skills"] = os.path.basename(os.path.abspath(skills)) if skills else ""
     with open(os.path.abspath(out).rstrip("/") + "-report.json", "w") as f:
@@ -152,8 +165,9 @@ def main(argv=None):
     ap.add_argument("--out", required=True)
     ap.add_argument("--remove-internal", action="store_true",
                     help="leave out reference/internal/ (off by default; the review report comes first)")
+    ap.add_argument("--augment", default="", help="a folder of logical models to add to the release (augment.py)")
     a = ap.parse_args(argv)
-    r = export(a.epm, a.skills, a.out, a.remove_internal)
+    r = export(a.epm, a.skills, a.out, a.remove_internal, a.augment or None)
     n = len(r["files"])
     print(f"exported {n} files to {a.out}; rules applied: {json.dumps(r['rule_totals'], sort_keys=True)}")
 

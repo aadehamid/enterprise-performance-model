@@ -188,7 +188,9 @@ class Packages(unittest.TestCase):
             cat = Graph().parse(data=bm.catalog(name), format="turtle")
             dataset = next(cat.subjects(RDF.type, DCAT.Dataset))
             names = {str(d).rsplit("/", 1)[1] for d in cat.objects(dataset, DCAT.distribution)}
-            self.assertEqual(names, {f"{name}.ttl", f"{name}.jsonld", "shapes.ttl"})
+            # and a graph the package carries as it is (build_module's "graphs"; only the share release's logical-model has any)
+            graphs = {os.path.basename(p) for p in bm.MODULES[name].get("graphs", [])}
+            self.assertEqual(names, {f"{name}.ttl", f"{name}.jsonld", "shapes.ttl"} | graphs)
 
     def test_the_manifest_hashes_every_other_file(self):
         for name in bm.MODULES:

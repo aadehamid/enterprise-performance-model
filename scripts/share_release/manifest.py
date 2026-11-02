@@ -189,21 +189,44 @@ def fill(text):
     return text.replace("{{RELEASE_NAME}}", RELEASE_NAME).replace("{{CHECK_MINUTES}}", CHECK_MINUTES)
 
 
-def marker(built):
-    """The marker's content for a release built on the given date (YYYY-MM-DD)."""
-    return {"release": RELEASE_NAME, "built": built, "mode": RELEASE_MODE}
+def marker(built, augment=None):
+    """The marker's content for a release built on the given date (YYYY-MM-DD). A cut with an augment folder
+    (augment.py) adds the key "augment": the module it built and each outside file, with its path relative to the
+    folder and its SHA-256."""
+    m = {"release": RELEASE_NAME, "built": built, "mode": RELEASE_MODE}
+    if augment is not None:
+        m["augment"] = augment
+    return m
+
+
+def is_augment(value):
+    """The shape of the marker's "augment" value, and nothing else: {"module", "version", "files": [{"path", "sha256"}]}."""
+    if not isinstance(value, dict) or sorted(value) != ["files", "module", "version"]:
+        return False
+    if not (isinstance(value["module"], str) and isinstance(value["version"], str) and isinstance(value["files"], list)
+            and value["files"]):
+        return False
+    return all(isinstance(f, dict) and sorted(f) == ["path", "sha256"] and isinstance(f["path"], str)
+               and isinstance(f["sha256"], str) and re.fullmatch(r"[0-9a-f]{64}", f["sha256"]) for f in value["files"])
 
 
 def is_tool_marker(path):
-    """True only for a release.json this tool wrote: the exact keys and values of marker(), a well-formed date."""
+    """True only for a release.json this tool wrote: the exact keys and values of marker(), a well-formed date, and
+    an "augment" value of the exact shape when the cut had one."""
     import json
     try:
         with open(path, encoding="utf-8") as f:
             m = json.load(f)
     except (OSError, ValueError):
         return False
-    return (isinstance(m, dict) and tuple(sorted(m)) == tuple(sorted(MARKER_KEYS)) and isinstance(m.get("built"), str)
-            and bool(re.match(r"^\d{4}-\d{2}-\d{2}$", m["built"])) and m == marker(m["built"]))
+    if not isinstance(m, dict):
+        return False
+    augment = m.get("augment")
+    if "augment" in m and not is_augment(augment):
+        return False
+    keys = MARKER_KEYS + (("augment",) if "augment" in m else ())
+    return (tuple(sorted(m)) == tuple(sorted(keys)) and isinstance(m.get("built"), str)
+            and bool(re.match(r"^\d{4}-\d{2}-\d{2}$", m["built"])) and m == marker(m["built"], augment))
 
 
 def is_release(tree):

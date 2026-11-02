@@ -6,7 +6,8 @@ the tool; it never ships.
 
 ```sh
 scripts/share_release/cut.sh --epm . --skills ../personal-agent-skills --out /tmp/release --env <stores env> \
-    [--baseline <main's validate json>] [--store-rows <rows>|all] [--no-cleanroom] [--replace]
+    [--baseline <main's validate json>] [--store-rows <rows>|all] [--no-cleanroom] [--replace] \
+    [--augment <folder> --approval <answers file> --approval-words <words>]
 ```
 
 `cut.sh` runs the steps below in order and stops at the first failure: export, rebuild, gate, the store rows on
@@ -17,10 +18,39 @@ the store rows are the four that need no Databricks workspace; `--store-rows all
 the technical graph and the store sync when the workspace is reachable. The command refuses an `--out` that is
 the root, the home folder, a checkout or a parent of one, or a file; an existing folder that is not empty is
 removed only with `--replace`, and only when its `release.json` is exactly the marker this tool writes
-(`manifest.is_tool_marker`: the keys `release`, `built` and `mode`, the release name, the mode text, a date;
-nothing else is accepted). Its last line names the rows that did not run and the two steps that follow by hand:
+(`manifest.is_tool_marker`: the keys `release`, `built` and `mode`, the release name, the mode text, a date, and,
+for a cut with `--augment`, the key `augment` in the shape `manifest.marker` writes; nothing else is accepted). Its last line names the rows that did not run and the two steps that follow by hand:
 step 9, `cleanup.py --yes` from the ledger (`LEDGER_FILE` in `--env`), then, from the release's root, `python3 business_architecture/ontology/projection/rebuild_stores.py --env <file> --empty`, which empties and reloads the stores
-from the release, not from main (the owner's instruction of 2026-11-01), and step 10, `publish.py branch --zip` and the push, which wait for the owner. The export alone is:
+from the release, not from main (the owner's instruction of 2026-11-01), and step 10, `publish.py branch --zip` and the push, which wait for the owner. `--augment <folder>` adds files kept outside `main` (EPM-DEC-001-0113): each logical model in the folder, `<slug>.ttl`
+(ER Studio's export) with `<slug>.links.csv` beside it, joins the release in a `logical-model` 1.0.0 package that
+`main` does not have. The folder may be outside the repository, as the customer model's gitignored
+`release-cut/augment/logical-model/` is, or inside it. The export copies each model's two files into
+`logical-model/models/` through the rewrite rules; the rebuild runs the release's own `build_logical_model.py` on them,
+registers the module in every place the release lists its modules (`augment.REGISTRATION`: `build_module.py`'s
+`MODULES` and its test's approvals, the projection's `PACKAGES`, `OWN` and `PREFIXES`, `epm-config.json`, the module
+lists and counts that `test_epm_facts.py` and `test_release_package_shapes.py` pin, `MODULES.md`, the module's README,
+`OPEN-ITEMS.md`), builds the package with `build_module.py` (the vocabulary as `logical-model.ttl`, the shapes, each
+model's two graphs as they are, `catalog.ttl`, `CHANGELOG.md`, `manifest.json`) and adds its two checks to the
+release's `check.sh`. After the catalog is built, it rewrites each figure of the guide and the walkthrough that states
+the release set (`augment.FIGURES`: module counts, the total, the catalog, the `releases/` folder's versions, files
+and size, the graphs and triples the stores load, the release records) to the figure `augment.release_figures` reads
+from the release tree, adds the module's card and rows, and keeps the figure it replaces beside it where the sentence
+dates it. So the release counts one module more than `main`. Each patch stops the cut when its anchor is not found.
+`test_augment.py`'s `FIGURE_CLASSES` lists every figure of the two pages, with that rewrite or why it stays.
+`release.json` and the package's `manifest.json` list each outside file under `augment`, with its path relative to
+the folder and its SHA-256, never the folder's own path. The gate, the release's checks, the comparison
+(`validate.py compare --augment`, whose `augment` row checks the hashes and the staged copies) and the clone's check
+(`clonecheck.py --augment`, whose last line says it ran with the folder) run on everything. The rules move the
+module's own `lm:` IRIs and the link targets to `w3id.org/mpc`; ER Studio's namespace,
+`https://www.erstudio.com/semanticmodel/`, is never rewritten, and the gate does not treat its host as a host of the
+build. The package names the decision owner's approval, so the cut refuses `--augment`, before it removes anything,
+until `--approval` names a saved answers file in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/`
+of the `--epm` checkout and `--approval-words` is a sentence of that file's body that approves logical-model 1.0.0 by name, such as "approve logical-model 1.0.0"; an unrelated "go ahead" or a refusal does not pass (EPM-DEC-001-0113, decision 10).
+Without `--augment` the cut is unchanged. The release's `README.md`, `HOW-TO-UPDATE.md` ("Add a logical model") and
+the walkthrough's "How to change the ontology" carry their augment parts (between `<!-- augment -->` lines in
+`templates/`) only in a release cut with `--augment`.
+
+The export alone is:
 
 ```sh
 python3 scripts/share_release/export.py --epm . --skills ../personal-agent-skills --out /tmp/release
