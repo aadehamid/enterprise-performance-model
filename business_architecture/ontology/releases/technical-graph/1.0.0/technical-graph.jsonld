@@ -1,0 +1,1273 @@
+[
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Ontology"
+  ],
+  "http://purl.org/dc/terms/description": [
+   {
+    "@language": "en",
+    "@value": "The kinds of thing a technical graph records about a data platform as built: hosts, source databases, tables, views, metric views, pipeline steps, quality checks and agents, and the links between them; each built thing points to its design in data-product, the measure it computes in kpi and the system it copies from in system. Definitions only, never the graph's records."
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-11-02"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-11-02"
+   }
+  ],
+  "http://purl.org/dc/terms/requires": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/1.2.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/1.3.0"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/1.5.0"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "LSC Technical Graph Module"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionIRI": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/1.0.0"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionInfo": [
+   {
+    "@value": "1.0.0"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Agent",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, items 1 and 2 (which agent or report answers for this measure)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "agent"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An AI agent or a report that answers people's questions from the data objects it is bound to."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/CheckResults",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (checks passed)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "check results"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What a quality check found when it last ran."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#hasTopConcept": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/check-result/differs"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/check-result/fail"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/check-result/pass"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2; data-product's dp:Layer (EPM-DEC-001-0097, item 8)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "data object"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A table or view on the data platform, named by its full name. Its platform layer, where it has one, is a value of data-product's layer code list."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DefinitionsView",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2; EPM-DEC-001-0109"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "definitions view"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/View"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A view that publishes ontology definitions, such as measure definitions, on the data platform, so that agents read the definitions beside the data."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Host",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "host"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A machine or service that runs one or more source databases."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/MetricView",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2; EPM-DEC-001-0109"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "metric view"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/View"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A view that computes measures, each defined once, over a table, for agents and reports to query. The measures it computes are kpi measure definitions, by IRI."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Orchestrator",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2; EPM-DEC-001-0109 (one Genie agent per subject area under a supervisor agent)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "orchestrator"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Agent"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An agent that passes each question to the agent suited to answer it."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/PipelineStep",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "pipeline step"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "One step of the pipeline that builds or loads the platform, in the order it runs."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/QualityCheck",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, items 1 and 2 (can I trust it today)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "quality check"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A named test of one or more technical objects, as last run: when it ran and what it found."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/SourceDatabase",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "source database"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A database that holds an operational system's records, or a stand-in for them, which the data platform copies from."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Table",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "table"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A data object that stores rows."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, items 2 and 4; EPM-DEC-001-0109"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "technical object"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A thing built or run on a data platform, or feeding it, that the technical graph records as it is: a host, a source database, a table, a view, a pipeline step, a quality check or an agent. A record of what was built, never its design: the design is in data-product."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/View",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "view"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A data object defined by a query over other data objects, which stores no rows of its own."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/binds",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (which agent or report answers for this measure)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Agent"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "binds"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A data object the agent is bound to and answers from."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/check-result/differs",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The check compared two accounts of the same thing, such as designed and observed lineage, and found a difference that is not on its list of known differences."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/CheckResults"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "differs"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Differs"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#topConceptOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/CheckResults"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/check-result/fail",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The check found a problem the platform must fix."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/CheckResults"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "fail"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Fail"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#topConceptOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/CheckResults"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/check-result/pass",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The check found no problem."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/CheckResults"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "pass"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Pass"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#topConceptOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/CheckResults"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/checkedAt",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (can I trust it today)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/QualityCheck"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "checked at"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "When the quality check last ran."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/checks",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (can I trust it today)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/QualityCheck"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "checks"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A technical object the quality check tests."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/copies",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Table"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "copies"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/SourceDatabase"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The source database whose records the table copies."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/definedIn",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (is it built as designed)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "defined in"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The file, relative to the pipeline's folder, whose code creates the data object."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/designedAs",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, items 1 (is it built as designed; who answers for it) and 3"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "designed as"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The design in data-product that the technical object builds: a platform table or a data product (both concepts) or an agent (a PROV software agent) of the data-product module. No range is stated, because the designs are of different kinds. A built object with none was built without a recorded design."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/detail",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/QualityCheck"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "detail"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What the quality check reported, in its own words."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/hidden",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/SourceDatabase"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "hidden"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "True when the source database must never reach the data platform, such as the answers a test keeps from the agents it tests."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/hostedOn",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (what is affected if this system changes)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/SourceDatabase"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "hosted on"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Host"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The host that runs the source database."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/implements",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (where does this number come from); EPM-DEC-001-0109"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/MetricView"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "implements"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A measure whose kpi definition the metric view computes."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/lastRefresh",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (can I trust it today: last refresh)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "last refresh"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "When the data object was last built."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/layer",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2; data-product's dp:Layer (EPM-DEC-001-0097, item 8)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "layer"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The platform layer the data object is built in, from data-product's layer code list: replica, silver, gold or metric view. A data object outside those layers, such as a definitions view, has none."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/name",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "name"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The name the platform or the pipeline gives the technical object, such as a table's schema and name."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/next",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/PipelineStep"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "next"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/PipelineStep"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The pipeline step that runs after this one."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/order",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/PipelineStep"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "order"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The pipeline step's place in the order of steps, from 1."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/producedBy",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "produced by"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/PipelineStep"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The pipeline step that last built, loaded or recorded the technical object."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/readsFrom",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (where does this number come from); EPM-DEC-001-0110"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "reads from"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/DataObject"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A data object the subject is built from, as built: the as-built lineage of one step. Designed lineage is data-product's."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/result",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (checks passed)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/QualityCheck"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "result"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What the quality check found when it last ran, from the check-result code list."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/routesTo",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Orchestrator"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "routes to"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/Agent"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An agent the orchestrator passes questions to."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/rows",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (can I trust it today)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/TechnicalObject"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "rows"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#decimal"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "How many rows the data object or source database held when last recorded."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/standsFor",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 1 (what is affected if this table or system changes)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/SourceDatabase"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "stands for"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/System"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The system of the system module whose records the source database holds, or stands in for."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/tables",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0112, item 2"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/technical-graph/SourceDatabase"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "tables"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#decimal"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "How many tables the source database held when last recorded."
+   }
+  ]
+ }
+]

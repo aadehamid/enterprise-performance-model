@@ -22,7 +22,7 @@ SHAPE_FILES = [
     f"releases/core/{newest.newest_version('core')}/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl", "kpi/shapes.ttl",
     "data-product/shapes.ttl", "value-stream/shapes.ttl", "system/shapes.ttl", "lane/shapes.ttl",
     "market-data/shapes.ttl", "consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl", "party/shapes.ttl",
-    "technical-graph/shapes.ttl",  # the candidate module, with its example graph in the regression's graph (EPM-DEC-001-0112)
+    "technical-graph/shapes.ttl",  # released as 1.0.0 on 2026-11-02, with its example graph in the regression's graph (EPM-DEC-001-0112)
     "validation/controlled-values.ttl",
 ]
 GRAPH = run.load(run.RELEASE)

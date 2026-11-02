@@ -36,10 +36,11 @@ SOURCE_BUILDERS = [
     ("party", "build_party.py"), ("system", "build_systems.py"), ("data-product", "build_data_products.py"),
     ("data-product", "build_pricing.py"), ("value-stream", "build_value_streams.py"), ("lane", "build_lanes.py"),
     ("market-data", "build_market_data.py"),
-]
+]  # technical-graph has no source builder: its vocabulary is written by hand, and its example graph is test data
+
 # Each module after the ones it requires (build_module.py's depends_on).
 MODULE_ORDER = ["organization", "kpi", "system", "party", "ref-mpc", "data-product", "value-stream", "lane",
-                "market-data", "integration"]
+                "market-data", "integration", "technical-graph"]
 
 
 # The release's own documents and files: (template, where it lands in the release).

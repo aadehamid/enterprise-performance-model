@@ -183,8 +183,8 @@ details.fm:not([open])>:not(summary){display:none}
         <rect x="0" y="0" width="560" height="420" fill="#f2f4f7"/>
         <g font-family="Source Sans 3, sans-serif" font-size="15" fill="#1b1d21">
           <rect x="20" y="24" width="150" height="56" fill="#fff"/><text x="34" y="48" font-weight="700">Process map</text><text x="34" y="68" font-size="13" fill="#4a4f57">680 nodes, L0 to L6</text>
-          <rect x="205" y="24" width="150" height="56" fill="#fff"/><text x="219" y="48" font-weight="700">11 modules</text><text x="219" y="68" font-size="13" fill="#4a4f57">Turtle in git</text>
-          <rect x="390" y="24" width="150" height="56" fill="#0b5cad"/><text x="404" y="48" font-weight="700" fill="#fff">50 releases</text><text x="404" y="68" font-size="13" fill="#fff">one DCAT catalog</text>
+          <rect x="205" y="24" width="150" height="56" fill="#fff"/><text x="219" y="48" font-weight="700">12 modules</text><text x="219" y="68" font-size="13" fill="#4a4f57">Turtle in git</text>
+          <rect x="390" y="24" width="150" height="56" fill="#0b5cad"/><text x="404" y="48" font-weight="700" fill="#fff">51 releases</text><text x="404" y="68" font-size="13" fill="#fff">one DCAT catalog</text>
           <rect x="20" y="140" width="160" height="56" fill="#fff"/><text x="34" y="164" font-weight="700">Neo4j + Jena</text><text x="34" y="184" font-size="13" fill="#4a4f57">local, one of each</text>
           <rect x="200" y="140" width="160" height="56" fill="#fff"/><text x="214" y="164" font-weight="700">AuraDB</text><text x="214" y="184" font-size="13" fill="#4a4f57">copy, hash equal</text>
           <rect x="380" y="140" width="160" height="56" fill="#fff"/><text x="394" y="164" font-weight="700">epm_triples</text><text x="394" y="184" font-size="13" fill="#4a4f57">Delta, 40,169 rows</text>
@@ -531,7 +531,7 @@ details.fm:not([open])>:not(summary){display:none}
 
 <section id="how-built" data-ss-id="section-how-built" data-ss-section>
   <h2 class="rise" data-ss-id="how-the-ontology-was-built-from-zero-to-done">How the ontology was built, from zero to done</h2>
-  <p class="section-lede rise">It picked up from the process map and ended as 50 versioned, checked releases. The method came from a gated, twelve-step guide; every choice that mattered was written down as a decision record.</p>
+  <p class="section-lede rise">It picked up from the process map and ended as 50 versioned, checked releases (51 since technical-graph 1.0.0, 2026-11-02). The method came from a gated, twelve-step guide; every choice that mattered was written down as a decision record.</p>
 
   <h3 class="rise" data-ss-id="the-starting-point">The starting point</h3>
   <div class="split rise">
@@ -673,9 +673,9 @@ details.fm:not([open])>:not(summary){display:none}
 
 <section id="modules" data-ss-id="section-modules" data-ss-section>
   <h2 class="rise" data-ss-id="the-ontology-module-by-module">The ontology, module by module</h2>
-  <p class="section-lede rise"><code>core</code> is the process map. Most modules add one kind of thing and link it to core's processes; <code>market-data</code> links to <code>kpi</code>, <code>ref-mpc</code> holds the company facts, and <code>integration</code> holds rules about the other modules' links (<code>MODULES.md</code>).</p>
+  <p class="section-lede rise"><code>core</code> is the process map. Most modules add one kind of thing and link it to core's processes; <code>market-data</code> links to <code>kpi</code>, <code>ref-mpc</code> holds the company facts, <code>integration</code> holds rules about the other modules' links, and <code>technical-graph</code> links what is built on a data platform to <code>data-product</code>, <code>kpi</code> and <code>system</code> (<code>MODULES.md</code>).</p>
   <figure class="rise">
-    <svg viewBox="0 0 1000 380" role="img" aria-label="Module map: core in the centre; organization, party, kpi, data-product, value-stream, system and lane link to core's processes; market-data links to kpi; ref-mpc uses organization and party terms; integration holds rules over the others' links.">
+    <svg viewBox="0 0 1000 380" role="img" aria-label="Module map: core in the centre; organization, party, kpi, data-product, value-stream, system and lane link to core's processes; market-data links to kpi; ref-mpc uses organization and party terms; integration holds rules over the others' links. Not drawn: technical-graph, released 2026-11-02, which links to data-product, kpi and system.">
       <rect width="1000" height="380" fill="#f2f4f7"/>
       <g font-family="Source Sans 3, sans-serif" font-size="15" fill="#1b1d21">
         <rect x="420" y="160" width="160" height="56" fill="#0b5cad"/><text x="452" y="186" font-weight="700" fill="#fff">core 2.4.0</text><text x="436" y="206" font-size="13" fill="#fff">the process map</text>
@@ -698,10 +698,10 @@ details.fm:not([open])>:not(summary){display:none}
       </g>
       <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#4a4f57"/></marker></defs>
     </svg>
-    <figcaption>Newest release of each module, from <code>releases/catalog.ttl</code>. Arrows follow the links <code>MODULES.md</code> quotes; for what each release requires, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</figcaption>
+    <figcaption>Newest release of each module, from <code>releases/catalog.ttl</code>, as of 2026-10-31; <code>technical-graph</code>, released 2026-11-02, is not drawn (the guide's module map shows it). Arrows follow the links <code>MODULES.md</code> quotes; for what each release requires, run <code>uv run --with rdflib python scripts/epm_facts.py modules</code>.</figcaption>
   </figure>
 
-  <p class="rise">Every module folder has the same shape: CSV tables (the data the decision owner or the sources gave), a <code>build_*.py</code> that turns them into Turtle, a <code>vocabulary.ttl</code> for its terms, a <code>shapes.ttl</code> for its SHACL shapes, and a <code>test_*.py</code>. Its released packages are in <code>business_architecture/ontology/releases/&lt;module&gt;/&lt;version&gt;/</code>. Three source folders ship together as <code>integration</code> (<code>placement/</code>, <code>authority/</code>, <code>consumer/</code>), and <code>population/</code> ships in <code>kpi</code>.</p>
+  <p class="rise">Every module folder but <code>technical-graph</code> has the same shape: CSV tables (the data the decision owner or the sources gave), a <code>build_*.py</code> that turns them into Turtle, a <code>vocabulary.ttl</code> for its terms, a <code>shapes.ttl</code> for its SHACL shapes, and a <code>test_*.py</code>. Its released packages are in <code>business_architecture/ontology/releases/&lt;module&gt;/&lt;version&gt;/</code>. Three source folders ship together as <code>integration</code> (<code>placement/</code>, <code>authority/</code>, <code>consumer/</code>), and <code>population/</code> ships in <code>kpi</code>. <code>technical-graph/</code> releases only its vocabulary and shapes; beside them, <code>build_example.py</code> cuts an example graph from the demo's technical graph as test data, and <code>test_technical_graph.py</code> tests them.</p>
 
   <div class="tbl rise"><table>
     <thead><tr><th>Module</th><th>What it holds</th><th>Read first</th><th>Links</th></tr></thead>
@@ -717,6 +717,7 @@ details.fm:not([open])>:not(summary){display:none}
       <tr><td><code>market-data</code></td><td>Recipes of market series (legs and region), never prices</td><td><code>market-data/build_market_data.py</code>, <code>series.csv</code></td><td><code>seriesOf</code> to kpi</td></tr>
       <tr><td><code>ref-mpc</code></td><td>The only company-specific module: MPC, MPLX, control, segments, refineries, brands</td><td><code>ref-mpc/ref-mpc.ttl</code></td><td>uses organization and party terms</td></tr>
       <tr><td><code>integration</code></td><td>Rules: placement kinds, source tiers, consumer rules</td><td><code>placement/</code>, <code>authority/build_source_tiers.py</code>, <code>consumer/</code></td><td>over the others' links</td></tr>
+      <tr><td><code>technical-graph</code></td><td>The vocabulary of what was built on a data platform: hosts, source databases, tables, views, metric views, pipeline steps, quality checks and agents; definitions only, never the built records</td><td><code>technical-graph/vocabulary.ttl</code>; its example graph, test data, from <code>build_example.py</code></td><td><code>designedAs</code> to data-product, <code>implements</code> to kpi, <code>standsFor</code> to system</td></tr>
     </tbody>
   </table></div>
 
@@ -847,7 +848,7 @@ EOF</code></pre>
 
 <section id="projections" data-ss-id="section-projections" data-ss-section>
   <h2 class="rise" data-ss-id="projections-and-stores">Projections and stores</h2>
-  <p class="section-lede rise">One loader projects the releases into Neo4j: the skill driver. <code>pipeline.py</code> checks the same eleven packages in CI, with no database, and keeps the record of the last load.</p>
+  <p class="section-lede rise">One loader projects the releases into Neo4j: the skill driver. <code>pipeline.py</code> checks the same twelve packages in CI (eleven until technical-graph 1.0.0, 2026-11-02), with no database, and keeps the record of the last load.</p>
   <div class="split rise">
     <div class="panel">
       <h3 data-ss-id="pipeline-py-and-run-local-sh"><code>pipeline.py</code></h3>
@@ -856,7 +857,7 @@ EOF</code></pre>
         <li><code>pipeline.py build --verify</code>: fail unless the manifest matches a fresh build. <code>scripts/check.sh</code> runs it on every pull request.</li>
         <li><code>pipeline.py record --run ~/lpg-out/epm</code>: after a driver run on these inputs, take its <code>inferred.nt</code> and a summary of its report into the repository, then rewrite the manifest.</li>
       </ol>
-      <p>Last load: 4,193 nodes and 22,142 relationships from 36,951 triples and 2 inferred, every check passing (<code>scripts/epm_facts.py projection</code>).</p>
+      <p>Last load (2026-11-02, with technical-graph 1.0.0, on test containers): 4,234 nodes and 22,302 relationships from 37,176 triples and 2 inferred, every check passing (<code>scripts/epm_facts.py projection</code>).</p>
     </div>
     <div class="panel">
       <h3 data-ss-id="the-skill-driver-run-projection-py">The skill driver, <code>run_projection.py</code></h3>
@@ -993,13 +994,13 @@ uv run --no-project --with rdflib python3 run_projection.py --config "$EPM_RUN" 
 uv run -q --no-project --with rdflib --with pyshacl python pipeline.py record --run "$EPM_OUT"
 cd "$EPM_ROOT"
 python3 scripts/epm_facts.py projection</code></pre>
-  <p class="rise"><strong>Validate the local Neo4j.</strong> The run has already checked the graph; this counts it yourself. Expect the nodes and relationships <code>epm_facts.py projection</code> printed, 4,193 and 22,142 on these releases, and 11 release records, each with <code>TRUE</code> and 0 violations. After a full run, read the password from the <code>epm-rebuild</code> file instead.</p>
+  <p class="rise"><strong>Validate the local Neo4j.</strong> The run has already checked the graph; this counts it yourself. Expect the nodes and relationships <code>epm_facts.py projection</code> printed, 4,234 and 22,302 on these releases, and 12 release records, each with <code>TRUE</code> and 0 violations. After a full run, read the password from the <code>epm-rebuild</code> file instead.</p>
 <pre class="rise"><code>export NEO4J_PASSWORD=$(grep '^PASSWORD=' "$EPM_OUT/neo4j-run/run.env" | cut -d= -f2-)
 docker exec -e NEO4J_PASSWORD "$EPM_NEO4J" cypher-shell -u neo4j \
   "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]-&gt;(:Resource) RETURN count(r) AS relationships; MATCH (r:ModuleRelease) RETURN r.module, r.version, r.conforms, r.violations ORDER BY r.module;"</code></pre>
-  <p class="rise"><strong>Validate Jena.</strong> Expect 33 graphs and 40,169 triples on these releases: three graphs for each of 11 modules. The query leaves out the technical graph's two named graphs.</p>
+  <p class="rise"><strong>Validate Jena.</strong> Expect 36 graphs and 40,565 triples on these releases: three graphs for each of 12 modules (33 and 40,169 for the eleven before technical-graph 1.0.0, 2026-11-02). The query leaves out the technical graph's two named graphs.</p>
 <pre class="rise"><code>curl -s "$EPM_JENA/query" --data-urlencode 'query=SELECT (COUNT(DISTINCT ?g) AS ?graphs) (COUNT(*) AS ?triples) WHERE { GRAPH ?g { ?s ?p ?o } FILTER(!STRSTARTS(STR(?g), "urn:pricing-demo:")) }' -H 'Accept: text/csv'</code></pre>
-  <p class="rise"><strong>Validate AuraDB and Databricks,</strong> when the run reached them. The run's copy step has required AuraDB's graph hash to equal the local one, and its round trip has required the table's RDFC-1.0 hash to equal the release files'. In the Aura console's query tool, run the same three queries as for the local Neo4j. In the Databricks SQL editor, this returns 40169 and 33:</p>
+  <p class="rise"><strong>Validate AuraDB and Databricks,</strong> when the run reached them. The run's copy step has required AuraDB's graph hash to equal the local one, and its round trip has required the table's RDFC-1.0 hash to equal the release files'. In the Aura console's query tool, run the same three queries as for the local Neo4j. In the Databricks SQL editor, this returns 40565 and 36 for these releases (40169 and 33 for the eleven before technical-graph 1.0.0, which the table holds until its next reload):</p>
 <pre class="rise"><code>SELECT count(*), count(DISTINCT graph) FROM &lt;catalog&gt;.&lt;schema&gt;.epm_triples;</code></pre>
   <p class="rise"><strong>Load the technical graph.</strong> A run empties each Neo4j store, so load the demo's technical graph again. Name each store the run reached: <code>driver</code> is the local Neo4j, <code>jena</code> is Jena and <code>aura</code> is AuraDB. It prints how many nodes and edges it loaded.</p>
 <pre class="rise"><code>cd "$EPM_ROOT/demos/downstream-pricing-databricks-free"
@@ -1692,8 +1693,8 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre></sec
   <h3 class="rise" data-ss-id="change-a-measure">Add or change a measure</h3>
   <p class="rise" data-ss-id="change-measure-text">The same route, starting in <code>business_architecture/ontology/kpi/</code>, with these differences. Edit the tables <code>measure-classification.csv</code>, <code>measure-details.csv</code> and, for an identifier, <code>measure-identifiers.csv</code>. Build with <code>build_measures.py</code>, and release with <code>build_module.py kpi</code>. A KPI is a designation with a target and an owner (EPM-DEC-001-0042), and other measures take an OPM identifier. If Databricks computes the measure, also change <code>sql/05_metric_views.sql</code> in the demo (the comment, display name, synonyms and <code>epm_measure_identifiers</code> tag), rebuild, and run <code>tech_graph collect</code>, <code>build</code>, <code>load</code> and <code>sync</code>, so its <code>IMPLEMENTS</code> edge exists. The demo's E3 tests list each view's identifiers by hand, so update them too.</p>
 
-  <h3 class="rise" data-ss-id="add-a-module">Add a twelfth module</h3>
-  <p class="rise" data-ss-id="add-module-intro">Copy <code>business_architecture/ontology/lane/</code>, the smallest module: a README, <code>vocabulary.ttl</code>, <code>shapes.ttl</code>, a build script, its output and its test. Start from a competency question the eleven modules cannot answer, and decide what the module holds and what it depends on, with no cycles. Then register it in each place below. A place you miss may stay silent, so check every row.</p>
+  <h3 class="rise" data-ss-id="add-a-module">Add a thirteenth module</h3>
+  <p class="rise" data-ss-id="add-module-intro">Copy <code>business_architecture/ontology/lane/</code>, the smallest module: a README, <code>vocabulary.ttl</code>, <code>shapes.ttl</code>, a build script, its output and its test. Start from a competency question the released modules cannot answer, and decide what the module holds and what it depends on, with no cycles. Then register it in each place below. A place you miss may stay silent, so check every row.</p>
   <div class="tbl rise" data-ss-id="add-module-table"><table class="gapt"><thead><tr><th>Place</th><th>What to add</th></tr></thead><tbody>
 <tr><td><code>release/build_module.py</code></td><td data-k="What to add">An entry: title, description, version, stage, approver, approval, parts, shapes, <code>depends_on</code>, pins and decisions. The first release is a major, so build it as a candidate until the decision owner approves it</td></tr>
 <tr><td><code>scripts/check.sh</code></td><td data-k="What to add">The builder's <code>--verify</code>, <code>build_module.py &lt;module&gt; --verify</code>, and the test file</td></tr>
@@ -1703,7 +1704,7 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre></sec
 <tr><td><code>release/build_catalog.py</code></td><td data-k="What to add">Nothing to edit: run <code>--write</code>, since it reads the packages on disk</td></tr>
 <tr><td><code>integration</code> in <code>build_module.py</code></td><td data-k="What to add"><code>depends_on</code> and pins, in its next release, if the module links to the others</td></tr>
 <tr><td><code>scripts/epm_facts.py</code></td><td data-k="What to add">The <code>coverage</code> entry, if processes link to it</td></tr>
-<tr><td><code>MODULES.md</code>, the guide, this page</td><td data-k="What to add">A section on the module, and every figure that says eleven. <code>scripts/test_modules_guide.py</code> and <code>test_published_figures.py</code> check part of this</td></tr>
+<tr><td><code>MODULES.md</code>, the guide, this page</td><td data-k="What to add">A section on the module, and every figure that counts the modules. <code>scripts/test_modules_guide.py</code> and <code>test_published_figures.py</code> check part of this</td></tr>
 </tbody></table></div>
   <p class="rise" data-ss-id="add-module-method">The <code>ontology</code> skill holds the method for each step, in <code>references/new-module.md</code>: whether it should be a new module, and what each step covers for it.</p>
 </section>
@@ -2134,12 +2135,12 @@ uv run --with rdflib --with pyshacl --with openpyxl python build_module.py kpi -
 uv run --with rdflib --with pyshacl --with openpyxl python build_catalog.py --verify
 # from repository root
 git tag kpi-v1.3.0</code></pre></dd>
-<dt>What you should see</dt><dd>The catalog lists 50 releases (worklog §2, row 10).</dd>
+<dt>What you should see</dt><dd>The catalog lists 51 releases (50 until technical-graph 1.0.0, 2026-11-02; worklog §2, row 10, has the count of 2026-10-22).</dd>
 <dt>How to check it worked</dt><dd><code>build_catalog.py --verify</code> and each <code>build_module.py --verify</code>.</dd>
 <dt>What it enables next</dt><dd>Versioned inputs the projections read.</dd>
 <dt>Explained in</dt><dd><a href="#machinery">The build and release machinery</a></dd>
 <dt>Files in the File map</dt><dd><a href="#fm-checks">Build and checks</a>, <a href="#fm-modules">Ontology modules and releases</a></dd>
-</dl><div class="ex"><p><strong>Try it: List the modules.</strong> <code>uv run --with rdflib python scripts/epm_facts.py modules</code>. Expect eleven modules, newest core 2.4.0 and kpi 1.3.0. Teaches: releases and requirements.</p></div><p class="unv">Run <code>--write</code> only for a new version. It overwrites the package folder of the version the module's entry names, with no prompt, and a released package must never change. Use <code>--verify</code> to check.</p>
+</dl><div class="ex"><p><strong>Try it: List the modules.</strong> <code>uv run --with rdflib python scripts/epm_facts.py modules</code>. Expect twelve modules, newest core 2.4.0 and kpi 1.3.0 (eleven until technical-graph 1.0.0, 2026-11-02). Teaches: releases and requirements.</p></div><p class="unv">Run <code>--write</code> only for a new version. It overwrites the package folder of the version the module's entry names, with no prompt, and a released package must never change. Use <code>--verify</code> to check.</p>
 </li>
 <li class="stepcard rise" id="s-22">
 <h4>Run the competency regression (method Step 11)</h4>
@@ -2149,7 +2150,7 @@ git tag kpi-v1.3.0</code></pre></dd>
 <dt>Files to open, in this order</dt><dd><ol class="files"><li><code>business_architecture/ontology/regression/README.md</code>: the harness</li><li><code>business_architecture/ontology/regression/expected.csv</code>: each question&#x27;s status</li><li><code>business_architecture/ontology/regression/queries/</code>: the SPARQL per question</li><li><code>business_architecture/ontology/regression/run.py</code>: the runner</li></ol></dd>
 <dt>Commands</dt><dd><pre><code># from business_architecture/ontology/regression
 uv run --with rdflib --with pyshacl --with openpyxl python run.py</code></pre></dd>
-<dt>What you should see</dt><dd>49 answerable, 0 waiting, 1 parked (Q17, EPM-DEC-001-0086). Until 2026-11-02 it was 43 answerable; questions 45 to 50 are the technical-graph candidate's, answered on its example graph (EPM-DEC-001-0112).</dd>
+<dt>What you should see</dt><dd>49 answerable, 0 waiting, 1 parked (Q17, EPM-DEC-001-0086). Until 2026-11-02 it was 43 answerable; questions 45 to 50 are the technical-graph module's, answered on its example graph (EPM-DEC-001-0112).</dd>
 <dt>How to check it worked</dt><dd><code>run.py</code> in <code>scripts/check.sh</code>.</dd>
 <dt>What it enables next</dt><dd>Proof the ontology does its job.</dd>
 <dt>Explained in</dt><dd><a href="#how-built">How the ontology was built</a></dd>
@@ -2186,7 +2187,7 @@ scripts/check.sh</code></pre></dd>
 uv run --with rdflib --with pyshacl python pipeline.py build --verify
 # after the driver run of step 25
 uv run --with rdflib --with pyshacl python pipeline.py record --run ~/lpg-out/epm</code></pre></dd>
-<dt>What you should see</dt><dd><code>projection-manifest.json is current</code>; after a record, 4,193 nodes, 22,142 relationships, 36,951 triples and 2 inferred.</dd>
+<dt>What you should see</dt><dd><code>projection-manifest.json is current</code>; after a record, 4,234 nodes, 22,302 relationships, 37,176 triples and 2 inferred (since technical-graph 1.0.0, 2026-11-02).</dd>
 <dt>How to check it worked</dt><dd><code>pipeline.py build --verify</code> and <code>test_pipeline.py</code> in <code>scripts/check.sh</code>.</dd>
 <dt>What it enables next</dt><dd>Inputs the driver can load.</dd>
 <dt>Explained in</dt><dd><a href="#projections">Projections and stores</a></dd>

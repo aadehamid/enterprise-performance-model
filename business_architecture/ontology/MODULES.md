@@ -11,9 +11,9 @@ The diagram "EPM ontology: modules and how they connect" draws the same picture,
 
 ## The whole picture
 
-`core` is the process map. Most other modules add one kind of thing and link it to core's processes, mostly by using core's process IRIs (`https://w3id.org/lsc/ontology/process/CM-…`) directly. Three do not: `market-data` links to `kpi`'s measures, `ref-mpc` holds company facts in the terms of `organization` and `party`, and `integration` holds rules about the other modules' links. A module names the versions of the modules it was released against. When modules are loaded together, the newest release of each one is loaded.
+`core` is the process map. Most other modules add one kind of thing and link it to core's processes, mostly by using core's process IRIs (`https://w3id.org/lsc/ontology/process/CM-…`) directly. Four do not: `market-data` links to `kpi`'s measures, `ref-mpc` holds company facts in the terms of `organization` and `party`, `integration` holds rules about the other modules' links, and `technical-graph` links what is built on a data platform to `data-product`, `kpi` and `system`. A module names the versions of the modules it was released against. When modules are loaded together, the newest release of each one is loaded.
 
-Some source folders are not packages of their own. `placement/`, `authority/` and `consumer/` ship together as `integration`. `population/` ships in `kpi`. `apqc/` is a reference list that ships in no package. *2026-11-02:* `technical-graph/` is a candidate module that ships in no package until the decision owner approves its `1.0.0` (EPM-DEC-001-0112).
+Some source folders are not packages of their own. `placement/`, `authority/` and `consumer/` ship together as `integration`. `population/` ships in `kpi`. `apqc/` is a reference list that ships in no package. *2026-11-02:* `technical-graph/` ships as the `technical-graph` package since its `1.0.0`, which the decision owner approved (EPM-DEC-001-0112); its `example/` graph is test data and ships in no package.
 
 ## Three kinds of content
 
@@ -50,6 +50,7 @@ Every module package holds three graphs in Turtle:
 | `system` | What each process uses | `system/vocabulary.ttl`, `system/systems.ttl` | `system/shapes.ttl` |
 | `lane` | Where a trading process sits | `lane/vocabulary.ttl`, `lane/lanes.ttl` | `lane/shapes.ttl` |
 | `integration` | Rules that apply across modules | `placement/vocabulary.ttl`, `authority/vocabulary.ttl`, `authority/source-tiers.ttl`, `consumer/vocabulary.ttl` | `consumer/shapes.ttl`, `placement/shapes.ttl`, `authority/shapes.ttl` |
+| `technical-graph` | What was built on the data platform | `technical-graph/vocabulary.ttl` | `technical-graph/shapes.ttl` |
 
 The module builder writes each `catalog.ttl` from the release's own version and issue date; several of the Turtle files above are themselves built from the CSV tables beside them.
 
@@ -262,6 +263,23 @@ proc:CM-1-2-1 lane:officeLane lanev:front-office .
 proc:CM-1-2-2 lane:officeLane lanev:middle-office .
 proc:CM-1-2-3 lane:officeLane lanev:operations .
 proc:CM-1-2-4 lane:officeLane lanev:back-office .
+```
+
+### technical-graph: what was built on the data platform
+
+The module defines the kinds of thing a technical graph records about a data platform as built: hosts, source databases, tables, views, metric views, pipeline steps, quality checks and agents. It holds definitions only; the graph's nodes, row counts and check results stay in the technical graph (EPM-DEC-001-0112). Its links reach three modules by IRI: a metric view `implements` a `kpi` measure, a source database `standsFor` a `system` system, and a built thing is `designedAs` its design in `data-product`, with its `layer` from data-product's layer code list. Here the definitions state the first two links.
+
+<!-- module: technical-graph -->
+```turtle
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tg: <https://w3id.org/lsc/ontology/modules/technical-graph/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+
+tg:implements rdfs:domain tg:MetricView ;
+    rdfs:range kpi:MeasureDefinition .
+tg:standsFor rdfs:domain tg:SourceDatabase ;
+    rdfs:range sys:System .
 ```
 
 ### integration: rules that apply across modules

@@ -230,6 +230,20 @@ MODULES = {
         "decisions": ["EPM-DEC-001-0046", "EPM-DEC-001-0057", "EPM-DEC-001-0066", "EPM-DEC-001-0077", "EPM-DEC-001-0097",
                       "EPM-DEC-001-0098", "EPM-DEC-001-0100"],
     },
+    # The follow-up release's new module. 1.0.0 is its first release, a major the decision owner approved
+    # (EPM-DEC-001-0112, amendment of 2026-11-02, later). Its example graph is test data and never joins the package
+    # (the ontology skill's new-module rule 9).
+    "technical-graph": {
+        "title": "LSC Technical Graph Module",
+        "description": "The kinds of thing a technical graph records about a data platform as built: hosts, source databases, tables, views, metric views, pipeline steps, quality checks and agents, and the links between them; each built thing points to its design in data-product, the measure it computes in kpi and the system it copies from in system. Definitions only, never the graph's records.",
+        "version": "1.0.0", "stage": None, "issued": "2026-11-02",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-11-02-follow-up-release.md", "1. approve 1.0.0"),
+        "parts": ["technical-graph/vocabulary.ttl"],
+        "shapes": ["technical-graph/shapes.ttl"],
+        "depends_on": ["data-product", "kpi", "system"],
+        "pins": {"data-product": "1.2.0", "kpi": "1.3.0", "system": "1.5.0"},
+        "decisions": ["EPM-DEC-001-0112"],
+    },
     # The integration package's first release, a major the decision owner approved with the release plan
     # (EPM-DEC-001-0078). It packages three small vocabularies, each keeping its own namespace; the package
     # IRI names the release only. The population statements ship in kpi 1.1.0, and the APQC element list
