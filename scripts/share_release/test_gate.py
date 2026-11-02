@@ -21,6 +21,7 @@ PLANTS = {
     "a peer named": "compared with Valero and Phillips 66",
     "an issue or pull request number": "fixed in PR #231",
     "the graph's double-underscore separator": "MATCH (c:skos__Concept)",
+    "a skill the release leaves out": "follow the `way-of-working` skill",
 }
 
 
@@ -507,3 +508,17 @@ def test_a_market_news_file_named_for_a_peer_still_fails(tmp_path):
     hits = gate.scan(str(tmp_path))
     assert [(h["reason"], h.get("where")) for h in hits if h["reason"] == "a peer named"], hits
     path.unlink()
+
+
+def test_an_issue_number_in_an_answer_iri_fails_and_the_comment_alone_passes(tmp_path):
+    clean(tmp_path)
+    (tmp_path / "seq.csv").write_text("REL-00008,urn:epm:issue:205:comment:6116668059\n")
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["an issue or pull request number"]
+    (tmp_path / "seq.csv").write_text("REL-00008,urn:epm:comment:6116668059\n")
+    assert gate.scan(str(tmp_path)) == []
+
+
+def test_a_shipped_skill_naming_a_left_out_skill_fails(tmp_path):
+    clean(tmp_path)
+    plant(tmp_path, "skills/ontology/references/governance.md", "Where the `way-of-working` skill is installed, follow it.\n")
+    assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a skill the release leaves out"]

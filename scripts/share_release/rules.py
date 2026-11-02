@@ -27,6 +27,8 @@ The rules, in order:
                    release, releases/previous/kpi/1.2.0/.
  15. agents:       agent names and agent work -> neutral wording, with every decision the subject matter expert's
                    (the decision's amendment of 2026-11-01). A draft keeps its status.
+ 16. skills-left-out: a shipped skill's sentences that name the way-of-working skill, which does not ship -> what
+                   the skill says to do without it.
 
 Rule 3 also rewrites the short forms that follow a citation ("EPM-DEC-001-0020, 0021 and 0036", "(0021)",
 "amending 0021") when the number is a record in the record-dates map; a four-digit number that is not a known
@@ -144,6 +146,10 @@ def rule_records(text, ctx):
     text, k = _count(r"\((0\d{3})\)", lambda m: f"(the decision of {date_of('EPM-DEC-001-' + m.group(1))})" if known(m.group(1)) else m.group(0), text); n += k
     text, k = _count(r"\b(amending|amended by|amends|supersedes|superseded by) (0\d{3})\b",
                      lambda m: f"{m.group(1)} the decision of {date_of('EPM-DEC-001-' + m.group(2))}" if known(m.group(2)) else m.group(0), text); n += k
+    # The series name as a prefix in code (a regex, a glob, an f-string: "EPM-DEC-001-(\d{4})", "EPM-DEC-001-*.md")
+    # becomes a neutral record prefix, so the code still reads as a pattern; the prose rewrite below would make it
+    # "the decision records-(\d{4})".
+    text, k = _count(r"\bEPM-DEC-001-(?!\d)", "DEC-", text); n += k
     text, k = _count(r"\bEPM-DEC-001 records\b", "the decision records", text); n += k
     text, k = _count(r"\bEPM-DEC-001\b", "the decision records", text); n += k
     # "the decision of DATE" doubled by a preceding article: "the the decision of" -> "the decision of".
@@ -227,6 +233,9 @@ def rule_repository(text, ctx):
     text, k = _count(r"https?://github\.com/" + account + r"/[A-Za-z0-9/_.#?=-]*", "another repository", text); n += k
     text, k = _count(r"\b" + account + r"/enterprise-performance-model\b", "this repository", text); n += k
     text, k = _count(r"\b" + account + r"/personal-agent-skills\b", "the skills folder", text); n += k
+    # A change to the skills repository, by number: the number goes with the name, and the sentence keeps a noun.
+    text, k = _count(r"\bpersonal-agent-skills(?:\s+(?:PRs?|pull requests?|issues?))?\s+#\d+\s+to\s+#\d+\b", "changes to the skills folder", text); n += k
+    text, k = _count(r"\bpersonal-agent-skills(?:\s+(?:PRs?|pull requests?|issues?))?\s+#\d+\b", "a change to the skills folder", text); n += k
     text, k = _count(r"\benterprise-performance-model\b", "this repository", text); n += k
     text, k = _count(r"\bpersonal-agent-skills\b", "the skills folder", text); n += k
     for repo in OTHER_REPOS:
@@ -239,9 +248,34 @@ def rule_repository(text, ctx):
     return text, n
 
 
+# The core builder describes each source-author answer it cites by its comment (the IRIs are rewritten below).
+ANSWER_PAGE_CODE = [
+    ('re.match(r"urn:epm:issue:(\\d+):comment:(\\d+)$", str(page))', 're.match(r"urn:epm:comment:(\\d+)$", str(page))'),
+    ('f"Source-author answer, GitHub issue #{m.group(1)}, comment {m.group(2)}"', 'f"Source-author answer, comment {m.group(1)}"'),
+]
+
+
 def rule_numbers(text, ctx):
     n = 0
     html = ctx.get("path", "").endswith((".html", ".css"))
+    # Another project's tracker keeps its number, without the hash: "rdflib issue 3524" is a public issue of rdflib.
+    text, k = _count(r"\b(rdflib|RDFLib|neosemantics|n10s) (issue|PR|pull request) #(\d+)", r"\1 \2 \3", text); n += k
+    text, k = _count(r"\b(Issue|issue|PR) #(\d+)(?=, https?://github\.com/)", r"\1 \2", text); n += k
+    # A source-author answer is named by its issue comment: the IRI keeps the comment and loses the issue number, and
+    # the builder that describes it matches the new IRI.
+    for old, new in ANSWER_PAGE_CODE:
+        if old in text:
+            text = text.replace(old, new); n += 1
+    text, k = _count(r"\burn:epm:(?:issue|pull):\d+:comment:(\d+)", r"urn:epm:comment:\1", text); n += k
+    text, k = _count(r"\bGitHub issue #\d+, comment (\d+)", r"comment \1", text); n += k
+    if not html:
+        # A number used as a modifier goes and the noun reads on its own: "the 11 #204 batch 1 trigger rows" -> "the 11
+        # batch 1 trigger rows", "12 #203, 8 #210 and 84 #201 sweep rows" -> "12, 8 and 84 sweep rows", "every #201 row"
+        # -> "every row". In a page or stylesheet such a number may be a colour, so pages are left to the rules below.
+        text, k = _count(r"(?<=\d) #\d{2,4}\b(?![\w-])", "", text); n += k
+        text, k = _count(r"(?<![&\w-])#\d{2,4} (?=(?:[a-z][a-z-]* ){0,2}(?:rows?|rules?|batch)\b)", "", text); n += k
+        # A list of numbers: "#305 and #306", "#301/#302", "comment 7000001, #301, #302".
+        text, k = _count(r"(?<![&\w-])#\d{2,4}(?:(?:,\s*|\s+and\s+|/)#\d{2,4})+\b(?![\w-])", "earlier items", text); n += k
     text, k = _count(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+(?:(?:,\s*|\s+(?:to|and)\s+)#?\d+)*\b",
                      lambda m: "earlier items" if re.search(r"\d\D+\d", m.group(0)) else "an earlier change", text, re.I); n += k
     text, k = _count(r"\s?\(#\d+(?:,\s*#\d+)*(?:\s+comment\s+\d+)?\)", "", text); n += k
@@ -548,6 +582,48 @@ def rule_agents(text, ctx):
     return text, n
 
 
+# The ontology skill's sentences that name the way-of-working skill, which the release leaves out (the decision of
+# 2026-10-31): each keeps what the skill says to do without it. The rule runs after rule 15, so it reads that rule's
+# wording ("the project's instructions"). The gate fails on any mention left.
+SKILL_LEFT_OUT = [
+    (r" It says what to do with and without the `way-of-working` skill\.", ""),
+    (r"The skill works on its own\. If the `way-of-working` skill is installed too, the agent follows it for decision records, "
+     r"the pull-request loop, the check script's design and a shared tool for figures; `references/governance\.md` says what "
+     r"changes without it\.",
+     "The skill works on its own: `references/governance.md` and the templates carry the rules for decision records, review, "
+     "the check script and figures."),
+    (r"; with and without `way-of-working`\.", "."),
+    (r"Where the `way-of-working` skill is installed, it is the home for decision records, the pull-request loop, the check "
+     r"script's design and the shared figures tool: follow it, and use this file for the additions\. Where it is not "
+     r"installed, each section below says what to do instead, and the templates carry the rules you need\.",
+     "Each section below says what to do, and the templates carry the rules you need."),
+    (r" live in `way-of-working`, `references/deciding\.md`\. Without that skill, `templates/decision-record\.md` carries "
+     r"them\. Copy the template either way\.", " are carried by `templates/decision-record.md`. Copy the template."),
+    (r" What a merge does and does not decide: `way-of-working`, SKILL\.md, rule 1 \(\"On the record\"\), where installed\.",
+     " A merge decides nothing on its own."),
+    (r" \(`way-of-working`, `references/documents\.md`\)", ""),
+    (r" lives in `way-of-working`, `references/guardrails\.md`\. Without that skill, `templates/check\.sh` carries the "
+     r"guard\. Copy the template either way", " is carried by `templates/check.sh`. Copy the template"),
+    (r"the shared tool where `way-of-working` provides one, otherwise a script in the repository", "a script in the repository"),
+    (r"Where `way-of-working` is installed, its review loop is the rule:[^\n]*?Without it, the reviewer is", "The reviewer is"),
+    (r"four-snapshot guard of the way-of-working skill's references/guardrails\.md, written out so the\n# script works "
+     r"without that skill\.", "four-snapshot guard, written out in full."),
+    (r"\(short scripts, or the way-of-working skill's shared figures tool\)", "(short scripts)"),
+    (r"; where the way-of-working skill is installed, its references/deciding\.md is the home of the record rules this "
+     r"template carries", ""),
+]
+
+
+def rule_skills_left_out(text, ctx):
+    """A shipped skill names no skill the release leaves out (rule 16)."""
+    if not ctx.get("path", "").startswith("skills/"):
+        return text, 0
+    n = 0
+    for pattern, repl in SKILL_LEFT_OUT:
+        text, k = _count(pattern, repl, text); n += k
+    return text, n
+
+
 def rule_names(text, ctx):
     n = 0
     for name in owner.owner_names():
@@ -574,7 +650,8 @@ RULES = [
     ("iri", rule_iri), ("company", rule_company), ("records", rule_records), ("answers", rule_answers),
     ("attribution", rule_attribution), ("approvals", rule_approvals), ("hosts", rule_hosts),
     ("repository", rule_repository), ("numbers", rule_numbers), ("peers", rule_peers), ("left-out", rule_left_out),
-    ("previous-paths", rule_previous_paths), ("underscores", rule_underscores), ("agents", rule_agents), ("names", rule_names),
+    ("previous-paths", rule_previous_paths), ("underscores", rule_underscores), ("agents", rule_agents),
+    ("skills-left-out", rule_skills_left_out), ("names", rule_names),
 ]
 
 
