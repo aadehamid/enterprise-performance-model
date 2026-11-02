@@ -40,7 +40,7 @@ docker compose -f docker/docker-compose.yml up -d          # the seven source da
 uv sync
 uv run python -m pricing_demo.load_postgres                # generate and load the source tables
 uv run python -m pricing_demo.replicate                    # Postgres -> Parquet with DuckDB
-uv run python -m pricing_demo.databricks setup             # catalog DEMO_CATALOG as given, or idp_sbx when it is unset; schemas, volume
+uv run python -m pricing_demo.databricks setup             # catalog DEMO_CATALOG as given, or idp_sbx when it is unset; schemas, their epm_source_system tags, volume
 uv run python -m pricing_demo.databricks upload            # Parquet -> the volume
 uv run python -m pricing_demo.databricks build             # replica, silver, gold, metric views, definitions views, empty tech_graph tables
 uv run python -m pricing_demo.genie                        # the four Genie agents
@@ -50,7 +50,7 @@ uv run python -m pricing_demo.supervisor ask "<question>"  # route a question th
 uv run python -m pricing_demo.aura_test                    # can Databricks reach AuraDB? secret scope epm-neo4j, one probe job
 uv run --group outside python -m pricing_demo.outside plan     # the Parallel Decisions calls each step needs, and how many are cached
 uv run --group outside python -m pricing_demo.outside run --step events   # then monthly, diagnosis, forward; a cached call is never sent again
-uv run --group graph python -m pricing_demo.tech_graph collect   # live facts, data-quality checks, designed against observed lineage
+uv run --group graph python -m pricing_demo.tech_graph collect   # live facts, data-quality checks, designed against observed lineage, proposals
 uv run --group graph python -m pricing_demo.tech_graph build     # SPARQL Anything: the technical graph and the decision trail, out/tech/graph/*.ttl
 uv run --group graph python -m pricing_demo.tech_graph load      # Tech nodes into the local Neo4j and AuraDB, two named graphs in Jena
 uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_sbx.tech_graph.tech_graph_nodes and tech_graph_edges
@@ -60,7 +60,7 @@ uv run python -m pricing_demo.databricks purge             # list what a purge d
 uv run --with pytest python -m pytest -q tests             # offline tests
 ```
 
-Two more steps of `tech_graph` check a refresh and change nothing. After `build`, `compare` fails when the refreshed graph's objects or edges differ from `graph/*.ttl`, and `lineage` fails on a lineage difference `graph/lineage-known.json` does not state. `build` writes `out/tech/graph/`, which Git ignores, and `load` prefers it; `build --to-repo` writes `graph/*.ttl`. `collect --lineage-wait <seconds>` waits for Unity Catalog's lineage to arrive. `business_architecture/ontology/projection/rebuild_stores.py` runs all of it in order.
+Two more steps of `tech_graph` check a refresh and change nothing. After `build`, `compare` fails when the refreshed graph's objects or edges differ from `graph/*.ttl`, and `lineage` fails on a lineage difference `graph/lineage-known.json` does not state (*2026-11-02, #457:* it now sets each edge beside the three sources that may hold it: the design, the SQL files and Unity Catalog; "The lineage test", below). `build` writes `out/tech/graph/`, which Git ignores, and `load` prefers it; `build --to-repo` writes `graph/*.ttl`. `collect --lineage-wait <seconds>` waits for Unity Catalog's lineage to arrive. `business_architecture/ontology/projection/rebuild_stores.py` runs all of it in order.
 
 Postgres listens only on this machine (127.0.0.1:55432), with the throwaway login `demo`. To move the source databases to another host, change `SOURCE_PG_DSN`; nothing else names the host. Since 2026-10-28 the source databases (seven since the three-year extension, with the hidden `decision_truth` beside them) also run on an exe.dev VM, `databases.exe.xyz`, where Postgres listens only on the VM's localhost. Open a tunnel and leave it running, `ssh -N -L 127.0.0.1:5433:127.0.0.1:5432 databases.exe.xyz`, then set `SOURCE_PG_DSN=postgresql://demo:<password>@127.0.0.1:5433` in `.env`. The VM's `demo` login has its own generated password, kept only in the local `.env`. The local container stays as the fallback.
 
@@ -165,6 +165,13 @@ The checks, each a node linked to what it covers:
 | A Databricks job reaches AuraDB with the login in secret scope `epm-neo4j` | pass |
 
 The lineage test reads the `data-product` module's table lineage (`prov:wasDerivedFrom` between its tables) from `epm_triples` and Unity Catalog's `system.access.table_lineage`, keeping for each table the edges observed within 10 minutes of its latest build (`LINEAGE_WINDOW_MINUTES` in `tech_graph.py`). The window ages from each table's own latest lineage event, not from the collection: a table built twice more than 10 minutes apart keeps only the newer build's edges, so a designed edge that only the older build produced would read as designed only. The five designed-only edges are places where the demo is simpler than the shared asset: its silver price master reads only the price master replica, not the three Commercial Reference Data Hub replicas, and its crack-spread gold table reads neither the MIPS price batch dimension nor the assessment fact. The SQL files say the same, so the test found a real difference, not a fault in either record. `out/tech/lineage.json` lists every edge.
+
+*2026-11-02, #457:* the lineage is now confirmed three ways, and Databricks extends the technical graph without writing to the ontology. These run offline in the tests; a live `collect` has not run them yet.
+
+- **Confirm.** `collect` writes the designed edges, every edge Unity Catalog observed in the catalog and the built objects to `out/tech/lineage.json`. `tech_graph lineage`, after `build`, adds the SQL files' edges (the graph's `readsFrom` from `sparql/objects.rq`) and sets each edge between the design's tables beside the sources that hold it: `in_all_three`, `designed_only`, `sql_only`, `observed_only`, or two of them (`designed_and_sql` is designed and in the SQL files but not observed). It writes that into `lineage.json` under `edges` and fails on any difference `graph/lineage-known.json` does not state. The file expects the five edges above as `designed_only` (in neither the SQL files nor Unity Catalog) and the nine MPR edges as `designed_not_built`. A test computes the designed and SQL sides from `graph/tech-graph.ttl` and `data-product`'s `pricing.ttl`. The observed side is the 2026-10-29 `collect`'s (Unity Catalog saw the 26 edges the design and the SQL files share, and no other), which only a live `collect` can confirm.
+- **Extend.** A metric view made in the workspace, which no SQL file creates, still reaches the graph at the next `collect` and `build`: it gets its class from its schema, reads what Unity Catalog's lineage says it reads, and `links.rq` links its `epm_measure_identifiers` tag to `kpi` as for every view. No code changes per view. The view must define `Record_Count`, as every view here does, because `collect` counts rows through it.
+- **Tag what Databricks cannot see.** `databricks setup` tags each replica schema with `epm_source_system`, the `system` module's slug for the database ("The source systems", below; `SYSTEM_MODULE` in `pricing_demo/config.py`). `collect` reads the tags from `information_schema.schema_tags`, and `links.rq` takes the tag as deployed, or this README's map where a schema has none. The check `source-systems-agree` fails when a tag names another system than the map.
+- **Propose, never write.** `collect` writes `out/tech/proposals.json`: each identifier a view's tag lists that no `kpi` measure carries, and each built table or view the `data-product` design does not name, with the observed edges into it. A person takes each to `kpi` or `data-product`; nothing writes to the ontology.
 
 `aura_test` wrote the AuraDB login from `~/.config/neo4j/aura.env` into the secret scope `epm-neo4j` without printing it, and ran `aura_probe.py` as a one-time serverless job with the `neo4j` 5.28.1 driver. Free Edition limits outbound access, but this connection worked: the DNS lookup, a TCP connection to port 7687 and a Bolt query all succeeded, and the query counted 4,193 ontology nodes in AuraDB.
 
@@ -357,7 +364,7 @@ It leaves out that repository's documents, OT and historian data, storage design
 
 ## The source systems
 
-The demo names each source database after a public product where one exists (RightAngle, Aspen PIMS) and gives the others generic names (the decision owner, 2026-10-28). The real names stay in the ontology. The replica schemas follow the database names (`replica_rightangle`); the silver and gold tables keep the shared asset's names, so its queries run unchanged.
+The demo names each source database after a public product where one exists (RightAngle, Aspen PIMS) and gives the others generic names (the decision owner, 2026-10-28). The real names stay in the ontology. The replica schemas follow the database names (`replica_rightangle`); the silver and gold tables keep the shared asset's names, so its queries run unchanged. *2026-11-02, #457:* `databricks setup` tags each replica schema whose real system the `system` module holds with `epm_source_system` and that system's slug (`mips`, `mpr`, `kittyhawk`, `rightangle`).
 
 | Database | Demo name | Real system | Before 2026-10-28 |
 |---|---|---|---|
