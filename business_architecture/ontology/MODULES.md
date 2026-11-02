@@ -13,7 +13,7 @@ The diagram "EPM ontology: modules and how they connect" draws the same picture,
 
 `core` is the process map. Most other modules add one kind of thing and link it to core's processes, mostly by using core's process IRIs (`https://w3id.org/lsc/ontology/process/CM-…`) directly. Four do not: `market-data` links to `kpi`'s measures, `ref-mpc` holds company facts in the terms of `organization` and `party`, `integration` holds rules about the other modules' links, and `technical-graph` links what is built on a data platform to `data-product`, `kpi` and `system`. A module names the versions of the modules it was released against. When modules are loaded together, the newest release of each one is loaded.
 
-Some source folders are not packages of their own. `placement/`, `authority/` and `consumer/` ship together as `integration`. `population/` ships in `kpi`. `apqc/` is a reference list that ships in no package. *2026-11-02:* `technical-graph/` ships as the `technical-graph` package since its `1.0.0`, which the decision owner approved (EPM-DEC-001-0112); its `example/` graph is test data and ships in no package. *2026-11-02:* `logical-model/` holds the machinery of the logical-model module and a made-up example model; it ships in no package in `main`. Its first model, the customer logical model, is kept out of `main` and joins the release as `logical-model 1.0.0`, which the decision owner approves (EPM-DEC-001-0113).
+Some source folders are not packages of their own. `placement/`, `authority/` and `consumer/` ship together as `integration`. `population/` ships in `kpi`. `apqc/` is a reference list that ships in no package. *2026-11-02:* `technical-graph/` ships as the `technical-graph` package since its `1.0.0`, which the decision owner approved (EPM-DEC-001-0112); its `example/` graph is test data and ships in no package. *2026-11-02:* `logical-model/` holds the machinery of the logical-model module and a made-up example model; it ships in no package in `main`. Its first model, the customer logical model, is kept out of `main` and joins the release as `logical-model 1.0.0`, which the decision owner approved on 2026-11-02 (EPM-DEC-001-0113, amendment); `main` has no package for it, and the release cut builds it.
 
 ## Three kinds of content
 
@@ -280,6 +280,25 @@ tg:implements rdfs:domain tg:MetricView ;
     rdfs:range kpi:MeasureDefinition .
 tg:standsFor rdfs:domain tg:SourceDatabase ;
     rdfs:range sys:System .
+```
+
+### logical-model: logical data models
+
+*2026-11-02:* not released in `main`; its first model, the customer logical model, ships only in the release (EPM-DEC-001-0113). The module keeps each logical data model exported from ER Studio Data Architect as two views. The first is ER Studio's export, unchanged, in ER Studio's namespace and its own named graph. The second is an annotation layer in the module's namespace, keyed on ER Studio's identifier for each entity. The layer links each entity to three modules by IRI: `lm:sourceSystem` to a system of `system` or a customer system of `party`, `lm:describes` to a `party` concept, class or code list, and `lm:implementedBy` to a `data-product` platform table or data product. `lm:inModel` names the model the entity belongs to. Here the subject is ER Studio's own entity IRI, and nothing is re-minted. The guide's "Adding a logical model" gives the method for any later model.
+
+Because the module has no release in `main`, this quote is from the layer of the made-up example model, `logical-model/example/example-logical-model.layer.ttl`, which `scripts/check.sh` verifies; it is not a release.
+
+```text
+@prefix lm: <https://w3id.org/lsc/ontology/modules/logical-model/> .
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
+@prefix product: <https://w3id.org/lsc/ontology/modules/data-product/product/> .
+@prefix er: <https://www.erstudio.com/semanticmodel/> .
+
+er:example_core_Example_Account_Dim lm:describes party:CustomerAccount ;
+    lm:implementedBy product:customer-master ;
+    lm:inModel <https://w3id.org/lsc/ontology/modules/logical-model/model/example-logical-model> ;
+    lm:sourceSystem system:profisee .
 ```
 
 ### integration: rules that apply across modules

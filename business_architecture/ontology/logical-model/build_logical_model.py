@@ -20,7 +20,8 @@ What it does, and when it fails:
 - Every entity of the export gets lm:inModel, and the layer holds the model's lm:LogicalModel individual,
   lm:model/<slug>.
 - It fails on an IRI that two models of the build both define (as a subject), except ER Studio's shared vocabulary
-  terms (SHARED) and its glossary nodes when both models describe them identically. ER Studio's ontology header
+  terms (SHARED) and a term both models describe identically, such as a glossary node or a reused attribute; an entity
+  is never exempt. ER Studio's ontology header
   (:Ontology) is in every export: it is checked per model, never compared across models, and no query
   reads it. Each model's export stays in its own file, so the headers are never merged by the builder; the header's
   creation time is copied onto the model's individual, where it belongs to one model only.
@@ -181,14 +182,16 @@ def glossary_node(export, iri):
 
 
 def collisions(exports, errors):
-    """An IRI two models both define, other than ER Studio's vocabulary and identically described glossary nodes."""
+    """An IRI two models both define, other than ER Studio's vocabulary and a term both describe identically, such as a
+    glossary node or a reused attribute. An entity is never exempt: two models' entities of one IRI would merge."""
     slugs = sorted(exports)
     for i, a in enumerate(slugs):
         for b in slugs[i + 1:]:
             for iri in sorted(defined(exports[a]) & defined(exports[b])):
-                if glossary_node(exports[a], iri) and glossary_node(exports[b], iri) and \
-                        set(exports[a].predicate_objects(iri)) == set(exports[b].predicate_objects(iri)):
-                    continue
+                entity = any((iri, DCTERMS.identifier, None) in g and (iri, RDF.type, OWL.Class) in g
+                             for g in (exports[a], exports[b]))
+                if not entity and set(exports[a].predicate_objects(iri)) == set(exports[b].predicate_objects(iri)):
+                    continue  # the same term, described the same way in both: the skill's logical-model.md, rule 6
                 errors.append(f"models {a} and {b} both define {iri}")
 
 

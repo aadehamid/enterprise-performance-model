@@ -26,6 +26,7 @@ roles, and a fourth to read first if you are new (`epm-ontology-guide.html`, bel
 | What does the finished ontology hold, and why these modules? | `epm-ontology-guide.html`, then `MODULES.md` |
 | How do I load it into a store and query it? | `projection/ontology-stores-runbook.html` |
 | How do I change the ontology, or add a module? | `epm-walkthrough.html`, "How to change the ontology" |
+| How do I add a logical data model, such as an ER Studio export? | `epm-ontology-guide.html`, "Adding a logical model", for the design; `epm-walkthrough.html`, "Add a logical model", for the steps; the `ontology` skill's `references/logical-model.md` for the method |
 | Why is something the way it is? | `../domain/decisions/` |
 | What is still open on the ontology, and what do we need from the business? | `OPEN-ITEMS.md`, with the full wording in `business-closeout.md` |
 
@@ -73,7 +74,7 @@ example quoted from the releases.
 
 *2026-11-02:* `technical-graph`, the twelfth module, is released as 1.0.0, which the decision owner approved (EPM-DEC-001-0112).
 
-*2026-11-02:* the `logical-model` module, which keeps logical data models exported from ER Studio and links their entities to `party`, `system` and `data-product`, has its machinery in `logical-model/` (EPM-DEC-001-0113). Its first model, the customer logical model, stays out of `main` and ships only in the release, as `logical-model 1.0.0`, which the decision owner approves. In `main` it has no package, so no figure here counts it. It answers competency questions 51 to 55 on a made-up example model.
+*2026-11-02:* the `logical-model` module, which keeps logical data models exported from ER Studio and links their entities to `party`, `system` and `data-product`, has its machinery in `logical-model/` (EPM-DEC-001-0113). Its first model, the customer logical model, stays out of `main` and ships only in the release, as `logical-model 1.0.0`, which the decision owner approved on 2026-11-02 (EPM-DEC-001-0113, amendment); the release cut builds the package. In `main` it has no package, so no figure here counts it. It answers competency questions 51 to 55 on a made-up example model.
 
 For versions, what each module requires and triple counts, run
 `uv run --with rdflib python scripts/epm_facts.py modules`. It also says what each release was built
