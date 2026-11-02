@@ -846,7 +846,7 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre>
 <h3>The two views</h3>
 <ul>
 <li><strong>The tool's view.</strong> The export, kept byte for byte in its own file and its own named graph, with the tool's namespace, classes, properties and shapes. Nothing is re-minted, and no namespace rewrite touches it.</li>
-<li><strong>The annotation layer.</strong> Four annotation properties in the module's namespace, set on the tool's own entity IRIs: <code>lm:inModel</code> gives the model the entity belongs to, <code>lm:sourceSystem</code> the system its data comes from (a system of <code>system</code>, or a customer system of <code>party</code>), <code>lm:describes</code> the <code>party</code> concept or class it holds data about, and <code>lm:implementedBy</code> the <code>data-product</code> platform table or data product that builds it.</li>
+<li><strong>The annotation layer.</strong> Four annotation properties in the module's namespace, set on the tool's own entity IRIs: <code>lm:inModel</code> gives the model the entity belongs to, <code>lm:sourceSystem</code> the system its data comes from (a system of <code>system</code>, or a customer system of <code>party</code>), <code>lm:describes</code> the <code>party</code> concept, class or code list it holds data about (a lookup table that holds a whole code list describes the list), and <code>lm:implementedBy</code> the <code>data-product</code> platform table or data product that builds it.</li>
 </ul>
 <p>The layer uses annotation properties because OWL gives annotations no logical meaning. A reasoner reads no axioms into the links, and the tool's classes stay plain classes.</p>
 </div>

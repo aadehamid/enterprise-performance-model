@@ -1734,7 +1734,7 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre></sec
 <tr><td><code>model</code></td><td data-k="What">The model's slug</td></tr>
 <tr><td><code>erstudio_id</code></td><td data-k="What">The entity's <code>dcterms:identifier</code> in the export</td></tr>
 <tr><td><code>source_system</code></td><td data-k="What">The IRI of a system in <code>system</code> or a customer system in <code>party</code>, or <code>none</code> when neither holds it</td></tr>
-<tr><td><code>describes</code></td><td data-k="What">The IRI of a <code>party</code> concept or class, or empty</td></tr>
+<tr><td><code>describes</code></td><td data-k="What">The IRI of a <code>party</code> concept, class or code list (a lookup table that holds a whole code list describes the list), or empty</td></tr>
 <tr><td><code>implemented_by</code></td><td data-k="What">The IRI of a <code>data-product</code> platform table or data product, or empty</td></tr>
 <tr><td><code>status</code></td><td data-k="What"><code>asserted</code> when the entity's name, description or ER Studio's metadata makes the links clear; otherwise <code>doubtful</code></td></tr>
 <tr><td><code>evidence</code></td><td data-k="What">Why the links hold, or why they are doubtful</td></tr>
