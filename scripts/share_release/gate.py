@@ -2,8 +2,8 @@
 """The leak gate: fail on any name, handle, repository, host, peer, record number or issue number in the
 release, and on the graph's double-underscore separator (plan step 5; EPM-DEC-001-0110 and its amendment).
 A peer named in market news (vocabulary.MARKET_NEWS: the demo's cached Parallel search results and SCENARIO.md)
-is not a failure (EPM-DEC-001-0112, point 7); every other check still runs on those files, and a peer anywhere
-else fails.
+is not a failure in the file's text (EPM-DEC-001-0112, point 7); a file name that names a peer still fails, every other
+check still runs on those files, and a peer anywhere else fails.
 
     python3 scripts/share_release/gate.py <release folder> [--json]
 
