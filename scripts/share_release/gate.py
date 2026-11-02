@@ -29,16 +29,18 @@ import vocabulary as V  # noqa: E402
 
 # Agents and review tools the build used, and the words for what they did (the decision's amendment of 2026-11-01).
 # "Delegation" stays where it is a business term: the delegation of authority, the documented delegation.
-AGENT_NAMES = (r"\b(?:claude|codex|bugbot|kimi|anthropic|chatgpt|herdr|openai|copilot|gemini|gpt-\d[\w.-]*|pi-review|rex-review)\b"
+# The boundary is "no letter or digit", not \b, because an underscore is a word character: test_bugbot_380 must fail.
+AGENT_NAMES = (r"(?<![A-Za-z0-9])(?:claude|codex|bugbot|kimi|anthropic|chatgpt|herdr|openai|copilot|gemini|gpt-\d[\w.-]*|pi-review|rex-review)(?![A-Za-z0-9])"
                r"|\bAGENTS\.md\b|\bPi,? round\b|\bPi review")
 AGENT_WORK = (r"\bretro of \d{4}|\bnight[ _]brief\b|\b[Ii]ndependent review|\b[Rr]eview rounds?\b|\b[Rr]ound \d+,? (?:on|finding)|\(findings? \d+|\bPR verdict|\bapproval agent\b"
               r"|\b[Uu]nder the delegation\b(?! of\b)|\b[Uu]nder their (?:recorded )?delegation\b|\b(?:expert|owner)'s delegation\b"
               r"|\b[Dd]elegated under\b|\bdelegate as described\b|\bcoding agents?\b|\bKailey\b")
 # Each pattern with its reason. The owner's names and handle come from owner.py's configuration, never from this file.
 # A name matches as a whole word only ("Ada" is a hit; "Adam", "metadata" and "adapt" are not); a handle may hold
-# punctuation, so the boundary is "no letter, digit or underscore on either side" rather than \b.
-OWNER = r"(?<![A-Za-z0-9_])(?:" + "|".join(re.escape(n) for n in _owner.owner_names()) + r")(?![A-Za-z0-9_])"
-PEERS = r"valero|phillips\s?66|\bpbf\b|hf\s?sinclair|hollyfrontier|par\s+pacific|\bdelek\b|\bcvr\b|chevron|exxon"
+# punctuation and sit inside an identifier, so the boundary is "no letter or digit on either side" rather than \b.
+OWNER = r"(?<![A-Za-z0-9])(?:" + "|".join(re.escape(n) for n in _owner.owner_names()) + r")(?![A-Za-z0-9])"
+PEERS = (r"valero|phillips[-_\s]?66|\bphillips\b|(?<![A-Za-z0-9])pbf(?![A-Za-z0-9])|hf\s?sinclair|hollyfrontier|par\s+pacific"
+         r"|(?<![A-Za-z0-9])delek(?![A-Za-z0-9])|(?<![A-Za-z0-9])cvr(?![A-Za-z0-9])|chevron|exxon")
 TICK = "|".join(V.PEER_TICKERS)
 LIST_TICK = TICK + "|" + "|".join(V.OWN_TICKERS)
 SEP = r"(?:,\s*|/|\s+and\s+|\s+or\s+)"

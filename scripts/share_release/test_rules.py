@@ -440,3 +440,13 @@ def test_the_paths_the_agent_rules_name_are_files_of_main():
 
 def test_a_retro_citation_goes_from_python():
     assert rules.apply("x (retro of 2026-10-28) y; z (a; retro of 2026-10-26).\n", "scripts/a.py")[0] == "x y; z (a).\n"
+
+
+def test_the_peer_forms_a_headline_or_a_link_takes_go():
+    out = rules.apply('"Refiners follow Valero, Phillips \\u2013 News", "https://s22.q4cdn.com/1/Phillips-66-Market.pdf" Phillips-66', "demos/x/data/a.json")[0]
+    assert "Phillips" not in out and "Valero" not in out
+
+
+def test_a_test_named_for_a_review_tool_is_renamed():
+    assert rules.apply("def test_bugbot_380_every_example(): pass\n", "demos/d/tests/test_demo.py")[0] == "def test_every_example(): pass\n"
+    assert rules.apply("def test_citations_hold_each_edge_codex_found_in_round_2(): pass\n", "scripts/test_epm_facts.py")[0] == "def test_citations_hold_each_edge_found(): pass\n"

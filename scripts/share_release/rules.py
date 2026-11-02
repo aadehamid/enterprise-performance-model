@@ -41,7 +41,7 @@ ONT = "business_architecture/ontology"
 
 # Rule 11's prefixes: the projection's fixed prefixes plus n10s's schema and SHACL prefixes (vocabulary.py).
 GRAPH_PREFIXES = V.GRAPH_PREFIXES
-PEER_NAMES = [r"Valero Energy Corporation", r"Valero Energy", r"Valero", r"Phillips ?66", r"PBF Energy", r"PBF",
+PEER_NAMES = [r"Valero Energy Corporation", r"Valero Energy", r"Valero", r"Phillips[- ]?66", r"PBF Energy", r"PBF",
               r"HF ?Sinclair", r"HollyFrontier", r"Par\s+Pacific", r"Delek US", r"Delek", r"CVR Energy", r"CVR",
               r"Chevron Corporation", r"Chevron", r"Exxon ?Mobil", r"ExxonMobil", r"Exxon"]
 # The peers' stock tickers (vocabulary.PEER_TICKERS; case-sensitive: "psx" or "dino" in lower case is not a ticker).
@@ -52,7 +52,7 @@ TICKER_OR_DK = r"(?:" + "|".join(V.PEER_TICKERS) + r"|DK)"
 LIST_TICKER = r"(?:" + "|".join(V.PEER_TICKERS + V.OWN_TICKERS) + r")"
 TICKER_SEP = r"(?:,\s*|/|\s+and\s+|\s+or\s+)"
 # A link whose address names a peer (a filing on EDGAR, a news slug, an investor site) is withheld with the name.
-PEER_URL = re.compile(r"https?://[^\s)\]\"'<>|]*(?:pbf|valero|phillips66|hfsinclair|hollyfrontier|parpacific|par-pacific|delek|cvrenergy|cvr-energy|chevron|exxon)[^\s)\]\"'<>|]*", re.I)
+PEER_URL = re.compile(r"https?://[^\s)\]\"'<>|]*(?:pbf|valero|phillips[-_]?66|hfsinclair|hollyfrontier|parpacific|par-pacific|delek|cvrenergy|cvr-energy|chevron|exxon)[^\s)\]\"'<>|]*", re.I)
 # A filing on SEC EDGAR is named by the filer's CIK (vocabulary.PEER_CIKS, cited there; EDGAR writes it with or without
 # leading zeroes) and the file by the ticker (vlo-20251231.htm): a peer's filing is withheld; MPC's, MPLX's and any
 # other filer's (an industry exhibit) stay.
@@ -280,6 +280,7 @@ def rule_peers(text, ctx):
     text, k = _count(r"\bthe Sinclair brand\b", "its brand", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")'s\b", "a U.S. refining peer's", text); n += k
     text, k = _count(r"\b(?:" + PEER_ALT + r")\b", "a U.S. refining peer", text); n += k
+    text, k = _count(r"(a U\.S\. refining peer), Phillips\b", r"\1", text); n += k  # a headline that names the second peer without its number
     # The tickers: a list ("PSX, VLO and MPC" keeps MPC), a ticker after a name ("a U.S. refining peer (VLO)"), one alone.
     text, k = _count(r"\b(?:a U\.S\. refining peer|U\.S\. refining peers) \(" + TICKER_OR_DK + r"\)", "a U.S. refining peer", text); n += k
     text, k = _count(r"\b" + TICKER_OR_DK + r"(?:" + TICKER_SEP + TICKER_OR_DK + r")+(?:'s)?\b", "U.S. refining peers", text); n += k
@@ -527,6 +528,10 @@ def rule_agents(text, ctx):
         text, k = _count(r"\bNIGHT_BRIEF\b", "BRIEF", text); n += k
         text, k = _count(r"\bNIGHT\b", "RECORDED", text); n += k
         text, k = _count(r"(?<![a-z])night[ _]brief(?![a-z])", lambda m: m.group(0).replace("night_", "").replace("night ", ""), text); n += k
+    if path.endswith("tests/test_demo.py"):  # a test named for the tool that found the case
+        text, k = _count(r"\btest_bugbot_\d+_", "test_", text); n += k
+    if path.endswith("scripts/test_epm_facts.py"):
+        text, k = _count(r"each_edge_codex_found_in_round_2", "each_edge_found", text); n += k
     if path.endswith("scripts/test_published_figures.py"):
         text, k = _count(r" \(the retro of\s+2026-10-28 left this gate.*?\)\.", ".", text, re.S); n += k
         text, k = _count(r"\(retro on [^:\n]*: ", "(", text); n += k
@@ -541,8 +546,9 @@ def rule_agents(text, ctx):
 def rule_names(text, ctx):
     n = 0
     for name in owner.owner_names():
-        text, k = _count(r"\b" + re.escape(name) + r"'s\b", "the author's", text); n += k
-        text, k = _count(r"\b" + re.escape(name) + r"\b", "the author", text); n += k
+        # An underscore is a word character, so a name inside an identifier needs a boundary of its own.
+        text, k = _count(r"(?<![A-Za-z0-9])" + re.escape(name) + r"'s\b", "the author's", text); n += k
+        text, k = _count(r"(?<![A-Za-z0-9])" + re.escape(name) + r"(?![A-Za-z0-9])", "the author", text); n += k
     return text, n
 
 

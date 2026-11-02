@@ -444,3 +444,11 @@ def test_the_agent_fails_only_in_a_decision_package(tmp_path):
     folder.mkdir(parents=True)
     (folder / "x.md").write_text("You ask the agent to draft it.\n")
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["the agent, in a decision package"]
+
+
+@pytest.mark.parametrize("text", ["def test_bugbot_380_x(): pass", "each_edge_codex_found", "built_by_Ada_Lovelace_here", "pbf_margin",
+                                  "Phillips-66-Market-Indicators.pdf", "a U.S. refining peer, Phillips"])
+def test_a_name_joined_by_an_underscore_or_a_hyphen_fails(tmp_path, text):
+    clean(tmp_path)
+    (tmp_path / "doc.md").write_text(text + "\n")
+    assert gate.scan(str(tmp_path))
