@@ -335,6 +335,7 @@ FIGURE_CLASSES = {
         ("present", r"as Turtle: {m_w} modules since technical-graph 1\.0\.0 \(2026-11-02\)",
          r"as Turtle: {a_w} modules since logical-model 1\.0\.0, in this release \({m_w} since technical-graph 1\.0\.0, 2026-11-02\)"),
         ("stores", r"over 36,951 triples Two loads", None),
+        ("stores", r"loaded from 1 Module ;", None),  # a Neo4j table: one Module node per store marker
         ("stores", r"40,169 quads in 33 graphs", None),
         ("stores", r"40,169 rows in 33 named graphs", None),
         ("stores", r"11 Module and 11 ModuleRelease nodes", None),
@@ -350,6 +351,8 @@ FIGURE_CLASSES = {
         ("present", r"for the whole ontology \({m_total} triples\)", r"for the whole ontology \({a_total} triples\)"),
     ],
     "epm-walkthrough.html": [
+        ("stores", r"loaded from 1 Module ;", None),  # a Neo4j table: one Module node per store marker
+        ("other", r"Step 4 Release Checklist", None),  # a document title, not a count
         ("present", r"L0 to L6 {m_n} modules Turtle in git", r"L0 to L6 {a_n} modules Turtle in git"),
         ("present", r"Turtle in git {m_catalog} releases one DCAT catalog", r"Turtle in git {a_catalog} releases one DCAT catalog"),
         ("stores", r"Delta, 40,169 rows", None),
@@ -440,11 +443,15 @@ def test_every_figure_of_the_pages_is_classified_and_an_augmented_release_rewrit
         before, after = visible(page), visible(fn(page, ctx))
         classes = [(cls, b.format(**values), a and a.format(**values)) for cls, b, a in FIGURE_CLASSES[name]]
         spans = [m.span() for _, b, _ in classes for m in re.finditer(b, before)]
+        loose = []
         for m in detect.finditer(before):
-            if m.group(1) and m.group(1)[0].isdigit() and int(m.group(1).replace(",", "")) < main["modules"] - 1:
-                continue  # a count smaller than any module count the pages give
-            assert any(s <= m.start() and m.end() <= e for s, e in spans), (
-                f"{name}: {before[max(0, m.start() - 80):m.end() + 40]!r} states a figure no class in FIGURE_CLASSES covers")
+            unit = m.group(0).rsplit(" ", 1)[-1].lower()
+            if m.group(1) and m.group(1)[0].isdigit() and int(m.group(1).replace(",", "")) < main["modules"] - 1 \
+                    and unit.rstrip("s") in ("file", "triple", "quad", "row"):
+                continue  # a small count of files, triples or rows; a count of modules, releases, packages, versions or graphs is always checked (Codex)
+            if not any(s <= m.start() and m.end() <= e for s, e in spans):
+                loose.append(f"{m.group(0)!r} in {before[max(0, m.start() - 80):m.end() + 40]!r}")
+        assert not loose, f"{name}: figures no class in FIGURE_CLASSES covers:\n" + "\n".join(map(repr, loose))
         for added in ADDED[name]:
             assert len(re.findall(added.format(**values), after)) == 1, f"{name}: the augmented release does not say {added!r}"
         for cls, b, a in classes:
