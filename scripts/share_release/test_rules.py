@@ -450,3 +450,31 @@ def test_the_peer_forms_a_headline_or_a_link_takes_go():
 def test_a_test_named_for_a_review_tool_is_renamed():
     assert rules.apply("def test_bugbot_380_every_example(): pass\n", "demos/d/tests/test_demo.py")[0] == "def test_every_example(): pass\n"
     assert rules.apply("def test_citations_hold_each_edge_codex_found_in_round_2(): pass\n", "scripts/test_epm_facts.py")[0] == "def test_citations_hold_each_edge_found(): pass\n"
+
+
+MARKET_NEWS = ("demos/downstream-pricing-databricks-free/data/parallel/monthly-west-coast-2024-02.json",
+               "demos/downstream-pricing-databricks-free/SCENARIO.md")
+
+
+def test_market_news_keeps_its_peer_names():
+    # EPM-DEC-001-0112, point 7: the cached Parallel search results and the scenario's briefings keep their peers.
+    line = "Valero and Chevron cut runs; PSX, VLO and MPC in Focus; https://www.qcintel.com/article/delek-starts-maintenance"
+    for path in MARKET_NEWS:
+        out, counts = run(line, path)
+        assert out == line and "peers" not in counts, path
+
+
+def test_a_peer_outside_market_news_is_still_rewritten():
+    # The ontology and every other demo file still name no peer, the same folder's other files and a look-alike path included.
+    for path in ("business_architecture/ontology/modules/kpi/kpi.ttl", "demos/downstream-pricing-databricks-free/README.md",
+                 "demos/downstream-pricing-databricks-free/data/acceptance/run-1.json",
+                 "demos/downstream-pricing-databricks-free/data/parallel/notes.md",
+                 "demos/other/SCENARIO.md", "x/demos/downstream-pricing-databricks-free/SCENARIO.md"):
+        out, counts = run("Valero cut runs.", path)
+        assert out == "A U.S. refining peer cut runs." and "peers" in counts, path
+
+
+def test_market_news_still_gets_every_other_rule():
+    out, counts = run("approved under EPM-DEC-001-0044 on the exe.dev VM; Valero", MARKET_NEWS[1])
+    assert out == "approved under the decision of 2026-10-18 on a remote host; Valero"
+    assert set(counts) == {"records", "hosts"}

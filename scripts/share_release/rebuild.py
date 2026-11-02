@@ -272,8 +272,9 @@ class Rebuild:
         self.steps.append({"step": "changelog notes", "modules": moved, "returncode": 0})
 
     def scenario_pin(self):
-        """The demo's test pins the hash of SCENARIO.md's body; the rules rewrite that body (peer names, record
-        references), so the pin is recomputed for the rewritten body and the test's note says so."""
+        """The demo's test pins the hash of SCENARIO.md's body; the rules rewrite that body (record references and
+        agent wording; its peer names stay, as market news), so the pin is recomputed for the rewritten body and the
+        test's note says so."""
         demo = os.path.join(self.release, "demos", "downstream-pricing-databricks-free")
         with open(os.path.join(demo, "SCENARIO.md"), encoding="utf-8") as f:
             body = f.read().split("-->", 1)[1]
@@ -287,8 +288,8 @@ class Rebuild:
         text = text.replace(m.group(0), m.group(1) + digest + m.group(3), 1)
         note = "    # Pinned on "
         if "Re-pinned by the share release" not in text:  # a rerun of the rebuild adds no second note
-            text = text.replace(note, "    # Re-pinned by the share release's rebuild for the rewritten body (the rules rename the peers and the "
-                                  "records in it).\n" + note, 1)
+            text = text.replace(note, "    # Re-pinned by the share release's rebuild for the rewritten body (the rules rewrite the records and other "
+                                  "references to the build in it).\n" + note, 1)
         with open(test, "w", encoding="utf-8") as f:
             f.write(text)
         self.steps.append({"step": "scenario pin", "was": m.group(2), "now": digest, "returncode": 0})

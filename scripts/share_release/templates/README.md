@@ -52,7 +52,7 @@ It verifies that every released package equals a fresh build from its sources, r
 - The ontology's IRIs begin with `https://w3id.org/mpc/ontology/`. They identify terms and resolve nowhere. They are not issued by Marathon Petroleum, and nothing here is Marathon's own or endorsed by it. The namespaces will be reviewed and approved by the Data, Analytics and Insight team; until then they are working names.
 - In the Neo4j graphs every label, relationship type and property is `prefix_name`, with one underscore (`skos_prefLabel`, `vs_Stage`).
 - "Decision owner" in the documents and the sources means the subject matter expert who reviewed the documents and recorded each decision. Every decision in this release is theirs. Quotes attributed to "a subject matter expert reviewing the documents" are their words. For your own changes, your ontology owner holds this role.
-- Claims that rest on the industry view are presented as "Industry standard, and analysis of publicly available filings from peers (U.S. refiners)"; no peer is named.
+- Peers are named only in market news: the pricing demo's cached search results (`demos/downstream-pricing-databricks-free/data/parallel/`) and the scenario's briefings (`demos/downstream-pricing-databricks-free/SCENARIO.md`). Every other claim that rests on peers reads as the industry view: "Industry standard, and analysis of publicly available filings from peers (U.S. refiners)".
 
 ## Licences and sources
 

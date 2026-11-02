@@ -43,8 +43,8 @@ A new cut is a small edit: `manifest.py` holds its facts in one place (`RELEASE_
   the one table the `skills-tests` row runs too (`skill_checks.py`). Its freeze step relies on the builders'
   release mode (`frozen_sources.py`, `build_module.package_folder`, `scripts/conftest.py`), merged into `main` by
   pull request #460 on 2026-11-01.
-- `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing), record number
-  (full or short form), issue number, left-out document, agent or review tool, agent-work phrase or double-underscore graph name; a name matches when no letter or digit touches it, so it also fails inside an identifier such as `test_x_y`, and "Adam" or "metadata" do not match;
+- `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing, except in market
+  news, below), record number (full or short form), issue number, left-out document, agent or review tool, agent-work phrase or double-underscore graph name; a name matches when no letter or digit touches it, so it also fails inside an identifier such as `test_x_y`, and "Adam" or "metadata" do not match;
   binaries and base64 data are read as the printable text inside them.
 - `validate.py`, `stores.py` and `snippets.py` are the validation: each row judges what it finds (a planted
   violation fails it), every command exits nonzero on a failure, and no output file holds a password: every
@@ -57,7 +57,9 @@ A new cut is a small edit: `manifest.py` holds its facts in one place (`RELEASE_
   keeping each file's mode, runs `./scripts/check.sh`, and stops the container when its deadline passes. `cut.sh`
   runs its long steps under the same deadline (`STEP_TIMEOUT`, 7200 s by default).
 - `vocabulary.py` holds the leak vocabulary the rules and the gate share (peers' tickers and EDGAR filers, with
-  their source, the other repositories, the graph prefixes).
+  their source, the other repositories, the graph prefixes) and `MARKET_NEWS`, the market news whose peer names
+  stay: the demo's cached Parallel search results and its `SCENARIO.md` (EPM-DEC-001-0112, point 7). The peer rule
+  leaves those files as they are and the gate's three peer text checks skip them (a file name is still checked); every other check still runs on them.
 - `cleanup.py` removes only what the ledger names, refuses the root, the home folder, any folder holding a checkout
   and any catalog this run did not create (a test catalog's name starts with `epm_release_validate_`), and exits 0 only with proof that everything is gone.
 
