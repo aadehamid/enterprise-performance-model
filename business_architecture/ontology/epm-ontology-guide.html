@@ -322,7 +322,7 @@ table td.n, table th.n { text-align: right; padding-right: 24px; white-space: no
 <h2 id="map">The module map</h2>
 <p class="lead"><code>core</code>, the process map, is at the bottom. Most modules add one kind of thing and link it to core's processes. An arrow points from a module to a module it requires, as each release's manifest records. <code>integration</code> requires nine modules, every one except <code>ref-mpc</code> and <code>technical-graph</code>; its arrows are dashed.</p>
 <figure>
-<div class="diagram wide" role="img" aria-label="Module map: integration on top requires core, organization, kpi, data-product, value-stream, system, lane, market-data and party, not ref-mpc; value-stream requires data-product, kpi and core; technical-graph requires data-product, kpi and system; ref-mpc requires party and organization; market-data requires kpi; data-product requires kpi, system and core; party requires system and core; lane, kpi, system and organization require core.">
+<div class="diagram wide" role="img" aria-label="Module map: integration on top requires core, organization, kpi, data-product, value-stream, system, lane, market-data and party, not ref-mpc or technical-graph; value-stream requires data-product, kpi and core; technical-graph requires data-product, kpi and system; ref-mpc requires party and organization; market-data requires kpi; data-product requires kpi, system and core; party requires system and core; lane, kpi, system and organization require core.">
 <svg viewBox="0 0 1040 530" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head" d="M0 0 10 5 0 10z"/></marker>
