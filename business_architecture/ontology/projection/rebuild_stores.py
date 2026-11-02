@@ -7,9 +7,12 @@ The environment file is the only thing that names an environment, so QA and prod
 databricks; the default is all four. A store that holds data is refused unless --empty says to replace it. --plan
 prints the steps and runs nothing.
 
-The steps, each stopping the run when it fails: preflight, empty, load, record; with Databricks, demo-build, collect,
-tech-build, tech-compare and lineage, in that order, because Unity Catalog's lineage keeps only recent builds; then
-tech-load, tech-sync, mark and check. Without Databricks the technical graph loads from what the release ships.
+The steps, each stopping the run when it fails: preflight, empty, load, record; with Databricks, demo-build, then
+aura-test with AuraDB too (a Databricks job tries to reach AuraDB with the login file EPM_AURA_ENV names; a failed probe
+is a result, which collect records as the check databricks-reaches-auradb), then collect, tech-build, tech-compare and
+lineage, in that order, because Unity Catalog's lineage keeps only recent builds; then tech-load, tech-sync, mark and
+check. Without Databricks the technical graph loads from what the release ships. With Databricks and no AuraDB,
+tech-compare fails on a copy that has never run aura-test, because the shipped graph holds that check.
 
 Exit 0: every step passed. 1: a step failed, and the last line names it. 2: the input is wrong, and each problem is named
 before anything changes. It writes <out>-rebuild-report.json (steps, status, seconds, log file; no value from a login)
@@ -170,6 +173,8 @@ def child_env(s, stores, config_path):
     """The steps' environment: this environment's stores, and the values the demo reads. Passed down, never printed."""
     env = {**os.environ, "EPM_STORES_JSON": stores_json(s, config_path), "EPM_SKILLS": s["EPM_SKILLS"]}
     logins = read_logins(s, stores)[0]
+    if "aura" in stores:
+        env["EPM_AURA_ENV"] = s["EPM_AURA_ENV"]  # aura_test's login file
     if "databricks" in stores:
         env.update({k: logins[k] for k in DATABRICKS_KEYS[:3]})
         env["EPM_TRIPLES"] = f"{logins['DATABRICKS_CATALOG']}.{logins['DATABRICKS_SCHEMA']}.{s['EPM_TRIPLES_TABLE']}"
@@ -204,6 +209,8 @@ def plan(s, stores, config_path, empty):
             ("sources", ["pricing_demo.load_postgres"]), ("replicate", ["pricing_demo.replicate"]),
             ("setup", ["pricing_demo.databricks", "setup"]), ("upload", ["pricing_demo.databricks", "upload"]),
             ("build", ["pricing_demo.databricks", "build"]), ("genie", ["pricing_demo.genie"]))]
+        if "aura" in stores:  # collect records the probe's result; the shipped graph holds that check
+            steps.append(("aura-test", DEMO, [*demo, "pricing_demo.aura_test"]))
         steps += [("collect", DEMO, [*graph, "collect", "--lineage-wait", s["EPM_LINEAGE_WAIT_SECONDS"]]),
                   ("tech-build", DEMO, [*graph, "build"]), ("tech-compare", DEMO, [*graph, "compare"]),
                   ("lineage", DEMO, [*graph, "lineage"])]
