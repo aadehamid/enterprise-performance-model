@@ -20,8 +20,8 @@ What it does, and when it fails:
   lm:model/<slug>.
 - It fails on an IRI that two models of the build both define (as a subject), except ER Studio's shared vocabulary
   terms (SHARED) and its glossary nodes when both models describe them identically. ER Studio's ontology header
-  (:Ontology) is in every export: it is checked per model, never compared across models, and the module never reads
-  it. Each model's export stays in its own file, so the headers are never merged by the builder; the header's
+  (:Ontology) is in every export: it is checked per model, never compared across models, and no query
+  reads it. Each model's export stays in its own file, so the headers are never merged by the builder; the header's
   creation time is copied onto the model's individual, where it belongs to one model only.
 - It checks the export's own key shapes point at the export's entities and their attributes, which question 53
   reads. It does not run them as SHACL, and they are not the module's shapes nor part of the whole-graph gate

@@ -2,7 +2,7 @@
 # layer with the model's export and the releases it links to (party, system, data-product) loaded, so each link can
 # be checked by class. The modelling tool's own SHACL shapes in an export are not these shapes: they constrain the
 # records of the model's entities, which the ontology never holds, so the builder only checks that they load
-# (README, "The modelling tool's own shapes").
+# (README, "ER Studio's own shapes").
 @prefix lm: <https://w3id.org/lsc/ontology/modules/logical-model/> .
 @prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
