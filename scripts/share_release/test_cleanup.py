@@ -112,3 +112,32 @@ def test_a_catalog_the_run_created_may_be_purged():
     assert cleanup.catalog_refusal({"name": "epm_release_validate_a", "detail_created_by_run": "yes"})  # only the literal true
     assert cleanup.catalog_refusal({"name": "IDP_SBX", "detail_created_by_run": True})
     assert cleanup.catalog_refusal({"name": "team_catalog", "detail_created_by_run": True})  # absence alone is not enough
+
+
+def test_the_demo_s_compose_project_goes_down_before_its_override_file_is_removed(tmp_path):
+    # stores.py ledgers the override file before the project, and the project's "down" needs the file
+    override = tmp_path / "scratch" / "validate" / "compose.pricing-validate.yml"
+    override.parent.mkdir(parents=True); override.write_text("services: {}\n")
+    (tmp_path / "demos" / "downstream-pricing-databricks-free").mkdir(parents=True)
+    ledger, envf, env = setup(tmp_path, [{"kind": "file", "name": str(override)},
+                                         {"kind": "compose-project", "name": "pricing-validate", "detail_override": str(override)}])
+    with open(tmp_path / "bin" / "docker", "w") as f:  # "compose ... down" fails when the override is gone
+        f.write("#!/bin/sh\necho \"$@\" >> \"$FAKE_DOCKER_LOG\"\n"
+                f"case \"$1 $2\" in 'compose ls') echo '[]'; exit 0;; 'compose -p') test -e {str(override)!r} || exit 1;; esac\nexit 0\n")
+    r = run(ledger, envf, env, "--yes", "--tree", str(tmp_path))
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert not override.exists() and "removed compose-project pricing-validate" in r.stdout
+
+
+def test_the_demo_s_purge_runs_with_demo_catalog_set_to_the_ledgered_catalog(tmp_path):
+    # without DEMO_CATALOG the demo's purge chooses idp_sbx, and --catalog only confirms
+    (tmp_path / "demos" / "downstream-pricing-databricks-free").mkdir(parents=True)
+    ledger, envf, env = setup(tmp_path, [{"kind": "databricks-catalog", "name": "epm_release_validate_a", "detail_created_by_run": True}])
+    with open(tmp_path / "bin" / "uv", "w") as f:
+        f.write("#!/bin/sh\necho \"DEMO_CATALOG=$DEMO_CATALOG $*\" >> \"$FAKE_DOCKER_LOG\"\nexit 0\n")
+    os.chmod(tmp_path / "bin" / "uv", 0o755)
+    env.pop("DEMO_CATALOG", None)
+    r = run(ledger, envf, env, "--yes", "--tree", str(tmp_path))
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert (tmp_path / "docker.log").read_text().strip() == (
+        "DEMO_CATALOG=epm_release_validate_a run python -m pricing_demo.databricks purge --yes --catalog epm_release_validate_a")

@@ -26,7 +26,7 @@
 # NEO4J_DATABASE=neo4j
 # EPM_AURA_ENV=<file>
 
-# Databricks, needed for --store databricks: here, or in the file EPM_DATABRICKS_ENV names.
+# Databricks, needed for --store databricks, which needs --store aura too: here, or in the file EPM_DATABRICKS_ENV names.
 # DATABRICKS_HOST=https://<workspace>.cloud.databricks.com
 # DATABRICKS_TOKEN=<token>
 # DATABRICKS_HTTP_PATH=/sql/1.0/warehouses/<warehouse-id>

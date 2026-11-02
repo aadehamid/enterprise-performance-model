@@ -454,8 +454,10 @@ def row_demo_live(tree, env):
         return {**out, "ok": False}
     time.sleep(8)
     e = demo_env(tree, env)
+    absent, why = catalog_is_absent(demo, e)
+    out["catalog_absent_before"] = why
     ledger(env, "databricks-catalog", e["DEMO_CATALOG"], "the demo's test catalog (purge with pricing_demo.databricks purge --yes --catalog)",
-           created_by_run=catalog_is_absent(demo, e))
+           created_by_run=absent, absence_check=why)
     for step in (["python", "-m", "pricing_demo.load_postgres"], ["python", "-m", "pricing_demo.replicate"],
                  ["python", "-m", "pricing_demo.databricks", "setup"], ["python", "-m", "pricing_demo.databricks", "upload"],
                  ["python", "-m", "pricing_demo.databricks", "build"], ["python", "-m", "pricing_demo.databricks", "counts"]):
@@ -469,14 +471,23 @@ def row_demo_live(tree, env):
 
 
 CATALOG_LIST = ("import sys; from pricing_demo import databricks as d; conn, e = d.connect(); cur = conn.cursor(); "
-                "print('absent' if sys.argv[1] not in {r[0] for r in d.run(cur, 'SHOW CATALOGS')} else 'present')")
+                "found = {r[0] for r in d.run(cur, 'SHOW CATALOGS')}; conn.close(); "
+                "print('CATALOG', 'present' if sys.argv[1] in found else 'absent')")
 
 
 def catalog_is_absent(demo, e, sh=None):
-    """True only on proof that the catalog is not there before this run creates it. A failed query proves nothing, so
-    cleanup.py then refuses to purge it."""
-    r = (sh or globals()["sh"])(["uv", "run", "python", "-c", CATALOG_LIST, e["DEMO_CATALOG"]], demo, env=e, timeout=600)
-    return r["returncode"] == 0 and r["tail"].strip().endswith("absent")
+    """(absent, why): absent is True only on proof that the catalog is not there before this run creates it. A failed
+    query proves nothing, so cleanup.py then refuses to purge it; why says what the check found, and is printed when
+    there is no proof. The answer is the line CATALOG absent or CATALOG present, wherever it falls among uv's and the
+    connector's messages, which share the output."""
+    r = (sh or globals()["sh"])(["uv", "run", "-q", "python", "-c", CATALOG_LIST, e["DEMO_CATALOG"]], demo, env=e, timeout=600)
+    answers = [line.split()[1] for line in r["tail"].splitlines() if line.split()[:1] == ["CATALOG"] and len(line.split()) == 2]
+    if r["returncode"] == 0 and answers == ["absent"]:
+        return True, "absent before the run"
+    why = ("present before the run" if r["returncode"] == 0 and answers == ["present"]
+           else f"no proof of absence: the check exited {r['returncode']}: {r['tail'].strip()[-300:]}")
+    print(f"catalog {e['DEMO_CATALOG']}: {why}; cleanup.py will not purge it", file=sys.stderr)
+    return False, why
 
 
 def stores_json(env):
@@ -516,7 +527,8 @@ def row_tech_graph(tree, env):
     walk on the test stores, after the demo's live row. collect records the probe's result as a check the shipped graph
     holds; compare may differ from the shipped graph only in the test triple table's name (compare_ok)."""
     demo = os.path.join(tree, DEMO)
-    e = {**demo_env(tree, env), "EPM_STORES_JSON": stores_json(env)}
+    e = {**demo_env(tree, env), "EPM_STORES_JSON": stores_json(env),
+         "EPM_RUN_STARTED": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}  # collect ignores an older probe result
     out = {"steps": []}
     if env.get("AURA_ENV"):
         e["EPM_AURA_ENV"] = expand(env["AURA_ENV"])

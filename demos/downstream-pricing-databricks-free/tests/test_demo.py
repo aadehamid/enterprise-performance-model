@@ -836,6 +836,18 @@ def test_purge_refuses_a_catalog_the_demo_did_not_create():
     assert _drops(cur) == dbx.purge_statements("idp_sbx")
 
 
+
+def test_purge_never_lets_catalog_choose_another_catalog():
+    # cleanup.py purges a validation's test catalog with --catalog; without DEMO_CATALOG the chosen catalog is idp_sbx
+    from pricing_demo import databricks as dbx
+    cur = _Cursor(dbx.DEMO_COMMENT)
+    try:
+        dbx.purge(execute=True, catalog="epm_release_validate_demo", connection=(_Conn(cur), {}))
+        raise AssertionError("purge dropped idp_sbx's objects when --catalog named another catalog")
+    except SystemExit as err:
+        assert "set DEMO_CATALOG=epm_release_validate_demo" in str(err)
+    assert _drops(cur) == []
+
 def test_purge_stops_at_a_schema_that_holds_something_else():
     from pricing_demo import databricks as dbx
     cur = _Cursor(dbx.DEMO_COMMENT, fail_on="DROP SCHEMA")
@@ -1477,6 +1489,20 @@ def test_e5_the_aura_test_writes_the_login_to_a_secret_scope_and_never_prints_it
         assert prints and not any(re.search(r"\b(uri|user|password|login)\b", p) for p in prints), prints
     assert aura_test.probe_line('noise\nAURA_PROBE {"dns": {"ok": true}}\n') == {"dns": {"ok": True}}
 
+
+
+def test_e5_a_probe_result_from_before_the_run_does_not_count(monkeypatch, tmp_path):
+    """collect records the AuraDB probe from out/tech/aura-test.json; a file an earlier run left there must not pass
+    for this run's probe."""
+    result = tmp_path / "aura-test.json"
+    result.write_text(json.dumps({"started": "2026-11-01T10:00:00Z", "probe": {"dns": {"ok": True}}}))
+    monkeypatch.setattr(tech_graph, "AURA_TEST", str(result))
+    monkeypatch.setenv("EPM_RUN_STARTED", "2026-11-02T09:00:00Z")
+    assert tech_graph.aura_check() is None
+    monkeypatch.setenv("EPM_RUN_STARTED", "2026-11-01T09:00:00Z")
+    assert tech_graph.aura_check()["result"] == "pass"
+    monkeypatch.delenv("EPM_RUN_STARTED")  # a run by hand names no start: the file counts, as before
+    assert tech_graph.aura_check()["checked_at"] == "2026-11-01T10:00:00Z"
 
 
 def test_e5_the_aura_login_file_is_the_one_epm_aura_env_names_and_epm_stores_json_still_overrides(monkeypatch, tmp_path):

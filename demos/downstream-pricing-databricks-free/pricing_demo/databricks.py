@@ -233,11 +233,15 @@ def demo_owns(cur, cat):
 
 def purge(execute=False, catalog=None, connection=None):
     """Prints the drop statements; runs them only with --yes. Stops at the first statement that fails. A catalog the
-    demo did not create (one without setup's comment) is purged only when --catalog names it."""
+    demo did not create (one without setup's comment) is purged only when --catalog names it. --catalog confirms the
+    catalog DEMO_CATALOG chooses and never chooses one: a --catalog that names another is refused, since without
+    DEMO_CATALOG the purge would act on idp_sbx."""
     conn, e = connection or connect()
     with conn, conn.cursor() as cur:
         cat = current_catalog(cur, e)
         print(f"catalog {cat}")
+        if catalog and catalog != cat:
+            raise SystemExit(f"--catalog names {catalog}, but the catalog chosen is {cat}; set DEMO_CATALOG={catalog} to purge it")
         if execute and not demo_owns(cur, cat) and catalog != cat:
             raise SystemExit(f"{cat} is not a catalog the demo created; to purge the demo's objects in it, "
                              f"add --catalog {cat}")

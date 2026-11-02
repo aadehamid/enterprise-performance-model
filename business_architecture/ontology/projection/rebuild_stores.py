@@ -11,8 +11,9 @@ The steps, each stopping the run when it fails: preflight, empty, load, record; 
 aura-test with AuraDB too (a Databricks job tries to reach AuraDB with the login file EPM_AURA_ENV names; a failed probe
 is a result, which collect records as the check databricks-reaches-auradb), then collect, tech-build, tech-compare and
 lineage, in that order, because Unity Catalog's lineage keeps only recent builds; then tech-load, tech-sync, mark and
-check. Without Databricks the technical graph loads from what the release ships. With Databricks and no AuraDB,
-tech-compare fails on a copy that has never run aura-test, because the shipped graph holds that check.
+check. Without Databricks the technical graph loads from what the release ships. Preflight refuses Databricks without
+AuraDB (EPM-DEC-001-0112, point 8): tech-compare would fail on a copy that has never run aura-test, because the shipped
+graph holds that check.
 
 Exit 0: every step passed. 1: a step failed, and the last line names it. 2: the input is wrong, and each problem is named
 before anything changes. It writes <out>-rebuild-report.json (steps, status, seconds, log file; no value from a login)
@@ -114,6 +115,9 @@ def preflight(s, stores, which=shutil.which):
             problems.append(f"EPM_SKILLS: no {script} under {s['EPM_SKILLS']}")
     if "aura" in stores and "driver" not in stores:
         problems.append("aura is a copy of the local Neo4j: name driver too")
+    if "databricks" in stores and "aura" not in stores:  # EPM-DEC-001-0112, point 8
+        problems.append("databricks needs aura too: the technical graph's structure check expects the AuraDB probe's result, "
+                        "which runs only with both; add --store aura")
     if "driver" in stores:
         if not which("java"):
             problems.append("java is not on the PATH (11 or later; ROBOT runs on it)")
@@ -171,7 +175,8 @@ def driver_arguments(stores):
 
 def child_env(s, stores, config_path):
     """The steps' environment: this environment's stores, and the values the demo reads. Passed down, never printed."""
-    env = {**os.environ, "EPM_STORES_JSON": stores_json(s, config_path), "EPM_SKILLS": s["EPM_SKILLS"]}
+    env = {**os.environ, "EPM_STORES_JSON": stores_json(s, config_path), "EPM_SKILLS": s["EPM_SKILLS"],
+           "EPM_RUN_STARTED": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}  # collect ignores an older probe result
     logins = read_logins(s, stores)[0]
     if "aura" in stores:
         env["EPM_AURA_ENV"] = s["EPM_AURA_ENV"]  # aura_test's login file
@@ -250,15 +255,16 @@ def holding(s, stores, env, runner=subprocess.run):
         row = rows.get(store)
         if row is None:
             problems.append(f"{store}: the count gave no result; nothing was changed")
-        elif "unreachable" in row:
+        elif "unreachable" in row or "no_login" in row:
+            why = row.get("unreachable") or row["no_login"]
             if store not in projects:
-                problems.append(f"{store}: could not be reached ({row['unreachable']}); check its login values")
+                problems.append(f"{store}: could not be reached ({why}); check its login values")
             else:
                 found = containers(projects[store], runner)
                 if found is None:
                     problems.append(f"{store}: Docker could not list its containers; nothing was changed")
                 elif found:
-                    held.append((store, f"a container that did not answer, {row['unreachable']}"))
+                    held.append((store, f"a container that did not answer, {why}"))
         elif row.get("held"):
             held.append((store, row["held"]))
     return held, problems

@@ -2,6 +2,7 @@
 output file holds a password. The stores themselves are stubbed; nothing here needs Docker or a login."""
 import json
 import os
+import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -307,9 +308,22 @@ def test_the_ledgered_demo_venv_is_a_path_cleanup_may_remove(tmp_path, monkeypat
 def test_a_catalog_is_absent_only_on_proof():
     import stores
     answer = lambda rc, tail: (lambda *a, **k: {"returncode": rc, "tail": tail})
-    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "absent\n")) is True
-    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "present\n")) is False
-    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(1, "absent\n")) is False
+    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "CATALOG absent\n"))[0] is True
+    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "CATALOG present\n")) == (False, "present before the run")
+    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(1, "CATALOG absent\n"))[0] is False
+    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, "absent\n"))[0] is False  # no answer line
+
+
+def test_the_catalog_check_finds_its_answer_among_other_output_and_says_why_it_has_no_proof(capsys):
+    # stderr follows stdout in the tail, so any message after the answer hid it, and the ledger said "not created by
+    # this run" with no reason; cleanup.py then refused the demo's test catalog
+    import stores
+    answer = lambda rc, tail: (lambda *a, **k: {"returncode": rc, "tail": tail})
+    noisy = "CATALOG absent\nwarning: a message on stderr\n"
+    assert stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(0, noisy)) == (True, "absent before the run")
+    absent, why = stores.catalog_is_absent("/demo", {"DEMO_CATALOG": "c"}, sh=answer(1, "ModuleNotFoundError: databricks"))
+    assert not absent and "exited 1" in why and "ModuleNotFoundError" in why
+    assert "catalog c: no proof of absence" in capsys.readouterr().err
 
 
 TEST_TABLE = "workspace.epm_ontology.epm_triples_validate"
@@ -333,6 +347,16 @@ def test_compare_accepts_only_the_test_triple_table_s_name():
     assert not stores.compare_ok({**compare_result(EXPECTED), "returncode": 2}, TEST_TABLE)
 
 
+
+def test_the_shipped_triple_table_is_the_one_the_shipped_graph_names():
+    """SHIPPED_TRIPLES is typed by hand; the demo's graph/tech-graph.ttl, which the release ships, is the source."""
+    ttl = os.path.join(os.path.dirname(os.path.dirname(HERE)), "demos", "downstream-pricing-databricks-free", "graph", "tech-graph.ttl")
+    subject, name = stores.TRIPLES_NAME.split()
+    text = open(ttl).read()
+    assert f"@prefix tv: <{name[:-len('name')]}> ." in text
+    block = re.search(rf"^<{re.escape(subject)}> .*?\.$", text, re.M | re.S).group(0)
+    assert re.findall(r'tv:name "([^"]+)"', block) == [stores.SHIPPED_TRIPLES]
+
 def run_tech_graph_row(tmp_path, monkeypatch, compare_lines):
     """row_tech_graph with every command stubbed; compare answers with the given differences."""
     tree = release_tree(tmp_path)
@@ -354,6 +378,7 @@ def test_the_tech_graph_row_probes_aura_first_and_passes_the_test_table_s_rename
     out, calls = run_tech_graph_row(tmp_path, monkeypatch, EXPECTED)
     assert out["ok"] and out["compare_expected"]
     assert calls[0][0][-1] == "pricing_demo.aura_test" and calls[0][1]["EPM_AURA_ENV"] == str(tmp_path / "aura.env")
+    assert re.match(r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$", calls[1][1]["EPM_RUN_STARTED"])  # collect ignores an older probe result
     assert [a[-1] if a[-1] != "--store" else a for a, _ in calls][-1] == "walk"  # every step after compare ran
 
 
