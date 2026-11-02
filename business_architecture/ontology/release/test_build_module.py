@@ -133,7 +133,8 @@ class Packages(unittest.TestCase):
                     iri = URIRef(bm.MODULES_NS + name)
                     self.assertEqual(g.value(iri, DCTERMS.modified), g.value(iri, DCTERMS.issued))
                     self.assertFalse(manifest["release_candidate"])
-                    self.assertEqual(manifest["approved_by"]["recorded_in"], path)
+                    # The share release names no file it does not ship: the field comes out there (bm.recorded_where).
+                    self.assertEqual(manifest["approved_by"].get("recorded_in"), bm.recorded_where(path))
                 else:
                     self.assertFalse(issued)
                     self.assertTrue(manifest["release_candidate"])
@@ -142,6 +143,21 @@ class Packages(unittest.TestCase):
         wrong = dict(bm.MODULES["organization"], approval=(NIGHT, "Yes, cut 2.1.0 (Recommended)"))
         self.assertFalse(approval_holds("organization", wrong))
         self.assertTrue(approval_holds("organization", bm.MODULES["organization"]))
+
+    def test_a_manifest_names_where_an_approval_is_recorded_only_as_a_path(self):
+        # In a share release the sources name a subject matter expert's review comments, a sentence, where the answers
+        # file was; the manifest then leaves the field out. A file in the tree is named in either mode.
+        sentence = "(the review comments of a subject matter expert reviewing the documents)"
+        self.assertIsNone(bm.recorded_where(sentence, release_mode=True))
+        self.assertEqual(bm.recorded_where(sentence, release_mode=False), sentence)
+        self.assertEqual(bm.recorded_where("README.md", release_mode=True), "README.md")
+        name = "organization"
+        m = dict(bm.MODULES[name], approval=(sentence, "Approved as described"))
+        g = bm.build(name)
+        with mock.patch.object(bm, "SHARE_RELEASE", True), mock.patch.dict(bm.MODULES, {name: m}):
+            approved = json.loads(bm.package(name, g)["manifest.json"])["approved_by"]
+        self.assertNotIn("recorded_in", approved)
+        self.assertEqual(approved["words"], "Approved as described")
 
     def test_dependencies_name_versions_that_exist(self):
         for name in bm.MODULES:
@@ -172,7 +188,9 @@ class Packages(unittest.TestCase):
             cat = Graph().parse(data=bm.catalog(name), format="turtle")
             dataset = next(cat.subjects(RDF.type, DCAT.Dataset))
             names = {str(d).rsplit("/", 1)[1] for d in cat.objects(dataset, DCAT.distribution)}
-            self.assertEqual(names, {f"{name}.ttl", f"{name}.jsonld", "shapes.ttl"})
+            # and a graph the package carries as it is (build_module's "graphs"; only the share release's logical-model has any)
+            graphs = {os.path.basename(p) for p in bm.MODULES[name].get("graphs", [])}
+            self.assertEqual(names, {f"{name}.ttl", f"{name}.jsonld", "shapes.ttl"} | graphs)
 
     def test_the_manifest_hashes_every_other_file(self):
         for name in bm.MODULES:
@@ -429,7 +447,7 @@ class EarlierReleases(unittest.TestCase):
             self.assertIn((URIRef(bm.MODULES_NS + "ref-mpc/brand/" + slug), None, None), released)
         with open(os.path.join(shipped(self, "ref-mpc", "1.3.0"), "manifest.json")) as f:
             manifest = json.load(f)
-        self.assertEqual(manifest["approved_by"]["recorded_in"], BRANDS[0])
+        self.assertEqual(manifest["approved_by"].get("recorded_in"), bm.recorded_where(BRANDS[0]))
 
     def test_the_brands_release_carries_the_answer(self):
         m = bm.MODULES["ref-mpc"]

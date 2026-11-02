@@ -110,8 +110,9 @@ def check_targets(row, linked, errors):
         errors.append(f"{where}: source system {system} is not a system of the newest system or party release")
     concept = row["describes"]
     if concept and not (concept.startswith(str(PARTY)) and ((URIRef(concept), RDF.type, OWL.Class) in linked
-                                                            or (URIRef(concept), RDF.type, SKOS.Concept) in linked)):
-        errors.append(f"{where}: {concept} is not a concept or class of the newest party release")
+                                                            or (URIRef(concept), RDF.type, SKOS.Concept) in linked
+                                                            or (URIRef(concept), RDF.type, SKOS.ConceptScheme) in linked)):
+        errors.append(f"{where}: {concept} is not a concept, class or code list of the newest party release")
     impl = row["implemented_by"]
     if impl and not ((URIRef(impl), RDF.type, DP.PlatformTable) in linked or (URIRef(impl), RDF.type, DP.DataProduct) in linked):
         errors.append(f"{where}: {impl} is not a platform table or data product of the newest data-product release")

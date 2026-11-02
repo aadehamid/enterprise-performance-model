@@ -21,7 +21,7 @@ The layer's input is a CSV file kept beside the export, one row per entity; the 
 | `model` | The model's slug, such as `customer-logical-model` |
 | `erstudio_id` | ER Studio's `dcterms:identifier` of the entity |
 | `source_system` | The IRI of the source system: a `sys:System` of the `system` module or a `party:CustomerSystem` of the `party` module. Most customer systems are only in `party`, which says which of them are the same as a `system` system (`skos:exactMatch`). `none` when neither module holds the entity's system, and the row's other links still count; an empty value fails the build |
-| `describes` | The IRI of a `party` concept or class, or empty |
+| `describes` | The IRI of a `party` concept, class or code list (a lookup table that holds a whole code list describes the list), or empty |
 | `implemented_by` | The IRI of a `data-product` platform table or data product, or empty |
 | `status` | `asserted` or `doubtful`. Only `asserted` rows become triples. The builder prints `doubtful` rows, with their evidence, for the decision owner |
 | `evidence` | Why the links hold, or why they are doubtful |
@@ -51,4 +51,4 @@ ER Studio marks an attribute's link to a business glossary with `:businessTerm`,
 
 A new logical model joins this module as another model; it does not become a new module (EPM-DEC-001-0113, decision 3). Clean its export if it passed through email or a word processor, draft its links file, run the builder with a new slug, and resolve every `doubtful` row with the decision owner. The method is the `ontology` skill's `references/logical-model.md`. The guide, `../epm-ontology-guide.html`, explains the design in "Adding a logical model", with this module's made-up example. The walkthrough, `../epm-walkthrough.html`, gives the steps and commands in "Add a logical model". EPM-DEC-001-0113 records the decision.
 
-**Status:** not released in `main`. *2026-11-02:* `main` holds the module's machinery and the made-up example only. The package `logical-model 1.0.0`, which holds the customer model, is built only when the release is cut, in a later change. The decision owner approves it from one page (EPM-DEC-001-0113, decision 10). Until then it has no package in `../releases/`, and it is not in `build_module.py`'s modules, the catalog or the projection's inputs.
+**Status:** not released in `main`. *2026-11-02:* `main` holds the module's machinery and the made-up example only. The package `logical-model 1.0.0`, which holds the customer model, is built only when the release is cut, by `scripts/share_release/cut.sh --augment` (`scripts/share_release/README.md` says how). The decision owner approved its `1.0.0` on 2026-11-02 (EPM-DEC-001-0113, amendment). Because the cut builds it, `main` has no package for it in `../releases/`, and it is not in `build_module.py`'s modules, the catalog or the projection's inputs.

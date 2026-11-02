@@ -35,9 +35,9 @@ shp:AnnotatedEntity a sh:NodeShape ;
                   sh:or ( [ sh:class sys:System ] [ sh:class party:CustomerSystem ] ) ;
                   sh:message "An entity comes from at most one source system: a system of the system module or a customer system of the party module." ] ;
     sh:property [ sh:path lm:describes ; sh:maxCount 1 ;
-                  sh:or ( [ sh:class owl:Class ] [ sh:class skos:Concept ] ) ;
+                  sh:or ( [ sh:class owl:Class ] [ sh:class skos:Concept ] [ sh:class skos:ConceptScheme ] ) ;
                   sh:pattern "^https://w3id.org/lsc/ontology/modules/party/" ;
-                  sh:message "An entity describes at most one concept or class, and it is one of the party module." ] ;
+                  sh:message "An entity describes at most one concept, class or code list, and it is one of the party module." ] ;
     sh:property [ sh:path lm:implementedBy ; sh:maxCount 1 ;
                   sh:or ( [ sh:class dp:PlatformTable ] [ sh:class dp:DataProduct ] ) ;
                   sh:message "An entity is implemented by at most one platform table or data product of the data-product module." ] .

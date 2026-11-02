@@ -198,6 +198,26 @@ git add -A
 bash scripts/check.sh
 ```
 
+<!-- augment -->
+## Add a logical model
+
+`logical-model` holds logical data models exported from ER Studio Data Architect. A new model joins this module as one more model; it is not a new module. Each model is two files in `$ONT/logical-model/models/`: ER Studio's Turtle export, saved as `<model>.erstudio.ttl`, and a links file, `<model>.links.csv`. Name the model in lower-case words joined by hyphens, such as `supplier-logical-model`. `$ONT/logical-model/README.md` describes the links file's columns: one row per entity, keyed on ER Studio's identifier, with the source system, the `party` concept and the `data-product` table it links to, and `asserted` or `doubtful`. Only `asserted` rows become triples, and the builder prints each `doubtful` row for your ontology owner. Every link target must be in the newest package of its module, so use this release's IRIs (`https://w3id.org/mpc/ontology/modules/...`).
+
+1. Build the model's graphs. The builder writes `<model>.layer.ttl` beside the export, and fails on an IRI that your model and a model already in `models/` both define:
+
+   ```sh
+   (cd $ONT/logical-model && py build_logical_model.py --export models/<model>.erstudio.ttl --links models/<model>.links.csv \
+       --model <model> --title "<Model title>" --out models --write)
+   ```
+
+2. In `$ONT/release/build_module.py`, add the model's two files to the `graphs` list of the `logical-model` entry: `"logical-model/models/<model>.erstudio.ttl"` and `"logical-model/models/<model>.layer.ttl"`. Delete the entry's `augment` list, which names the files this release was cut from, unless you keep a record of your own files in it.
+3. Release `logical-model` as a minor, with the release steps above: save the approval, then `next_version.py start logical-model 1.1.0 minor`, `build_module.py logical-model --write` and `next_version.py finish logical-model 1.0.0`.
+4. In `scripts/check.sh`, add `--export`, `--links`, `--model` and `--title` for the new model to the line that runs `build_logical_model.py ... --verify`, so the check rebuilds every model.
+5. Rebuild the catalog and the projection manifest, and check, as in step 5 of the release steps.
+
+Questions 51 to 55 in `$ONT/regression/` run on the made-up example model. To ask them of your models, run the queries in `$ONT/regression/queries/q51-*.rq` to `q55b-*.rq` over the package's files.
+
+<!-- /augment -->
 ## The cascade
 
 A package names the exact version of each module it requires. So a new version of a module means a new version of every module that depends on it. `dependents.py` lists them, each after what it requires. Raise each version before you write its package, and write them in that order. A module that only takes the new version of what it requires gets a patch, with a changelog line that says so. A change to `core` reaches every module, so use a loop. It patches each module on the list and then finishes them all, and it stops at the first failing step. For any other module, change the list to `py dependents.py <module>`, and start the loop with `for m in $(echo "$list" | tail -n +2)`, which leaves out the module you released yourself.

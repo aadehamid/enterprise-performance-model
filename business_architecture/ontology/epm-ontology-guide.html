@@ -879,7 +879,7 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre>
 <pre><code>uv run --with rdflib python ask.py q51-entities-about-party</code></pre>
 
 <h3>A confidential export stays outside the repository</h3>
-<p>A model the decision owner wants only in the release never enters <code>main</code>. Its export and links file sit in <code>release-cut/augment/logical-model/</code>, a folder Git ignores, and the builder writes the model's two graphs beside them. <code>main</code> holds the module's vocabulary, shapes, builder, tests and the made-up example. The release cut reads the augment folder and builds the package, so the release holds one module more than <code>main</code> releases. The cut's option for this, <code>cut.sh --augment</code>, is pending in PR #474. The builder takes the export's location as an input, so the same build runs from <code>main</code> if the decision owner later moves a model there (EPM-DEC-001-0113, decisions 2 and 6).</p>
+<p>A model the decision owner wants only in the release never enters <code>main</code>. Its export and links file sit in <code>release-cut/augment/logical-model/</code>, a folder Git ignores, and the builder writes the model's two graphs beside them. <code>main</code> holds the module's vocabulary, shapes, builder, tests and the made-up example. The release cut reads the augment folder and builds the package, so the release holds one module more than <code>main</code> releases. The cut's option for this is <code>cut.sh --augment</code>, merged in PR #474. The builder takes the export's location as an input, so the same build runs from <code>main</code> if the decision owner later moves a model there (EPM-DEC-001-0113, decisions 2 and 6).</p>
 
 <h3>Cleaning an export that passed through email or a word processor</h3>
 <p>The first export arrived inside an RTF document sent by email, and a mail filter had rewritten its namespace IRIs into tracking links (EPM-DEC-001-0113, "Context"). A rewritten link still parses as an IRI, so a parse alone does not catch it. Before you use such an export:</p>
@@ -892,7 +892,7 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre>
 </ol>
 
 <h3>Approval and release</h3>
-<p>The module's first release, <code>logical-model 1.0.0</code>, needs the decision owner's approval, given from one page that also lists every doubtful link. Until then it is built as a candidate. A later model joins the same module as another named model, not a new module, and ships as a minor release. A re-export that drops or renames an entity removes an IRI that consumers may rely on, so it gets the meaning-change test before release and may be a major.</p>
+<p>The module's first release, <code>logical-model 1.0.0</code>, needed the decision owner's approval, given from one page that also listed every doubtful link. The decision owner approved it on 2026-11-02 (EPM-DEC-001-0113, amendment), and the cut refuses <code>--augment</code> unless it names that recorded approval. A later model joins the same module as another named model, not a new module, and ships as a minor release. A re-export that drops or renames an entity removes an IRI that consumers may rely on, so it gets the meaning-change test before release and may be a major.</p>
 <p class="note">The method is the <code>ontology</code> skill's <code>references/logical-model.md</code>, in 14 rules. The decision is EPM-DEC-001-0113. The walkthrough's "Add a logical model" gives the commands, step by step.</p>
 
 <h2 id="stores">How it reaches the stores</h2>

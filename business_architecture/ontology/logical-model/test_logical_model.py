@@ -127,6 +127,13 @@ class Build(unittest.TestCase):
         with self.assertRaises(blm.BuildError):
             self.build(links_text=self.links(lambda rows: rows.pop()))
 
+    def test_a_lookup_table_may_describe_a_party_code_list(self):
+        # The decision owner accepted a link from a dealer-class lookup table to party's dealer-class list (2026-11-02).
+        scheme = "https://w3id.org/lsc/ontology/modules/party/dealer-class"
+        files, _ = self.build(links_text=self.links(lambda rows: rows[0].update(describes=scheme)))
+        layer = self.layer_of(files)
+        self.assertIn(URIRef(scheme), set(layer.objects(None, LM.describes)))
+
     def test_an_empty_source_system_fails(self):
         # Codex's quick check: an empty column could be a mistake, so the row must say which case it is.
         with self.assertRaises(blm.BuildError):

@@ -31,6 +31,7 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, OWL, RDF, SKOS, XSD
 
 import build_core_2_3 as prev
+import build_module as bm  # release mode, and where an approval is recorded
 import frozen_sources
 import newest
 
@@ -208,7 +209,7 @@ def package(g, counts):
         "built_from": {"core 2.3.0 manifest": hashlib.sha256(base_manifest.encode()).hexdigest(),
                        "process map": f"{SOURCE_PATH} at {SOURCE_COMMIT}"},
         "decisions": ["EPM-DEC-001-0028", "EPM-DEC-001-0098", "EPM-DEC-001-0105"],
-        "approval": {"who": APPROVER, "file": APPROVAL[0], "words": APPROVAL[1]},
+        "approval": {"who": APPROVER, **({"file": where} if (where := bm.recorded_where(APPROVAL[0])) else {}), "words": APPROVAL[1]},
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
 

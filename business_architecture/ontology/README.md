@@ -74,7 +74,7 @@ example quoted from the releases.
 
 *2026-11-02:* `technical-graph`, the twelfth module, is released as 1.0.0, which the decision owner approved (EPM-DEC-001-0112).
 
-*2026-11-02:* the `logical-model` module, which keeps logical data models exported from ER Studio and links their entities to `party`, `system` and `data-product`, has its machinery in `logical-model/` (EPM-DEC-001-0113). Its first model, the customer logical model, stays out of `main` and ships only in the release, as `logical-model 1.0.0`, which the decision owner approves. In `main` it has no package, so no figure here counts it. It answers competency questions 51 to 55 on a made-up example model.
+*2026-11-02:* the `logical-model` module, which keeps logical data models exported from ER Studio and links their entities to `party`, `system` and `data-product`, has its machinery in `logical-model/` (EPM-DEC-001-0113). Its first model, the customer logical model, stays out of `main` and ships only in the release, as `logical-model 1.0.0`, which the decision owner approved on 2026-11-02 (EPM-DEC-001-0113, amendment); the release cut builds the package. In `main` it has no package, so no figure here counts it. It answers competency questions 51 to 55 on a made-up example model.
 
 For versions, what each module requires and triple counts, run
 `uv run --with rdflib python scripts/epm_facts.py modules`. It also says what each release was built
