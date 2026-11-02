@@ -30,7 +30,7 @@ lm:sourceSystem a owl:AnnotationProperty ;
 
 lm:describes a owl:AnnotationProperty ;
     rdfs:label "describes"@en ;
-    skos:definition "The concept or class of the party module that the entity holds data about, such as a customer account. Asserted only where the entity's name and description make the link clear; a doubtful link goes to the decision owner instead."@en ;
+    skos:definition "The concept, class or code list of the party module that the entity holds data about, such as a customer account, or a code list such as the dealer classes for a lookup table that holds the whole list. Asserted only where the entity's name and description make the link clear; a doubtful link goes to the decision owner instead."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0113, decisions 4 and 8"@en .
 
 lm:implementedBy a owl:AnnotationProperty ;
