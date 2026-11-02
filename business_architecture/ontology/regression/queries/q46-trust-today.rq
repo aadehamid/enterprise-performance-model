@@ -1,0 +1,10 @@
+# Q46 Can I trust it today: for each measure, each data object behind it with its last refresh, and each quality check that tests it, with its result and when it ran.
+PREFIX tg: <https://w3id.org/lsc/ontology/modules/technical-graph/>
+SELECT ?measure ?object ?lastRefresh ?check ?result ?checkedAt WHERE {
+  ?view tg:implements ?measure ;
+        tg:readsFrom* ?object .
+  OPTIONAL { ?object tg:lastRefresh ?lastRefresh }
+  ?check tg:checks ?object ;
+         tg:result ?result ;
+         tg:checkedAt ?checkedAt .
+}

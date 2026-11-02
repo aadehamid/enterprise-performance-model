@@ -69,6 +69,8 @@ example quoted from the releases.
 | `ref-mpc` | The company-specific facts: MPC and MPLX; the only module that is not company-neutral |
 | `integration` | Rules across modules: which links certify (placement), which source wins (authority), and what consumers may bind and answer (consumer) |
 
+*2026-11-02:* a twelfth module, `technical-graph`, the vocabulary of what was built on the data platform, is a candidate in `technical-graph/`. It is not released until the decision owner approves its `1.0.0` (EPM-DEC-001-0112), so no figure here counts it. It answers competency questions 45 to 50.
+
 For versions, what each module requires and triple counts, run
 `uv run --with rdflib python scripts/epm_facts.py modules`. It also says what each release was built
 from where its manifest records that ("built from (release manifest)"); for the other releases it
