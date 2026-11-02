@@ -66,7 +66,7 @@ This supersedes, for market news, EPM-DEC-001-0110's amendment item 4 (rewrite t
 The decision owner's answers (block 8), to three questions Claude asked during the build:
 
 1. **technical-graph 1.0.0 is approved:** "1. approve 1.0.0", to the one page with the module's terms, its six questions and their results on the example graph (item 6). The candidate of #468 is released as `1.0.0`, a major the decision owner approved.
-2. **The store logins become GitHub secrets (#426):** "2. Yes we should do do this . I want to know how to do this as well". Claude sets the six AuraDB and Databricks secrets from the local login files without printing them; the seventh, `EPM_SKILLS_TOKEN`, is a read-only token for the skills repository that only the decision owner can create.
+2. **The store logins become GitHub secrets (#426):** "2. Yes we should do do this . I want to know how to do this as well". Claude is to set the six AuraDB and Databricks secrets from the local login files without printing them, with the in-sync change (pending, #426); the seventh, `EPM_SKILLS_TOKEN`, is a read-only token for the skills repository that only the decision owner can create.
 3. **The drift check stays manual (#455):** "3. Aligned on #455", to the recommendation to make `sync_stores.py check` a written step of each release, with no scheduled workflow, which would use paid Actions minutes.
 
 > 1. approve 1.0.0

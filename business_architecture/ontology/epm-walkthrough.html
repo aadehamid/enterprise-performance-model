@@ -184,7 +184,7 @@ details.fm:not([open])>:not(summary){display:none}
         <g font-family="Source Sans 3, sans-serif" font-size="15" fill="#1b1d21">
           <rect x="20" y="24" width="150" height="56" fill="#fff"/><text x="34" y="48" font-weight="700">Process map</text><text x="34" y="68" font-size="13" fill="#4a4f57">680 nodes, L0 to L6</text>
           <rect x="205" y="24" width="150" height="56" fill="#fff"/><text x="219" y="48" font-weight="700">12 modules</text><text x="219" y="68" font-size="13" fill="#4a4f57">Turtle in git</text>
-          <rect x="390" y="24" width="150" height="56" fill="#0b5cad"/><text x="404" y="48" font-weight="700" fill="#fff">50 releases</text><text x="404" y="68" font-size="13" fill="#fff">one DCAT catalog</text>
+          <rect x="390" y="24" width="150" height="56" fill="#0b5cad"/><text x="404" y="48" font-weight="700" fill="#fff">51 releases</text><text x="404" y="68" font-size="13" fill="#fff">one DCAT catalog</text>
           <rect x="20" y="140" width="160" height="56" fill="#fff"/><text x="34" y="164" font-weight="700">Neo4j + Jena</text><text x="34" y="184" font-size="13" fill="#4a4f57">local, one of each</text>
           <rect x="200" y="140" width="160" height="56" fill="#fff"/><text x="214" y="164" font-weight="700">AuraDB</text><text x="214" y="184" font-size="13" fill="#4a4f57">copy, hash equal</text>
           <rect x="380" y="140" width="160" height="56" fill="#fff"/><text x="394" y="164" font-weight="700">epm_triples</text><text x="394" y="184" font-size="13" fill="#4a4f57">Delta, 40,169 rows</text>
@@ -531,7 +531,7 @@ details.fm:not([open])>:not(summary){display:none}
 
 <section id="how-built" data-ss-id="section-how-built" data-ss-section>
   <h2 class="rise" data-ss-id="how-the-ontology-was-built-from-zero-to-done">How the ontology was built, from zero to done</h2>
-  <p class="section-lede rise">It picked up from the process map and ended as 50 versioned, checked releases. The method came from a gated, twelve-step guide; every choice that mattered was written down as a decision record.</p>
+  <p class="section-lede rise">It picked up from the process map and ended as 50 versioned, checked releases (51 since technical-graph 1.0.0, 2026-11-02). The method came from a gated, twelve-step guide; every choice that mattered was written down as a decision record.</p>
 
   <h3 class="rise" data-ss-id="the-starting-point">The starting point</h3>
   <div class="split rise">
@@ -999,7 +999,7 @@ docker exec -e NEO4J_PASSWORD "$EPM_NEO4J" cypher-shell -u neo4j \
   "MATCH (n:Resource) RETURN count(n) AS nodes; MATCH (:Resource)-[r]-&gt;(:Resource) RETURN count(r) AS relationships; MATCH (r:ModuleRelease) RETURN r.module, r.version, r.conforms, r.violations ORDER BY r.module;"</code></pre>
   <p class="rise"><strong>Validate Jena.</strong> Expect 36 graphs and 40,565 triples on these releases: three graphs for each of 12 modules (33 and 40,169 for the eleven before technical-graph 1.0.0, 2026-11-02). The query leaves out the technical graph's two named graphs.</p>
 <pre class="rise"><code>curl -s "$EPM_JENA/query" --data-urlencode 'query=SELECT (COUNT(DISTINCT ?g) AS ?graphs) (COUNT(*) AS ?triples) WHERE { GRAPH ?g { ?s ?p ?o } FILTER(!STRSTARTS(STR(?g), "urn:pricing-demo:")) }' -H 'Accept: text/csv'</code></pre>
-  <p class="rise"><strong>Validate AuraDB and Databricks,</strong> when the run reached them. The run's copy step has required AuraDB's graph hash to equal the local one, and its round trip has required the table's RDFC-1.0 hash to equal the release files'. In the Aura console's query tool, run the same three queries as for the local Neo4j. In the Databricks SQL editor, this returns 40169 and 33:</p>
+  <p class="rise"><strong>Validate AuraDB and Databricks,</strong> when the run reached them. The run's copy step has required AuraDB's graph hash to equal the local one, and its round trip has required the table's RDFC-1.0 hash to equal the release files'. In the Aura console's query tool, run the same three queries as for the local Neo4j. In the Databricks SQL editor, this returns 40565 and 36 for these releases (40169 and 33 for the eleven before technical-graph 1.0.0, which the table holds until its next reload):</p>
 <pre class="rise"><code>SELECT count(*), count(DISTINCT graph) FROM &lt;catalog&gt;.&lt;schema&gt;.epm_triples;</code></pre>
   <p class="rise"><strong>Load the technical graph.</strong> A run empties each Neo4j store, so load the demo's technical graph again. Name each store the run reached: <code>driver</code> is the local Neo4j, <code>jena</code> is Jena and <code>aura</code> is AuraDB. It prints how many nodes and edges it loaded.</p>
 <pre class="rise"><code>cd "$EPM_ROOT/demos/downstream-pricing-databricks-free"
@@ -2134,7 +2134,7 @@ uv run --with rdflib --with pyshacl --with openpyxl python build_module.py kpi -
 uv run --with rdflib --with pyshacl --with openpyxl python build_catalog.py --verify
 # from repository root
 git tag kpi-v1.3.0</code></pre></dd>
-<dt>What you should see</dt><dd>The catalog lists 50 releases (worklog §2, row 10).</dd>
+<dt>What you should see</dt><dd>The catalog lists 51 releases (50 until technical-graph 1.0.0, 2026-11-02; worklog §2, row 10, has the count of 2026-10-22).</dd>
 <dt>How to check it worked</dt><dd><code>build_catalog.py --verify</code> and each <code>build_module.py --verify</code>.</dd>
 <dt>What it enables next</dt><dd>Versioned inputs the projections read.</dd>
 <dt>Explained in</dt><dd><a href="#machinery">The build and release machinery</a></dd>

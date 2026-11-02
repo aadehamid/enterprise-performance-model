@@ -331,6 +331,12 @@ def test_a_documents_path_to_a_previous_package_moves_to_the_history_folder():
     assert out == "see releases/kpi/1.2.0/kpi.ttl"  # the history folder is left as cut
 
 
+def test_a_module_with_one_release_keeps_its_path():
+    # technical-graph has no release before 1.0.0, so its path stays where it is and nothing fails on the missing one.
+    out, n = run("see `../releases/technical-graph/1.0.0/technical-graph.ttl`", "business_architecture/ontology/technical-graph/README.md")
+    assert out == "see `../releases/technical-graph/1.0.0/technical-graph.ttl`"
+
+
 def test_dk_beside_mpc_or_mplx_is_a_ticker_and_the_two_stay():
     out, _ = run("see DK and MPC report; MPLX/DK; MPC, DK and VLO; the DK stays; MPC and MPLX")
     assert out == "see a U.S. refining peer and MPC report; MPLX/a U.S. refining peer; MPC, U.S. refining peers; the DK stays; MPC and MPLX"
