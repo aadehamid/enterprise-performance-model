@@ -1,0 +1,8 @@
+# Q51 Which logical entities hold data about a party concept: each annotated entity of a logical model, with the party concept or class it describes.
+PREFIX lm: <https://w3id.org/lsc/ontology/modules/logical-model/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?model ?entity ?name ?concept WHERE {
+  ?entity lm:inModel ?model ;
+          lm:describes ?concept .
+  OPTIONAL { ?entity rdfs:label ?name }
+}

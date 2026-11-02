@@ -1,0 +1,6 @@
+# Q55 Which data product or platform table implements each logical entity.
+PREFIX lm: <https://w3id.org/lsc/ontology/modules/logical-model/>
+SELECT ?model ?entity ?implementation WHERE {
+  ?entity lm:inModel ?model ;
+          lm:implementedBy ?implementation .
+}

@@ -1,0 +1,9 @@
+# Q52 Which source system each logical entity comes from, and which entities each system feeds.
+PREFIX lm: <https://w3id.org/lsc/ontology/modules/logical-model/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?system ?model ?entity ?name WHERE {
+  ?entity lm:inModel ?model ;
+          lm:sourceSystem ?system .
+  OPTIONAL { ?entity rdfs:label ?name }
+}
+ORDER BY ?system ?entity

@@ -71,6 +71,8 @@ example quoted from the releases.
 
 *2026-11-02:* a twelfth module, `technical-graph`, the vocabulary of what was built on the data platform, is a candidate in `technical-graph/`. It is not released until the decision owner approves its `1.0.0` (EPM-DEC-001-0112), so no figure here counts it. It answers competency questions 45 to 50.
 
+*2026-11-02:* the `logical-model` module, which keeps logical data models exported from ER Studio and links their entities to `party`, `system` and `data-product`, has its machinery in `logical-model/` (EPM-DEC-001-0113). Its first model, the customer logical model, stays out of `main` and ships only in the release, as `logical-model 1.0.0`, which the decision owner approves. In `main` it has no package, so no figure here counts it. It answers competency questions 51 to 55 on a made-up example model.
+
 For versions, what each module requires and triple counts, run
 `uv run --with rdflib python scripts/epm_facts.py modules`. It also says what each release was built
 from where its manifest records that ("built from (release manifest)"); for the other releases it
@@ -93,7 +95,7 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 | `step4/evidence-discipline.md` | The approved Step 4 evidence discipline text, moved word for word from the playbook on 2026-10-05 |
 | `lpg-projection/` | The superseded v2.2 copy of the ontology-to-LPG projection guideline, kept as evidence of what Step 12 followed (EPM-DEC-001-0020, 0021). Since 2026-10-23 the method is the `ontology-to-lpg` skill in personal-agent-skills, at `da75164`; the folder's README points to it (EPM-DEC-001-0095) |
 | `../domain/decisions/` | Project decision records (EPM-DEC-001) |
-| `competency-questions.md` | The 50-question acceptance baseline (44 until 2026-11-02, when the technical-graph module's six were added: EPM-DEC-001-0112), tested by the Step 11 regression in `regression/` |
+| `competency-questions.md` | The 55-question acceptance baseline (44 until 2026-11-02, when the technical-graph module's six were added: EPM-DEC-001-0112; then 50 until the logical-model module's five were added the same day: EPM-DEC-001-0113), tested by the Step 11 regression in `regression/` |
 | `projection/` | Step 12: the pipeline that projects the ontology into Neo4j, its manifest and its last report (EPM-DEC-001-0036) |
 | `validation/` | Step 9 shapes run against the released modules: controlled values (EPM-DEC-001-0035) |
 | `provenance/` | The Step 6 definition-to-run pattern: the shapes a consumer's run must meet, an example run and tests (EPM-DEC-001-0034) |
@@ -107,6 +109,7 @@ each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
 | `placement/` | The placement kinds: which placing properties certify (only producing a data product) and which give context (EPM-DEC-001-0058); released in `integration` 1.0.0 (EPM-DEC-001-0078) |
 | `market-data/` | The Step 7 market-data module (*2026-10-26:* 1.1.0 adds 2 series, 40 market prices and the views' series enumerations, EPM-DEC-001-0100): 13 series of the crack-spreads measure, from MPC Economics' definition first (six regional ex-RIN series, the NYMEX 3-2-1, two MPC-weighted blends), then MPC's FY2025 Form 10-K, Item 7, and CME Group, with their benchmarks and regions (EPM-DEC-001-0057, 0066); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
 | `technical-graph/` | The technical-graph candidate module: the vocabulary of what was built on the data platform, its shapes and an example graph that is test data, answering questions 45 to 50; not released until the decision owner approves its `1.0.0` (EPM-DEC-001-0112) |
+| `logical-model/` | The logical-model module's machinery: its vocabulary, shapes, builder and a made-up example model that is test data, answering questions 51 to 55. The customer model it holds ships only in the release, as `logical-model 1.0.0`; `main` has no package (EPM-DEC-001-0113) |
 | `lane/` | The Step 7 lane module: the four office lanes and the seven processes the process map places in them (EPM-DEC-001-0056); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
 | `system/` | The Step 7 system module (*2026-10-26:* 34 systems since 1.2.0, with MIPS and Databricks; 1.1.0 and 1.2.0 define 18, EPM-DEC-001-0099, 0100; 1.3.0 defines 14 more from the repository, 32 of 34, EPM-DEC-001-0103; 1.4.0 adds MPC-P11's seven systems and 21 links, 39 of 41 defined, EPM-DEC-001-0104; 1.5.0 adds eight systems the process map does not name, from the customer inputs of 2026-10-27, 47 of 49 defined, EPM-DEC-001-0108): the systems come from the process map's system strings (32 in 1.0.0), merged on spelling through a register, with their kind and the processes they support (EPM-DEC-001-0055); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
 | `value-stream/` | The Step 7 value-stream module: the Commercial Hydrocarbon Lifecycle and Order to Cash, their stages, capabilities and 58 value-stream processes, which realize core processes, produce and consume data products and carry the MPC-P09 measure links (EPM-DEC-001-0054); released as 1.0.0 on 2026-10-22 (EPM-DEC-001-0077) |
@@ -172,7 +175,7 @@ exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
 - **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);
   the competency regression has 43 questions answerable, 0 partial,
   0 waiting and 1 parked (Q17, EPM-DEC-001-0086) (*2026-11-02:* 49 answerable, with questions 45 to 50 of the
-  technical-graph candidate answered on its example graph, EPM-DEC-001-0112); the Neo4j projection of every released package passes,
+  technical-graph candidate answered on its example graph, EPM-DEC-001-0112; *2026-11-02:* 54 answerable, with questions 51 to 55 of the logical-model module answered on its made-up example model, EPM-DEC-001-0113); the Neo4j projection of every released package passes,
   with no rule gap listed (16 before value-stream 1.1.0, 14 before party
   1.1.0, 6 before kpi 1.1.1, 5 before integration 2.0.0)
   (EPM-DEC-001-0036).

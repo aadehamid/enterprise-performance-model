@@ -1,0 +1,254 @@
+# A MADE-UP export in ER Studio Data Architect's Turtle format: test data for the logical-model module
+# (EPM-DEC-001-0113). Every entity, attribute and description below is invented. It exercises what the format holds:
+# the shared header and vocabulary, entities and attributes numbered from one identifier space (entity 103 and an
+# attribute of entity 101 share the number), a primary key and an alternate key as SHACL shapes with SPARQL, a
+# relationship with its inverse twin and cardinality restrictions, one business-term link, and an entity with no
+# description and no key.
+# RDF Turtle export from ERStudio Data Architect
+# Model: Logical
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix : <https://www.erstudio.com/semanticmodel/> .
+
+:Ontology a owl:Ontology ;
+    dcterms:title "Logical" ;
+    dcterms:created "2026-01-01T00:00:00Z"^^xsd:dateTime .
+
+#################################################################
+# Custom Vocabulary
+#################################################################
+
+:hasPhysicalName a owl:AnnotationProperty .
+:hasRoleName a owl:AnnotationProperty .
+:hasNotes a owl:AnnotationProperty .
+:sourceAttribute a owl:AnnotationProperty .
+:hasDiscriminator a owl:AnnotationProperty .
+:businessTerm a owl:AnnotationProperty .
+:externalTermLinkMissing a owl:DatatypeProperty ;
+    rdfs:range xsd:boolean .
+:Attribute a owl:Class .
+:keyType a owl:AnnotationProperty .
+:PrimaryKey a owl:Class .
+:AlternateKey a owl:Class .
+
+#################################################################
+# SKOS Concept Schemes (one per Business Glossary)
+#################################################################
+
+:EnterpriseGlossary a skos:ConceptScheme ;
+    skos:prefLabel "Enterprise Glossary" .
+
+:Term_Example_Account_Name a skos:Concept ;
+    skos:inScheme :EnterpriseGlossary ;
+    skos:prefLabel "Example Account Name" .
+
+# Entity: Example_Account_Dim
+:example_core_Example_Account_Dim a owl:Class ;
+    rdfs:label "Example_Account_Dim" ;
+    dcterms:identifier "101" ;
+    dcterms:description """An invented table of example accounts, one row per account.""" ;
+    :externalTermLinkMissing true .
+
+:Attribute_example_core_Example_Account_Dim_Account_Id a :Attribute ;
+    rdfs:label "Account_Id" ;
+    dcterms:identifier "1001" ;
+    dcterms:description """Identifier assigned to the example account""" ;
+    :externalTermLinkMissing true .
+
+:example_core_Example_Account_Dim_Account_Id a owl:DatatypeProperty ;
+    rdfs:label "Account_Id" ;
+    rdfs:domain :example_core_Example_Account_Dim ;
+    rdfs:range xsd:string ;
+    :sourceAttribute :Attribute_example_core_Example_Account_Dim_Account_Id .
+
+:Attribute_example_core_Example_Account_Dim_Account_Number a :Attribute ;
+    rdfs:label "Account_Number" ;
+    dcterms:identifier "1002" ;
+    dcterms:description """Number printed on the example account""" ;
+    :externalTermLinkMissing true .
+
+:example_core_Example_Account_Dim_Account_Number a owl:DatatypeProperty ;
+    rdfs:label "Account_Number" ;
+    rdfs:domain :example_core_Example_Account_Dim ;
+    rdfs:range xsd:string ;
+    :sourceAttribute :Attribute_example_core_Example_Account_Dim_Account_Number .
+
+:Attribute_example_core_Example_Account_Dim_Account_Name a :Attribute ;
+    rdfs:label "Account_Name" ;
+    dcterms:identifier "1003" ;
+    dcterms:description """Name of the example account""" ;
+    :businessTerm :Term_Example_Account_Name ;
+    :externalTermLinkMissing false .
+
+:example_core_Example_Account_Dim_Account_Name a owl:DatatypeProperty ;
+    rdfs:label "Account_Name" ;
+    rdfs:domain :example_core_Example_Account_Dim ;
+    rdfs:range xsd:string ;
+    :sourceAttribute :Attribute_example_core_Example_Account_Dim_Account_Name .
+
+:Attribute_example_core_Example_Account_Dim_Account_Region_Code a :Attribute ;
+    rdfs:label "Account_Region_Code" ;
+    dcterms:identifier "103" ;
+    dcterms:description """Code of the example region the account is in""" ;
+    :externalTermLinkMissing true .
+
+:example_core_Example_Account_Dim_Account_Region_Code a owl:DatatypeProperty ;
+    rdfs:label "Account_Region_Code" ;
+    rdfs:domain :example_core_Example_Account_Dim ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Defaulted to xsd:string: source datatype was missing or unrecognized." ;
+    :sourceAttribute :Attribute_example_core_Example_Account_Dim_Account_Region_Code .
+
+:example_core_Example_Account_Dim rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :example_core_Example_Account_Dim_Account_Id ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onDataRange xsd:string
+] .
+
+:example_core_Example_Account_Dim_PK a sh:NodeShape ;
+    sh:targetClass :example_core_Example_Account_Dim ;
+    sh:property [
+        sh:path :example_core_Example_Account_Dim_Account_Id ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    :keyType :PrimaryKey ;
+    sh:message "Primary key: Account_Id must be unique per record." ;
+    sh:sparql [
+        sh:select '''SELECT ?this WHERE {
+      { SELECT ?v0 (COUNT(DISTINCT ?s) AS ?c)
+        WHERE {
+          ?s a :example_core_Example_Account_Dim ;
+             :example_core_Example_Account_Dim_Account_Id ?v0 .
+        }
+        GROUP BY ?v0 HAVING (?c > 1)
+      }
+      ?this a :example_core_Example_Account_Dim ;
+            :example_core_Example_Account_Dim_Account_Id ?v0 .
+    }''' ;
+    ] .
+
+:example_core_Example_Account_Dim_AK1 a sh:NodeShape ;
+    sh:targetClass :example_core_Example_Account_Dim ;
+    sh:property [
+        sh:path :example_core_Example_Account_Dim_Account_Number ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    :keyType :AlternateKey ;
+    sh:message "Alternate key: Account_Number must be unique per record." ;
+    sh:sparql [
+        sh:select '''SELECT ?this WHERE {
+      { SELECT ?v0 (COUNT(DISTINCT ?s) AS ?c)
+        WHERE {
+          ?s a :example_core_Example_Account_Dim ;
+             :example_core_Example_Account_Dim_Account_Number ?v0 .
+        }
+        GROUP BY ?v0 HAVING (?c > 1)
+      }
+      ?this a :example_core_Example_Account_Dim ;
+            :example_core_Example_Account_Dim_Account_Number ?v0 .
+    }''' ;
+    ] .
+
+# Entity: Example_Contact_Dim
+:example_core_Example_Contact_Dim a owl:Class ;
+    rdfs:label "Example_Contact_Dim" ;
+    dcterms:identifier "102" ;
+    dcterms:description """An invented table of the ways to reach an example account.""" ;
+    :externalTermLinkMissing true .
+
+:Attribute_example_core_Example_Contact_Dim_Contact_Id a :Attribute ;
+    rdfs:label "Contact_Id" ;
+    dcterms:identifier "1011" ;
+    dcterms:description """Identifier assigned to the example contact""" ;
+    :externalTermLinkMissing true .
+
+:example_core_Example_Contact_Dim_Contact_Id a owl:DatatypeProperty ;
+    rdfs:label "Contact_Id" ;
+    rdfs:domain :example_core_Example_Contact_Dim ;
+    rdfs:range xsd:string ;
+    :sourceAttribute :Attribute_example_core_Example_Contact_Dim_Contact_Id .
+
+:Attribute_example_core_Example_Contact_Dim_Account_Id a :Attribute ;
+    rdfs:label "Account_Id" ;
+    dcterms:identifier "1012" ;
+    dcterms:description """Identifier of the example account the contact belongs to""" ;
+    :externalTermLinkMissing true .
+
+:example_core_Example_Contact_Dim_Account_Id a owl:DatatypeProperty ;
+    rdfs:label "Account_Id" ;
+    rdfs:domain :example_core_Example_Contact_Dim ;
+    rdfs:range xsd:string ;
+    :sourceAttribute :Attribute_example_core_Example_Contact_Dim_Account_Id .
+
+:example_core_Example_Contact_Dim rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :example_core_Example_Contact_Dim_Contact_Id ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onDataRange xsd:string
+] .
+
+:example_core_Example_Contact_Dim_PK a sh:NodeShape ;
+    sh:targetClass :example_core_Example_Contact_Dim ;
+    sh:property [
+        sh:path :example_core_Example_Contact_Dim_Contact_Id ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    :keyType :PrimaryKey ;
+    sh:message "Primary key: Contact_Id must be unique per record." ;
+    sh:sparql [
+        sh:select '''SELECT ?this WHERE {
+      { SELECT ?v0 (COUNT(DISTINCT ?s) AS ?c)
+        WHERE {
+          ?s a :example_core_Example_Contact_Dim ;
+             :example_core_Example_Contact_Dim_Contact_Id ?v0 .
+        }
+        GROUP BY ?v0 HAVING (?c > 1)
+      }
+      ?this a :example_core_Example_Contact_Dim ;
+            :example_core_Example_Contact_Dim_Contact_Id ?v0 .
+    }''' ;
+    ] .
+
+# Entity: Example_Region_Ref
+:example_core_Example_Region_Ref a owl:Class ;
+    rdfs:label "Example_Region_Ref" ;
+    dcterms:identifier "103" ;
+    :externalTermLinkMissing true .
+
+:Attribute_example_core_Example_Region_Ref_Region_Code a :Attribute ;
+    rdfs:label "Region_Code" ;
+    dcterms:identifier "1021" ;
+    :externalTermLinkMissing true .
+
+:example_core_Example_Region_Ref_Region_Code a owl:DatatypeProperty ;
+    rdfs:label "Region_Code" ;
+    rdfs:domain :example_core_Example_Region_Ref ;
+    rdfs:range xsd:string ;
+    :sourceAttribute :Attribute_example_core_Example_Region_Ref_Region_Code .
+
+:example_core_Example_Account_Dim_relatesTo_example_core_Example_Contact_Dim a owl:ObjectProperty ;
+    rdfs:label "connected by Account_Id" ;
+    rdfs:domain :example_core_Example_Account_Dim ;
+    rdfs:range :example_core_Example_Contact_Dim .
+
+:example_core_Example_Account_Dim_relatesTo_example_core_Example_Contact_Dim_inverse a owl:ObjectProperty ;
+    owl:inverseOf :example_core_Example_Account_Dim_relatesTo_example_core_Example_Contact_Dim ;
+    rdfs:domain :example_core_Example_Contact_Dim ;
+    rdfs:range :example_core_Example_Account_Dim .
+
+:example_core_Example_Contact_Dim rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :example_core_Example_Account_Dim_relatesTo_example_core_Example_Contact_Dim_inverse ;
+    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :example_core_Example_Account_Dim
+] .

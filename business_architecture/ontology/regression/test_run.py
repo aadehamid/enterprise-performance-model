@@ -1,4 +1,4 @@
-"""Tests for run.py: expected.csv covers the 50 locked questions (44 until 2026-11-02), every query file is
+"""Tests for run.py: expected.csv covers the 55 locked questions (44 until 2026-11-02, then 50 until the logical-model module's five were added the same day), every query file is
 used, the release passes, and a broken graph fails."""
 import os
 import re
@@ -20,7 +20,7 @@ class Coverage(unittest.TestCase):
     def test_one_row_per_locked_question(self):
         with open(run.QUESTIONS) as f:
             numbers = [int(n) for n in re.findall(r"^(\d+)\. ", f.read(), re.M)]
-        self.assertEqual(numbers, list(range(1, 51)))
+        self.assertEqual(numbers, list(range(1, 56)))
         self.assertEqual([int(r["question"]) for r in run.load_expected()], numbers)
 
     def test_every_query_file_is_listed_once(self):
@@ -49,7 +49,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"], statuses["parked"]), (49, 0, 0, 1))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"], statuses["parked"]), (54, 0, 0, 1))
 
     def test_q15b_reports_the_systems_in_two_modules_as_one(self):
         # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name;
@@ -109,7 +109,7 @@ class Release(unittest.TestCase):
 
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
-        self.assertEqual(len([f for f in failures if "no rows" in f]), 61)  # 45 before the `party` module, plus its 10 row-returning queries, plus the technical-graph module's 6
+        self.assertEqual(len([f for f in failures if "no rows" in f]), 68)  # 45 before the `party` module, plus its 10 row-returning queries, plus the technical-graph module's 6, plus the logical-model module's 7 (2026-11-02)
 
     def mutated(self, change):
         g = Graph()

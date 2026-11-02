@@ -49,3 +49,8 @@ question,status,queries,waits_for
 48,answerable,q48-built-as-designed.rq;q48b-layer-differs.rq,
 49,answerable,q49-who-answers.rq,
 50,answerable,q50-agent-for-measure.rq,
+51,answerable,q51-entities-about-party.rq,
+52,answerable,q52-entity-source-system.rq,
+53,answerable,q53-customer-keys.rq,
+54,answerable,q54-business-term.rq;q54b-no-business-term.rq,
+55,answerable,q55-implemented-by.rq;q55b-not-implemented.rq,

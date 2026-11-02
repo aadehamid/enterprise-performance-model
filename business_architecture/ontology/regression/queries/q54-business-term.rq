@@ -1,0 +1,10 @@
+# Q54 Which attributes stand for a business term: each attribute of a logical model's entity that ER Studio links to a term of its glossary.
+PREFIX lm: <https://w3id.org/lsc/ontology/modules/logical-model/>
+PREFIX er: <https://www.erstudio.com/semanticmodel/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?model ?entity ?attribute ?term WHERE {
+  ?entity lm:inModel ?model .
+  ?property rdfs:domain ?entity ;
+            er:sourceAttribute ?attribute .
+  ?attribute er:businessTerm ?term .
+}

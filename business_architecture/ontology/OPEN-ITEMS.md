@@ -7,6 +7,7 @@ The ontology is done (EPM-DEC-001-0107), and this page lists what stays open on 
 | Item | What is needed | Record |
 |---|---|---|
 | Releasing the technical-graph module | Approve its `1.0.0` from one page; a major release stays with the decision owner. *Added 2026-11-02.* | EPM-DEC-001-0112, item 6 |
+| Releasing the logical-model module | Approve `logical-model 1.0.0`, which holds the customer logical model, from one page, with the list of doubtful links. The package is built only when the release is cut. *Added 2026-11-02.* | EPM-DEC-001-0113, decision 10 |
 | Turning on the release-tag store sync | Add its seven repository secrets, or keep syncing by hand | #426 |
 
 ## What we need from the business

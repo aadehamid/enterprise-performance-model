@@ -49,12 +49,12 @@ DECISIONS_PAGE = f"{DECISIONS_DIR}/decisions.html"
 DEC_FILE = re.compile(r"EPM-DEC-001-(\d{4})-[\w-]+\.md$")
 DEC_ID = re.compile(r"(?<![\w/#-])EPM-DEC-001-(\d{4})(?![\w-])")
 
-# The folders the eleven released packages are built from, each documented by its README, and the technical-graph
-# candidate (EPM-DEC-001-0112). core is built
+# The folders the eleven released packages are built from, each documented by its README, the technical-graph
+# candidate (EPM-DEC-001-0112) and the logical-model module, unreleased in main (EPM-DEC-001-0113). core is built
 # from the process map and release/; its changelog is its own document.
 MODULE_READMES = ["kpi", "lane", "market-data", "organization", "party", "ref-mpc", "system", "value-stream",
                   "data-product", "consumer", "authority", "placement", "population", "provenance", "validation",
-                  "regression", "apqc", "technical-graph"]
+                  "regression", "apqc", "technical-graph", "logical-model"]
 
 
 def single(src, lead, scope="EPM ontology"):

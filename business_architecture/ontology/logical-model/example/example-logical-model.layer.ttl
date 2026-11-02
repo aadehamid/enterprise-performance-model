@@ -1,0 +1,23 @@
+# The annotation layer of logical model example-logical-model (EPM-DEC-001-0113): links from ER Studio's entities to the
+# ontology, keyed on ER Studio's identifiers. Built by build_logical_model.py. Do not edit by hand.
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix lm: <https://w3id.org/lsc/ontology/modules/logical-model/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://www.erstudio.com/semanticmodel/example_core_Example_Account_Dim> lm:describes <https://w3id.org/lsc/ontology/modules/party/CustomerAccount> ;
+    lm:implementedBy <https://w3id.org/lsc/ontology/modules/data-product/product/customer-master> ;
+    lm:inModel <https://w3id.org/lsc/ontology/modules/logical-model/model/example-logical-model> ;
+    lm:sourceSystem <https://w3id.org/lsc/ontology/modules/system/system/profisee> .
+
+<https://www.erstudio.com/semanticmodel/example_core_Example_Contact_Dim> lm:describes <https://w3id.org/lsc/ontology/modules/party/ContactPoint> ;
+    lm:inModel <https://w3id.org/lsc/ontology/modules/logical-model/model/example-logical-model> ;
+    lm:sourceSystem <https://w3id.org/lsc/ontology/modules/party/system/gravitate> .
+
+<https://www.erstudio.com/semanticmodel/example_core_Example_Region_Ref> lm:inModel <https://w3id.org/lsc/ontology/modules/logical-model/model/example-logical-model> .
+
+<https://w3id.org/lsc/ontology/modules/logical-model/model/example-logical-model> a lm:LogicalModel ;
+    rdfs:label "An example logical model"@en ;
+    dcterms:created "2026-01-01T00:00:00+00:00"^^xsd:dateTime ;
+    dcterms:identifier "example-logical-model" .
+

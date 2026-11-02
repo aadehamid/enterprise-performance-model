@@ -1,0 +1,42 @@
+# SHACL shapes for the logical-model module (EPM-DEC-001-0113). They check a model's annotation layer: validate the
+# layer with the model's export and the releases it links to (party, system, data-product) loaded, so each link can
+# be checked by class. The modelling tool's own SHACL shapes in an export are not these shapes: they constrain the
+# records of the model's entities, which the ontology never holds, so the builder only checks that they load
+# (README, "The modelling tool's own shapes").
+@prefix lm: <https://w3id.org/lsc/ontology/modules/logical-model/> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/logical-model/shapes/> .
+
+shp:LogicalModel a sh:NodeShape ;
+    sh:targetClass lm:LogicalModel ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:message "A logical model has one title." ] ;
+    sh:property [ sh:path dcterms:identifier ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "A logical model has one slug, its identifier in the build." ] .
+
+shp:AnnotatedEntity a sh:NodeShape ;
+    sh:targetSubjectsOf lm:inModel, lm:sourceSystem, lm:describes, lm:implementedBy ;
+    sh:property [ sh:path rdf:type ; sh:hasValue owl:Class ;
+                  sh:message "Only an entity of an export, an OWL class, is annotated." ] ;
+    sh:property [ sh:path dcterms:identifier ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "An annotated entity has one identifier from the modelling tool, which the layer is keyed on." ] ;
+    sh:property [ sh:path lm:inModel ; sh:minCount 1 ; sh:maxCount 1 ; sh:class lm:LogicalModel ;
+                  sh:message "An entity belongs to exactly one logical model." ] ;
+    sh:property [ sh:path lm:sourceSystem ; sh:maxCount 1 ;
+                  sh:or ( [ sh:class sys:System ] [ sh:class party:CustomerSystem ] ) ;
+                  sh:message "An entity comes from at most one source system: a system of the system module or a customer system of the party module." ] ;
+    sh:property [ sh:path lm:describes ; sh:maxCount 1 ;
+                  sh:or ( [ sh:class owl:Class ] [ sh:class skos:Concept ] ) ;
+                  sh:pattern "^https://w3id.org/lsc/ontology/modules/party/" ;
+                  sh:message "An entity describes at most one concept or class, and it is one of the party module." ] ;
+    sh:property [ sh:path lm:implementedBy ; sh:maxCount 1 ;
+                  sh:or ( [ sh:class dp:PlatformTable ] [ sh:class dp:DataProduct ] ) ;
+                  sh:message "An entity is implemented by at most one platform table or data product of the data-product module." ] .

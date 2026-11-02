@@ -104,6 +104,9 @@ done
 (cd business_architecture/ontology/party && run with_deps python build_party.py --verify)
 # The technical-graph module's example graph must equal a fresh build from the demo's technical graph (EPM-DEC-001-0112).
 (cd business_architecture/ontology/technical-graph && run with_deps python build_example.py --verify)
+# The logical-model module's made-up example model must equal a fresh build by its builder (EPM-DEC-001-0113).
+(cd business_architecture/ontology/logical-model && run with_deps python build_logical_model.py --export example/example-export.ttl \
+  --links example/example-links.csv --model example-logical-model --title "An example logical model" --out example --verify)
 # Step 12: the projection's checked, serialised inputs must match the committed manifest (EPM-DEC-001-0036).
 (cd business_architecture/ontology/projection && run with_deps python pipeline.py build --verify)
 # The test files run in parallel, each test on whichever worker is free (pytest-xdist): the same tests and
@@ -138,6 +141,7 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
   business_architecture/ontology/population/test_population.py \
   business_architecture/ontology/party/test_party.py \
   business_architecture/ontology/technical-graph/test_technical_graph.py \
+  business_architecture/ontology/logical-model/test_logical_model.py \
   demos/downstream-pricing-databricks-free/tests/test_demo.py \
   business_architecture/ontology/party/test_party_systems.py \
   business_architecture/ontology/party/test_party_lifecycle.py \

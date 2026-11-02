@@ -13,7 +13,7 @@ The diagram "EPM ontology: modules and how they connect" draws the same picture,
 
 `core` is the process map. Most other modules add one kind of thing and link it to core's processes, mostly by using core's process IRIs (`https://w3id.org/lsc/ontology/process/CM-…`) directly. Three do not: `market-data` links to `kpi`'s measures, `ref-mpc` holds company facts in the terms of `organization` and `party`, and `integration` holds rules about the other modules' links. A module names the versions of the modules it was released against. When modules are loaded together, the newest release of each one is loaded.
 
-Some source folders are not packages of their own. `placement/`, `authority/` and `consumer/` ship together as `integration`. `population/` ships in `kpi`. `apqc/` is a reference list that ships in no package. *2026-11-02:* `technical-graph/` is a candidate module that ships in no package until the decision owner approves its `1.0.0` (EPM-DEC-001-0112).
+Some source folders are not packages of their own. `placement/`, `authority/` and `consumer/` ship together as `integration`. `population/` ships in `kpi`. `apqc/` is a reference list that ships in no package. *2026-11-02:* `technical-graph/` is a candidate module that ships in no package until the decision owner approves its `1.0.0` (EPM-DEC-001-0112). *2026-11-02:* `logical-model/` holds the machinery of the logical-model module and a made-up example model; it ships in no package in `main`. Its first model, the customer logical model, is kept out of `main` and joins the release as `logical-model 1.0.0`, which the decision owner approves (EPM-DEC-001-0113).
 
 ## Three kinds of content
 

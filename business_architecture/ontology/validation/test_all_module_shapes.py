@@ -23,6 +23,7 @@ SHAPE_FILES = [
     "data-product/shapes.ttl", "value-stream/shapes.ttl", "system/shapes.ttl", "lane/shapes.ttl",
     "market-data/shapes.ttl", "consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl", "party/shapes.ttl",
     "technical-graph/shapes.ttl",  # the candidate module, with its example graph in the regression's graph (EPM-DEC-001-0112)
+    "logical-model/shapes.ttl",  # the unreleased module, with its made-up example model in the regression's graph (EPM-DEC-001-0113)
     "validation/controlled-values.ttl",
 ]
 GRAPH = run.load(run.RELEASE)
