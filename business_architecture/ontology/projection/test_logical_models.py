@@ -357,7 +357,7 @@ class Plans(unittest.TestCase):
         return [" ".join(c) for _, c in ss.plan(behind, cloud, "~/skills", tech_behind, models)[0]]
 
     def test_sync_loads_the_logical_models_last_where_a_reload_wiped_them_or_they_are_not_current(self):
-        self.assertFalse(any("logical_models.py" in c for c in self.cmds(["driver"], False)))  # main: no package graph
+        self.assertFalse(any("logical_models.py" in c for c in self.cmds(["driver"], False)))  # releases with no package graph
         cmds = self.cmds(["driver"], False, models=[])
         self.assertTrue(cmds[-1].endswith("logical_models.py load --store driver --store jena --skills ~/skills"))
         self.assertEqual(self.cmds([], False, models=[]), [])

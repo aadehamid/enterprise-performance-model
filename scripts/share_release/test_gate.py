@@ -621,3 +621,14 @@ def test_the_option_wording_and_generic_text_pass(tmp_path):
         (tmp_path / "skills/ontology/references/release.md").write_text(text + "\n")
         hits = gate.scan(str(tmp_path))
         assert hits and {h["reason"] for h in hits} == {"something kept out of the repository"}, (text, hits)
+
+
+def test_the_gate_refuses_what_main_lacks_in_code_notes_too(tmp_path):
+    # Cursor's second hold on #488: code comments and docstrings said what main lacks in five more wordings.
+    clean(tmp_path)
+    for i, text in enumerate(("The logical-model module is unreleased in main", "hold no package graph, as in main; otherwise",
+                              "before mark; main holds none, and the step is left out.", "# main: no package graph",
+                              "# none in main; the release's logical models")):
+        (tmp_path / f"n{i}.py").write_text(text + "\n")
+    reasons = [h["file"] for h in gate.scan(str(tmp_path)) if "kept out" in h["reason"]]
+    assert sorted(reasons) == [f"n{i}.py" for i in range(5)]

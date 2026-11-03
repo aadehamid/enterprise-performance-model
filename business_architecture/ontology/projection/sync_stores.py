@@ -557,7 +557,7 @@ def plan(behind, cloud, skills, tech_behind=(), models=None):
     Jena alone needs only the driver's jena step. A run that loads Neo4j takes its result into this folder.
     tech_behind names the stores whose technical graph is not current (tech_drift): each gets tech_graph load again,
     as does every store a reload wiped, and the Delta copy follows with tech_graph sync. AuraDB and Databricks again
-    only with --cloud. models is None when the newest releases hold no package graph, as in main; otherwise it names
+    only with --cloud. models is None when the newest releases hold no package graph; otherwise it names
     the Neo4j stores whose logical models are not current (logical_models.drift), and logical_models.py load runs on
     them and on every store a reload wiped, last, so mark reads Jena and Delta with the package graphs."""
     steps, reloaded = [], []

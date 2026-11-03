@@ -50,8 +50,8 @@ DEC_FILE = re.compile(r"EPM-DEC-001-(\d{4})-[\w-]+\.md$")
 DEC_ID = re.compile(r"(?<![\w/#-])EPM-DEC-001-(\d{4})(?![\w-])")
 
 # The folders the twelve released packages are built from, each documented by its README; technical-graph joined
-# them with its 1.0.0 on 2026-11-02 (EPM-DEC-001-0112). The logical-model module is unreleased in main
-# (EPM-DEC-001-0113). core is built
+# them with its 1.0.0 on 2026-11-02 (EPM-DEC-001-0112). The logical-model module's README is listed
+# with the module's own sources (EPM-DEC-001-0113). core is built
 # from the process map and release/; its changelog is its own document.
 MODULE_READMES = ["kpi", "lane", "market-data", "organization", "party", "ref-mpc", "system", "value-stream",
                   "data-product", "consumer", "authority", "placement", "population", "provenance", "validation",
