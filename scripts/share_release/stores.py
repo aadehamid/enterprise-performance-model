@@ -505,7 +505,10 @@ def stores_json(env):
 
 
 # The triple table's node keeps its IRI on the test stores; only its name differs from the one the release ships.
-TRIPLES_NAME = "urn:pricing-demo:tech:triples/epm_triples https://w3id.org/lsc/ontology/modules/technical-graph/name "
+# The name predicate under main's IRI base and under the release's, which the rewrite rules move (rules.py, rule 1):
+# the rows run on main's tree for the baseline and on the release's tree for the cut.
+TRIPLES_NAMES = tuple(f"urn:pricing-demo:tech:triples/epm_triples https://w3id.org/{base}/ontology/modules/technical-graph/name "
+                      for base in ("lsc", "mpc"))
 SHIPPED_TRIPLES = "workspace.epm_ontology.epm_triples"
 
 
@@ -514,12 +517,13 @@ def compare_ok(r, test_table):
     release's missing and the test table's new. Any other difference fails the row."""
     if not r["returncode"]:
         return True
-    expected = set() if not test_table or test_table == SHIPPED_TRIPLES else {
-        f"FAIL missing statement {TRIPLES_NAME}{SHIPPED_TRIPLES}", f"FAIL new statement {TRIPLES_NAME}{test_table}"}
+    if not test_table or test_table == SHIPPED_TRIPLES:
+        return False
     lines = [line.strip() for line in r["tail"].splitlines()]
     found = {line for line in lines if line.startswith("FAIL ")}
-    return (r["returncode"] == 1 and bool(expected) and found == expected
-            and f"{len(expected)} structural difference(s) between" in r["tail"])
+    return r["returncode"] == 1 and "2 structural difference(s) between" in r["tail"] and any(
+        found == {f"FAIL missing statement {name}{SHIPPED_TRIPLES}", f"FAIL new statement {name}{test_table}"}
+        for name in TRIPLES_NAMES)
 
 
 def row_tech_graph(tree, env):

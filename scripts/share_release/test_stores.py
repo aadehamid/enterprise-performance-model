@@ -343,6 +343,9 @@ def test_compare_accepts_only_the_test_triple_table_s_name():
     assert not stores.compare_ok(compare_result(planted), TEST_TABLE)  # a planted extra difference fails
     assert not stores.compare_ok(compare_result(EXPECTED[:1]), TEST_TABLE)  # half the rename is not the rename
     assert not stores.compare_ok(compare_result(EXPECTED), None)  # no test table: every difference fails
+    released = [line.replace("w3id.org/lsc/", "w3id.org/mpc/") for line in EXPECTED]
+    assert stores.compare_ok(compare_result(released), TEST_TABLE)  # the release's tree, its IRI base rewritten
+    assert not stores.compare_ok(compare_result([released[0], EXPECTED[1]]), TEST_TABLE)  # two bases is no rename
     assert not stores.compare_ok(compare_result(EXPECTED), "workspace.epm_ontology.epm_triples")
     assert not stores.compare_ok({**compare_result(EXPECTED), "returncode": 2}, TEST_TABLE)
 
@@ -351,7 +354,7 @@ def test_compare_accepts_only_the_test_triple_table_s_name():
 def test_the_shipped_triple_table_is_the_one_the_shipped_graph_names():
     """SHIPPED_TRIPLES is typed by hand; the demo's graph/tech-graph.ttl, which the release ships, is the source."""
     ttl = os.path.join(os.path.dirname(os.path.dirname(HERE)), "demos", "downstream-pricing-databricks-free", "graph", "tech-graph.ttl")
-    subject, name = stores.TRIPLES_NAME.split()
+    subject, name = stores.TRIPLES_NAMES[0].split()  # main's tree, as this test reads it
     text = open(ttl).read()
     assert f"@prefix tg: <{name[:-len('name')]}> ." in text  # the technical-graph module's name (EPM-DEC-001-0112, item 4)
     block = re.search(rf"^<{re.escape(subject)}> .*?\.$", text, re.M | re.S).group(0)
