@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (the decision owner, 2026-11-02, for the ten points below; the build choices delegated under EPM-DEC-001-0028; the module's `1.0.0` stays with the decision owner, not delegated: *2026-11-02:* approved by the decision owner, "1. approve 1.0.0", amendment below) |
+| Status | Decided (the decision owner, 2026-11-02, for the ten points below; the build choices delegated under EPM-DEC-001-0028; the module's `1.0.0` stays with the decision owner, not delegated: *2026-11-02:* approved by the decision owner, "1. approve 1.0.0", amendment below; *2026-11-03:* the follow-up release confirmed by the decision owner as the full version to share, "confirmed", amendment "The follow-up release confirmed") |
 | Date | 2026-11-02 |
 | Questions | Claude asked ten questions in two rounds, each with a recommendation, to open the follow-up release that EPM-DEC-001-0110 plans |
-| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-follow-up-release.md`, blocks 1 to 8 |
+| Source | Claude Code session of 2026-11-02; `answers-2026-11-02-follow-up-release.md`, blocks 1 to 8; `answers-2026-11-03-follow-up-release-confirmed.md` |
 
 ## Context
 
@@ -72,3 +72,12 @@ The decision owner's answers (block 8), to three questions Claude asked during t
 > 1. approve 1.0.0
 > 2. Yes we should do do this . I want to know how to do this as well
 > 3. Aligned on #455
+
+## Amendment, 2026-11-03: the follow-up release confirmed
+
+The follow-up release was cut from `main` with `cut.sh --augment`, validated with every store row against `main`'s baseline, published as `share/epm-1.0` in the private release repository (commit 2b3f02e2, replacing EPM 1.0), and every store was reloaded from it and read current. Asked to confirm it as the full version to share, the plan's end point, the decision owner answered (`answers-2026-11-03-follow-up-release-confirmed.md`):
+
+> confirmed
+
+So the follow-up release is the full version to share, and it replaces EPM 1.0. Question 17 stays open in it, listed in `OPEN-ITEMS.md` (EPM-DEC-001-0086, amendment of 2026-11-02). The ontology viewer, which the plan starts after this confirmation, is the next piece of work.
+
