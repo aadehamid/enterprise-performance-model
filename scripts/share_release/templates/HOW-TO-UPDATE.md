@@ -285,6 +285,19 @@ The packages are the source. Neo4j and Jena are copies that you can empty and re
    (cd $ONT/projection && uv run -q --no-project --with rdflib --with neo4j python sync_stores.py check --ref worktree --store driver --store jena)
    ```
 
+## Keep every copy in step
+
+Your packages are the master copy, and everything you load from them is a copy that falls behind when you release. Each kind of copy has its own check:
+
+- **The ontology in each store.** The check in step 5 of "Project into Neo4j and Jena" reads each store's ontology line as `current`, `behind`, `changed`, `unmarked` or `unreachable` (Jena, which has no marker, reads `empty` after a restart). For Jena it compares each named graph's triple count with your packages; Jena reads `empty` after a restart, because its dataset is in memory.
+- **The technical graph.** It is loaded from the demo's graph files, not from your packages. The same check's `tech:` line compares each store's technical graph with those files, by the marker the load wrote and by a fingerprint of the content.
+
+<!-- augment -->
+- **The logical models.** The `lm:` line compares each Neo4j store's logical-model subgraph with the package's graphs. The original files the models were built from were kept outside these sources. `release.json` and the package's `manifest.json` record each one under `augment`, by its path and its SHA-256. If you keep those originals, compare each one's SHA-256 with its record before you build from it again.
+
+<!-- /augment -->
+To repair any of them, run step 3 of "Project into Neo4j and Jena" again, which reloads the stores from your packages and ends with the check. Do not fix a store by hand. A release is done only when every store you keep reads `current` (release steps, step 6).
+
 ## The optional check against this release
 
 `scripts/check-pinned.sh` asks a different question from `scripts/check.sh`: does your copy still equal {{RELEASE_NAME}} as shipped? Its tests pin versions, counts, approvals and the figures in the guide. They pass on the release as shipped. After your first change some of them fail, and that means only that your copy has moved on. Ignore them from then on, or edit `scripts/pinned-tests.txt` when you want your own pins.
