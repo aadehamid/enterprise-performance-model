@@ -41,6 +41,26 @@ try {
     });
     assert.deepEqual(expected.map(n => n.label).sort(), ["Commercial Hydrocarbon Lifecycle", "Order to Cash"]);
     assert.equal(await page.locator("#stream-entry button").count(), expected.length);
+    await page.locator("#tree-mode").click();
+    const moduleTree = page.locator("#results > details").filter({hasText:/^value-stream ·/});
+    await moduleTree.locator(":scope > summary").click();
+    await moduleTree.locator(":scope > ul > li").first().waitFor();
+    const roots = moduleTree.locator(":scope > ul > li > details");
+    assert.equal(await roots.count(), expected.length);
+    for (let i = 0; i < expected.length; i++) {
+      const root = roots.nth(i);
+      const id = await root.locator(":scope > button").getAttribute("data-term");
+      const stream = expected.find(n => n.id === id);
+      assert.ok(stream);
+      await root.locator(":scope > summary").click();
+      await root.locator(":scope > ul > li").first().waitFor();
+      assert.deepEqual(await root.locator(":scope > ul > li > details > button").evaluateAll(els=>els.map(el=>el.dataset.term)), stream.stages.map(s=>s.id));
+      const stageTree = root.locator(":scope > ul > li > details").first();
+      await stageTree.locator(":scope > summary").click();
+      await stageTree.locator(":scope > ul > li").first().waitFor();
+      assert.deepEqual((await stageTree.locator(":scope > ul > li > button").evaluateAll(els=>els.map(el=>el.dataset.term))).sort(), stream.stages[0].processes.map(p=>p.id).sort());
+    }
+    await page.locator("#list-mode").click();
     for (const stream of expected) {
       await page.locator("#stream-entry button").filter({hasText:stream.label}).click();
       assert.equal(await page.locator("#iri").textContent(), stream.id);

@@ -657,6 +657,8 @@
       const streams = ordered.filter((n) => n.values.some((v) =>
         v.p === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" &&
         !v.literal && v.v === VS + "ValueStream"));
+      const sequence = (n) => Number(n.values.find((v) => v.p === VS + "sequence" && v.literal)?.v ?? Infinity);
+      const stageOrder = (a, b) => sequence(a) - sequence(b) || a.label.localeCompare(b.label);
       function renderStreamEntry() {
         const entry = $("stream-entry");
         entry.replaceChildren();
@@ -684,8 +686,7 @@
           for (const parent of parents) nav.append(termButton(parent.node));
           panel.append(nav);
         }
-        const sequence = (n) => Number(n.values.find((v) => v.p === VS + "sequence" && v.literal)?.v ?? Infinity);
-        const children = stages.length ? stages.sort((a, b) => sequence(a) - sequence(b) || a.label.localeCompare(b.label))
+        const children = stages.length ? stages.sort(stageOrder)
           : (processes.length ? processes : realized).sort((a, b) => a.label.localeCompare(b.label));
         if (!children.length) return;
         panel.append(element("h2", stages.length ? "Stages" : processes.length ? "Processes" : "Realized processes"));
@@ -720,6 +721,15 @@
               if (!children.has(p)) children.set(p, []);
               children.get(p).push(n);
             }
+          // Value streams are composed of stages and processes, not subclasses.
+          // Search keeps the generic hierarchy; All terms retains every vocabulary term.
+          const streamTree = !$("query").value.trim();
+          if (streamTree) for (const n of nodes) {
+            const stages = linked(n, VS + "hasStage").filter((s) => ids.has(s.id));
+            const processes = linked(n, VS + "hasProcess").filter((p) => ids.has(p.id));
+            if (stages.length) children.set(n.id, stages.sort(stageOrder));
+            else if (processes.length) children.set(n.id, processes.sort((a, b) => a.label.localeCompare(b.label)));
+          }
           function item(n, path) {
             const li = element("li");
             const kids = children.get(n.id) || [];
@@ -750,7 +760,8 @@
             d.addEventListener("toggle", () => {
               if (!d.open || d.querySelector("ul")) return;
               const ul = element("ul");
-              const roots = members.filter(
+              const roots = name === "value-stream" && streamTree
+                ? streams.filter((n) => ids.has(n.id)) : members.filter(
                 (n) =>
                   !n.parents.some(
                     (p) =>
