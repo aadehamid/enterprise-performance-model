@@ -81,7 +81,7 @@ Every change below ends with these steps. Run them once for the module you chang
 
    After a change, the script prints a note that the projection report describes an earlier build, until you project into Neo4j again. The note does not fail the check.
 
-6. If you keep stores loaded, reload them ("Project into Neo4j and Jena") and run the check in its step 5. The release is done only when every store you keep reads `current`, on its ontology line, on its `tech:` line, which is the technical graph's, and, when your releases hold `logical-model`, on each `lm:` line, which is a logical model's.
+6. If you keep stores loaded, reload them ("Project into Neo4j and Jena") and run the check in its step 5. The release is done only when every store you keep reads `current`, on its ontology line and on its `tech:` line, which is the technical graph's.
 
 ## Change a concept's definition
 
@@ -219,6 +219,8 @@ bash scripts/check.sh
 
 Questions 51 to 55 in `$ONT/regression/` run on the made-up example model. To ask them of your models, run the queries in `$ONT/regression/queries/q51-*.rq` to `q55b-*.rq` over the package's files.
 
+The stores load each model too: Jena and Delta its two graphs as named graphs, the local Neo4j and AuraDB the model as its own subgraph. The check in step 5 of the release steps then prints an `lm:` line for each Neo4j store, and a release is done only when each of those reads `current` too.
+
 <!-- /augment -->
 ## The cascade
 
@@ -273,7 +275,7 @@ The packages are the source. Neo4j and Jena are copies that you can empty and re
 
    The script stops at the first failing step and names it. The load fails if it lost a triple, added one or found a violation. The script also takes the result into `$ONT/projection/` and checks the stores against your packages.
 4. Commit `inferred.nt`, `projection-manifest.json` and `projection-report.json` from `$ONT/projection/`. `scripts/check.sh` then stops printing its note, and `python3 scripts/epm_facts.py projection` prints the new figures.
-5. To see later which store is behind your newest packages, or holds other technical-graph files than the demo's (the line that starts `tech:`), or, when your releases hold `logical-model`, another model than the package's (the line that starts `lm:`):
+5. To see later which store is behind your newest packages, or holds other technical-graph files than the demo's (the line that starts `tech:`):
 
    ```sh
    (cd $ONT/projection && uv run -q --no-project --with rdflib --with neo4j python sync_stores.py check --ref worktree --store driver --store jena)
