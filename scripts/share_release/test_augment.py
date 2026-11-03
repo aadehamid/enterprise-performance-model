@@ -393,6 +393,7 @@ FIGURE_CLASSES = {
          r"technical-graph 1\.0\.0, 2026-11-02: 4,234 nodes, 22,302 relationships, {m_total} triples and 2 inferred\)"),
         ("stores", r"epm_triples 40,169 quads, hash equal; 14 walks equal; the Jena walk store 37,089 quads", None),
         ("other", r"crack-spread gold table of 108,204 rows", None),
+        ("other", r"example-logical-model: 3 entities; 2 asserted, 1 doubtful, 0 with no row; layer 12 triples", None),  # the made-up example's build output
         # The file map's rows: each folder's own files, and each module's own packages, which the release set does not change.
         ("other", r"\(\d+ files(?:: Turtle, JSON-LD, shapes, DCAT record, manifest)?\)|\(109 files,", None),
     ],
