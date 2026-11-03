@@ -522,3 +522,16 @@ def test_a_shipped_skill_naming_a_left_out_skill_fails(tmp_path):
     clean(tmp_path)
     plant(tmp_path, "skills/ontology/references/governance.md", "Where the `way-of-working` skill is installed, follow it.\n")
     assert [h["reason"] for h in gate.scan(str(tmp_path))] == ["a skill the release leaves out"]
+
+
+def test_the_gate_skips_what_the_zip_skips_and_scans_the_rest(tmp_path):
+    # A run's out/ folder (the demo's replica, written by the store rows) never ships, so its copies of market news
+    # are not leaks; the same text in a shipped folder is.
+    import publish
+    assert set(gate.SKIP_DIRS) == set(publish.SKIP_DIRS)
+    clean(tmp_path)
+    (tmp_path / "demos" / "d" / "out" / "replica").mkdir(parents=True)
+    (tmp_path / "demos" / "d" / "out" / "replica" / "citation.txt").write_text("Valero raised runs\n")
+    assert gate.scan(str(tmp_path)) == []
+    (tmp_path / "demos" / "d" / "notes.txt").write_text("Valero raised runs\n")
+    assert any(h["reason"] == "a peer named" for h in gate.scan(str(tmp_path)))
