@@ -1204,9 +1204,9 @@ uv run --group graph python -m pricing_demo.tech_graph walk</code></pre>
   </ol>
   <p class="rise">This query returns the chain from the local Neo4j or AuraDB:</p>
 <pre class="rise"><code>MATCH (m:Resource {dcterms__identifier: 'KPI-0001'})&lt;-[:IMPLEMENTS]-(v:MetricView)
-MATCH (v)-[:READS_FROM]-&gt;(g:GoldTable)-[:READS_FROM]-&gt;(s:SilverTable)-[:READS_FROM]-&gt;(r:ReplicaTable)-[:COPIES]-&gt;(d:SourceDatabase)
+MATCH (v)-[:READS_FROM]-&gt;(g:Table {layer: 'gold'})-[:READS_FROM]-&gt;(s:Table {layer: 'silver'})-[:READS_FROM]-&gt;(r:Table {layer: 'replica'})-[:COPIES]-&gt;(d:SourceDatabase)
 OPTIONAL MATCH (d)-[:STANDS_FOR]-&gt;(sys:Resource)
-OPTIONAL MATCH (a:GenieAgent)-[:BINDS]-&gt;(v)
+OPTIONAL MATCH (a:Agent)-[:BINDS]-&gt;(v)
 OPTIONAL MATCH (m)-[:kpi__informsProcess]-&gt;(p:Resource)
 OPTIONAL MATCH (m)-[:kpi__usedBy]-&gt;(u:Resource)
 RETURN m.dcterms__identifier AS measure, m.skos__prefLabel AS label, v.name AS metric_view, g.name AS gold,
@@ -1418,8 +1418,8 @@ FROM &lt;catalog&gt;.semantic_sem_commercial.mpr_mips_crack_spread_price_fact_me
 <tr><td>Source database</td><td data-k="Link">Link to the system</td><td data-k="Ontology module"><code>system</code> entry</td><td data-k="Comes from">MIPS, MPR, KittyHawk, RightAngle</td></tr>
 <tr><td>Decision</td><td data-k="Link">Owner, refinery, measure</td><td data-k="Ontology module"><code>organization</code>, <code>ref-mpc</code>, <code>kpi</code></td><td data-k="Comes from">Decision trail, as PROV-O</td></tr>
 </tbody></table></div>
-  <pre class="rise" data-ss-id="link-walk"><code>MATCH (gold:Tech:GoldTable {name: 'gold_commercial_core.mips_mpr_executive_summary_fact'})&lt;-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]-&gt;(m:Resource)
-OPTIONAL MATCH (agent:Tech:GenieAgent)-[:BINDS]-&gt;(view)
+  <pre class="rise" data-ss-id="link-walk"><code>MATCH (gold:Tech:Table {name: 'gold_commercial_core.mips_mpr_executive_summary_fact', layer: 'gold'})&lt;-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]-&gt;(m:Resource)
+OPTIONAL MATCH (agent:Tech:Agent)-[:BINDS]-&gt;(view)
 RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos__prefLabel AS label,
        collect(DISTINCT agent.name) AS agents ORDER BY metric_view, measure</code></pre>
   <p class="rise" data-ss-id="link-result">From <code>gold_commercial_core.mips_mpr_executive_summary_fact</code> this returned 11 rows: the Executive Summary view's six measures and the pricing view's five, each with the agent that answers for it (demo <code>README.md</code>, E5).</p>
@@ -1575,31 +1575,31 @@ RETURN m.skos__prefLabel, m.skos__definition;
 
 // Which metric views compute it, and which agents answer
 MATCH (v:Tech:MetricView)-[:IMPLEMENTS]-&gt;(m:kpi__MeasureDefinition {dcterms__identifier: 'KPI-0001'})
-OPTIONAL MATCH (a:Tech:GenieAgent)-[:BINDS]-&gt;(v)
-RETURN v.name, collect(a.name);</code></pre><h3 class="rise" data-ss-id="map-h-38">The technical graph: its nodes</h3><div class="tbl rise" data-ss-id="map-t-39"><table class="gapt"><thead><tr><th>Kind (with label <code>Tech</code>)</th><th>Nodes</th><th>What it is</th><th>Built from</th></tr></thead><tbody>
+OPTIONAL MATCH (a:Tech:Agent)-[:BINDS]-&gt;(v)
+RETURN v.name, collect(a.name);</code></pre><h3 class="rise" data-ss-id="map-h-38">The technical graph: its nodes</h3><p class="rise">Since 2026-11-02 the technical graph uses the technical-graph module&#x27;s terms (EPM-DEC-001-0112, item 4), so its labels are the module&#x27;s classes. A replica, silver or gold table is a <code>Table</code> with a <code>layer</code> property; until then the demo&#x27;s own labels <code>ReplicaTable</code>, <code>SilverTable</code>, <code>GoldTable</code>, <code>TechGraphTable</code>, <code>TripleTable</code> and <code>GenieAgent</code> named them. The counts are the same. The queries on this page use the new labels; the answers below were read with the old ones.</p><div class="tbl rise" data-ss-id="map-t-39"><table class="gapt"><thead><tr><th>Kind (with label <code>Tech</code>)</th><th>Nodes</th><th>What it is</th><th>Built from</th></tr></thead><tbody>
 <tr><td><code>SourceDatabase</code></td><td data-k="Nodes">8</td><td data-k="What it is">A Postgres source</td><td data-k="Built from"><code>sparql/runtime.rq</code>, live facts</td></tr>
 <tr><td><code>Host</code></td><td data-k="Nodes">1</td><td data-k="What it is">The machine holding the sources</td><td data-k="Built from"><code>runtime.rq</code>, live facts</td></tr>
-<tr><td><code>ReplicaTable</code></td><td data-k="Nodes">28</td><td data-k="What it is">The medallion's bronze; with rows and last refresh</td><td data-k="Built from"><code>sparql/objects.rq</code> over the SQL files, live facts</td></tr>
-<tr><td><code>SilverTable</code></td><td data-k="Nodes">22</td><td data-k="What it is">A dimension or fact</td><td data-k="Built from"><code>objects.rq</code>, live facts</td></tr>
-<tr><td><code>GoldTable</code></td><td data-k="Nodes">6</td><td data-k="What it is">A gold table</td><td data-k="Built from"><code>objects.rq</code>, live facts</td></tr>
+<tr><td><code>Table</code>, layer <code>replica</code></td><td data-k="Nodes">28</td><td data-k="What it is">The medallion's bronze; with rows and last refresh</td><td data-k="Built from"><code>sparql/objects.rq</code> over the SQL files, live facts</td></tr>
+<tr><td><code>Table</code>, layer <code>silver</code></td><td data-k="Nodes">22</td><td data-k="What it is">A dimension or fact</td><td data-k="Built from"><code>objects.rq</code>, live facts</td></tr>
+<tr><td><code>Table</code>, layer <code>gold</code></td><td data-k="Nodes">6</td><td data-k="What it is">A gold table</td><td data-k="Built from"><code>objects.rq</code>, live facts</td></tr>
 <tr><td><code>MetricView</code></td><td data-k="Nodes">6</td><td data-k="What it is">A metric view</td><td data-k="Built from"><code>objects.rq</code>, live facts</td></tr>
 <tr><td><code>DefinitionsView</code></td><td data-k="Nodes">5</td><td data-k="What it is">A definitions view</td><td data-k="Built from"><code>objects.rq</code>, live facts</td></tr>
-<tr><td><code>TripleTable</code></td><td data-k="Nodes">1</td><td data-k="What it is"><code>epm_triples</code></td><td data-k="Built from"><code>runtime.rq</code></td></tr>
-<tr><td><code>TechGraphTable</code></td><td data-k="Nodes">2</td><td data-k="What it is">The Delta copy of this graph</td><td data-k="Built from"><code>objects.rq</code></td></tr>
-<tr><td><code>GenieAgent</code>, <code>Orchestrator</code></td><td data-k="Nodes">4, 1</td><td data-k="What it is">The agents, and what routes to them</td><td data-k="Built from"><code>runtime.rq</code></td></tr>
+<tr><td><code>Table</code>, no layer</td><td data-k="Nodes">1</td><td data-k="What it is"><code>epm_triples</code></td><td data-k="Built from"><code>runtime.rq</code></td></tr>
+<tr><td><code>Table</code>, no layer</td><td data-k="Nodes">2</td><td data-k="What it is">The Delta copy of this graph</td><td data-k="Built from"><code>objects.rq</code></td></tr>
+<tr><td><code>Agent</code>, <code>Orchestrator</code></td><td data-k="Nodes">4, 1</td><td data-k="What it is">The agents, and what routes to them</td><td data-k="Built from"><code>runtime.rq</code></td></tr>
 <tr><td><code>PipelineStep</code></td><td data-k="Nodes">19</td><td data-k="What it is">A step of the demo's run commands, in order</td><td data-k="Built from"><code>sparql/steps.rq</code> over the README</td></tr>
 <tr><td><code>QualityCheck</code></td><td data-k="Nodes">7</td><td data-k="What it is">A check, with its last result and time</td><td data-k="Built from"><code>tech_graph collect</code>, <code>runtime.rq</code></td></tr>
 <tr><td><code>Decision</code>, <code>EvidenceItem</code></td><td data-k="Nodes">10, 22</td><td data-k="What it is">The decision trail, as PROV-O</td><td data-k="Built from"><code>sparql/decisions.rq</code></td></tr>
 </tbody></table></div><h3 class="rise" data-ss-id="map-h-40">The technical graph: its relationships</h3><p class="rise" data-ss-id="map-p-41">There are 540 edges: 407 between technical nodes and 133 to the ontology. The same edges are in <code>tech_graph_edges</code>, with <code>target_in_ontology</code> marking the 133.</p><div class="tbl rise" data-ss-id="map-t-42"><table class="gapt"><thead><tr><th>Relationship</th><th>From and to</th><th>Edges</th><th>What it says</th></tr></thead><tbody>
-<tr><td><code>COPIES</code></td><td data-k="From and to">ReplicaTable to SourceDatabase</td><td data-k="Edges">28</td><td data-k="What it says">Lineage: the table copies this source</td></tr>
+<tr><td><code>COPIES</code></td><td data-k="From and to">Replica table to SourceDatabase</td><td data-k="Edges">28</td><td data-k="What it says">Lineage: the table copies this source</td></tr>
 <tr><td><code>READS_FROM</code></td><td data-k="From and to">Silver to replica (28); gold to silver (19) and gold (2); metric view to gold (5) and silver (3); definitions view to definitions view (4) and <code>epm_triples</code> (1)</td><td data-k="Edges">62</td><td data-k="What it says">The medallion's lineage, read from the SQL files</td></tr>
 <tr><td><code>HOSTED_ON</code></td><td data-k="From and to">SourceDatabase to Host</td><td data-k="Edges">8</td><td data-k="What it says">Where the source runs</td></tr>
 <tr><td><code>PRODUCED_BY</code></td><td data-k="From and to">Each table, view, agent, check and database to a PipelineStep</td><td data-k="Edges">89</td><td data-k="What it says">Which step makes or fills it</td></tr>
 <tr><td><code>NEXT</code></td><td data-k="From and to">PipelineStep to PipelineStep</td><td data-k="Edges">18</td><td data-k="What it says">The order of the run</td></tr>
 <tr><td><code>CHECKS</code></td><td data-k="From and to">QualityCheck to silver (51), replica (40), metric view (15), gold (14), definitions view (5), <code>epm_triples</code> (1), source (1)</td><td data-k="Edges">127</td><td data-k="What it says">What each check covers</td></tr>
-<tr><td><code>BINDS</code></td><td data-k="From and to">GenieAgent to metric view (6), silver (5), definitions view (4), gold (2)</td><td data-k="Edges">17</td><td data-k="What it says">What an agent can read</td></tr>
-<tr><td><code>ROUTES_TO</code></td><td data-k="From and to">Orchestrator to GenieAgent</td><td data-k="Edges">4</td><td data-k="What it says">Where a question can go</td></tr>
-<tr><td><code>RECORDED_IN</code></td><td data-k="From and to">Decision (10) and EvidenceItem (22) to ReplicaTable</td><td data-k="Edges">32</td><td data-k="What it says">Where the trail's row lives</td></tr>
+<tr><td><code>BINDS</code></td><td data-k="From and to">Agent to metric view (6), silver (5), definitions view (4), gold (2)</td><td data-k="Edges">17</td><td data-k="What it says">What an agent can read</td></tr>
+<tr><td><code>ROUTES_TO</code></td><td data-k="From and to">Orchestrator to Agent</td><td data-k="Edges">4</td><td data-k="What it says">Where a question can go</td></tr>
+<tr><td><code>RECORDED_IN</code></td><td data-k="From and to">Decision (10) and EvidenceItem (22) to a replica table</td><td data-k="Edges">32</td><td data-k="What it says">Where the trail's row lives</td></tr>
 <tr><td><code>USED</code>, <code>WAS_GENERATED_BY</code></td><td data-k="From and to">Decision to EvidenceItem; EvidenceItem to Decision</td><td data-k="Edges">18, 4</td><td data-k="What it says">Evidence written before or after the decision</td></tr>
 <tr><td><code>IMPLEMENTS</code></td><td data-k="From and to">MetricView to a <code>kpi</code> measure</td><td data-k="Edges">20</td><td data-k="What it says"><strong>To the ontology.</strong> The view computes this measure</td></tr>
 <tr><td><code>DESIGNED_AS</code></td><td data-k="From and to">Replica (12), silver (7), metric view (3), gold (2) and agent (2) to their <code>data-product</code> designs</td><td data-k="Edges">26</td><td data-k="What it says"><strong>To the ontology.</strong> The design this object builds</td></tr>
@@ -1661,11 +1661,11 @@ RETURN v.name, collect(a.name);</code></pre><h3 class="rise" data-ss-id="map-h-3
 uv run --with rdflib python ask.py                   # list the 80 queries, each named for its question
 uv run --with rdflib python ask.py q36-the-crack     # ask one</code></pre>
 <h3 class="rise" data-ss-id="ask-biz-1">Three business questions, across both graphs</h3><p class="rise" data-ss-id="ask-biz-2">The technical graph holds these links and facts. The first and third walks end on an ontology node for the meaning, and the second reads the checks on a technical node. These run on the local Neo4j or AuraDB, and each answer below was read from AuraDB on 2026-10-31. Row counts, dates and check results come from the graph's last load.</p><p class="rise" data-ss-id="ask-biz-3"><strong>Where does this number come from?</strong> The crack spread: Crack Spreads Pricing, then its metric view, then gold <code>mpr_mips_crack_spread_price_fact</code>, then source databases <code>price_assessment</code> and <code>price_reference</code>, which stand for MIPS and MPR.</p><pre class="rise" data-ss-id="ask-biz-4"><code>MATCH (v:Tech:MetricView {name: 'semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw'})-[:IMPLEMENTS]-&gt;(m:kpi__MeasureDefinition {dcterms__identifier: 'KPI-0001'})
-MATCH (v)-[:READS_FROM]-&gt;(g:GoldTable)
-OPTIONAL MATCH (g)-[:READS_FROM]-&gt;(:SilverTable)-[:READS_FROM]-&gt;(:ReplicaTable)-[:COPIES]-&gt;(db:SourceDatabase)
+MATCH (v)-[:READS_FROM]-&gt;(g:Table {layer: 'gold'})
+OPTIONAL MATCH (g)-[:READS_FROM]-&gt;(:Table {layer: 'silver'})-[:READS_FROM]-&gt;(:Table {layer: 'replica'})-[:COPIES]-&gt;(db:SourceDatabase)
 OPTIONAL MATCH (db)-[:STANDS_FOR]-&gt;(sys:Resource)
-RETURN m.skos__prefLabel AS measure, g.name AS gold, collect(DISTINCT db.name) AS sources, collect(DISTINCT sys.skos__prefLabel) AS systems;</code></pre><p class="rise" data-ss-id="ask-biz-5"><strong>Can I trust it today?</strong> 569,976 rows, refreshed on 2026-10-29. <code>built-objects-hold-rows</code> and <code>rows-labelled</code> pass. <code>designed-vs-observed-lineage</code> says differs: the demo is simpler than the design.</p><pre class="rise" data-ss-id="ask-biz-6"><code>MATCH (c:QualityCheck)-[:CHECKS]-&gt;(g:GoldTable {name: 'gold_commercial_core.mpr_mips_crack_spread_price_fact'})
-RETURN g.rows AS rows, g.lastRefresh AS refreshed, collect(c.name + ': ' + c.result) AS checks;</code></pre><p class="rise" data-ss-id="ask-biz-7"><strong>What is affected if this source changes?</strong> For <code>price_reference</code>, six measures: Additional Market Prices, Crack Spreads Pricing, Crude Market Pricing, Distillate Market Pricing, Gasoline Market Pricing and Price Comparison.</p><pre class="rise" data-ss-id="ask-biz-8"><code>MATCH (db:SourceDatabase {name: 'price_reference'})&lt;-[:COPIES]-(:ReplicaTable)&lt;-[:READS_FROM*1..3]-(:MetricView)-[:IMPLEMENTS]-&gt;(m)
+RETURN m.skos__prefLabel AS measure, g.name AS gold, collect(DISTINCT db.name) AS sources, collect(DISTINCT sys.skos__prefLabel) AS systems;</code></pre><p class="rise" data-ss-id="ask-biz-5"><strong>Can I trust it today?</strong> 569,976 rows, refreshed on 2026-10-29. <code>built-objects-hold-rows</code> and <code>rows-labelled</code> pass. <code>designed-vs-observed-lineage</code> says differs: the demo is simpler than the design.</p><pre class="rise" data-ss-id="ask-biz-6"><code>MATCH (c:QualityCheck)-[:CHECKS]-&gt;(g:Table {name: 'gold_commercial_core.mpr_mips_crack_spread_price_fact', layer: 'gold'})
+RETURN g.rows AS rows, g.lastRefresh AS refreshed, collect(c.name + ': ' + c.result) AS checks;</code></pre><p class="rise" data-ss-id="ask-biz-7"><strong>What is affected if this source changes?</strong> For <code>price_reference</code>, six measures: Additional Market Prices, Crack Spreads Pricing, Crude Market Pricing, Distillate Market Pricing, Gasoline Market Pricing and Price Comparison.</p><pre class="rise" data-ss-id="ask-biz-8"><code>MATCH (db:SourceDatabase {name: 'price_reference'})&lt;-[:COPIES]-(:Table {layer: 'replica'})&lt;-[:READS_FROM*1..3]-(:MetricView)-[:IMPLEMENTS]-&gt;(m)
 RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre></section>
 
 <section id="change" data-ss-id="section-change" data-ss-section>
@@ -1798,10 +1798,10 @@ MATCH (m:EpmStoreMarker) RETURN m;       // the release set</code></pre>
     </div>
     <div class="panel">
       <h3 data-ss-id="the-gold-to-measure-walk">The gold-to-measure walk</h3>
-<pre><code>MATCH (gold:Tech:GoldTable {name: 'gold_commercial_core.mips_mpr_executive_summary_fact'})
+<pre><code>MATCH (gold:Tech:Table {name: 'gold_commercial_core.mips_mpr_executive_summary_fact', layer: 'gold'})
       &lt;-[:READS_FROM]-(view:Tech:MetricView)
       -[:IMPLEMENTS]-&gt;(m:Resource)
-OPTIONAL MATCH (agent:Tech:GenieAgent)-[:BINDS]-&gt;(view)
+OPTIONAL MATCH (agent:Tech:Agent)-[:BINDS]-&gt;(view)
 RETURN gold.name, view.name, m.uri, m.skos__prefLabel,
        collect(DISTINCT agent.name)</code></pre>
     </div>

@@ -9,13 +9,13 @@
 # %REPO% is the repository root and %LIVE% the live facts file, filled in by tech_graph.py.
 PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
-PREFIX tv:  <urn:pricing-demo:tech-vocab#>
+PREFIX tg:  <https://w3id.org/lsc/ontology/modules/technical-graph/>
 
 CONSTRUCT {
-  ?view tv:implements ?measure .
-  ?obj tv:designedAs ?designed .
-  ?agent tv:designedAs ?designedAgent .
-  ?db tv:standsFor ?system .
+  ?view tg:implements ?measure .
+  ?obj tg:designedAs ?designed .
+  ?agent tg:designedAs ?designedAgent .
+  ?db tg:standsFor ?system .
 }
 WHERE {
   {

@@ -1,20 +1,23 @@
 # What the last run left: the host and the source databases with their row counts, each Databricks object's rows and
 # last refresh, the Genie agents and the views they bind, the orchestrator, and the data-quality checks with their last
-# result. SPARQL Anything reads out/tech/live.json, which `tech_graph collect` writes from Postgres and Databricks.
+# result. SPARQL Anything reads out/tech/live.json, which `tech_graph collect` writes from Postgres and Databricks. The
+# terms are the technical-graph module's (EPM-DEC-001-0112, item 4): counts are xsd:decimal, a label is English, and a
+# check's result is a value of the module's check-result list.
 PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
 PREFIX xyz: <http://sparql.xyz/facade-x/data/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX tv:  <urn:pricing-demo:tech-vocab#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX tg:  <https://w3id.org/lsc/ontology/modules/technical-graph/>
 
 CONSTRUCT {
-  ?host a tv:Host ; tv:name ?hostName ; tv:label ?hostKind .
-  ?db a tv:SourceDatabase ; tv:name ?dbName ; tv:hidden ?hidden ; tv:tables ?dbTables ; tv:rows ?dbRows ; tv:hostedOn ?host .
-  ?obj tv:rows ?rows ; tv:lastRefresh ?refresh .
-  <urn:pricing-demo:tech:triples/epm_triples> a tv:TripleTable ; tv:name ?triples .
-  ?agent a tv:GenieAgent ; tv:name ?agentTitle ; tv:binds ?bound .
-  <urn:pricing-demo:tech:orchestrator> a tv:Orchestrator ; tv:name "Orchestrator (pricing_demo/supervisor.py)" ; tv:routesTo ?agent .
-  ?check a tv:QualityCheck ; tv:name ?checkId ; tv:label ?checkLabel ; tv:result ?result ; tv:detail ?detail ;
-         tv:checkedAt ?checkedAt ; tv:checks ?covered .
+  ?host a tg:Host ; tg:name ?hostName ; rdfs:label ?hostLabel .
+  ?db a tg:SourceDatabase ; tg:name ?dbName ; tg:hidden ?hidden ; tg:tables ?tablesCount ; tg:rows ?dbRowsCount ; tg:hostedOn ?host .
+  ?obj tg:rows ?rowsCount ; tg:lastRefresh ?refresh .
+  <urn:pricing-demo:tech:triples/epm_triples> a tg:Table ; tg:name ?triples .
+  ?agent a tg:Agent ; tg:name ?agentTitle ; tg:binds ?bound .
+  <urn:pricing-demo:tech:orchestrator> a tg:Orchestrator ; tg:name "Orchestrator (pricing_demo/supervisor.py)" ; tg:routesTo ?agent .
+  ?check a tg:QualityCheck ; tg:name ?checkId ; rdfs:label ?label ; tg:result ?resultValue ; tg:detail ?detail ;
+         tg:checkedAt ?checkedAt ; tg:checks ?covered .
 }
 WHERE {
   SERVICE <x-sparql-anything:> {
@@ -36,6 +39,12 @@ WHERE {
       OPTIONAL { ?c xyz:covers ?cov . ?cov ?p ?coveredId . }
     }
   }
+  BIND(STRLANG(?hostKind, "en") AS ?hostLabel)
+  BIND(STRDT(STR(?dbTables), xsd:decimal) AS ?tablesCount)
+  BIND(STRDT(STR(?dbRows), xsd:decimal) AS ?dbRowsCount)
+  BIND(STRDT(STR(?rows), xsd:decimal) AS ?rowsCount)
+  BIND(STRLANG(?checkLabel, "en") AS ?label)
+  BIND(IRI(CONCAT("https://w3id.org/lsc/ontology/modules/technical-graph/check-result/", ?result)) AS ?resultValue)
   BIND(IRI(CONCAT("urn:pricing-demo:tech:host/", ENCODE_FOR_URI(?hostName))) AS ?host)
   BIND(IRI(CONCAT("urn:pricing-demo:tech:database/", ?dbName)) AS ?db)
   BIND(IRI(CONCAT("urn:pricing-demo:tech:object/", ?objId)) AS ?obj)

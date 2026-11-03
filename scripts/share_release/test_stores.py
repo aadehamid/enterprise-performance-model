@@ -327,7 +327,7 @@ def test_the_catalog_check_finds_its_answer_among_other_output_and_says_why_it_h
 
 
 TEST_TABLE = "workspace.epm_ontology.epm_triples_validate"
-NAME = "urn:pricing-demo:tech:triples/epm_triples urn:pricing-demo:tech-vocab#name"
+NAME = "urn:pricing-demo:tech:triples/epm_triples https://w3id.org/lsc/ontology/modules/technical-graph/name"
 EXPECTED = [f"FAIL missing statement {NAME} workspace.epm_ontology.epm_triples", f"FAIL new statement {NAME} {TEST_TABLE}"]
 
 
@@ -353,9 +353,9 @@ def test_the_shipped_triple_table_is_the_one_the_shipped_graph_names():
     ttl = os.path.join(os.path.dirname(os.path.dirname(HERE)), "demos", "downstream-pricing-databricks-free", "graph", "tech-graph.ttl")
     subject, name = stores.TRIPLES_NAME.split()
     text = open(ttl).read()
-    assert f"@prefix tv: <{name[:-len('name')]}> ." in text
+    assert f"@prefix tg: <{name[:-len('name')]}> ." in text  # the technical-graph module's name (EPM-DEC-001-0112, item 4)
     block = re.search(rf"^<{re.escape(subject)}> .*?\.$", text, re.M | re.S).group(0)
-    assert re.findall(r'tv:name "([^"]+)"', block) == [stores.SHIPPED_TRIPLES]
+    assert re.findall(r'tg:name "([^"]+)"', block) == [stores.SHIPPED_TRIPLES]
 
 def run_tech_graph_row(tmp_path, monkeypatch, compare_lines):
     """row_tech_graph with every command stubbed; compare answers with the given differences."""

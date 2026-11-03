@@ -1,11 +1,15 @@
+@prefix layer: <https://w3id.org/lsc/ontology/modules/data-product/layer/> .
 @prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix result: <https://w3id.org/lsc/ontology/modules/technical-graph/check-result/> .
 @prefix tech: <urn:pricing-demo:tech:> .
-@prefix tv: <urn:pricing-demo:tech-vocab#> .
+@prefix tg: <https://w3id.org/lsc/ontology/modules/technical-graph/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<urn:pricing-demo:tech:check/built-objects-hold-rows> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T19:05:37+00:00"^^xsd:dateTime ;
-    tv:checks <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
+<urn:pricing-demo:tech:check/built-objects-hold-rows> a tg:QualityCheck ;
+    rdfs:label "Every silver and gold table, metric view and definitions view exists and holds rows"@en ;
+    tg:checkedAt "2026-10-29T19:05:37+00:00"^^xsd:dateTime ;
+    tg:checks <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact>,
@@ -44,33 +48,33 @@
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_version_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_production_daily_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_unit_daily_fact> ;
-    tv:detail "no problem found" ;
-    tv:label "Every silver and gold table, metric view and definitions view exists and holds rows" ;
-    tv:name "built-objects-hold-rows" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
-    tv:result "pass" .
+    tg:detail "no problem found" ;
+    tg:name "built-objects-hold-rows" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:result result:pass .
 
-<urn:pricing-demo:tech:check/databricks-reaches-auradb> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T17:05:45+00:00"^^xsd:dateTime ;
-    tv:checks <urn:pricing-demo:tech:triples/epm_triples> ;
-    tv:detail "bolt_query: ok; dns: ok; tcp_7687: ok" ;
-    tv:label "A Databricks job reaches AuraDB with the login in secret scope epm-neo4j" ;
-    tv:name "databricks-reaches-auradb" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
-    tv:result "pass" .
+<urn:pricing-demo:tech:check/databricks-reaches-auradb> a tg:QualityCheck ;
+    rdfs:label "A Databricks job reaches AuraDB with the login in secret scope epm-neo4j"@en ;
+    tg:checkedAt "2026-10-29T17:05:45+00:00"^^xsd:dateTime ;
+    tg:checks <urn:pricing-demo:tech:triples/epm_triples> ;
+    tg:detail "bolt_query: ok; dns: ok; tcp_7687: ok" ;
+    tg:name "databricks-reaches-auradb" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:result result:pass .
 
-<urn:pricing-demo:tech:check/decision-truth-hidden> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T19:05:49+00:00"^^xsd:dateTime ;
-    tv:checks <urn:pricing-demo:tech:database/decision_truth> ;
-    tv:detail "no problem found" ;
-    tv:label "No table of decision_truth reaches Databricks, and no SQL file names it" ;
-    tv:name "decision-truth-hidden" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
-    tv:result "pass" .
+<urn:pricing-demo:tech:check/decision-truth-hidden> a tg:QualityCheck ;
+    rdfs:label "No table of decision_truth reaches Databricks, and no SQL file names it"@en ;
+    tg:checkedAt "2026-10-29T19:05:49+00:00"^^xsd:dateTime ;
+    tg:checks <urn:pricing-demo:tech:database/decision_truth> ;
+    tg:detail "no problem found" ;
+    tg:name "decision-truth-hidden" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:result result:pass .
 
-<urn:pricing-demo:tech:check/designed-vs-observed-lineage> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T19:05:59+00:00"^^xsd:dateTime ;
-    tv:checks <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
+<urn:pricing-demo:tech:check/designed-vs-observed-lineage> a tg:QualityCheck ;
+    rdfs:label "Designed lineage matches Unity Catalog's observed lineage"@en ;
+    tg:checkedAt "2026-10-29T19:05:59+00:00"^^xsd:dateTime ;
+    tg:checks <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_currency>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessment>,
@@ -94,29 +98,29 @@
         <urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim>,
         <urn:pricing-demo:tech:object/silver_udm_core.mips_price_assessment_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.mpr_price_detail_fact> ;
-    tv:detail "26 edges match; 5 designed only; 0 observed only; 9 designed edges touch a table the demo does not build" ;
-    tv:label "Designed lineage matches Unity Catalog's observed lineage" ;
-    tv:name "designed-vs-observed-lineage" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
-    tv:result "differs" .
+    tg:detail "26 edges match; 5 designed only; 0 observed only; 9 designed edges touch a table the demo does not build" ;
+    tg:name "designed-vs-observed-lineage" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:result result:differs .
 
-<urn:pricing-demo:tech:check/metric-views-tagged> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T19:05:37+00:00"^^xsd:dateTime ;
-    tv:checks <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw>,
+<urn:pricing-demo:tech:check/metric-views-tagged> a tg:QualityCheck ;
+    rdfs:label "Every metric view carries its epm_measure_identifiers tag"@en ;
+    tg:checkedAt "2026-10-29T19:05:37+00:00"^^xsd:dateTime ;
+    tg:checks <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_executive_summary_fact_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.pricing_market_margin_metrics_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_operations_metrics_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_unit_operations_metrics_vw> ;
-    tv:detail "no problem found" ;
-    tv:label "Every metric view carries its epm_measure_identifiers tag" ;
-    tv:name "metric-views-tagged" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
-    tv:result "pass" .
+    tg:detail "no problem found" ;
+    tg:name "metric-views-tagged" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:result result:pass .
 
-<urn:pricing-demo:tech:check/replica-matches-manifest> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T19:05:26+00:00"^^xsd:dateTime ;
-    tv:checks <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence>,
+<urn:pricing-demo:tech:check/replica-matches-manifest> a tg:QualityCheck ;
+    rdfs:label "Each replica table holds the replica manifest's rows, all from its run"@en ;
+    tg:checkedAt "2026-10-29T19:05:26+00:00"^^xsd:dateTime ;
+    tg:checks <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence>,
         <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log>,
         <urn:pricing-demo:tech:object/replica_aspen_pims.plan_target>,
         <urn:pricing-demo:tech:object/replica_aspen_pims.plan_version>,
@@ -144,15 +148,15 @@
         <urn:pricing-demo:tech:object/replica_rightangle.deal>,
         <urn:pricing-demo:tech:object/replica_rightangle.freight_rate>,
         <urn:pricing-demo:tech:object/replica_rightangle.movement> ;
-    tv:detail "no problem found" ;
-    tv:label "Each replica table holds the replica manifest's rows, all from its run" ;
-    tv:name "replica-matches-manifest" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
-    tv:result "pass" .
+    tg:detail "no problem found" ;
+    tg:name "replica-matches-manifest" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:result result:pass .
 
-<urn:pricing-demo:tech:check/rows-labelled> a tv:QualityCheck ;
-    tv:checkedAt "2026-10-29T19:05:48+00:00"^^xsd:dateTime ;
-    tv:checks <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
+<urn:pricing-demo:tech:check/rows-labelled> a tg:QualityCheck ;
+    rdfs:label "Every silver and gold row with a provenance column says real, spot-anchored or synthesized"@en ;
+    tg:checkedAt "2026-10-29T19:05:48+00:00"^^xsd:dateTime ;
+    tg:checks <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact>,
@@ -180,60 +184,57 @@
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_version_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_production_daily_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_unit_daily_fact> ;
-    tv:detail "no problem found" ;
-    tv:label "Every silver and gold row with a provenance column says real, spot-anchored or synthesized" ;
-    tv:name "rows-labelled" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
-    tv:result "pass" .
+    tg:detail "no problem found" ;
+    tg:name "rows-labelled" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:result result:pass .
 
-<urn:pricing-demo:tech:object/tech_graph.tech_graph_edges> a tv:TechGraphTable ;
-    tv:definedIn "sql/07_tech_graph.sql" ;
-    tv:lastRefresh "2026-10-29T17:08:23+00:00"^^xsd:dateTime ;
-    tv:layer "tech-graph" ;
-    tv:name "tech_graph.tech_graph_edges" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-sync> ;
-    tv:rows 533.0 .
+<urn:pricing-demo:tech:object/tech_graph.tech_graph_edges> a tg:Table ;
+    tg:definedIn "sql/07_tech_graph.sql" ;
+    tg:lastRefresh "2026-10-29T17:08:23+00:00"^^xsd:dateTime ;
+    tg:name "tech_graph.tech_graph_edges" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-sync> ;
+    tg:rows 533.0 .
 
-<urn:pricing-demo:tech:object/tech_graph.tech_graph_nodes> a tv:TechGraphTable ;
-    tv:definedIn "sql/07_tech_graph.sql" ;
-    tv:lastRefresh "2026-10-29T17:08:13+00:00"^^xsd:dateTime ;
-    tv:layer "tech-graph" ;
-    tv:name "tech_graph.tech_graph_nodes" ;
-    tv:producedBy <urn:pricing-demo:tech:step/tech_graph-sync> ;
-    tv:rows 142.0 .
+<urn:pricing-demo:tech:object/tech_graph.tech_graph_nodes> a tg:Table ;
+    tg:definedIn "sql/07_tech_graph.sql" ;
+    tg:lastRefresh "2026-10-29T17:08:13+00:00"^^xsd:dateTime ;
+    tg:name "tech_graph.tech_graph_nodes" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-sync> ;
+    tg:rows 142.0 .
 
-tech:orchestrator a tv:Orchestrator ;
-    tv:name "Orchestrator (pricing_demo/supervisor.py)" ;
-    tv:producedBy <urn:pricing-demo:tech:step/supervisor-ask> ;
-    tv:routesTo <urn:pricing-demo:tech:agent/crack-spread-price-analytics>,
+tech:orchestrator a tg:Orchestrator ;
+    tg:name "Orchestrator (pricing_demo/supervisor.py)" ;
+    tg:producedBy <urn:pricing-demo:tech:step/supervisor-ask> ;
+    tg:routesTo <urn:pricing-demo:tech:agent/crack-spread-price-analytics>,
         <urn:pricing-demo:tech:agent/executive-summary-kpis-analytics>,
         <urn:pricing-demo:tech:agent/pricing-and-market-margin-analytics>,
         <urn:pricing-demo:tech:agent/refinery-operations-analytics> .
 
-<urn:pricing-demo:tech:agent/crack-spread-price-analytics> a tv:GenieAgent ;
-    tv:binds <urn:pricing-demo:tech:object/ontology_definitions.crack_spread_definitions_vw>,
+<urn:pricing-demo:tech:agent/crack-spread-price-analytics> a tg:Agent ;
+    tg:binds <urn:pricing-demo:tech:object/ontology_definitions.crack_spread_definitions_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw> ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/agent/crack-spread-price-analytics> ;
-    tv:name "Crack Spread Price Analytics" ;
-    tv:producedBy <urn:pricing-demo:tech:step/genie> .
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/agent/crack-spread-price-analytics> ;
+    tg:name "Crack Spread Price Analytics" ;
+    tg:producedBy <urn:pricing-demo:tech:step/genie> .
 
-<urn:pricing-demo:tech:agent/executive-summary-kpis-analytics> a tv:GenieAgent ;
-    tv:binds <urn:pricing-demo:tech:object/ontology_definitions.executive_summary_definitions_vw>,
+<urn:pricing-demo:tech:agent/executive-summary-kpis-analytics> a tg:Agent ;
+    tg:binds <urn:pricing-demo:tech:object/ontology_definitions.executive_summary_definitions_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_executive_summary_fact_vw> ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/agent/executive-summary-kpis-analytics> ;
-    tv:name "Executive Summary KPIs Analytics" ;
-    tv:producedBy <urn:pricing-demo:tech:step/genie> .
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/agent/executive-summary-kpis-analytics> ;
+    tg:name "Executive Summary KPIs Analytics" ;
+    tg:producedBy <urn:pricing-demo:tech:step/genie> .
 
-<urn:pricing-demo:tech:agent/pricing-and-market-margin-analytics> a tv:GenieAgent ;
-    tv:binds <urn:pricing-demo:tech:object/ontology_definitions.pricing_market_margin_definitions_vw>,
+<urn:pricing-demo:tech:agent/pricing-and-market-margin-analytics> a tg:Agent ;
+    tg:binds <urn:pricing-demo:tech:object/ontology_definitions.pricing_market_margin_definitions_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.pricing_market_margin_metrics_vw>,
         <urn:pricing-demo:tech:object/silver_udm_core.freight_rate_fact> ;
-    tv:name "Pricing and Market Margin Analytics" ;
-    tv:producedBy <urn:pricing-demo:tech:step/genie> .
+    tg:name "Pricing and Market Margin Analytics" ;
+    tg:producedBy <urn:pricing-demo:tech:step/genie> .
 
-<urn:pricing-demo:tech:agent/refinery-operations-analytics> a tv:GenieAgent ;
-    tv:binds <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
+<urn:pricing-demo:tech:agent/refinery-operations-analytics> a tg:Agent ;
+    tg:binds <urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.refinery_plan_backcast_fact>,
         <urn:pricing-demo:tech:object/ontology_definitions.refinery_operations_definitions_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_operations_metrics_vw>,
@@ -242,845 +243,840 @@ tech:orchestrator a tv:Orchestrator ;
         <urn:pricing-demo:tech:object/silver_udm_core.eia_weekly_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.external_event_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.forward_scan_fact> ;
-    tv:name "Refinery Operations Analytics" ;
-    tv:producedBy <urn:pricing-demo:tech:step/genie> .
+    tg:name "Refinery Operations Analytics" ;
+    tg:producedBy <urn:pricing-demo:tech:step/genie> .
 
-<urn:pricing-demo:tech:database/decision_truth> a tv:SourceDatabase ;
-    tv:hidden true ;
-    tv:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tv:name "decision_truth" ;
-    tv:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tv:rows 10.0 ;
-    tv:tables 1.0 .
+<urn:pricing-demo:tech:database/decision_truth> a tg:SourceDatabase ;
+    tg:hidden true ;
+    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:name "decision_truth" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 10.0 ;
+    tg:tables 1.0 .
 
-<urn:pricing-demo:tech:step/aura_test> a tv:PipelineStep ;
-    tv:name "pricing_demo.aura_test" ;
-    tv:next <urn:pricing-demo:tech:step/outside-plan> ;
-    tv:order 10 .
+<urn:pricing-demo:tech:step/aura_test> a tg:PipelineStep ;
+    tg:name "pricing_demo.aura_test" ;
+    tg:next <urn:pricing-demo:tech:step/outside-plan> ;
+    tg:order 10 .
 
-<urn:pricing-demo:tech:step/databricks-counts> a tv:PipelineStep ;
-    tv:name "pricing_demo.databricks counts" ;
-    tv:next <urn:pricing-demo:tech:step/databricks-purge> ;
-    tv:order 18 .
+<urn:pricing-demo:tech:step/databricks-counts> a tg:PipelineStep ;
+    tg:name "pricing_demo.databricks counts" ;
+    tg:next <urn:pricing-demo:tech:step/databricks-purge> ;
+    tg:order 18 .
 
-<urn:pricing-demo:tech:step/databricks-purge> a tv:PipelineStep ;
-    tv:name "pricing_demo.databricks purge" ;
-    tv:order 19 .
+<urn:pricing-demo:tech:step/databricks-purge> a tg:PipelineStep ;
+    tg:name "pricing_demo.databricks purge" ;
+    tg:order 19 .
 
-<urn:pricing-demo:tech:step/databricks-setup> a tv:PipelineStep ;
-    tv:name "pricing_demo.databricks setup" ;
-    tv:next <urn:pricing-demo:tech:step/databricks-upload> ;
-    tv:order 3 .
+<urn:pricing-demo:tech:step/databricks-setup> a tg:PipelineStep ;
+    tg:name "pricing_demo.databricks setup" ;
+    tg:next <urn:pricing-demo:tech:step/databricks-upload> ;
+    tg:order 3 .
 
-<urn:pricing-demo:tech:step/databricks-upload> a tv:PipelineStep ;
-    tv:name "pricing_demo.databricks upload" ;
-    tv:next <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:order 4 .
+<urn:pricing-demo:tech:step/databricks-upload> a tg:PipelineStep ;
+    tg:name "pricing_demo.databricks upload" ;
+    tg:next <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:order 4 .
 
-<urn:pricing-demo:tech:step/outside-plan> a tv:PipelineStep ;
-    tv:name "pricing_demo.outside plan" ;
-    tv:next <urn:pricing-demo:tech:step/outside-run> ;
-    tv:order 11 .
+<urn:pricing-demo:tech:step/outside-plan> a tg:PipelineStep ;
+    tg:name "pricing_demo.outside plan" ;
+    tg:next <urn:pricing-demo:tech:step/outside-run> ;
+    tg:order 11 .
 
-<urn:pricing-demo:tech:step/outside-run> a tv:PipelineStep ;
-    tv:name "pricing_demo.outside run" ;
-    tv:next <urn:pricing-demo:tech:step/tech_graph-collect> ;
-    tv:order 12 .
+<urn:pricing-demo:tech:step/outside-run> a tg:PipelineStep ;
+    tg:name "pricing_demo.outside run" ;
+    tg:next <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:order 12 .
 
-<urn:pricing-demo:tech:step/replicate> a tv:PipelineStep ;
-    tv:name "pricing_demo.replicate" ;
-    tv:next <urn:pricing-demo:tech:step/databricks-setup> ;
-    tv:order 2 .
+<urn:pricing-demo:tech:step/replicate> a tg:PipelineStep ;
+    tg:name "pricing_demo.replicate" ;
+    tg:next <urn:pricing-demo:tech:step/databricks-setup> ;
+    tg:order 2 .
 
-<urn:pricing-demo:tech:step/supervisor-describe> a tv:PipelineStep ;
-    tv:name "pricing_demo.supervisor describe" ;
-    tv:next <urn:pricing-demo:tech:step/supervisor-setup> ;
-    tv:order 7 .
+<urn:pricing-demo:tech:step/supervisor-describe> a tg:PipelineStep ;
+    tg:name "pricing_demo.supervisor describe" ;
+    tg:next <urn:pricing-demo:tech:step/supervisor-setup> ;
+    tg:order 7 .
 
-<urn:pricing-demo:tech:step/supervisor-setup> a tv:PipelineStep ;
-    tv:name "pricing_demo.supervisor setup" ;
-    tv:next <urn:pricing-demo:tech:step/supervisor-ask> ;
-    tv:order 8 .
+<urn:pricing-demo:tech:step/supervisor-setup> a tg:PipelineStep ;
+    tg:name "pricing_demo.supervisor setup" ;
+    tg:next <urn:pricing-demo:tech:step/supervisor-ask> ;
+    tg:order 8 .
 
-<urn:pricing-demo:tech:step/tech_graph-build> a tv:PipelineStep ;
-    tv:name "pricing_demo.tech_graph build" ;
-    tv:next <urn:pricing-demo:tech:step/tech_graph-load> ;
-    tv:order 14 .
+<urn:pricing-demo:tech:step/tech_graph-build> a tg:PipelineStep ;
+    tg:name "pricing_demo.tech_graph build" ;
+    tg:next <urn:pricing-demo:tech:step/tech_graph-load> ;
+    tg:order 14 .
 
-<urn:pricing-demo:tech:step/tech_graph-load> a tv:PipelineStep ;
-    tv:name "pricing_demo.tech_graph load" ;
-    tv:next <urn:pricing-demo:tech:step/tech_graph-sync> ;
-    tv:order 15 .
+<urn:pricing-demo:tech:step/tech_graph-load> a tg:PipelineStep ;
+    tg:name "pricing_demo.tech_graph load" ;
+    tg:next <urn:pricing-demo:tech:step/tech_graph-sync> ;
+    tg:order 15 .
 
-<urn:pricing-demo:tech:step/tech_graph-walk> a tv:PipelineStep ;
-    tv:name "pricing_demo.tech_graph walk" ;
-    tv:next <urn:pricing-demo:tech:step/databricks-counts> ;
-    tv:order 17 .
+<urn:pricing-demo:tech:step/tech_graph-walk> a tg:PipelineStep ;
+    tg:name "pricing_demo.tech_graph walk" ;
+    tg:next <urn:pricing-demo:tech:step/databricks-counts> ;
+    tg:order 17 .
 
-<urn:pricing-demo:tech:database/eia_weekly> a tv:SourceDatabase ;
-    tv:hidden false ;
-    tv:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tv:name "eia_weekly" ;
-    tv:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tv:rows 8820.0 ;
-    tv:tables 2.0 .
+<urn:pricing-demo:tech:database/eia_weekly> a tg:SourceDatabase ;
+    tg:hidden false ;
+    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:name "eia_weekly" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 8820.0 ;
+    tg:tables 2.0 .
 
-<urn:pricing-demo:tech:database/price_reference> a tv:SourceDatabase ;
-    tv:hidden false ;
-    tv:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tv:name "price_reference" ;
-    tv:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tv:rows 599280.0 ;
-    tv:standsFor <https://w3id.org/lsc/ontology/modules/system/system/mpr> ;
-    tv:tables 2.0 .
+<urn:pricing-demo:tech:database/price_reference> a tg:SourceDatabase ;
+    tg:hidden false ;
+    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:name "price_reference" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 599280.0 ;
+    tg:standsFor <https://w3id.org/lsc/ontology/modules/system/system/mpr> ;
+    tg:tables 2.0 .
 
-<urn:pricing-demo:tech:object/ontology_definitions.crack_spread_definitions_vw> a tv:DefinitionsView ;
-    tv:definedIn "sql/06_definitions.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:51+00:00"^^xsd:dateTime ;
-    tv:layer "definitions" ;
-    tv:name "ontology_definitions.crack_spread_definitions_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
-    tv:rows 1.0 .
+<urn:pricing-demo:tech:object/ontology_definitions.crack_spread_definitions_vw> a tg:DefinitionsView ;
+    tg:definedIn "sql/06_definitions.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:51+00:00"^^xsd:dateTime ;
+    tg:name "ontology_definitions.crack_spread_definitions_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
+    tg:rows 1.0 .
 
-<urn:pricing-demo:tech:object/ontology_definitions.executive_summary_definitions_vw> a tv:DefinitionsView ;
-    tv:definedIn "sql/06_definitions.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:52+00:00"^^xsd:dateTime ;
-    tv:layer "definitions" ;
-    tv:name "ontology_definitions.executive_summary_definitions_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
-    tv:rows 6.0 .
+<urn:pricing-demo:tech:object/ontology_definitions.executive_summary_definitions_vw> a tg:DefinitionsView ;
+    tg:definedIn "sql/06_definitions.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:52+00:00"^^xsd:dateTime ;
+    tg:name "ontology_definitions.executive_summary_definitions_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
+    tg:rows 6.0 .
 
-<urn:pricing-demo:tech:object/ontology_definitions.pricing_market_margin_definitions_vw> a tv:DefinitionsView ;
-    tv:definedIn "sql/06_definitions.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:53+00:00"^^xsd:dateTime ;
-    tv:layer "definitions" ;
-    tv:name "ontology_definitions.pricing_market_margin_definitions_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
-    tv:rows 6.0 .
+<urn:pricing-demo:tech:object/ontology_definitions.pricing_market_margin_definitions_vw> a tg:DefinitionsView ;
+    tg:definedIn "sql/06_definitions.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:53+00:00"^^xsd:dateTime ;
+    tg:name "ontology_definitions.pricing_market_margin_definitions_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
+    tg:rows 6.0 .
 
-<urn:pricing-demo:tech:object/ontology_definitions.refinery_operations_definitions_vw> a tv:DefinitionsView ;
-    tv:definedIn "sql/06_definitions.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:54+00:00"^^xsd:dateTime ;
-    tv:layer "definitions" ;
-    tv:name "ontology_definitions.refinery_operations_definitions_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
-    tv:rows 7.0 .
+<urn:pricing-demo:tech:object/ontology_definitions.refinery_operations_definitions_vw> a tg:DefinitionsView ;
+    tg:definedIn "sql/06_definitions.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:54+00:00"^^xsd:dateTime ;
+    tg:name "ontology_definitions.refinery_operations_definitions_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
+    tg:rows 7.0 .
 
-<urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/aspen_pims> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:03+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_aspen_pims.decision_evidence" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 22.0 .
+<urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/aspen_pims> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:03+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_aspen_pims.decision_evidence" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 22.0 .
 
-<urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/aspen_pims> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:00+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_aspen_pims.decision_log" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 10.0 .
+<urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/aspen_pims> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:00+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_aspen_pims.decision_log" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 10.0 .
 
-<urn:pricing-demo:tech:object/replica_aspen_pims.plan_target> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/aspen_pims> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:19+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_aspen_pims.plan_target" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 481.0 .
+<urn:pricing-demo:tech:object/replica_aspen_pims.plan_target> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/aspen_pims> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:19+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_aspen_pims.plan_target" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 481.0 .
 
-<urn:pricing-demo:tech:object/replica_aspen_pims.plan_version> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/aspen_pims> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:57+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_aspen_pims.plan_version" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 455.0 .
+<urn:pricing-demo:tech:object/replica_aspen_pims.plan_version> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/aspen_pims> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:57+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_aspen_pims.plan_version" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 455.0 .
 
-<urn:pricing-demo:tech:object/replica_eia_weekly.weekly_value> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/eia_weekly> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:54+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_eia_weekly.weekly_value" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 8792.0 .
+<urn:pricing-demo:tech:object/replica_eia_weekly.weekly_value> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/eia_weekly> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:54+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_eia_weekly.weekly_value" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 8792.0 .
 
-<urn:pricing-demo:tech:object/replica_production_accounting.refinery> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/production_accounting> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:22+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_production_accounting.refinery" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 13.0 .
+<urn:pricing-demo:tech:object/replica_production_accounting.refinery> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/production_accounting> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:22+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_production_accounting.refinery" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 13.0 .
 
-<urn:pricing-demo:tech:object/replica_production_accounting.refinery_daily> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/production_accounting> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:26+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_production_accounting.refinery_daily" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 9724.0 .
+<urn:pricing-demo:tech:object/replica_production_accounting.refinery_daily> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/production_accounting> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:26+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_production_accounting.refinery_daily" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 9724.0 .
 
-<urn:pricing-demo:tech:object/replica_production_accounting.unit_daily> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/production_accounting> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:48+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_production_accounting.unit_daily" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 76296.0 .
+<urn:pricing-demo:tech:object/replica_production_accounting.unit_daily> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/production_accounting> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:48+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_production_accounting.unit_daily" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 76296.0 .
 
-<urn:pricing-demo:tech:object/replica_reference_data_hub.deliveryperiodcategory> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-kittyhawk-deliveryperiodcategory> ;
-    tv:lastRefresh "2026-10-29T16:59:10+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_reference_data_hub.deliveryperiodcategory" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 3.0 .
+<urn:pricing-demo:tech:object/replica_reference_data_hub.deliveryperiodcategory> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-kittyhawk-deliveryperiodcategory> ;
+    tg:lastRefresh "2026-10-29T16:59:10+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_reference_data_hub.deliveryperiodcategory" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 3.0 .
 
-<urn:pricing-demo:tech:object/replica_reference_data_hub.external_citation> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:41+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_reference_data_hub.external_citation" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 1360.0 .
+<urn:pricing-demo:tech:object/replica_reference_data_hub.external_citation> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:41+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_reference_data_hub.external_citation" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 1360.0 .
 
-<urn:pricing-demo:tech:object/replica_reference_data_hub.external_event> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:34+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_reference_data_hub.external_event" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 344.0 .
+<urn:pricing-demo:tech:object/replica_reference_data_hub.external_event> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:34+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_reference_data_hub.external_event" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 344.0 .
 
-<urn:pricing-demo:tech:object/replica_reference_data_hub.forward_scan> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:38+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_reference_data_hub.forward_scan" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 45.0 .
+<urn:pricing-demo:tech:object/replica_reference_data_hub.forward_scan> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:38+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_reference_data_hub.forward_scan" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 45.0 .
 
-<urn:pricing-demo:tech:object/replica_reference_data_hub.holidaycalendar> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-kittyhawk-holidaycalendar> ;
-    tv:lastRefresh "2026-10-29T16:59:07+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_reference_data_hub.holidaycalendar" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 30.0 .
+<urn:pricing-demo:tech:object/replica_reference_data_hub.holidaycalendar> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-kittyhawk-holidaycalendar> ;
+    tg:lastRefresh "2026-10-29T16:59:07+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_reference_data_hub.holidaycalendar" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 30.0 .
 
-<urn:pricing-demo:tech:object/replica_reference_data_hub.market_event> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:29+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_reference_data_hub.market_event" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 9.0 .
+<urn:pricing-demo:tech:object/replica_reference_data_hub.market_event> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:29+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_reference_data_hub.market_event" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 9.0 .
 
-<urn:pricing-demo:tech:object/replica_reference_data_hub.priceservice> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-kittyhawk-priceservice> ;
-    tv:lastRefresh "2026-10-29T16:59:04+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_reference_data_hub.priceservice" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 2.0 .
+<urn:pricing-demo:tech:object/replica_reference_data_hub.priceservice> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/reference_data_hub> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-kittyhawk-priceservice> ;
+    tg:lastRefresh "2026-10-29T16:59:04+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_reference_data_hub.priceservice" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 2.0 .
 
-<urn:pricing-demo:tech:object/replica_rightangle.deal> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/rightangle> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:13+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_rightangle.deal" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 2673.0 .
+<urn:pricing-demo:tech:object/replica_rightangle.deal> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/rightangle> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:13+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_rightangle.deal" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 2673.0 .
 
-<urn:pricing-demo:tech:object/replica_rightangle.freight_rate> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/rightangle> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:45+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_rightangle.freight_rate" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 1496.0 .
+<urn:pricing-demo:tech:object/replica_rightangle.freight_rate> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/rightangle> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:45+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_rightangle.freight_rate" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 1496.0 .
 
-<urn:pricing-demo:tech:object/replica_rightangle.movement> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/rightangle> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:16+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_rightangle.movement" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 2673.0 .
+<urn:pricing-demo:tech:object/replica_rightangle.movement> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/rightangle> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:16+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_rightangle.movement" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 2673.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.eia_weekly_series_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:00+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.eia_weekly_series_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_eia_weekly.series> ;
-    tv:rows 28.0 .
+<urn:pricing-demo:tech:object/silver_mdm_core.eia_weekly_series_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:00+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.eia_weekly_series_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_eia_weekly.series> ;
+    tg:rows 28.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.external_citation_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:19+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.external_citation_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.external_citation> ;
-    tv:rows 1360.0 .
+<urn:pricing-demo:tech:object/silver_mdm_core.external_citation_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:19+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.external_citation_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.external_citation> ;
+    tg:rows 1360.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.ctrm_deal_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:50+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.ctrm_deal_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_rightangle.deal>,
+<urn:pricing-demo:tech:object/silver_udm_core.ctrm_deal_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:50+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.ctrm_deal_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_rightangle.deal>,
         <urn:pricing-demo:tech:object/replica_rightangle.movement> ;
-    tv:rows 2673.0 .
+    tg:rows 2673.0 .
 
-<urn:pricing-demo:tech:step/supervisor-ask> a tv:PipelineStep ;
-    tv:name "pricing_demo.supervisor ask" ;
-    tv:next <urn:pricing-demo:tech:step/aura_test> ;
-    tv:order 9 .
+<urn:pricing-demo:tech:step/supervisor-ask> a tg:PipelineStep ;
+    tg:name "pricing_demo.supervisor ask" ;
+    tg:next <urn:pricing-demo:tech:step/aura_test> ;
+    tg:order 9 .
 
-<urn:pricing-demo:tech:triples/epm_triples> a tv:TripleTable ;
-    tv:name "workspace.epm_ontology.epm_triples" .
+<urn:pricing-demo:tech:triples/epm_triples> a tg:Table ;
+    tg:name "workspace.epm_ontology.epm_triples" .
 
-<urn:pricing-demo:tech:database/production_accounting> a tv:SourceDatabase ;
-    tv:hidden false ;
-    tv:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tv:name "production_accounting" ;
-    tv:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tv:rows 86033.0 ;
-    tv:tables 3.0 .
+<urn:pricing-demo:tech:database/production_accounting> a tg:SourceDatabase ;
+    tg:hidden false ;
+    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:name "production_accounting" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 86033.0 ;
+    tg:tables 3.0 .
 
-<urn:pricing-demo:tech:database/rightangle> a tv:SourceDatabase ;
-    tv:hidden false ;
-    tv:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tv:name "rightangle" ;
-    tv:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tv:rows 6842.0 ;
-    tv:standsFor <https://w3id.org/lsc/ontology/modules/system/system/rightangle> ;
-    tv:tables 3.0 .
+<urn:pricing-demo:tech:database/rightangle> a tg:SourceDatabase ;
+    tg:hidden false ;
+    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:name "rightangle" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 6842.0 ;
+    tg:standsFor <https://w3id.org/lsc/ontology/modules/system/system/rightangle> ;
+    tg:tables 3.0 .
 
-<urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact> a tv:GoldTable ;
-    tv:definedIn "sql/04_gold.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:39+00:00"^^xsd:dateTime ;
-    tv:layer "gold" ;
-    tv:name "gold_commercial_core.decision_evidence_detail_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.decision_dim>,
+<urn:pricing-demo:tech:object/gold_commercial_core.decision_evidence_detail_fact> a tg:Table ;
+    tg:definedIn "sql/04_gold.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:39+00:00"^^xsd:dateTime ;
+    tg:layer layer:gold ;
+    tg:name "gold_commercial_core.decision_evidence_detail_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.decision_dim>,
         <urn:pricing-demo:tech:object/silver_udm_core.decision_evidence_fact> ;
-    tv:rows 22.0 .
+    tg:rows 22.0 .
 
-<urn:pricing-demo:tech:object/gold_commercial_core.refinery_plan_backcast_fact> a tv:GoldTable ;
-    tv:definedIn "sql/04_gold.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:37+00:00"^^xsd:dateTime ;
-    tv:layer "gold" ;
-    tv:name "gold_commercial_core.refinery_plan_backcast_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact>,
+<urn:pricing-demo:tech:object/gold_commercial_core.refinery_plan_backcast_fact> a tg:Table ;
+    tg:definedIn "sql/04_gold.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:37+00:00"^^xsd:dateTime ;
+    tg:layer layer:gold ;
+    tg:name "gold_commercial_core.refinery_plan_backcast_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_version_fact> ;
-    tv:rows 455.0 .
+    tg:rows 455.0 .
 
-<urn:pricing-demo:tech:object/gold_commercial_core.refinery_unit_operations_daily_fact> a tv:GoldTable ;
-    tv:definedIn "sql/04_gold.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:34+00:00"^^xsd:dateTime ;
-    tv:layer "gold" ;
-    tv:name "gold_commercial_core.refinery_unit_operations_daily_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.refinery_dim>,
+<urn:pricing-demo:tech:object/gold_commercial_core.refinery_unit_operations_daily_fact> a tg:Table ;
+    tg:definedIn "sql/04_gold.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:34+00:00"^^xsd:dateTime ;
+    tg:layer layer:gold ;
+    tg:name "gold_commercial_core.refinery_unit_operations_daily_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.refinery_dim>,
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_unit_daily_fact> ;
-    tv:rows 76296.0 .
+    tg:rows 76296.0 .
 
-<urn:pricing-demo:tech:object/replica_eia_weekly.series> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/eia_weekly> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:lastRefresh "2026-10-29T16:59:51+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_eia_weekly.series" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 28.0 .
+<urn:pricing-demo:tech:object/replica_eia_weekly.series> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/eia_weekly> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:lastRefresh "2026-10-29T16:59:51+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_eia_weekly.series" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 28.0 .
 
-<urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessment> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_assessment> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-priceassessment> ;
-    tv:lastRefresh "2026-10-29T16:58:54+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_assessment.mips_priceassessment" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 266288.0 .
+<urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessment> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-priceassessment> ;
+    tg:lastRefresh "2026-10-29T16:58:54+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_assessment.mips_priceassessment" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 266288.0 .
 
-<urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessmentgroup> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_assessment> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-priceassessmentgroup> ;
-    tv:lastRefresh "2026-10-29T16:58:50+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_assessment.mips_priceassessmentgroup" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 188.0 .
+<urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessmentgroup> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-priceassessmentgroup> ;
+    tg:lastRefresh "2026-10-29T16:58:50+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_assessment.mips_priceassessmentgroup" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 188.0 .
 
-<urn:pricing-demo:tech:object/replica_price_assessment.mips_pricebatch> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_assessment> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricebatch> ;
-    tv:lastRefresh "2026-10-29T16:58:40+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_assessment.mips_pricebatch" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 748.0 .
+<urn:pricing-demo:tech:object/replica_price_assessment.mips_pricebatch> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricebatch> ;
+    tg:lastRefresh "2026-10-29T16:58:40+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_assessment.mips_pricebatch" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 748.0 .
 
-<urn:pricing-demo:tech:object/replica_price_assessment.mips_pricegroup> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_assessment> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricegroup> ;
-    tv:lastRefresh "2026-10-29T16:58:46+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_assessment.mips_pricegroup" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 66.0 .
+<urn:pricing-demo:tech:object/replica_price_assessment.mips_pricegroup> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricegroup> ;
+    tg:lastRefresh "2026-10-29T16:58:46+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_assessment.mips_pricegroup" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 66.0 .
 
-<urn:pricing-demo:tech:object/replica_price_assessment.mips_pricesheet> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_assessment> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricesheet> ;
-    tv:lastRefresh "2026-10-29T16:58:43+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_assessment.mips_pricesheet" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 7.0 .
+<urn:pricing-demo:tech:object/replica_price_assessment.mips_pricesheet> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricesheet> ;
+    tg:lastRefresh "2026-10-29T16:58:43+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_assessment.mips_pricesheet" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 7.0 .
 
-<urn:pricing-demo:tech:object/replica_price_reference.pricedetail> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_reference> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mpr-pricedetail> ;
-    tv:lastRefresh "2026-10-29T16:59:01+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_reference.pricedetail" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 599148.0 .
+<urn:pricing-demo:tech:object/replica_price_reference.pricedetail> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_reference> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mpr-pricedetail> ;
+    tg:lastRefresh "2026-10-29T16:59:01+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_reference.pricedetail" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 599148.0 .
 
-<urn:pricing-demo:tech:object/replica_price_reference.pricemaster> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_reference> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mpr-pricemaster> ;
-    tv:lastRefresh "2026-10-29T16:58:57+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_reference.pricemaster" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 132.0 .
+<urn:pricing-demo:tech:object/replica_price_reference.pricemaster> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_reference> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mpr-pricemaster> ;
+    tg:lastRefresh "2026-10-29T16:58:57+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_reference.pricemaster" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 132.0 .
 
-<urn:pricing-demo:tech:object/semantic_sem_commercial.pricing_market_margin_metrics_vw> a tv:MetricView ;
-    tv:definedIn "sql/05_metric_views.sql" ;
-    tv:implements measure:additional-market-prices,
+<urn:pricing-demo:tech:object/semantic_sem_commercial.pricing_market_margin_metrics_vw> a tg:MetricView ;
+    tg:definedIn "sql/05_metric_views.sql" ;
+    tg:implements measure:additional-market-prices,
         measure:crude-prices,
         measure:distillate-prices,
         measure:gasoline-prices,
         measure:price-comparison ;
-    tv:lastRefresh "2026-10-29T17:01:46+00:00"^^xsd:dateTime ;
-    tv:layer "metric-view" ;
-    tv:name "semantic_sem_commercial.pricing_market_margin_metrics_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
+    tg:lastRefresh "2026-10-29T17:01:46+00:00"^^xsd:dateTime ;
+    tg:layer layer:metric-view ;
+    tg:name "semantic_sem_commercial.pricing_market_margin_metrics_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim> ;
-    tv:rows 45628.0 .
+    tg:rows 45628.0 .
 
-<urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_operations_metrics_vw> a tv:MetricView ;
-    tv:definedIn "sql/05_metric_views.sql" ;
-    tv:implements measure:crude-utilization,
+<urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_operations_metrics_vw> a tg:MetricView ;
+    tg:definedIn "sql/05_metric_views.sql" ;
+    tg:implements measure:crude-utilization,
         measure:distillate-yield,
         measure:gasoline-yield,
         measure:margin-capture,
         measure:refining-opex-per-barrel,
         measure:rm-margin-per-barrel ;
-    tv:lastRefresh "2026-10-29T17:01:47+00:00"^^xsd:dateTime ;
-    tv:layer "metric-view" ;
-    tv:name "semantic_sem_commercial.refinery_operations_metrics_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact> ;
-    tv:rows 9724.0 .
+    tg:lastRefresh "2026-10-29T17:01:47+00:00"^^xsd:dateTime ;
+    tg:layer layer:metric-view ;
+    tg:name "semantic_sem_commercial.refinery_operations_metrics_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact> ;
+    tg:rows 9724.0 .
 
-<urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_unit_operations_metrics_vw> a tv:MetricView ;
-    tv:definedIn "sql/05_metric_views.sql" ;
-    tv:implements measure:unit-utilization ;
-    tv:lastRefresh "2026-10-29T17:01:49+00:00"^^xsd:dateTime ;
-    tv:layer "metric-view" ;
-    tv:name "semantic_sem_commercial.refinery_unit_operations_metrics_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.refinery_unit_operations_daily_fact> ;
-    tv:rows 76296.0 .
+<urn:pricing-demo:tech:object/semantic_sem_commercial.refinery_unit_operations_metrics_vw> a tg:MetricView ;
+    tg:definedIn "sql/05_metric_views.sql" ;
+    tg:implements measure:unit-utilization ;
+    tg:lastRefresh "2026-10-29T17:01:49+00:00"^^xsd:dateTime ;
+    tg:layer layer:metric-view ;
+    tg:name "semantic_sem_commercial.refinery_unit_operations_metrics_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.refinery_unit_operations_daily_fact> ;
+    tg:rows 76296.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.decision_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:07+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.decision_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
-    tv:rows 10.0 .
+<urn:pricing-demo:tech:object/silver_mdm_core.decision_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:07+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.decision_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.decision_log> ;
+    tg:rows 10.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.market_event_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:58+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.market_event_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.market_event> ;
-    tv:rows 9.0 .
+<urn:pricing-demo:tech:object/silver_mdm_core.market_event_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:58+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.market_event_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.market_event> ;
+    tg:rows 9.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.decision_evidence_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:10+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.decision_evidence_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> ;
-    tv:rows 22.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.decision_evidence_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:10+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.decision_evidence_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.decision_evidence> ;
+    tg:rows 22.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.eia_weekly_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:03+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.eia_weekly_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_eia_weekly.series>,
+<urn:pricing-demo:tech:object/silver_udm_core.eia_weekly_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:03+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.eia_weekly_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_eia_weekly.series>,
         <urn:pricing-demo:tech:object/replica_eia_weekly.weekly_value> ;
-    tv:rows 8792.0 .
+    tg:rows 8792.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.external_event_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:13+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.external_event_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.external_event> ;
-    tv:rows 344.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.external_event_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:13+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.external_event_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.external_event> ;
+    tg:rows 344.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.forward_scan_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:15+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.forward_scan_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.forward_scan> ;
-    tv:rows 45.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.forward_scan_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:15+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.forward_scan_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_reference_data_hub.forward_scan> ;
+    tg:rows 45.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.freight_rate_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:55+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.freight_rate_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_rightangle.freight_rate> ;
-    tv:rows 1496.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.freight_rate_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:55+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.freight_rate_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_rightangle.freight_rate> ;
+    tg:rows 1496.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_target_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:48+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.refinery_plan_target_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.plan_target> ;
-    tv:rows 481.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_target_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:48+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.refinery_plan_target_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.plan_target> ;
+    tg:rows 481.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_version_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:05+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.refinery_plan_version_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.plan_version> ;
-    tv:rows 455.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_version_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:05+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.refinery_plan_version_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_aspen_pims.plan_version> ;
+    tg:rows 455.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.refinery_production_daily_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:45+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.refinery_production_daily_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_production_accounting.refinery_daily> ;
-    tv:rows 9724.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.refinery_production_daily_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:45+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.refinery_production_daily_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_production_accounting.refinery_daily> ;
+    tg:rows 9724.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.refinery_unit_daily_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:53+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.refinery_unit_daily_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_production_accounting.unit_daily> ;
-    tv:rows 76296.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.refinery_unit_daily_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:53+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.refinery_unit_daily_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_production_accounting.unit_daily> ;
+    tg:rows 76296.0 .
 
-<urn:pricing-demo:tech:step/tech_graph-sync> a tv:PipelineStep ;
-    tv:name "pricing_demo.tech_graph sync" ;
-    tv:next <urn:pricing-demo:tech:step/tech_graph-walk> ;
-    tv:order 16 .
+<urn:pricing-demo:tech:step/tech_graph-sync> a tg:PipelineStep ;
+    tg:name "pricing_demo.tech_graph sync" ;
+    tg:next <urn:pricing-demo:tech:step/tech_graph-walk> ;
+    tg:order 16 .
 
-<urn:pricing-demo:tech:database/aspen_pims> a tv:SourceDatabase ;
-    tv:hidden false ;
-    tv:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tv:name "aspen_pims" ;
-    tv:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tv:rows 968.0 ;
-    tv:tables 4.0 .
+<urn:pricing-demo:tech:database/aspen_pims> a tg:SourceDatabase ;
+    tg:hidden false ;
+    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:name "aspen_pims" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 968.0 ;
+    tg:tables 4.0 .
 
-<urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact> a tv:GoldTable ;
-    tv:definedIn "sql/04_gold.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:31+00:00"^^xsd:dateTime ;
-    tv:layer "gold" ;
-    tv:name "gold_commercial_core.refinery_operations_daily_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
+<urn:pricing-demo:tech:object/gold_commercial_core.refinery_operations_daily_fact> a tg:Table ;
+    tg:definedIn "sql/04_gold.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:31+00:00"^^xsd:dateTime ;
+    tg:layer layer:gold ;
+    tg:name "gold_commercial_core.refinery_operations_daily_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
         <urn:pricing-demo:tech:object/silver_mdm_core.refinery_dim>,
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_plan_target_fact>,
         <urn:pricing-demo:tech:object/silver_udm_core.refinery_production_daily_fact> ;
-    tv:rows 9724.0 .
+    tg:rows 9724.0 .
 
-<urn:pricing-demo:tech:object/replica_price_assessment.mips_currency> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_assessment> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-currency> ;
-    tv:lastRefresh "2026-10-29T16:58:32+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_assessment.mips_currency" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 1.0 .
+<urn:pricing-demo:tech:object/replica_price_assessment.mips_currency> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-currency> ;
+    tg:lastRefresh "2026-10-29T16:58:32+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_assessment.mips_currency" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 1.0 .
 
-<urn:pricing-demo:tech:object/replica_price_assessment.mips_unitofmeasure> a tv:ReplicaTable ;
-    tv:copies <urn:pricing-demo:tech:database/price_assessment> ;
-    tv:definedIn "sql/02_replica.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-unitofmeasure> ;
-    tv:lastRefresh "2026-10-29T16:58:36+00:00"^^xsd:dateTime ;
-    tv:layer "replica" ;
-    tv:name "replica_price_assessment.mips_unitofmeasure" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:rows 6.0 .
+<urn:pricing-demo:tech:object/replica_price_assessment.mips_unitofmeasure> a tg:Table ;
+    tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
+    tg:definedIn "sql/02_replica.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-unitofmeasure> ;
+    tg:lastRefresh "2026-10-29T16:58:36+00:00"^^xsd:dateTime ;
+    tg:layer layer:replica ;
+    tg:name "replica_price_assessment.mips_unitofmeasure" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:rows 6.0 .
 
-<urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw> a tv:MetricView ;
-    tv:definedIn "sql/05_metric_views.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/view-mips-mpr-benchmark-prices-fact-vw> ;
-    tv:implements measure:crude-prices ;
-    tv:lastRefresh "2026-10-29T17:01:45+00:00"^^xsd:dateTime ;
-    tv:layer "metric-view" ;
-    tv:name "semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim>,
+<urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw> a tg:MetricView ;
+    tg:definedIn "sql/05_metric_views.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/view-mips-mpr-benchmark-prices-fact-vw> ;
+    tg:implements measure:crude-prices ;
+    tg:lastRefresh "2026-10-29T17:01:45+00:00"^^xsd:dateTime ;
+    tg:layer layer:metric-view ;
+    tg:name "semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim>,
         <urn:pricing-demo:tech:object/silver_udm_core.mpr_price_detail_fact> ;
-    tv:rows 4134.0 .
+    tg:rows 4134.0 .
 
-<urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_executive_summary_fact_vw> a tv:MetricView ;
-    tv:definedIn "sql/05_metric_views.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/view-mips-mpr-executive-summary-fact-vw> ;
-    tv:implements measure:additional-market-prices,
+<urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_executive_summary_fact_vw> a tg:MetricView ;
+    tg:definedIn "sql/05_metric_views.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/view-mips-mpr-executive-summary-fact-vw> ;
+    tg:implements measure:additional-market-prices,
         measure:crack-spreads,
         measure:crude-prices,
         measure:distillate-prices,
         measure:gasoline-prices,
         measure:price-comparison ;
-    tv:lastRefresh "2026-10-29T17:01:43+00:00"^^xsd:dateTime ;
-    tv:layer "metric-view" ;
-    tv:name "semantic_sem_commercial.mips_mpr_executive_summary_fact_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact> ;
-    tv:rows 266288.0 .
+    tg:lastRefresh "2026-10-29T17:01:43+00:00"^^xsd:dateTime ;
+    tg:layer layer:metric-view ;
+    tg:name "semantic_sem_commercial.mips_mpr_executive_summary_fact_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact> ;
+    tg:rows 266288.0 .
 
-<urn:pricing-demo:tech:object/semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw> a tv:MetricView ;
-    tv:definedIn "sql/05_metric_views.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/view-mpr-mips-crack-spread-price-fact-metrics-vw> ;
-    tv:implements measure:crack-spreads ;
-    tv:lastRefresh "2026-10-29T17:01:41+00:00"^^xsd:dateTime ;
-    tv:layer "metric-view" ;
-    tv:name "semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact> ;
-    tv:rows 569976.0 .
+<urn:pricing-demo:tech:object/semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw> a tg:MetricView ;
+    tg:definedIn "sql/05_metric_views.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/view-mpr-mips-crack-spread-price-fact-metrics-vw> ;
+    tg:implements measure:crack-spreads ;
+    tg:lastRefresh "2026-10-29T17:01:41+00:00"^^xsd:dateTime ;
+    tg:layer layer:metric-view ;
+    tg:name "semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact> ;
+    tg:rows 569976.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.mips_price_batch_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-batch-dim> ;
-    tv:lastRefresh "2026-10-29T17:00:26+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.mips_price_batch_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_pricebatch> ;
-    tv:rows 748.0 .
+<urn:pricing-demo:tech:object/silver_mdm_core.mips_price_batch_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-batch-dim> ;
+    tg:lastRefresh "2026-10-29T17:00:26+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.mips_price_batch_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_pricebatch> ;
+    tg:rows 748.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.refinery_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:lastRefresh "2026-10-29T17:00:42+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.refinery_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_production_accounting.refinery> ;
-    tv:rows 13.0 .
+<urn:pricing-demo:tech:object/silver_mdm_core.refinery_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:lastRefresh "2026-10-29T17:00:42+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.refinery_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_production_accounting.refinery> ;
+    tg:rows 13.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.mips_price_assessment_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-assessment-fact> ;
-    tv:lastRefresh "2026-10-29T17:00:40+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.mips_price_assessment_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessment> ;
-    tv:rows 266288.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.mips_price_assessment_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-assessment-fact> ;
+    tg:lastRefresh "2026-10-29T17:00:40+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.mips_price_assessment_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessment> ;
+    tg:rows 266288.0 .
 
-<urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact> a tv:GoldTable ;
-    tv:definedIn "sql/04_gold.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/gold-mips-mpr-executive-summary-fact> ;
-    tv:lastRefresh "2026-10-29T17:01:27+00:00"^^xsd:dateTime ;
-    tv:layer "gold" ;
-    tv:name "gold_commercial_core.mips_mpr_executive_summary_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim>,
+<urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact> a tg:Table ;
+    tg:definedIn "sql/04_gold.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/gold-mips-mpr-executive-summary-fact> ;
+    tg:lastRefresh "2026-10-29T17:01:27+00:00"^^xsd:dateTime ;
+    tg:layer layer:gold ;
+    tg:name "gold_commercial_core.mips_mpr_executive_summary_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_batch_dim>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_group_dim>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_sheet_dim>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim>,
         <urn:pricing-demo:tech:object/silver_udm_core.mips_price_assessment_fact> ;
-    tv:rows 266288.0 .
+    tg:rows 266288.0 .
 
-<urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact> a tv:GoldTable ;
-    tv:definedIn "sql/04_gold.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/gold-mpr-mips-crack-spread-price-fact> ;
-    tv:lastRefresh "2026-10-29T17:01:23+00:00"^^xsd:dateTime ;
-    tv:layer "gold" ;
-    tv:name "gold_commercial_core.mpr_mips_crack_spread_price_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim>,
+<urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact> a tg:Table ;
+    tg:definedIn "sql/04_gold.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/gold-mpr-mips-crack-spread-price-fact> ;
+    tg:lastRefresh "2026-10-29T17:01:23+00:00"^^xsd:dateTime ;
+    tg:layer layer:gold ;
+    tg:name "gold_commercial_core.mpr_mips_crack_spread_price_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_group_dim>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_sheet_dim>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim>,
         <urn:pricing-demo:tech:object/silver_udm_core.mpr_price_detail_fact> ;
-    tv:rows 569976.0 .
+    tg:rows 569976.0 .
 
-<urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> a tv:DefinitionsView ;
-    tv:definedIn "sql/06_definitions.sql" ;
-    tv:lastRefresh "2026-10-29T17:01:50+00:00"^^xsd:dateTime ;
-    tv:layer "definitions" ;
-    tv:name "ontology_definitions.measure_definitions_vw" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:triples/epm_triples> ;
-    tv:rows 33.0 .
+<urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> a tg:DefinitionsView ;
+    tg:definedIn "sql/06_definitions.sql" ;
+    tg:lastRefresh "2026-10-29T17:01:50+00:00"^^xsd:dateTime ;
+    tg:name "ontology_definitions.measure_definitions_vw" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:triples/epm_triples> ;
+    tg:rows 33.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.mips_price_group_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-group-dim> ;
-    tv:lastRefresh "2026-10-29T17:00:32+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.mips_price_group_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_pricegroup> ;
-    tv:rows 66.0 .
+<urn:pricing-demo:tech:object/silver_mdm_core.mips_price_group_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-group-dim> ;
+    tg:lastRefresh "2026-10-29T17:00:32+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.mips_price_group_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_pricegroup> ;
+    tg:rows 66.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.mips_price_sheet_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-sheet-dim> ;
-    tv:lastRefresh "2026-10-29T17:00:29+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.mips_price_sheet_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_currency>,
+<urn:pricing-demo:tech:object/silver_mdm_core.mips_price_sheet_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-sheet-dim> ;
+    tg:lastRefresh "2026-10-29T17:00:29+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.mips_price_sheet_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_currency>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_pricesheet>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_unitofmeasure> ;
-    tv:rows 7.0 .
+    tg:rows 7.0 .
 
-<urn:pricing-demo:tech:object/silver_udm_core.mpr_price_detail_fact> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mpr-price-detail-fact> ;
-    tv:lastRefresh "2026-10-29T17:00:37+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_udm_core.mpr_price_detail_fact" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_price_reference.pricedetail> ;
-    tv:rows 599148.0 .
+<urn:pricing-demo:tech:object/silver_udm_core.mpr_price_detail_fact> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mpr-price-detail-fact> ;
+    tg:lastRefresh "2026-10-29T17:00:37+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_udm_core.mpr_price_detail_fact" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_price_reference.pricedetail> ;
+    tg:rows 599148.0 .
 
-<urn:pricing-demo:tech:step/genie> a tv:PipelineStep ;
-    tv:name "pricing_demo.genie" ;
-    tv:next <urn:pricing-demo:tech:step/supervisor-describe> ;
-    tv:order 6 .
+<urn:pricing-demo:tech:step/genie> a tg:PipelineStep ;
+    tg:name "pricing_demo.genie" ;
+    tg:next <urn:pricing-demo:tech:step/supervisor-describe> ;
+    tg:order 6 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-assessment-group-dim> ;
-    tv:lastRefresh "2026-10-29T17:00:35+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.mips_price_assessment_group_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_currency>,
+<urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-assessment-group-dim> ;
+    tg:lastRefresh "2026-10-29T17:00:35+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.mips_price_assessment_group_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_price_assessment.mips_currency>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessmentgroup>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_unitofmeasure> ;
-    tv:rows 188.0 .
+    tg:rows 188.0 .
 
-<urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim> a tv:SilverTable ;
-    tv:definedIn "sql/03_silver.sql" ;
-    tv:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mpr-price-master-dim> ;
-    tv:lastRefresh "2026-10-29T17:00:24+00:00"^^xsd:dateTime ;
-    tv:layer "silver" ;
-    tv:name "silver_mdm_core.mpr_price_master_dim" ;
-    tv:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
-    tv:readsFrom <urn:pricing-demo:tech:object/replica_price_reference.pricemaster> ;
-    tv:rows 132.0 .
+<urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim> a tg:Table ;
+    tg:definedIn "sql/03_silver.sql" ;
+    tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mpr-price-master-dim> ;
+    tg:lastRefresh "2026-10-29T17:00:24+00:00"^^xsd:dateTime ;
+    tg:layer layer:silver ;
+    tg:name "silver_mdm_core.mpr_price_master_dim" ;
+    tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
+    tg:readsFrom <urn:pricing-demo:tech:object/replica_price_reference.pricemaster> ;
+    tg:rows 132.0 .
 
-<urn:pricing-demo:tech:database/price_assessment> a tv:SourceDatabase ;
-    tv:hidden false ;
-    tv:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tv:name "price_assessment" ;
-    tv:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tv:rows 267304.0 ;
-    tv:standsFor <https://w3id.org/lsc/ontology/modules/system/system/mips> ;
-    tv:tables 7.0 .
+<urn:pricing-demo:tech:database/price_assessment> a tg:SourceDatabase ;
+    tg:hidden false ;
+    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:name "price_assessment" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 267304.0 ;
+    tg:standsFor <https://w3id.org/lsc/ontology/modules/system/system/mips> ;
+    tg:tables 7.0 .
 
-<urn:pricing-demo:tech:database/reference_data_hub> a tv:SourceDatabase ;
-    tv:hidden false ;
-    tv:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tv:name "reference_data_hub" ;
-    tv:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tv:rows 1793.0 ;
-    tv:standsFor <https://w3id.org/lsc/ontology/modules/system/system/kittyhawk> ;
-    tv:tables 7.0 .
+<urn:pricing-demo:tech:database/reference_data_hub> a tg:SourceDatabase ;
+    tg:hidden false ;
+    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:name "reference_data_hub" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 1793.0 ;
+    tg:standsFor <https://w3id.org/lsc/ontology/modules/system/system/kittyhawk> ;
+    tg:tables 7.0 .
 
-<urn:pricing-demo:tech:host/databases.exe.xyz> a tv:Host ;
-    tv:label "exe.dev VM, reached through an SSH tunnel" ;
-    tv:name "databases.exe.xyz" .
+<urn:pricing-demo:tech:host/databases.exe.xyz> a tg:Host ;
+    rdfs:label "exe.dev VM, reached through an SSH tunnel"@en ;
+    tg:name "databases.exe.xyz" .
 
-<urn:pricing-demo:tech:step/load_postgres> a tv:PipelineStep ;
-    tv:name "pricing_demo.load_postgres" ;
-    tv:next <urn:pricing-demo:tech:step/replicate> ;
-    tv:order 1 .
+<urn:pricing-demo:tech:step/load_postgres> a tg:PipelineStep ;
+    tg:name "pricing_demo.load_postgres" ;
+    tg:next <urn:pricing-demo:tech:step/replicate> ;
+    tg:order 1 .
 
-<urn:pricing-demo:tech:step/tech_graph-collect> a tv:PipelineStep ;
-    tv:name "pricing_demo.tech_graph collect" ;
-    tv:next <urn:pricing-demo:tech:step/tech_graph-build> ;
-    tv:order 13 .
+<urn:pricing-demo:tech:step/tech_graph-collect> a tg:PipelineStep ;
+    tg:name "pricing_demo.tech_graph collect" ;
+    tg:next <urn:pricing-demo:tech:step/tech_graph-build> ;
+    tg:order 13 .
 
-<urn:pricing-demo:tech:step/databricks-build> a tv:PipelineStep ;
-    tv:name "pricing_demo.databricks build" ;
-    tv:next <urn:pricing-demo:tech:step/genie> ;
-    tv:order 5 .
+<urn:pricing-demo:tech:step/databricks-build> a tg:PipelineStep ;
+    tg:name "pricing_demo.databricks build" ;
+    tg:next <urn:pricing-demo:tech:step/genie> ;
+    tg:order 5 .
 

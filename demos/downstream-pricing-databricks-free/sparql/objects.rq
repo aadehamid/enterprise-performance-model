@@ -1,5 +1,7 @@
 # Every table and view one sql/*.sql file creates, its layer, and what it reads (the technical graph, EPM-DEC-001-0109,
-# decision 6). SPARQL Anything's text triplifier reads the file with one regular expression that matches, in file
+# decision 6), in the technical-graph module's terms (EPM-DEC-001-0112, item 4): a replica, silver or gold table is a
+# tg:Table whose tg:layer is a value of data-product's layer list, and a table of another schema is a tg:Table with no
+# layer. SPARQL Anything's text triplifier reads the file with one regular expression that matches, in file
 # order, each CREATE OR REPLACE statement's name and each FROM, JOIN and metric-view source reference; a reference
 # belongs to the last CREATE before it, found by the matches' slot numbers (fx:cardinal). tech_graph.py runs this once
 # per file, filling in %SQL_FILE% and %SQL_NAME%. SPARQL Anything's documentation (v1.3.0, "Introduction") allows a
@@ -7,12 +9,13 @@
 # file's path is written into the query.
 PREFIX fx:  <http://sparql.xyz/facade-x/ns/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX tv:  <urn:pricing-demo:tech-vocab#>
+PREFIX tg:  <https://w3id.org/lsc/ontology/modules/technical-graph/>
+PREFIX layer: <https://w3id.org/lsc/ontology/modules/data-product/layer/>
 
 CONSTRUCT {
-  ?obj a ?class ; tv:name ?name ; tv:layer ?layer ; tv:definedIn "%SQL_NAME%" .
-  ?obj tv:copies ?database .
-  ?obj tv:readsFrom ?upstream .
+  ?obj a ?class ; tg:name ?name ; tg:layer ?layerValue ; tg:definedIn "%SQL_NAME%" .
+  ?obj tg:copies ?database .
+  ?obj tg:readsFrom ?upstream .
 }
 WHERE {
   {
@@ -51,9 +54,9 @@ WHERE {
        IF(STRSTARTS(?schema, "gold_"), "gold",
        IF(?schema = "semantic_sem_commercial", "metric-view",
        IF(?schema = "ontology_definitions", "definitions", "tech-graph"))))) AS ?layer)
-  VALUES (?layer ?class) {
-    ("replica" tv:ReplicaTable) ("silver" tv:SilverTable) ("gold" tv:GoldTable)
-    ("metric-view" tv:MetricView) ("definitions" tv:DefinitionsView) ("tech-graph" tv:TechGraphTable)
+  VALUES (?layer ?class ?layerValue) {
+    ("replica" tg:Table layer:replica) ("silver" tg:Table layer:silver) ("gold" tg:Table layer:gold)
+    ("metric-view" tg:MetricView layer:metric-view) ("definitions" tg:DefinitionsView UNDEF) ("tech-graph" tg:Table UNDEF)
   }
   BIND(IRI(CONCAT("urn:pricing-demo:tech:object/", ?name)) AS ?obj)
   BIND(IF(?layer = "replica", IRI(CONCAT("urn:pricing-demo:tech:database/", STRAFTER(?schema, "replica_"))), ?none) AS ?database)
