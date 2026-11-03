@@ -111,7 +111,7 @@ step "rebuild"; within "$OUT-rebuild.log" uv run -q --no-project --with rdflib -
 if [ -n "$VIEWER_SOURCE" ]; then
   step "offline viewer"
   within "$OUT-viewer.log" uv run -q --no-project --with rdflib==7.6.0 python3 "$EPM/business_architecture/ontology/viewer/build.py" --source "$VIEWER_SOURCE" --compare "$OUT" --out "$OUT/viewer/index.html" > /dev/null || { tail -20 "$OUT-viewer.log"; exit 1; }
-  within "$OUT-viewer-check.log" env EPM_VIEWER_RELEASE_SOURCE="$VIEWER_SOURCE" uv run -q --no-project --with rdflib==7.6.0 --with pytest python3 -m pytest -q "$EPM/business_architecture/ontology/viewer/test_viewer.py::test_pinned_release_roundtrip_when_supplied" > /dev/null || { tail -20 "$OUT-viewer-check.log"; exit 1; }
+  within "$OUT-viewer-check.log" env EPM_VIEWER_RELEASE_SOURCE="$VIEWER_SOURCE" uv run -q --no-project --with rdflib==7.6.0 --with pytest python3 -m pytest -q -p no:cacheprovider "$EPM/business_architecture/ontology/viewer/test_viewer.py::test_pinned_release_roundtrip_when_supplied" > /dev/null || { tail -20 "$OUT-viewer-check.log"; exit 1; }
   cp "$HERE/templates/VIEWER.md" "$OUT/viewer/README.md"
   python3 - "$OUT/README.md" <<'PY'
 from pathlib import Path

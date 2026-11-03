@@ -4,6 +4,8 @@ The viewer shows one released ontology from the private release repository. Reci
 
 Search finds labels, definitions and IRIs. Module navigation includes a hierarchy and an alphabetical fallback for terms without parents or with cycles. Selecting a term opens its definitions, scope notes, sources, module versions and relationships. Evidence, anonymous restrictions and constraints remain available through property links and the supporting-node search option. On a phone, choosing a term opens its detail pane; Back to terms returns to navigation.
 
+Choosing the value-stream module lists the released value streams first. Each opens its stages in their recorded sequence, then their processes and realized core processes. Links to the containing stage or stream provide a way back. The module's vocabulary remains searchable and accessible in the hierarchy.
+
 ## Data boundary
 
 The input is `share/epm-1.0` at `81f2f63b128820854a25204641b6899d55051ae3`. The builder checks the Git commit, refuses local changes under `releases/`, and verifies each manifest-listed Turtle file against its SHA-256. It reads the current package of each module and the top-level release catalog from that pinned tree. It includes the customer schema and technical-graph vocabulary. It does not read main, candidate packages, earlier releases, examples, live stores or technical-graph records.

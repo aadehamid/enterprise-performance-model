@@ -186,6 +186,7 @@ def test_manifest_ships_the_two_versions_and_leaves_older_ones_out():
     assert manifest.disposition("business_architecture/domain/decision-packages/2026-10-14/pr-reviews-262-266-269.md", r) == "out"
     assert manifest.disposition("business_architecture/ontology/step4/playbook/ontology-worklog.md", r) == "out"
     assert manifest.disposition("business_architecture/ontology/README.html", r) == "out"
+    assert manifest.disposition("business_architecture/ontology/viewer/README.md", r) == "out"
     assert manifest.disposition("scripts/docs_template.html", r) == "ship"
     assert manifest.disposition("business_architecture/ontology/epm-walkthrough.html", r) == "ship"
     assert manifest.disposition("AGENTS.md", r) == "out"

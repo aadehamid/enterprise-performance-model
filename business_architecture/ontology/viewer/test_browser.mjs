@@ -25,6 +25,47 @@ try {
   await page.locator("#results button").first().waitFor();
   const initial = await page.locator("#summary").innerText();
   assert.match(initial, /terms in release/);
+  async function checkValueStreams(mobile = false) {
+    if (mobile) {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.locator("#back").click();
+    }
+    await page.locator("#query").fill("");
+    await page.locator("#module").selectOption("value-stream");
+    const expected = await page.evaluate(() => {
+      const ns = "https://w3id.org/mpc/ontology/modules/value-stream/";
+      const targets = (n, p) => n.values.filter(v => !v.literal && v.p === ns + p).map(v => byId.get(v.v));
+      const sequence = n => Number(n.values.find(v => v.p === ns + "sequence").v);
+      return data.nodes.filter(n => n.values.some(v => v.p === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" && v.v === ns + "ValueStream"))
+        .map(n => ({id: n.id, label: n.label, stages: targets(n, "hasStage").sort((a,b) => sequence(a)-sequence(b)).map(s => ({id:s.id, sequence:sequence(s), processes:targets(s,"hasProcess").map(p => ({id:p.id, realized:targets(p,"realizes").map(r=>r.id).sort()}))}))}));
+    });
+    assert.deepEqual(expected.map(n => n.label).sort(), ["Commercial Hydrocarbon Lifecycle", "Order to Cash"]);
+    assert.equal(await page.locator("#stream-entry button").count(), expected.length);
+    for (const stream of expected) {
+      await page.locator("#stream-entry button").filter({hasText:stream.label}).click();
+      assert.equal(await page.locator("#iri").textContent(), stream.id);
+      assert.deepEqual(await page.locator("#stream-children button").evaluateAll(els=>els.map(el=>el.dataset.term)), stream.stages.map(s=>s.id));
+      assert.deepEqual(await page.locator("#stream-children li").evaluateAll(els=>els.map(el=>el.value)), stream.stages.map(s=>s.sequence));
+      for (const stage of stream.stages) {
+        await page.locator(`#stream-children button[data-term="${stage.id}"]`).click();
+        assert.equal(await page.locator("#iri").textContent(), stage.id);
+        assert.deepEqual((await page.locator("#stream-children button").evaluateAll(els=>els.map(el=>el.dataset.term))).sort(), stage.processes.map(p=>p.id).sort());
+        const process = stage.processes[0];
+        await page.locator(`#stream-children button[data-term="${process.id}"]`).click();
+        assert.equal(await page.locator("#iri").textContent(), process.id);
+        assert.deepEqual((await page.locator("#stream-children button").evaluateAll(els=>els.map(el=>el.dataset.term))).sort(), process.realized);
+        await page.locator(`#stream-parents button[data-term="${stage.id}"]`).click();
+        await page.locator(`#stream-parents button[data-term="${stream.id}"]`).click();
+      }
+      if (mobile) await page.locator("#back").click();
+    }
+    await page.locator("#query").fill("has stage");
+    assert.equal(await page.locator("#stream-entry").isVisible(), false);
+    assert.ok(await page.locator("#results button").count());
+    await page.locator("#query").fill("");
+    if (mobile) await page.locator("#stream-entry button").first().click();
+  }
+  await checkValueStreams();
   for (const name of ["core", "logical-model", "technical-graph"]) {
     await page.locator("#module").selectOption(name);
     await page.locator("#query").fill("");
@@ -144,6 +185,8 @@ try {
     ),
     false,
   );
+  await checkValueStreams(true);
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   assert.deepEqual(errors, []);
   assert.equal(network, 0);
   console.log(
@@ -154,6 +197,7 @@ try {
       search: true,
       modules: true,
       hierarchy: true,
+      valueStreamDrilldown: true,
       graph: true,
       mobile: true,
     }),

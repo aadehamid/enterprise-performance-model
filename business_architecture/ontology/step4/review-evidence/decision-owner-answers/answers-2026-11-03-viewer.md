@@ -47,3 +47,7 @@ keep the vocabulary
 <!-- Source clarification, 2026-11-03. The decision owner's words, verbatim: -->
 
 by the way only released ontology in the private release repo will be viewed from the user. makes sesne
+
+<!-- Value-stream navigation, 2026-11-03. The decision owner's words, verbatim: -->
+
+for value stream, can we make sure that we can list the two value streams that we have. and then be able to drill into each one of the value stream

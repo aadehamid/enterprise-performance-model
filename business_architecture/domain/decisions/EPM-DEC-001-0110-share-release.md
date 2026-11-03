@@ -200,3 +200,11 @@ The decision owner also clarified the source boundary in `answers-2026-11-03-vie
 > by the way only released ontology in the private release repo will be viewed from the user. makes sesne
 
 The viewer's user-facing data comes only from the released ontology in the private release repository.
+
+## Amendment, 2026-11-03: value-stream navigation
+
+The decision owner requested in `answers-2026-11-03-viewer.md`:
+
+> for value stream, can we make sure that we can list the two value streams that we have. and then be able to drill into each one of the value stream
+
+The viewer must list the released value streams and let the reader drill into each. The stages, their sequence and their process links come from the released ontology. The full module vocabulary remains accessible.
