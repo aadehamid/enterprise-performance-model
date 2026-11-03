@@ -75,6 +75,21 @@ try {
   assert.equal(coverage.missing, 0);
   assert.equal(coverage.expected, coverage.found);
   assert.equal(coverage.allSearchable, true);
+  await page.locator("#tree-mode").click();
+  const moduleTrees = page.locator("#results > details");
+  for (let index = 0; index < await moduleTrees.count(); index++) {
+    const tree = moduleTrees.nth(index);
+    await tree.locator(":scope > summary").click();
+    await tree.locator(":scope > details > summary").click();
+    await tree.locator(":scope > details button[data-term]").first().waitFor();
+  }
+  const hierarchyCoverage = await page.evaluate(() => {
+    const rendered = new Set([...document.querySelectorAll("#results > details > details button[data-term]")].map(el => el.dataset.term));
+    return {expected: data.nodes.length, rendered: rendered.size, missing: data.nodes.filter(n => !rendered.has(n.id)).map(n => n.id)};
+  });
+  assert.equal(hierarchyCoverage.rendered, hierarchyCoverage.expected);
+  assert.deepEqual(hierarchyCoverage.missing, []);
+  await page.locator("#list-mode").click();
   await page.locator("#query").fill("");
   assert.equal(await page.locator("#results > button").count(), 80);
   await page.locator("#pagination").click();
