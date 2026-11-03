@@ -13,7 +13,7 @@
 
 <urn:pricing-demo:tech:check/built-objects-hold-rows> a tg:QualityCheck ;
     rdfs:label "Every silver and gold table, metric view and definitions view exists and holds rows"@en ;
-    tg:checkedAt "2026-10-29T19:05:37+00:00"^^xsd:dateTime ;
+    tg:checkedAt "2026-11-03T07:44:12+00:00"^^xsd:dateTime ;
     tg:checks <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
         <urn:pricing-demo:tech:object/ontology_definitions.crack_spread_definitions_vw>,
@@ -36,7 +36,7 @@
 
 <urn:pricing-demo:tech:check/databricks-reaches-auradb> a tg:QualityCheck ;
     rdfs:label "A Databricks job reaches AuraDB with the login in secret scope epm-neo4j"@en ;
-    tg:checkedAt "2026-10-29T17:05:45+00:00"^^xsd:dateTime ;
+    tg:checkedAt "2026-11-03T07:42:58+00:00"^^xsd:dateTime ;
     tg:checks <urn:pricing-demo:tech:triples/epm_triples> ;
     tg:detail "bolt_query: ok; dns: ok; tcp_7687: ok" ;
     tg:name "databricks-reaches-auradb" ;
@@ -45,7 +45,7 @@
 
 <urn:pricing-demo:tech:check/designed-vs-observed-lineage> a tg:QualityCheck ;
     rdfs:label "Designed lineage matches Unity Catalog's observed lineage"@en ;
-    tg:checkedAt "2026-10-29T19:05:59+00:00"^^xsd:dateTime ;
+    tg:checkedAt "2026-11-03T07:44:24+00:00"^^xsd:dateTime ;
     tg:checks <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_currency>,
@@ -74,7 +74,7 @@
 
 <urn:pricing-demo:tech:check/metric-views-tagged> a tg:QualityCheck ;
     rdfs:label "Every metric view carries its epm_measure_identifiers tag"@en ;
-    tg:checkedAt "2026-10-29T19:05:37+00:00"^^xsd:dateTime ;
+    tg:checkedAt "2026-11-03T07:44:12+00:00"^^xsd:dateTime ;
     tg:checks <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_executive_summary_fact_vw>,
         <urn:pricing-demo:tech:object/semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw> ;
@@ -85,7 +85,7 @@
 
 <urn:pricing-demo:tech:check/replica-matches-manifest> a tg:QualityCheck ;
     rdfs:label "Each replica table holds the replica manifest's rows, all from its run"@en ;
-    tg:checkedAt "2026-10-29T19:05:26+00:00"^^xsd:dateTime ;
+    tg:checkedAt "2026-11-03T07:44:03+00:00"^^xsd:dateTime ;
     tg:checks <urn:pricing-demo:tech:object/replica_price_assessment.mips_currency>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessment>,
         <urn:pricing-demo:tech:object/replica_price_assessment.mips_priceassessmentgroup>,
@@ -102,7 +102,7 @@
 
 <urn:pricing-demo:tech:check/rows-labelled> a tg:QualityCheck ;
     rdfs:label "Every silver and gold row with a provenance column says real, spot-anchored or synthesized"@en ;
-    tg:checkedAt "2026-10-29T19:05:48+00:00"^^xsd:dateTime ;
+    tg:checkedAt "2026-11-03T07:44:17+00:00"^^xsd:dateTime ;
     tg:checks <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact>,
         <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact>,
         <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim>,
@@ -114,6 +114,16 @@
         <urn:pricing-demo:tech:object/silver_udm_core.mpr_price_detail_fact> ;
     tg:detail "no problem found" ;
     tg:name "rows-labelled" ;
+    tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
+    tg:result result:pass .
+
+<urn:pricing-demo:tech:check/source-systems-agree> a tg:QualityCheck ;
+    rdfs:label "Each replica schema's epm_source_system tag names the system README.md maps its database to"@en ;
+    tg:checkedAt "2026-11-03T07:44:17+00:00"^^xsd:dateTime ;
+    tg:checks <urn:pricing-demo:tech:database/price_assessment>,
+        <urn:pricing-demo:tech:database/price_reference> ;
+    tg:detail "no problem found" ;
+    tg:name "source-systems-agree" ;
     tg:producedBy <urn:pricing-demo:tech:step/tech_graph-collect> ;
     tg:result result:pass .
 
@@ -157,22 +167,13 @@
     tg:name "pricing_demo.supervisor ask" ;
     tg:order 9 .
 
-<urn:pricing-demo:tech:database/price_reference> a tg:SourceDatabase ;
-    tg:hidden false ;
-    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
-    tg:name "price_reference" ;
-    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
-    tg:rows 599280.0 ;
-    tg:standsFor <https://w3id.org/lsc/ontology/modules/system/system/mpr> ;
-    tg:tables 2.0 .
-
-<urn:pricing-demo:tech:host/databases.exe.xyz> a tg:Host ;
-    rdfs:label "exe.dev VM, reached through an SSH tunnel"@en ;
-    tg:name "databases.exe.xyz" .
+<urn:pricing-demo:tech:host/pricing-demo-sources> a tg:Host ;
+    rdfs:label "local Docker container"@en ;
+    tg:name "pricing-demo-sources" .
 
 <urn:pricing-demo:tech:object/ontology_definitions.crack_spread_definitions_vw> a tg:DefinitionsView ;
     tg:definedIn "sql/06_definitions.sql" ;
-    tg:lastRefresh "2026-10-29T17:01:51+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:25:21+00:00"^^xsd:dateTime ;
     tg:name "ontology_definitions.crack_spread_definitions_vw" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
     tg:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
@@ -180,7 +181,7 @@
 
 <urn:pricing-demo:tech:object/ontology_definitions.executive_summary_definitions_vw> a tg:DefinitionsView ;
     tg:definedIn "sql/06_definitions.sql" ;
-    tg:lastRefresh "2026-10-29T17:01:52+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:25:22+00:00"^^xsd:dateTime ;
     tg:name "ontology_definitions.executive_summary_definitions_vw" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
     tg:readsFrom <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> ;
@@ -193,9 +194,18 @@
 <urn:pricing-demo:tech:triples/epm_triples> a tg:Table ;
     tg:name "workspace.epm_ontology.epm_triples" .
 
+<urn:pricing-demo:tech:database/price_reference> a tg:SourceDatabase ;
+    tg:hidden false ;
+    tg:hostedOn <urn:pricing-demo:tech:host/pricing-demo-sources> ;
+    tg:name "price_reference" ;
+    tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
+    tg:rows 599280.0 ;
+    tg:standsFor <https://w3id.org/lsc/ontology/modules/system/system/mpr> ;
+    tg:tables 2.0 .
+
 <urn:pricing-demo:tech:object/ontology_definitions.measure_definitions_vw> a tg:DefinitionsView ;
     tg:definedIn "sql/06_definitions.sql" ;
-    tg:lastRefresh "2026-10-29T17:01:50+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:25:20+00:00"^^xsd:dateTime ;
     tg:name "ontology_definitions.measure_definitions_vw" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
     tg:readsFrom <urn:pricing-demo:tech:triples/epm_triples> ;
@@ -205,7 +215,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-priceassessment> ;
-    tg:lastRefresh "2026-10-29T16:58:54+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:36+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_assessment.mips_priceassessment" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -215,7 +225,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-priceassessmentgroup> ;
-    tg:lastRefresh "2026-10-29T16:58:50+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:33+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_assessment.mips_priceassessmentgroup" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -225,7 +235,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricebatch> ;
-    tg:lastRefresh "2026-10-29T16:58:40+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:23+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_assessment.mips_pricebatch" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -235,7 +245,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricegroup> ;
-    tg:lastRefresh "2026-10-29T16:58:46+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:30+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_assessment.mips_pricegroup" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -245,7 +255,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-pricesheet> ;
-    tg:lastRefresh "2026-10-29T16:58:43+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:26+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_assessment.mips_pricesheet" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -255,7 +265,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_reference> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mpr-pricedetail> ;
-    tg:lastRefresh "2026-10-29T16:59:01+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:44+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_reference.pricedetail" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -265,7 +275,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_reference> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mpr-pricemaster> ;
-    tg:lastRefresh "2026-10-29T16:58:57+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:40+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_reference.pricemaster" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -278,7 +288,7 @@
 <urn:pricing-demo:tech:object/gold_commercial_core.mips_mpr_executive_summary_fact> a tg:Table ;
     tg:definedIn "sql/04_gold.sql" ;
     tg:designedAs <urn:example:technical-graph:product/example-data-product> ;
-    tg:lastRefresh "2026-10-29T17:01:27+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:25:03+00:00"^^xsd:dateTime ;
     tg:layer layer:gold ;
     tg:name "gold_commercial_core.mips_mpr_executive_summary_fact" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -293,7 +303,7 @@
 <urn:pricing-demo:tech:object/gold_commercial_core.mpr_mips_crack_spread_price_fact> a tg:Table ;
     tg:definedIn "sql/04_gold.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/gold-mpr-mips-crack-spread-price-fact> ;
-    tg:lastRefresh "2026-10-29T17:01:23+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:24:59+00:00"^^xsd:dateTime ;
     tg:layer layer:gold ;
     tg:name "gold_commercial_core.mpr_mips_crack_spread_price_fact" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -308,7 +318,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-currency> ;
-    tg:lastRefresh "2026-10-29T16:58:32+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:16+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_assessment.mips_currency" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -318,7 +328,7 @@
     tg:copies <urn:pricing-demo:tech:database/price_assessment> ;
     tg:definedIn "sql/02_replica.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/replica-mips-unitofmeasure> ;
-    tg:lastRefresh "2026-10-29T16:58:36+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:22:20+00:00"^^xsd:dateTime ;
     tg:layer layer:replica ;
     tg:name "replica_price_assessment.mips_unitofmeasure" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -328,13 +338,13 @@
     tg:definedIn "sql/05_metric_views.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/view-mips-mpr-benchmark-prices-fact-vw> ;
     tg:implements measure:crude-prices ;
-    tg:lastRefresh "2026-10-29T17:01:45+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:25:17+00:00"^^xsd:dateTime ;
     tg:layer layer:metric-view ;
     tg:name "semantic_sem_commercial.mips_mpr_benchmark_prices_fact_vw" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
     tg:readsFrom <urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim>,
         <urn:pricing-demo:tech:object/silver_udm_core.mpr_price_detail_fact> ;
-    tg:rows 4134.0 .
+    tg:rows 4056.0 .
 
 <urn:pricing-demo:tech:object/semantic_sem_commercial.mips_mpr_executive_summary_fact_vw> a tg:MetricView ;
     tg:definedIn "sql/05_metric_views.sql" ;
@@ -345,7 +355,7 @@
         measure:distillate-prices,
         measure:gasoline-prices,
         measure:price-comparison ;
-    tg:lastRefresh "2026-10-29T17:01:43+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:25:16+00:00"^^xsd:dateTime ;
     tg:layer layer:metric-view ;
     tg:name "semantic_sem_commercial.mips_mpr_executive_summary_fact_vw" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -356,7 +366,7 @@
     tg:definedIn "sql/05_metric_views.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/view-mpr-mips-crack-spread-price-fact-metrics-vw> ;
     tg:implements measure:crack-spreads ;
-    tg:lastRefresh "2026-10-29T17:01:41+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:25:15+00:00"^^xsd:dateTime ;
     tg:layer layer:metric-view ;
     tg:name "semantic_sem_commercial.mpr_mips_crack_spread_price_fact_metrics_vw" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -366,7 +376,7 @@
 <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_batch_dim> a tg:Table ;
     tg:definedIn "sql/03_silver.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-batch-dim> ;
-    tg:lastRefresh "2026-10-29T17:00:26+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:24:04+00:00"^^xsd:dateTime ;
     tg:layer layer:silver ;
     tg:name "silver_mdm_core.mips_price_batch_dim" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -376,7 +386,7 @@
 <urn:pricing-demo:tech:object/silver_udm_core.mips_price_assessment_fact> a tg:Table ;
     tg:definedIn "sql/03_silver.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-assessment-fact> ;
-    tg:lastRefresh "2026-10-29T17:00:40+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:24:17+00:00"^^xsd:dateTime ;
     tg:layer layer:silver ;
     tg:name "silver_udm_core.mips_price_assessment_fact" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -386,7 +396,7 @@
 <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_assessment_group_dim> a tg:Table ;
     tg:definedIn "sql/03_silver.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-assessment-group-dim> ;
-    tg:lastRefresh "2026-10-29T17:00:35+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:24:12+00:00"^^xsd:dateTime ;
     tg:layer layer:silver ;
     tg:name "silver_mdm_core.mips_price_assessment_group_dim" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -398,7 +408,7 @@
 <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_group_dim> a tg:Table ;
     tg:definedIn "sql/03_silver.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-group-dim> ;
-    tg:lastRefresh "2026-10-29T17:00:32+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:24:09+00:00"^^xsd:dateTime ;
     tg:layer layer:silver ;
     tg:name "silver_mdm_core.mips_price_group_dim" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -408,7 +418,7 @@
 <urn:pricing-demo:tech:object/silver_mdm_core.mips_price_sheet_dim> a tg:Table ;
     tg:definedIn "sql/03_silver.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mips-price-sheet-dim> ;
-    tg:lastRefresh "2026-10-29T17:00:29+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:24:07+00:00"^^xsd:dateTime ;
     tg:layer layer:silver ;
     tg:name "silver_mdm_core.mips_price_sheet_dim" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -420,7 +430,7 @@
 <urn:pricing-demo:tech:object/silver_udm_core.mpr_price_detail_fact> a tg:Table ;
     tg:definedIn "sql/03_silver.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mpr-price-detail-fact> ;
-    tg:lastRefresh "2026-10-29T17:00:37+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:24:15+00:00"^^xsd:dateTime ;
     tg:layer layer:silver ;
     tg:name "silver_udm_core.mpr_price_detail_fact" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -430,7 +440,7 @@
 <urn:pricing-demo:tech:object/silver_mdm_core.mpr_price_master_dim> a tg:Table ;
     tg:definedIn "sql/03_silver.sql" ;
     tg:designedAs <https://w3id.org/lsc/ontology/modules/data-product/table/silver-mpr-price-master-dim> ;
-    tg:lastRefresh "2026-10-29T17:00:24+00:00"^^xsd:dateTime ;
+    tg:lastRefresh "2026-11-03T07:24:02+00:00"^^xsd:dateTime ;
     tg:layer layer:silver ;
     tg:name "silver_mdm_core.mpr_price_master_dim" ;
     tg:producedBy <urn:pricing-demo:tech:step/databricks-build> ;
@@ -443,7 +453,7 @@
 
 <urn:pricing-demo:tech:database/price_assessment> a tg:SourceDatabase ;
     tg:hidden false ;
-    tg:hostedOn <urn:pricing-demo:tech:host/databases.exe.xyz> ;
+    tg:hostedOn <urn:pricing-demo:tech:host/pricing-demo-sources> ;
     tg:name "price_assessment" ;
     tg:producedBy <urn:pricing-demo:tech:step/load_postgres> ;
     tg:rows 267304.0 ;

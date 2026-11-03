@@ -2428,6 +2428,7 @@ def _offline_lineage():
 def test_the_known_lineage_is_what_the_design_and_the_sql_files_hold_with_the_observed_side_the_last_collect_saw():
     # The designed and SQL sides are computed here, offline. The observed side is the 2026-10-29 collect's, which only
     # a live collect can confirm: Unity Catalog observed exactly the edges the design and the SQL files share.
+    # 2026-11-03: the live collect confirmed it, the same 26 edges and no other.
     from rdflib import Graph, Namespace
     tables, designed, sql, present = _offline_lineage()
     expected = tech_graph.confirm_lineage(tables, designed, sql, designed & sql, present)
