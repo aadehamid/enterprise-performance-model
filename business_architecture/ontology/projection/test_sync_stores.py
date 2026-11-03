@@ -131,6 +131,7 @@ class Drift(unittest.TestCase):
         with mock.patch.object(sys, "argv", ["sync_stores.py", "check"] + argv), \
                 mock.patch.object(ss, "read_markers_and_counts", fake_read), \
                 mock.patch.object(ss, "read_tech_markers", lambda stores=ss.STORES: read.append(("tech", *stores)) or {}), \
+                mock.patch.object(ss, "logical_models", lambda: mock.Mock(check=lambda stores: [])), \
                 mock.patch.object(ss, "expected_for", lambda ref, stores: self.want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()
@@ -209,12 +210,13 @@ class StoresAreOneNeo4jPlusJena(unittest.TestCase):
         self.assertEqual(tuple(cfg["release_graphs"]), ss.RELEASE_GRAPHS)
         self.assertIn(f":{cfg['jena']['port']}/", ss.JENA_QUERY)
 
-    def test_a_current_jena_holds_every_newest_release_three_times(self):
+    def test_a_current_jena_holds_every_newest_release_three_times_and_each_package_graph(self):
         newest = ss.newest_releases(ss.catalog_datasets(ss.repo_file(ss.CATALOG)))
         want = ss.jena_graphs(newest)
-        self.assertEqual(len(want), 3 * len(newest))
+        extra = {g for iri in newest for g in ss.package_graphs(iri)}  # none in main; the release's logical models
+        self.assertEqual(len(want), 3 * len(newest) + len(extra))
         self.assertTrue(all(want.values()))
-        self.assertEqual({f"{iri}/{n}" for iri in newest for n in ("shapes", "catalog")} | set(newest), set(want))
+        self.assertEqual({f"{iri}/{n}" for iri in newest for n in ("shapes", "catalog")} | set(newest) | extra, set(want))
 
 
 class OntologyLabelsOnly(unittest.TestCase):
@@ -437,6 +439,7 @@ class TechGraphMarker(unittest.TestCase):
         with mock.patch.object(sys, "argv", ["sync_stores.py", "check", "--store", "driver"]), \
                 mock.patch.object(ss, "read_markers_and_counts", lambda stores: ({"driver": marker}, {"driver": [1, 2, 3]})), \
                 mock.patch.object(ss, "read_tech_markers", lambda stores: {"driver": {"digest": "old", "nodes": 3}}), \
+                mock.patch.object(ss, "logical_models", lambda: mock.Mock(check=lambda stores: [])), \
                 mock.patch.object(ss, "expected_for", lambda ref, stores: want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()
@@ -476,7 +479,7 @@ class Workflow(unittest.TestCase):
         steps = self.text.split("\n      - ")
         order = [next((i for i, st in enumerate(steps) if needle in st), None) for needle in (
             "run_projection.py", "tech_graph load --store aura", "tech_graph sync --store aura",
-            "sync_stores.py mark --store aura --store databricks", "sync_stores.py check --ref worktree --store aura --store databricks")]
+            "logical_models.py load --store aura --store databricks", "sync_stores.py mark --store aura --store databricks", "sync_stores.py check --ref worktree --store aura --store databricks")]
         self.assertNotIn(None, order)
         self.assertEqual(order, sorted(order))
 

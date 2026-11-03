@@ -12,7 +12,9 @@ aura-test with AuraDB too (a Databricks job tries to reach AuraDB with the login
 is a result, which collect records as the check databricks-reaches-auradb), then collect, tech-build, tech-compare and
 lineage, in that order, because Unity Catalog's lineage keeps only recent builds; then tech-load, tech-sync, mark and
 check, which must read every chosen store current, ontology and technical graph (tech-load and tech-sync write the
-technical graph's markers), before a release is called done. Without Databricks the technical graph loads from what the release ships. Preflight refuses Databricks without
+technical graph's markers), before a release is called done. When the newest releases hold the logical-model module,
+model-load (logical_models.py load) comes before mark and puts the models into every chosen store; main holds no such
+module, so its plan has no model-load. Without Databricks the technical graph loads from what the release ships. Preflight refuses Databricks without
 AuraDB (EPM-DEC-001-0112, point 8): tech-compare would fail on a copy that has never run aura-test, because the shipped
 graph holds that check.
 
@@ -31,6 +33,8 @@ import stat
 import subprocess
 import sys
 import time
+
+import logical_models
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, "..", "..", ".."))
@@ -190,8 +194,10 @@ def child_env(s, stores, config_path):
     return env
 
 
-def plan(s, stores, config_path, empty):
-    """(step, folder, command) in order. Pure, so the tests read the order without running anything."""
+def plan(s, stores, config_path, empty, models=False):
+    """(step, folder, command) in order. Pure, so the tests read the order without running anything. models says the
+    newest releases hold package graphs (logical_models.held), so model-load puts a release's logical models into the
+    chosen stores before mark; main holds none, and the step is left out."""
     py = ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "neo4j"]
     if "databricks" in stores:
         py += ["--with", "databricks-sql-connector"]
@@ -224,6 +230,9 @@ def plan(s, stores, config_path, empty):
         steps.append(("tech-load", DEMO, [*graph, "load", *tech]))
     if "databricks" in stores:
         steps.append(("tech-sync", DEMO, [*graph, "sync"]))
+    if models:  # after the demo's steps, which read the triple table, and before mark, which counts the package graphs
+        steps.append(("model-load", HERE, [*py, "--with", "pyoxigraph", "python", "logical_models.py", "load", *named,
+                                           "--skills", s["EPM_SKILLS"]]))
     steps += [("mark", HERE, [*py, "python", "sync_stores.py", "mark", *named]),
               ("check", HERE, [*py, "python", "sync_stores.py", "check", "--ref", "worktree", *named])]
     return steps
@@ -328,7 +337,7 @@ def main(argv=None):
         if problems:
             raise Refused(*problems)
         config_path = s["EPM_OUT"].rstrip("/") + "-run.json"
-        steps = plan(s, stores, config_path, args.empty)
+        steps = plan(s, stores, config_path, args.empty, models=logical_models.held())
         env = child_env(s, stores, config_path)
         if args.plan:
             print("preflight: passed")

@@ -11,6 +11,11 @@ it on a tech:<store> line beside the ontology's, with a fingerprint of the conte
 files', so a missing, stale or edited technical graph shows when the ontology is current. sync reloads what is behind with the ontology-to-lpg driver, takes the driver's result into this folder,
 loads the pricing demo's technical graph again where a reload wiped it or its marker is not current, copies it to
 Delta with tech_graph sync when the Delta copy is reloaded or behind, and marks the stores it reloaded.
+When the newest releases hold the logical-model module (a share release does; main does not), Jena and the triple
+table also hold each package graph its manifest lists (package_graphs: each model's ER Studio export and annotation
+layer), which jena_graphs counts with the release graphs, and each Neo4j store holds the models as a subgraph apart from
+the projection, which check reports on an lm:<store> line (logical_models.py) and sync reloads with logical_models.py
+load, last, where a reload wiped it or it is not current. In main there is no lm: line and no such step.
 
     python3 sync_stores.py expected [--ref origin/main]   # what a current store holds
     python3 sync_stores.py mark --store driver ...         # check a store against the repository, then mark it
@@ -121,9 +126,30 @@ def expected(ref=None):
             "newest": newest_releases(datasets)}
 
 
+def extra_graph_files(module, manifest):
+    """The Turtle files a package's manifest lists beside its content and its release graphs: the graphs it carries as
+    they are (build_module.py's "graphs"), such as a logical model's ER Studio export and annotation layer. No package
+    in main has any; the share release's logical-model package does (EPM-DEC-001-0113, amendment "the stores")."""
+    own = {f"{module}.ttl", *(f"{n}.ttl" for n in RELEASE_GRAPHS)}
+    return sorted(n for n in manifest.get("files", {}) if n.endswith(".ttl") and n not in own)
+
+
+def package_graphs(iri, ref=None):
+    """{graph IRI: path under the repository} of a release's package graphs (extra_graph_files), each named
+    <version IRI>/<file name without .ttl>, as the release graphs are named <version IRI>/<name>."""
+    module, version = iri.rsplit("/", 2)[-2:]
+    folder = f"business_architecture/ontology/releases/{module}/{version}"
+    try:
+        manifest = json.loads(repo_file(f"{folder}/manifest.json", ref))
+    except (OSError, subprocess.CalledProcessError):  # a package with no manifest carries no graph of its own
+        return {}
+    return {f"{iri}/{n[:-len('.ttl')]}": f"{folder}/{n}" for n in extra_graph_files(module, manifest)}
+
+
 def jena_graphs(newest, ref=None):
-    """{graph IRI: triple count} that a current Jena holds: for each newest release, its content under the version IRI
-    and each release graph under <version IRI>/<name>, counted from the release's files."""
+    """{graph IRI: triple count} that a current Jena holds, and the triple table too: for each newest release, its
+    content under the version IRI, each release graph under <version IRI>/<name>, and each package graph
+    (package_graphs, which logical_models.py load adds), counted from the release's files."""
     from rdflib import Graph
     graphs = {}
     for iri in newest:
@@ -131,6 +157,8 @@ def jena_graphs(newest, ref=None):
         folder = f"business_architecture/ontology/releases/{module}/{version}"
         for name, graph in ((module, iri), *((n, f"{iri}/{n}") for n in RELEASE_GRAPHS)):
             graphs[graph] = len(Graph().parse(data=repo_file(f"{folder}/{name}.ttl", ref), format="turtle"))
+        for graph, path in package_graphs(iri, ref).items():
+            graphs[graph] = len(Graph().parse(data=repo_file(path, ref), format="turtle"))
     return graphs
 
 
@@ -154,6 +182,12 @@ def demo_graph():
         sys.path.insert(0, DEMO)
     import pricing_demo.tech_graph as tg
     return tg
+
+
+def logical_models():
+    """logical_models.py, which imports this module: the logical models' subgraph and the package graphs."""
+    import logical_models as lm
+    return lm
 
 
 def tech_content(folder=None):
@@ -485,14 +519,16 @@ def mark(stores, want=None):
 
 # ---------- sync ----------
 
-def plan(behind, cloud, skills, tech_behind=()):
+def plan(behind, cloud, skills, tech_behind=(), models=None):
     """The commands that reload the stores that are behind, in order. Local stores always; AuraDB and Databricks only
     with --cloud, through the full driver run, which also reloads the local Neo4j and Jena. A local driver run skips the
     driver's copy, databricks and rebuild steps, so its Neo4j is loaded from the repository, not back from epm_triples.
     Jena alone needs only the driver's jena step. A run that loads Neo4j takes its result into this folder.
     tech_behind names the stores whose technical graph is not current (tech_drift): each gets tech_graph load again,
     as does every store a reload wiped, and the Delta copy follows with tech_graph sync. AuraDB and Databricks again
-    only with --cloud."""
+    only with --cloud. models is None when the newest releases hold no package graph, as in main; otherwise it names
+    the Neo4j stores whose logical models are not current (logical_models.drift), and logical_models.py load runs on
+    them and on every store a reload wiped, last, so mark reads Jena and Delta with the package graphs."""
     steps, reloaded = [], []
     driver_cmd = ["uv", "run", "--no-project", "--with", "rdflib", "python3", "run_projection.py",
                   "--config", RUN_CONFIG]
@@ -517,6 +553,13 @@ def plan(behind, cloud, skills, tech_behind=()):
                       + [a for s in tech for a in ("--store", s)]))
     if "databricks" in reloaded or "databricks" in reachable:  # the Delta copy follows Neo4j, and sync marks it
         steps.append((DEMO, ["uv", "run", "--group", "graph", "python", "-m", "pricing_demo.tech_graph", "sync"]))
+    if models is not None:
+        stale = [s for s in models if cloud or s not in ("aura", "databricks")]
+        lm = [s for s in STORES if s in reloaded or s in stale]
+        if lm:  # a reload wipes the package graphs and the logical models' subgraph too
+            steps.append((HERE, ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "neo4j", "--with", "pyoxigraph",
+                                 *(["--with", "databricks-sql-connector"] if "databricks" in lm else []), "python",
+                                 "logical_models.py", "load", *(a for s in lm for a in ("--store", s)), "--skills", skills]))
     return steps, reloaded
 
 
@@ -532,9 +575,12 @@ def sync(cloud, dry_run, ref, skills):
     behind = [s for s, status, _ in rows if status != "current"]
     tech_behind = [s for s, status, _ in tech_drift(read_tech_markers(), live, tech_digest(), STORES, tech_content())
                    if status != "current"]
-    steps, reloaded = plan(behind, cloud, skills, tech_behind)
+    lm = logical_models()
+    models = [s for s, status, _ in lm.check(STORES) if status != "current"] if lm.package_graphs() else None
+    steps, reloaded = plan(behind, cloud, skills, tech_behind, models)
     skipped = [s for s in behind if s not in reloaded] + [f"{s} (technical graph)" for s in tech_behind
-                                                          if s in ("aura", "databricks") and not cloud]
+                                                          if s in ("aura", "databricks") and not cloud] \
+        + [f"{s} (logical models)" for s in models or () if s == "aura" and not cloud]
     for cwd, cmd in steps:
         print(f"({os.path.relpath(cwd, REPO) if cwd.startswith(REPO) else cwd}) {' '.join(cmd)}")
         if not dry_run:
@@ -543,8 +589,8 @@ def sync(cloud, dry_run, ref, skills):
         print(f"not reloaded (cloud stores need --cloud): {', '.join(skipped)}")
     if not dry_run and reloaded:
         mark(reloaded, expected())
-    if not behind and not tech_behind:
-        print("every store is current, ontology and technical graph")
+    if not behind and not tech_behind and not models:
+        print("every store is current, ontology and technical graph" + (", and the logical models" if models is not None else ""))
 
 
 def main():
@@ -570,11 +616,14 @@ def main():
         markers, live = read_markers_and_counts(stores)
         rows = drift(markers, live, expected_for(args.ref, stores), stores)
         tech = tech_drift(read_tech_markers(stores), live, tech_digest(), stores, tech_content())
+        models = logical_models().check(stores)  # none when the newest releases hold no logical-model module
         for store, status, why in rows:
             print(f"{store:<11} {status:<9} {why}")
         for store, status, why in tech:  # the technical graph, beside the ontology: tech:<store>
             print(f"{'tech:' + store:<16} {status:<9} {why}")
-        sys.exit(0 if all(status == "current" for _, status, _ in rows + tech) else 1)
+        for store, status, why in models:  # a release's logical models, in a Neo4j store: lm:<store>
+            print(f"{'lm:' + store:<16} {status:<9} {why}")
+        sys.exit(0 if all(status == "current" for _, status, _ in rows + tech + models) else 1)
     else:
         sync(args.cloud, args.dry_run, args.ref, args.skills)
 

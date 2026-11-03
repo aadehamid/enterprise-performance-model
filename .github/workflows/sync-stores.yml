@@ -2,7 +2,9 @@ name: Sync stores
 
 # On a release tag (<module>-v<version>, as the releases are tagged: kpi-v1.3.0), or when started by hand, runs the
 # ontology-to-lpg driver against AuraDB and Databricks, loads the pricing demo's technical graph into AuraDB (the
-# driver's copy wipes it) and copies it to Delta, marks both stores and runs the drift check on them
+# driver's copy wipes it) and copies it to Delta, loads a release's logical models into both when the newest releases
+# hold the logical-model module (EPM-DEC-001-0113, amendment "the stores"; main holds none), marks both stores and runs
+# the drift check on them
 # (business_architecture/ontology/projection/sync_stores.py). It runs on no timer, because the drift check of every
 # store is a written step of each release (EPM-DEC-001-0112, amendment of 2026-11-02 (later), item 3).
 # Inactive until the decision owner adds the logins below as repository secrets: the first step checks them, and
@@ -86,6 +88,10 @@ jobs:
         name: Copy the technical graph from AuraDB to Delta, with its marker
         working-directory: demos/downstream-pricing-databricks-free
         run: uv run -q --group graph python -m pricing_demo.tech_graph sync --store aura
+      - if: steps.logins.outputs.ready == 'true'
+        name: Load the logical models into AuraDB and Delta, when the newest releases hold the logical-model module (main holds none, so this loads nothing)
+        working-directory: business_architecture/ontology/projection
+        run: uv run -q --no-project --with rdflib --with neo4j --with pyoxigraph --with databricks-sql-connector python logical_models.py load --store aura --store databricks --skills "$GITHUB_WORKSPACE/personal-agent-skills/skills/data"
       - if: steps.logins.outputs.ready == 'true'
         name: Mark AuraDB and Databricks
         working-directory: business_architecture/ontology/projection
