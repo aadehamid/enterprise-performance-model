@@ -1,5 +1,5 @@
 {
- "note": "The lineage differences the demo states it expects, by the sources that hold each edge: designed (the data-product module), sql (the graph's readsFrom, from the SQL files) and observed (Unity Catalog). The demo is simpler than the design in these places. The designed and sql sides follow from graph/tech-graph.ttl and data-product's pricing.ttl, and a test computes them. The observed side is the 2026-10-29 collect's: every edge the design and the SQL files share was observed, and nothing else, which only a live collect can confirm. tech_graph lineage fails on any other difference.",
+ "note": "The lineage differences the demo states it expects, by the sources that hold each edge: designed (the data-product module), sql (the graph's readsFrom, from the SQL files) and observed (Unity Catalog). The demo is simpler than the design in these places. The designed and sql sides follow from graph/tech-graph.ttl and data-product's pricing.ttl, and a test computes them. The observed side is the 2026-10-29 collect's: every edge the design and the SQL files share was observed, and nothing else, which only a live collect can confirm (2026-11-03: the live collect confirmed it, the same 26 edges and no other). tech_graph lineage fails on any other difference.",
  "designed_and_sql": [],
  "designed_and_observed": [],
  "sql_and_observed": [],
