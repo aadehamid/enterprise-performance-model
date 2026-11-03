@@ -36,6 +36,7 @@ ONT = "business_architecture/ontology"
 EPM_RULES = [
     # The ontology: sources, builders, regression, projection, validation, documents.
     ("ship", f"{ONT}/*"),
+    ("out", f"{ONT}/viewer/README.md"),  # the cut adds recipient instructions beside the generated page
     ("out", f"{ONT}/releases/*"),                       # re-added per version below
     ("out", f"{ONT}/step4/*"),                          # re-added: the frozen inputs and the checks that still run
     ("ship", f"{ONT}/step4/baseline/*"),

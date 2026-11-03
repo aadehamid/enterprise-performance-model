@@ -1,4 +1,4 @@
-"""Build an offline ontology viewer from one release's manifest-listed Turtle."""
+"""Build an offline viewer from current Turtle packages and the release catalog."""
 
 import argparse
 import base64
@@ -29,16 +29,16 @@ def release_files(root):
     for module in sorted(packages.iterdir()):
         if not module.is_dir() or module.name == "previous":
             continue
-        manifests = [
+        versions = [
             p
-            for p in module.glob("*/manifest.json")
-            if re.fullmatch(r"\d+\.\d+\.\d+", p.parent.name)
+            for p in module.iterdir()
+            if p.is_dir() and re.fullmatch(r"\d+\.\d+\.\d+", p.name)
         ]
-        if not manifests:
+        if not versions:
             continue
         manifest_path = max(
-            manifests, key=lambda p: tuple(map(int, p.parent.name.split(".")))
-        )
+            versions, key=lambda p: tuple(map(int, p.name.split(".")))
+        ) / "manifest.json"
         manifest = json.loads(manifest_path.read_text())
         if (
             manifest["module"] != module.name
@@ -58,6 +58,9 @@ def release_files(root):
             files.append((path, module.name, manifest["version"]))
     if not files:
         raise ValueError("No released Turtle packages found")
+    catalog = packages / "catalog.ttl"
+    if catalog.exists():
+        files.append((catalog, None, None))
     return files
 
 
@@ -106,7 +109,8 @@ def build_data(root):
         for s, p, o in part:
             triple = tuple(scoped(n) for n in (s, p, o))
             graph.add(triple)
-            membership[triple[0]].add((module, version))
+            if module:
+                membership[triple[0]].add((module, version))
         inputs.append(
             {
                 "path": str(path.relative_to(root)),
@@ -146,7 +150,7 @@ def build_data(root):
         elif SKOS.ConceptScheme in types:
             kind = "Concept scheme"
         elif OWL.Ontology in types or any(
-            short(t) in ("Catalog", "Dataset") for t in types
+            short(t) in ("Catalog", "Dataset", "Distribution") for t in types
         ):
             kind = "Metadata"
         elif any(
@@ -178,7 +182,8 @@ def build_data(root):
                 "label": label,
                 "kind": kind,
                 "modules": [
-                    {"name": m, "version": v} for m, v in sorted(membership[s])
+                    {"name": m, "version": v}
+                    for m, v in sorted(membership[s] or {("Release metadata", "EPM 1.0")})
                 ],
                 "parents": sorted(
                     term_id(o)
@@ -236,7 +241,6 @@ def build(root, output, compare=None, require_pin=True):
     page = (
         (HERE / "viewer.html")
         .read_text()
-        .replace("/* EMBEDDED_DATA */", payload)
         .replace("/* EMBEDDED_FONTS */", font_css)
     )
     import html
@@ -244,6 +248,7 @@ def build(root, output, compare=None, require_pin=True):
     page = page.replace(
         "FONT_LICENSE_TEXT", html.escape((HERE / "fonts/OFL.txt").read_text())
     )
+    page = page.replace("/* EMBEDDED_DATA */", payload)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(page)

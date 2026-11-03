@@ -170,7 +170,7 @@ The decision owner instructed (`answers-2026-11-03-viewer.md`):
 
 The viewer ships inside the shared release through the cut. This supersedes the local plan's statement that it is not part of either release. Decision 15 and consequence 9 still set the start after the full release. EPM-DEC-001-0112's confirmation has met that condition.
 
-The request pins the viewer's input to `share/epm-1.0` at `81f2f63b`, from its Turtle or JSON-LD, with no store. The scope interview is recorded below. Implementation and publication are pending.
+The request pins the viewer's input to `share/epm-1.0` at `81f2f63b`, from its Turtle or JSON-LD, with no store. The scope interview is recorded below. At this scope decision, implementation and publication were pending.
 
 EPM-DEC-001-0112 records the earlier confirmation at `2b3f02e2`. The later viewer request explicitly selects `81f2f63b`; it does not change that historical confirmation or claim that the two commits have identical contents.
 

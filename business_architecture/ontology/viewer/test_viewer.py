@@ -92,9 +92,10 @@ def test_customer_schema_and_technical_vocabulary_are_included(tmp_path):
 
 
 def test_embed_is_script_safe_and_needs_no_network(tmp_path):
+    label = "</script><script>alert(1)</script> /* EMBEDDED_FONTS */ FONT_LICENSE_TEXT"
     package(
         tmp_path,
-        ttl=TTL + '\nx:attack rdfs:label "</script><script>alert(1)</script>" .',
+        ttl=TTL + '\nx:attack rdfs:label ' + json.dumps(label) + ' .',
     )
     out = tmp_path / "viewer/index.html"
     viewer.build(tmp_path, out, require_pin=False)
@@ -104,7 +105,7 @@ def test_embed_is_script_safe_and_needs_no_network(tmp_path):
     ].split("</script>")[0]
     assert "</script>" not in payload
     assert any(
-        n["label"] == "</script><script>alert(1)</script>"
+        n["label"] == label
         for n in json.loads(payload)["nodes"]
     )
     assert "data:font/woff2;base64," in text
@@ -154,7 +155,7 @@ def test_source_pin_rejects_another_commit_and_local_package_changes(tmp_path, m
         viewer.pinned_source(tmp_path)
 
 
-def assert_roundtrip(root):
+def assert_roundtrip(root, data=None):
     from rdflib import Graph, URIRef, BNode, Literal
     from rdflib.compare import isomorphic
 
@@ -162,7 +163,7 @@ def assert_roundtrip(root):
     # Parse independently and include each current manifest-listed Turtle file.
     for path, _, _ in viewer.release_files(root):
         expected += Graph().parse(path, format="turtle")
-    data = viewer.build_data(root)
+    data = viewer.build_data(root) if data is None else data
     actual = Graph()
 
     def resource(value):
@@ -191,7 +192,7 @@ def test_payload_preserves_every_rdf_triple(tmp_path):
     assert_roundtrip(tmp_path)
 
 
-def test_pinned_release_roundtrip_when_supplied():
+def test_pinned_release_roundtrip_when_supplied(tmp_path):
     import os
 
     root = os.environ.get("EPM_VIEWER_RELEASE_SOURCE")
@@ -200,4 +201,42 @@ def test_pinned_release_roundtrip_when_supplied():
             "Set EPM_VIEWER_RELEASE_SOURCE for the private release acceptance check"
         )
     viewer.pinned_source(root)
-    assert_roundtrip(Path(root))
+    output = tmp_path / "index.html"
+    viewer.build(root, output)
+    payload = output.read_text().split('<script id="ontology-data" type="application/json">')[1].split("</script>")[0]
+    assert_roundtrip(Path(root), json.loads(payload))
+
+
+@pytest.mark.parametrize("defect", ["identity", "candidate", "escape", "missing-newest"])
+def test_invalid_package_cannot_be_viewed(tmp_path, defect):
+    p = package(tmp_path)
+    manifest = json.loads((p / "manifest.json").read_text())
+    if defect == "identity":
+        manifest["module"] = "other"
+    elif defect == "candidate":
+        manifest["release_candidate"] = True
+    elif defect == "escape":
+        (p.parent / "escape.ttl").write_text(TTL)
+        manifest["files"] = {"../escape.ttl": hashlib.sha256(TTL.encode()).hexdigest()}
+    else:
+        (p.parent / "2.0.0").mkdir()
+    (p / "manifest.json").write_text(json.dumps(manifest))
+    with pytest.raises((ValueError, FileNotFoundError)):
+        viewer.build_data(tmp_path)
+
+
+def test_catalog_metadata_is_preserved_but_not_counted_as_terms(tmp_path):
+    package(tmp_path, ttl=TTL + '\nx:file a <http://www.w3.org/ns/dcat#Distribution> .')
+    catalog = tmp_path / viewer.ONTOLOGY / "releases/catalog.ttl"
+    catalog.write_text('@prefix dcat: <http://www.w3.org/ns/dcat#> . <https://example.test/catalog> a dcat:Catalog; <http://purl.org/dc/terms/title> "Whole release catalog" .')
+    data = viewer.build_data(tmp_path)
+    assert data["terms"] == 5
+    assert data["counts"]["Metadata"] == 2
+    assert any(n["label"] == "Whole release catalog" and n["modules"] for n in data["nodes"])
+    assert_roundtrip(tmp_path, data)
+
+
+def test_non_semver_directories_are_not_release_inputs(tmp_path):
+    package(tmp_path)
+    package(tmp_path, version="2.0.0-candidate", ttl="invalid RDF")
+    assert viewer.build_data(tmp_path)["terms"] == 5

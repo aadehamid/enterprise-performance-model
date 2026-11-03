@@ -109,7 +109,7 @@ review report of what changes comes before anyone turns it on.
 
 ## Include the offline ontology viewer
 
-Pass `--viewer-source <release clone>` to `cut.sh` to include `viewer/index.html` and its link in the release README. The source must be a clean clone of `share/epm-1.0` at `81f2f63b128820854a25204641b6899d55051ae3`. The cut validates the source before replacing an output folder. After rebuilding, it requires the cut's current package Turtle files to match the source files by path and SHA-256. A changed package stops the cut instead of shipping a stale viewer.
+Pass `--viewer-source <release clone>` to `cut.sh` to include `viewer/index.html`, recipient instructions and a link at the top of the release README. The source must be a clean clone of `share/epm-1.0` at `81f2f63b128820854a25204641b6899d55051ae3`. The cut validates the source before replacing an output folder. After rebuilding, it requires the cut's current package Turtle files and release catalog to match the source files by path and SHA-256. A changed input stops the cut instead of shipping a stale viewer. The cut also checks that RDF reconstructed from the generated HTML equals the source graph, using RDFLib 7.6.0.
 
 The page embeds the current released ontology, its customer schema, scripts and fonts. Recipients unzip the release and open `viewer/index.html` in a browser. It needs no server, store, install or network connection. Previous packages, examples and technical-graph records are outside its inputs; technical-graph vocabulary remains included. Build details and coverage are in [the viewer guide](../../business_architecture/ontology/viewer/README.md).
 

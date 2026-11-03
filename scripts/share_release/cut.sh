@@ -68,7 +68,7 @@ export PYTHONDONTWRITEBYTECODE=1
 unset GIT_DIR GIT_INDEX_FILE GIT_WORK_TREE
 if [ -n "$VIEWER_SOURCE" ]; then
   VIEWER_SOURCE="$(cd "$VIEWER_SOURCE" && pwd -P)"
-  uv run -q --no-project --with rdflib python3 -c 'import sys; sys.path.insert(0, sys.argv[1]); import build; build.pinned_source(sys.argv[2]); build.release_files(sys.argv[2])' "$EPM/business_architecture/ontology/viewer" "$VIEWER_SOURCE"
+  uv run -q --no-project --with rdflib==7.6.0 python3 -c 'import sys; sys.path.insert(0, sys.argv[1]); import build; build.pinned_source(sys.argv[2]); build.release_files(sys.argv[2])' "$EPM/business_architecture/ontology/viewer" "$VIEWER_SOURCE"
 fi
 
 # The output folder: never a folder that holds something else.
@@ -110,13 +110,15 @@ step "export"; rm -rf "$OUT"; within "$OUT-export.log" python3 -I "$HERE/export.
 step "rebuild"; within "$OUT-rebuild.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/rebuild.py" --release "$OUT" --epm "$EPM" ${AUGMENT_ARGS[@]+"${AUGMENT_ARGS[@]}"} ${APPROVAL_ARGS[@]+"${APPROVAL_ARGS[@]}"} > /dev/null || { tail -20 "$OUT-rebuild.log"; exit 1; }; tail -1 "$OUT-rebuild.log"
 if [ -n "$VIEWER_SOURCE" ]; then
   step "offline viewer"
-  within "$OUT-viewer.log" uv run -q --no-project --with rdflib python3 "$EPM/business_architecture/ontology/viewer/build.py" --source "$VIEWER_SOURCE" --compare "$OUT" --out "$OUT/viewer/index.html" > /dev/null || { tail -20 "$OUT-viewer.log"; exit 1; }
+  within "$OUT-viewer.log" uv run -q --no-project --with rdflib==7.6.0 python3 "$EPM/business_architecture/ontology/viewer/build.py" --source "$VIEWER_SOURCE" --compare "$OUT" --out "$OUT/viewer/index.html" > /dev/null || { tail -20 "$OUT-viewer.log"; exit 1; }
+  within "$OUT-viewer-check.log" env EPM_VIEWER_RELEASE_SOURCE="$VIEWER_SOURCE" uv run -q --no-project --with rdflib==7.6.0 --with pytest python3 -m pytest -q "$EPM/business_architecture/ontology/viewer/test_viewer.py::test_pinned_release_roundtrip_when_supplied" > /dev/null || { tail -20 "$OUT-viewer-check.log"; exit 1; }
+  cp "$HERE/templates/VIEWER.md" "$OUT/viewer/README.md"
   python3 - "$OUT/README.md" <<'PY'
 from pathlib import Path
 import sys
 path = Path(sys.argv[1])
 title, separator, body = path.read_text().partition("\n")
-path.write_text(title + "\n\nUnzip the release and open [the ontology viewer](viewer/index.html) in a browser. It works offline and needs no setup.\n" + body)
+path.write_text(title + "\n\nUnzip the release and open [the ontology viewer](viewer/index.html) in a browser. It shows this release as received, works offline and needs no setup. See [viewer instructions](viewer/README.md).\n" + body)
 PY
 fi
 step "gate"; within "$OUT-gate.log" python3 -I "$HERE/gate.py" "$OUT" > /dev/null || { tail -20 "$OUT-gate.log"; exit 1; }; tail -1 "$OUT-gate.log"

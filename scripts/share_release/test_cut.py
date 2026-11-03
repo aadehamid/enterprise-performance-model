@@ -58,6 +58,29 @@ def test_a_missing_option_prints_the_usage():
     assert r.returncode == 2 and "--store-rows" in r.stdout
 
 
+def test_invalid_viewer_source_leaves_existing_output_untouched(tmp_path):
+    from pathlib import Path
+    import shutil
+    sys.path.insert(0, HERE)
+    import manifest
+    import json
+
+    builder = Path(HERE).parents[1] / "business_architecture/ontology/viewer/build.py"
+    target = tmp_path / "epm/business_architecture/ontology/viewer/build.py"
+    target.parent.mkdir(parents=True)
+    shutil.copyfile(builder, target)
+    source = tmp_path / "not-a-release"
+    source.mkdir()
+    out = tmp_path / "out"
+    out.mkdir()
+    (out / "release.json").write_text(json.dumps(manifest.marker("2026-11-03")))
+    (out / "keep").write_text("existing output")
+    result = cut(tmp_path, out, None, "--replace", "--viewer-source", str(source))
+    assert result.returncode != 0
+    assert "=== export" not in result.stdout
+    assert (out / "keep").read_text() == "existing output"
+
+
 def test_the_header_says_what_the_command_leaves_to_later_steps():
     with open(CUT) as f:
         head = f.read().split("set -euo pipefail")[0]

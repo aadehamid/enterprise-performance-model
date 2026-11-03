@@ -2,6 +2,8 @@
 
 This release is your starting point. Your copy is yours to change: add a module, change a module, reword a definition, add a process. This guide says what to do and who decides. Use whichever tools you prefer to do it. Every command here has been run on this release.
 
+If your copy includes `viewer/index.html`, that page shows the ontology as you received it. Changing a package does not refresh the page. Use the changed Turtle or JSON-LD to inspect your edits; a newly cut viewer is needed to view a later release.
+
 **Who decides.** Your ontology owner is the person your organisation names to decide what the ontology means. A module owner is the person they name for one module. The ontology owner approves every major release and every module's first release. The module owner approves minor and patch releases. Until a module has an owner, the ontology owner decides for it.
 
 **What the words mean.** A *module* is one part of the ontology with its own version, such as `kpi`. A *package* is one released version of a module: the folder `business_architecture/ontology/releases/<module>/<version>/`. A package never changes after its release. A change makes a new package.
