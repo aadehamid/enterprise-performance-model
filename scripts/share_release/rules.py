@@ -665,6 +665,49 @@ KEPT_OUT = [
     (r",\s+so\s+the\s+customer\s+model's\s+graphs\s+stay\s+in\s+the\s+gitignored\s+augment\s+folder\s+beside\s+its\s+export\.",
      ", so a model's graphs sit beside its export,\ninside the repository or in a folder outside it (HOW-TO-UPDATE.md, \"Inputs from outside the repository\")."),
     (r" from files kept outside the repository(?= " + _DATE + ")", " from files read from outside the repository"),
+    # Where the logical model is not: the release is the reader's copy, so what main lacks goes, and the release says
+    # what it holds.
+    (r"; it ships in no package in `main`\.", "."),
+    (r"; `main` has no package for it, and the release cut builds it\.", "."),
+    (r"; `main` holds no such package\.", "."),
+    (r"not released in `main`; its first model, the customer logical model, ships only in the release (?=\(the decision)",
+     "its first model is the customer logical model "),
+    (r" In `main` it has no package, so no figure here counts it\.", " The figures on this page do not count it."),
+    (r"ships only in the release, as `logical-model 1\.0\.0`; `main` has no package (?=\(the decision)",
+     "is released as `logical-model 1.0.0` "),
+    (r",? and (?:`|<code>)main(?:`|</code>) holds no package of it, so (?:`|<code>)main(?:`|</code>)'s stores hold none", ""),
+    (r" (?:`|<code>)main(?:`|</code>) holds no package of it, so (?:`|<code>)main(?:`|</code>)'s stores hold none\.", ""),
+    (r" <code>main</code> holds no such module, so <code>check</code> prints no <code>lm:</code> line(?: there\.)?", ""),
+    (r"; <code>main</code> holds no such module, so it prints no <code>lm:</code> line\.", "."),
+    (r" \(never in <code>main</code>\)", ""),
+    (r" In <code>main</code> (?:the command|it) says there is nothing to load and changes nothing\.", ""),
+    (r"\. In <code>main</code> it loads nothing(?=</td>)", ""),
+    (r" So `main` holds the machinery and a made-up example model, and the regression runs the questions on that example\.",
+     " The regression runs the questions on a made-up example model."),
+    (r"\*\*Status:\*\* not released in `main`\.[^\n]*",
+     "**Status:** the module's machinery and a made-up example model are here; when this release holds the package "
+     "`logical-model 1.0.0`, it is in `../releases/logical-model/`."),
+    (r"<p>A model the decision owner wants only in the release never enters <code>main</code>\..*?</p>",
+     "<p>A model's export and links file can sit in a folder that Git ignores, such as "
+     "<code>release-cut/augment/logical-model/</code>, and the builder writes the model's two graphs beside them. The "
+     "release build reads that folder and builds the package. The builder takes the export's location as an input, so "
+     "the same build runs with the files inside the repository (the decision of 2026-11-02, decisions 2 and 6). "
+     "<code>HOW-TO-UPDATE.md</code>, \"Inputs from outside the repository\", gives the two ways to work with such files.</p>"),
+    (r"A logical model that only the release may hold has its export and links file in the augment folder, "
+     r"<code>release-cut/augment/logical-model/</code>, which Git ignores, so neither ever enters <code>main</code>\.",
+     "A logical model's export and links file can sit in an augment folder that Git ignores, such as "
+     "<code>release-cut/augment/logical-model/</code>."),
+    (r"A model that only the release may hold goes in <code>release-cut/augment/logical-model/</code> at the repository's "
+     r"root\. Git ignores <code>release-cut/</code>, so the export never enters <code>main</code>\.",
+     "A model's export can go in an augment folder that Git ignores, such as "
+     "<code>release-cut/augment/logical-model/</code> at the repository's root."),
+    # The projection's docstrings say what a release without the module does, not what main lacks.
+    (r" main holds no such package, so in main every command here finds\nnothing to load and changes nothing; the share "
+     r"release's cut builds the package \(scripts/share_release/augment\.py\)\.",
+     " Where the releases hold no such package, every command here finds\nnothing to load and changes nothing."),
+    (r"; main holds no such\nmodule, so its plan has no model-load\.", "; without the\nmodule, the plan has no model-load."),
+    (r"No package\n    in main has any; the share release's logical-model package does", "The logical-model package\n    has them"),
+    (r", because\nmain holds no logical-model package\.", "."),
     # The guide's and the walkthrough's sections on the augment folder: the pattern stays, with a pointer to the two ways.
     (r"<h3>A confidential export stays outside the repository</h3>", "<h3>A confidential export, read from outside the repository</h3>"),
     (r"(<h3[^>]*>)Files kept outside Git(</h3>)", r"\1Files read from outside Git\2"),
@@ -674,7 +717,7 @@ KEPT_OUT = [
     (r"\"Add a logical model\", below, steps 2 and 7, and <code>scripts/share_release/README\.md</code> give the detail\.",
      "\"Add a logical model\", below, steps 2 and 7, give the detail, and <code>HOW-TO-UPDATE.md</code>, \"Inputs from outside the "
      "repository\", the two ways to work with such files."),
-    (r"(so the export never enters <code>main</code>\.)( Choose a slug)",
+    (r"(at the repository's root\.)( Choose a slug)",
      r'\1 To keep the files in your copy instead, see <code>HOW-TO-UPDATE.md</code>, "Inputs from outside the repository".\2'),
     # The walkthrough's file map: its group of this build's working files outside the repositories goes, heading and table.
     (r'\s*<h3 id="fm-outside"[^>]*>.*?</tbody></table></div>', ""),

@@ -555,6 +555,25 @@ KEPT_OUT_PLANTS = [
     "every check passed; the reload's log is kept outside the repository.",
     "The planning workbook stays outside the repo.",
     "Tools and working files this run used that do not live in either repository.",
+    # The same claim as what main lacks, copied from MODULES.md, README.md, logical-model/README.md, the guide, the
+    # walkthrough, the runbook and the projection's code.
+    "it ships in no package in `main`.",
+    "`main` has no package for it, and the release cut builds it.",
+    "*2026-11-02:* not released in `main`; its first model, the customer logical model, ships only in the release",
+    "In `main` it has no package, so no figure here counts it.",
+    "The customer model it holds ships only in the release, as `logical-model 1.0.0`; `main` has no package",
+    "**Status:** not released in `main`.",
+    "Only the `logical-model` module does, and `main` holds no package of it, so `main`'s stores hold none.",
+    "<p>A model the decision owner wants only in the release never enters <code>main</code>.",
+    "which Git ignores, so neither ever enters <code>main</code>.",
+    "Git ignores <code>release-cut/</code>, so the export never enters <code>main</code>.",
+    "A logical model that only the release may hold has its export.",
+    "<code>main</code> holds no such module, so <code>check</code> prints no <code>lm:</code> line there.",
+    "In <code>main</code> it says there is nothing to load and changes nothing.",
+    "In <code>main</code> it loads nothing</td>",
+    "when the releases hold the module (never in <code>main</code>), marks both",
+    "No package\n    in main has any; the share release's logical-model package does",
+    "main holds no such package, so in main every command here finds",
 ]
 
 
@@ -582,8 +601,9 @@ GENERIC_TEXT = {
         "- **Move the files into the repository.** Save them in `$ONT/logical-model/models/`.\n"),
     "business_architecture/ontology/epm-ontology-guide.html": (
         "<p>Three kinds of copy can fall behind Git: the ontology's triples, the graphs loaded beside them, and the files a release reads from outside Git.</p>\n"
-        "<h3>A confidential export, read from outside the repository</h3>\n<p>A model the decision owner wants only in the release never enters <code>main</code>. Its export and links file sit in <code>release-cut/augment/logical-model/</code>, a folder Git ignores.</p>\n"
-        "<h3>Files read from outside Git</h3>\n<p>A logical model that only the release may hold has its export and links file in the augment folder, <code>release-cut/augment/logical-model/</code>, which Git ignores, so neither ever enters <code>main</code>.</p>\n"
+        "<h3>A confidential export, read from outside the repository</h3>\n<p>A model's export and links file can sit in a folder that Git ignores, such as <code>release-cut/augment/logical-model/</code>, and the builder writes the model's two graphs beside them.</p>\n"
+        "<h3>Files read from outside Git</h3>\n<p>A logical model's export and links file can sit in an augment folder that Git ignores, such as <code>release-cut/augment/logical-model/</code>.</p>\n"
+        "<p>In <code>main</code> they run on the made-up example. The figures on this page do not count it.</p>\n"
         "<li>Keep the cleaned file beside the original, outside the repository, and record each change.</li>\n"),
     "business_architecture/ontology/release/build_module.py": "# Added by the share release's cut from files read from outside the repository; \"augment\": the files from outside the repository the package was built from\n",
     "business_architecture/ontology/projection/skill-run/README.md": "Outputs go to `~/lpg-out/`, outside the repository. Copy it outside the repository; it must be outside the repository.\n",

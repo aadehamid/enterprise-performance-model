@@ -43,14 +43,22 @@ AGENT_WORK = (r"\bretro of \d{4}|\bnight[ _]brief\b|\b[Ii]ndependent review|\b[R
 # rule 17 of rules.py). It may say that an input is read from a folder outside the repository, and how to keep that
 # pattern or move the files into the copy (the decision owner's refinement, the same day). KEPT_OUT is the withholding
 # wording: kept out of the repository or main, staying, held or living outside it, not in the repository, a gitignored
-# folder of ours, files kept apart from these sources, this run's files in no repository. The shipped skills are exempt
-# from it, since their method text is generic (the decision owner, the same day). KEPT_OUT_CUSTOMER, the customer's
+# folder of ours, files kept apart from these sources, this run's files in no repository, and the same claim as what
+# main lacks. The shipped skills are exempt from it, since their method text is generic (the decision owner, the same day). KEPT_OUT_CUSTOMER, the customer's
 # files, inputs, data or model kept out, gitignored or in the augment folder, runs on every file, the skills included.
 KEPT_OUT = (r"\bkept\s+(?:out\s+of|outside)\s+(?:the\s+|this\s+)?(?:repo|repository|(?:`|<code>)?main)\b"
             r"|\b(?:stays?|stayed|remains?|held|lives?)\s+(?:out\s+of|outside)\s+(?:the\s+|this\s+)?(?:repo|repository|(?:`|<code>)?main)\b"
             r"|\bnot\s+in\s+(?:this|the)\s+repository\b|\bgitignored\s+(?:folder|augment)"
             r"|\b(?:kept\s+(?:apart\s+from|outside)|from\s+outside)\s+(?:these|those)\s+sources\b"
-            r"|\bdo\s+not\s+live\s+in\s+either\s+repository\b|\bOutside\s+the\s+repositories\b")
+            r"|\bdo\s+not\s+live\s+in\s+either\s+repository\b|\bOutside\s+the\s+repositories\b"
+            # The same claim as where the logical model is not: never entering main, not released or no package in main,
+            # main holding none, only in the release. The release is the reader's copy, and main is not theirs.
+            r"|\b(?:never|not|ever)\s+enters?\s+(?:<code>|`)?main\b|\bnot\s+(?:released\s+)?in\s+(?:<code>|`)main\b"
+            r"|\bnot\s+released\s+in\s+main\b|\bno\s+package\s+in\s+(?:<code>|`)?main\b"
+            r"|\bmain(?:</code>|`)?\s+(?:has|holds)\s+no\s+(?:such\s+)?(?:package|module|logical-model)"
+            r"|\bships\s+only\s+in\s+the\s+release\b|\bwants\s+only\s+in\s+the\s+release\b|\bonly\s+the\s+release\s+(?:may\s+)?holds?\b"
+            r"|\bIn\s+(?:<code>|`)?main(?:</code>|`)?,?\s+(?:it|the\s+command)\s+(?:has\s+no|loads\s+nothing|says\s+there\s+is\s+nothing)"
+            r"|\(never\s+in\s+(?:<code>|`)?main\b")
 KEPT_OUT_CUSTOMER = (r"\b(?:the|expert's|owner's)\s+customer\s+(?:files|inputs|data|logical\s+model|model)\b[^.\n]{0,80}?"
                      r"(?:\b(?:out\s+of|outside|not\s+in|never\s+enters?)\s+(?:the\s+|this\s+)?(?:repo|repository|(?:`|<code>)?main)\b"
                      r"|gitignored|augment\s+folder)")
