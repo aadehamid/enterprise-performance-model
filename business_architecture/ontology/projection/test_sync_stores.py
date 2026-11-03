@@ -7,6 +7,7 @@ import os
 import re
 import subprocess
 import sys
+import types
 import unittest
 from unittest import mock
 
@@ -78,6 +79,13 @@ class Drift(unittest.TestCase):
     def test_an_extra_delta_graph_reads_changed_although_the_total_holds(self):
         status, why = self.delta(self.held | {"old": 1, "a": 2})
         self.assertEqual((status, "old" in why), ("changed", True))
+
+    def test_delta_rows_in_no_graph_read_changed_and_do_not_crash(self):
+        rows = types.SimpleNamespace(execute=lambda q: None, fetchall=lambda: [(None, 2), ("a", 1)])
+        held = ss.triples_per_graph(rows, "s")
+        self.assertEqual(held, {ss.DEFAULT_GRAPH: 2, "a": 1})
+        status, why = self.delta(self.held | {ss.DEFAULT_GRAPH: 2, "a": 1})
+        self.assertEqual((status, ss.DEFAULT_GRAPH in why), ("changed", True))
 
     def test_jena_is_judged_from_its_graphs_with_no_marker(self):
         want = {"a": 1, "a/shapes": 2}

@@ -333,6 +333,9 @@ def jena_select(query):
         return json.load(response)["results"]["bindings"]
 
 
+DEFAULT_GRAPH = "(the default graph)"  # triples outside any named graph: no release graph has this name, so they read as a stray
+
+
 def read_jena():
     """{graph IRI: triple count} of what Jena holds; triples in the default graph, where nothing should be, count as a
     graph of their own so the check reports them."""
@@ -341,7 +344,7 @@ def read_jena():
             for r in select("SELECT ?g (COUNT(*) AS ?n) WHERE { GRAPH ?g { ?s ?p ?o } } GROUP BY ?g")}
     in_default = int(select("SELECT (COUNT(*) AS ?n) WHERE { ?s ?p ?o }")[0]["n"]["value"])
     if in_default:
-        held["(the default graph)"] = in_default
+        held[DEFAULT_GRAPH] = in_default
     return held
 
 
@@ -493,7 +496,7 @@ def databricks_checked(cur, schema, want):
 def triples_per_graph(cur, schema):
     """{graph: row count} of the triple table: one GROUP BY on its graph column."""
     cur.execute(f"SELECT graph, count(*) FROM {schema}.{TRIPLES_TABLE} GROUP BY graph")
-    return {r[0]: r[1] for r in cur.fetchall()}
+    return {DEFAULT_GRAPH if r[0] is None else r[0]: r[1] for r in cur.fetchall()}  # a row with no graph is a stray
 
 
 def graphs_differ(held, graphs):
