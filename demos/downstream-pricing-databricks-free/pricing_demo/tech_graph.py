@@ -730,6 +730,57 @@ def graph_digest(folder):
     return h.hexdigest()
 
 
+# ---------- content fingerprints ----------
+# What each store holds of the technical graph, reduced to one SHA-256 that the graph files give too, so a store whose
+# content no longer equals the files reads as changed even when its marker and counts match. Nothing is left out: the
+# files are what was loaded, volatile values included. projection/sync_stores.py reads the stores with these.
+NEO4J_NODES = "MATCH (n:Tech) RETURN labels(n) AS labels, properties(n) AS p"
+NEO4J_EDGES = "MATCH (a:Tech)-[r]->(b) RETURN a.uri AS s, type(r) AS t, b.uri AS o, b:Resource AS ontology"
+
+
+def _sha(lines):
+    return hashlib.sha256("\n".join(sorted(lines)).encode()).hexdigest()
+
+
+def neo4j_fingerprint(nodes, edges):
+    """Nodes as {"labels", "p"} (properties) and edges as {"s", "t", "o", "ontology"}, the rows NEO4J_NODES and
+    NEO4J_EDGES return; graph_rows' nodes ({"labels", "props"}) are taken too."""
+    return _sha([json.dumps({"labels": sorted(n["labels"]), "p": n.get("p", n.get("props"))}, sort_keys=True, default=str)
+                 for n in nodes] + [json.dumps([e["s"], e["t"], e["o"], bool(e["ontology"])]) for e in edges])
+
+
+def delta_rows(nodes, edges):
+    """The rows sync writes to tech_graph_nodes and tech_graph_edges, from Neo4j's rows (or graph_rows')."""
+    node_rows = []
+    for n in nodes:
+        p = n.get("p", n.get("props"))
+        node_rows.append((p["uri"], next((l for l in sorted(n["labels"]) if l != "Tech"), "Tech"), p.get("name"),
+                          json.dumps({k: v for k, v in p.items() if k not in ("uri", "name")}, sort_keys=True, default=str)))
+    return node_rows, [(e["s"], e["t"], e["o"], bool(e["ontology"])) for e in edges]
+
+
+def delta_fingerprint(node_rows, edge_rows):
+    """tech_graph_nodes rows (uri, kind, name, properties as JSON text) and tech_graph_edges rows (source, type,
+    target, target_in_ontology), without synced_at."""
+    return _sha([json.dumps([u, k, n, json.loads(p)], sort_keys=True) for u, k, n, p in node_rows]
+                + [json.dumps(["edge", s, t, o, bool(b)]) for s, t, o, b in edge_rows])
+
+
+def jena_fingerprint(graphs):
+    """{graph IRI: rdflib Graph} for the two named graphs, as Jena holds them or as the files give them."""
+    return _sha([f"<{iri}> " + " ".join(term.n3() for term in triple) for iri, g in graphs.items() for triple in g])
+
+
+def files_fingerprints(folder=None):
+    """{"neo4j", "jena", "delta"}: what a store holds when it equals the graph files in folder."""
+    from rdflib import Graph
+    folder = folder or graph_folder()
+    nodes, edges = graph_rows(read_graph(folder))
+    return {"neo4j": neo4j_fingerprint(nodes, edges), "delta": delta_fingerprint(*delta_rows(nodes, edges)),
+            "jena": jena_fingerprint({iri: Graph().parse(os.path.join(folder, name), format="turtle")
+                                      for name, iri in JENA_GRAPHS.items()})}
+
+
 def graph_folder():
     """The refreshed graph when a build wrote one, otherwise what the release ships."""
     return REFRESHED if all(os.path.exists(os.path.join(REFRESHED, n)) for n in GRAPH_FILES) else GRAPH
@@ -829,25 +880,35 @@ def walk(store="driver", gold="gold_commercial_core.mips_mpr_executive_summary_f
 
 # ---------- Delta ----------
 
+def source_matches_files(store, marker, nodes, edges, folder=None):
+    """Refuses a source whose marker names other graph files, or whose Tech nodes and edges no longer equal the files
+    (a hand edit that kept the counts, say), so the Delta copy never carries a digest its content does not match."""
+    folder = folder or graph_folder()
+    if marker.get("digest") != graph_digest(folder):
+        raise SystemExit(f"{store} was loaded from other graph files than {os.path.relpath(folder, ROOT)}: "
+                         f"run tech_graph load --store {store} first; nothing was copied")
+    if neo4j_fingerprint(nodes, edges) != files_fingerprints(folder)["neo4j"]:
+        raise SystemExit(f"{store}'s technical graph differs from {os.path.relpath(folder, ROOT)} although its marker matches: "
+                         f"run tech_graph load --store {store} again; nothing was copied")
+
+
 def sync(store="driver"):
     """Copies the Tech nodes and their edges from Neo4j, the source, into the two Delta tables sql/07 creates, then
-    records the source's marker as the Delta copy's (MARKER_ROW). The row is deleted first, so a copy that fails part
-    way reads as unmarked, and a source with no marker is refused: load it first."""
+    records the source's marker as the Delta copy's (MARKER_ROW), with the schema it wrote, where sync_stores.py reads
+    the copy's content. The row is deleted first, so a copy that fails part way reads as unmarked. A source with no
+    marker, or whose content differs from the graph files, is refused (source_matches_files)."""
     from neo4j import GraphDatabase
     from .databricks import connect, current_catalog, run
     uri, user, password = neo4j_login(store)
     with GraphDatabase.driver(uri, auth=(user, password)) as driver:
         marker, _, _ = driver.execute_query(f"MATCH (m:{MARKER_LABEL}) RETURN properties(m) AS p")
-        nodes, _, _ = driver.execute_query("MATCH (n:Tech) RETURN n.uri AS uri, labels(n) AS labels, properties(n) AS p ORDER BY uri")
-        edges, _, _ = driver.execute_query("MATCH (a:Tech)-[r]->(b) RETURN a.uri AS s, type(r) AS t, b.uri AS o, "
-                                           "b:Resource AS ontology ORDER BY s, t, o")
+        nodes, _, _ = driver.execute_query(NEO4J_NODES)
+        edges, _, _ = driver.execute_query(NEO4J_EDGES)
     if not marker or not marker[0]["p"].get("digest"):
         raise SystemExit(f"{store} holds no technical-graph marker: run tech_graph load --store {store} first; nothing was copied")
+    source_matches_files(store, marker[0]["p"], nodes, edges)
     synced = now()
-    node_rows = [(n["uri"], next((l for l in sorted(n["labels"]) if l != "Tech"), "Tech"), n["p"].get("name"),
-                  json.dumps({k: v for k, v in n["p"].items() if k not in ("uri", "name")}, sort_keys=True, default=str))
-                 for n in nodes]
-    edge_rows = [(r["s"], r["t"], r["o"], bool(r["ontology"])) for r in edges]
+    node_rows, edge_rows = delta_rows(nodes, edges)
     conn, e = connect()
     markers = e["EPM_TRIPLES"].rsplit(".", 1)[0] + ".epm_store_markers"  # the projection's table (sync_stores.py)
     with conn, conn.cursor() as cur:
@@ -866,7 +927,7 @@ def sync(store="driver"):
                 raise SystemExit(f"{cat}.tech_graph.{table} holds {n} rows; Neo4j has {len(rows)}")
             print(f"{cat}.tech_graph.{table}: {n} rows from Neo4j ({store})")
         row = {"store": MARKER_ROW, "digest": marker[0]["p"]["digest"], "copied_from": store, "nodes": len(node_rows),
-               "edges": len(edge_rows), "marked_at": synced}
+               "edges": len(edge_rows), "marked_at": synced, "schema": f"{cat}.tech_graph"}
         cur.execute(f"INSERT INTO {markers} VALUES ('{MARKER_ROW}', ?)", [json.dumps(row)])
     print(f"{markers}: the Delta copy marked {row['digest'][:12]}, from {store}")
     return len(node_rows), len(edge_rows)

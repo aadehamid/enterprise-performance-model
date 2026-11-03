@@ -7,8 +7,8 @@ no marker: its named graphs are version IRIs, so the check reads its graph names
 compares them with the newest release files, and the technical graph's two named graphs, which stay out of the release's
 proof, with the graph files the demo would load. Each store also holds the technical graph's own marker, a digest of
 those graph files, which the demo's tech_graph load writes (and tech_graph sync, for the Delta copy); the check reports
-it on a tech:<store> line beside the ontology's, so a missing or stale technical graph shows when the ontology is
-current. sync reloads what is behind with the ontology-to-lpg driver, takes the driver's result into this folder,
+it on a tech:<store> line beside the ontology's, with a fingerprint of the content the store holds compared with the
+files', so a missing, stale or edited technical graph shows when the ontology is current. sync reloads what is behind with the ontology-to-lpg driver, takes the driver's result into this folder,
 loads the pricing demo's technical graph again where a reload wiped it or its marker is not current, copies it to
 Delta with tech_graph sync when the Delta copy is reloaded or behind, and marks the stores it reloaded.
 
@@ -147,6 +147,20 @@ def tech_graph_counts():
     return {iri: len(Graph().parse(os.path.join(folder, name), format="turtle")) for name, iri in TECH_GRAPHS.items()}
 
 
+def demo_graph():
+    """The demo's tech_graph module, whose fingerprints of the technical graph's content this check shares, so the
+    files and every store are reduced the same way (it needs only the standard library and rdflib to import)."""
+    if DEMO not in sys.path:
+        sys.path.insert(0, DEMO)
+    import pricing_demo.tech_graph as tg
+    return tg
+
+
+def tech_content(folder=None):
+    """{"neo4j", "jena", "delta"}: the content fingerprint a store holds when it equals the graph files."""
+    return demo_graph().files_fingerprints(folder or tech_folder())
+
+
 def tech_digest(folder=None):
     """The digest a current store's technical-graph marker holds: tech_graph.graph_digest of the files load reads."""
     h = hashlib.sha256()
@@ -204,11 +218,13 @@ def drift(markers, live, want, stores=STORES):
     return rows
 
 
-def tech_drift(markers, live, digest, stores=STORES):
-    """Each store's technical-graph status from its marker (read_tech_markers) and the digest of the files the demo
-    loads: current, behind (it holds other graph files), changed (a Neo4j store's Tech node count moved since load
-    marked it), unmarked (no marker: a reload wiped it, or the graph was never loaded) or unreachable. The Delta copy
-    is the databricks store's: tech_graph sync marks it with the digest of the Neo4j store it copied."""
+def tech_drift(markers, live, digest, stores=STORES, content=None):
+    """Each store's technical-graph status from its marker (read_tech_markers, which adds the store's live content
+    fingerprint as "content") and the files the demo loads, their digest and their content fingerprints (tech_content):
+    current only when the marker names those files and the content equals them; behind (it holds other graph files),
+    changed (a Neo4j store's Tech node count moved, or the content differs while the marker matches: a hand edit, say),
+    unmarked (no marker: a reload wiped it, or the graph was never loaded) or unreachable. The Delta copy is the
+    databricks store's: tech_graph sync marks it with the digest of the Neo4j store it copied."""
     rows = []
     for store in stores:
         m = markers.get(store)
@@ -222,9 +238,16 @@ def tech_drift(markers, live, digest, stores=STORES):
                                           f"not {digest[:12]})"))
         elif store in NEO4J_STORES and isinstance(live.get(store), list) and live[store][2:] != [m.get("nodes")]:
             rows.append((store, "changed", f"marked with {m.get('nodes')} Tech nodes, now holds {live[store][2:]}"))
+        elif content is not None and m.get("content") != content[tech_kind(store)]:
+            why = m.get("content_error") or "its technical graph's content differs from the graph files although its marker matches"
+            rows.append((store, "changed", f"{why}; run tech_graph load (tech_graph sync for Delta), or sync"))
         else:
             rows.append((store, "current", f"marked {m.get('marked_at')} with the graph files' digest {digest[:12]}"))
     return rows
+
+
+def tech_kind(store):
+    return "neo4j" if store in NEO4J_STORES else "jena" if store == "jena" else "delta"
 
 
 # ---------- logins and readers ----------
@@ -329,8 +352,21 @@ def read_markers_and_counts(stores=STORES):
     return markers, live
 
 
+def jena_construct(iri):
+    """The triples of one named graph in Jena, as an rdflib Graph."""
+    from rdflib import Graph
+    query = f"CONSTRUCT {{ ?s ?p ?o }} WHERE {{ GRAPH <{iri}> {{ ?s ?p ?o }} }}"
+    request = urllib.request.Request(JENA_QUERY + "?" + urllib.parse.urlencode({"query": query}),
+                                     headers={"Accept": "application/n-triples"})
+    with urllib.request.urlopen(request, timeout=120) as response:
+        return Graph().parse(data=response.read().decode("utf-8"), format="nt")
+
+
 def read_tech_markers(stores=STORES):
-    """Each named store's technical-graph marker: a dict, None when it has none, or "unreachable (<error>)"."""
+    """Each named store's technical-graph marker: a dict, None when it has none, or "unreachable (<error>)". A marker
+    carries the store's live content fingerprint as "content", from the Tech nodes and edges, Jena's two graphs, or
+    the Delta tables the marker names (or "content_error" when they cannot be read)."""
+    tg = demo_graph()
     markers = {}
     for store in stores:
         try:
@@ -338,10 +374,15 @@ def read_tech_markers(stores=STORES):
                 driver, session = neo4j_session(store)
                 with driver, session:
                     rec = session.run(f"MATCH (m:{TECH_MARKER_LABEL}) RETURN properties(m) AS p").single()
-                    markers[store] = rec["p"] if rec else None
+                    markers[store] = dict(rec["p"]) if rec else None
+                    if markers[store]:
+                        markers[store]["content"] = tg.neo4j_fingerprint(list(session.run(tg.NEO4J_NODES)),
+                                                                         list(session.run(tg.NEO4J_EDGES)))
             elif store == "jena":
                 rows = jena_select(f"SELECT ?d WHERE {{ GRAPH <{TECH_MARKER_GRAPH}> {{ <{TECH_MARKER_GRAPH}> <{TECH_MARKER_DIGEST}> ?d }} }}")
                 markers[store] = {"digest": rows[0]["d"]["value"], "marked_at": "by tech_graph load"} if rows else None
+                if markers[store]:
+                    markers[store]["content"] = tg.jena_fingerprint({iri: jena_construct(iri) for iri in TECH_GRAPHS.values()})
             else:
                 conn, schema = databricks()
                 with conn, conn.cursor() as cur:
@@ -351,6 +392,14 @@ def read_tech_markers(stores=STORES):
                     except Exception:  # no marker table yet
                         row = None
                     markers[store] = json.loads(row[0]) if row else None
+                    copy = (markers[store] or {}).get("schema")
+                    if markers[store] and not copy:
+                        markers[store]["content_error"] = "its marker names no Delta tables, so the copy's content cannot be read"
+                    elif markers[store]:
+                        cur.execute(f"SELECT uri, kind, name, properties FROM {copy}.tech_graph_nodes")
+                        nodes = [tuple(r) for r in cur.fetchall()]
+                        cur.execute(f"SELECT source, type, target, target_in_ontology FROM {copy}.tech_graph_edges")
+                        markers[store]["content"] = tg.delta_fingerprint(nodes, [tuple(r) for r in cur.fetchall()])
         except Exception as err:  # as read_markers_and_counts: a store that can't be read says so, with the reason
             markers[store] = f"unreachable ({type(err).__name__})"
     return markers
@@ -481,7 +530,8 @@ def sync(cloud, dry_run, ref, skills):
     markers, live = read_markers_and_counts()
     rows = drift(markers, live, expected_for(ref, STORES))
     behind = [s for s, status, _ in rows if status != "current"]
-    tech_behind = [s for s, status, _ in tech_drift(read_tech_markers(), live, tech_digest()) if status != "current"]
+    tech_behind = [s for s, status, _ in tech_drift(read_tech_markers(), live, tech_digest(), STORES, tech_content())
+                   if status != "current"]
     steps, reloaded = plan(behind, cloud, skills, tech_behind)
     skipped = [s for s in behind if s not in reloaded] + [f"{s} (technical graph)" for s in tech_behind
                                                           if s in ("aura", "databricks") and not cloud]
@@ -519,7 +569,7 @@ def main():
         stores = tuple(args.store) if args.store else STORES
         markers, live = read_markers_and_counts(stores)
         rows = drift(markers, live, expected_for(args.ref, stores), stores)
-        tech = tech_drift(read_tech_markers(stores), live, tech_digest(), stores)
+        tech = tech_drift(read_tech_markers(stores), live, tech_digest(), stores, tech_content())
         for store, status, why in rows:
             print(f"{store:<11} {status:<9} {why}")
         for store, status, why in tech:  # the technical graph, beside the ontology: tech:<store>

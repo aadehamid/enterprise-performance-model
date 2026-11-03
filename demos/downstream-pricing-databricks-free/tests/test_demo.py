@@ -646,6 +646,7 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     neo4j = types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver()))
     with pytest.MonkeyPatch.context() as mp:
         mp.setitem(sys.modules, "neo4j", neo4j)
+        mp.setattr(tech_graph, "source_matches_files", lambda *a, **k: None)  # the fake's rows are not the graph files
         assert tech_graph.sync("driver") == (1, 1)
     # The Delta copy's marker sits in the projection's epm_store_markers, beside epm_triples: deleted first, written last.
     markers = [st for st in cur.statements if "epm_store_markers" in st]
@@ -2673,3 +2674,46 @@ def test_sync_refuses_a_source_with_no_marker_and_copies_nothing(monkeypatch):
     with pytest.raises(SystemExit, match="no technical-graph marker"):
         tech_graph.sync("driver")
     assert cur.statements == []
+
+
+def _shipped_neo4j_rows():
+    """The Tech nodes and edges a store holds after loading graph/*.ttl, as NEO4J_NODES and NEO4J_EDGES return them."""
+    nodes, edges = tech_graph.graph_rows(tech_graph.read_graph(tech_graph.GRAPH))
+    return [{"labels": n["labels"], "p": dict(n["props"])} for n in nodes], edges
+
+
+def test_the_files_and_a_store_that_equals_them_give_one_fingerprint():
+    nodes, edges = _shipped_neo4j_rows()
+    want = tech_graph.files_fingerprints(tech_graph.GRAPH)
+    assert tech_graph.neo4j_fingerprint(nodes, edges) == want["neo4j"]
+    assert tech_graph.delta_fingerprint(*tech_graph.delta_rows(nodes, edges)) == want["delta"]
+    nodes[0]["p"]["name"] = "edited by hand"  # same counts, other content
+    assert tech_graph.neo4j_fingerprint(nodes, edges) != want["neo4j"]
+
+
+def test_sync_refuses_a_source_whose_content_differs_from_the_files_though_its_marker_matches(monkeypatch, tmp_path):
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    monkeypatch.setattr(tech_graph, "REFRESHED", str(tmp_path / "none"))
+    monkeypatch.setattr(tech_graph, "neo4j_login", lambda store: ("bolt://fake", "neo4j", "pw"))
+    nodes, edges = _shipped_neo4j_rows()
+    marker = {"store": "driver", "digest": tech_graph.graph_digest(tech_graph.GRAPH), "nodes": len(nodes)}
+    tech_graph.source_matches_files("driver", marker, nodes, edges)  # the store as loaded passes
+    nodes[0]["p"]["name"] = "edited by hand"
+
+    class Driver:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def execute_query(self, query, **params):
+            if tech_graph.MARKER_LABEL in query:
+                return [{"p": marker}], None, None
+            return (nodes if query == tech_graph.NEO4J_NODES else edges), None, None
+    monkeypatch.setitem(sys.modules, "neo4j", types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver())))
+    with pytest.raises(SystemExit, match="differs from graph although its marker matches"):
+        tech_graph.sync("driver")
+    assert cur.statements == []
+    with pytest.raises(SystemExit, match="other graph files"):
+        tech_graph.source_matches_files("driver", {**marker, "digest": "0" * 64}, *_shipped_neo4j_rows())

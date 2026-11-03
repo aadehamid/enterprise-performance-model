@@ -273,6 +273,103 @@ class Markers(unittest.TestCase):
         self.assertIn("raise SystemExit", inspect.getsource(ss.databricks_checked))
 
 
+class TechGraphContent(unittest.TestCase):
+    """Codex round 1 on #455: a marker that matches says nothing of the content, so a hand edit that kept the counts,
+    or a change to Jena or Delta that left the marker, read as current. Each store's content is now compared too."""
+    folder = os.path.join(ss.DEMO, "graph")
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tg = ss.demo_graph()
+        cls.want = ss.tech_content(cls.folder)
+        cls.digest = ss.tech_digest(cls.folder)
+
+    def rows(self):
+        nodes, edges = self.tg.graph_rows(self.tg.read_graph(self.folder))
+        return [{"labels": n["labels"], "p": dict(n["props"])} for n in nodes], edges
+
+    def judge(self, store, markers, nodes):
+        live = {store: [0, 0, len(nodes)]} if store in ss.NEO4J_STORES else {store: [0]}
+        return ss.tech_drift(markers, live, self.digest, (store,), self.want)[0][1]
+
+    def neo4j(self, nodes, edges):
+        marker = {"digest": self.digest, "nodes": len(nodes)}
+
+        class Result(list):
+            def single(self):
+                return self[0] if self else None
+
+        class Session(contextlib.nullcontext):
+            def run(_, query, **kw):
+                if ss.TECH_MARKER_LABEL in query:
+                    return Result([{"p": marker}])
+                return Result(nodes if query == self.tg.NEO4J_NODES else edges)
+
+        with mock.patch.object(ss, "neo4j_session", lambda store: (contextlib.nullcontext(), Session())):
+            return ss.read_tech_markers(("driver",))
+
+    def test_neo4j_with_its_marker_and_counts_but_edited_content_reads_changed(self):
+        nodes, edges = self.rows()
+        self.assertEqual(self.judge("driver", self.neo4j(nodes, edges), nodes), "current")
+        nodes[0]["p"]["name"] = "edited by hand"
+        self.assertEqual(self.judge("driver", self.neo4j(nodes, edges), nodes), "changed")
+
+    def jena(self, edit):
+        from rdflib import Graph, Literal
+        graphs = {iri: Graph().parse(os.path.join(self.folder, name), format="turtle") for name, iri in ss.TECH_GRAPHS.items()}
+        if edit:
+            g = graphs[ss.TECH_GRAPHS["tech-graph.ttl"]]
+            s, p, o = next(t for t in sorted(g) if isinstance(t[2], Literal))
+            g.remove((s, p, o))
+            g.add((s, p, Literal("edited by hand")))  # same triple count
+        with mock.patch.object(ss, "jena_select", lambda q: [{"d": {"value": self.digest}}]), \
+                mock.patch.object(ss, "jena_construct", lambda iri: graphs[iri]):
+            return ss.read_tech_markers(("jena",))
+
+    def test_jena_with_its_marker_but_edited_content_reads_changed(self):
+        self.assertEqual(self.judge("jena", self.jena(False), []), "current")
+        self.assertEqual(self.judge("jena", self.jena(True), []), "changed")
+
+    def databricks(self, nodes, edges, schema="idp_sbx.tech_graph"):
+        node_rows, edge_rows = self.tg.delta_rows(nodes, edges)
+        marker = {"digest": self.digest, "schema": schema} if schema else {"digest": self.digest}
+
+        class Cursor:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def execute(self, query):
+                self.query = query
+
+            def fetchone(self):
+                return (json.dumps(marker),)
+
+            def fetchall(self):
+                return node_rows if "tech_graph_nodes" in self.query else edge_rows
+
+        class Conn:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def cursor(self):
+                return Cursor()
+        with mock.patch.object(ss, "databricks", lambda: (Conn(), "workspace.epm_ontology")):
+            return ss.read_tech_markers(("databricks",))
+
+    def test_the_delta_copy_with_its_marker_but_edited_content_reads_changed(self):
+        nodes, edges = self.rows()
+        self.assertEqual(self.judge("databricks", self.databricks(nodes, edges), nodes), "current")
+        edges[0] = {**edges[0], "t": "EDITED"}
+        self.assertEqual(self.judge("databricks", self.databricks(nodes, edges), nodes), "changed")
+        self.assertEqual(self.judge("databricks", self.databricks(*self.rows(), schema=None), nodes), "changed")
+
+
 class DatabricksChecked(unittest.TestCase):
     """#455: mark read the triple table's graph names and recorded its row count without comparing it, so a load that
     stopped part way, with every graph present, could be marked current."""
