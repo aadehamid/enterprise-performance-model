@@ -42,6 +42,7 @@ import argparse
 import csv
 import datetime as dt
 import glob
+import hashlib
 import itertools
 import json
 import os
@@ -62,6 +63,14 @@ GRAPH_FILES = ("tech-graph.ttl", "decision-trail.ttl")
 KNOWN_LINEAGE = os.path.join(GRAPH, "lineage-known.json")
 JENA_GRAPHS = {"tech-graph.ttl": "urn:pricing-demo:graph:tech-graph", "decision-trail.ttl": "urn:pricing-demo:graph:decision-trail"}
 JENA_QUERY = "http://127.0.0.1:13031/ds/query"  # projection/skill-run/epm-run.json's "jena"
+# The technical graph's marker: which graph files a store holds, as a digest of them (graph_digest). load writes it in
+# each Neo4j store as a node labelled TechGraphMarker (never Tech or Resource) and in Jena as a named graph of its own;
+# sync writes it, with the digest of the Neo4j store it copied, as the row MARKER_ROW of the projection's
+# epm_store_markers table, beside epm_triples. projection/sync_stores.py reads all of them.
+MARKER_LABEL = "TechGraphMarker"
+MARKER_GRAPH = "urn:pricing-demo:graph:tech-marker"
+MARKER_DIGEST = "urn:pricing-demo:tech-marker:digest"
+MARKER_ROW = "tech_graph"
 LIVE = os.path.join(OUT, "tech", "live.json")
 LINEAGE = os.path.join(OUT, "tech", "lineage.json")
 PROPOSALS = os.path.join(OUT, "tech", "proposals.json")
@@ -523,18 +532,44 @@ def databricks_only(g, objects, observed):
     return added
 
 
+def unlinked_tags(tags, g, identifiers=None):
+    """Each identifier a metric view's tag lists that gives the view no implements edge in g, as a line saying why:
+    no row in kpi's measure-identifiers.csv (a stale or new tag; collect drafts a proposal for it) or no edge to that
+    measure. links.rq joins the tag to the table and drops what does not join, so build checks the result."""
+    from rdflib import URIRef
+    if identifiers is None:
+        identifiers = {r["identifier"]: r["measure_id"] for r in csv.DictReader(open(MEASURE_IDENTIFIERS))}
+    problems = []
+    for t in tags:
+        view = URIRef(TECH + "object/" + t["view"])
+        for i in str(t["identifiers"]).split():
+            if i not in identifiers:
+                problems.append(f"{t['view']}: its tag lists {i}, which no row of kpi/measure-identifiers.csv holds")
+            elif (view, URIRef(TG + "implements"), URIRef(ONTOLOGY + "modules/kpi/measure/" + identifiers[i])) not in g:
+                problems.append(f"{t['view']}: its tag lists {i}, but the graph has no implements edge to {identifiers[i]}")
+    return problems
+
+
 def build(to_repo=False):
+    """Builds both graphs, then writes them; a tag identifier that makes no implements edge stops it before any write."""
     from rdflib import RDF, Namespace
     graph = construct(GRAPH_QUERIES)
     graph += graph.query(open(os.path.join(SPARQL, "wiring.rq")).read()).graph
     observed = json.load(open(LINEAGE)).get("observed", []) if os.path.exists(LINEAGE) else []
-    databricks_only(graph, json.load(open(LIVE))["objects"], observed)
+    live = json.load(open(LIVE))
+    databricks_only(graph, live["objects"], observed)
     trail = construct(TRAIL_QUERIES)
     typed = set(graph.subjects(RDF.type, None)) | set(trail.subjects(RDF.type, None))
+    graphs = [typed_only(g, typed) for g in (graph, trail)]
+    unlinked = unlinked_tags(live.get("tags", []), graphs[0])
+    if unlinked:
+        for line in unlinked:
+            print(f"FAIL {line}")
+        raise SystemExit(f"{len(unlinked)} tag identifier(s) make no implements edge; nothing was written. Add the measure's "
+                         "row to kpi/measure-identifiers.csv (out/tech/proposals.json drafts it) or correct the view's tag")
     folder = GRAPH if to_repo else REFRESHED
     os.makedirs(folder, exist_ok=True)
-    for name, g in zip(GRAPH_FILES, (graph, trail)):
-        g = typed_only(g, typed)
+    for name, g in zip(GRAPH_FILES, graphs):
         for prefix, ns in (("tv", VOCAB), ("tg", TG), ("layer", LAYER), ("result", RESULT), ("rdfs", RDFS), ("tech", TECH),
                            ("prov", PROV), ("measure", ONTOLOGY + "modules/kpi/measure/")):
             g.bind(prefix, Namespace(ns))
@@ -670,30 +705,110 @@ def ontology_counts(session):
     return nodes, edges
 
 
-def load_store(store, nodes, edges):
+def load_store(store, nodes, edges, digest):
+    """Replaces the store's Tech nodes and its technical-graph marker in one transaction, which commits only when every
+    edge found its target and the ontology's counts did not move: a failure leaves the previous graph and marker."""
     from neo4j import GraphDatabase
     uri, user, password = neo4j_login(store)
     with GraphDatabase.driver(uri, auth=(user, password)) as driver, driver.session() as session:
-        before = ontology_counts(session)
-        session.run("MATCH (n:Tech) DETACH DELETE n").consume()
-        session.run("UNWIND $rows AS row CREATE (n:$(row.labels)) SET n = row.props", rows=nodes).consume()
-        made = {"tech": 0, "ontology": 0}
-        for kind, target in (("tech", "Tech"), ("ontology", "Resource")):
-            rows = [e for e in edges if e["ontology"] == (kind == "ontology")]
-            made[kind] = session.run(f"UNWIND $rows AS row MATCH (a:Tech {{uri: row.s}}), (b:{target} {{uri: row.o}}) "
-                                     "CREATE (a)-[:$(row.t)]->(b) RETURN count(*) AS n", rows=rows).single()["n"]
-            if made[kind] != len(rows):
-                found = set(session.run(f"UNWIND $uris AS u MATCH (b:{target} {{uri: u}}) RETURN b.uri AS u",
-                                        uris=sorted({e["o"] for e in rows})).value())
-                missing = sorted({e["o"] for e in rows} - found)
-                raise SystemExit(f"{store}: {len(rows) - made[kind]} {kind} edges found no target, e.g. {missing[:5]}")
-        after = ontology_counts(session)
-    if before != after:
-        raise SystemExit(f"{store}: the ontology's counts changed from {before} to {after}")
+        tx = session.begin_transaction()
+        try:
+            made, after = replace_tech(tx, store, nodes, edges, digest)
+            tx.commit()
+        finally:
+            if not tx.closed():
+                tx.rollback()
     print(f"{store}: {len(nodes)} Tech nodes, {made['tech']} edges between them, {made['ontology']} to ontology nodes; "
-          f"ontology unchanged at {after[0]} nodes and {after[1]} relationships")
+          f"ontology unchanged at {after[0]} nodes and {after[1]} relationships; marked {digest[:12]}")
     return {"store": store, "nodes": len(nodes), "tech_edges": made["tech"], "ontology_edges": made["ontology"],
-            "resource_nodes": after[0], "resource_relationships": after[1]}
+            "resource_nodes": after[0], "resource_relationships": after[1], "digest": digest}
+
+
+def replace_tech(tx, store, nodes, edges, digest):
+    """load_store's writes, inside its transaction: raises SystemExit, before anything commits, on an edge with no
+    target or a move in the ontology's counts."""
+    before = ontology_counts(tx)
+    tx.run(f"MATCH (m:{MARKER_LABEL}) DETACH DELETE m").consume()
+    tx.run("MATCH (n:Tech) DETACH DELETE n").consume()
+    tx.run("UNWIND $rows AS row CREATE (n:$(row.labels)) SET n = row.props", rows=nodes).consume()
+    made = {"tech": 0, "ontology": 0}
+    for kind, target in (("tech", "Tech"), ("ontology", "Resource")):
+        rows = [e for e in edges if e["ontology"] == (kind == "ontology")]
+        made[kind] = tx.run(f"UNWIND $rows AS row MATCH (a:Tech {{uri: row.s}}), (b:{target} {{uri: row.o}}) "
+                            "CREATE (a)-[:$(row.t)]->(b) RETURN count(*) AS n", rows=rows).single()["n"]
+        if made[kind] != len(rows):
+            found = set(tx.run(f"UNWIND $uris AS u MATCH (b:{target} {{uri: u}}) RETURN b.uri AS u",
+                               uris=sorted({e["o"] for e in rows})).value())
+            missing = sorted({e["o"] for e in rows} - found)
+            raise SystemExit(f"{store}: {len(rows) - made[kind]} {kind} edges found no target, e.g. {missing[:5]}; "
+                             "nothing was changed")
+    after = ontology_counts(tx)
+    if before != after:
+        raise SystemExit(f"{store}: the ontology's counts changed from {before} to {after}; nothing was changed")
+    tx.run(f"CREATE (m:{MARKER_LABEL}) SET m = $p", p={"store": store, "digest": digest, "nodes": len(nodes),
+                                                        "marked_at": now()}).consume()
+    return made, after
+
+
+def graph_digest(folder):
+    """The SHA-256 of the graph files in folder, each file's name and bytes in GRAPH_FILES order: what a store's
+    technical-graph marker records (projection/sync_stores.py computes the same)."""
+    h = hashlib.sha256()
+    for name in GRAPH_FILES:
+        with open(os.path.join(folder, name), "rb") as f:
+            h.update(name.encode() + b"\0" + f.read() + b"\0")
+    return h.hexdigest()
+
+
+# ---------- content fingerprints ----------
+# What each store holds of the technical graph, reduced to one SHA-256 that the graph files give too, so a store whose
+# content no longer equals the files reads as changed even when its marker and counts match. Nothing is left out: the
+# files are what was loaded, volatile values included. projection/sync_stores.py reads the stores with these.
+NEO4J_NODES = "MATCH (n:Tech) RETURN labels(n) AS labels, properties(n) AS p"
+NEO4J_EDGES = "MATCH (a:Tech)-[r]->(b) RETURN a.uri AS s, type(r) AS t, b.uri AS o, b:Resource AS ontology"
+
+
+def _sha(lines):
+    return hashlib.sha256("\n".join(sorted(lines)).encode()).hexdigest()
+
+
+def neo4j_fingerprint(nodes, edges):
+    """Nodes as {"labels", "p"} (properties) and edges as {"s", "t", "o", "ontology"}, the rows NEO4J_NODES and
+    NEO4J_EDGES return; graph_rows' nodes ({"labels", "props"}) are taken too."""
+    return _sha([json.dumps({"labels": sorted(n["labels"]), "p": n.get("p", n.get("props"))}, sort_keys=True, default=str)
+                 for n in nodes] + [json.dumps([e["s"], e["t"], e["o"], bool(e["ontology"])]) for e in edges])
+
+
+def delta_rows(nodes, edges):
+    """The rows sync writes to tech_graph_nodes and tech_graph_edges, from Neo4j's rows (or graph_rows')."""
+    node_rows = []
+    for n in nodes:
+        p = n.get("p", n.get("props"))
+        node_rows.append((p["uri"], next((l for l in sorted(n["labels"]) if l != "Tech"), "Tech"), p.get("name"),
+                          json.dumps({k: v for k, v in p.items() if k not in ("uri", "name")}, sort_keys=True, default=str)))
+    return node_rows, [(e["s"], e["t"], e["o"], bool(e["ontology"])) for e in edges]
+
+
+def delta_fingerprint(node_rows, edge_rows):
+    """tech_graph_nodes rows (uri, kind, name, properties as JSON text) and tech_graph_edges rows (source, type,
+    target, target_in_ontology), without synced_at."""
+    return _sha([json.dumps([u, k, n, json.loads(p)], sort_keys=True) for u, k, n, p in node_rows]
+                + [json.dumps(["edge", s, t, o, bool(b)]) for s, t, o, b in edge_rows])
+
+
+def jena_fingerprint(graphs):
+    """{graph IRI: rdflib Graph} for the two named graphs, as Jena holds them or as the files give them."""
+    return _sha([f"<{iri}> " + " ".join(term.n3() for term in triple) for iri, g in graphs.items() for triple in g])
+
+
+def files_fingerprints(folder=None):
+    """{"neo4j", "jena", "delta"}: what a store holds when it equals the graph files in folder."""
+    from rdflib import Graph
+    folder = folder or graph_folder()
+    nodes, edges = graph_rows(read_graph(folder))
+    return {"neo4j": neo4j_fingerprint(nodes, edges), "delta": delta_fingerprint(*delta_rows(nodes, edges)),
+            "jena": jena_fingerprint({iri: Graph().parse(os.path.join(folder, name), format="turtle")
+                                      for name, iri in JENA_GRAPHS.items()})}
 
 
 def graph_folder():
@@ -741,33 +856,45 @@ def jena_found_query(targets, releases):
             "GRAPH ?g { ?o ?x ?y } }")
 
 
-def load_jena(folder):
-    """Each graph file as its own named graph in Jena, replaced whole, once every ontology target is found in a current
-    release's graph; a target that is not fails, as it does in Neo4j, and leaves Jena as it was. The release's proof ran
-    before these graphs arrive and never covers them."""
+def jena_update(folder, digest):
+    """One SPARQL Update request that replaces each graph file's named graph and the marker graph. SPARQL 1.1 Update
+    (W3C Recommendation, 21 March 2013, section 2.2) says a service should treat each request atomically, with no
+    effect or a complete one, so a failure leaves Jena's previous graphs and marker."""
+    from rdflib import Graph
+    ops = []
+    for name, iri in JENA_GRAPHS.items():
+        body = Graph().parse(os.path.join(folder, name), format="turtle").serialize(format="nt")
+        ops.append(f"DROP SILENT GRAPH <{iri}> ;\nINSERT DATA {{ GRAPH <{iri}> {{\n{body}}} }}")
+    ops.append(f'DROP SILENT GRAPH <{MARKER_GRAPH}> ;\nINSERT DATA {{ GRAPH <{MARKER_GRAPH}> {{ <{MARKER_GRAPH}> <{MARKER_DIGEST}> "{digest}" }} }}')
+    return " ;\n".join(ops)
+
+
+def load_jena(folder, digest):
+    """Each graph file as its own named graph in Jena, replaced whole with the marker in one update request, once every
+    ontology target is found in a current release's graph; a target that is not fails, as it does in Neo4j, and leaves
+    Jena as it was. The release's proof ran before these graphs arrive and never covers them."""
     targets = ontology_targets(read_graph(folder))
     found = {r["o"] for r in sparql_select(jena_found_query(targets, newest_releases()))}
     missing = sorted(set(targets) - found)
     if missing:
         raise SystemExit(f"jena: {len(missing)} edge target(s) in no current release graph, e.g. {missing[:5]}; nothing was changed")
-    data = JENA_QUERY.rsplit("/", 1)[0] + "/data"
-    counts = {}
-    for name, iri in JENA_GRAPHS.items():
-        with open(os.path.join(folder, name), "rb") as f:
-            body = f.read()
-        request = urllib.request.Request(data + "?" + urllib.parse.urlencode({"graph": iri}), data=body, method="PUT",
-                                         headers={"Content-Type": "text/turtle"})
-        urllib.request.urlopen(request, timeout=120).close()
-        counts[name] = int(sparql_select(f"SELECT (COUNT(*) AS ?n) WHERE {{ GRAPH <{iri}> {{ ?s ?p ?o }} }}")[0]["n"])
-    print(f"jena: {', '.join(f'{iri} {counts[n]} triples' for n, iri in JENA_GRAPHS.items())}; every ontology target found")
-    return {"store": "jena", "graphs": counts}
+    request = urllib.request.Request(JENA_QUERY.rsplit("/", 1)[0] + "/update", data=jena_update(folder, digest).encode("utf-8"),
+                                     method="POST", headers={"Content-Type": "application/sparql-update"})
+    urllib.request.urlopen(request, timeout=300).close()
+    counts = {name: int(sparql_select(f"SELECT (COUNT(*) AS ?n) WHERE {{ GRAPH <{iri}> {{ ?s ?p ?o }} }}")[0]["n"])
+              for name, iri in JENA_GRAPHS.items()}
+    print(f"jena: {', '.join(f'{iri} {counts[n]} triples' for n, iri in JENA_GRAPHS.items())}; every ontology target found; "
+          f"marked {digest[:12]}")
+    return {"store": "jena", "graphs": counts, "digest": digest}
 
 
 def load(stores=(*STORES, "jena")):
+    """Loads the technical graph into each store named, and with it the store's marker: the digest of the files loaded."""
     folder = graph_folder()
+    digest = graph_digest(folder)
     print(f"loading from {os.path.relpath(folder, ROOT)}")
     nodes, edges = graph_rows(read_graph(folder))
-    return [load_jena(folder) if s == "jena" else load_store(s, nodes, edges) for s in stores]
+    return [load_jena(folder, digest) if s == "jena" else load_store(s, nodes, edges, digest) for s in stores]
 
 
 def walk(store="driver", gold="gold_commercial_core.mips_mpr_executive_summary_fact"):
@@ -783,23 +910,42 @@ def walk(store="driver", gold="gold_commercial_core.mips_mpr_executive_summary_f
 
 # ---------- Delta ----------
 
+def source_matches_files(store, marker, nodes, edges, folder=None):
+    """Refuses a source whose marker names other graph files, or whose Tech nodes and edges no longer equal the files
+    (a hand edit that kept the counts, say), so the Delta copy never carries a digest its content does not match."""
+    folder = folder or graph_folder()
+    if marker.get("digest") != graph_digest(folder):
+        raise SystemExit(f"{store} was loaded from other graph files than {os.path.relpath(folder, ROOT)}: "
+                         f"run tech_graph load --store {store} first; nothing was copied")
+    if neo4j_fingerprint(nodes, edges) != files_fingerprints(folder)["neo4j"]:
+        raise SystemExit(f"{store}'s technical graph differs from {os.path.relpath(folder, ROOT)} although its marker matches: "
+                         f"run tech_graph load --store {store} again; nothing was copied")
+
+
 def sync(store="driver"):
-    """Copies the Tech nodes and their edges from Neo4j, the source, into the two Delta tables sql/07 creates."""
+    """Copies the Tech nodes and their edges from Neo4j, the source, into the two Delta tables sql/07 creates, then
+    records the source's marker as the Delta copy's (MARKER_ROW), with the schema it wrote, where sync_stores.py reads
+    the copy's content. The row is deleted first, so a copy that fails part way reads as unmarked. A source with no
+    marker, or whose content differs from the graph files, is refused (source_matches_files)."""
     from neo4j import GraphDatabase
     from .databricks import connect, current_catalog, run
     uri, user, password = neo4j_login(store)
     with GraphDatabase.driver(uri, auth=(user, password)) as driver:
-        nodes, _, _ = driver.execute_query("MATCH (n:Tech) RETURN n.uri AS uri, labels(n) AS labels, properties(n) AS p ORDER BY uri")
-        edges, _, _ = driver.execute_query("MATCH (a:Tech)-[r]->(b) RETURN a.uri AS s, type(r) AS t, b.uri AS o, "
-                                           "b:Resource AS ontology ORDER BY s, t, o")
+        marker, _, _ = driver.execute_query(f"MATCH (m:{MARKER_LABEL}) RETURN properties(m) AS p")
+        nodes, _, _ = driver.execute_query(NEO4J_NODES)
+        edges, _, _ = driver.execute_query(NEO4J_EDGES)
+    if not marker or not marker[0]["p"].get("digest"):
+        raise SystemExit(f"{store} holds no technical-graph marker: run tech_graph load --store {store} first; nothing was copied")
+    source_matches_files(store, marker[0]["p"], nodes, edges)
     synced = now()
-    node_rows = [(n["uri"], next((l for l in sorted(n["labels"]) if l != "Tech"), "Tech"), n["p"].get("name"),
-                  json.dumps({k: v for k, v in n["p"].items() if k not in ("uri", "name")}, sort_keys=True, default=str))
-                 for n in nodes]
-    edge_rows = [(r["s"], r["t"], r["o"], bool(r["ontology"])) for r in edges]
+    node_rows, edge_rows = delta_rows(nodes, edges)
     conn, e = connect()
+    markers = e["EPM_TRIPLES"].rsplit(".", 1)[0] + ".epm_store_markers"  # the projection's table (sync_stores.py)
     with conn, conn.cursor() as cur:
         cat = current_catalog(cur, e)
+        cur.execute(f"CREATE TABLE IF NOT EXISTS {markers} (store STRING, marker STRING) "
+                    "COMMENT 'Which release set each ontology store was loaded from (sync_stores.py)'")
+        cur.execute(f"DELETE FROM {markers} WHERE store = '{MARKER_ROW}'")
         for table, rows in (("tech_graph_nodes", node_rows), ("tech_graph_edges", edge_rows)):
             run(cur, f"DELETE FROM {cat}.tech_graph.{table}")
             for i in range(0, len(rows), 100):
@@ -810,13 +956,18 @@ def sync(store="driver"):
             if n != len(rows):
                 raise SystemExit(f"{cat}.tech_graph.{table} holds {n} rows; Neo4j has {len(rows)}")
             print(f"{cat}.tech_graph.{table}: {n} rows from Neo4j ({store})")
+        row = {"store": MARKER_ROW, "digest": marker[0]["p"]["digest"], "copied_from": store, "nodes": len(node_rows),
+               "edges": len(edge_rows), "marked_at": synced, "schema": f"{cat}.tech_graph"}
+        cur.execute(f"INSERT INTO {markers} VALUES ('{MARKER_ROW}', ?)", [json.dumps(row)])
+    print(f"{markers}: the Delta copy marked {row['digest'][:12]}, from {store}")
     return len(node_rows), len(edge_rows)
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=("collect", "build", "compare", "lineage", "load", "sync", "walk"))
-    ap.add_argument("--store", action="append", choices=(*STORES, "jena"), help="load: these stores only (default: all)")
+    ap.add_argument("--store", action="append", choices=(*STORES, "jena"),
+                    help="load: these stores only (default: all); sync: the Neo4j store to copy from (default: driver)")
     ap.add_argument("--lineage-wait", type=int, default=0, help="collect: seconds to wait for Unity Catalog's lineage to arrive")
     ap.add_argument("--to-repo", action="store_true", help="build: write graph/*.ttl, what the release ships, not out/tech/graph/")
     ap.add_argument("--manifest", default=MANIFEST, help="collect: the replica manifest the Databricks replica came from")
@@ -827,5 +978,9 @@ if __name__ == "__main__":
         build(args.to_repo)
     elif args.step == "load":
         load(tuple(args.store or (*STORES, "jena")))
+    elif args.step == "sync":
+        if args.store and (len(args.store) > 1 or args.store[0] == "jena"):
+            raise SystemExit("sync: name one Neo4j store to copy from")
+        sync(args.store[0] if args.store else "driver")
     else:
-        {"compare": compare, "lineage": lineage, "sync": sync, "walk": walk}[args.step]()
+        {"compare": compare, "lineage": lineage, "walk": walk}[args.step]()

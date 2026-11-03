@@ -57,7 +57,7 @@ These also wait on the business, and their changelogs hold the detail:
 
 | Item | What is needed | Record |
 |---|---|---|
-| Keeping the stores in step with Git | Automatic checks, a drift check for the technical graph, and content comparison. The plan is in the guide and the walkthrough | #455 |
+| Keeping the stores in step with Git | A check of the technical graph against the demo's files in CI, and content comparison. The drift check is a written step of each release, with no schedule (EPM-DEC-001-0112, amendment of 2026-11-02 (later), item 3). The plan is in the guide and the walkthrough | #455 |
 | A small fix in the next `market-data` release | Reword its one shape message that holds an apostrophe | EPM-DEC-001-0106 |
 | The process playbook's log | Backfill the entries of batches 1 to 20 | `business-process-architecture-playbook.md`, §9 |
 

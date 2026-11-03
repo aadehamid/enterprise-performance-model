@@ -130,6 +130,7 @@ class Drift(unittest.TestCase):
         out = io.StringIO()
         with mock.patch.object(sys, "argv", ["sync_stores.py", "check"] + argv), \
                 mock.patch.object(ss, "read_markers_and_counts", fake_read), \
+                mock.patch.object(ss, "read_tech_markers", lambda stores=ss.STORES: read.append(("tech", *stores)) or {}), \
                 mock.patch.object(ss, "expected_for", lambda ref, stores: self.want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()
@@ -138,11 +139,11 @@ class Drift(unittest.TestCase):
 
     def test_main_passes_the_named_stores_to_the_reader_and_the_report(self):
         read, reported = self.run_check(["--store", "driver", "--store", "aura"])
-        self.assertEqual(read, [("driver", "aura")])
-        self.assertEqual(reported, ["driver", "aura"])
+        self.assertEqual(read, [("driver", "aura"), ("tech", "driver", "aura")])
+        self.assertEqual(reported, ["driver", "aura", "tech:driver", "tech:aura"])
         read, reported = self.run_check([])
-        self.assertEqual(read, [tuple(ss.STORES)])
-        self.assertEqual(reported, list(ss.STORES))
+        self.assertEqual(read, [tuple(ss.STORES), ("tech", *ss.STORES)])
+        self.assertEqual(reported, list(ss.STORES) + [f"tech:{s}" for s in ss.STORES])
 
 
 class Plan(unittest.TestCase):
@@ -174,6 +175,27 @@ class Plan(unittest.TestCase):
 
     def test_nothing_behind_runs_nothing(self):
         self.assertEqual(self.cmds([], cloud=True), ([], []))
+
+    def tech_cmds(self, behind, tech_behind, cloud):
+        steps, reloaded = ss.plan(behind, cloud, "~/skills", tech_behind)
+        return [" ".join(c) for _, c in steps], reloaded
+
+    def test_a_stale_technical_graph_alone_reloads_only_the_technical_graph(self):
+        cmds, reloaded = self.tech_cmds([], ["driver", "jena"], cloud=False)
+        self.assertEqual(reloaded, [])
+        self.assertEqual(len(cmds), 1)
+        self.assertTrue(cmds[0].endswith("tech_graph load --store driver --store jena"))
+
+    def test_the_delta_copy_follows_with_sync_and_the_cloud_stores_need_cloud(self):
+        cmds, _ = self.tech_cmds([], ["aura", "databricks"], cloud=False)
+        self.assertEqual(cmds, [])
+        cmds, _ = self.tech_cmds([], ["aura", "databricks"], cloud=True)
+        self.assertTrue(cmds[0].endswith("tech_graph load --store aura"))
+        self.assertTrue(cmds[1].endswith("tech_graph sync"))
+        self.assertEqual(len(cmds), 2)
+        cmds, _ = self.tech_cmds(["driver"], ["databricks"], cloud=True)
+        self.assertTrue(cmds[2].endswith("tech_graph load --store driver --store jena"))
+        self.assertTrue(cmds[3].endswith("tech_graph sync"))
 
 
 class StoresAreOneNeo4jPlusJena(unittest.TestCase):
@@ -251,6 +273,189 @@ class Markers(unittest.TestCase):
         self.assertIn("raise SystemExit", inspect.getsource(ss.databricks_checked))
 
 
+class TechGraphContent(unittest.TestCase):
+    """Codex round 1 on #455: a marker that matches says nothing of the content, so a hand edit that kept the counts,
+    or a change to Jena or Delta that left the marker, read as current. Each store's content is now compared too."""
+    folder = os.path.join(ss.DEMO, "graph")
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tg = ss.demo_graph()
+        cls.want = ss.tech_content(cls.folder)
+        cls.digest = ss.tech_digest(cls.folder)
+
+    def rows(self):
+        nodes, edges = self.tg.graph_rows(self.tg.read_graph(self.folder))
+        return [{"labels": n["labels"], "p": dict(n["props"])} for n in nodes], edges
+
+    def judge(self, store, markers, nodes):
+        live = {store: [0, 0, len(nodes)]} if store in ss.NEO4J_STORES else {store: [0]}
+        return ss.tech_drift(markers, live, self.digest, (store,), self.want)[0][1]
+
+    def neo4j(self, nodes, edges):
+        marker = {"digest": self.digest, "nodes": len(nodes)}
+
+        class Result(list):
+            def single(self):
+                return self[0] if self else None
+
+        class Session(contextlib.nullcontext):
+            def run(_, query, **kw):
+                if ss.TECH_MARKER_LABEL in query:
+                    return Result([{"p": marker}])
+                return Result(nodes if query == self.tg.NEO4J_NODES else edges)
+
+        with mock.patch.object(ss, "neo4j_session", lambda store: (contextlib.nullcontext(), Session())):
+            return ss.read_tech_markers(("driver",))
+
+    def test_neo4j_with_its_marker_and_counts_but_edited_content_reads_changed(self):
+        nodes, edges = self.rows()
+        self.assertEqual(self.judge("driver", self.neo4j(nodes, edges), nodes), "current")
+        nodes[0]["p"]["name"] = "edited by hand"
+        self.assertEqual(self.judge("driver", self.neo4j(nodes, edges), nodes), "changed")
+
+    def jena(self, edit):
+        from rdflib import Graph, Literal
+        graphs = {iri: Graph().parse(os.path.join(self.folder, name), format="turtle") for name, iri in ss.TECH_GRAPHS.items()}
+        if edit:
+            g = graphs[ss.TECH_GRAPHS["tech-graph.ttl"]]
+            s, p, o = next(t for t in sorted(g) if isinstance(t[2], Literal))
+            g.remove((s, p, o))
+            g.add((s, p, Literal("edited by hand")))  # same triple count
+        with mock.patch.object(ss, "jena_select", lambda q: [{"d": {"value": self.digest}}]), \
+                mock.patch.object(ss, "jena_construct", lambda iri: graphs[iri]):
+            return ss.read_tech_markers(("jena",))
+
+    def test_jena_with_its_marker_but_edited_content_reads_changed(self):
+        self.assertEqual(self.judge("jena", self.jena(False), []), "current")
+        self.assertEqual(self.judge("jena", self.jena(True), []), "changed")
+
+    def databricks(self, nodes, edges, schema="idp_sbx.tech_graph"):
+        node_rows, edge_rows = self.tg.delta_rows(nodes, edges)
+        marker = {"digest": self.digest, "schema": schema} if schema else {"digest": self.digest}
+
+        class Cursor:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def execute(self, query):
+                self.query = query
+
+            def fetchone(self):
+                return (json.dumps(marker),)
+
+            def fetchall(self):
+                return node_rows if "tech_graph_nodes" in self.query else edge_rows
+
+        class Conn:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def cursor(self):
+                return Cursor()
+        with mock.patch.object(ss, "databricks", lambda: (Conn(), "workspace.epm_ontology")):
+            return ss.read_tech_markers(("databricks",))
+
+    def test_the_delta_copy_with_its_marker_but_edited_content_reads_changed(self):
+        nodes, edges = self.rows()
+        self.assertEqual(self.judge("databricks", self.databricks(nodes, edges), nodes), "current")
+        edges[0] = {**edges[0], "t": "EDITED"}
+        self.assertEqual(self.judge("databricks", self.databricks(nodes, edges), nodes), "changed")
+        self.assertEqual(self.judge("databricks", self.databricks(*self.rows(), schema=None), nodes), "changed")
+
+
+class DatabricksChecked(unittest.TestCase):
+    """#455: mark read the triple table's graph names and recorded its row count without comparing it, so a load that
+    stopped part way, with every graph present, could be marked current."""
+    want = {"newest": ["a"], "jena_graphs": {"a": 3, "a/shapes": 2, "a/catalog": 1}}
+
+    def cursor(self, held):
+        class Cursor:
+            def execute(self, query):
+                assert "GROUP BY graph" in query, query
+                self.query = query
+
+            def fetchall(self):
+                return sorted(held.items())
+        return Cursor()
+
+    def test_a_table_with_every_graph_at_its_release_count_passes(self):
+        self.assertEqual(ss.databricks_checked(self.cursor({"a": 3, "a/shapes": 2, "a/catalog": 1}), "c.s", self.want), [6])
+
+    def test_a_partial_load_with_every_graph_present_is_refused(self):
+        with self.assertRaisesRegex(SystemExit, "another row count"):
+            ss.databricks_checked(self.cursor({"a": 2, "a/shapes": 2, "a/catalog": 1}), "c.s", self.want)
+
+    def test_a_missing_or_stray_graph_is_refused(self):
+        with self.assertRaisesRegex(SystemExit, "lacks 1 graph"):
+            ss.databricks_checked(self.cursor({"a": 3, "a/shapes": 2}), "c.s", self.want)
+        with self.assertRaisesRegex(SystemExit, "holds 1 other"):
+            ss.databricks_checked(self.cursor({"a": 3, "a/shapes": 2, "a/catalog": 1, "old": 4}), "c.s", self.want)
+
+
+class TechGraphMarker(unittest.TestCase):
+    """#455: each store that holds the technical graph is marked with a digest of the graph files it was loaded from."""
+
+    def marker(self, **over):
+        return {"digest": "d" * 64, "nodes": 142, "marked_at": "2026-11-02T00:00:00Z"} | over
+
+    def test_each_status(self):
+        markers = {"driver": self.marker(), "aura": self.marker(digest="e" * 64), "jena": None,
+                   "databricks": "unreachable (ConnectionError)"}
+        live = {"driver": [4193, 21767, 142], "aura": [4193, 21767, 142]}
+        self.assertEqual({s: st for s, st, _ in ss.tech_drift(markers, live, "d" * 64)},
+                         {"driver": "current", "aura": "behind", "jena": "unmarked", "databricks": "unreachable"})
+        changed = ss.tech_drift({"driver": self.marker()}, {"driver": [4193, 21767, 0]}, "d" * 64, ("driver",))
+        self.assertEqual(changed[0][1], "changed")  # the Tech nodes went, the marker stayed
+        self.assertEqual(ss.tech_drift({"databricks": self.marker()}, {"databricks": [1]}, "d" * 64, ("databricks",))[0][1], "current")
+
+    def test_the_marker_names_and_digest_equal_the_demos(self):
+        sys.path.insert(0, ss.DEMO)
+        import pricing_demo.tech_graph as tg
+        self.assertEqual((ss.TECH_MARKER_LABEL, ss.TECH_MARKER_GRAPH, ss.TECH_MARKER_DIGEST, ss.TECH_MARKER_ROW),
+                         (tg.MARKER_LABEL, tg.MARKER_GRAPH, tg.MARKER_DIGEST, tg.MARKER_ROW))
+        self.assertEqual(tuple(ss.TECH_GRAPHS), tg.GRAPH_FILES)
+        folder = os.path.join(ss.DEMO, "graph")
+        self.assertEqual(ss.tech_digest(folder), tg.graph_digest(folder))
+
+    def test_jena_leaves_the_marker_graph_to_the_technical_graphs_check(self):
+        want, iri = {"a": 1}, ss.TECH_GRAPHS["tech-graph.ttl"]
+        self.assertEqual(ss.judge_jena({"a": 1, iri: 5, ss.TECH_MARKER_GRAPH: 1}, want, {iri: 5})[0], "current")
+
+    def test_check_fails_when_the_ontology_is_current_and_the_technical_graph_is_not(self):
+        import io
+        want = {"catalog_datasets": 50, "catalog_digest": "d", "input_fingerprint": "f", "newest": []}
+        marker = {"catalog_datasets": 50, "catalog_digest": "d", "input_fingerprint": "f", "count": [1, 2, 3],
+                  "marked_at": "t", "commit": "c"}
+        out = io.StringIO()
+        with mock.patch.object(sys, "argv", ["sync_stores.py", "check", "--store", "driver"]), \
+                mock.patch.object(ss, "read_markers_and_counts", lambda stores: ({"driver": marker}, {"driver": [1, 2, 3]})), \
+                mock.patch.object(ss, "read_tech_markers", lambda stores: {"driver": {"digest": "old", "nodes": 3}}), \
+                mock.patch.object(ss, "expected_for", lambda ref, stores: want), mock.patch("sys.stdout", out):
+            with self.assertRaises(SystemExit) as stop:
+                ss.main()
+        self.assertEqual(stop.exception.code, 1)
+        lines = {line.split()[0]: line.split()[1] for line in out.getvalue().splitlines()}
+        self.assertEqual(lines, {"driver": "current", "tech:driver": "behind"})
+
+    def test_the_marker_readers_report_an_unreachable_store_without_a_crash(self):
+        def no_login(store):
+            raise FileNotFoundError(store)
+
+        def down(*args):
+            raise ConnectionError("down")
+        with mock.patch.object(ss, "neo4j_session", no_login), mock.patch.object(ss, "jena_select", down), \
+                mock.patch.object(ss, "databricks", down):
+            self.assertEqual(ss.read_tech_markers(), {"driver": "unreachable (FileNotFoundError)", "aura": "unreachable (FileNotFoundError)",
+                                                       "jena": "unreachable (ConnectionError)", "databricks": "unreachable (ConnectionError)"})
+
+
 @unittest.skipIf(pl.SHARE_RELEASE and not os.path.exists(WORKFLOW), "no workflow file here (the share release ships no GitHub workflow)")
 class Workflow(unittest.TestCase):
     text = open(WORKFLOW).read() if os.path.exists(WORKFLOW) else ""  # on main a missing file fails the tests below
@@ -260,6 +465,20 @@ class Workflow(unittest.TestCase):
         tags = subprocess.run(["git", "-C", ss.REPO, "tag"], capture_output=True, text=True).stdout.split()
         pattern = re.compile(r"^[^/]*-v[^/]*$")  # GitHub's * matches any character but a slash
         self.assertTrue(all(pattern.match(t) for t in tags), [t for t in tags if not pattern.match(t)])
+
+    def test_it_never_runs_on_a_schedule(self):
+        # EPM-DEC-001-0112, amendment of 2026-11-02 (later), item 3: the drift check stays a written step of each release.
+        self.assertNotIn("schedule:", self.text)
+        self.assertEqual(self.text.split("\non:\n")[1].split("\njobs:")[0].split(),
+                         ["push:", "tags:", "['*-v*']", "workflow_dispatch:"])
+
+    def test_it_loads_the_technical_graph_into_auradb_and_delta_after_the_driver_then_marks_and_checks(self):
+        steps = self.text.split("\n      - ")
+        order = [next((i for i, st in enumerate(steps) if needle in st), None) for needle in (
+            "run_projection.py", "tech_graph load --store aura", "tech_graph sync --store aura",
+            "sync_stores.py mark --store aura --store databricks", "sync_stores.py check --ref worktree --store aura --store databricks")]
+        self.assertNotIn(None, order)
+        self.assertEqual(order, sorted(order))
 
     def test_every_secret_is_checked_and_every_later_step_waits_for_the_check(self):
         secrets = sorted(set(re.findall(r"secrets\.(\w+)", self.text)))

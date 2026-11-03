@@ -14,13 +14,14 @@ This page lists what each store should hold, what should not be in it, and the c
 | Nodes labelled `Tech` (the technical graph and decision trail) | 142, each with its own `uri` | `pricing_demo.tech_graph load` |
 | Nodes labelled `Module` | 12 | The driver's module tags |
 | `EpmStoreMarker` | 1 (`store: driver`) | `sync_stores.py mark` |
+| `TechGraphMarker` | 1 (`store: driver`), with the digest of the technical graph's files, once `tech_graph load` has written it | `pricing_demo.tech_graph load` |
 | n10s configuration nodes (`_GraphConfig`, `_NsPrefDef`, `_n10sValidatorConfig`) | 1 each | The n10s load |
 
 Should not be there: nodes from an earlier release beside the current ones, a second copy of the Tech graph (two `Tech` nodes with the same `uri`), or any label not listed above.
 
 ## Jena (container `epm-jena-fuseki-1`)
 
-All three graphs of each newest release: 36 named graphs and 40,565 triples, as in `epm_triples`. Each module has its content under its version IRI, and `<version IRI>/shapes` and `<version IRI>/catalog`. Beside them it holds the technical graph, as `urn:pricing-demo:graph:tech-graph` and `urn:pricing-demo:graph:decision-trail`. It holds no marker: the drift check compares its graph names and each graph's triple count with the files.
+All three graphs of each newest release: 36 named graphs and 40,565 triples, as in `epm_triples`. Each module has its content under its version IRI, and `<version IRI>/shapes` and `<version IRI>/catalog`. Beside them it holds the technical graph, as `urn:pricing-demo:graph:tech-graph` and `urn:pricing-demo:graph:decision-trail`, and the technical graph's marker, `urn:pricing-demo:graph:tech-marker`, once `tech_graph load` has written it. It holds no ontology marker: the drift check compares its graph names and each graph's triple count with the files.
 
 Should not be there: a graph of an older release, any other graph, or a triple in the default graph. The dataset is in memory, so a restart empties it, and `sync_stores.py check` then reads `empty`. `sync_stores.py sync` reloads it.
 
@@ -32,7 +33,8 @@ AuraDB holds a copy of the local Neo4j, in one database. Its counts match the lo
 - 12 `ModuleRelease` nodes, the same records as the local store's;
 - 142 `Tech` nodes, each with its own `uri`;
 - 12 `Module` nodes;
-- one `EpmStoreMarker` (`store: aura`).
+- one `EpmStoreMarker` (`store: aura`);
+- one `TechGraphMarker` (`store: aura`), once `tech_graph load` has written it.
 
 ## Local Postgres (container `pricing-demo-sources`) and the exe.dev VM
 
@@ -61,7 +63,7 @@ Should not be there: databases under the source names used before 2026-10-28. No
 | Table | Rows | Where it comes from |
 |---|---|---|
 | `epm_triples` | 40,565 quads in 36 named graphs | The driver's `databricks` step, from the newest release of each module |
-| `epm_store_markers` | 1 (`store: databricks`) | `sync_stores.py mark` |
+| `epm_store_markers` | 1 (`store: databricks`), and `store: tech_graph` once `tech_graph sync` has written it | `sync_stores.py mark`; `pricing_demo.tech_graph sync` |
 
 **`idp_sbx`** holds the pricing demo: exactly the 69 objects the demo's SQL creates (`databricks.created_objects()`). Row counts per object are in `DATA.md`.
 
