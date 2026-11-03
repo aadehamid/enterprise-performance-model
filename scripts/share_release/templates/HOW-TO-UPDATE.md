@@ -81,6 +81,8 @@ Every change below ends with these steps. Run them once for the module you chang
 
    After a change, the script prints a note that the projection report describes an earlier build, until you project into Neo4j again. The note does not fail the check.
 
+6. If you keep stores loaded, reload them ("Project into Neo4j and Jena") and run the check in its step 5. The release is done only when every store you keep reads `current`, on its ontology line and on its `tech:` line, which is the technical graph's.
+
 ## Change a concept's definition
 
 The worked example changes the definition of the measure Unit Utilization in `kpi`. The wording changes and the meaning does not, so it is a patch.
@@ -271,7 +273,7 @@ The packages are the source. Neo4j and Jena are copies that you can empty and re
 
    The script stops at the first failing step and names it. The load fails if it lost a triple, added one or found a violation. The script also takes the result into `$ONT/projection/` and checks the stores against your packages.
 4. Commit `inferred.nt`, `projection-manifest.json` and `projection-report.json` from `$ONT/projection/`. `scripts/check.sh` then stops printing its note, and `python3 scripts/epm_facts.py projection` prints the new figures.
-5. To see later which store is behind your newest packages:
+5. To see later which store is behind your newest packages, or holds other technical-graph files than the demo's (the line that starts `tech:`):
 
    ```sh
    (cd $ONT/projection && uv run -q --no-project --with rdflib --with neo4j python sync_stores.py check --ref worktree --store driver --store jena)

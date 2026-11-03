@@ -638,6 +638,8 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
             return False
 
         def execute_query(self, query, **params):
+            if tech_graph.MARKER_LABEL in query:
+                return [{"p": {"store": "driver", "digest": "d" * 64}}], None, None
             if "MATCH (n:Tech)" in query:
                 return [{"uri": "u", "labels": ["Tech", "GoldTable"], "p": {"uri": "u", "name": "g"}}], None, None
             return [{"s": "u", "t": "READS_FROM", "o": "o", "ontology": False}], None, None
@@ -645,9 +647,15 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     with pytest.MonkeyPatch.context() as mp:
         mp.setitem(sys.modules, "neo4j", neo4j)
         assert tech_graph.sync("driver") == (1, 1)
-    kinds = [st.split(" epm_validate.tech_graph.")[0] for st in cur.statements]
+    # The Delta copy's marker sits in the projection's epm_store_markers, beside epm_triples: deleted first, written last.
+    markers = [st for st in cur.statements if "epm_store_markers" in st]
+    assert [st.split(" workspace.epm_ontology.epm_store_markers")[0] for st in markers] == [
+        "CREATE TABLE IF NOT EXISTS", "DELETE FROM", "INSERT INTO"]
+    assert cur.statements[1] == markers[1] and cur.statements[-1] == markers[2]
+    copied = [st for st in cur.statements if st not in markers]
+    kinds = [st.split(" epm_validate.tech_graph.")[0] for st in copied]
     assert kinds == ["DELETE FROM", "INSERT INTO", "SELECT COUNT(*) FROM"] * 2  # nodes, then edges, each deleted, filled, counted
-    only_catalog(cur.statements, "epm_validate")
+    only_catalog(copied, "epm_validate")
 
 
 def test_without_demo_catalog_setup_builds_in_idp_sbx(monkeypatch):
@@ -2451,7 +2459,7 @@ def test_jena_load_looks_for_targets_only_in_current_release_graphs_and_writes_n
     monkeypatch.setattr(tech_graph, "sparql_select", lambda query: [])
     monkeypatch.setattr(tech_graph.urllib.request, "urlopen", lambda *a, **k: pytest.fail("Jena was written to"))
     with pytest.raises(SystemExit, match="1 edge target"):
-        tech_graph.load_jena(str(tmp_path))
+        tech_graph.load_jena(str(tmp_path), "d" * 64)
 
 
 # ---- #457 (2026-11-02): lineage confirmed three ways, new measures from Databricks, tags, proposals ----
@@ -2508,3 +2516,160 @@ def test_the_source_system_comes_from_the_schema_tag_and_the_readme_map_is_the_f
     assert tech_graph.systems_disagree({"price_reference": "mips"}) == "price_reference: tag mips, README.md mpr"
     links = open(os.path.join(tech_graph.SPARQL, "links.rq")).read()
     assert "xyz:source_systems" in links and '"price_assessment"' not in links  # the map lives in config, read through live.json
+
+
+# ---- #455 (2026-11-02): the technical graph's marker, a load that commits whole, a tag that makes no edge ----
+
+def _sql_tags():
+    """The epm_measure_identifiers tag of each metric view as sql/05 sets it, as collect reads it from Databricks."""
+    return [{"view": f"semantic_sem_commercial.{v}", "identifiers": spec["tag"]} for v, spec in metric_view_specs().items()]
+
+
+def test_every_shipped_tag_identifier_makes_an_implements_edge_and_a_stale_one_is_reported():
+    g = _graph("tech-graph.ttl")
+    tags = _sql_tags()
+    assert tags and tech_graph.unlinked_tags(tags, g) == []
+    view = tags[0]["view"]
+    stale = tech_graph.unlinked_tags([{"view": view, "identifiers": "KPI-9999"}], g)
+    assert stale == [f"{view}: its tag lists KPI-9999, which no row of kpi/measure-identifiers.csv holds"]
+    from rdflib import URIRef
+    first = tags[0]["identifiers"].split()[0]
+    slug = {i: m for m, i in IDENTIFIERS.items()}[first]
+    g.remove((URIRef(tech_graph.TECH + "object/" + view), URIRef(TV + "implements"),
+              URIRef(tech_graph.ONTOLOGY + "modules/kpi/measure/" + slug)))
+    assert tech_graph.unlinked_tags(tags, g) == [f"{view}: its tag lists {first}, but the graph has no implements edge to {slug}"]
+
+
+def test_build_stops_before_writing_when_a_tag_identifier_makes_no_implements_edge(monkeypatch, tmp_path):
+    # links.rq drops an identifier that does not join kpi's table, so build checks the graph it made against the tags.
+    shipped = {names: _graph(f) for names, f in ((tech_graph.GRAPH_QUERIES, "tech-graph.ttl"), (tech_graph.TRAIL_QUERIES, "decision-trail.ttl"))}
+    monkeypatch.setattr(tech_graph, "construct", lambda names: shipped[names])
+    objects = [{"id": n["props"]["name"]} for n in tech_graph.graph_rows(shipped[tech_graph.GRAPH_QUERIES])[0] if OBJECT_CLASSES & set(n["labels"])]
+    tags = _sql_tags()
+    tags[0] = {**tags[0], "identifiers": tags[0]["identifiers"] + " KPI-9999"}
+    (tmp_path / "live.json").write_text(json.dumps({"objects": objects, "tags": tags}))
+    monkeypatch.setattr(tech_graph, "LIVE", str(tmp_path / "live.json"))
+    monkeypatch.setattr(tech_graph, "LINEAGE", str(tmp_path / "no-lineage.json"))
+    monkeypatch.setattr(tech_graph, "REFRESHED", str(tmp_path / "refreshed"))
+    with pytest.raises(SystemExit, match="1 tag identifier"):
+        tech_graph.build()
+    assert not (tmp_path / "refreshed").exists()  # nothing written
+
+
+def test_the_graph_digest_covers_both_files_by_name_and_content(tmp_path):
+    for name in tech_graph.GRAPH_FILES:
+        (tmp_path / name).write_text(f"# {name}\n")
+    first = tech_graph.graph_digest(str(tmp_path))
+    assert len(first) == 64 and first == tech_graph.graph_digest(str(tmp_path))
+    (tmp_path / tech_graph.GRAPH_FILES[1]).write_text("# changed\n")
+    assert tech_graph.graph_digest(str(tmp_path)) != first
+
+
+class _Tx:
+    """A Neo4j transaction that records its statements; edges_found says how many edges each CREATE finds a target for."""
+
+    def __init__(self, edges_found):
+        self.queries, self.edges_found, self.state = [], edges_found, "open"
+
+    def run(self, query, **params):
+        self.queries.append((query, params))
+        rows = params.get("rows", [])
+        n = (len(rows) if self.edges_found is None else self.edges_found) if "CREATE (a)" in query else 0
+        return types.SimpleNamespace(consume=lambda: None, single=lambda: {"n": n}, value=lambda: [])
+
+    def commit(self):
+        self.state = "committed"
+
+    def rollback(self):
+        self.state = "rolled back"
+
+    def closed(self):
+        return self.state != "open"
+
+
+def _load_with(monkeypatch, tx):
+    class Session:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def begin_transaction(self):
+            return tx
+
+        def run(self, *a, **k):
+            pytest.fail("a write outside the transaction")
+
+    class Driver:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def session(self):
+            return Session()
+    monkeypatch.setattr(tech_graph, "neo4j_login", lambda store: ("bolt://fake", "neo4j", "pw"))
+    monkeypatch.setitem(sys.modules, "neo4j", types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver())))
+    nodes = [{"labels": ["Tech", "GoldTable"], "props": {"uri": "urn:pricing-demo:tech:object/g"}}]
+    edges = [{"s": "urn:pricing-demo:tech:object/g", "t": "READS_FROM", "o": "urn:pricing-demo:tech:object/s", "ontology": False}]
+    return tech_graph.load_store("driver", nodes, edges, "d" * 64)
+
+
+def test_a_failed_neo4j_load_rolls_back_and_leaves_the_previous_graph_and_marker(monkeypatch):
+    tx = _Tx(edges_found=0)
+    with pytest.raises(SystemExit, match="1 tech edges found no target"):
+        _load_with(monkeypatch, tx)
+    assert tx.state == "rolled back"
+    assert not any(q.startswith(f"CREATE (m:{tech_graph.MARKER_LABEL})") for q, _ in tx.queries)
+
+
+def test_a_neo4j_load_replaces_the_tech_nodes_and_the_marker_in_one_committed_transaction(monkeypatch):
+    tx = _Tx(edges_found=None)
+    loaded = _load_with(monkeypatch, tx)
+    assert tx.state == "committed" and loaded["digest"] == "d" * 64
+    queries = [q for q, _ in tx.queries]
+    assert queries.index(f"MATCH (m:{tech_graph.MARKER_LABEL}) DETACH DELETE m") < queries.index("MATCH (n:Tech) DETACH DELETE n")
+    marker = tx.queries[-1]
+    assert marker[0] == f"CREATE (m:{tech_graph.MARKER_LABEL}) SET m = $p" and marker[1]["p"]["digest"] == "d" * 64
+    assert marker[1]["p"]["nodes"] == 1 and tech_graph.MARKER_LABEL not in ("Tech", "Resource")
+
+
+def test_jena_load_replaces_both_graphs_and_the_marker_in_one_update_request(monkeypatch, tmp_path):
+    for name in tech_graph.GRAPH_FILES:
+        shutil.copy(os.path.join(tech_graph.GRAPH, name), tmp_path / name)
+    targets = tech_graph.ontology_targets(tech_graph.read_graph(str(tmp_path)))
+    monkeypatch.setattr(tech_graph, "sparql_select", lambda q: [{"o": t} for t in targets] if "DISTINCT ?o" in q else [{"n": "1"}])
+    sent = []
+
+    class Response:
+        def close(self):
+            pass
+    monkeypatch.setattr(tech_graph.urllib.request, "urlopen", lambda request, timeout: sent.append(request) or Response())
+    digest = tech_graph.graph_digest(str(tmp_path))
+    tech_graph.load_jena(str(tmp_path), digest)
+    assert len(sent) == 1 and sent[0].get_method() == "POST" and sent[0].full_url.endswith("/ds/update")
+    body = sent[0].data.decode()
+    for iri in (*tech_graph.JENA_GRAPHS.values(), tech_graph.MARKER_GRAPH):
+        assert f"DROP SILENT GRAPH <{iri}>" in body and f"GRAPH <{iri}> {{" in body
+    assert f'<{tech_graph.MARKER_DIGEST}> "{digest}"' in body
+
+
+def test_sync_refuses_a_source_with_no_marker_and_copies_nothing(monkeypatch):
+    cur, e = fake_connection(monkeypatch, "epm_validate")
+    monkeypatch.setattr(tech_graph, "neo4j_login", lambda store: ("bolt://fake", "neo4j", "pw"))
+
+    class Driver:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def execute_query(self, query, **params):
+            return [], None, None
+    monkeypatch.setitem(sys.modules, "neo4j", types.SimpleNamespace(GraphDatabase=types.SimpleNamespace(driver=lambda uri, auth: Driver())))
+    with pytest.raises(SystemExit, match="no technical-graph marker"):
+        tech_graph.sync("driver")
+    assert cur.statements == []

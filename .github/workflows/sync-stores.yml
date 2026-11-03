@@ -1,7 +1,10 @@
 name: Sync stores
 
-# On a release tag (<module>-v<version>, as the releases are tagged: kpi-v1.3.0), runs the ontology-to-lpg
-# driver against AuraDB and Databricks, then marks both (business_architecture/ontology/projection/sync_stores.py).
+# On a release tag (<module>-v<version>, as the releases are tagged: kpi-v1.3.0), or when started by hand, runs the
+# ontology-to-lpg driver against AuraDB and Databricks, loads the pricing demo's technical graph into AuraDB (the
+# driver's copy wipes it) and copies it to Delta, marks both stores and runs the drift check on them
+# (business_architecture/ontology/projection/sync_stores.py). It runs on no timer, because the drift check of every
+# store is a written step of each release (EPM-DEC-001-0112, amendment of 2026-11-02 (later), item 3).
 # Inactive until the decision owner adds the logins below as repository secrets: the first step checks them, and
 # without all of them the job ends there with a notice and every later step is skipped. Secrets cannot be read in
 # an if: condition, so they pass through job-level environment variables ("Using secrets in GitHub Actions", GitHub
@@ -76,6 +79,18 @@ jobs:
         working-directory: personal-agent-skills/skills/data/ontology-to-lpg/scripts
         run: uv run --no-project --with rdflib python3 run_projection.py --config "$GITHUB_WORKSPACE/business_architecture/ontology/projection/skill-run/epm-run.json"
       - if: steps.logins.outputs.ready == 'true'
+        name: Load the technical graph into AuraDB, with its marker
+        working-directory: demos/downstream-pricing-databricks-free
+        run: uv run -q --group graph python -m pricing_demo.tech_graph load --store aura
+      - if: steps.logins.outputs.ready == 'true'
+        name: Copy the technical graph from AuraDB to Delta, with its marker
+        working-directory: demos/downstream-pricing-databricks-free
+        run: uv run -q --group graph python -m pricing_demo.tech_graph sync --store aura
+      - if: steps.logins.outputs.ready == 'true'
         name: Mark AuraDB and Databricks
         working-directory: business_architecture/ontology/projection
         run: uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py mark --store aura --store databricks
+      - if: steps.logins.outputs.ready == 'true'
+        name: Check AuraDB and Databricks, ontology and technical graph
+        working-directory: business_architecture/ontology/projection
+        run: uv run -q --with rdflib --with pyshacl --with neo4j --with databricks-sql-connector python sync_stores.py check --ref worktree --store aura --store databricks

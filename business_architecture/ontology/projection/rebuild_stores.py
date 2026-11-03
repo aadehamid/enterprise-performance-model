@@ -11,7 +11,8 @@ The steps, each stopping the run when it fails: preflight, empty, load, record; 
 aura-test with AuraDB too (a Databricks job tries to reach AuraDB with the login file EPM_AURA_ENV names; a failed probe
 is a result, which collect records as the check databricks-reaches-auradb), then collect, tech-build, tech-compare and
 lineage, in that order, because Unity Catalog's lineage keeps only recent builds; then tech-load, tech-sync, mark and
-check. Without Databricks the technical graph loads from what the release ships. Preflight refuses Databricks without
+check, which must read every chosen store current, ontology and technical graph (tech-load and tech-sync write the
+technical graph's markers), before a release is called done. Without Databricks the technical graph loads from what the release ships. Preflight refuses Databricks without
 AuraDB (EPM-DEC-001-0112, point 8): tech-compare would fail on a copy that has never run aura-test, because the shipped
 graph holds that check.
 
