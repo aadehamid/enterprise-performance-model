@@ -10,6 +10,11 @@ scripts/share_release/cut.sh --epm . --skills ../personal-agent-skills --out /tm
     [--augment <folder> --approval <answers file> --approval-words <words>]
 ```
 
+After any pull request that changes shipped documents or this tool, run a trial cut with the default store rows
+before the cut with every row. On the follow-up release a trial cut found three faults in under an hour (the figures
+pass, agent names in shipped text, snippet folders) that each passed `scripts/check.sh` on `main` and would each
+have stopped the 1.5-hour cut (the retro of 2026-11-03).
+
 `cut.sh` runs the steps below in order and stops at the first failure: export, rebuild, gate, the store rows on
 the test stores (`--env` names them; the release's own `rebuild_stores.py` writes its report and figures),
 the release's `check.sh` from the folder and from a Git clone of it (`clonecheck.py`), the tree rows, the comparison with main, every snippet, the gate again, the zip, the
