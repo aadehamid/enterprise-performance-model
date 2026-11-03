@@ -30,7 +30,7 @@ The layer is keyed on the model and ER Studio's identifier, because ER Studio bu
 
 ## ER Studio's ontology header
 
-Every ER Studio export declares the same node, `https://www.erstudio.com/semanticmodel/Ontology`, with the model's title and creation time. The builder checks the header in each model's own graph and never compares it across models. It fails only if an export declares an ontology other than ER Studio's. Each model's export stays in its own file, so the builder never merges two headers. The header's creation time is copied onto the model's own individual, `lm:model/<slug>`, which also carries the model's title and slug. No query reads ER Studio's header; they find a model through `lm:inModel`. A store that loads two models into one graph merges their headers, so it should keep each export in its own named graph.
+Every ER Studio export declares the same node, `https://www.erstudio.com/semanticmodel/Ontology`, with the model's title and creation time. The builder checks the header in each model's own graph and never compares it across models. It fails only if an export declares an ontology other than ER Studio's. Each model's export stays in its own file, so the builder never merges two headers. The header's creation time is copied onto the model's own individual, `lm:model/<slug>`, which also carries the model's title and slug. No query reads ER Studio's header; they find a model through `lm:inModel`. A store that loads two models into one graph merges their headers, so the stores keep each export in its own named graph ("In the stores", below).
 
 The builder fails on any other IRI that two models of a build both define, including models already built into the same folder. ER Studio's shared vocabulary terms (`:Attribute`, `:PrimaryKey`, `:AlternateKey` and its annotation properties) are not collisions. Neither is a term that both models describe in the same way, such as a glossary scheme or term or a reused attribute; an entity is never exempt.
 
@@ -46,6 +46,15 @@ Question 53 reads the key shapes, so the builder checks their structure instead.
 ## Business terms
 
 ER Studio marks an attribute's link to a business glossary with `:businessTerm`, and sets `:externalTermLinkMissing` to true when it has none. The made-up example links one attribute to a glossary term so that question 54 has a term to find. The form of that link (an IRI of a `skos:Concept` in ER Studio's glossary scheme) is assumed: check how your export writes it before relying on question 54's first query. Question 54's second query lists the attributes with no `:businessTerm`, and reports the flag beside each one.
+
+## In the stores
+
+When the newest releases hold this module, as a share release's do, the four ontology stores hold it (EPM-DEC-001-0113, amendment "the stores"). `main` holds no package of it, so `main`'s stores hold none. The projection loads the module's vocabulary into the local Neo4j and AuraDB like every package's, and `../projection/logical_models.py load` adds the models:
+
+- Jena and the Delta table `epm_triples` hold each model's export and layer as named graphs of their own, `<version IRI>/<slug>.erstudio` and `<version IRI>/<slug>.layer`, found from the package's `manifest.json`.
+- The local Neo4j and AuraDB hold each model in full as a subgraph labelled `LogicalModel`, apart from the ontology's `Resource` nodes: a `Model` node, each `Entity` with its name and description, its `Attribute` and `Key` nodes, `RELATES_TO` edges between entities, and `SOURCE_SYSTEM`, `DESCRIBES` and `IMPLEMENTED_BY` edges to the ontology nodes its layer names. The script's docstring lists every property.
+
+The projection's round-trip checks read only `Resource` nodes, so they never read the subgraph. `../projection/sync_stores.py check` counts the named graphs with the release graphs and compares the subgraph with the package's graphs on an `lm:<store>` line, by a marker and a fingerprint of its content. The labels, node shapes and loader are Claude's build choice, delegated under EPM-DEC-001-0028.
 
 ## Adding a logical model
 

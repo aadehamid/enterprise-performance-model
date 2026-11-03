@@ -214,6 +214,15 @@ def test_the_package_is_built_registered_and_counted(tmp_path, folder):
     # Figured: the catalog is rebuilt, and every figure of the pages comes from the tree (Codex's review of #474).
     r = run(["build_catalog.py", "--write"], f"{ONT}/release")
     assert r.returncode == 0, r.stdout + r.stderr
+    # Stored: the release's store code finds the model from the package's manifest and the catalog, and draws its
+    # subgraph (projection/logical_models.py; EPM-DEC-001-0113, amendment "the stores"). Its tech_graph is the demo's.
+    shutil.copytree(os.path.join(ROOT, "demos", "downstream-pricing-databricks-free", "pricing_demo"),
+                    rel / "demos" / "downstream-pricing-databricks-free" / "pricing_demo", ignore=shutil.ignore_patterns("__pycache__"))
+    r = run(["logical_models.py", "rows"], f"{ONT}/projection")
+    assert r.returncode == 0, r.stdout + r.stderr
+    rows = json.loads(r.stdout)
+    assert [n["props"]["slug"] for n in rows["nodes"] if "Model" in n["labels"]] == [SLUG]
+    assert sum("Entity" in n["labels"] for n in rows["nodes"]) == 3 and {e["t"] for e in rows["edges"]} >= {"DESCRIBES", "RELATES_TO"}
     main, fig = augment.release_figures(ROOT), augment.release_figures(str(rel))
     package_files = sum(len(f) for _, _, f in os.walk(rel / ONT / "releases" / augment.MODULE))
     assert (fig["modules"], fig["catalog"], fig["versions"]) == (main["modules"] + 1, main["catalog"] + 1, main["versions"] + 1)

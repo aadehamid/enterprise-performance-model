@@ -727,26 +727,37 @@ def load_store(store, nodes, edges, digest):
 def replace_tech(tx, store, nodes, edges, digest):
     """load_store's writes, inside its transaction: raises SystemExit, before anything commits, on an edge with no
     target or a move in the ontology's counts."""
+    return replace_subgraph(tx, store, "Tech", MARKER_LABEL, nodes, edges,
+                            {"store": store, "digest": digest, "nodes": len(nodes), "marked_at": now()}, "tech")
+
+
+def replace_subgraph(tx, store, label, marker_label, nodes, edges, marker, kind, edge_props=False):
+    """Replaces a subgraph that stays apart from the ontology's Resource nodes, and its marker, inside the caller's
+    transaction: every node labelled `label` and the one node labelled `marker_label` go, `nodes` ({"labels", "props"})
+    are created, and each of `edges` ({"s", "t", "o", "ontology"}, with "p" for its properties when edge_props) starts
+    at a node of the subgraph and ends at another (`kind` edges) or at an ontology node. Raises SystemExit, before
+    anything commits, on an edge with no target or a move in the ontology's counts. The technical graph (Tech) and the
+    logical models (projection/logical_models.py) load through it."""
     before = ontology_counts(tx)
-    tx.run(f"MATCH (m:{MARKER_LABEL}) DETACH DELETE m").consume()
-    tx.run("MATCH (n:Tech) DETACH DELETE n").consume()
+    tx.run(f"MATCH (m:{marker_label}) DETACH DELETE m").consume()
+    tx.run(f"MATCH (n:{label}) DETACH DELETE n").consume()
     tx.run("UNWIND $rows AS row CREATE (n:$(row.labels)) SET n = row.props", rows=nodes).consume()
-    made = {"tech": 0, "ontology": 0}
-    for kind, target in (("tech", "Tech"), ("ontology", "Resource")):
-        rows = [e for e in edges if e["ontology"] == (kind == "ontology")]
-        made[kind] = tx.run(f"UNWIND $rows AS row MATCH (a:Tech {{uri: row.s}}), (b:{target} {{uri: row.o}}) "
-                            "CREATE (a)-[:$(row.t)]->(b) RETURN count(*) AS n", rows=rows).single()["n"]
-        if made[kind] != len(rows):
+    create = "CREATE (a)-[r:$(row.t)]->(b) SET r = row.p" if edge_props else "CREATE (a)-[:$(row.t)]->(b)"
+    made = {kind: 0, "ontology": 0}
+    for each, target in ((kind, label), ("ontology", "Resource")):
+        rows = [e for e in edges if e["ontology"] == (each == "ontology")]
+        made[each] = tx.run(f"UNWIND $rows AS row MATCH (a:{label} {{uri: row.s}}), (b:{target} {{uri: row.o}}) "
+                            f"{create} RETURN count(*) AS n", rows=rows).single()["n"]
+        if made[each] != len(rows):
             found = set(tx.run(f"UNWIND $uris AS u MATCH (b:{target} {{uri: u}}) RETURN b.uri AS u",
                                uris=sorted({e["o"] for e in rows})).value())
             missing = sorted({e["o"] for e in rows} - found)
-            raise SystemExit(f"{store}: {len(rows) - made[kind]} {kind} edges found no target, e.g. {missing[:5]}; "
+            raise SystemExit(f"{store}: {len(rows) - made[each]} {each} edges found no target, e.g. {missing[:5]}; "
                              "nothing was changed")
     after = ontology_counts(tx)
     if before != after:
         raise SystemExit(f"{store}: the ontology's counts changed from {before} to {after}; nothing was changed")
-    tx.run(f"CREATE (m:{MARKER_LABEL}) SET m = $p", p={"store": store, "digest": digest, "nodes": len(nodes),
-                                                        "marked_at": now()}).consume()
+    tx.run(f"CREATE (m:{marker_label}) SET m = $p", p=marker).consume()
     return made, after
 
 
@@ -774,9 +785,11 @@ def _sha(lines):
 
 def neo4j_fingerprint(nodes, edges):
     """Nodes as {"labels", "p"} (properties) and edges as {"s", "t", "o", "ontology"}, the rows NEO4J_NODES and
-    NEO4J_EDGES return; graph_rows' nodes ({"labels", "props"}) are taken too."""
+    NEO4J_EDGES return; graph_rows' nodes ({"labels", "props"}) are taken too. An edge's properties, as "p", count when
+    it has any (the technical graph's edges have none; a logical model's relationships do)."""
     return _sha([json.dumps({"labels": sorted(n["labels"]), "p": n.get("p", n.get("props"))}, sort_keys=True, default=str)
-                 for n in nodes] + [json.dumps([e["s"], e["t"], e["o"], bool(e["ontology"])]) for e in edges])
+                 for n in nodes] + [json.dumps([e["s"], e["t"], e["o"], bool(e["ontology"])] + ([e["p"]] if e.get("p") else []),
+                                               sort_keys=True, default=str) for e in edges])
 
 
 def delta_rows(nodes, edges):

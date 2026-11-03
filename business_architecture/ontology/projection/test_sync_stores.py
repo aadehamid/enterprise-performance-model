@@ -7,6 +7,7 @@ import os
 import re
 import subprocess
 import sys
+import types
 import unittest
 from unittest import mock
 
@@ -55,6 +56,36 @@ class Drift(unittest.TestCase):
         self.assertEqual(self.statuses(markers, live),
                          {"driver": "behind", "aura": "changed", "jena": "current", "databricks": "unmarked"})
         self.assertEqual(self.statuses({"driver": self.marker()}, {"driver": [4193, 21767]})["driver"], "current")
+
+    def delta(self, held):
+        """Databricks' status when its marker and its total row count match, from its rows per graph."""
+        want = self.want | {"jena_graphs": {"a": 3, "a/shapes": 2, "a/catalog": 1, "a/m.erstudio": 5, "a/m.layer": 4}}
+        live = {"databricks": [sum(held.values())], "databricks_graphs": held}
+        return ss.drift({"databricks": self.marker(count=live["databricks"])}, live, want, ("databricks",))[0][1:]
+
+    held = {"a": 3, "a/shapes": 2, "a/catalog": 1, "a/m.erstudio": 5, "a/m.layer": 4}
+
+    def test_delta_with_every_graph_at_its_release_count_reads_current(self):
+        self.assertEqual(self.delta(self.held)[0], "current")
+
+    def test_a_missing_package_graph_in_delta_reads_changed_although_the_total_holds(self):
+        status, why = self.delta({k: v for k, v in self.held.items() if k != "a/m.layer"} | {"a": 7})
+        self.assertEqual((status, "a/m.layer" in why), ("changed", True))
+
+    def test_two_delta_graphs_moved_by_one_each_way_read_changed_although_the_total_holds(self):
+        status, why = self.delta(self.held | {"a/m.erstudio": 6, "a/m.layer": 3})
+        self.assertEqual((status, "a/m.erstudio" in why), ("changed", True))
+
+    def test_an_extra_delta_graph_reads_changed_although_the_total_holds(self):
+        status, why = self.delta(self.held | {"old": 1, "a": 2})
+        self.assertEqual((status, "old" in why), ("changed", True))
+
+    def test_delta_rows_in_no_graph_read_changed_and_do_not_crash(self):
+        rows = types.SimpleNamespace(execute=lambda q: None, fetchall=lambda: [(None, 2), ("a", 1)])
+        held = ss.triples_per_graph(rows, "s")
+        self.assertEqual(held, {ss.DEFAULT_GRAPH: 2, "a": 1})
+        status, why = self.delta(self.held | {ss.DEFAULT_GRAPH: 2, "a": 1})
+        self.assertEqual((status, ss.DEFAULT_GRAPH in why), ("changed", True))
 
     def test_jena_is_judged_from_its_graphs_with_no_marker(self):
         want = {"a": 1, "a/shapes": 2}
@@ -131,6 +162,7 @@ class Drift(unittest.TestCase):
         with mock.patch.object(sys, "argv", ["sync_stores.py", "check"] + argv), \
                 mock.patch.object(ss, "read_markers_and_counts", fake_read), \
                 mock.patch.object(ss, "read_tech_markers", lambda stores=ss.STORES: read.append(("tech", *stores)) or {}), \
+                mock.patch.object(ss, "logical_models", lambda: mock.Mock(check=lambda stores, ref=None: [])), \
                 mock.patch.object(ss, "expected_for", lambda ref, stores: self.want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()
@@ -209,12 +241,13 @@ class StoresAreOneNeo4jPlusJena(unittest.TestCase):
         self.assertEqual(tuple(cfg["release_graphs"]), ss.RELEASE_GRAPHS)
         self.assertIn(f":{cfg['jena']['port']}/", ss.JENA_QUERY)
 
-    def test_a_current_jena_holds_every_newest_release_three_times(self):
+    def test_a_current_jena_holds_every_newest_release_three_times_and_each_package_graph(self):
         newest = ss.newest_releases(ss.catalog_datasets(ss.repo_file(ss.CATALOG)))
         want = ss.jena_graphs(newest)
-        self.assertEqual(len(want), 3 * len(newest))
+        extra = {g for iri in newest for g in ss.package_graphs(iri)}  # none in main; the release's logical models
+        self.assertEqual(len(want), 3 * len(newest) + len(extra))
         self.assertTrue(all(want.values()))
-        self.assertEqual({f"{iri}/{n}" for iri in newest for n in ("shapes", "catalog")} | set(newest), set(want))
+        self.assertEqual({f"{iri}/{n}" for iri in newest for n in ("shapes", "catalog")} | set(newest) | extra, set(want))
 
 
 class OntologyLabelsOnly(unittest.TestCase):
@@ -437,6 +470,7 @@ class TechGraphMarker(unittest.TestCase):
         with mock.patch.object(sys, "argv", ["sync_stores.py", "check", "--store", "driver"]), \
                 mock.patch.object(ss, "read_markers_and_counts", lambda stores: ({"driver": marker}, {"driver": [1, 2, 3]})), \
                 mock.patch.object(ss, "read_tech_markers", lambda stores: {"driver": {"digest": "old", "nodes": 3}}), \
+                mock.patch.object(ss, "logical_models", lambda: mock.Mock(check=lambda stores, ref=None: [])), \
                 mock.patch.object(ss, "expected_for", lambda ref, stores: want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()
@@ -476,7 +510,7 @@ class Workflow(unittest.TestCase):
         steps = self.text.split("\n      - ")
         order = [next((i for i, st in enumerate(steps) if needle in st), None) for needle in (
             "run_projection.py", "tech_graph load --store aura", "tech_graph sync --store aura",
-            "sync_stores.py mark --store aura --store databricks", "sync_stores.py check --ref worktree --store aura --store databricks")]
+            "logical_models.py load --store aura --store databricks", "sync_stores.py mark --store aura --store databricks", "sync_stores.py check --ref worktree --store aura --store databricks")]
         self.assertNotIn(None, order)
         self.assertEqual(order, sorted(order))
 

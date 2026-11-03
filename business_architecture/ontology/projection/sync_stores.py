@@ -11,10 +11,15 @@ it on a tech:<store> line beside the ontology's, with a fingerprint of the conte
 files', so a missing, stale or edited technical graph shows when the ontology is current. sync reloads what is behind with the ontology-to-lpg driver, takes the driver's result into this folder,
 loads the pricing demo's technical graph again where a reload wiped it or its marker is not current, copies it to
 Delta with tech_graph sync when the Delta copy is reloaded or behind, and marks the stores it reloaded.
+When the newest releases hold the logical-model module (a share release does; main does not), Jena and the triple
+table also hold each package graph its manifest lists (package_graphs: each model's ER Studio export and annotation
+layer), which jena_graphs counts with the release graphs, and each Neo4j store holds the models as a subgraph apart from
+the projection, which check reports on an lm:<store> line (logical_models.py) and sync reloads with logical_models.py
+load, last, where a reload wiped it or it is not current. In main there is no lm: line and no such step.
 
     python3 sync_stores.py expected [--ref origin/main]   # what a current store holds
     python3 sync_stores.py mark --store driver ...         # check a store against the repository, then mark it
-    python3 sync_stores.py check [--ref origin/main] [--store driver ...]   # the drift check, ontology and technical graph (default: all stores)
+    python3 sync_stores.py check [--ref origin/main] [--store driver ...]   # the drift check: ontology, technical graph and any logical models (default: all stores)
     python3 sync_stores.py sync [--cloud] [--dry-run]      # reload what is behind, then mark it
 
 The markers stay out of the projection: in Neo4j a node labelled EpmStoreMarker, never Resource, which the
@@ -96,6 +101,14 @@ def repo_file(path, ref=None):
     return subprocess.run(["git", "-C", REPO, "show", f"{ref}:{path}"], check=True, capture_output=True, text=True).stdout
 
 
+def repo_bytes(path, ref=None):
+    """A file's bytes in the working tree, or at a git ref, as repo_file reads its text."""
+    if ref is None or ref == "worktree":
+        with open(os.path.join(REPO, path), "rb") as f:
+            return f.read()
+    return subprocess.run(["git", "-C", REPO, "show", f"{ref}:{path}"], check=True, capture_output=True).stdout
+
+
 def catalog_datasets(text):
     from rdflib import Graph, Namespace
     DCAT = Namespace("http://www.w3.org/ns/dcat#")
@@ -121,9 +134,30 @@ def expected(ref=None):
             "newest": newest_releases(datasets)}
 
 
+def extra_graph_files(module, manifest):
+    """The Turtle files a package's manifest lists beside its content and its release graphs: the graphs it carries as
+    they are (build_module.py's "graphs"), such as a logical model's ER Studio export and annotation layer. No package
+    in main has any; the share release's logical-model package does (EPM-DEC-001-0113, amendment "the stores")."""
+    own = {f"{module}.ttl", *(f"{n}.ttl" for n in RELEASE_GRAPHS)}
+    return sorted(n for n in manifest.get("files", {}) if n.endswith(".ttl") and n not in own)
+
+
+def package_graphs(iri, ref=None):
+    """{graph IRI: path under the repository} of a release's package graphs (extra_graph_files), each named
+    <version IRI>/<file name without .ttl>, as the release graphs are named <version IRI>/<name>."""
+    module, version = iri.rsplit("/", 2)[-2:]
+    folder = f"business_architecture/ontology/releases/{module}/{version}"
+    try:
+        manifest = json.loads(repo_file(f"{folder}/manifest.json", ref))
+    except (OSError, subprocess.CalledProcessError):  # a package with no manifest carries no graph of its own
+        return {}
+    return {f"{iri}/{n[:-len('.ttl')]}": f"{folder}/{n}" for n in extra_graph_files(module, manifest)}
+
+
 def jena_graphs(newest, ref=None):
-    """{graph IRI: triple count} that a current Jena holds: for each newest release, its content under the version IRI
-    and each release graph under <version IRI>/<name>, counted from the release's files."""
+    """{graph IRI: triple count} that a current Jena holds, and the triple table too: for each newest release, its
+    content under the version IRI, each release graph under <version IRI>/<name>, and each package graph
+    (package_graphs, which logical_models.py load adds), counted from the release's files."""
     from rdflib import Graph
     graphs = {}
     for iri in newest:
@@ -131,6 +165,8 @@ def jena_graphs(newest, ref=None):
         folder = f"business_architecture/ontology/releases/{module}/{version}"
         for name, graph in ((module, iri), *((n, f"{iri}/{n}") for n in RELEASE_GRAPHS)):
             graphs[graph] = len(Graph().parse(data=repo_file(f"{folder}/{name}.ttl", ref), format="turtle"))
+        for graph, path in package_graphs(iri, ref).items():
+            graphs[graph] = len(Graph().parse(data=repo_file(path, ref), format="turtle"))
     return graphs
 
 
@@ -154,6 +190,12 @@ def demo_graph():
         sys.path.insert(0, DEMO)
     import pricing_demo.tech_graph as tg
     return tg
+
+
+def logical_models():
+    """logical_models.py, which imports this module: the logical models' subgraph and the package graphs."""
+    import logical_models as lm
+    return lm
 
 
 def tech_content(folder=None):
@@ -198,6 +240,8 @@ def drift(markers, live, want, stores=STORES):
     current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or
     unreachable (the store could not be read: no connection, no login file or a missing table, for example; the
     error's name follows the word). Jena has no marker: judge_jena reads it as current, behind, changed or empty.
+    Databricks is also judged per graph (live["databricks_graphs"], one GROUP BY): a graph missing, extra or holding
+    another row count than the release files' triples reads changed, with the graph named, even when the total holds.
     `stores` narrows the report to the stores named (check --store)."""
     rows = []
     for store in stores:
@@ -211,6 +255,9 @@ def drift(markers, live, want, stores=STORES):
         elif any(m.get(k) != want[k] for k in MARKER_FIELDS):
             moved = [k for k in MARKER_FIELDS if m.get(k) != want[k]]
             rows.append((store, "behind", f"marked {m.get('marked_at')} from another release set ({', '.join(moved)})"))
+        elif store == "databricks" and "jena_graphs" in want and isinstance(live.get("databricks_graphs"), dict) \
+                and (problem := graphs_differ(live["databricks_graphs"], want["jena_graphs"])):
+            rows.append((store, "changed", f"{TRIPLES_TABLE} {problem}"))
         elif live.get(store) != m.get("count"):
             rows.append((store, "changed", f"marked with {m.get('count')}, now holds {live.get(store)}"))
         else:
@@ -294,6 +341,9 @@ def jena_select(query):
         return json.load(response)["results"]["bindings"]
 
 
+DEFAULT_GRAPH = "(the default graph)"  # triples outside any named graph: no release graph has this name, so they read as a stray
+
+
 def read_jena():
     """{graph IRI: triple count} of what Jena holds; triples in the default graph, where nothing should be, count as a
     graph of their own so the check reports them."""
@@ -302,7 +352,7 @@ def read_jena():
             for r in select("SELECT ?g (COUNT(*) AS ?n) WHERE { GRAPH ?g { ?s ?p ?o } } GROUP BY ?g")}
     in_default = int(select("SELECT (COUNT(*) AS ?n) WHERE { ?s ?p ?o }")[0]["n"]["value"])
     if in_default:
-        held["(the default graph)"] = in_default
+        held[DEFAULT_GRAPH] = in_default
     return held
 
 
@@ -339,8 +389,8 @@ def read_markers_and_counts(stores=STORES):
     try:
         conn, schema = databricks()
         with conn, conn.cursor() as cur:
-            cur.execute(f"SELECT count(*) FROM {schema}.{TRIPLES_TABLE}")
-            live["databricks"] = [cur.fetchone()[0]]
+            live["databricks_graphs"] = triples_per_graph(cur, schema)  # judged per graph against the release files
+            live["databricks"] = [sum(live["databricks_graphs"].values())]
             try:
                 cur.execute(f"SELECT marker FROM {schema}.epm_store_markers WHERE store = 'databricks'")
                 row = cur.fetchone()
@@ -444,17 +494,32 @@ def databricks_checked(cur, schema, want):
     release and its release graphs), each with the release files' triple count: a load that stopped part way, or one
     from other files, is not marked."""
     graphs = want.get("jena_graphs") or jena_graphs(want["newest"])
+    held = triples_per_graph(cur, schema)
+    problem = graphs_differ(held, graphs)
+    if problem:
+        raise SystemExit(f"databricks: {TRIPLES_TABLE} {problem}")
+    return [sum(held.values())]
+
+
+def triples_per_graph(cur, schema):
+    """{graph: row count} of the triple table: one GROUP BY on its graph column."""
     cur.execute(f"SELECT graph, count(*) FROM {schema}.{TRIPLES_TABLE} GROUP BY graph")
-    held = {r[0]: r[1] for r in cur.fetchall()}
+    return {DEFAULT_GRAPH if r[0] is None else r[0]: r[1] for r in cur.fetchall()}  # a row with no graph is a stray
+
+
+def graphs_differ(held, graphs):
+    """Why a store's {graph: triple or row count} is not the expected one (jena_graphs: each newest release, its release
+    graphs and its package graphs, counted from the release files), naming a graph; None when they are equal. mark
+    refuses the triple table on it, and check reads it as changed."""
     missing, stray = sorted(set(graphs) - set(held)), sorted(set(held) - set(graphs))
     if missing or stray:
-        raise SystemExit(f"databricks: {TRIPLES_TABLE} lacks {len(missing)} graph(s) of the newest releases, e.g. {missing[:3]}, "
-                         f"and holds {len(stray)} other(s), e.g. {stray[:3]}")
+        return (f"lacks {len(missing)} graph(s) of the newest releases, e.g. {missing[:3]}, "
+                f"and holds {len(stray)} other(s), e.g. {stray[:3]}")
     moved = sorted(g for g in graphs if held[g] != graphs[g])
     if moved:
-        raise SystemExit(f"databricks: {len(moved)} graph(s) hold another row count than the release files' triples, "
-                         f"e.g. {moved[0]}: {held[moved[0]]}, not {graphs[moved[0]]}")
-    return [sum(held.values())]
+        return (f"has {len(moved)} graph(s) with another row count than the release files' triples, "
+                f"e.g. {moved[0]}: {held[moved[0]]}, not {graphs[moved[0]]}")
+    return None
 
 
 def mark(stores, want=None):
@@ -485,14 +550,16 @@ def mark(stores, want=None):
 
 # ---------- sync ----------
 
-def plan(behind, cloud, skills, tech_behind=()):
+def plan(behind, cloud, skills, tech_behind=(), models=None):
     """The commands that reload the stores that are behind, in order. Local stores always; AuraDB and Databricks only
     with --cloud, through the full driver run, which also reloads the local Neo4j and Jena. A local driver run skips the
     driver's copy, databricks and rebuild steps, so its Neo4j is loaded from the repository, not back from epm_triples.
     Jena alone needs only the driver's jena step. A run that loads Neo4j takes its result into this folder.
     tech_behind names the stores whose technical graph is not current (tech_drift): each gets tech_graph load again,
     as does every store a reload wiped, and the Delta copy follows with tech_graph sync. AuraDB and Databricks again
-    only with --cloud."""
+    only with --cloud. models is None when the newest releases hold no package graph, as in main; otherwise it names
+    the Neo4j stores whose logical models are not current (logical_models.drift), and logical_models.py load runs on
+    them and on every store a reload wiped, last, so mark reads Jena and Delta with the package graphs."""
     steps, reloaded = [], []
     driver_cmd = ["uv", "run", "--no-project", "--with", "rdflib", "python3", "run_projection.py",
                   "--config", RUN_CONFIG]
@@ -517,13 +584,22 @@ def plan(behind, cloud, skills, tech_behind=()):
                       + [a for s in tech for a in ("--store", s)]))
     if "databricks" in reloaded or "databricks" in reachable:  # the Delta copy follows Neo4j, and sync marks it
         steps.append((DEMO, ["uv", "run", "--group", "graph", "python", "-m", "pricing_demo.tech_graph", "sync"]))
+    if models is not None:
+        stale = [s for s in models if cloud or s not in ("aura", "databricks")]
+        lm = [s for s in STORES if s in reloaded or s in stale]
+        if lm:  # a reload wipes the package graphs and the logical models' subgraph too
+            steps.append((HERE, ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "neo4j", "--with", "pyoxigraph",
+                                 *(["--with", "databricks-sql-connector"] if "databricks" in lm else []), "python",
+                                 "logical_models.py", "load", *(a for s in lm for a in ("--store", s)), "--skills", skills]))
     return steps, reloaded
 
 
 def expected_for(ref, stores):
-    """What the named stores should hold; Jena's graph counts are read from the release files only when it is named."""
+    """What the named stores should hold; the graph counts are read from the release files only when Jena or Databricks
+    is named, since both are judged per graph."""
     want = expected(ref)
-    return want | {"jena_graphs": jena_graphs(want["newest"], ref), "jena_tech": tech_graph_counts()} if "jena" in stores else want
+    return want | {"jena_graphs": jena_graphs(want["newest"], ref), "jena_tech": tech_graph_counts()} \
+        if {"jena", "databricks"} & set(stores) else want
 
 
 def sync(cloud, dry_run, ref, skills):
@@ -532,9 +608,12 @@ def sync(cloud, dry_run, ref, skills):
     behind = [s for s, status, _ in rows if status != "current"]
     tech_behind = [s for s, status, _ in tech_drift(read_tech_markers(), live, tech_digest(), STORES, tech_content())
                    if status != "current"]
-    steps, reloaded = plan(behind, cloud, skills, tech_behind)
+    lm = logical_models()
+    models = [s for s, status, _ in lm.check(STORES, ref) if status != "current"] if lm.package_graphs(ref=ref) else None
+    steps, reloaded = plan(behind, cloud, skills, tech_behind, models)
     skipped = [s for s in behind if s not in reloaded] + [f"{s} (technical graph)" for s in tech_behind
-                                                          if s in ("aura", "databricks") and not cloud]
+                                                          if s in ("aura", "databricks") and not cloud] \
+        + [f"{s} (logical models)" for s in models or () if s == "aura" and not cloud]
     for cwd, cmd in steps:
         print(f"({os.path.relpath(cwd, REPO) if cwd.startswith(REPO) else cwd}) {' '.join(cmd)}")
         if not dry_run:
@@ -543,8 +622,8 @@ def sync(cloud, dry_run, ref, skills):
         print(f"not reloaded (cloud stores need --cloud): {', '.join(skipped)}")
     if not dry_run and reloaded:
         mark(reloaded, expected())
-    if not behind and not tech_behind:
-        print("every store is current, ontology and technical graph")
+    if not behind and not tech_behind and not models:
+        print("every store is current, ontology and technical graph" + (", and the logical models" if models is not None else ""))
 
 
 def main():
@@ -570,11 +649,14 @@ def main():
         markers, live = read_markers_and_counts(stores)
         rows = drift(markers, live, expected_for(args.ref, stores), stores)
         tech = tech_drift(read_tech_markers(stores), live, tech_digest(), stores, tech_content())
+        models = logical_models().check(stores, args.ref)  # none when the ref's newest releases hold no logical-model module
         for store, status, why in rows:
             print(f"{store:<11} {status:<9} {why}")
         for store, status, why in tech:  # the technical graph, beside the ontology: tech:<store>
             print(f"{'tech:' + store:<16} {status:<9} {why}")
-        sys.exit(0 if all(status == "current" for _, status, _ in rows + tech) else 1)
+        for store, status, why in models:  # a release's logical models, in a Neo4j store: lm:<store>
+            print(f"{'lm:' + store:<16} {status:<9} {why}")
+        sys.exit(0 if all(status == "current" for _, status, _ in rows + tech + models) else 1)
     else:
         sync(args.cloud, args.dry_run, args.ref, args.skills)
 
