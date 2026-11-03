@@ -1,0 +1,1017 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EPM ontology viewer</title>
+    <style>
+      /* EMBEDDED_FONTS */
+      * {
+        box-sizing: border-box;
+      }
+      :root {
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        color: #131416;
+        background: #f1f5f5;
+        font-size: 14px;
+        --accent: #1b6c80;
+        --line: #e8eaec;
+        --muted: #5d5f60;
+      }
+      body {
+        margin: 0;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+        color: inherit;
+      }
+      button,
+      a,
+      input,
+      select {
+        touch-action: manipulation;
+      }
+      button {
+        cursor: pointer;
+        border: 1px solid #cdced1;
+        border-radius: 6px;
+        background: #fff;
+        padding: 8px 12px;
+      }
+      button:hover {
+        background: #ebedee;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #1b6c80;
+        outline-offset: 2px;
+      }
+      a {
+        color: #1b6c80;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 0 0 12px;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 0 0 12px;
+      }
+      h3 {
+        font-size: 14px;
+      }
+      p {
+        line-height: 1.55;
+        margin: 8px 0;
+      }
+      small,
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      header {
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 24px;
+        gap: 16px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 18px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand svg {
+        width: 30px;
+        height: 30px;
+        stroke: var(--accent);
+        fill: none;
+        stroke-width: 2;
+      }
+      #layout {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        min-height: calc(100vh - 64px);
+      }
+      aside {
+        padding: 12px 20px 24px;
+        min-width: 0;
+      }
+      main {
+        min-width: 0;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        margin: 0 8px 8px 0;
+        padding: 24px;
+      }
+      label {
+        display: block;
+        margin: 0 0 6px;
+        font-weight: 600;
+      }
+      input,
+      select {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #cdced1;
+        border-radius: 6px;
+        background: #fff;
+        padding: 8px;
+        margin-bottom: 12px;
+      }
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+      }
+      .inline {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 400;
+      }
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin: 12px 0;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 8px;
+      }
+      .tabs button {
+        border: 0;
+        border-radius: 0;
+        background: none;
+      }
+      .tabs button[aria-pressed="true"] {
+        border-bottom: 2px solid #131416;
+        font-weight: 600;
+      }
+      .term-button {
+        display: block;
+        text-align: left;
+        width: 100%;
+        border: 0;
+        background: transparent;
+        padding: 9px 8px;
+        line-height: 1.4;
+        border-radius: 6px;
+        overflow-wrap: anywhere;
+      }
+      .term-button[aria-current="true"] {
+        background: #e0e9ea;
+      }
+      .term-button small {
+        display: block;
+        margin-top: 3px;
+      }
+      #results {
+        max-height: calc(100vh - 390px);
+        min-height: 200px;
+        overflow: auto;
+      }
+      #results ul {
+        list-style: none;
+        padding-left: 12px;
+        margin: 0;
+      }
+      #results > ul {
+        padding-left: 0;
+      }
+      #results summary {
+        padding: 10px 4px;
+        cursor: pointer;
+      }
+      #results details details {
+        margin-left: 10px;
+      }
+      .count {
+        font-variant-numeric: tabular-nums;
+      }
+      #summary {
+        margin: 4px 0 12px;
+      }
+      .term-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 20px;
+      }
+      .term-header > div {
+        min-width: 0;
+      }
+      .badge {
+        background: #ebedee;
+        border-radius: 4px;
+        padding: 3px 7px;
+        font-size: 13px;
+      }
+      .content {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 24px;
+      }
+      .content > section {
+        min-width: 0;
+      }
+      .definition {
+        font-size: 16px;
+        line-height: 1.65;
+        max-width: 75ch;
+      }
+      .field {
+        padding: 12px 0;
+        border-bottom: 1px solid #f0f1f2;
+        overflow-wrap: anywhere;
+      }
+      .field dt {
+        font-size: 13px;
+        color: #5d5f60;
+        margin-bottom: 6px;
+      }
+      .field dd {
+        margin: 0;
+        line-height: 1.55;
+      }
+      .field a,
+      .field button {
+        overflow-wrap: anywhere;
+      }
+      .field button {
+        border: 0;
+        text-align: left;
+        background: #f4f6f8;
+        max-width: 100%;
+        margin: 2px 4px 2px 0;
+      }
+      .graph-box {
+        background: #f8fafa;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 16px;
+      }
+      .graph-scroll {
+        overflow: auto;
+        max-height: 440px;
+      }
+      .graph-scroll svg {
+        display: block;
+        width: 100%;
+      }
+      .graph-scroll text {
+        font-family: "IBM Plex Sans", sans-serif;
+        font-size: 17px;
+        fill: #131416;
+      }
+      .graph-scroll rect {
+        fill: white;
+        stroke: #cdced1;
+      }
+      .graph-scroll .selected rect {
+        fill: #e3f0f2;
+        stroke: #1b6c80;
+        stroke-width: 2;
+      }
+      .graph-scroll path {
+        stroke: #73878c;
+        fill: none;
+      }
+      .graph-scroll g[role="button"] {
+        cursor: pointer;
+      }
+      .graph-scroll g:focus {
+        outline: none;
+      }
+      .graph-scroll g:focus rect {
+        stroke: #131416;
+        stroke-width: 3;
+      }
+      .graph-controls {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 10px 0;
+      }
+      .relation {
+        display: grid;
+        grid-template-columns: minmax(90px, 0.7fr) minmax(0, 1.3fr);
+        gap: 10px;
+        align-items: center;
+        margin: 6px 0;
+      }
+      .relation span {
+        font-size: 13px;
+        overflow-wrap: anywhere;
+      }
+      .relation button {
+        text-align: left;
+        overflow-wrap: anywhere;
+      }
+      .technical {
+        margin-top: 24px;
+      }
+      .technical summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .iri {
+        overflow-wrap: anywhere;
+        font-size: 13px;
+        color: #5d5f60;
+        margin: 10px 0;
+      }
+      .mobile-only {
+        display: none;
+      }
+      #message {
+        min-height: 20px;
+      }
+      #release-info {
+        max-width: 800px;
+      }
+      dialog {
+        border: 1px solid #cdced1;
+        border-radius: 12px;
+        max-width: min(650px, 90vw);
+        max-height: 85vh;
+        padding: 24px;
+      }
+      dialog::backdrop {
+        background: #0006;
+      }
+      dialog ul {
+        padding-left: 20px;
+      }
+      #all-statistics li {
+        line-height: 1.8;
+      }
+      #pagination {
+        margin-top: 12px;
+      }
+      .empty {
+        padding: 20px 4px;
+        color: #5d5f60;
+      }
+      noscript {
+        display: block;
+        padding: 24px;
+      }
+      @media (max-width: 1100px) {
+        #layout {
+          grid-template-columns: 270px minmax(0, 1fr);
+        }
+        .content {
+          grid-template-columns: 1fr;
+        }
+        header {
+          padding: 12px 20px;
+        }
+        main {
+          padding: 20px;
+        }
+        .term-header {
+          flex-wrap: wrap;
+        }
+      }
+      @media (max-width: 640px) {
+        header {
+          height: 60px;
+          padding: 12px 16px;
+        }
+        header h1 {
+          margin: 0;
+          font-size: 16px;
+        }
+        header .muted {
+          display: none;
+        }
+        #layout {
+          display: block;
+        }
+        aside {
+          padding: 12px 16px;
+        }
+        main {
+          margin: 0;
+          border: 0;
+          border-radius: 0;
+          padding: 20px 16px;
+          min-height: calc(100vh - 60px);
+        }
+        body:not(.show-detail) main {
+          display: none;
+        }
+        body.show-detail aside {
+          display: none;
+        }
+        .mobile-only {
+          display: inline-block;
+          margin-bottom: 16px;
+        }
+        #results {
+          max-height: none;
+        }
+        button {
+          min-height: 44px;
+        }
+        input,
+        select {
+          height: 44px;
+        }
+        h1 {
+          font-size: 22px;
+        }
+        .content {
+          gap: 20px;
+        }
+        .term-header {
+          gap: 12px;
+        }
+        .term-header > button {
+          min-width: 100px;
+        }
+        .tabs {
+          margin: 4px 0 10px;
+        }
+        .graph-box {
+          padding: 8px;
+        }
+        .relation {
+          grid-template-columns: minmax(75px, 0.7fr) minmax(0, 1.3fr);
+        }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        button {
+          transition: background-color 0.12s ease;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <svg aria-hidden="true" viewBox="0 0 32 32">
+          <path d="M6 8h20M6 24h20M6 8v16M26 8v16M6 8l20 16" />
+          <circle cx="6" cy="8" r="3" />
+          <circle cx="26" cy="24" r="3" />
+        </svg>
+        <h1>EPM ontology</h1>
+        <span class="muted">One release · definitions and relationships</span>
+      </div>
+      <button id="about">Release details</button>
+    </header>
+    <div id="layout">
+      <aside aria-label="Find ontology terms">
+        <label for="query">Find a term</label
+        ><input
+          id="query"
+          type="search"
+          placeholder="Search labels, definitions or IRIs"
+          autocomplete="off"
+        /><label for="module">Module</label
+        ><select id="module">
+          <option value="">All modules</option></select
+        ><label class="inline"
+          ><input type="checkbox" id="support" />Include evidence and
+          constraints</label
+        >
+        <div class="tabs" aria-label="Browse mode">
+          <button id="list-mode" aria-pressed="true">Search results</button
+          ><button id="tree-mode" aria-pressed="false">Hierarchy</button>
+        </div>
+        <p id="summary" class="muted count" role="status"></p>
+        <div id="results"></div>
+        <button id="pagination" hidden>Show more</button>
+      </aside>
+      <main id="detail" aria-label="Selected term">
+        <button class="mobile-only" id="back">Back to terms</button>
+        <div class="term-header">
+          <div>
+            <h2 id="title" style="font-size: 22px">Ontology viewer</h2>
+            <span id="kind" class="badge"></span>
+            <p id="modules" class="muted"></p>
+          </div>
+          <button id="copy">Copy term IRI</button>
+        </div>
+        <p id="message" role="status" class="muted"></p>
+        <div class="content">
+          <section aria-labelledby="definition-heading">
+            <h2 id="definition-heading">Definition and scope</h2>
+            <div id="definition" class="definition"></div>
+            <dl id="metadata"></dl>
+            <div class="technical">
+              <details>
+                <summary>All properties and evidence</summary>
+                <p id="iri" class="iri"></p>
+                <dl id="properties"></dl>
+              </details>
+            </div>
+          </section>
+          <section aria-labelledby="graph-heading">
+            <h2 id="graph-heading">Relationships</h2>
+            <div class="graph-box">
+              <p class="muted">
+                Select a connected term to explore its relationships.
+              </p>
+              <div class="graph-scroll" id="graph"></div>
+              <div class="graph-controls">
+                <button id="more-graph">Show more relationships</button
+                ><button id="reset-graph">Reset view</button>
+              </div>
+              <p id="graph-count" class="muted count"></p>
+            </div>
+            <div id="relations"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <dialog id="release-info">
+      <h2>Release details</h2>
+      <p id="release-pin"></p>
+      <p>
+        This page carries its data inside the file and works offline. It
+        includes the technical-graph vocabulary. Technical-graph records and
+        example datasets are excluded.
+      </p>
+      <ul id="all-statistics"></ul>
+      <details>
+        <summary>Font licence</summary>
+        <p style="white-space: pre-wrap">FONT_LICENSE_TEXT</p>
+      </details>
+      <details>
+        <summary>Source files and checksums</summary>
+        <div id="sources"></div>
+      </details>
+      <button id="close-about">Close</button>
+    </dialog>
+    <noscript
+      >Enable JavaScript to search and explore this offline ontology
+      viewer.</noscript
+    >
+    <script id="ontology-data" type="application/json">
+      /* EMBEDDED_DATA */
+    </script>
+    <script>
+      "use strict";
+      const data = JSON.parse(
+        document.getElementById("ontology-data").textContent,
+      );
+      const byId = new Map(data.nodes.map((n) => [n.id, n]));
+      const $ = (id) => document.getElementById(id);
+      const compact = (id) => id.replace(/.*[/#]/, "");
+      const supporting = new Set(data.supportingKinds);
+      const incoming = new Map();
+      for (const node of data.nodes)
+        for (const v of node.values)
+          if (!v.literal && byId.has(v.v)) {
+            if (!incoming.has(v.v)) incoming.set(v.v, []);
+            incoming.get(v.v).push({ node, p: v.p });
+          }
+      let selected = null,
+        mode = "list",
+        pageSize = 80,
+        listScroll = 0,
+        graphLimit = 8;
+      const ordered = data.nodes
+        .slice()
+        .sort(
+          (a, b) => a.label.localeCompare(b.label) || a.id.localeCompare(b.id),
+        );
+      const modules = [
+        ...new Set(data.nodes.flatMap((n) => n.modules.map((m) => m.name))),
+      ].sort();
+      for (const name of modules) {
+        const o = document.createElement("option");
+        o.value = name;
+        o.textContent = name;
+        $("module").append(o);
+      }
+      const searchText = new Map(
+        data.nodes.map((n) => [
+          n.id,
+          [n.id, n.label, ...n.values.filter((v) => v.literal).map((v) => v.v)]
+            .join(" ")
+            .toLowerCase(),
+        ]),
+      );
+      function element(tag, text, cls) {
+        const e = document.createElement(tag);
+        if (text !== undefined) e.textContent = text;
+        if (cls) e.className = cls;
+        return e;
+      }
+      function termButton(node) {
+        const b = element("button", node.label, "term-button");
+        b.type = "button";
+        b.dataset.term = node.id;
+        b.setAttribute("aria-current", String(selected?.id === node.id));
+        b.append(
+          element(
+            "small",
+            node.kind + " · " + node.modules.map((m) => m.name).join(", "),
+          ),
+        );
+        b.onclick = () => select(node.id, true);
+        return b;
+      }
+      function filtered() {
+        const q = $("query").value.trim().toLowerCase(),
+          m = $("module").value;
+        return ordered.filter(
+          (n) =>
+            ($("support").checked || !supporting.has(n.kind)) &&
+            (!m || n.modules.some((x) => x.name === m)) &&
+            (!q || searchText.get(n.id).includes(q)),
+        );
+      }
+      function renderList() {
+        const nodes = filtered();
+        $("summary").textContent =
+          nodes.length.toLocaleString() +
+          " results · " +
+          data.terms.toLocaleString() +
+          " terms in release";
+        $("results").replaceChildren();
+        $("pagination").hidden = mode === "tree" || nodes.length <= pageSize;
+        if (mode === "list") {
+          for (const n of nodes.slice(0, pageSize))
+            $("results").append(termButton(n));
+        } else {
+          const ids = new Set(nodes.map((n) => n.id)),
+            children = new Map();
+          for (const n of nodes)
+            for (const p of n.parents.filter((p) => ids.has(p))) {
+              if (!children.has(p)) children.set(p, []);
+              children.get(p).push(n);
+            }
+          function item(n, path) {
+            const li = element("li");
+            const kids = children.get(n.id) || [];
+            if (kids.length && !path.has(n.id)) {
+              const d = element("details"),
+                s = element("summary", n.label + " (" + kids.length + ")");
+              d.append(s, termButton(n));
+              d.addEventListener("toggle", () => {
+                if (!d.open || d.querySelector("ul")) return;
+                const ul = element("ul");
+                for (const k of kids)
+                  ul.append(item(k, new Set([...path, n.id])));
+                d.append(ul);
+              });
+              li.append(d);
+            } else li.append(termButton(n));
+            return li;
+          }
+          // Module roots also provide access to terms with external parents and cyclic hierarchies.
+          for (const name of modules) {
+            const members = nodes.filter((n) =>
+              n.modules.some((m) => m.name === name),
+            );
+            if (!members.length) continue;
+            const d = element("details"),
+              s = element("summary", name + " · " + members.length);
+            d.append(s);
+            d.addEventListener("toggle", () => {
+              if (!d.open || d.querySelector("ul")) return;
+              const ul = element("ul");
+              const roots = members.filter(
+                (n) =>
+                  !n.parents.some(
+                    (p) =>
+                      ids.has(p) &&
+                      byId.get(p).modules.some((m) => m.name === name),
+                  ),
+              );
+              for (const n of roots) ul.append(item(n, new Set()));
+              const all = element("details"),
+                as = element("summary", "All terms in " + name);
+              all.append(as);
+              all.addEventListener("toggle", () => {
+                if (!all.open || all.querySelector("ul")) return;
+                const fallback = element("ul");
+                for (const n of members) {
+                  const li = element("li");
+                  li.append(termButton(n));
+                  fallback.append(li);
+                }
+                all.append(fallback);
+              });
+              d.append(ul, all);
+            });
+            $("results").append(d);
+          }
+        }
+        if (!nodes.length)
+          $("results").append(
+            element(
+              "p",
+              "No matching terms. Try another phrase or module.",
+              "empty",
+            ),
+          );
+      }
+      function valueElement(v) {
+        if (!v.literal && byId.has(v.v)) {
+          const b = element("button", byId.get(v.v).label);
+          b.onclick = () => select(v.v, true);
+          return b;
+        }
+        if (!v.literal && /^https?:\/\//.test(v.v)) {
+          const a = element("a", v.v);
+          a.href = v.v;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          return a;
+        }
+        return element("span", v.v);
+      }
+      function field(title, values, parent, technical = false) {
+        if (!values.length) return;
+        const row = element("div", undefined, "field"),
+          dt = element("dt", title),
+          dd = element("dd");
+        for (const v of values) {
+          const p = element("p");
+          p.append(valueElement(v));
+          if (v.lang && (technical || v.lang !== "en"))
+            p.append(element("small", " [" + v.lang + "]"));
+          if (technical && v.datatype)
+            p.append(element("small", " · " + v.datatype));
+          dd.append(p);
+        }
+        row.append(dt, dd);
+        parent.append(row);
+      }
+      function select(id, push = false) {
+        const n = byId.get(id);
+        if (!n) return;
+        if (!document.body.classList.contains("show-detail"))
+          listScroll = window.scrollY;
+        selected = n;
+        graphLimit = 8;
+        $("title").textContent = n.label;
+        $("kind").textContent = n.kind;
+        $("modules").textContent = n.modules
+          .map((m) => m.name + " " + m.version)
+          .join(" · ");
+        $("iri").textContent = n.id;
+        $("message").textContent = "";
+        $("definition").replaceChildren();
+        $("metadata").replaceChildren();
+        $("properties").replaceChildren();
+        const definitions = n.values.filter(
+          (v) =>
+            v.literal &&
+            ["definition", "description", "comment"].includes(compact(v.p)),
+        );
+        for (const v of definitions) $("definition").append(element("p", v.v));
+        if (!definitions.length)
+          $("definition").append(
+            element("p", "No definition is recorded for this term.", "muted"),
+          );
+        for (const [title, names] of [
+          ["Scope note", ["scopeNote"]],
+          ["Source", ["source", "references", "isDefinedBy", "wasDerivedFrom"]],
+          ["Alternative names", ["altLabel"]],
+        ])
+          field(
+            title,
+            n.values.filter((v) => names.includes(compact(v.p))),
+            $("metadata"),
+          );
+        for (const p of [...new Set(n.values.map((v) => v.p))])
+          field(
+            p,
+            n.values.filter((v) => v.p === p),
+            $("properties"),
+            true,
+          );
+        document.body.classList.add("show-detail");
+        if (push) location.hash = encodeURIComponent(id);
+        if (!$("results").hasChildNodes()) renderList();
+        for (const button of $("results").querySelectorAll("[data-term]"))
+          button.setAttribute("aria-current", String(button.dataset.term === id));
+        renderGraph();
+        if (push) {
+          $("title").tabIndex = -1;
+          $("title").focus({ preventScroll: true });
+          window.scrollTo(0, 0);
+        }
+      }
+      function neighbors() {
+        const out = selected.values
+          .filter((v) => !v.literal && byId.has(v.v))
+          .map((v) => ({ node: byId.get(v.v), p: v.p, incoming: false }));
+        return [
+          ...out,
+          ...(incoming.get(selected.id) || []).map((x) => ({
+            ...x,
+            incoming: true,
+          })),
+        ].sort(
+          (a, b) =>
+            a.node.label.localeCompare(b.node.label) || a.p.localeCompare(b.p),
+        );
+      }
+      function renderGraph() {
+        if (!selected) return;
+        const links = neighbors(),
+          shown = links.slice(0, graphLimit);
+        $("graph").replaceChildren();
+        $("relations").replaceChildren();
+        const ns = "http://www.w3.org/2000/svg";
+        function svg(tag, attrs, text) {
+          const e = document.createElementNS(ns, tag);
+          for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+          if (text) e.textContent = text;
+          return e;
+        }
+        const height = Math.max(180, shown.length * 70 + 20),
+          root = svg("svg", {
+            viewBox: `0 0 650 ${height}`,
+            role: "img",
+            "aria-label": "Relationships of " + selected.label,
+          });
+        function box(n, x, y, current = false) {
+          const g = svg("g", {
+            transform: `translate(${x},${y})`,
+            class: current ? "selected" : "",
+            role: "button",
+            tabindex: "0",
+            "aria-label": n.label,
+          });
+          g.append(
+            svg("rect", { width: 210, height: 46, rx: 6 }),
+            svg(
+              "text",
+              { x: 12, y: 28 },
+              n.label.length > 22 ? n.label.slice(0, 20) + "…" : n.label,
+            ),
+            svg("title", {}, n.label),
+          );
+          g.onclick = () => select(n.id, true);
+          g.onkeydown = (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              select(n.id, true);
+            }
+          };
+          return g;
+        }
+        const cy = height / 2 - 23;
+        for (let i = 0; i < shown.length; i++) {
+          const link = shown[i],
+            y = i * 70 + 12;
+          root.append(
+            svg("path", {
+              d: `M 220 ${cy + 23} C 310 ${cy + 23},310 ${y + 23},425 ${y + 23}`,
+            }),
+          );
+          root.append(
+            svg(
+              "text",
+              { x: 240, y: y + 12 },
+              (link.incoming ? "← " : "→ ") +
+                (byId.get(link.p)?.label || compact(link.p)),
+            ),
+          );
+          root.append(box(link.node, 425, y));
+          const row = element("div", undefined, "relation");
+          row.append(
+            element(
+              "span",
+              (link.incoming ? "Incoming: " : "Outgoing: ") +
+                (byId.get(link.p)?.label || compact(link.p)),
+            ),
+          );
+          const b = element("button", link.node.label);
+          b.onclick = () => select(link.node.id, true);
+          row.append(b);
+          $("relations").append(row);
+        }
+        root.append(box(selected, 10, cy, true));
+        $("graph").append(root);
+        $("graph-count").textContent =
+          shown.length + " of " + links.length + " relationships shown";
+        $("more-graph").hidden = shown.length >= links.length;
+        if (!links.length)
+          $("relations").append(
+            element(
+              "p",
+              "No relationships to other terms are recorded.",
+              "muted",
+            ),
+          );
+      }
+      $("query").oninput = () => {
+        pageSize = 80;
+        renderList();
+      };
+      $("module").onchange = () => {
+        pageSize = 80;
+        renderList();
+      };
+      $("support").onchange = () => {
+        pageSize = 80;
+        renderList();
+      };
+      $("pagination").onclick = () => {
+        pageSize += 80;
+        renderList();
+      };
+      for (const [id, value] of [
+        ["list-mode", "list"],
+        ["tree-mode", "tree"],
+      ])
+        $(id).onclick = () => {
+          mode = value;
+          $("list-mode").setAttribute("aria-pressed", String(mode === "list"));
+          $("tree-mode").setAttribute("aria-pressed", String(mode === "tree"));
+          renderList();
+        };
+      $("back").onclick = () => {
+        document.body.classList.remove("show-detail");
+        $("query").focus({ preventScroll: true });
+        window.scrollTo(0, listScroll);
+      };
+      $("more-graph").onclick = () => {
+        graphLimit += 8;
+        renderGraph();
+      };
+      $("reset-graph").onclick = () => {
+        graphLimit = 8;
+        renderGraph();
+      };
+      $("copy").onclick = async () => {
+        if (!selected) return;
+        try {
+          await navigator.clipboard.writeText(selected.id);
+          $("message").textContent = "Term IRI copied.";
+        } catch {
+          const input = element("textarea");
+          input.value = selected.id;
+          document.body.append(input);
+          input.select();
+          const ok = document.execCommand("copy");
+          input.remove();
+          $("message").textContent = ok
+            ? "Term IRI copied."
+            : "Copy this IRI: " + selected.id;
+        }
+      };
+      $("about").onclick = () => $("release-info").showModal();
+      $("close-about").onclick = () => $("release-info").close();
+      $("release-pin").textContent =
+        data.release + " · source " + data.sourceCommit;
+      for (const [k, v] of Object.entries(data.counts))
+        $("all-statistics").append(
+          element("li", k + ": " + v.toLocaleString()),
+        );
+      $("all-statistics").append(
+        element("li", "Distinct triples: " + data.triples.toLocaleString()),
+      );
+      for (const input of data.inputs) {
+        const p = element(
+          "p",
+          input.path + " · SHA-256 " + input.sha256,
+          "iri",
+        );
+        $("sources").append(p);
+      }
+      window.onhashchange = () => {
+        let id;
+        try {
+          id = decodeURIComponent(location.hash.slice(1));
+        } catch {
+          return;
+        }
+        if (byId.has(id) && id !== selected?.id) select(id);
+      };
+      let first;
+      try {
+        first = byId.get(decodeURIComponent(location.hash.slice(1)));
+      } catch {}
+      first =
+        first ||
+        ordered.find(
+          (n) =>
+            n.kind === "Concept" && n.modules.some((m) => m.name === "core"),
+        ) ||
+        ordered[0];
+      select(first.id);
+      if (!location.hash) document.body.classList.remove("show-detail");
+    </script>
+  </body>
+</html>

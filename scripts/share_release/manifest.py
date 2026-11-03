@@ -87,6 +87,7 @@ EPM_RULES = [
     ("ship", f"{ONT}/epm-ontology-guide.html"),
     ("ship", f"{ONT}/projection/ontology-stores-runbook.html"),
     ("ship", "scripts/docs_template.html"),  # the page template is a source, not a generated page
+    ("ship", f"{ONT}/viewer/viewer.html"),  # the offline viewer template is source too
     ("ship", "best-practices/*.html"),
     ("ship", "demos/downstream-pricing-databricks-free/*.html"),
 ]
