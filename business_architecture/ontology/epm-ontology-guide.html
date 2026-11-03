@@ -877,7 +877,8 @@ RETURN DISTINCT m.skos__prefLabel AS measure ORDER BY measure;</code></pre>
 
 <h3>The questions it answers</h3>
 <p>Competency questions 51 to 55 belong to this module: which entities hold data about a party concept, which source system each entity comes from, which attributes identify a customer in each system, which attributes stand for a business term, and which data product or platform table implements each entity. In <code>main</code> they run on the made-up example, which <code>scripts/check.sh</code> rebuilds and verifies on every push. To ask one, run this from <code>business_architecture/ontology/regression</code>:</p>
-<pre><code>uv run --with rdflib python ask.py q51-entities-about-party</code></pre>
+<pre><code># from business_architecture/ontology/regression
+uv run --with rdflib python ask.py q51-entities-about-party</code></pre>
 
 <h3>A confidential export stays outside the repository</h3>
 <p>A model the decision owner wants only in the release never enters <code>main</code>. Its export and links file sit in <code>release-cut/augment/logical-model/</code>, a folder Git ignores, and the builder writes the model's two graphs beside them. <code>main</code> holds the module's vocabulary, shapes, builder, tests and the made-up example. The release cut reads the augment folder and builds the package, so the release holds one module more than <code>main</code> releases. The cut's option for this is <code>cut.sh --augment</code>, merged in PR #474. The builder takes the export's location as an input, so the same build runs from <code>main</code> if the decision owner later moves a model there (EPM-DEC-001-0113, decisions 2 and 6).</p>
