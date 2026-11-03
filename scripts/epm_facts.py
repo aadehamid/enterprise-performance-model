@@ -1544,6 +1544,7 @@ def cmd_viewer(args):
     spec = importlib.util.spec_from_file_location("epm_viewer_build", Path(ROOT) / "business_architecture/ontology/viewer/build.py")
     viewer = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(viewer)
+    viewer.pinned_source(Path(args.tree).resolve())
     data = viewer.build_data(Path(args.tree).resolve())
     print(json.dumps({"commit": commit(), "sourceCommit": data["sourceCommit"], "tree": str(Path(args.tree).resolve()), "terms": data["terms"], "triples": data["triples"], "counts": data["counts"], "inputs": data["inputs"]}, indent=2))
     return 0

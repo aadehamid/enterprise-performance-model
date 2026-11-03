@@ -449,6 +449,13 @@ def test_a_retro_citation_goes_from_python():
     assert rules.apply("x (retro of 2026-10-28) y; z (a; retro of 2026-10-26).\n", "scripts/a.py")[0] == "x y; z (a).\n"
 
 
+def test_live_graph_refresh_rule_survives_without_the_build_retro_citation():
+    src = "Refresh `graph/*.ttl` from a live run (`collect`, then `build --to-repo`), or state that the refresh is pending (the retro of 2026-11-03)."
+    expected = "Refresh `graph/*.ttl` from a live run (`collect`, then `build --to-repo`), or state that the refresh is pending."
+    for path in ("demos/downstream-pricing-databricks-free/README.md", "demos/downstream-pricing-databricks-free/README.html"):
+        assert rules.apply(src, path)[0] == expected
+
+
 def test_the_peer_forms_a_headline_or_a_link_takes_go():
     out = rules.apply('"Refiners threaten to follow Valero, Phillips \\u2013 News", "https://s22.q4cdn.com/1/Phillips-66-Market.pdf" Phillips-66', "demos/x/data/a.json")[0]
     assert "Phillips" not in out and "Valero" not in out

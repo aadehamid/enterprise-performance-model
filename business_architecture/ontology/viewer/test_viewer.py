@@ -128,6 +128,32 @@ def test_no_package_is_an_error(tmp_path):
         viewer.build_data(tmp_path)
 
 
+def test_source_pin_rejects_another_commit_and_local_package_changes(tmp_path, monkeypatch):
+    import os
+    import subprocess
+
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    for key in list(os.environ):
+        if key.startswith("GIT_"):
+            monkeypatch.delenv(key)
+    package(tmp_path)
+
+    def git(*args):
+        return subprocess.check_output(["git", "-C", str(tmp_path), *args], env=env, text=True).strip()
+
+    git("init", "-q")
+    git("add", ".")
+    git("-c", "user.name=Test fixture", "-c", "user.email=fixture@example.invalid", "-c", "commit.gpgsign=false", "commit", "-qm", "Fixture")
+    with pytest.raises(ValueError, match="Expected source release"):
+        viewer.pinned_source(tmp_path)
+    monkeypatch.setattr(viewer, "SOURCE_COMMIT", git("rev-parse", "HEAD"))
+    viewer.pinned_source(tmp_path)
+    manifest = next((tmp_path / viewer.ONTOLOGY / "releases").glob("*/*/manifest.json"))
+    manifest.write_text(manifest.read_text() + "\n")
+    with pytest.raises(ValueError, match="local changes"):
+        viewer.pinned_source(tmp_path)
+
+
 def assert_roundtrip(root):
     from rdflib import Graph, URIRef, BNode, Literal
     from rdflib.compare import isomorphic

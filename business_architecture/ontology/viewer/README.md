@@ -23,7 +23,7 @@ uv run --with rdflib python business_architecture/ontology/viewer/build.py \
   --source <release-clone> --out <outside-checkout>/viewer/index.html
 ```
 
-The implementation lives here. Generated customer data stays outside main. For the shared release, use `scripts/share_release/cut.sh --viewer-source <release-clone>` along with its other required arguments. The cut requires the output's current Turtle packages to equal the pinned inputs before building the viewer. Do not copy a preview into the release or push the release branch directly.
+The implementation lives here. Build output belongs in the cut's output folder. For the shared release, use `scripts/share_release/cut.sh --viewer-source <release-clone>` along with its other required arguments. The cut requires the output's current Turtle packages to equal the pinned inputs before building the viewer. Do not copy a preview into the release or push the release branch directly.
 
 The tests use synthetic RDF and cover package hashes, exclusions, customer schema inclusion, blank-node separation, restrictions, script-safe embedding and cut/source mismatches. Browser checks must also exercise the generated page through `file://`, with network requests blocked, and inspect desktop, tablet and phone layouts.
 

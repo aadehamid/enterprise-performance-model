@@ -75,6 +75,32 @@ try {
   assert.equal(coverage.missing, 0);
   assert.equal(coverage.expected, coverage.found);
   assert.equal(coverage.allSearchable, true);
+  await page.locator("#query").fill("");
+  assert.equal(await page.locator("#results > button").count(), 80);
+  await page.locator("#pagination").click();
+  assert.equal(await page.locator("#results > button").count(), 160);
+  const lastResult = page.locator("#results > button").last();
+  const lastId = await lastResult.getAttribute("data-term");
+  await lastResult.click();
+  assert.equal(await page.locator("#iri").textContent(), lastId);
+  assert.ok(await page.locator("#results").evaluate(el => el.scrollTop > 0));
+
+  const hub = await page.evaluate(() => data.nodes.find(n =>
+    n.values.filter(v => !v.literal && byId.has(v.v)).length > 16).id);
+  await page.locator("#query").fill(hub);
+  await page.locator("#results > button").first().click();
+  assert.equal(await page.locator("#relations button").count(), 8);
+  await page.locator("#more-graph").click();
+  assert.equal(await page.locator("#relations button").count(), 16);
+  await page.locator("#reset-graph").click();
+  assert.equal(await page.locator("#relations button").count(), 8);
+  const neighborLabel = await page.locator("#graph g:not(.selected)").first().getAttribute("aria-label");
+  await page.locator("#graph g:not(.selected)").first().focus();
+  await page.keyboard.press("Enter");
+  assert.equal(await page.locator("#title").textContent(), neighborLabel);
+  assert.notEqual(await page.locator("#iri").textContent(), hub);
+  await page.locator("main details > summary").first().click();
+  assert.ok(await page.locator("#properties").innerText());
   await page.locator("#query").fill("customer");
 
   await page.locator("#tree-mode").click();
