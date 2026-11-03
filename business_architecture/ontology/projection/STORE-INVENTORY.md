@@ -19,11 +19,13 @@ This page lists what each store should hold, what should not be in it, and the c
 
 Should not be there: nodes from an earlier release beside the current ones, a second copy of the Tech graph (two `Tech` nodes with the same `uri`), or any label not listed above.
 
+`main` holds no `logical-model` package, so no node is labelled `LogicalModel` or `LogicalModelMarker`. A store loaded from releases that hold the module, as a share release's do, also holds each model as `LogicalModel` nodes and one `LogicalModelMarker`, which `logical_models.py load` writes (EPM-DEC-001-0113, amendment "the stores").
+
 ## Jena (container `epm-jena-fuseki-1`)
 
 All three graphs of each newest release: 36 named graphs and 40,565 triples, as in `epm_triples`. Each module has its content under its version IRI, and `<version IRI>/shapes` and `<version IRI>/catalog`. Beside them it holds the technical graph, as `urn:pricing-demo:graph:tech-graph` and `urn:pricing-demo:graph:decision-trail`, and the technical graph's marker, `urn:pricing-demo:graph:tech-marker`, once `tech_graph load` has written it. It holds no ontology marker: the drift check compares its graph names and each graph's triple count with the files.
 
-Should not be there: a graph of an older release, any other graph, or a triple in the default graph. The dataset is in memory, so a restart empties it, and `sync_stores.py check` then reads `empty`. `sync_stores.py sync` reloads it.
+Should not be there: a graph of an older release, any other graph, or a triple in the default graph. Releases that hold the `logical-model` module add two named graphs per model, `<version IRI>/<slug>.erstudio` and `<version IRI>/<slug>.layer`, here and in `epm_triples`; `main`'s hold none. The dataset is in memory, so a restart empties it, and `sync_stores.py check` then reads `empty`. `sync_stores.py sync` reloads it.
 
 ## Neo4j AuraDB
 
