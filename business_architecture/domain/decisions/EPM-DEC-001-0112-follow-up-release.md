@@ -81,3 +81,5 @@ The follow-up release was cut from `main` with `cut.sh --augment`, validated wit
 
 So the follow-up release is the full version to share, and it replaces EPM 1.0. Question 17 stays open in it, listed in `OPEN-ITEMS.md` (EPM-DEC-001-0086, amendment of 2026-11-02). The ontology viewer, which the plan starts after this confirmation, is the next piece of work.
 
+*2026-11-03, viewer input:* The confirmation above records `2b3f02e2`. The later viewer request explicitly selects `share/epm-1.0` at `81f2f63b` as its input (`answers-2026-11-03-viewer.md`; EPM-DEC-001-0110, amendment "ship the viewer through the cut"). The earlier confirmation remains a historical record.
+

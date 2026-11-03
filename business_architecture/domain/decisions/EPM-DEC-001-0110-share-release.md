@@ -172,6 +172,10 @@ The viewer ships inside the shared release through the cut. This supersedes the 
 
 The request pins the viewer's input to `share/epm-1.0` at `81f2f63b`, from its Turtle or JSON-LD, with no store. The scope interview is recorded below. Implementation and publication are pending.
 
+EPM-DEC-001-0112 records the earlier confirmation at `2b3f02e2`. The later viewer request explicitly selects `81f2f63b`; it does not change that historical confirmation or claim that the two commits have identical contents.
+
+The same request requires asking the decision owner before making any repository public, and returning all repositories to private when the work ends. This applies to every repository used for the viewer work. The viewer ships through the existing release cut; this decision creates no separate viewer repository.
+
 ## Amendment, 2026-11-03: viewer scope
 
 The scope interview is saved in `answers-2026-11-03-viewer.md`, rounds 1 and 2. The decision owner accepted the recommendations for questions 1, 3, 4 and 5 with "aligned". For question 2, the decision owner answered:
