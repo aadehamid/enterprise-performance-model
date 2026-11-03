@@ -60,7 +60,8 @@ KEPT_OUT = (r"\bkept\s+(?:out\s+of|outside)\s+(?:the\s+|this\s+)?(?:repo|reposit
             r"|\bIn\s+(?:<code>|`)?main(?:</code>|`)?,?\s+(?:it|the\s+command)\s+(?:has\s+no|loads\s+nothing|says\s+there\s+is\s+nothing)"
             r"|\(never\s+in\s+(?:<code>|`)?main\b"
             r"|\bunreleased\s+in\s+(?:<code>|`)?main\b|\bmain(?:</code>|`)?\s+holds\s+none\b|\bnone\s+in\s+(?:<code>|`)?main\b"
-            r"|\bmain:\s+no\s+package\b|,\s+as\s+in\s+(?:<code>|`)?main\b")
+            r"|\bmain:\s+no\s+package\b|,\s+as\s+in\s+(?:<code>|`)?main\b"
+            r"|;\s+main(?:</code>|`)?\s+does\s+not\)|\bIn\s+(?:<code>|`)?main(?:</code>|`)?\s+there\s+is\s+no\b")
 KEPT_OUT_CUSTOMER = (r"\b(?:the|expert's|owner's)\s+customer\s+(?:files|inputs|data|logical\s+model|model)\b[^.\n]{0,80}?"
                      r"(?:\b(?:out\s+of|outside|not\s+in|never\s+enters?)\s+(?:the\s+|this\s+)?(?:repo|repository|(?:`|<code>)?main)\b"
                      r"|gitignored|augment\s+folder)")

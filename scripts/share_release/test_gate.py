@@ -628,7 +628,8 @@ def test_the_gate_refuses_what_main_lacks_in_code_notes_too(tmp_path):
     clean(tmp_path)
     for i, text in enumerate(("The logical-model module is unreleased in main", "hold no package graph, as in main; otherwise",
                               "before mark; main holds none, and the step is left out.", "# main: no package graph",
-                              "# none in main; the release's logical models")):
+                              "# none in main; the release's logical models",
+                              "(a share release does; main does not)", "In main there is no lm: line and no such step.")):
         (tmp_path / f"n{i}.py").write_text(text + "\n")
     reasons = [h["file"] for h in gate.scan(str(tmp_path)) if "kept out" in h["reason"]]
-    assert sorted(reasons) == [f"n{i}.py" for i in range(5)]
+    assert sorted(reasons) == [f"n{i}.py" for i in range(7)]
