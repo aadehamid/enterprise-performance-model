@@ -101,6 +101,14 @@ def repo_file(path, ref=None):
     return subprocess.run(["git", "-C", REPO, "show", f"{ref}:{path}"], check=True, capture_output=True, text=True).stdout
 
 
+def repo_bytes(path, ref=None):
+    """A file's bytes in the working tree, or at a git ref, as repo_file reads its text."""
+    if ref is None or ref == "worktree":
+        with open(os.path.join(REPO, path), "rb") as f:
+            return f.read()
+    return subprocess.run(["git", "-C", REPO, "show", f"{ref}:{path}"], check=True, capture_output=True).stdout
+
+
 def catalog_datasets(text):
     from rdflib import Graph, Namespace
     DCAT = Namespace("http://www.w3.org/ns/dcat#")
@@ -601,7 +609,7 @@ def sync(cloud, dry_run, ref, skills):
     tech_behind = [s for s, status, _ in tech_drift(read_tech_markers(), live, tech_digest(), STORES, tech_content())
                    if status != "current"]
     lm = logical_models()
-    models = [s for s, status, _ in lm.check(STORES) if status != "current"] if lm.package_graphs() else None
+    models = [s for s, status, _ in lm.check(STORES, ref) if status != "current"] if lm.package_graphs(ref=ref) else None
     steps, reloaded = plan(behind, cloud, skills, tech_behind, models)
     skipped = [s for s in behind if s not in reloaded] + [f"{s} (technical graph)" for s in tech_behind
                                                           if s in ("aura", "databricks") and not cloud] \
@@ -641,7 +649,7 @@ def main():
         markers, live = read_markers_and_counts(stores)
         rows = drift(markers, live, expected_for(args.ref, stores), stores)
         tech = tech_drift(read_tech_markers(stores), live, tech_digest(), stores, tech_content())
-        models = logical_models().check(stores)  # none when the newest releases hold no logical-model module
+        models = logical_models().check(stores, args.ref)  # none when the ref's newest releases hold no logical-model module
         for store, status, why in rows:
             print(f"{store:<11} {status:<9} {why}")
         for store, status, why in tech:  # the technical graph, beside the ontology: tech:<store>

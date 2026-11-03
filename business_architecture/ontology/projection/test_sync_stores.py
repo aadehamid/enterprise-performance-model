@@ -162,7 +162,7 @@ class Drift(unittest.TestCase):
         with mock.patch.object(sys, "argv", ["sync_stores.py", "check"] + argv), \
                 mock.patch.object(ss, "read_markers_and_counts", fake_read), \
                 mock.patch.object(ss, "read_tech_markers", lambda stores=ss.STORES: read.append(("tech", *stores)) or {}), \
-                mock.patch.object(ss, "logical_models", lambda: mock.Mock(check=lambda stores: [])), \
+                mock.patch.object(ss, "logical_models", lambda: mock.Mock(check=lambda stores, ref=None: [])), \
                 mock.patch.object(ss, "expected_for", lambda ref, stores: self.want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()
@@ -470,7 +470,7 @@ class TechGraphMarker(unittest.TestCase):
         with mock.patch.object(sys, "argv", ["sync_stores.py", "check", "--store", "driver"]), \
                 mock.patch.object(ss, "read_markers_and_counts", lambda stores: ({"driver": marker}, {"driver": [1, 2, 3]})), \
                 mock.patch.object(ss, "read_tech_markers", lambda stores: {"driver": {"digest": "old", "nodes": 3}}), \
-                mock.patch.object(ss, "logical_models", lambda: mock.Mock(check=lambda stores: [])), \
+                mock.patch.object(ss, "logical_models", lambda: mock.Mock(check=lambda stores, ref=None: [])), \
                 mock.patch.object(ss, "expected_for", lambda ref, stores: want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()

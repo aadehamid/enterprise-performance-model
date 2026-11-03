@@ -63,25 +63,27 @@ def held(releases=None):
     return False
 
 
-def newest():
-    return ss.newest_releases(ss.catalog_datasets(ss.repo_file(ss.CATALOG)))
+def newest(ref=None):
+    """The newest releases of the catalog in the working tree, or at a git ref (sync_stores.repo_file)."""
+    return ss.newest_releases(ss.catalog_datasets(ss.repo_file(ss.CATALOG, ref)))
 
 
-def package_graphs(releases=None):
-    """{graph IRI: path under the repository} of every package graph of the newest releases (sync_stores.package_graphs)."""
+def package_graphs(releases=None, ref=None):
+    """{graph IRI: path under the repository} of every package graph of the newest releases (sync_stores.package_graphs),
+    read at ref like the rest of sync_stores.py check."""
     found = {}
-    for iri in releases if releases is not None else newest():
-        found.update(ss.package_graphs(iri))
+    for iri in releases if releases is not None else newest(ref):
+        found.update(ss.package_graphs(iri, ref))
     return found
 
 
-def models(releases=None):
-    """[(slug, export path, layer path)] of the newest logical-model package, from its manifest; [] when the newest
-    releases hold no logical-model module, as in main. A model whose export or layer is missing stops the load."""
-    iri = next((i for i in (releases if releases is not None else newest()) if i.rsplit("/", 2)[-2] == MODULE), None)
+def models(releases=None, ref=None):
+    """[(slug, export path, layer path)] of the newest logical-model package, from its manifest at ref; [] when the
+    newest releases hold no logical-model module, as in main. A model whose export or layer is missing stops the load."""
+    iri = next((i for i in (releases if releases is not None else newest(ref)) if i.rsplit("/", 2)[-2] == MODULE), None)
     if iri is None:
         return []
-    graphs = sorted(ss.package_graphs(iri).values())
+    graphs = sorted(ss.package_graphs(iri, ref).values())
     slugs = sorted({os.path.basename(p).split(".")[0] for p in graphs if p.endswith((".erstudio.ttl", ".layer.ttl"))})
     found = []
     for slug in slugs:
@@ -118,7 +120,7 @@ def literals(g, *subjects, names=None):
     return {k: next(iter(v)) if len(v) == 1 else sorted(map(str, v)) for k, v in found.items()}
 
 
-def graph_rows(model_files):
+def graph_rows(model_files, ref=None):
     """Nodes ({"labels", "props"}) and edges ({"s", "t", "o", "ontology", "p"}) of the subgraph, from each model's export
     and layer. Every node is labelled LogicalModel and one of:
       Model      the model's lm:LogicalModel individual: uri, slug, name (its title), created
@@ -148,8 +150,8 @@ def graph_rows(model_files):
             n["props"]["models"] = sorted({*n["props"].get("models", []), slug})
 
     for slug, export_path, layer_path in model_files:
-        export = Graph().parse(os.path.join(ss.REPO, export_path), format="turtle")
-        layer = Graph().parse(os.path.join(ss.REPO, layer_path), format="turtle")
+        export = Graph().parse(data=ss.repo_file(export_path, ref), format="turtle")
+        layer = Graph().parse(data=ss.repo_file(layer_path, ref), format="turtle")
         entities = set(blm.entities(export, []).values())
         for m in layer.subjects(RDF.type, blm.LM.LogicalModel):
             node(m, "Model", {"slug": slug, **literals(layer, m, names={DCTERMS.identifier: "slug"})})
@@ -204,13 +206,12 @@ def graph_rows(model_files):
             [{"s": s, "t": t, "o": o, "ontology": ont, "p": dict(p)} for s, t, o, ont, p in sorted(edges)])
 
 
-def digest(model_files):
-    """The SHA-256 of the model graph files, each file's name and bytes in name order: what a Neo4j store's
-    LogicalModelMarker records."""
+def digest(model_files, ref=None):
+    """The SHA-256 of the model graph files (in the working tree, or at ref), each file's name and bytes in name order:
+    what a Neo4j store's LogicalModelMarker records."""
     h = hashlib.sha256()
     for path in sorted(p for _, *paths in model_files for p in paths):
-        with open(os.path.join(ss.REPO, path), "rb") as f:
-            h.update(os.path.basename(path).encode() + b"\0" + f.read() + b"\0")
+        h.update(os.path.basename(path).encode() + b"\0" + ss.repo_bytes(path, ref) + b"\0")
     return h.hexdigest()
 
 
@@ -260,13 +261,14 @@ def drift(markers, want_digest, want_content, stores):
     return rows
 
 
-def check(stores):
-    """The lm:<store> rows of sync_stores.py check: none when the newest releases hold no logical-model module."""
-    files = models()
+def check(stores, ref=None):
+    """The lm:<store> rows of sync_stores.py check, judged against the package at the same ref as the rest of the check
+    (worktree, or None, reads the working tree): none when that ref's newest releases hold no logical-model module."""
+    files = models(ref=ref)
     if not files:
         return []
-    nodes, edges = graph_rows(files)
-    return drift(read_markers(stores), digest(files), content(nodes, edges), stores)
+    nodes, edges = graph_rows(files, ref)
+    return drift(read_markers(stores), digest(files, ref), content(nodes, edges), stores)
 
 
 # ---------- loading ----------

@@ -6,6 +6,7 @@ import io
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import types
@@ -252,7 +253,7 @@ class Loading(Package):
 
     def test_load_sends_each_store_its_part(self):
         calls = []
-        with mock.patch.object(lm, "newest", lambda: [VERSION_IRI]), mock.patch.object(lm, "rdfstore", lambda skills: "rs"), \
+        with mock.patch.object(lm, "newest", lambda ref=None: [VERSION_IRI]), mock.patch.object(lm, "rdfstore", lambda skills: "rs"), \
                 mock.patch.object(lm, "load_jena", lambda rs, g: calls.append(("jena", rs, sorted(g)))), \
                 mock.patch.object(lm, "load_databricks", lambda rs, g: calls.append(("databricks", rs, sorted(g)))), \
                 mock.patch.object(lm, "load_neo4j", lambda store, files: calls.append((store, [f[0] for f in files]))):
@@ -275,7 +276,7 @@ class Drift(Package):
         return mock.patch.object(ss, "neo4j_session", lambda store: (contextlib.nullcontext(), Session()))
 
     def status(self, nodes, edges, marker):
-        with self.neo4j(nodes, edges, marker), mock.patch.object(lm, "newest", lambda: [VERSION_IRI]):
+        with self.neo4j(nodes, edges, marker), mock.patch.object(lm, "newest", lambda ref=None: [VERSION_IRI]):
             return lm.check(("driver", "jena"))
 
     def test_each_status(self):
@@ -292,10 +293,45 @@ class Drift(Package):
         relates["p"] = {**relates["p"], "name": "renamed"}
         self.assertEqual(self.status([{"labels": n["labels"], "p": dict(n["props"])} for n in nodes], edited, marker)[0][1], "changed")
 
+    def git(self, *args):
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+        subprocess.run(["git", "-C", self.root, *args], check=True, capture_output=True, env=env)
+
+    def commit_catalog(self, with_package):
+        """Writes the repository's catalog, with or without the package's dataset, and commits the tree; returns the commit."""
+        catalog = os.path.join(self.root, ss.CATALOG)
+        with open(catalog, "w") as f:
+            f.write(f"<{VERSION_IRI}/../catalog> <http://www.w3.org/ns/dcat#dataset> <{VERSION_IRI}> .\n" if with_package else "")
+        self.git("add", "-A")
+        self.git("-c", "user.name=t", "-c", "user.email=t@example.org", "commit", "-q", "-m", "c")
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+        return subprocess.run(["git", "-C", self.root, "rev-parse", "HEAD"], capture_output=True, text=True, env=env).stdout.strip()
+
+    def lines(self, ref):
+        with self.neo4j([], [], None):  # a store whose subgraph was wiped: no marker
+            return [r[:2] for r in lm.check(("driver",), ref)]
+
+    def test_the_lm_line_follows_the_ref_that_holds_the_package_not_the_working_tree(self):
+        self.git("init", "-q")
+        ref = self.commit_catalog(with_package=True)
+        shutil.rmtree(self.folder)  # the working tree has no package; the ref does
+        with open(os.path.join(self.root, ss.CATALOG), "w") as f:
+            f.write("")
+        self.assertEqual(self.lines(ref), [("driver", "unmarked")])
+        self.assertEqual(self.lines("worktree"), [])
+
+    def test_the_lm_line_follows_a_ref_that_holds_no_package_though_the_working_tree_does(self):
+        self.git("init", "-q")
+        ref = self.commit_catalog(with_package=False)
+        with open(os.path.join(self.root, ss.CATALOG), "w") as f:
+            f.write(f"<{VERSION_IRI}/../catalog> <http://www.w3.org/ns/dcat#dataset> <{VERSION_IRI}> .\n")
+        self.assertEqual(self.lines(ref), [])
+        self.assertEqual(self.lines("worktree"), [("driver", "unmarked")])
+
     def test_an_unreachable_store_says_so(self):
         def no_login(store):
             raise FileNotFoundError(store)
-        with mock.patch.object(ss, "neo4j_session", no_login), mock.patch.object(lm, "newest", lambda: [VERSION_IRI]):
+        with mock.patch.object(ss, "neo4j_session", no_login), mock.patch.object(lm, "newest", lambda ref=None: [VERSION_IRI]):
             self.assertEqual(lm.check(("driver", "aura")), [("driver", "unreachable", "unreachable (FileNotFoundError)"),
                                                             ("aura", "unreachable", "unreachable (FileNotFoundError)")])
 
@@ -307,7 +343,7 @@ class Drift(Package):
                 mock.patch.object(ss, "read_markers_and_counts", lambda stores: ({"driver": marker}, {"driver": [1, 2, 3]})), \
                 mock.patch.object(ss, "read_tech_markers", lambda stores: {}), \
                 mock.patch.object(ss, "tech_drift", lambda *a: [("driver", "current", "")]), \
-                mock.patch.object(ss, "logical_models", lambda: types.SimpleNamespace(check=lambda stores: [("driver", "unmarked", "")])), \
+                mock.patch.object(ss, "logical_models", lambda: types.SimpleNamespace(check=lambda stores, ref=None: [("driver", "unmarked", "")])), \
                 mock.patch.object(ss, "expected_for", lambda ref, stores: want), mock.patch("sys.stdout", out):
             with self.assertRaises(SystemExit) as stop:
                 ss.main()
