@@ -19,7 +19,7 @@ What each store gets, beside the module's vocabulary, which the projection loads
   projection's counts, hash and round trip read Resource nodes only, so they never read the subgraph; sync_stores.py
   check compares it with the package's graphs on an lm:<store> line, by marker and content fingerprint.
 
-The labels, node shapes and loader are Claude's build choice, delegated under EPM-DEC-001-0028. Logins come from the
+The labels, node shapes and loader are a build choice delegated to the build's agent, delegated under EPM-DEC-001-0028. Logins come from the
 files sync_stores.py reads (EPM_STORES_JSON names another environment's); none is printed.
 Needs rdflib; load also needs neo4j for the Neo4j stores, pyoxigraph for Jena and Delta, and databricks-sql-connector
 for Delta (uv run --with ...).
