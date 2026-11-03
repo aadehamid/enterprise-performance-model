@@ -29,6 +29,9 @@ The rules, in order:
                    (the decision's amendment of 2026-11-01). A draft keeps its status.
  16. skills-left-out: a shipped skill's sentences that name the way-of-working skill, which does not ship -> what
                    the skill says to do without it.
+ 17. kept-out:     every statement that the build kept something out of the repository goes (the customer's inputs and
+                   named sources: the provenance stays) or, for the logical models, becomes a pointer to
+                   HOW-TO-UPDATE.md, "Inputs from outside the repository"; the skills' generic text stays.
 
 Rule 3 also rewrites the short forms that follow a citation ("EPM-DEC-001-0020, 0021 and 0036", "(0021)",
 "amending 0021") when the number is a record in the record-dates map; a four-digit number that is not a known
@@ -624,6 +627,69 @@ def rule_skills_left_out(text, ctx):
     return text, n
 
 
+# Rule 17's patterns: the release never says the build kept something out of the repository (the decision owner's
+# request of 2026-11-03). It may say that some inputs are read from a folder outside the repository, and HOW-TO-UPDATE.md,
+# "Inputs from outside the repository", gives the reader both ways: keep that pattern or move the files into the copy
+# (the decision owner's refinement, the same day). So each withholding statement either becomes a pointer to that
+# section, where the reader may need the input (the logical models), or goes, where the reader gains nothing (the
+# customer inputs and sources already built into the modules: the provenance stays). The skills' generic text stays.
+# The rule runs after rules 3 and 15, so it reads their wording ("the decision of DATE"). The gate's check "something
+# kept out of the repository" fails on any withholding statement left.
+_DATE = r"\(the decision of \d{4}-\d{2}-\d{2}"
+_INPUTS = "the release's `HOW-TO-UPDATE.md`, \"Inputs from outside the repository\""
+KEPT_OUT = [
+    # Customer inputs and named sources held outside: the source stays, the withholding goes.
+    (r";\s+not\s+in\s+the\s+repository\)", ")"),
+    (r"\(kept\s+out\s+of\s+the\s+repository,\s+", "("),
+    (r",\s+kept\s+out\s+of\s+the\s+repository\s+by\s+the\s+decision\s+of\s+\d{4}-\d{2}-\d{2}\)", ")"),
+    (r"\s+and\s+held\s+outside\s+the\s+repository(?=\s+" + _DATE + ")", ""),
+    (r";\s+held\s+outside\s+the\s+repository(?=\s+" + _DATE + ")", ""),
+    (r",\s+which\s+stays\s+outside\s+the\s+repository(?=\s+" + _DATE + ")", ""),
+    (r",\s+which\s+is\s+not\s+in\s+this\s+repository(?=\s+" + _DATE + ")", ""),
+    (r",\s+and\s+the\s+decision\s+owner's\s+customer\s+data\s+is\s+not\s+in\s+the\s+repository\s+" + _DATE + r"\)", ""),
+    (r"The decision owner's model and other inputs are not in this repository; the definitions are derived from them,",
+     "The definitions are derived from the decision owner's model and other inputs,"),
+    (r" The inputs are not in this repository\.", ""),
+    (r" The customer files themselves stay out of the repository\.", ""),
+    (r";\s+the\s+reload's\s+log\s+is\s+kept\s+outside\s+the\s+repository\.", "."),
+    # The customer logical model: it is in the release; where its files came from is a pointer to the two ways.
+    (r"(the customer logical model), is kept out of `main` and joins the release", r"\1, joins the release"),
+    (r"(the customer logical model), stays out of `main` and ships only in the release, as", r"\1, ships in the release as"),
+    (r"stays out of `main`: its export lives in the gitignored folder `release-cut/augment/logical-model/`, and only the "
+     r"release holds it " + _DATE + r"([^)]*)\)",
+     lambda m: "ships in this release " + m.group(0)[m.group(0).index("(the decision of"):] +
+               f"; its export and links file were read from a folder outside the repository ({_INPUTS})"),
+    (r" For the customer model it sits in the augment folder, not in `main`\.",
+     f" For the customer model it is in `models/` ({_INPUTS}, says where else it may live)."),
+    (r" The customer model never enters `main` " + _DATE + r"[^)]*\)\.", ""),
+    (r",\s+so\s+the\s+customer\s+model's\s+graphs\s+stay\s+in\s+the\s+gitignored\s+augment\s+folder\s+beside\s+its\s+export\.",
+     ", so a model's graphs sit beside its export,\ninside the repository or in a folder outside it (HOW-TO-UPDATE.md, \"Inputs from outside the repository\")."),
+    (r" from files kept outside the repository(?= " + _DATE + ")", " from files read from outside the repository"),
+    # The guide's and the walkthrough's sections on the augment folder: the pattern stays, with a pointer to the two ways.
+    (r"<h3>A confidential export stays outside the repository</h3>", "<h3>A confidential export, read from outside the repository</h3>"),
+    (r"(<h3[^>]*>)Files kept outside Git(</h3>)", r"\1Files read from outside Git\2"),
+    (r"\"Adding a logical model\" above, and <code>scripts/share_release/README\.md</code>, give the detail\.",
+     "\"Adding a logical model\" above gives the detail, and <code>HOW-TO-UPDATE.md</code>, \"Inputs from outside the repository\", "
+     "the two ways to work with such files."),
+    (r"\"Add a logical model\", below, steps 2 and 7, and <code>scripts/share_release/README\.md</code> give the detail\.",
+     "\"Add a logical model\", below, steps 2 and 7, give the detail, and <code>HOW-TO-UPDATE.md</code>, \"Inputs from outside the "
+     "repository\", the two ways to work with such files."),
+    (r"(so the export never enters <code>main</code>\.)( Choose a slug)",
+     r'\1 To keep the files in your copy instead, see <code>HOW-TO-UPDATE.md</code>, "Inputs from outside the repository".\2'),
+    # The walkthrough's file map: its group of this build's working files outside the repositories goes, heading and table.
+    (r'\s*<h3 id="fm-outside"[^>]*>.*?</tbody></table></div>', ""),
+]
+
+
+def rule_kept_out(text, ctx):
+    """What the build kept out of the repository (rule 17): each statement goes or points to the two ways to work with
+    inputs from outside the repository."""
+    n = 0
+    for pattern, repl in KEPT_OUT:
+        text, k = _count(pattern, repl, text, re.S); n += k
+    return text, n
+
+
 def rule_names(text, ctx):
     n = 0
     for name in owner.owner_names():
@@ -651,7 +717,7 @@ RULES = [
     ("attribution", rule_attribution), ("approvals", rule_approvals), ("hosts", rule_hosts),
     ("repository", rule_repository), ("numbers", rule_numbers), ("peers", rule_peers), ("left-out", rule_left_out),
     ("previous-paths", rule_previous_paths), ("underscores", rule_underscores), ("agents", rule_agents),
-    ("skills-left-out", rule_skills_left_out), ("names", rule_names),
+    ("skills-left-out", rule_skills_left_out), ("kept-out", rule_kept_out), ("names", rule_names),
 ]
 
 

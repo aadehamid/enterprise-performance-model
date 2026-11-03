@@ -102,7 +102,7 @@ def test_the_guide_has_every_section_and_no_unfilled_fact():
         text = manifest.fill(f.read())
     assert "{{" not in text
     for heading in ("Start here", "Patch, minor or major", "Change a concept's definition", "Add a concept or property", "Change a process",
-                    "Add a module", "The cascade", "Keep the catalog, regression and projection current", "Project into Neo4j and Jena",
+                    "Add a module", "Inputs from outside the repository", "The cascade", "Keep the catalog, regression and projection current", "Project into Neo4j and Jena",
                     "The optional check against this release", "The namespace", "What you can ignore"):
         assert f"## {heading}" in text, heading
 
