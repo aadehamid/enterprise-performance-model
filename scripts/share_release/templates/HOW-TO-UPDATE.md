@@ -83,6 +83,10 @@ Every change below ends with these steps. Run them once for the module you chang
 
 6. If you keep stores loaded, reload them ("Project into Neo4j and Jena") and run the check in its step 5. The release is done only when every store you keep reads `current`, on its ontology line and on its `tech:` line, which is the technical graph's.
 
+<!-- augment -->
+   This release holds `logical-model`, so the check also prints an `lm:` line for the local Neo4j and AuraDB, one per store, and the release is done only when each of those reads `current` too.
+
+<!-- /augment -->
 ## Change a concept's definition
 
 The worked example changes the definition of the measure Unit Utilization in `kpi`. The wording changes and the meaning does not, so it is a patch.
@@ -219,7 +223,7 @@ bash scripts/check.sh
 
 Questions 51 to 55 in `$ONT/regression/` run on the made-up example model. To ask them of your models, run the queries in `$ONT/regression/queries/q51-*.rq` to `q55b-*.rq` over the package's files.
 
-The stores load each model too: Jena and Delta its two graphs as named graphs, the local Neo4j and AuraDB the model as its own subgraph. The check in step 5 of the release steps then prints an `lm:` line for each Neo4j store, and a release is done only when each of those reads `current` too.
+The stores load each model too: Jena and Delta its two graphs as named graphs, the local Neo4j and AuraDB the model as its own subgraph. `sync_stores.py check`, in step 5 of "Project into Neo4j and Jena", then prints an `lm:` line for each Neo4j store, and a release is done only when each of those reads `current` too (release steps, step 6).
 
 <!-- /augment -->
 ## The cascade
