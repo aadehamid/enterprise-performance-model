@@ -1,3 +1,4 @@
+import types
 """The augment folder (augment.py; EPM-DEC-001-0113), tested with the logical-model module's made-up example as the
 folder: without --augment nothing changes; with it the models are staged through the rules (the module's own IRIs move
 to w3id.org/mpc, ER Studio's namespace is untouched and passes the gate), the package is built, registered and counted,
@@ -478,3 +479,15 @@ def test_the_figures_context_takes_the_release_figures_and_prints_the_requiremen
     ctx = augment.figure_context({"slugs": ["m"], "requires": "old", "modules": 1},
                                  {"modules": 13, "requires": {"party": "2.1.0", "system": "1.5.0"}})
     assert ctx == {"slugs": ["m"], "modules": 13, "requires": "party 2.1.0, system 1.5.0"}
+
+
+def test_the_rebuilds_figures_pass_runs_when_the_figures_hold_the_requirements(tmp_path, monkeypatch):
+    # The pass itself, as the cut runs it: the figures come back from the release tree with their requires dict.
+    rb = rebuild.Rebuild(str(tmp_path / "rel"), str(tmp_path))
+    rb.augment_ctx = {"slugs": ["m"], "requires": "old"}
+    fig = {"modules": 13, "requires": {"party": "2.1.0"}}
+    monkeypatch.setattr(rb, "run", lambda *a, **k: types.SimpleNamespace(stdout=json.dumps(fig) + "\n"))
+    seen = {}
+    monkeypatch.setattr(augment, "apply", lambda release, patches, ctx: seen.update(ctx) or ["a page"])
+    rb.augment_figures()
+    assert seen["requires"] == "party 2.1.0" and seen["modules"] == 13 and rb.steps[-1]["patched"] == ["a page"]
