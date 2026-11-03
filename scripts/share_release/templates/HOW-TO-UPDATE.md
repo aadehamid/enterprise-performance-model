@@ -81,7 +81,7 @@ Every change below ends with these steps. Run them once for the module you chang
 
    After a change, the script prints a note that the projection report describes an earlier build, until you project into Neo4j again. The note does not fail the check.
 
-6. If you keep stores loaded, reload them ("Project into Neo4j and Jena") and run the check in its step 5. The release is done only when every store you keep reads `current`, on its ontology line and on its `tech:` line, which is the technical graph's.
+6. If you keep stores loaded, reload them ("Project into Neo4j and Jena") and run the check in its step 5. The release is done only when every store you keep reads `current`, on its ontology line, on its `tech:` line, which is the technical graph's, and, when your releases hold `logical-model`, on each `lm:` line, which is a logical model's.
 
 ## Change a concept's definition
 
