@@ -34,7 +34,7 @@ Each module package has three graphs: `<module>.ttl` (the content), `shapes.ttl`
 | `test_rebuild_stores.py` | The offline tests of those two |
 | `skill-run/environment.example` | Every key of an environment file, with its default |
 | `sync_stores.py` | Marks the local Neo4j, AuraDB and Databricks with the release set each was loaded from, after checking it against the repository; the drift check against main's newest catalog, which judges Jena from its graph names and triple counts; and `sync`, which reloads what is behind with the driver (AuraDB and Databricks only with `--cloud`), takes the result into this folder, loads the demo's technical graph back, and marks what it reloaded. The runbook's "Keeping the stores in step" gives the commands |
-| `test_sync_stores.py` | The offline tests of `sync_stores.py` and of `.github/workflows/sync-stores.yml`, the release-tag workflow that runs the driver for AuraDB and Databricks, inactive until its repository secrets exist |
+| `test_sync_stores.py` | The offline tests of `sync_stores.py` and of `.github/workflows/sync-stores.yml`, the release-tag workflow that runs the driver for AuraDB and Databricks, then loads the technical graph into AuraDB and Delta, marks and checks both, inactive until its repository secrets exist |
 
 `scripts/check.sh` runs `pipeline.py build --verify` and the tests. The load needs Docker and Java, so it runs on a workstation, not in CI.
 
