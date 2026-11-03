@@ -289,6 +289,12 @@ def patch_open_items(text, ctx):
 # the sentence dates it. Each edit is anchored and stops the cut when its anchor is missing. test_augment.py's
 # FIGURE_CLASSES lists every figure of the two pages, with this rewrite or the reason it stays.
 
+def figure_context(ctx, fig):
+    """The patches' context for the figures pass: the augment context, the release's figures over it, and the package's
+    requirements as the text the module's card and row print ("data-product 1.2.0, party 2.1.0")."""
+    return {**ctx, **fig, "requires": ", ".join(f"{d} {v}" for d, v in fig["requires"].items())}
+
+
 def release_figures(release):
     """The figures the guide and walkthrough state, from the release tree as built: the modules and their newest
     releases (epm_facts.py's module list), the triples of the newest releases loaded together, the catalog's

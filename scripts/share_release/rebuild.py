@@ -330,7 +330,7 @@ class Rebuild:
                 "print(json.dumps(augment.release_figures('.')))\n")
         r = self.run("figures", ["-c", code], ".")
         fig = json.loads(r.stdout.strip().splitlines()[-1])
-        ctx = dict(self.augment_ctx, **fig, requires=", ".join(f"{d} {v}" for d, v in fig["requires"].items()))
+        ctx = augment.figure_context(self.augment_ctx, fig)
         places = augment.apply(self.release, augment.FIGURES, ctx)
         self.steps.append({"step": "augment figures", "figures": fig, "patched": places, "returncode": 0})
 
