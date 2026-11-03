@@ -11,8 +11,9 @@ demo's live technical graph.
 It is cut from the pricing demo's technical graph (demos/downstream-pricing-databricks-free/graph/
 tech-graph.ttl): everything upstream of the metric views that compute the crack-spreads measure, the
 agents bound to them and the orchestrator routing to those agents, the source databases and hosts they
-copy from, the pipeline steps that produced them and the quality checks that test them. The demo's own
-terms (urn:pricing-demo:tech-vocab#) are mapped onto the module's (to_module). One design is added that
+copy from, the pipeline steps that produced them and the quality checks that test them. The demo's graph uses
+the module's terms, so it is cut as it stands (demo_graph); until 2026-11-02 it used its own vocabulary
+(urn:pricing-demo:tech-vocab#), which a mapping here translated. One design is added that
 the demo lacks, so that question 49 (who answers for it) has an answer to find: a gold table designed as
 an example data product, produced by a process that has an Accountable role in organization. In
 the ontology today no path reaches an owner: the pricing data products record no producing process, and
@@ -36,61 +37,24 @@ RESULT = Namespace("https://w3id.org/lsc/ontology/modules/technical-graph/check-
 LAYER = Namespace("https://w3id.org/lsc/ontology/modules/data-product/layer/")
 DP = Namespace("https://w3id.org/lsc/ontology/modules/data-product/")
 MEASURE = Namespace("https://w3id.org/lsc/ontology/modules/kpi/measure/")
-TV = Namespace("urn:pricing-demo:tech-vocab#")
+TV = Namespace("urn:pricing-demo:tech-vocab#")  # the demo's old vocabulary, which demo_graph refuses
 EX = Namespace("urn:example:technical-graph:")
 LINE = Namespace("https://w3id.org/lsc/ontology/modules/data-product/line/")
 STATUS = Namespace("https://w3id.org/lsc/ontology/modules/data-product/status/")
 AUTH = Namespace("https://w3id.org/lsc/ontology/modules/authority/")
 TIER = Namespace("https://w3id.org/lsc/ontology/modules/authority/tier/")
 
-# The demo's classes, mapped to the module's class and, for a data object, its layer (EPM-DEC-001-0112, item 2).
-CLASSES = {
-    "ReplicaTable": ("Table", "replica"), "SilverTable": ("Table", "silver"), "GoldTable": ("Table", "gold"),
-    "MetricView": ("MetricView", "metric-view"), "DefinitionsView": ("DefinitionsView", None),
-    "TechGraphTable": ("Table", None), "TripleTable": ("Table", None),
-    "PipelineStep": ("PipelineStep", None), "QualityCheck": ("QualityCheck", None),
-    "GenieAgent": ("Agent", None), "Orchestrator": ("Orchestrator", None),
-    "SourceDatabase": ("SourceDatabase", None), "Host": ("Host", None),
-}
-# The demo's properties with the same meaning and name in the module.
-SAME = {"name", "producedBy", "rows", "lastRefresh", "definedIn", "readsFrom", "copies", "designedAs", "order",
-        "next", "tables", "hostedOn", "hidden", "detail", "checks", "checkedAt", "implements", "standsFor", "binds",
-        "routesTo"}
 MEASURE_OF_EXAMPLE = MEASURE["crack-spreads"]
 PRODUCING_PROCESS = URIRef("https://w3id.org/lsc/ontology/process/CM-1-1-2-1")  # has an Accountable role (assignments.ttl)
 
 
-def to_module(demo):
-    """The demo's graph in the module's terms. A term the module does not define stops the build."""
-    g = Graph()
-    unknown = set()
-    for s, p, o in demo:
-        if p == RDF.type and str(o).startswith(str(TV)):
-            cls, layer = CLASSES.get(str(o)[len(str(TV)):], (None, None))
-            if cls is None:
-                unknown.add(str(o))
-                continue
-            g.add((s, RDF.type, TG[cls]))
-            if layer:
-                g.add((s, TG.layer, LAYER[layer]))
-        elif str(p).startswith(str(TV)):
-            local = str(p)[len(str(TV)):]
-            if local in SAME:
-                if local == "rows" or local == "tables":
-                    o = Literal(o.toPython(), datatype=XSD.decimal)
-                g.add((s, TG[local], o))
-            elif local == "label":
-                g.add((s, RDFS.label, Literal(str(o), lang="en")))
-            elif local == "result":
-                g.add((s, TG.result, RESULT[str(o)]))
-            elif local == "layer":
-                continue  # the layer comes from the class (CLASSES), from the data-product code list
-            else:
-                unknown.add(str(p))
-        else:
-            g.add((s, p, o))
-    if unknown:
-        sys.exit("the demo's graph uses terms the module does not map:\n  " + "\n  ".join(sorted(unknown)))
+def demo_graph(path=DEMO_GRAPH):
+    """The demo's technical graph, which uses the module's terms since the demo moved onto them (EPM-DEC-001-0112,
+    item 4). A term of the demo's old vocabulary (urn:pricing-demo:tech-vocab#) stops the build."""
+    g = Graph().parse(path)
+    old = sorted({str(t) for triple in g for t in triple if str(t).startswith(str(TV))})
+    if old:
+        sys.exit("the demo's graph still uses its old vocabulary:\n  " + "\n  ".join(old))
     return g
 
 
@@ -154,8 +118,7 @@ def designed_example(g):
 
 
 def build():
-    demo = Graph().parse(DEMO_GRAPH)
-    g = designed_example(cut(to_module(demo)))
+    g = designed_example(cut(demo_graph()))
     for prefix, ns in (("tg", TG), ("result", RESULT), ("layer", LAYER), ("dp", DP),
                        ("measure", MEASURE), ("ex", EX), ("skos", SKOS), ("dcterms", DCTERMS), ("rdfs", RDFS)):
         g.bind(prefix, ns)

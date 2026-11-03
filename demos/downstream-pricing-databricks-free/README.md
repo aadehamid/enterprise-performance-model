@@ -144,11 +144,13 @@ E5 describes the pipeline itself, which the business ontology does not model, as
 `tech_graph load` put both into the two local Neo4j stores of that day and AuraDB (*2026-11-01:* one local Neo4j and AuraDB, `../../business_architecture/ontology/projection/LOCAL-STORES.md`): in each, 134 nodes labelled `Tech`, 377 edges between them and 133 edges to ontology nodes, every one of which found its target (*2026-10-29, later:* since E6, 142 `Tech` nodes and 400 edges between them, still 133 to ontology nodes; below; since E7, 407 between them). The `Tech` nodes carry no `Resource` label and no edge points into them from the ontology, so the projection's counts and hash, which read only `:Resource` nodes and the edges between them, did not move: 4,193 nodes and 21,767 relationships in the pipeline's store and 4,193 and 22,142 in the driver's and AuraDB, before and after, and `pipeline.py`'s `graph_hash` gave the same value before and after the load. A pipeline reload or a driver run empties its store, so run `tech_graph load` again after one. `tech_graph walk` runs one Cypher query from a gold table to the measures it implements:
 
 ```cypher
-MATCH (gold:Tech:GoldTable {name: 'gold_commercial_core.mips_mpr_executive_summary_fact'})<-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]->(m:Resource)
-OPTIONAL MATCH (agent:Tech:GenieAgent)-[:BINDS]->(view)
+MATCH (gold:Tech:Table {name: 'gold_commercial_core.mips_mpr_executive_summary_fact', layer: 'gold'})<-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]->(m:Resource)
+OPTIONAL MATCH (agent:Tech:Agent)-[:BINDS]->(view)
 RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos__prefLabel AS label,
        collect(DISTINCT agent.name) AS agents ORDER BY metric_view, measure
 ```
+
+(*2026-11-02, EPM-DEC-001-0112, item 4:* the technical graph now uses the technical-graph module's terms, so the walk starts at a `Table` whose `layer` is `gold` and finds `Agent` nodes; until then it named the demo's own labels `GoldTable` and `GenieAgent`. The nodes, edges and properties are otherwise the same: 142 `Tech` nodes and 540 edges, with the labels `Table` (for the old `ReplicaTable`, `SilverTable`, `GoldTable`, `TechGraphTable` and `TripleTable`) and `Agent` (for `GenieAgent`), and no `layer` property on the definitions views and the `tech_graph` tables, which the module's layer list does not cover. DATA.md, "The technical graph and the decision trail (E5)", lists the classes.)
 
 From `gold_commercial_core.mips_mpr_executive_summary_fact` it returned 11 rows: the Executive Summary view's six measures (Crack Spreads Pricing and the five market prices), answered by Executive Summary KPIs Analytics, and the pricing view's five, answered by Pricing and Market Margin Analytics. `tech_graph sync` copied the graph from the pipeline's Neo4j, its source, into `idp_sbx.tech_graph.tech_graph_nodes` (134 rows) and `tech_graph_edges` (510 rows; *2026-10-29, later:* 142 and 533 since E6, and 540 since E7). No Genie agent binds those tables yet.
 

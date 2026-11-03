@@ -20,7 +20,11 @@ design's tables beside the sources that hold it: the design (data-product), the 
 Unity Catalog.
 load gives every node the label Tech and no Resource label, and starts every edge at a Tech node (ending at another
 Tech node or an ontology node), so the projection's counts and hashes, which read :Resource nodes and the edges between them, do not change;
-load checks that on each store. A driver run empties its store, so run load again after one. In Jena each file is its
+load checks that on each store. The technical graph uses the technical-graph module's terms (EPM-DEC-001-0112, item 4),
+so the shapes in business_architecture/ontology/technical-graph/shapes.ttl check it; a node's labels are its module
+class (a replica, silver or gold table is a Table with a layer property). The decision trail keeps the demo's own
+vocabulary (VOCAB) for the terms the module does not define: Decision, EvidenceItem, affects, concerns, domain, kind,
+name, recordedIn and selectedOption. A driver run empties its store, so run load again after one. In Jena each file is its
 own named graph beside the release graphs, and load fails when an edge's ontology target is in no release graph.
 
 graph/*.ttl is what the release ships, from an earlier collect. build writes a refreshed copy to out/tech/graph/, which
@@ -65,7 +69,11 @@ MEASURE_IDENTIFIERS = os.path.join(REPO, "business_architecture", "ontology", "k
 AURA_TEST = os.path.join(OUT, "tech", "aura-test.json")
 MANIFEST = os.path.join(OUT, "replica", "manifest.json")
 TECH = "urn:pricing-demo:tech:"
-VOCAB = "urn:pricing-demo:tech-vocab#"
+VOCAB = "urn:pricing-demo:tech-vocab#"  # the decision trail's own terms, which the technical-graph module does not define
+TG = "https://w3id.org/lsc/ontology/modules/technical-graph/"
+LAYER = "https://w3id.org/lsc/ontology/modules/data-product/layer/"
+RESULT = TG + "check-result/"
+RDFS = "http://www.w3.org/2000/01/rdf-schema#"
 ONTOLOGY = "https://w3id.org/lsc/ontology/"
 PROV = "http://www.w3.org/ns/prov#"
 GRAPH_QUERIES = ("objects.rq", "runtime.rq", "links.rq", "steps.rq")
@@ -80,17 +88,18 @@ TABLE = ONTOLOGY + "modules/data-product/table/"
 LINEAGE_WINDOW_MINUTES = 10  # observed edges count from a target's latest build: its statement's edges share one time
 LINEAGE_POLL_SECONDS = 60  # how often collect --lineage-wait reads Unity Catalog's lineage again
 SOURCES = ("designed", "sql", "observed")  # where lineage reads an edge: data-product, the SQL files, Unity Catalog
-# A schema's layer and class, as sparql/objects.rq gives them; the last entry takes any other schema.
-LAYERS = (("replica_", "replica", "ReplicaTable"), ("silver_", "silver", "SilverTable"), ("gold_", "gold", "GoldTable"),
-          ("semantic_sem_commercial", "metric-view", "MetricView"), ("ontology_definitions", "definitions", "DefinitionsView"),
-          ("", "tech-graph", "TechGraphTable"))
+# A schema's layer, the module class and the value of data-product's layer list (None: no layer), as sparql/objects.rq
+# gives them; the last entry takes any other schema.
+LAYERS = (("replica_", "replica", "Table", "replica"), ("silver_", "silver", "Table", "silver"), ("gold_", "gold", "Table", "gold"),
+          ("semantic_sem_commercial", "metric-view", "MetricView", "metric-view"),
+          ("ontology_definitions", "definitions", "DefinitionsView", None), ("", "tech-graph", "Table", None))
 STORES = {  # the stores LOCAL-STORES.md lists, with their login files; the newest file that exists is the live one
     # a full driver run writes the rebuild's login; a run with --skip rebuild writes only the first container's
     "driver": ("bolt://127.0.0.1:17711", ("~/lpg-out/epm-rebuild/neo4j-run/run.env", "~/lpg-out/epm/neo4j-run/run.env")),
     "aura": (None, ("~/.config/neo4j/aura.env",)),
 }
-WALK = f"""MATCH (gold:Tech:GoldTable {{name: $gold}})<-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]->(m:Resource)
-OPTIONAL MATCH (agent:Tech:GenieAgent)-[:BINDS]->(view)
+WALK = f"""MATCH (gold:Tech:Table {{name: $gold, layer: 'gold'}})<-[:READS_FROM]-(view:Tech:MetricView)-[:IMPLEMENTS]->(m:Resource)
+OPTIONAL MATCH (agent:Tech:Agent)-[:BINDS]->(view)
 RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos{GRAPH_SEP}prefLabel AS label,
        collect(DISTINCT agent.name) AS agents ORDER BY metric_view, measure"""
 
@@ -331,12 +340,12 @@ CATEGORIES = [category(c) for n in (3, 2, 1) for c in itertools.combinations(SOU
 
 
 def sql_lineage(g):
-    """The graph's readsFrom edges that objects.rq read from the SQL files (the reader has tv:definedIn), as
+    """The graph's readsFrom edges that objects.rq read from the SQL files (the reader has tg:definedIn), as
     (source, target) in schema.name form."""
     from rdflib import URIRef
     obj = TECH + "object/"
-    defined = set(g.subjects(URIRef(VOCAB + "definedIn"), None))
-    return {(str(o)[len(obj):], str(s)[len(obj):]) for s, o in g.subject_objects(URIRef(VOCAB + "readsFrom"))
+    defined = set(g.subjects(URIRef(TG + "definedIn"), None))
+    return {(str(o)[len(obj):], str(s)[len(obj):]) for s, o in g.subject_objects(URIRef(TG + "readsFrom"))
             if s in defined and str(o).startswith(obj)}
 
 
@@ -423,10 +432,11 @@ def collect(manifest_path=MANIFEST, lineage_wait=0):
     aura = aura_check()
     if aura:
         checks.append(aura)
+    checks, skipped = split_skipped(checks)
     agents = [{"slug": slug(title), "title": title, "views": [t for t, _ in spec["tables"]]} for title, spec in genie.AGENTS.items()]
     live = {"collected_at": now(), "catalog": cat, "triples": e["EPM_TRIPLES"], "host": host_of(dsn),
             "replicated_at": manifest["replicated_at"], "databases": databases, "objects": objects, "tags": tags,
-            "source_systems": source_systems(source_tags), "agents": agents, "checks": checks, "decisions": decisions,
+            "source_systems": source_systems(source_tags), "agents": agents, "checks": checks, "skipped_checks": skipped, "decisions": decisions,
             "evidence": evidence}
     os.makedirs(os.path.dirname(LIVE), exist_ok=True)
     with open(LIVE, "w") as f:
@@ -438,8 +448,16 @@ def collect(manifest_path=MANIFEST, lineage_wait=0):
     print(f"wrote {PROPOSALS}: {len(drafted)} proposals for kpi or data-product, for a person to review")
     for c in checks:
         print(f"check {c['id']}: {c['result']} ({c['detail'][:160]})")
+    for c in skipped:
+        print(f"check {c['id']}: skipped, not in the graph ({c['detail'][:160]})")
     print(f"wrote {LIVE}: {len(databases)} databases, {len(objects)} objects, {len(decisions)} decisions, {len(evidence)} evidence items")
     return live
+
+
+def split_skipped(checks):
+    """(checks that ran, checks that were skipped). A skipped check has no result in the module's code list (pass, fail,
+    differs), so it stays out of the graph; collect reports it and live.json keeps it apart, under skipped_checks."""
+    return [c for c in checks if c["result"] != "skipped"], [c for c in checks if c["result"] == "skipped"]
 
 
 def slug(title):
@@ -493,14 +511,15 @@ def databricks_only(g, objects, observed):
     for o in objects:
         iri = URIRef(TECH + "object/" + o["id"])
         if iri not in typed:
-            layer, cls = next((layer, cls) for prefix, layer, cls in LAYERS if o["id"].startswith(prefix))
-            g.add((iri, RDF.type, URIRef(VOCAB + cls)))
-            g.add((iri, URIRef(VOCAB + "name"), Literal(o["id"])))
-            g.add((iri, URIRef(VOCAB + "layer"), Literal(layer)))
+            cls, layer = next((cls, layer) for prefix, _, cls, layer in LAYERS if o["id"].startswith(prefix))
+            g.add((iri, RDF.type, URIRef(TG + cls)))
+            g.add((iri, URIRef(TG + "name"), Literal(o["id"])))
+            if layer:
+                g.add((iri, URIRef(TG + "layer"), URIRef(LAYER + layer)))
             added.append(o["id"])
     for source, target in observed:
         if target in added:
-            g.add((URIRef(TECH + "object/" + target), URIRef(VOCAB + "readsFrom"), URIRef(TECH + "object/" + source)))
+            g.add((URIRef(TECH + "object/" + target), URIRef(TG + "readsFrom"), URIRef(TECH + "object/" + source)))
     return added
 
 
@@ -516,7 +535,8 @@ def build(to_repo=False):
     os.makedirs(folder, exist_ok=True)
     for name, g in zip(GRAPH_FILES, (graph, trail)):
         g = typed_only(g, typed)
-        for prefix, ns in (("tv", VOCAB), ("tech", TECH), ("prov", PROV), ("measure", ONTOLOGY + "modules/kpi/measure/")):
+        for prefix, ns in (("tv", VOCAB), ("tg", TG), ("layer", LAYER), ("result", RESULT), ("rdfs", RDFS), ("tech", TECH),
+                           ("prov", PROV), ("measure", ONTOLOGY + "modules/kpi/measure/")):
             g.bind(prefix, Namespace(ns))
         g.serialize(os.path.join(folder, name), format="turtle")
         nodes, edges = graph_rows(g)
@@ -525,15 +545,15 @@ def build(to_repo=False):
 
 
 # What a run changes, named one by one: anything else that differs is a difference in structure.
-VOLATILE = tuple(VOCAB + name for name in ("rows", "tables", "lastRefresh", "checkedAt", "result", "detail"))
+VOLATILE = tuple(TG + name for name in ("rows", "tables", "lastRefresh", "checkedAt", "result", "detail"))
 
 
 def structure(g):
     """A graph's objects, edges and stable values, without what a run changes: the VOLATILE values, and the host, which
     names the machine the source databases ran on. Returns (typed nodes, statements)."""
     from rdflib import RDF
-    host = VOCAB + "hostedOn"
-    hosts = {s for s, o in g.subject_objects(RDF.type) if str(o) == VOCAB + "Host"}
+    host = TG + "hostedOn"
+    hosts = {s for s, o in g.subject_objects(RDF.type) if str(o) == TG + "Host"}
     nodes = {(str(s), str(o)) for s, o in g.subject_objects(RDF.type) if s not in hosts}
     statements = {(str(s), str(p), str(o)) for s, p, o in g
                   if p != RDF.type and str(p) != host and str(p) not in VOLATILE and s not in hosts}
@@ -577,26 +597,36 @@ def neo4j_value(value):
         return value.isoformat()
     if isinstance(value, Decimal):
         return int(value) if value == value.to_integral_value() else float(value)
+    if isinstance(value, str):
+        return str(value)  # a language-tagged label comes back from rdflib as a Literal
     return value
 
 
+# Values of a code list the node carries as a property holding the value's name (a Table's layer: 'gold'; a check's
+# result: 'pass'), as the graph held them before the module's terms, not as an edge to the code list.
+CODED = (TG + "layer", TG + "result")
+
+
 def graph_rows(g):
-    """Neo4j rows from the Turtle: a node per typed technical-graph IRI, labelled Tech and its tv: classes, with its
-    literals as properties; an edge per IRI-valued statement, to a Tech node or to an ontology resource."""
+    """Neo4j rows from the Turtle: a node per typed technical-graph IRI, labelled Tech and its class, of the module
+    (tg:) or of the decision trail (tv:), with its literals and CODED values as properties; an edge per other IRI-valued
+    statement, to a Tech node or to an ontology resource."""
     from rdflib import RDF, Literal, URIRef
     nodes, edges = {}, []
     for s in sorted(set(g.subjects(RDF.type, None)), key=str):
         if not str(s).startswith(TECH):
             continue
-        classes = sorted(local_name(c) for c in g.objects(s, RDF.type) if str(c).startswith(VOCAB))
+        classes = sorted(local_name(c) for c in g.objects(s, RDF.type) if str(c).startswith((TG, VOCAB)))
         props = {"uri": str(s)}
         for p, o in g.predicate_objects(s):
             if isinstance(o, Literal):
                 props[local_name(p)] = neo4j_value(o.toPython())
+            elif str(p) in CODED:
+                props[local_name(p)] = local_name(o)
         props["types"] = sorted(str(c) for c in g.objects(s, RDF.type))
         nodes[str(s)] = {"labels": ["Tech"] + classes, "props": props}
     for s, p, o in sorted(g, key=lambda t: tuple(map(str, t))):
-        if str(s) in nodes and isinstance(o, URIRef) and p != RDF.type:
+        if str(s) in nodes and isinstance(o, URIRef) and p != RDF.type and str(p) not in CODED:
             edges.append({"s": str(s), "t": edge_type(p), "o": str(o), "ontology": not str(o).startswith(TECH)})
     return list(nodes.values()), edges
 

@@ -80,9 +80,20 @@ class Example(unittest.TestCase):
         self.assertTrue(ok, text)
 
     def test_the_demos_graph_conforms_in_the_modules_terms(self):
-        # The demo moves to the module's terms after its 1.0.0 (EPM-DEC-001-0112, item 4); its graph already fits.
-        ok, text = conforms(build_example.to_module(Graph().parse(build_example.DEMO_GRAPH)))
+        # The demo moved to the module's terms after its 1.0.0 (EPM-DEC-001-0112, item 4): its graph is checked as it stands.
+        ok, text = conforms(build_example.demo_graph())
         self.assertTrue(ok, text)
+
+    def test_the_demos_old_vocabulary_stops_the_build(self):
+        path = os.path.join(HERE, "example", "example-graph.ttl")
+        g = Graph().parse(path)
+        g.add((URIRef("urn:pricing-demo:tech:object/x"), RDF.type, URIRef("urn:pricing-demo:tech-vocab#GoldTable")))
+        import tempfile
+        with tempfile.NamedTemporaryFile("w", suffix=".ttl", delete=False) as f:
+            f.write(g.serialize(format="turtle"))
+        with self.assertRaises(SystemExit):
+            build_example.demo_graph(f.name)
+        os.unlink(f.name)
 
 
 class Questions(unittest.TestCase):
