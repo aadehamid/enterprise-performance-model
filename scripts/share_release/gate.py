@@ -301,13 +301,16 @@ def code_cursor(rel, text, m):
     return rel.endswith(".py") and m.group(0) == "Cursor" and (text[max(0, m.start() - 6):m.start()] == "class " or text[m.end():m.end() + 1] == "(")
 
 
+SKIP_DIRS = (".git", "__pycache__", ".pytest_cache", ".venv", "out")  # publish.SKIP_DIRS; a test keeps them equal
+
+
 def scan(release):
     hits = []
     note_found = False
     for root, dirs, files in os.walk(release):
-        # A virtual environment or a cache inside the tree is a validation artefact, never a shipped file (publish.py
-        # leaves them out of the zip and the branch).
-        dirs[:] = sorted(d for d in dirs if d not in (".git", "__pycache__", ".pytest_cache", ".venv"))
+        # A virtual environment, a cache or a run's out/ folder inside the tree is a validation artefact, never a
+        # shipped file: the gate skips exactly the folders publish.py leaves out of the zip and the branch.
+        dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS)
         for f in sorted(files):
             path = os.path.join(root, f)
             rel = os.path.relpath(path, release)
