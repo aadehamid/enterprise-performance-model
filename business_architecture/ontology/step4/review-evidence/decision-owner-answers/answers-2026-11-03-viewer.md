@@ -43,3 +43,7 @@ The decision owner's answer, verbatim:
 -->
 
 keep the vocabulary
+
+<!-- Source clarification, 2026-11-03. The decision owner's words, verbatim: -->
+
+by the way only released ontology in the private release repo will be viewed from the user. makes sesne

@@ -190,3 +190,9 @@ The accepted recommendations, quoted from the saved questions:
 - Question 5: "I recommend a read-only first release: browse, search, inspect and copy term identifiers. Comments, editing and saved review work stay outside this version."
 
 The whole ontology includes the customer schema. The earlier request that the customer model stays out of `main` still applies. Build code may live in `main`; the cut supplies the customer model from the release inputs. The separate logical-model view suggested in question 2 was not specifically accepted and is a presentation choice, not a requirement attributed to the decision owner.
+
+The decision owner also clarified the source boundary in `answers-2026-11-03-viewer.md`:
+
+> by the way only released ontology in the private release repo will be viewed from the user. makes sesne
+
+The viewer's user-facing data comes only from the released ontology in the private release repository.
