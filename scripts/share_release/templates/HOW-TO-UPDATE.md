@@ -273,7 +273,7 @@ The packages are the source. Neo4j and Jena are copies that you can empty and re
 
    The script stops at the first failing step and names it. The load fails if it lost a triple, added one or found a violation. The script also takes the result into `$ONT/projection/` and checks the stores against your packages.
 4. Commit `inferred.nt`, `projection-manifest.json` and `projection-report.json` from `$ONT/projection/`. `scripts/check.sh` then stops printing its note, and `python3 scripts/epm_facts.py projection` prints the new figures.
-5. To see later which store is behind your newest packages, or holds other technical-graph files than the demo's (the line that starts `tech:`):
+5. To see later which store is behind your newest packages, or holds other technical-graph files than the demo's (the line that starts `tech:`), or, when your releases hold `logical-model`, another model than the package's (the line that starts `lm:`):
 
    ```sh
    (cd $ONT/projection && uv run -q --no-project --with rdflib --with neo4j python sync_stores.py check --ref worktree --store driver --store jena)

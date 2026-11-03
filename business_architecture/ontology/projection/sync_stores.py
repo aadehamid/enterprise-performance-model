@@ -19,7 +19,7 @@ load, last, where a reload wiped it or it is not current. In main there is no lm
 
     python3 sync_stores.py expected [--ref origin/main]   # what a current store holds
     python3 sync_stores.py mark --store driver ...         # check a store against the repository, then mark it
-    python3 sync_stores.py check [--ref origin/main] [--store driver ...]   # the drift check, ontology and technical graph (default: all stores)
+    python3 sync_stores.py check [--ref origin/main] [--store driver ...]   # the drift check: ontology, technical graph and any logical models (default: all stores)
     python3 sync_stores.py sync [--cloud] [--dry-run]      # reload what is behind, then mark it
 
 The markers stay out of the projection: in Neo4j a node labelled EpmStoreMarker, never Resource, which the

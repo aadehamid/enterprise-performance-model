@@ -12,7 +12,8 @@ aura-test with AuraDB too (a Databricks job tries to reach AuraDB with the login
 is a result, which collect records as the check databricks-reaches-auradb), then collect, tech-build, tech-compare and
 lineage, in that order, because Unity Catalog's lineage keeps only recent builds; then tech-load, tech-sync, mark and
 check, which must read every chosen store current, ontology and technical graph (tech-load and tech-sync write the
-technical graph's markers), before a release is called done. When the newest releases hold the logical-model module,
+technical graph's markers) and, when the releases hold the logical-model module, each lm: line, before a release
+is called done. When the newest releases hold the logical-model module,
 model-load (logical_models.py load) comes before mark and puts the models into every chosen store; main holds no such
 module, so its plan has no model-load. Without Databricks the technical graph loads from what the release ships. Preflight refuses Databricks without
 AuraDB (EPM-DEC-001-0112, point 8): tech-compare would fail on a copy that has never run aura-test, because the shipped
