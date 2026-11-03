@@ -232,6 +232,8 @@ def drift(markers, live, want, stores=STORES):
     current, behind (marked from another release set), changed (its count moved since it was marked), unmarked, or
     unreachable (the store could not be read: no connection, no login file or a missing table, for example; the
     error's name follows the word). Jena has no marker: judge_jena reads it as current, behind, changed or empty.
+    Databricks is also judged per graph (live["databricks_graphs"], one GROUP BY): a graph missing, extra or holding
+    another row count than the release files' triples reads changed, with the graph named, even when the total holds.
     `stores` narrows the report to the stores named (check --store)."""
     rows = []
     for store in stores:
@@ -245,6 +247,9 @@ def drift(markers, live, want, stores=STORES):
         elif any(m.get(k) != want[k] for k in MARKER_FIELDS):
             moved = [k for k in MARKER_FIELDS if m.get(k) != want[k]]
             rows.append((store, "behind", f"marked {m.get('marked_at')} from another release set ({', '.join(moved)})"))
+        elif store == "databricks" and "jena_graphs" in want and isinstance(live.get("databricks_graphs"), dict) \
+                and (problem := graphs_differ(live["databricks_graphs"], want["jena_graphs"])):
+            rows.append((store, "changed", f"{TRIPLES_TABLE} {problem}"))
         elif live.get(store) != m.get("count"):
             rows.append((store, "changed", f"marked with {m.get('count')}, now holds {live.get(store)}"))
         else:
@@ -373,8 +378,8 @@ def read_markers_and_counts(stores=STORES):
     try:
         conn, schema = databricks()
         with conn, conn.cursor() as cur:
-            cur.execute(f"SELECT count(*) FROM {schema}.{TRIPLES_TABLE}")
-            live["databricks"] = [cur.fetchone()[0]]
+            live["databricks_graphs"] = triples_per_graph(cur, schema)  # judged per graph against the release files
+            live["databricks"] = [sum(live["databricks_graphs"].values())]
             try:
                 cur.execute(f"SELECT marker FROM {schema}.epm_store_markers WHERE store = 'databricks'")
                 row = cur.fetchone()
@@ -478,17 +483,32 @@ def databricks_checked(cur, schema, want):
     release and its release graphs), each with the release files' triple count: a load that stopped part way, or one
     from other files, is not marked."""
     graphs = want.get("jena_graphs") or jena_graphs(want["newest"])
+    held = triples_per_graph(cur, schema)
+    problem = graphs_differ(held, graphs)
+    if problem:
+        raise SystemExit(f"databricks: {TRIPLES_TABLE} {problem}")
+    return [sum(held.values())]
+
+
+def triples_per_graph(cur, schema):
+    """{graph: row count} of the triple table: one GROUP BY on its graph column."""
     cur.execute(f"SELECT graph, count(*) FROM {schema}.{TRIPLES_TABLE} GROUP BY graph")
-    held = {r[0]: r[1] for r in cur.fetchall()}
+    return {r[0]: r[1] for r in cur.fetchall()}
+
+
+def graphs_differ(held, graphs):
+    """Why a store's {graph: triple or row count} is not the expected one (jena_graphs: each newest release, its release
+    graphs and its package graphs, counted from the release files), naming a graph; None when they are equal. mark
+    refuses the triple table on it, and check reads it as changed."""
     missing, stray = sorted(set(graphs) - set(held)), sorted(set(held) - set(graphs))
     if missing or stray:
-        raise SystemExit(f"databricks: {TRIPLES_TABLE} lacks {len(missing)} graph(s) of the newest releases, e.g. {missing[:3]}, "
-                         f"and holds {len(stray)} other(s), e.g. {stray[:3]}")
+        return (f"lacks {len(missing)} graph(s) of the newest releases, e.g. {missing[:3]}, "
+                f"and holds {len(stray)} other(s), e.g. {stray[:3]}")
     moved = sorted(g for g in graphs if held[g] != graphs[g])
     if moved:
-        raise SystemExit(f"databricks: {len(moved)} graph(s) hold another row count than the release files' triples, "
-                         f"e.g. {moved[0]}: {held[moved[0]]}, not {graphs[moved[0]]}")
-    return [sum(held.values())]
+        return (f"has {len(moved)} graph(s) with another row count than the release files' triples, "
+                f"e.g. {moved[0]}: {held[moved[0]]}, not {graphs[moved[0]]}")
+    return None
 
 
 def mark(stores, want=None):
@@ -564,9 +584,11 @@ def plan(behind, cloud, skills, tech_behind=(), models=None):
 
 
 def expected_for(ref, stores):
-    """What the named stores should hold; Jena's graph counts are read from the release files only when it is named."""
+    """What the named stores should hold; the graph counts are read from the release files only when Jena or Databricks
+    is named, since both are judged per graph."""
     want = expected(ref)
-    return want | {"jena_graphs": jena_graphs(want["newest"], ref), "jena_tech": tech_graph_counts()} if "jena" in stores else want
+    return want | {"jena_graphs": jena_graphs(want["newest"], ref), "jena_tech": tech_graph_counts()} \
+        if {"jena", "databricks"} & set(stores) else want
 
 
 def sync(cloud, dry_run, ref, skills):
