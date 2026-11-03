@@ -289,7 +289,7 @@ The packages are the source. Neo4j and Jena are copies that you can empty and re
 
 Your packages are the master copy, and everything you load from them is a copy that falls behind when you release. Each kind of copy has its own check:
 
-- **The ontology in each store.** The check in step 5 of "Project into Neo4j and Jena" reads each store's ontology line as `current`, `behind`, `changed`, `unmarked` or `unreachable`. For Jena it compares each named graph's triple count with your packages; Jena reads `empty` after a restart, because its dataset is in memory.
+- **The ontology in each store.** The check in step 5 of "Project into Neo4j and Jena" reads each store's ontology line as `current`, `behind`, `changed`, `unmarked` or `unreachable` (Jena, which has no marker, reads `empty` after a restart). For Jena it compares each named graph's triple count with your packages; Jena reads `empty` after a restart, because its dataset is in memory.
 - **The technical graph.** It is loaded from the demo's graph files, not from your packages. The same check's `tech:` line compares each store's technical graph with those files, by the marker the load wrote and by a fingerprint of the content.
 
 <!-- augment -->
