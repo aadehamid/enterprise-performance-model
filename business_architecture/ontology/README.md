@@ -187,7 +187,8 @@ exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
   outside Phase 1 (`python3 scripts/epm_facts.py counts`). PTC-001-B is
   held by design.
 - **Decided by the decision owner on 2026-10-23:** Q17 is parked until
-  the ontology is first shared with business consumers (EPM-DEC-001-0086);
+  the ontology is first shared with business consumers (EPM-DEC-001-0086;
+  *2026-11-02:* the follow-up release may be cut and shared with it still open, listed in `OPEN-ITEMS.md`);
   MPC-P10 is accepted (EPM-DEC-001-0087); product values from MPC's FY2025
   Form 10-K, and six releases that carry these and close the 16 projection
   gaps, are approved (EPM-DEC-001-0088). `core` 2.3.0, `value-stream` 1.1.0,
@@ -202,7 +203,8 @@ exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
   to: Q17, Market Data's accountable group, the four codes and TID Nbr, the
   product list, Forecaster, Crude RFC, PSM, four working role definitions
   and 33 measure populations. They are settled when the ontology is first
-  shared with business consumers. *2026-10-28:* the decision owner worked
+  shared with business consumers (*2026-11-02:* the follow-up release may
+  be cut and shared with Q17 still open, EPM-DEC-001-0086). *2026-10-28:* the decision owner worked
   through the package: points 3 and 4 are closed, point 5 is narrowed to the
   PIDX family letters, and points 17 and 18 (Dealer Master) are added
   (EPM-DEC-001-0086, amendment of 2026-10-28). Organization 2.2.0 closes
