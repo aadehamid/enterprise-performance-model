@@ -93,7 +93,8 @@ def test_each_pinned_test_exists_on_main():
 
 
 def test_every_template_has_a_place():
-    placed = {name for name, dest in rebuild.TEMPLATES} | {"check.sh", "walkthrough-change.html"}
+    # cut.sh places the optional viewer guide after generating the page.
+    placed = {name for name, dest in rebuild.TEMPLATES} | {"check.sh", "walkthrough-change.html", "VIEWER.md"}
     assert placed == set(os.listdir(TEMPLATES)) - {"__pycache__"}
 
 
