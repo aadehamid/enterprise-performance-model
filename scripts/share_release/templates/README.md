@@ -53,6 +53,14 @@ It verifies that every released package equals a fresh build from its sources, r
 - **Run the pricing demo:** `demos/downstream-pricing-databricks-free/README.md`.
 - **Add a module, or change anything else:** `HOW-TO-UPDATE.md`.
 
+## Keep every copy in step with your packages
+
+The released packages in your copy are the master copy, and every store you load is a copy of them. `sync_stores.py check`, in `business_architecture/ontology/projection/`, reads each store you name as `current`, `behind`, `changed`, `unmarked` or `unreachable`. Its ontology line compares the store with your newest packages. Its `tech:` line compares the technical graph the store holds with the demo's graph files, by marker and by a fingerprint of the content. To repair a store, reload it from your packages, as "Project into Neo4j and Jena" in `HOW-TO-UPDATE.md` says, and run the check again. Do not edit a store by hand. A change is done only when every store you keep reads `current`.
+
+<!-- augment -->
+This release holds `logical-model`, so the check also prints an `lm:` line for each Neo4j store. It compares the store's logical-model subgraph with the package's graphs, by marker and fingerprint. The original files the models were built from were kept outside these sources. `release.json` and the package's `manifest.json` record each one under `augment`, by its path and its SHA-256. Those hashes are of the files as they were before the ontology's rewrite of its own IRIs, so they identify the originals: a copy in `logical-model/models/` that the rewrite changed has another hash. If you keep the originals, compare each one's SHA-256 with its record before you build from it again.
+
+<!-- /augment -->
 ## Names, namespaces and terms
 
 - The ontology's IRIs begin with `https://w3id.org/mpc/ontology/`. They identify terms and resolve nowhere. They are not issued by Marathon Petroleum, and nothing here is Marathon's own or endorsed by it. The namespaces will be reviewed and approved by the Data, Analytics and Insight team; until then they are working names.
