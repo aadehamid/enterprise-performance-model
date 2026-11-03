@@ -1456,7 +1456,7 @@ RETURN gold.name AS gold, view.name AS metric_view, m.uri AS measure, m.skos__pr
     <li><strong>Automatic once started:</strong> every step of <code>rebuild_stores.py</code>, and <code>sync_stores.py sync</code>, which reloads only what is behind, then the technical graph where a reload wiped it or its marker is not current, and the Delta copy with <code>--cloud</code>.</li>
     <li><strong>What starts them:</strong> a person or an agent. Nothing starts them by itself: <code>sync_stores.py check</code> is a written step of each release. A workflow on release tags exists and is off until its logins are added.</li>
     <li><strong>How drift shows:</strong> <code>sync_stores.py check</code>, which exits non-zero unless every store reads <code>current</code>. It reads each store's marker and counts, including the <code>Tech</code> nodes, and Jena's graphs against the files. <code>empty</code> means Jena restarted. Each store's <code>tech:</code> line reads the technical graph's marker, a digest of the graph files it was loaded from.</li>
-    <li><strong>What it does not catch:</strong> an ontology store edited by hand with the same counts (a technical graph edited so reads <code>changed</code>), and a change to the demo whose graph files were not rebuilt (a Delta copy that a demo build emptied reads <code>changed</code>). "The in-sync strategy", next, lists each case and the plan to close it.</li>
+    <li><strong>What it does not catch:</strong> an ontology store edited by hand with the same counts, and a change to the demo whose graph files were not rebuilt. A technical graph edited by hand with the same counts, or a Delta copy that a demo build emptied, reads <code>changed</code>. "The in-sync strategy", next, lists each case and the plan to close it.</li>
   </ul>
 </section>
 
@@ -2505,7 +2505,7 @@ python3 scripts/epm_facts.py sweep main</code></pre></dd>
         <li data-ss-id="next-closeout">The business close-out points in <code>business_architecture/ontology/business-closeout.md</code> (#427).</li>
         <li data-ss-id="next-drift">The drift check does not run by itself: it is a written step of each release (EPM-DEC-001-0112, amendment of 2026-11-02 (later), item 3; #455).</li>
         <li data-ss-id="next-secrets">The repository secrets that switch on the release-tag store sync (#426).</li>
-        <li data-ss-id="next-q17">Q17, parked until the ontology is first shared with business consumers (EPM-DEC-001-0086).</li>
+        <li data-ss-id="next-q17">Q17, parked until the ontology is first shared with business consumers (EPM-DEC-001-0086). <em>2026-11-02:</em> the follow-up release may be cut and shared with it still open, listed in <code>OPEN-ITEMS.md</code> (EPM-DEC-001-0086, amendment).</li>
       </ul>
     </div>
   </div>

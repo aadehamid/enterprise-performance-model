@@ -15,7 +15,7 @@ Each answer goes into the named record and that module's next release. `business
 
 | Point | What the business needs to say | Who | Module |
 |---|---|---|---|
-| 1 | Who owns the meaning of each module or concept scheme, who stewards its data and who keeps its systems (competency question 17; stays with the decision owner, who convenes the business leads) | Business leads per domain | `organization` |
+| 1 | Who owns the meaning of each module or concept scheme, who stewards its data and who keeps its systems (competency question 17; stays with the decision owner, who convenes the business leads; *2026-11-02:* the follow-up release may be cut with it open, EPM-DEC-001-0086, amendment) | Business leads per domain | `organization` |
 | 2 | Confirm the Risk Group's mandate for Market Data, or name the accountable group (stays with the decision owner) | The Risk Group, or whoever sets its mandate | `market-data` |
 | 5 | Confirm the PIDX family letters with PIDX, or give the PIDX codes MPC trades | Commercial product owners, with PIDX | `party` |
 | 6 | Whether the Forecaster in the backcasting activities is the Local Refinery Forecaster; merging them is a major release | The refinery Economics and Planning process owner | `organization` |
