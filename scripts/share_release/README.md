@@ -74,7 +74,7 @@ A new cut is a small edit: `manifest.py` holds its facts in one place (`RELEASE_
   release mode (`frozen_sources.py`, `build_module.package_folder`, `scripts/conftest.py`), merged into `main` by
   pull request #460 on 2026-11-01.
 - `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing, except in market
-  news, below), record number (full or short form), issue number (also inside the IRI of an answer given as an issue comment), left-out document, the left-out `way-of-working` skill, agent or review tool, agent-work phrase or double-underscore graph name; a name matches when no letter or digit touches it, so it also fails inside an identifier such as `test_x_y`, and "Adam" or "metadata" do not match;
+  news, below), record number (full or short form), issue number (also inside the IRI of an answer given as an issue comment), left-out document, the left-out `way-of-working` skill, agent or review tool, agent-work phrase, double-underscore graph name, or statement that the build kept something out of the repository (rule 17 of `rules.py` removes each one main has or points it to `HOW-TO-UPDATE.md`, "Inputs from outside the repository", the decision owner's request of 2026-11-03; text saying an input is read from outside the repository, and the skills' generic text, pass); a name matches when no letter or digit touches it, so it also fails inside an identifier such as `test_x_y`, and "Adam" or "metadata" do not match;
   binaries and base64 data are read as the printable text inside them.
 - `validate.py`, `stores.py` and `snippets.py` are the validation: each row judges what it finds (a planted
   violation fails it), every command exits nonzero on a failure, and no output file holds a password: every

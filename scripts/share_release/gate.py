@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """The leak gate: fail on any name, handle, repository, host, peer, record number or issue number in the
-release, and on the graph's double-underscore separator (plan step 5; EPM-DEC-001-0110 and its amendment).
+release, on a statement that the build kept something out of the repository, and on the graph's double-underscore
+separator (plan step 5; EPM-DEC-001-0110 and its amendment).
 A peer named in market news (vocabulary.MARKET_NEWS: the demo's cached Parallel search results and SCENARIO.md)
 is not a failure in the file's text (EPM-DEC-001-0112, point 7); a file name that names a peer still fails, every other
 check still runs on those files, and a peer anywhere else fails.
@@ -38,6 +39,32 @@ AGENT_NAMES = (r"(?<![A-Za-z0-9])(?:claude|codex|bugbot|kimi|anthropic|chatgpt|h
 AGENT_WORK = (r"\bretro of \d{4}|\bnight[ _]brief\b|\b[Ii]ndependent review|\b[Rr]eview rounds?\b|\b[Rr]ound \d+,? (?:on|finding)|\(findings? \d+|\bPR verdict|\bapproval agent\b"
               r"|\b[Uu]nder the delegation\b(?! of\b)|\b[Uu]nder their (?:recorded )?delegation\b|\b(?:expert|owner)'s delegation\b"
               r"|\b[Dd]elegated under\b|\bdelegate as described\b|\bcoding agents?\b|(?<![A-Za-z0-9])(?i:kailey)(?![A-Za-z0-9])")
+# What the build kept out of the repository: the release never says it (the decision owner's request of 2026-11-03,
+# rule 17 of rules.py). It may say that an input is read from a folder outside the repository, and how to keep that
+# pattern or move the files into the copy (the decision owner's refinement, the same day). KEPT_OUT is the withholding
+# wording: kept out of the repository or main, staying, held or living outside it, not in the repository, a gitignored
+# folder of ours, files kept apart from these sources, this run's files in no repository, and the same claim as what
+# main lacks. The shipped skills are exempt from it, since their method text is generic (the decision owner, the same day). KEPT_OUT_CUSTOMER, the customer's
+# files, inputs, data or model kept out, gitignored or in the augment folder, runs on every file, the skills included.
+KEPT_OUT = (r"\bkept\s+(?:out\s+of|outside)\s+(?:the\s+|this\s+)?(?:repo|repository|(?:`|<code>)?main)\b"
+            r"|\b(?:stays?|stayed|remains?|held|lives?)\s+(?:out\s+of|outside)\s+(?:the\s+|this\s+)?(?:repo|repository|(?:`|<code>)?main)\b"
+            r"|\bnot\s+in\s+(?:this|the)\s+repository\b|\bgitignored\s+(?:folder|augment)"
+            r"|\b(?:kept\s+(?:apart\s+from|outside)|from\s+outside)\s+(?:these|those)\s+sources\b"
+            r"|\bdo\s+not\s+live\s+in\s+either\s+repository\b|\bOutside\s+the\s+repositories\b"
+            # The same claim as where the logical model is not: never entering main, not released or no package in main,
+            # main holding none, only in the release. The release is the reader's copy, and main is not theirs.
+            r"|\b(?:never|not|ever)\s+enters?\s+(?:<code>|`)?main\b|\bnot\s+(?:released\s+)?in\s+(?:<code>|`)main\b"
+            r"|\bnot\s+released\s+in\s+main\b|\bno\s+package\s+in\s+(?:<code>|`)?main\b"
+            r"|\bmain(?:</code>|`)?\s+(?:has|holds)\s+no\s+(?:such\s+)?(?:package|module|logical-model)"
+            r"|\bships\s+only\s+in\s+the\s+release\b|\bwants\s+only\s+in\s+the\s+release\b|\bonly\s+the\s+release\s+(?:may\s+)?holds?\b"
+            r"|\bIn\s+(?:<code>|`)?main(?:</code>|`)?,?\s+(?:it|the\s+command)\s+(?:has\s+no|loads\s+nothing|says\s+there\s+is\s+nothing)"
+            r"|\(never\s+in\s+(?:<code>|`)?main\b"
+            r"|\bunreleased\s+in\s+(?:<code>|`)?main\b|\bmain(?:</code>|`)?\s+holds\s+none\b|\bnone\s+in\s+(?:<code>|`)?main\b"
+            r"|\bmain:\s+no\s+package\b|,\s+as\s+in\s+(?:<code>|`)?main\b"
+            r"|;\s+main(?:</code>|`)?\s+does\s+not\)|\bIn\s+(?:<code>|`)?main(?:</code>|`)?\s+there\s+is\s+no\b")
+KEPT_OUT_CUSTOMER = (r"\b(?:the|expert's|owner's)\s+customer\s+(?:files|inputs|data|logical\s+model|model)\b[^.\n]{0,80}?"
+                     r"(?:\b(?:out\s+of|outside|not\s+in|never\s+enters?)\s+(?:the\s+|this\s+)?(?:repo|repository|(?:`|<code>)?main)\b"
+                     r"|gitignored|augment\s+folder)")
 # The three peer checks, whose text scan market news (vocabulary.MARKET_NEWS) is exempt from; a file's name is still checked.
 PEER_REASONS = ("a peer named", "a peer's ticker", "a peer's filing on EDGAR")
 # Each pattern with its reason. The owner's names and handle come from owner.py's configuration, never from this file.
@@ -68,6 +95,8 @@ PATTERNS = [
     # An issue's number also hides in an IRI that names an issue comment (the rules keep the comment, urn:epm:comment:N).
     ("an issue or pull request number", re.compile(r"\b(?:PRs?|pull requests?|issues?)\s+#\d+|(?<![&\w-])#\d{3}\b(?![\da-fA-F])|urn:epm:(?:issue|pull):\d")),
     ("a skill the release leaves out", re.compile(r"way-of-working")),
+    ("something kept out of the repository", re.compile(KEPT_OUT, re.I)),
+    ("something kept out of the repository", re.compile(KEPT_OUT_CUSTOMER, re.I)),
     ("the graph's double-underscore separator", re.compile(r"\b[a-z][a-z0-9]*__[A-Za-z]")),
     ("an agent or review tool named", re.compile(AGENT_NAMES, re.I)),
     ("the agent called Cursor", re.compile(r"\bCursor\b|\bcursor/|/cursor\b|(?<![A-Za-z0-9])cursor[-_]agent(?![A-Za-z0-9])|\.cursor/")),
@@ -340,6 +369,8 @@ def scan(release):
                             continue
                         if reason == "the agent called Cursor" and code_cursor(rel, text, m):
                             continue
+                        if reason == "something kept out of the repository" and pattern.pattern == KEPT_OUT and METHOD_FILES.match(rel):
+                            continue  # the skills' generic method text; KEPT_OUT_CUSTOMER still runs on them
                         if reason == "a pull request of the build" and METHOD_FILES.match(rel):
                             continue
                         if reason == "the work of an agent" and METHOD_FILES.match(rel) and "delegated under" in m.group(0).lower():

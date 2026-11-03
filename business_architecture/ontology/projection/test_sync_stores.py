@@ -244,7 +244,7 @@ class StoresAreOneNeo4jPlusJena(unittest.TestCase):
     def test_a_current_jena_holds_every_newest_release_three_times_and_each_package_graph(self):
         newest = ss.newest_releases(ss.catalog_datasets(ss.repo_file(ss.CATALOG)))
         want = ss.jena_graphs(newest)
-        extra = {g for iri in newest for g in ss.package_graphs(iri)}  # none in main; the release's logical models
+        extra = {g for iri in newest for g in ss.package_graphs(iri)}  # the releases' package graphs, if any
         self.assertEqual(len(want), 3 * len(newest) + len(extra))
         self.assertTrue(all(want.values()))
         self.assertEqual({f"{iri}/{n}" for iri in newest for n in ("shapes", "catalog")} | set(newest) | extra, set(want))

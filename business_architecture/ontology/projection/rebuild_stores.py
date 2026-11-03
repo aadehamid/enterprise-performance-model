@@ -198,7 +198,7 @@ def child_env(s, stores, config_path):
 def plan(s, stores, config_path, empty, models=False):
     """(step, folder, command) in order. Pure, so the tests read the order without running anything. models says the
     newest releases hold package graphs (logical_models.held), so model-load puts a release's logical models into the
-    chosen stores before mark; main holds none, and the step is left out."""
+    chosen stores before mark; without such a module the step is left out."""
     py = ["uv", "run", "-q", "--no-project", "--with", "rdflib", "--with", "neo4j"]
     if "databricks" in stores:
         py += ["--with", "databricks-sql-connector"]

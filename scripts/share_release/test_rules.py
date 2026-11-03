@@ -1,5 +1,6 @@
 """Each rewrite rule, on a planted line, by hand."""
 import pytest
+import re
 import os
 
 os.environ["EPM_RELEASE_OWNER_NAMES"] = "Ada Lovelace,Ada,adalove"  # a stand-in: no test names a person
@@ -578,3 +579,202 @@ def test_a_shipped_skill_names_no_skill_the_release_leaves_out():
                 rel = "skills/ontology/" + str(f.relative_to(skills))
                 out, _ = run(f.read_text(encoding="utf-8"), rel)
                 assert "way-of-working" not in out, rel
+
+
+# Rule 17 (kept-out), on lines copied from main and from the skills, each with the record dates its citations need.
+KEPT_DATES = dict(DATES, **{"EPM-DEC-001-0005": "2026-10-05", "EPM-DEC-001-0040": "2026-10-18", "EPM-DEC-001-0067": "2026-10-21",
+                            "EPM-DEC-001-0097": "2026-10-25", "EPM-DEC-001-0108": "2026-10-27", "EPM-DEC-001-0113": "2026-11-02"})
+ONT = "business_architecture/ontology"
+LPG = "skills/ontology-to-lpg/references"
+ONTO = "skills/ontology/references"
+KEPT_OUT_CASES = [
+    # Customer inputs and sources held outside: the source stays.
+    ("business_architecture/business_process/proposals/MPC-P10-customer-lifecycle.md",
+     "| Source | The decision owner's customer lifecycle and data-flow inputs (EPM-DEC-001-0067; not in the repository), mapped to `downstream_process_map.json`",
+     "| Source | The decision owner's customer lifecycle and data-flow inputs (the decision of 2026-10-21), mapped to `downstream_process_map.json`"),
+    ("business_architecture/business_process/proposals/MPC-P11-customer-process-systems.md",
+     "in `party` 1.2.0 (EPM-DEC-001-0069), from the decision owner's customer inputs (kept out of the repository, EPM-DEC-001-0067) |",
+     "in `party` 1.2.0 (the decision of an earlier date), from the subject matter expert's customer inputs (the decision of 2026-10-21) |"),
+    (f"{ONT}/system/sources.csv",
+     "decision-owner-customer-inputs,\"The decision owner's customer inputs (seven files, kept out of the repository by EPM-DEC-001-0067), as the party module holds them",
+     "decision-owner-customer-inputs,\"the subject matter expert's customer inputs (seven files), as the party module holds them"),
+    (f"{ONT}/system/sources.csv",
+     "gents' instructions (idp_sbx sandbox), shared on 2026-10-25 and held outside the repository (EPM-DEC-001-0097)\",1",
+     "gents' instructions (idp_sbx sandbox), shared on 2026-10-25 (the decision of 2026-10-25)\",1"),
+    (f"{ONT}/kpi/build_measures.py",
+     "'s measure list, as the decision owner sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)\",",
+     "'s measure list, as the subject matter expert sent it on 2026-10-18 (the decision of 2026-10-18)\","),
+    (f"{ONT}/kpi/README.md",
+     "as the decision owner sent it on 2026-10-18, which stays outside the repository (EPM-DEC-001-0040), and MPC's public measures",
+     "as the subject matter expert sent it on 2026-10-18 (the decision of 2026-10-18), and MPC's public measures"),
+    (f"{ONT}/competency-questions.md",
+     "  organisations both ways. Customer records stay out of the ontology\n  (EPM-DEC-001-0005), and the decision owner's customer data is not in the\n  repository (EPM-DEC-001-0067). The",
+     "  organisations both ways. Customer records stay out of the ontology\n  (the decision of 2026-10-05). The"),
+    (f"{ONT}/party/README.md",
+     "customer records stay in the systems (EPM-DEC-001-0005). The decision owner's model and other inputs are not in this repository; the definitions are derived from them, in Claude's words.",
+     "customer records stay in the systems (the decision of 2026-10-05). The definitions are derived from the decision owner's model and other inputs, in the ontology's own words."),
+    (f"{ONT}/party/vocabulary.ttl",
+     "# are Claude's words, derived from that model, which is not in this repository (EPM-DEC-001-0067).",
+     "# are written for this ontology, derived from that model (the decision of 2026-10-21)."),
+    (f"{ONT}/party/vocabulary.ttl",
+     "8 to 11 as EPM-DEC-001-0108's Context lists them. The inputs are not in this repository.\"@en ;",
+     "8 to 11 as the decision of 2026-10-27's Context lists them.\"@en ;"),
+    (f"{ONT}/epm-walkthrough.html",
+     "The customer lifecycle went into proposal MPC-P10. The customer files themselves stay out of the repository.</li>",
+     "The customer lifecycle went into proposal MPC-P10.</li>"),
+    (f"{ONT}/projection/ontology-stores-runbook.html",
+     "and every count and hash check in it passed; the reload's log is kept outside the repository. Check, below,",
+     "and every count and hash check in it passed. Check, below,"),
+    # The customer logical model and its folder.
+    (f"{ONT}/MODULES.md",
+     "Its first model, the customer logical model, is kept out of `main` and joins the release as `logical-model 1.0.0`, which",
+     "Its first model, the customer logical model, joins the release as `logical-model 1.0.0`, which"),
+    (f"{ONT}/README.md",
+     "Its first model, the customer logical model, stays out of `main` and ships only in the release, as `logical-model 1.0.0`, which",
+     "Its first model, the customer logical model, ships in the release as `logical-model 1.0.0`, which"),
+    (f"{ONT}/logical-model/README.md",
+     "The customer logical model, the first model, stays out of `main`: its export lives in the gitignored folder `release-cut/augment/logical-model/`, and only the release holds it (EPM-DEC-001-0113, decision 2). So",
+     "The customer logical model, the first model, ships in this release (the decision of 2026-11-02, decision 2); its export and links file were read from a folder outside the repository (the release's `HOW-TO-UPDATE.md`, \"Inputs from outside the repository\"). So"),
+    (f"{ONT}/logical-model/README.md",
+     "drafted, even as doubtful, before it ships. For the customer model it sits in the augment folder, not in `main`. Its columns are:",
+     "drafted, even as doubtful, before it ships. For the customer model it is in `models/` (the release's `HOW-TO-UPDATE.md`, \"Inputs from outside the repository\", says where else it may live). Its columns are:"),
+    (f"{ONT}/logical-model/test_logical_model.py",
+     "Every export here is made up. The customer model never enters `main` (EPM-DEC-001-0113, decision 2).\n",
+     "Every export here is made up.\n"),
+    (f"{ONT}/logical-model/build_logical_model.py",
+     "--out\ndefaults to the first export's folder, so the customer model's graphs stay in the gitignored augment folder beside\nits export. The example's build",
+     "--out\ndefaults to the first export's folder, so a model's graphs sit beside its export,\ninside the repository or in a folder outside it (HOW-TO-UPDATE.md, \"Inputs from outside the repository\"). The example's build"),
+    (f"{ONT}/release/build_module.py",
+     "    # Added by the share release's cut from files kept outside the repository (EPM-DEC-001-0113): its first\n",
+     "    # Added by the share release's cut from files read from outside the repository (the decision of 2026-11-02): its first\n"),
+    # The guide's and the walkthrough's sections on the augment folder keep the pattern and point to the two ways.
+    (f"{ONT}/epm-ontology-guide.html",
+     "<h3>A confidential export stays outside the repository</h3>\n<p>A model the decision owner wants only in the release never enters <code>main</code>. Its export and links file sit in <code>release-cut/augment/logical-model/</code>, a folder Git ignores, and the builder writes the model's two graphs beside them. <code>main</code> holds the module's vocabulary, shapes, builder, tests and the made-up example. The release cut reads the augment folder and builds the package, so the release holds one module more than <code>main</code> releases. The cut's option for this is <code>cut.sh --augment</code>, merged in PR #474. The builder takes the export's location as an input, so the same build runs from <code>main</code> if the decision owner later moves a model there (EPM-DEC-001-0113, decisions 2 and 6).</p>",
+     "<h3>A confidential export, read from outside the repository</h3>\n<p>A model's export and links file can sit in a folder that Git ignores, such as <code>release-cut/augment/logical-model/</code>, and the builder writes the model's two graphs beside them. The release build reads that folder and builds the package. The builder takes the export's location as an input, so the same build runs with the files inside the repository (the decision of 2026-11-02, decisions 2 and 6). <code>HOW-TO-UPDATE.md</code>, \"Inputs from outside the repository\", gives the two ways to work with such files.</p>"),
+    (f"{ONT}/epm-ontology-guide.html",
+     "<h3>Files kept outside Git</h3>\n<p>The release records each file. \"Adding a logical model\" above, and <code>scripts/share_release/README.md</code>, give the detail.</p>",
+     "<h3>Files read from outside Git</h3>\n<p>The release records each file. \"Adding a logical model\" above gives the detail, and <code>HOW-TO-UPDATE.md</code>, \"Inputs from outside the repository\", the two ways to work with such files.</p>"),
+    (f"{ONT}/epm-walkthrough.html",
+     "<h3 class=\"rise\" data-ss-id=\"every-copy-files-h\">Files kept outside Git</h3>\n  <p>The release records each file. \"Add a logical model\", below, steps 2 and 7, and <code>scripts/share_release/README.md</code> give the detail.</p>",
+     "<h3 class=\"rise\" data-ss-id=\"every-copy-files-h\">Files read from outside Git</h3>\n  <p>The release records each file. \"Add a logical model\", below, steps 2 and 7, give the detail, and <code>HOW-TO-UPDATE.md</code>, \"Inputs from outside the repository\", the two ways to work with such files.</p>"),
+    (f"{ONT}/epm-walkthrough.html",
+     "<p class=\"rise\" data-ss-id=\"lm-place-text\">A model that only the release may hold goes in <code>release-cut/augment/logical-model/</code> at the repository's root. Git ignores <code>release-cut/</code>, so the export never enters <code>main</code>. Choose a slug",
+     "<p class=\"rise\" data-ss-id=\"lm-place-text\">A model's export can go in an augment folder that Git ignores, such as <code>release-cut/augment/logical-model/</code> at the repository's root. To keep the files in your copy instead, see <code>HOW-TO-UPDATE.md</code>, \"Inputs from outside the repository\". Choose a slug"),
+    # What main lacks: the release is the reader's copy, so it says what it holds.
+    (f"{ONT}/MODULES.md",
+     "`logical-model/` holds the machinery of the logical-model module and a made-up example model; it ships in no package in `main`. Its first model, the customer logical model, is kept out of `main` and joins the release as `logical-model 1.0.0`, which the decision owner approved on 2026-11-02 (EPM-DEC-001-0113, amendment); `main` has no package for it, and the release cut builds it.\n",
+     "`logical-model/` holds the machinery of the logical-model module and a made-up example model. Its first model, the customer logical model, joins the release as `logical-model 1.0.0`, which the subject matter expert approved on 2026-11-02 (the decision of 2026-11-02, amendment).\n"),
+    (f"{ONT}/MODULES.md",
+     "When the newest releases hold the `logical-model` module, as a share release's do, the stores also hold its models' own graphs; `main` holds no such package. `projection/README.md`",
+     "When the newest releases hold the `logical-model` module, as a share release's do, the stores also hold its models' own graphs. `projection/README.md`"),
+    (f"{ONT}/MODULES.md",
+     "*2026-11-02:* not released in `main`; its first model, the customer logical model, ships only in the release (EPM-DEC-001-0113). The module keeps",
+     "*2026-11-02:* its first model is the customer logical model (the decision of 2026-11-02). The module keeps"),
+    (f"{ONT}/README.md",
+     "the release cut builds the package. In `main` it has no package, so no figure here counts it. It answers",
+     "the release cut builds the package. The figures on this page do not count it. It answers"),
+    (f"{ONT}/README.md",
+     "answering questions 51 to 55. The customer model it holds ships only in the release, as `logical-model 1.0.0`; `main` has no package (EPM-DEC-001-0113) |",
+     "answering questions 51 to 55. The customer model it holds is released as `logical-model 1.0.0` (the decision of 2026-11-02) |"),
+    (f"{ONT}/logical-model/README.md",
+     "the four ontology stores hold it (EPM-DEC-001-0113, amendment \"the stores\"). `main` holds no package of it, so `main`'s stores hold none. The projection loads",
+     "the four ontology stores hold it (the decision of 2026-11-02, amendment \"the stores\"). The projection loads"),
+    (f"{ONT}/logical-model/README.md",
+     "(EPM-DEC-001-0113, decision 2). So `main` holds the machinery and a made-up example model, and the regression runs the questions on that example.",
+     "(the decision of 2026-11-02, decision 2). The regression runs the questions on a made-up example model."),
+    (f"{ONT}/logical-model/README.md",
+     "\n**Status:** not released in `main`. *2026-11-02:* `main` holds the module's machinery and the made-up example only. Because the cut builds it, `main` has no package for it in `../releases/`.\n",
+     "\n**Status:** the module's machinery and a made-up example model are here; when this release holds the package `logical-model 1.0.0`, it is in `../releases/logical-model/`.\n"),
+    (f"{ONT}/projection/README.md",
+     "Only the `logical-model` module does, and `main` holds no package of it, so `main`'s stores hold none. When the newest releases hold it,",
+     "Only the `logical-model` module does. When the newest releases hold it,"),
+    (f"{ONT}/epm-ontology-guide.html",
+     "Only the <code>logical-model</code> module does, and <code>main</code> holds no package of it, so <code>main</code>'s stores hold none (EPM-DEC-001-0113",
+     "Only the <code>logical-model</code> module does (the decision of 2026-11-02"),
+    (f"{ONT}/epm-ontology-guide.html",
+     "with the package's graphs. <code>main</code> holds no such module, so <code>check</code> prints no <code>lm:</code> line there. The detail",
+     "with the package's graphs. The detail"),
+    (f"{ONT}/epm-walkthrough.html",
+     "subgraph with the package's graphs. <code>main</code> holds no such module, so <code>check</code> prints no <code>lm:</code> line</td><td data-k=\"The repair\">",
+     "subgraph with the package's graphs.</td><td data-k=\"The repair\">"),
+    (f"{ONT}/epm-ontology-guide.html",
+     "when the <code>:Resource</code> counts move or an edge finds no target. In <code>main</code> it loads nothing</td><td data-k=\"When\">",
+     "when the <code>:Resource</code> counts move or an edge finds no target</td><td data-k=\"When\">"),
+    (f"{ONT}/epm-walkthrough.html",
+     "into each Neo4j store, with its marker. In <code>main</code> it says there is nothing to load and changes nothing. Name the stores",
+     "into each Neo4j store, with its marker. Name the stores"),
+    (f"{ONT}/epm-ontology-guide.html",
+     "<h3>Files kept outside Git</h3>\n<p>A logical model that only the release may hold has its export and links file in the augment folder, <code>release-cut/augment/logical-model/</code>, which Git ignores, so neither ever enters <code>main</code>. <code>cut.sh --augment</code> reads the folder",
+     "<h3>Files read from outside Git</h3>\n<p>A logical model's export and links file can sit in an augment folder that Git ignores, such as <code>release-cut/augment/logical-model/</code>. <code>cut.sh --augment</code> reads the folder"),
+    (f"{ONT}/projection/ontology-stores-runbook.html",
+     "on Jena's and Databricks' lines; <code>main</code> holds no such module, so it prints no <code>lm:</code> line. It exits",
+     "on Jena's and Databricks' lines. It exits"),
+    (f"{ONT}/projection/ontology-stores-runbook.html",
+     "loads a release's logical models into both when the releases hold the module (never in <code>main</code>), marks both",
+     "loads a release's logical models into both when the releases hold the module, marks both"),
+    (f"{ONT}/projection/ontology-stores-runbook.html",
+     "into the local Neo4j and AuraDB. In <code>main</code> the command says there is nothing to load and changes nothing.</p>",
+     "into the local Neo4j and AuraDB.</p>"),
+    (f"{ONT}/projection/logical_models.py",
+     "module (EPM-DEC-001-0113, amendment \"the stores\"). main holds no such package, so in main every command here finds\nnothing to load and changes nothing; the share release's cut builds the package (scripts/share_release/augment.py).\n",
+     "module (the decision of 2026-11-02, amendment \"the stores\"). Where the releases hold no such package, every command here finds\nnothing to load and changes nothing.\n"),
+    (f"{ONT}/projection/rebuild_stores.py",
+     "puts the models into every chosen store; main holds no such\nmodule, so its plan has no model-load. Without",
+     "puts the models into every chosen store; without the\nmodule, the plan has no model-load. Without"),
+    (f"{ONT}/projection/sync_stores.py",
+     "annotation layer. No package\n    in main has any; the share release's logical-model package does (EPM-DEC-001-0113",
+     "annotation layer. The logical-model package\n    has them (the decision of 2026-11-02"),
+    (f"{ONT}/projection/test_logical_models.py",
+     "the way the share release's cut lays it out, because\nmain holds no logical-model package.\"\"\"",
+     "the way the share release's cut lays it out.\"\"\""),
+    # The walkthrough's file map: the group of this build's working files outside the repositories.
+    (f"{ONT}/epm-walkthrough.html",
+     "</tbody></table></div>\n  </details>\n  <h3 id=\"fm-outside\" class=\"rise\" data-ss-id=\"file-map-fm-outside\">Outside the repositories <span class=\"cnt\">(15 entries)</span></h3>\n"
+     "  <p class=\"rise\"><strong>Where to start:</strong> Tools and working files this run used that do not live in either repository.</p>\n"
+     "<div class=\"tbl fm-tbl\"><table><thead><tr><th>Path</th><th>What it is</th></tr></thead><tbody>\n</tbody></table></div>\n</section>",
+     "</tbody></table></div>\n  </details>\n</section>"),
+]
+
+
+@pytest.mark.parametrize("path,src,expected", KEPT_OUT_CASES)
+def test_what_the_build_kept_out_of_the_repository_goes(path, src, expected):
+    out, counts = rules.apply(src, path, KEPT_DATES)
+    assert out == expected
+    assert counts.get("kept-out"), counts
+    import gate
+    assert not re.search(gate.KEPT_OUT, out, re.I) and not re.search(gate.KEPT_OUT_CUSTOMER, out, re.I), out
+
+
+def test_instructions_that_keep_a_path_or_credential_outside_the_repository_stay():
+    """A run's output folder (the projection script refuses one inside the repository) and a credentials file."""
+    for path, src in ((f"{LPG}/run-config.md", "| `out` | every step | The output folder. It must be outside the repository that holds the configuration. |"),
+                      ("skills/rdf-store/SKILL.md", "Store credentials live in an env file outside the repository; the script reads them"),
+                      (f"{ONT}/projection/skill-run/environment.example", "# One environment for rebuild_stores.py. Copy it outside the repository, fill it in, and run chmod 600 on it.")):
+        out, counts = rules.apply(src, path, KEPT_DATES)
+        assert out == src and "kept-out" not in counts
+
+
+def test_the_skills_generic_method_text_stays():
+    """The skills name no file, folder or input of this build, so their method text ships as it is (the decision owner,
+    2026-11-03), even where it says a file stays outside Git."""
+    for path, src in ((f"{ONTO}/release.md", "## Inputs kept outside Git\n\nSome releases read files that may never enter the repository, such as an export a client keeps private, read through a release option from a folder git ignores.\n\n## The catalog\n"),
+                      (f"{LPG}/multi-store.md", "Three kinds of copy need keeping in step, each by its own check: the ontology's triples in each store, a graph kept beside them, and files a release reads from outside Git.\n"),
+                      (f"{ONTO}/governance.md", "24. **Keep customer inputs (files, images, transcripts) out of the repository.** Store them outside it and refer to them neutrally.\n"),
+                      (f"{ONTO}/logical-model.md", "Keep the cleaned file beside the original, outside the repository, and hash the cleaned one.\n")):
+        out, counts = rules.apply(src, path, KEPT_DATES)
+        assert out == src and "kept-out" not in counts, path
+
+
+def test_generic_text_on_inputs_read_from_outside_the_repository_stays():
+    """That a release may read inputs from a folder outside the repository, how --augment works and how the inputs are
+    hashed, and where a run writes, say nothing was kept out (the decision owner, 2026-11-03)."""
+    import gate
+    for path, src in ((f"{ONT}/epm-ontology-guide.html", "Three kinds of copy can fall behind Git, and each has its own check: the ontology's triples in the stores, the graphs loaded beside them from other files, and the files a release reads from outside Git."),
+                      (f"{ONT}/epm-ontology-guide.html", "<li>Keep the cleaned file beside the original, outside the repository, and record each change."),
+                      (f"{ONT}/epm-walkthrough.html", "goes in <code>release-cut/augment/logical-model/</code> at the repository's root. Git ignores <code>release-cut/</code>"),
+                      (f"{ONT}/release/build_module.py", "        # \"augment\": the files from outside the repository the package was built from, each with its SHA-256"),
+                      ("demos/downstream-pricing-databricks-free/README.md", "`build` writes `out/tech/graph/`, which Git ignores, and `load` prefers it;"),
+                      (f"{ONT}/projection/skill-run/README.md", "Outputs go to `~/lpg-out/`, outside the repository. |")):
+        out, counts = rules.apply(src, path, KEPT_DATES)
+        assert out == src and "kept-out" not in counts, path
+        assert not re.search(gate.KEPT_OUT, out, re.I) and not re.search(gate.KEPT_OUT_CUSTOMER, out, re.I), out

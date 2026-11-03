@@ -22,6 +22,7 @@ PLANTS = {
     "an issue or pull request number": "fixed in PR #231",
     "the graph's double-underscore separator": "MATCH (c:skos__Concept)",
     "a skill the release leaves out": "follow the `way-of-working` skill",
+    "something kept out of the repository": "The customer files themselves stay out of the repository.",
 }
 
 
@@ -535,3 +536,100 @@ def test_the_gate_skips_what_the_zip_skips_and_scans_the_rest(tmp_path):
     assert gate.scan(str(tmp_path)) == []
     (tmp_path / "demos" / "d" / "notes.txt").write_text("Valero raised runs\n")
     assert any(h["reason"] == "a peer named" for h in gate.scan(str(tmp_path)))
+
+
+# Each withholding wording the build used, and variants a later document might use.
+KEPT_OUT_PLANTS = [
+    "The customer files themselves stay out of the repository.",
+    "the subject matter expert's customer inputs (seven files, kept out of the repository by the decision of 2026-10-21)",
+    "shared on 2026-10-25 and held outside the repository (the decision of 2026-10-25)",
+    "as the subject matter expert sent it on 2026-10-18, which stays outside the repository (the decision of 2026-10-18)",
+    "the decision owner's customer data is not in the\n  repository (the decision of 2026-10-21)",
+    "The decision owner's model and other inputs are not in this repository.",
+    "the customer logical model, is kept out of `main` and joins the release",
+    "The customer model never enters `main`.",
+    "Its export lives in the gitignored folder `release-cut/augment/logical-model/`.",
+    "<h3>A confidential export stays outside the repository</h3>",
+    "## One module from outside these sources",
+    "Their files were kept apart from those sources and added when this release was cut.",
+    "every check passed; the reload's log is kept outside the repository.",
+    "The planning workbook stays outside the repo.",
+    "Tools and working files this run used that do not live in either repository.",
+    # The same claim as what main lacks, copied from MODULES.md, README.md, logical-model/README.md, the guide, the
+    # walkthrough, the runbook and the projection's code.
+    "it ships in no package in `main`.",
+    "`main` has no package for it, and the release cut builds it.",
+    "*2026-11-02:* not released in `main`; its first model, the customer logical model, ships only in the release",
+    "In `main` it has no package, so no figure here counts it.",
+    "The customer model it holds ships only in the release, as `logical-model 1.0.0`; `main` has no package",
+    "**Status:** not released in `main`.",
+    "Only the `logical-model` module does, and `main` holds no package of it, so `main`'s stores hold none.",
+    "<p>A model the decision owner wants only in the release never enters <code>main</code>.",
+    "which Git ignores, so neither ever enters <code>main</code>.",
+    "Git ignores <code>release-cut/</code>, so the export never enters <code>main</code>.",
+    "A logical model that only the release may hold has its export.",
+    "<code>main</code> holds no such module, so <code>check</code> prints no <code>lm:</code> line there.",
+    "In <code>main</code> it says there is nothing to load and changes nothing.",
+    "In <code>main</code> it loads nothing</td>",
+    "when the releases hold the module (never in <code>main</code>), marks both",
+    "No package\n    in main has any; the share release's logical-model package does",
+    "main holds no such package, so in main every command here finds",
+]
+
+
+@pytest.mark.parametrize("text", KEPT_OUT_PLANTS)
+def test_a_statement_that_the_build_kept_something_out_of_the_repository_fails(tmp_path, text):
+    clean(tmp_path)
+    (tmp_path / "doc.md").write_text(text + "\n")
+    hits = gate.scan(str(tmp_path))
+    assert hits and {h["reason"] for h in hits} == {"something kept out of the repository"}, hits
+
+
+# The option wording (an input read from outside the repository, and the two ways to work with it) and generic text,
+# copied from the release's templates, main's pages and the skills: none says the build kept something out.
+GENERIC_TEXT = {
+    "skills/ontology/references/release.md": "## Inputs kept outside Git\n\nSome releases read files that may never enter the repository, such as an export a client keeps private, read through a release option from a folder git ignores (`logical-model.md`, rule 12). That content, and anything built from it, never enters the main branch.\n",
+    "skills/ontology-to-lpg/references/multi-store.md": "### Files a release reads from outside Git\n\nA file kept outside Git, such as an export a client keeps private, has no store marker.\n",
+    "skills/ontology/references/governance.md": "24. **Keep customer inputs (files, images, transcripts) out of the repository.** Store them outside it and refer to them neutrally.\n",
+    "skills/ontology/references/logical-model.md": "12. **Where the export is confidential, keep it outside the repository and let the release build read it from a folder git ignores** (an augment folder). A confidential export stays outside the repository with its hash in the release's input record.\n",
+    "skills/ontology-to-lpg/references/running.md": "Keep `loadable.nt`, `merged.ttl` and the downloads out of the repository; they are rebuilt from the Turtle files.\n",
+    "skills/rdf-store/SKILL.md": "Store credentials live in an env file outside the repository; the script reads them.\n",
+    "HOW-TO-UPDATE.md": (
+        "## Inputs from outside the repository\n\nA build can read an input from a folder outside the repository instead of from your copy.\n\n"
+        "This release's logical models were built that way. When the release was made, the build read each model's ER Studio export and links file from a folder outside the repository, `release-cut/augment/logical-model/`, and copied them into `$ONT/logical-model/models/`.\n"
+        "- **Keep the files outside the repository.** Save the export and the links file in a folder of your own, outside your copy.\n"
+        "- **Move the files into the repository.** Save them in `$ONT/logical-model/models/`.\n"),
+    "business_architecture/ontology/epm-ontology-guide.html": (
+        "<p>Three kinds of copy can fall behind Git: the ontology's triples, the graphs loaded beside them, and the files a release reads from outside Git.</p>\n"
+        "<h3>A confidential export, read from outside the repository</h3>\n<p>A model's export and links file can sit in a folder that Git ignores, such as <code>release-cut/augment/logical-model/</code>, and the builder writes the model's two graphs beside them.</p>\n"
+        "<h3>Files read from outside Git</h3>\n<p>A logical model's export and links file can sit in an augment folder that Git ignores, such as <code>release-cut/augment/logical-model/</code>.</p>\n"
+        "<p>In <code>main</code> they run on the made-up example. The figures on this page do not count it.</p>\n"
+        "<li>Keep the cleaned file beside the original, outside the repository, and record each change.</li>\n"),
+    "business_architecture/ontology/release/build_module.py": "# Added by the share release's cut from files read from outside the repository; \"augment\": the files from outside the repository the package was built from\n",
+    "business_architecture/ontology/projection/skill-run/README.md": "Outputs go to `~/lpg-out/`, outside the repository. Copy it outside the repository; it must be outside the repository.\n",
+    "demos/downstream-pricing-databricks-free/README.md": "`build` writes `out/tech/graph/`, which Git ignores. The demo's .env (gitignored) is not in git. Records stay out of the ontology.\n",
+}
+
+
+def test_the_option_wording_and_generic_text_pass(tmp_path):
+    clean(tmp_path)
+    for rel, text in GENERIC_TEXT.items():
+        (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
+        (tmp_path / rel).write_text(text)
+    assert gate.scan(str(tmp_path)) == []
+    for text in ("The customer files themselves stay out of the repository.", "The customer model's export lives in the augment folder."):
+        (tmp_path / "skills/ontology/references/release.md").write_text(text + "\n")
+        hits = gate.scan(str(tmp_path))
+        assert hits and {h["reason"] for h in hits} == {"something kept out of the repository"}, (text, hits)
+
+
+def test_the_gate_refuses_what_main_lacks_in_code_notes_too(tmp_path):
+    # Cursor's second hold on #488: code comments and docstrings said what main lacks in five more wordings.
+    clean(tmp_path)
+    for i, text in enumerate(("The logical-model module is unreleased in main", "hold no package graph, as in main; otherwise",
+                              "before mark; main holds none, and the step is left out.", "# main: no package graph",
+                              "# none in main; the release's logical models",
+                              "(a share release does; main does not)", "In main there is no lm: line and no such step.")):
+        (tmp_path / f"n{i}.py").write_text(text + "\n")
+    reasons = [h["file"] for h in gate.scan(str(tmp_path)) if "kept out" in h["reason"]]
+    assert sorted(reasons) == [f"n{i}.py" for i in range(7)]

@@ -79,7 +79,7 @@ def package_graphs(releases=None, ref=None):
 
 def models(releases=None, ref=None):
     """[(slug, export path, layer path)] of the newest logical-model package, from its manifest at ref; [] when the
-    newest releases hold no logical-model module, as in main. A model whose export or layer is missing stops the load."""
+    newest releases hold no logical-model module. A model whose export or layer is missing stops the load."""
     iri = next((i for i in (releases if releases is not None else newest(ref)) if i.rsplit("/", 2)[-2] == MODULE), None)
     if iri is None:
         return []

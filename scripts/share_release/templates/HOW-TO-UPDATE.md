@@ -226,6 +226,17 @@ Questions 51 to 55 in `$ONT/regression/` run on the made-up example model. To as
 The stores load each model too: Jena and Delta its two graphs as named graphs, the local Neo4j and AuraDB the model as its own subgraph. `sync_stores.py check`, in step 5 of "Project into Neo4j and Jena", then prints an `lm:` line for each Neo4j store, and a release is done only when each of those reads `current` too (release steps, step 6).
 
 <!-- /augment -->
+## Inputs from outside the repository
+
+A build can read an input from a folder outside the repository instead of from your copy. The builders take each input's location as an option, so the same build runs whether the files sit in the repository or in such a folder.
+
+<!-- augment -->
+This release's logical models were built that way. When the release was made, the build read each model's ER Studio export and links file from a folder outside the repository, `release-cut/augment/logical-model/`, and copied them into `$ONT/logical-model/models/`. `release.json` and the package's `manifest.json` record each of those files by its path relative to that folder and its SHA-256. For a model you add, choose either way:
+
+- **Keep the files outside the repository.** Save the export and the links file in a folder of your own, outside your copy. Point `build_logical_model.py`'s `--export` and `--links` at them, and give `--out $ONT/logical-model/models` so the two graphs it writes go where the package build reads them. List each file with its SHA-256 in the `augment` list of the `logical-model` entry in `$ONT/release/build_module.py`, and compare the files with those hashes before you build from them again. The line in `scripts/check.sh` that runs `build_logical_model.py ... --verify` then needs `--links` pointed at your folder, so a copy without that folder cannot run it.
+- **Move the files into the repository.** Save them in `$ONT/logical-model/models/`, beside the module's sources, as "Add a logical model" does, and build from there.
+
+<!-- /augment -->
 ## The cascade
 
 A package names the exact version of each module it requires. So a new version of a module means a new version of every module that depends on it. `dependents.py` lists them, each after what it requires. Raise each version before you write its package, and write them in that order. A module that only takes the new version of what it requires gets a patch, with a changelog line that says so. A change to `core` reaches every module, so use a loop. It patches each module on the list and then finishes them all, and it stops at the first failing step. For any other module, change the list to `py dependents.py <module>`, and start the loop with `for m in $(echo "$list" | tail -n +2)`, which leaves out the module you released yourself.
@@ -293,7 +304,7 @@ Your packages are the master copy, and everything you load from them is a copy t
 - **The technical graph.** It is loaded from the demo's graph files, not from your packages. The same check's `tech:` line compares each store's technical graph with those files, by the marker the load wrote and by a fingerprint of the content.
 
 <!-- augment -->
-- **The logical models.** The `lm:` line compares each Neo4j store's logical-model subgraph with the package's graphs. The original files the models were built from were kept outside these sources. `release.json` and the package's `manifest.json` record each one under `augment`, by its path and its SHA-256. If you keep those originals, compare each one's SHA-256 with its record before you build from it again.
+- **The logical models.** The `lm:` line compares each Neo4j store's logical-model subgraph with the package's graphs. `release.json` and the package's `manifest.json` record each file the models were built from under `augment`, by its path and its SHA-256. If you keep those originals, compare each one's SHA-256 with its record before you build from it again ("Inputs from outside the repository").
 
 <!-- /augment -->
 To repair any of them, run step 3 of "Project into Neo4j and Jena" again, which reloads the stores from your packages and ends with the check. Do not fix a store by hand. A release is done only when every store you keep reads `current` (release steps, step 6).

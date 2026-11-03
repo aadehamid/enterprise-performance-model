@@ -11,11 +11,11 @@ it on a tech:<store> line beside the ontology's, with a fingerprint of the conte
 files', so a missing, stale or edited technical graph shows when the ontology is current. sync reloads what is behind with the ontology-to-lpg driver, takes the driver's result into this folder,
 loads the pricing demo's technical graph again where a reload wiped it or its marker is not current, copies it to
 Delta with tech_graph sync when the Delta copy is reloaded or behind, and marks the stores it reloaded.
-When the newest releases hold the logical-model module (a share release does; main does not), Jena and the triple
+When the newest releases hold the logical-model module, Jena and the triple
 table also hold each package graph its manifest lists (package_graphs: each model's ER Studio export and annotation
 layer), which jena_graphs counts with the release graphs, and each Neo4j store holds the models as a subgraph apart from
 the projection, which check reports on an lm:<store> line (logical_models.py) and sync reloads with logical_models.py
-load, last, where a reload wiped it or it is not current. In main there is no lm: line and no such step.
+load, last, where a reload wiped it or it is not current. Releases without the module give no lm: line and no such step.
 
     python3 sync_stores.py expected [--ref origin/main]   # what a current store holds
     python3 sync_stores.py mark --store driver ...         # check a store against the repository, then mark it
@@ -557,7 +557,7 @@ def plan(behind, cloud, skills, tech_behind=(), models=None):
     Jena alone needs only the driver's jena step. A run that loads Neo4j takes its result into this folder.
     tech_behind names the stores whose technical graph is not current (tech_drift): each gets tech_graph load again,
     as does every store a reload wiped, and the Delta copy follows with tech_graph sync. AuraDB and Databricks again
-    only with --cloud. models is None when the newest releases hold no package graph, as in main; otherwise it names
+    only with --cloud. models is None when the newest releases hold no package graph; otherwise it names
     the Neo4j stores whose logical models are not current (logical_models.drift), and logical_models.py load runs on
     them and on every store a reload wiped, last, so mark reads Jena and Delta with the package graphs."""
     steps, reloaded = [], []
