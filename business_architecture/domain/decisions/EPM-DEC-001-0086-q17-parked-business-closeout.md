@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (the decision owner, 2026-10-23, for parking Q17 and for the package; its contents delegated under EPM-DEC-001-0028) |
+| Status | Decided (the decision owner, 2026-10-23, for parking Q17 and for the package; its contents delegated under EPM-DEC-001-0028; *2026-11-02:* the follow-up release is shared with Q17 still open, the decision owner's decision, amendment below) |
 | Date | 2026-10-23 |
 | Questions | Competency question 17, "Who owns the meaning of a concept, and who only stewards the data?" (EPM-DEC-001-0045, decision 7); the items EPM-DEC-001-0083 lists as waiting on a process owner, the business or no named confirmer |
-| Source | Claude Code session of 2026-10-23; `answers-2026-10-23-closeout.md` |
+| Source | Claude Code session of 2026-10-23; `answers-2026-10-23-closeout.md`; `answers-2026-11-02-q17-release.md` |
 
 ## Context
 
@@ -48,6 +48,16 @@ On 2026-10-26 the decision owner said they might work through some of the packag
 - The package marks points 3 and 4 as closed, and point 5 as open for the PIDX letters only. Each row keeps its place, so the numbering does not change.
 - Points 7, 8, 9, 11 and 15 change the ontology. Each release's own pull request records its answer on the named record and updates its row in the package. *2026-10-28:* points 7, 8 and 9 are released in `organization` 2.2.0 (EPM-DEC-001-0045, amendment of 2026-10-28).
 - The package gains two rows from EPM-DEC-001-0108, which the decision owner cannot answer ("Others I cannot answer."): point 17, how Dealer Master's billing customer number relates to the SAP customer number; and point 18, whether Dealer Master's fuel volumes reach the Enterprise Data Lake.
+
+## Amendment, 2026-11-02: the follow-up release ships with Q17 open
+
+The follow-up release (EPM-DEC-001-0112) is the first time the ontology is shared with business consumers, which is when this record's parking ends. Asked whether that release may be shared with Q17 still open, the decision owner answered (`answers-2026-11-02-q17-release.md`):
+
+> we will keep Q17 TBD for now.
+
+> yes we can cut the release with Q17 still open. We can add it to the list of open items in the release
+
+So Q17 stays parked and the regression counts it as before. The release ships `OPEN-ITEMS.md`, whose point 1 is Q17, as the list of what the business still has to settle.
 
 ## Alternatives considered
 

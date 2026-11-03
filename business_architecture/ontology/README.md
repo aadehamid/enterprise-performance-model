@@ -187,7 +187,8 @@ exceptions (EPM-DEC-001-0083). Phase E closed on 2026-10-22.
   outside Phase 1 (`python3 scripts/epm_facts.py counts`). PTC-001-B is
   held by design.
 - **Decided by the decision owner on 2026-10-23:** Q17 is parked until
-  the ontology is first shared with business consumers (EPM-DEC-001-0086);
+  the ontology is first shared with business consumers (EPM-DEC-001-0086;
+  *2026-11-02:* the follow-up release is shared with it still open, listed in `OPEN-ITEMS.md`);
   MPC-P10 is accepted (EPM-DEC-001-0087); product values from MPC's FY2025
   Form 10-K, and six releases that carry these and close the 16 projection
   gaps, are approved (EPM-DEC-001-0088). `core` 2.3.0, `value-stream` 1.1.0,
