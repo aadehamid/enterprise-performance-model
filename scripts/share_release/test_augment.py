@@ -471,3 +471,10 @@ def test_every_figure_of_the_pages_is_classified_and_an_augmented_release_rewrit
                 assert len(re.findall(a, after)) == found, f"{name}: the augmented release does not say {a!r}"
             else:
                 assert len(re.findall(b, after)) == found, f"{name}: the {cls} figure {b!r} changed"
+
+
+def test_the_figures_context_takes_the_release_figures_and_prints_the_requirements():
+    # rebuild.augment_figures once passed requires twice (the figures' dict and the text) and the cut stopped.
+    ctx = augment.figure_context({"slugs": ["m"], "requires": "old", "modules": 1},
+                                 {"modules": 13, "requires": {"party": "2.1.0", "system": "1.5.0"}})
+    assert ctx == {"slugs": ["m"], "modules": 13, "requires": "party 2.1.0, system 1.5.0"}
