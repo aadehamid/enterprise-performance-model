@@ -123,7 +123,7 @@ def test_cut_must_equal_source_packages(tmp_path):
     assert not out.exists()
 
 
-def test_cut_emits_the_approved_source_title_and_actual_file_hashes(tmp_path):
+def test_cut_emits_the_neutral_source_title_and_actual_file_hashes(tmp_path):
     from epm_source_descriptions import OLD_TITLE, NEW_TITLE
 
     source, cut = tmp_path / "source", tmp_path / "cut"

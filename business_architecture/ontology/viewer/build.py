@@ -237,7 +237,7 @@ def build(root, output, compare=None, require_pin=True):
         if other_inputs != expected_inputs:
             raise ValueError("Cut packages differ from the pinned viewer release")
         # Emit the verified cut's data, so its source titles and file hashes agree
-        # with the files recipients receive. Only the exact approved substitution
+        # with the files recipients receive. Only the exact source-title substitution
         # above may differ from the pinned release, even in a metadata graph.
         data = build_data(compare)
     payload = (

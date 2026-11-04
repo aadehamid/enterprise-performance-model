@@ -1,4 +1,4 @@
-"""The approved editorial substitution for the shared release's customer source title.
+"""The editorial substitution for the shared release's customer source title.
 
 Keep this substitution exact: the viewer uses it to check a cut against its pinned
 release. It must never authorize a change to another source, term or relationship.
