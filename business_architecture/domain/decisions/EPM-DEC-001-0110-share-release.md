@@ -277,6 +277,15 @@ The same answers file records the additional request:
 
 ### Follow-through
 
-The agent will complete the maintenance list and investigate the diagram links through separate PRs, with the existing checks and reviewers. The follow-up release uses the existing cut and validation process. Business decisions and pricing-demo acceptance remain parked. No ontology content change is planned; an unresolved modeling choice stays open. This work grants no new business-model decision or paid service.
+The agent will complete the maintenance list and investigate the diagram links through separate PRs, with the existing checks and reviewers. The follow-up release uses the existing cut and validation process. Business decisions and pricing-demo acceptance remain parked. No change to ontology meaning or vocabulary is planned; an unresolved modeling choice stays open. The later source-description instruction below permits an editorial change to provenance text. This work grants no new business-model decision or paid service.
 
 The earlier temporary-visibility permission and requirement to finish with every repository private still apply. The customer model remains outside `main`. The alternative of leaving all maintenance for another session was not chosen. Maintenance and its follow-up release remain pending.
+
+
+### Later instruction: neutral source descriptions
+
+The same answers file records the request to remove source-format references from the documents, with the timing specified as:
+
+> before we do the follow up release.
+
+The agent will use neutral customer-input descriptions in authored documentation and recipient-facing provenance, including the viewer. This changes how sources are described, not which inputs support the ontology. Original saved answers remain verbatim audit evidence. Existing frozen packages remain historical inputs; the cut must apply the approved editorial rewrite consistently and verify that no other ontology change passes through it. The final release check must cover the generated documents and the viewer as well as source text.

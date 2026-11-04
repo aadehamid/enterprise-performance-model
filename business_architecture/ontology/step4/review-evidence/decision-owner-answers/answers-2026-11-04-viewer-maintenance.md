@@ -13,3 +13,9 @@ Turn on caffeine so that the machine does not go to sleep
 
 can you investigate the below as well
 The repository's documents still link to the old diagrams: MODULES.md, README.md and the ontology guide. Changing those links needs a pull request,
+
+<!-- Later scope extension, verbatim. This saved answer is the audit record for the source-description cleanup. -->
+
+Can you also check for places where we said we used images as a source
+
+Those needs to be removed the image refrences from all documents as well... before we do the follow up release.
