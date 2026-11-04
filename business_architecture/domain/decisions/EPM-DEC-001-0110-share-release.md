@@ -218,7 +218,7 @@ The decision owner then requested clearer customer navigation, quoting the prece
 > do you think we can do below. not easy to see at the moment
 > The conceptual model is currently browsable term by term; there is no dedicated whole-model diagram yet. Likewise, the lifecycle lacks a prominent entry point. Both need clearer navigation to make them easy to find.
 
-This adds a whole-model diagram and a prominent lifecycle entry point to the viewer scope. The earlier selected-term graph remains available for inspecting each term. Implementation and publication of these additions are pending.
+This adds a whole-model diagram and a prominent lifecycle entry point to the viewer scope. The earlier selected-term graph remains available for inspecting each term. Implementation and publication of these additions were pending at this decision. *2026-11-04:* completed with PR #491 and the viewer release, as recorded below.
 
 Implementation approach: derive definitions, lifecycle links and relationships from the pinned released RDF. Presentation groups arrange the conceptual entities without changing the ontology. The release records lifecycle stages without a mandatory sequence, so their overview must not invent one.
 
@@ -244,10 +244,48 @@ The decision owner then authorized the release:
 
 > go ahead and cut a new release. Once this is done do we have anything else that is outstanding or is this it?
 
-The owner-review checkpoint is satisfied. Comprehensive checks, independent review, the Cursor PR verdict and the release cut remain required before publication. Implementation merge and publication are pending. This authorization does not close Q17, Market Data accountability or the other open business questions.
+The owner-review checkpoint is satisfied. Comprehensive checks, independent review, the Cursor PR verdict and the release cut remain required before publication. Implementation merge and publication were pending at this decision. *2026-11-04:* completed with PR #491 and the viewer release, as recorded below. This authorization does not close Q17, Market Data accountability or the other open business questions.
 
 The saved permission for temporary repository visibility is:
 
 > you can swithc the repo to public while working. Switch back to private when you are done working
 
 All repositories must end private. The customer model remains outside `main`; the cut supplies it from the existing approved release inputs.
+
+## Amendment, 2026-11-04: maintenance after the viewer release
+
+### Context and completed release
+
+PR #491 merged the viewer as `ae9be6d3` after independent review, Cursor's MERGE verdict and the repository checks. The cut published the viewer on the private release branch at `5132e75f`. Cut validation, the offline browser check and a fresh-reader check passed. The production reload from that release passed, with every ontology, technical-graph and logical-model sync marker current. The release report and logs are retained under the ignored `release-cut/` folder.
+
+The agent's maintenance list comprised the standalone demo test command's missing pyshacl dependency, citation-check issue #428, catalog-fallback issue #384 and legacy-example issue #18. The agent proposed completing these after the viewer release and batching recipient-facing changes into one follow-up cut. This is context for the owner's messages, not a quotation of them.
+
+### Decision and recorded words
+
+The decision owner said in `answers-2026-11-04-viewer-maintenance.md`:
+
+> We can park the forst and the second. Whats the third one about?
+
+> Can you take up the third category then as part of the goal once you finish all the release. By the way, is it gonna affect? Are we gonna have to make another release when we finish the third category
+
+> Okay, go ahead and that will conclude the go then. Once you finish the maintenance. Does this make sense? Is it clear to you what we need to do tonight while I'm asleep?
+
+The same answers file records the additional request:
+
+> can you investigate the below as well
+> The repository's documents still link to the old diagrams: MODULES.md, README.md and the ontology guide. Changing those links needs a pull request,
+
+### Follow-through
+
+The agent will complete the maintenance list and investigate the diagram links through separate PRs, with the existing checks and reviewers. The follow-up release uses the existing cut and validation process. Business decisions and pricing-demo acceptance remain parked. No change to ontology meaning or vocabulary is planned; an unresolved modeling choice stays open. The later instruction below requires removal of image-source references from the documents before the follow-up release. This work grants no new business-model decision or paid service.
+
+The earlier temporary-visibility permission and requirement to finish with every repository private still apply. The customer model remains outside `main`. The alternative of leaving all maintenance for another session was not chosen. Maintenance and its follow-up release remain pending.
+
+
+### Later instruction: remove image-source references
+
+The same answers file records the request to check where the documents say images were used as a source and remove those image references, with the timing specified as:
+
+> before we do the follow up release.
+
+The following implementation approach is the agent's reading of that request: replace references to customer images as sources with neutral customer-input descriptions in authored documentation and recipient-facing provenance, including the viewer. Other source formats stay as they are. This changes how those image sources are described, not which inputs support the ontology. Original saved answers remain verbatim audit evidence. Existing frozen packages remain historical inputs. The follow-up release must remove image-source references from its documents before publication, as requested above. The agent plans to apply the replacement method through the cut and check the generated documents, viewer and source text, including a comparison that rejects unrelated ontology changes.
