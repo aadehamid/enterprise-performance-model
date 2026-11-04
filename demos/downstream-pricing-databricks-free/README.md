@@ -57,7 +57,7 @@ uv run --group graph python -m pricing_demo.tech_graph sync      # Neo4j -> idp_
 uv run --group graph python -m pricing_demo.tech_graph walk      # one Cypher walk from a gold table to the measures it implements
 uv run python -m pricing_demo.databricks counts            # row counts
 uv run python -m pricing_demo.databricks purge             # list what a purge drops; --yes drops it
-uv run --with pytest python -m pytest -q tests             # offline tests
+uv run --with pytest --with pyshacl python -m pytest -q tests  # offline tests, including SHACL
 ```
 
 Two more steps of `tech_graph` check a refresh and change nothing in the graph or the stores. After `build`, `compare` fails when the refreshed graph's objects or edges differ from `graph/*.ttl`, and `lineage` fails on a lineage difference `graph/lineage-known.json` does not state (*2026-11-02, #457:* it now sets each edge beside the three sources that may hold it: the design, the SQL files and Unity Catalog; "The lineage test", below). `build` writes `out/tech/graph/`, which Git ignores, and `load` prefers it; `build --to-repo` writes `graph/*.ttl`. `collect --lineage-wait <seconds>` waits for Unity Catalog's lineage to arrive. `business_architecture/ontology/projection/rebuild_stores.py` runs all of it in order.
