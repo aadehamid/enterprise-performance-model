@@ -836,6 +836,7 @@
         if (state) {
           $("results").replaceChildren(...state.nodes); $("summary").textContent = state.summary;
           $("pagination").hidden = state.more; listScroll = state.y;
+          renderStreamEntry();
         } else renderList();
       }
       const ordered = data.nodes

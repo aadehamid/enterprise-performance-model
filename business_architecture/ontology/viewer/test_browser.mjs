@@ -27,6 +27,28 @@ try {
   await page.locator("#results button").first().waitFor();
   const initial = await page.locator("#summary").innerText();
   assert.match(initial, /terms in release/);
+  async function checkBrowseContext() {
+    await page.locator("#view-browse").click();
+    await page.locator("#module").selectOption("value-stream");
+    assert.equal(await page.locator("#stream-entry").isVisible(), true);
+    async function openModuleBrowser(name) {
+      await page.locator("#view-modules").click();
+      await page.locator(`#module-catalogue button[data-module="${name}"]`).click();
+      await page.locator("#browse-module").click();
+      assert.equal(await page.locator("#module").inputValue(), name);
+    }
+    await openModuleBrowser("party");
+    assert.equal(await page.locator("#stream-entry").isVisible(), false);
+    await page.locator("#view-browse").click();
+    assert.equal(await page.locator("#module").inputValue(), "value-stream");
+    assert.equal(await page.locator("#stream-entry").isVisible(), true,
+      "restoring the value-stream browser must restore its stream entry points");
+    await openModuleBrowser("value-stream");
+    assert.equal(await page.locator("#stream-entry").isVisible(), true);
+    await openModuleBrowser("party");
+    assert.equal(await page.locator("#stream-entry").isVisible(), false,
+      "restoring the party browser must hide stale value-stream entry points");
+  }
   async function checkValueStreams(mobile = false) {
     if (mobile) {
       await page.setViewportSize({ width: 390, height: 844 });
@@ -366,6 +388,8 @@ try {
   }
   for (const width of [1440, 390]) {
     await page.setViewportSize({width,height:900});
+    await page.goto(pathToFileURL(resolve(process.argv[2])).href);
+    await checkBrowseContext();
     await page.goto(pathToFileURL(resolve(process.argv[2])).href);
     assert.equal(await page.locator("#overview").getAttribute("data-view"),"modules");
     await page.locator("#module-query").fill("party");
