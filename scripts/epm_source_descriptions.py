@@ -9,7 +9,8 @@ OLD_TITLE = (
     "(two images and two Dealer Master documents), as the party module holds them"
 )
 NEW_TITLE = (
-    "the subject matter expert's customer inputs of 2026-10-27, "
+    "the subject matter expert's customer inputs of 2026-10-27 "
+    "(including two Dealer Master documents), "
     "as the party module holds them"
 )
 

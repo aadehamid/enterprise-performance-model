@@ -107,6 +107,8 @@ still equals the release as shipped, using the list `templates/pinned-tests.txt`
 The option `--remove-internal` leaves `reference/internal/` out. It is off by default, and the plan says a
 review report of what changes comes before anyone turns it on.
 
+The logical-model 1.0.0 issue date stays 2026-11-03, as in its first published package at `81f2f63b`. Repeating a cut changes the cut date in `release.json`, not that module version's issue date.
+
 ## Include the offline ontology viewer
 
 Pass `--viewer-source <release clone>` to `cut.sh` to include `viewer/index.html`, recipient instructions and a link at the top of the release README. The source must be a clean clone of `share/epm-1.0` at `81f2f63b128820854a25204641b6899d55051ae3`. The cut validates the source before replacing an output folder. After rebuilding, it requires the cut's current package Turtle files and release catalog to match the source files by path and SHA-256 after the exact customer-source title substitution in `scripts/epm_source_descriptions.py` (EPM-DEC-001-0110, amendment of 2026-11-04). Every other byte difference stops the cut. The viewer reads the verified cut's packages, including their neutral source descriptions. Using RDFLib 7.6.0, the cut reconstructs the generated HTML's RDF and checks it against those packages; it also verifies that the tested page is byte-identical to the page it ships.

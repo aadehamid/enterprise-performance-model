@@ -33,7 +33,7 @@ The rules, in order:
                    named sources: the provenance stays) or, for the logical models, becomes a pointer to
                    HOW-TO-UPDATE.md, "Inputs from outside the repository"; the skills' generic text stays.
 
-Rule source-descriptions removes the image-format parenthesis from the exact customer-source title,
+Rule source-descriptions removes the image-format reference from the exact customer-source title,
 after attribution and kept-out rewrites. The source identity and remaining wording stay the same.
 
 Rule 3 also rewrites the short forms that follow a citation ("EPM-DEC-001-0020, 0021 and 0036", "(0021)",

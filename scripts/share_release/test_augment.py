@@ -173,7 +173,8 @@ def test_the_package_is_built_registered_and_counted(tmp_path, folder):
     r = run(augment.builder_args([SLUG], "--write"), f"{ONT}/logical-model")
     assert r.returncode == 0, r.stdout + r.stderr
     approved = (f"{augment.ANSWERS}/answers-2026-11-03-logical-model-release.md", WORDS)
-    ctx = augment.context(str(rel), str(tmp_path), approved, str(folder), {"EPM-DEC-001-0113": "2026-11-02"}, issued="2026-11-03")
+    ctx = augment.context(str(rel), str(tmp_path), approved, str(folder), {"EPM-DEC-001-0113": "2026-11-02"})
+    assert ctx["issued"] == "2026-11-03"  # the default cut path keeps the first release date
     augment.write_changelog(str(rel), ctx, {})
     before = {p: (rel / p).read_text(encoding="utf-8") for p, _ in augment.REGISTRATION}
     places = augment.apply(str(rel), augment.REGISTRATION, ctx)
@@ -187,6 +188,15 @@ def test_the_package_is_built_registered_and_counted(tmp_path, folder):
     assert r.returncode == 0 and "release package is current" in r.stdout, r.stdout + r.stderr
     package = rel / ONT / "releases" / augment.MODULE / augment.VERSION
     m = json.loads((package / "manifest.json").read_text())
+    from rdflib import Graph, Literal, URIRef
+    from rdflib.namespace import DCTERMS, XSD
+    version = URIRef(m["version_iri"])
+    issued = Literal("2026-11-03", datatype=XSD.date)
+    content = Graph().parse(package / "logical-model.ttl")
+    catalog = Graph().parse(package / "catalog.ttl")
+    assert content.value(version, DCTERMS.issued) == issued
+    assert content.value(version, DCTERMS.modified) == issued
+    assert catalog.value(version, DCTERMS.issued) == issued
     assert m["augment"] == augment.inputs(str(folder)) and m["approved_by"]["words"] == WORDS
     for kind in ("erstudio", "layer"):  # each model's two graphs ship as the builder wrote them
         assert (package / f"{SLUG}.{kind}.ttl").read_bytes() == (models / f"{SLUG}.{kind}.ttl").read_bytes()
@@ -491,3 +501,14 @@ def test_the_rebuilds_figures_pass_runs_when_the_figures_hold_the_requirements(t
     monkeypatch.setattr(augment, "apply", lambda release, patches, ctx: seen.update(ctx) or ["a page"])
     rb.augment_figures()
     assert seen["requires"] == "party 2.1.0" and seen["modules"] == 13 and rb.steps[-1]["patched"] == ["a page"]
+
+
+def test_a_later_cut_keeps_the_first_logical_model_release_date(tmp_path, folder, monkeypatch):
+    from datetime import date
+    clock = types.SimpleNamespace(date=types.SimpleNamespace(today=lambda: date(2030, 1, 2)))
+    monkeypatch.setattr(augment, "datetime", clock, raising=False)
+    monkeypatch.setattr(augment, "staged_slugs", lambda release: [SLUG])
+    approved = (f"{augment.ANSWERS}/answers-2026-11-03-logical-model-release.md", WORDS)
+    ctx = augment.context(str(tmp_path), str(tmp_path), approved, str(folder), {})
+    assert ctx["issued"] == "2026-11-03"
+    assert '"issued": "2026-11-03"' in ctx["entry"]

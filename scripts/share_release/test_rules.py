@@ -793,7 +793,8 @@ def test_customer_source_title_loses_only_its_format_description(path):
     original = ("The decision owner's customer inputs of 2026-10-27 "
                 "(two images and two Dealer Master documents, kept out of the repository by EPM-DEC-001-0108), "
                 "as the party module holds them")
-    expected = ("the subject matter expert's customer inputs of 2026-10-27, "
+    expected = ("the subject matter expert's customer inputs of 2026-10-27 "
+                "(including two Dealer Master documents), "
                 "as the party module holds them")
     text = original + "\nTax Image Silo\nurn:customer-source"
     out, counts = run(text, path)
