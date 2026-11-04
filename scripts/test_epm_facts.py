@@ -1181,6 +1181,20 @@ def test_citations_need_the_words_in_a_saved_answer_and_a_named_source(tmp_path)
 
 
 @pytest.mark.inputs("record-citations")
+@pytest.mark.parametrize("verb", ["allowed", "approved", "gave", "accepted", "agreed", "set", "confirmed", "requested"])
+def test_citations_check_permission_and_decision_verbs(tmp_path, verb):
+    saved = '"keep the old figures as they were recorded" (answers-x.md).\n'
+    unsaved = '"a sentence nobody saved anywhere" (answers-x.md).\n'
+    assert _citation_fixture(tmp_path / "saved", f'The decision owner {verb}: ' + saved) == []
+    assert NAMED_MISS in _citation_fixture(tmp_path / "unsaved", f'The decision owner {verb}: ' + unsaved)[0]
+    chained = ('The decision owner said: "keep the old figures as they were recorded" '
+               f'(answers-x.md), then {verb}: "a sentence nobody saved anywhere".\n')
+    assert NAMED_MISS in _citation_fixture(tmp_path / "chained", chained)[0]
+    other = f'The decision owner read the document. The reviewer {verb}: ' + unsaved
+    assert _citation_fixture(tmp_path / "other", other) == []
+
+
+@pytest.mark.inputs("record-citations")
 def test_citations_check_every_quote_a_verb_gives_and_the_named_source(tmp_path):
     # Codex on the citation check: the second of two quotes went unchecked, and a made-up file passed as a source.
     second = ('The decision owner asked: "keep the old figures as they were recorded" (answers-x.md), then chose '
