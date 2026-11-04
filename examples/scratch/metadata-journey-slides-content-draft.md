@@ -1,6 +1,6 @@
 # Metadata Journey Slides — Content Draft (for review before design)
 
-**Source of truth:** `master-use-case-kpi-store-semantic-governance.md` (working draft, treated as authoritative for this exercise per stakeholder instruction).
+**Status:** illustrative scratch. This draft and the pages in `metadata-journey-slides/` use [the master use case](master-use-case-kpi-store-semantic-governance.md) as source material for an example. They do not establish project authority or an implemented system. The foundation, applicable Turtle and process authority folders named in [the reconciliation](initial-draft-ontology-structure.md) govern the project. I-11 does not adopt this slide content.
 **Naming:** "ODPS" is presented as **Data Contract** (machine format unnamed on-slide). "Formula Pointer" is presented as **Measure Bind**. The "1:1 Governance Gate" is presented as the **Certification** step (intake & certification). Stage 4 is named **Data Product**.
 **Audience discipline:** Slides avoid standards jargon (no ODPS, PROV-O, SKOS, `ekpi:`/`data:` prefixes). Business Architecture metadata is cited as **JSON** (not path + SHA). External-gap findings are quarantined in §3 Speaker Notes / Advisory — they do NOT appear on the slides.
 **System conventions:** Four vendor platforms shown as visual anchors (ER/Studio, Unity Catalog, Bigeye, Microsoft Purview). Architecture components (KPI Store, Git Ontology / Graph of Meaning, Semantic Layer + Compiler, Data Contract) shown as styled text chips. Every metadata field carries its **birth system (SoR)** tag inline; catalog destinations (Purview / Unity Catalog) shown as small projections. KPI-stage metadata is shown as stored in the **Purview catalog**; the KPI Store remains the physical seat, cataloged in Purview.
@@ -9,7 +9,7 @@
 
 ## SLIDE 1 — "The Metadata Journey: From Domain Analysis to Certified Consumption"
 
-**Subtitle strip:** "How metadata flows end to end — the stages a KPI moves through, the metadata each stage introduces, and the one system that owns it. Captured once at origin; referenced downstream by URI / IRI. Working draft."
+**Subtitle strip:** "How metadata flows end to end — the stages a KPI moves through, the metadata each stage introduces, and the one system that owns it. Captured once at origin; referenced downstream by URI / IRI. Illustrative scratch."
 
 ### Top band — Journey buckets (5)
 

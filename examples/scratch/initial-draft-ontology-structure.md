@@ -2,7 +2,7 @@
 
 Status: non-authoritative scratch, reconciled for I-11 on 2026-11-04.
 
-This file and [the master use case](master-use-case-kpi-store-semantic-governance.md) remain examples. Closing I-11 does not promote either file into the foundation or a released ontology. The maintenance disposition below is delegated under EPM-DEC-001-0028; it adopts no new business rule, class, property or namespace.
+This file and [the master use case](master-use-case-kpi-store-semantic-governance.md) remain examples. Closing I-11 does not promote either file into the foundation or a released ontology. The disposition below is repository maintenance; it adopts no new business rule, class, property or namespace.
 
 ## Authority and boundaries
 
@@ -14,7 +14,7 @@ Process authority remains `business_architecture/business_process/` and `busines
 
 ## Prefix and identifier disposition
 
-These dispositions cover both scratch files. "Retired" means no proposed project namespace or alias survives; its spelling remains here only to record the disposition. "Scratch-only" means an example, with no adoption into Turtle or the foundation. Any future promotion follows FOUND-004 and the current ontology playbook through a separate reviewed change.
+These dispositions cover this namespace sketch and the linked master use case named in issue #18. The separate [metadata journey slide draft](metadata-journey-slides-content-draft.md) and its slide pages remain illustrative scratch; this reconciliation does not adopt their content. "Retired" means no proposed project namespace or alias survives; its spelling remains here only to record the disposition. "Scratch-only" means an example, with no adoption into Turtle or the foundation. Any future promotion follows FOUND-004 and the current ontology playbook through a separate reviewed change.
 
 | Prefix or identifier family | Disposition | Authority or next step |
 |---|---|---|
@@ -28,7 +28,7 @@ These dispositions cover both scratch files. "Retired" means no proposed project
 
 ## Class and property disposition through FOUND-004
 
-| Names in the two files or issue #18 | Disposition | Basis |
+| Names in the namespace sketch, master use case or issue #18 | Disposition | Basis |
 |---|---|---|
 | `BusinessProcess`, `KPI`, `Metric`, `KPIFormula`, `CalculationLogic`, `AggregationType`, `logicExpression` with `ekpi:` | Existing Stage 2 terms, unchanged | The Turtle declares these names. This reconciliation adds no term or mapping. |
 | `Metric` used as a synonym for `KPI` | Retired interpretation | Stage 2 declares `KPI` as a subclass of `Metric`; the names are not interchangeable. FOUND-003/004 distinguish the concepts. |
@@ -42,6 +42,6 @@ These dispositions cover both scratch files. "Retired" means no proposed project
 
 ## What remains outside I-11
 
-The master use case's contract, automation, ownership scheme, SLAs, thresholds and consumption examples remain scratch. Adopting any of them requires its own evidence and decision. C-08, the Family C and remaining Family E reconciliation, stays open. The two scratch files remain separate.
+The master use case's contract, automation, ownership scheme, SLAs, thresholds and consumption examples remain scratch. Adopting any of them requires its own evidence and decision. C-08, the Family C and remaining Family E reconciliation, stays open. The namespace sketch and master use case remain separate documents.
 
 When extending either example, check the current released vocabulary first. Keep an undeclared term marked scratch-only until a separate FOUND-004 proposal is reviewed. Preserve the Store binding and process authority above.

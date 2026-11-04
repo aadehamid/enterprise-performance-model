@@ -34,7 +34,7 @@ elements:
       color: "#C0392B"
       align: [center, middle]
       wrap: false
-      text: WORKING DRAFT
+      text: SCRATCH EXAMPLE
   - elementId: subtitle
     elementType: text
     bounds: [18, 42, 924, 14]
