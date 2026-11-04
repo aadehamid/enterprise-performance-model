@@ -31,11 +31,11 @@ try {
     await page.locator("#view-browse").click();
     await page.locator("#module").selectOption("value-stream");
     assert.equal(await page.locator("#stream-entry").isVisible(), true);
-    async function openModuleBrowser(name) {
+    async function openModuleBrowser(name, expected = name) {
       await page.locator("#view-modules").click();
       await page.locator(`#module-catalogue button[data-module="${name}"]`).click();
       await page.locator("#browse-module").click();
-      assert.equal(await page.locator("#module").inputValue(), name);
+      assert.equal(await page.locator("#module").inputValue(), expected);
     }
     await openModuleBrowser("party");
     assert.equal(await page.locator("#stream-entry").isVisible(), false);
@@ -48,6 +48,16 @@ try {
     await openModuleBrowser("party");
     assert.equal(await page.locator("#stream-entry").isVisible(), false,
       "restoring the party browser must hide stale value-stream entry points");
+    await page.locator("#module").selectOption("");
+    const allResults = await page.locator("#results").innerHTML();
+    const allSummary = await page.locator("#summary").innerText();
+    await openModuleBrowser("value-stream");
+    await openModuleBrowser("party", "");
+    assert.equal(await page.locator("#results").innerHTML(), allResults,
+      "restoring All modules must preserve the matching cached results");
+    assert.equal(await page.locator("#summary").innerText(), allSummary);
+    assert.equal(await page.locator("#stream-entry").isVisible(), false);
+    await page.locator("#module").selectOption("party");
   }
   async function checkValueStreams(mobile = false) {
     if (mobile) {

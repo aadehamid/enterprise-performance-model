@@ -828,7 +828,7 @@
         browseContext = context;
         const state = browseCache.get(context);
         $("query").value = state?.query || "";
-        $("module").value = state?.module || (context.startsWith("module:") ? context.slice(7) : "");
+        $("module").value = state?.module ?? (context.startsWith("module:") ? context.slice(7) : "");
         $("term-type").value = state?.type || ""; $("support").checked = state?.support || false;
         mode = state?.mode || "list"; pageSize = state?.pageSize || 80;
         $("list-mode").setAttribute("aria-pressed", String(mode === "list"));
