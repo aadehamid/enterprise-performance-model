@@ -207,6 +207,90 @@ try {
   );
   await checkValueStreams(true);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  // Derive the customer model's connected component from the released RDF, independently
+  // of the UI's presentation groups. Verify every entity, edge and lifecycle mapping.
+  const customer = await page.evaluate(() => {
+    const ns = "https://w3id.org/mpc/ontology/modules/party/", rdfs = "http://www.w3.org/2000/01/rdf-schema#";
+    const refs = (n, p) => n.values.filter(v => !v.literal && v.p === p).map(v => v.v);
+    const classes = new Set(data.nodes.filter(n => n.id.startsWith(ns) && n.kind === "Class").map(n => n.id));
+    const edges = [];
+    for (const n of data.nodes) {
+      if (n.kind === "Property") for (const from of refs(n, rdfs + "domain"))
+        for (const to of refs(n, rdfs + "range")) if (classes.has(from) && classes.has(to)) edges.push([from,n.id,to]);
+      if (classes.has(n.id)) for (const p of [rdfs + "subClassOf", "http://www.w3.org/2002/07/owl#disjointWith"])
+        for (const to of refs(n,p)) if (classes.has(to)) edges.push([n.id,p,to]);
+    }
+    const ids = new Set([ns + "Party"]);
+    let changed = true;
+    while (changed) {
+      const before = ids.size;
+      for (const [from,,to] of edges) if (ids.has(from) || ids.has(to)) {ids.add(from);ids.add(to);}
+      changed = ids.size !== before;
+    }
+    const stages = refs(byId.get(ns + "lifecycle-stage"), "http://www.w3.org/2004/02/skos/core#hasTopConcept").map(id => {
+      const n = byId.get(id);
+      return {id, label:n.label, processes:refs(n,ns+"stageProcess"), systems:refs(n,ns+"correspondsTo").map(id=>({id,targets:refs(byId.get(id),ns+"stageSystem")}))};
+    });
+    return {ids:[...ids].sort(), edges:edges.filter(([from,,to])=>ids.has(from)&&ids.has(to)).sort(), stages};
+  });
+  assert.equal(customer.ids.length, 17, "The released customer conceptual model has 17 entity classes");
+  assert.equal(customer.stages.length, 6);
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({width,height:900});
+    await page.locator("#view-lifecycle").click();
+    assert.equal(await page.locator("#layout").isVisible(), false);
+    assert.equal(await page.locator("#overview").isVisible(), true);
+    assert.deepEqual((await page.locator(".lifecycle-card").evaluateAll(els=>els.map(e=>e.dataset.stage))).sort(), customer.stages.map(s=>s.id).sort());
+    for (const stage of customer.stages) {
+      const card = page.locator(`.lifecycle-card[data-stage="${stage.id}"]`);
+      await card.locator("summary").click();
+      const expected = [...stage.processes, ...stage.systems.flatMap(s=>[s.id,...s.targets])].sort();
+      assert.deepEqual((await card.locator("details [data-term]").evaluateAll(els=>els.map(e=>e.dataset.term))).sort(), expected);
+      for (const system of stage.systems) assert.deepEqual((await card.locator(`.system-stage[data-stage="${system.id}"] li button`).evaluateAll(els=>els.map(e=>e.dataset.term))).sort(), system.targets.sort());
+      await card.locator(":scope > button").click();
+      assert.equal(await page.locator("#iri").textContent(),stage.id);
+      assert.deepEqual((await page.locator("#lifecycle-links [data-term]").evaluateAll(els=>els.map(e=>e.dataset.term))).sort(), expected);
+      await page.locator("#lifecycle-links > ul button").first().click();
+      assert.ok(stage.processes.includes(await page.locator("#iri").textContent()));
+      await page.locator("#return-overview").click();
+      assert.equal(await page.locator("#overview").getAttribute("data-view"), "lifecycle");
+    }
+    await page.reload();
+    assert.equal(await page.locator("#overview").getAttribute("data-view"), "lifecycle");
+    await page.locator("#view-model").click();
+    await page.locator("#model-reset").click();
+    assert.deepEqual((await page.locator("#model-diagram [data-entity]").evaluateAll(els=>els.map(e=>e.dataset.entity))).sort(),customer.ids);
+    const edgeRows = () => page.locator("#model-relations tbody tr").evaluateAll(els=>els.map(e=>[e.dataset.source,e.dataset.predicate,e.dataset.target]).sort());
+    assert.deepEqual(await edgeRows(), customer.edges);
+    assert.equal(await page.locator("#model-diagram .model-edge").count(),customer.edges.length);
+    for (const id of customer.ids) {
+      const node=page.locator(`#model-diagram [data-entity="${id}"]`);
+      await node.focus(); await page.keyboard.press("Enter");
+      assert.equal(await node.getAttribute("aria-pressed"),"true");
+      assert.deepEqual(await edgeRows(),customer.edges.filter(([a,,b])=>a===id||b===id));
+      await page.locator("#model-focus [data-term]").click();
+      assert.equal(await page.locator("#iri").textContent(),id);
+      await page.locator("#return-overview").click();
+      assert.equal(await page.locator(`#model-diagram [data-entity="${id}"]`).getAttribute("aria-pressed"),"true");
+    }
+    await page.locator("#model-reset").click();
+    const property = customer.edges.find(([,p])=>p.startsWith("https://w3id.org/mpc/ontology/modules/party/"))[1];
+    await page.locator(`#model-relations [data-term="${property}"]`).first().click();
+    assert.equal(await page.locator("#iri").textContent(),property);
+    await page.goBack();
+    assert.equal(await page.locator("#overview").getAttribute("data-view"),"model");
+    await page.reload();
+    assert.equal(await page.locator("#overview").isVisible(),true);
+    assert.equal(await page.locator("#overview").getAttribute("data-view"),"model");
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    const scroll=page.locator(".model-scroll");
+    await scroll.evaluate(e=>e.scrollLeft=e.scrollWidth);
+    await page.locator('#model-diagram [aria-label="product"]').click();
+    assert.equal(await page.locator("#model-focus h3").textContent(),"product");
+    await page.locator("#view-browse").click();
+    assert.equal(await page.locator("#overview").isVisible(),false);
+    assert.equal(await page.locator("aside").isVisible(),true);
+  }
   assert.deepEqual(errors, []);
   assert.equal(network, 0);
   console.log(
@@ -218,6 +302,8 @@ try {
       modules: true,
       hierarchy: true,
       valueStreamDrilldown: true,
+      customerLifecycle: true,
+      customerConceptualModel: true,
       graph: true,
       mobile: true,
     }),

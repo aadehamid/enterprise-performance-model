@@ -6,6 +6,10 @@ Search finds labels, definitions and IRIs. Module navigation includes a hierarch
 
 Choosing the value-stream module lists the released value streams first. Each opens its stages in their recorded sequence, then their processes and realized core processes. Links to the containing stage or stream provide a way back. The module's vocabulary remains searchable and accessible in the hierarchy.
 
+The top navigation opens Customer lifecycle and Customer conceptual model directly. The lifecycle lists the released business stages alphabetically, with definitions, process links and corresponding system stages. Systems appear under the system stage that records them; no business-stage sequence or direct system mapping is inferred. The conceptual diagram arranges the 17 customer entities in three presentation groups. Its edges come from declared property domains and ranges, subclass links and disjoint links between those entities. Selecting an entity highlights its edges and filters an equivalent relationship table. Properties, classes and lifecycle links open the existing term details, with a return button to the overview. Both overviews support browser history and reload. The model diagram scrolls within its frame on phones; the relationship table remains available as text.
+
+The diagram is a view of the conceptual entities, not a replacement for the full ontology browser. Attributes, code lists and system extensions remain in All ontology. Its arrows do not imply required fields, cardinalities or instance relationships. The separate customer logical model remains in the logical-model module.
+
 ## Data boundary
 
 The input is `share/epm-1.0` at `81f2f63b128820854a25204641b6899d55051ae3`. The builder checks the Git commit, refuses local changes under `releases/`, and verifies each manifest-listed Turtle file against its SHA-256. It reads the current package of each module and the top-level release catalog from that pinned tree. It includes the customer schema and technical-graph vocabulary. It does not read main, candidate packages, earlier releases, examples, live stores or technical-graph records.

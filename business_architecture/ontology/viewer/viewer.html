@@ -113,6 +113,68 @@
         grid-template-columns: 320px minmax(0, 1fr);
         min-height: calc(100vh - 64px);
       }
+      [hidden] { display: none !important; }
+      #views {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 24px 16px;
+      }
+      #views button[aria-current="page"] {
+        background: #e0e9eb;
+        border-color: var(--accent);
+      }
+      #overview {
+        margin: 0 24px 24px;
+        padding: 24px;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        min-width: 0;
+      }
+      #overview h2 { font-size: 22px; }
+      #overview h3 { font-size: 16px; }
+      .overview-intro { max-width: 80ch; }
+      .lifecycle-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+        margin-top: 24px;
+      }
+      .lifecycle-card {
+        min-width: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 12px;
+      }
+      .lifecycle-card > button { font-size: 17px; }
+      .lifecycle-card ul, #lifecycle-links ul { padding-left: 20px; }
+      .lifecycle-card li, #lifecycle-links li { margin: 8px 0; }
+      .model-scroll {
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin: 16px 0;
+      }
+      #model-diagram { width: 100%; min-width: 980px; max-height: 540px; display: block; }
+      #model-diagram .model-edge { fill: none; stroke: #437d8b; stroke-width: 1.4; }
+      #model-diagram .model-edge.active { stroke: var(--accent); stroke-width: 2.5; }
+      #model-diagram .model-edge.dimmed { opacity: 0.15; }
+      #model-diagram .model-node { cursor: pointer; }
+      #model-diagram .model-node rect { fill: #f7f9f9; stroke: #bbc8cb; }
+      #model-diagram .model-node.active rect { fill: #e0edef; stroke: var(--accent); stroke-width: 2; }
+      #model-diagram .model-node:focus rect { stroke: #172126; stroke-width: 3; }
+      #model-diagram text { font: 15px "IBM Plex Sans", sans-serif; fill: #202527; }
+      #model-diagram .model-group { font-size: 17px; font-weight: 600; }
+      #model-focus { padding: 8px 0; }
+      .model-relations { width: 100%; border-collapse: collapse; }
+      .model-relations th, .model-relations td {
+        text-align: left;
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--line);
+        overflow-wrap: anywhere;
+      }
+      .model-relations button { text-align: left; }
+      #return-overview { margin-bottom: 16px; }
       aside {
         padding: 12px 20px 24px;
         min-width: 0;
@@ -388,6 +450,7 @@
         padding: 24px;
       }
       @media (max-width: 1100px) {
+        .lifecycle-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         #layout {
           grid-template-columns: 270px minmax(0, 1fr);
         }
@@ -405,6 +468,11 @@
         }
       }
       @media (max-width: 640px) {
+        #views { padding: 0 16px 12px; }
+        #overview { margin: 0 8px 16px; padding: 16px; }
+        .lifecycle-grid { grid-template-columns: 1fr; }
+        .model-relations th, .model-relations td { padding: 8px 4px; }
+        .model-relations button { padding: 6px; }
         header {
           min-height: 60px;
           padding: 12px 16px;
@@ -493,6 +561,12 @@
       </div>
       <button id="about">Release details</button>
     </header>
+    <nav id="views" aria-label="Explore the ontology">
+      <button id="view-browse" aria-current="page">All ontology</button>
+      <button id="view-lifecycle">Customer lifecycle</button>
+      <button id="view-model">Customer conceptual model</button>
+    </nav>
+    <section id="overview" aria-label="Customer overview" hidden></section>
     <div id="layout">
       <aside aria-label="Find ontology terms">
         <label for="query">Find a term</label
@@ -519,6 +593,7 @@
       </aside>
       <main id="detail" aria-label="Selected term">
         <button class="mobile-only" id="back">Back to terms</button>
+        <button id="return-overview" hidden></button>
         <div class="term-header">
           <div>
             <h2 id="title" style="font-size: 22px">Ontology viewer</h2>
@@ -533,6 +608,7 @@
             <h2 id="definition-heading">Definition and scope</h2>
             <div id="definition" class="definition"></div>
             <section id="drilldown" aria-label="Value stream drill-down" hidden></section>
+            <section id="lifecycle-links" aria-label="Customer lifecycle links" hidden></section>
             <dl id="metadata"></dl>
             <div class="technical">
               <details>
@@ -607,6 +683,7 @@
         pageSize = 80,
         listScroll = 0,
         graphLimit = 8;
+      let overviewReturn = null, modelFocus = null;
       const ordered = data.nodes
         .slice()
         .sort(
@@ -664,6 +741,217 @@
         return node.values
           .filter((v) => !v.literal && v.p === predicate && byId.has(v.v))
           .map((v) => byId.get(v.v));
+      }
+      const PARTY = "https://w3id.org/mpc/ontology/modules/party/";
+      const RDFS = "http://www.w3.org/2000/01/rdf-schema#";
+      const SKOS = "http://www.w3.org/2004/02/skos/core#";
+      // These groups arrange the released conceptual entities; labels and edges come from RDF.
+      const modelGroups = [
+        ["Identity", ["Party", "Person", "Organization", "ExternalIdentifier", "Address", "ContactPoint"]],
+        ["Customer relationships", ["PartyRole", "CustomerAccount", "CustomerClass", "PartyRelationship", "Agreement", "LineOfBusiness"]],
+        ["Operational context", ["Site", "SiteBrandAssignment", "Brand", "Product", "PartyTransactionAssociation"]],
+      ];
+      const modelEntities = modelGroups.flatMap(([, names]) => names.map((n) => byId.get(PARTY + n))).filter(Boolean);
+      const modelIds = new Set(modelEntities.map((n) => n.id));
+      const modelEdges = [];
+      for (const property of ordered.filter((n) => n.kind === "Property"))
+        for (const source of linked(property, RDFS + "domain").filter((n) => modelIds.has(n.id)))
+          for (const target of linked(property, RDFS + "range").filter((n) => modelIds.has(n.id)))
+            modelEdges.push({source, target, property, label: property.label});
+      for (const source of modelEntities)
+        for (const [predicate, label] of [[RDFS + "subClassOf", "subclass of"],
+          ["http://www.w3.org/2002/07/owl#disjointWith", "disjoint with"]])
+          for (const target of linked(source, predicate).filter((n) => modelIds.has(n.id)))
+            modelEdges.push({source, target, predicate, label});
+      const lifecycleScheme = byId.get(PARTY + "lifecycle-stage");
+      const lifecycleStages = ordered.filter((n) => linked(n, SKOS + "inScheme").some((s) => s.id === lifecycleScheme?.id));
+      const overviewNames = {lifecycle: "Customer lifecycle", model: "Customer conceptual model"};
+      function definitionOf(node) {
+        return node.values.filter((v) => v.literal && v.p === SKOS + "definition").map((v) => v.v).join(" ");
+      }
+      function simpleTermButton(node) {
+        const b = element("button", node.label);
+        b.dataset.term = node.id;
+        b.onclick = () => select(node.id, true);
+        return b;
+      }
+      function termList(nodes) {
+        const ul = element("ul");
+        for (const node of nodes) {
+          const li = element("li");
+          li.append(simpleTermButton(node));
+          ul.append(li);
+        }
+        return ul;
+      }
+      function lifecycleLinks(node, container) {
+        const processes = linked(node, PARTY + "stageProcess");
+        const systemStages = linked(node, PARTY + "correspondsTo");
+        const systems = linked(node, PARTY + "stageSystem");
+        if (processes.length) container.append(element("h3", "Processes"), termList(processes));
+        if (systemStages.length) {
+          container.append(element("h3", "Corresponding system stages"));
+          for (const stage of systemStages) {
+            const group = element("div", undefined, "system-stage");
+            group.dataset.stage = stage.id;
+            group.append(simpleTermButton(stage));
+            const mapped = linked(stage, PARTY + "stageSystem");
+            if (mapped.length) group.append(termList(mapped));
+            else group.append(element("p", "No systems are recorded for this system stage.", "muted"));
+            container.append(group);
+          }
+        } else if (lifecycleStages.includes(node))
+          container.append(element("p", "No corresponding system stage is recorded.", "muted"));
+        if (systems.length) container.append(element("h3", "Systems"), termList(systems));
+      }
+      function navCurrent(name) {
+        for (const id of ["browse", "lifecycle", "model"])
+          if (id === name) $("view-" + id).setAttribute("aria-current", "page");
+          else $("view-" + id).removeAttribute("aria-current");
+      }
+      function showBrowse(push = true) {
+        overviewReturn = null;
+        $("overview").hidden = true;
+        $("layout").hidden = false;
+        $("return-overview").hidden = true;
+        document.body.classList.remove("show-detail");
+        navCurrent("browse");
+        if (push) location.hash = "";
+      }
+      function showOverview(name, push = true) {
+        overviewReturn = name;
+        navCurrent(name);
+        $("layout").hidden = true;
+        const panel = $("overview");
+        panel.hidden = false;
+        panel.dataset.view = name;
+        panel.replaceChildren();
+        const heading = element("h2", overviewNames[name]);
+        heading.tabIndex = -1;
+        panel.append(heading);
+        if (name === "lifecycle") {
+          panel.append(element("p", definitionOf(lifecycleScheme), "overview-intro"),
+            element("p", "Select a stage to inspect its definition. Expand its processes and systems to follow the recorded links. Stages are listed alphabetically; the release does not define a mandatory sequence.", "overview-intro muted"));
+          const grid = element("div", undefined, "lifecycle-grid");
+          for (const stage of lifecycleStages) {
+            const card = element("article", undefined, "lifecycle-card");
+            card.dataset.stage = stage.id;
+            const details = element("details");
+            details.append(element("summary", "Processes and systems"));
+            lifecycleLinks(stage, details);
+            card.append(simpleTermButton(stage), element("p", definitionOf(stage)), details);
+            grid.append(card);
+          }
+          panel.append(grid);
+        } else renderModel(panel);
+        if (push) {
+          location.hash = "view=" + name;
+          heading.focus({preventScroll: true});
+          window.scrollTo(0, 0);
+        }
+      }
+      function renderModel(panel) {
+        panel.append(element("p", "Select an entity to highlight its connections and read its definition. Open its details to inspect every property.", "overview-intro"));
+        const help = element("details");
+        help.append(element("summary", "How to read this model"),
+          element("p", "Solid arrows show declared property domains and ranges. Dashed arrows mean subclass of; dotted lines mean disjoint with. The relationship list names every link. These links do not imply required fields or cardinalities. Code lists, attributes and system extensions remain available in All ontology.", "overview-intro muted"));
+        panel.append(help);
+        const focus = element("div");
+        focus.id = "model-focus";
+        focus.setAttribute("aria-live", "polite");
+        const reset = element("button", "Show all relationships");
+        reset.id = "model-reset";
+        const scroll = element("div", undefined, "model-scroll");
+        scroll.tabIndex = 0;
+        scroll.setAttribute("role", "region");
+        scroll.setAttribute("aria-label", "Customer conceptual model diagram; scroll horizontally on a narrow screen");
+        panel.append(focus, reset, element("p", "On a narrow screen, scroll within the diagram to see every entity. The relationship list below provides the same connections as text.", "muted"), scroll);
+        const ns = "http://www.w3.org/2000/svg";
+        function svg(tag, attrs, text) {
+          const e = document.createElementNS(ns, tag);
+          for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+          if (text) e.textContent = text;
+          return e;
+        }
+        const diagram = svg("svg", {id: "model-diagram", viewBox: "0 0 1140 630", role: "group", "aria-label": "Customer conceptual entities and relationships"});
+        const marker = svg("marker", {id: "model-arrow", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse"});
+        marker.append(svg("path", {d: "M 0 0 L 10 5 L 0 10 z", fill: "#6d858d"}));
+        const defs = svg("defs", {}); defs.append(marker); diagram.append(defs);
+        const positions = new Map();
+        for (let col = 0; col < modelGroups.length; col++) {
+          const [name, members] = modelGroups[col];
+          diagram.append(svg("text", {x: col * 380 + 30, y: 30, class: "model-group"}, name));
+          members.forEach((name, row) => positions.set(PARTY + name, {x: col * 380 + 30, y: row * 90 + 60}));
+        }
+        const paths = [];
+        for (const edge of modelEdges) {
+          const a = positions.get(edge.source.id), b = positions.get(edge.target.id);
+          const right = b.x >= a.x, ax = a.x + (right ? 240 : 0), bx = b.x + (right ? 0 : 240);
+          let d;
+          if (a.x === b.x) {
+            const detour = a.x + 310;
+            d = edge.source === edge.target
+              ? `M ${a.x + 240} ${a.y + 20} C ${detour + 35} ${a.y - 20},${detour + 35} ${a.y + 85},${a.x + 240} ${a.y + 45}`
+              : `M ${a.x + 240} ${a.y + 32} C ${detour} ${a.y + 32},${detour} ${b.y + 32},${b.x + 240} ${b.y + 32}`;
+          } else d = `M ${ax} ${a.y + 32} C ${(ax + bx) / 2} ${a.y + 32},${(ax + bx) / 2} ${b.y + 32},${bx} ${b.y + 32}`;
+          const path = svg("path", {d, class: "model-edge", "data-predicate": edge.property?.id || edge.predicate});
+          if (edge.predicate === "http://www.w3.org/2002/07/owl#disjointWith") path.setAttribute("stroke-dasharray", "2 4");
+          else {
+            path.setAttribute("marker-end", "url(#model-arrow)");
+            if (edge.predicate === RDFS + "subClassOf") path.setAttribute("stroke-dasharray", "6 4");
+          }
+          path.append(svg("title", {}, edge.source.label + " → " + edge.label + " → " + edge.target.label));
+          paths.push([path, edge]); diagram.append(path);
+        }
+        const buttons = [];
+        for (const entity of modelEntities) {
+          const p = positions.get(entity.id);
+          const g = svg("g", {class: "model-node", transform: `translate(${p.x},${p.y})`, role: "button", tabindex: 0, "aria-label": entity.label, "data-entity": entity.id});
+          g.append(svg("rect", {width: 240, height: 64, rx: 6}));
+          const words = entity.label.split(" "), lines = [""];
+          for (const word of words) {
+            if ((lines.at(-1) + " " + word).trim().length > 27) lines.push(word);
+            else lines[lines.length - 1] = (lines.at(-1) + " " + word).trim();
+          }
+          lines.forEach((line, i) => g.append(svg("text", {x: 12, y: (lines.length > 1 ? 26 : 37) + i * 20}, line)));
+          g.onclick = () => focusEntity(entity.id);
+          g.onkeydown = (e) => { if (["Enter", " "].includes(e.key)) {e.preventDefault(); focusEntity(entity.id);} };
+          buttons.push([g, entity]); diagram.append(g);
+        }
+        scroll.append(diagram);
+        const count = element("p", undefined, "muted"); count.id = "model-count";
+        const table = element("table", undefined, "model-relations"); table.id = "model-relations";
+        const caption = element("caption", "Declared relationships between conceptual entities");
+        const head = element("thead"), tr = element("tr"), body = element("tbody");
+        for (const name of ["From", "Relationship", "To"]) {const th = element("th", name); th.scope = "col"; tr.append(th);}
+        head.append(tr); table.append(caption, head, body); panel.append(count, table);
+        function focusEntity(id) {
+          modelFocus = id;
+          const node = byId.get(id), edges = modelEdges.filter((e) => !id || e.source.id === id || e.target.id === id);
+          focus.replaceChildren();
+          if (node) {
+            focus.append(element("h3", node.label), element("p", definitionOf(node)));
+            const open = simpleTermButton(node); open.textContent = "Open " + node.label + " details"; focus.append(open);
+          } else focus.append(element("p", "All conceptual entities and their declared connections are shown."));
+          for (const [path, edge] of paths) path.setAttribute("class", "model-edge" + (!id ? "" : edges.includes(edge) ? " active" : " dimmed"));
+          for (const [g, entity] of buttons) {
+            g.setAttribute("class", "model-node" + (entity.id === id ? " active" : ""));
+            g.setAttribute("aria-pressed", String(entity.id === id));
+          }
+          count.textContent = modelEntities.length + " entities · " + edges.length + " of " + modelEdges.length + " relationships shown in the list";
+          body.replaceChildren();
+          for (const edge of edges) {
+            const row = element("tr");
+            row.dataset.source = edge.source.id; row.dataset.target = edge.target.id;
+            row.dataset.predicate = edge.property?.id || edge.predicate;
+            for (const content of [simpleTermButton(edge.source), edge.property ? simpleTermButton(edge.property) : element("span", edge.label), simpleTermButton(edge.target)]) {
+              const td = element("td"); td.append(content); row.append(td);
+            }
+            body.append(row);
+          }
+        }
+        reset.onclick = () => focusEntity(null);
+        focusEntity(modelFocus);
       }
       const streams = ordered.filter((n) => n.values.some((v) =>
         v.p === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" &&
@@ -843,6 +1131,11 @@
       function select(id, push = false) {
         const n = byId.get(id);
         if (!n) return;
+        $("overview").hidden = true;
+        $("layout").hidden = false;
+        navCurrent(overviewReturn || "browse");
+        $("return-overview").hidden = !overviewReturn;
+        if (overviewReturn) $("return-overview").textContent = "Back to " + overviewNames[overviewReturn];
         if (!document.body.classList.contains("show-detail"))
           listScroll = window.scrollY;
         selected = n;
@@ -880,6 +1173,10 @@
         for (const [title, predicate] of [["Trigger", "trigger"], ["Outcome", "outcome"]])
           field(title, n.values.filter((v) => v.p === VS + predicate), $("metadata"));
         renderDrilldown(n);
+        const lifecyclePanel = $("lifecycle-links");
+        lifecyclePanel.replaceChildren();
+        lifecyclePanel.hidden = !lifecycleStages.includes(n) && !linked(n, PARTY + "stageSystem").length;
+        if (!lifecyclePanel.hidden) lifecycleLinks(n, lifecyclePanel);
         for (const p of [...new Set(n.values.map((v) => v.p))])
           field(
             p,
@@ -1062,6 +1359,10 @@
       };
       $("about").onclick = () => $("release-info").showModal();
       $("close-about").onclick = () => $("release-info").close();
+      $("view-browse").onclick = () => showBrowse();
+      $("view-lifecycle").onclick = () => showOverview("lifecycle");
+      $("view-model").onclick = () => showOverview("model");
+      $("return-overview").onclick = () => showOverview(overviewReturn);
       $("release-pin").textContent =
         data.release + " · source " + data.sourceCommit;
       for (const [k, v] of Object.entries(data.counts))
@@ -1086,7 +1387,11 @@
         } catch {
           return;
         }
-        if (byId.has(id) && id !== selected?.id) select(id);
+        const view = id.startsWith("view=") ? id.slice(5) : null;
+        if (overviewNames[view]) {
+          if ($("overview").hidden || $("overview").dataset.view !== view) showOverview(view, false);
+        } else if (!id) showBrowse(false);
+        else if (byId.has(id) && (id !== selected?.id || !$("overview").hidden)) select(id);
       };
       let first;
       try {
@@ -1101,6 +1406,7 @@
         ordered[0];
       select(first.id);
       if (!location.hash) document.body.classList.remove("show-detail");
+      window.onhashchange();
     </script>
   </body>
 </html>

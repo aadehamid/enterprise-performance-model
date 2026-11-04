@@ -208,3 +208,16 @@ The decision owner requested in `answers-2026-11-03-viewer.md`:
 > for value stream, can we make sure that we can list the two value streams that we have. and then be able to drill into each one of the value stream
 
 The viewer must list the released value streams and let the reader drill into each. The stages, their sequence and their process links come from the released ontology. The full module vocabulary remains accessible.
+
+## Amendment, 2026-11-03: viewer heading and customer navigation
+
+The decision owner requested the title "MPC Business Process and Architecture Ontology" in `answers-2026-11-03-viewer.md`. Additional heading information was requested as advice and remains undecided.
+
+The decision owner then requested clearer customer navigation, quoting the preceding explanation in full:
+
+> do you think we can do below. not easy to see at the moment
+> The conceptual model is currently browsable term by term; there is no dedicated whole-model diagram yet. Likewise, the lifecycle lacks a prominent entry point. Both need clearer navigation to make them easy to find.
+
+This adds a whole-model diagram and a prominent lifecycle entry point to the viewer scope. The earlier selected-term graph remains available for inspecting each term. Implementation and publication of these additions are pending.
+
+Implementation approach: derive definitions, lifecycle links and relationships from the pinned released RDF. Presentation groups arrange the conceptual entities without changing the ontology. The release records lifecycle stages without a mandatory sequence, so their overview must not invent one.

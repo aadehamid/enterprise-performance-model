@@ -51,3 +51,17 @@ by the way only released ontology in the private release repo will be viewed fro
 <!-- Value-stream navigation, 2026-11-03. The decision owner's words, verbatim: -->
 
 for value stream, can we make sure that we can list the two value streams that we have. and then be able to drill into each one of the value stream
+
+<!-- Viewer heading, 2026-11-03. The decision owner's words, verbatim: -->
+
+Can we change the title below to
+"MPC Business Process and Architecture Ontology"
+What are the other useful information to add to the heading?
+
+EPM ontology
+One release · definitions and relationships
+
+<!-- Customer navigation, 2026-11-03. The decision owner's words, verbatim, including the preceding explanation quoted in the request: -->
+
+do you think we can do below. not easy to see at the moment
+The conceptual model is currently browsable term by term; there is no dedicated whole-model diagram yet. Likewise, the lifecycle lacks a prominent entry point. Both need clearer navigation to make them easy to find.
