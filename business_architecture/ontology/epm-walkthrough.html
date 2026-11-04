@@ -1146,7 +1146,7 @@ uv run --group graph python -m pricing_demo.tech_graph walk</code></pre>
 <tr><td><code>sparql/decisions.rq</code></td><td data-k="Does">The decision trail as PROV-O, from the two decision tables the agents may see</td><td data-k="Proves">Nothing by itself</td></tr>
 <tr><td><code>sql/05_metric_views.sql</code>, <code>sql/06_definitions.sql</code>, <code>sql/07_tech_graph.sql</code></td><td data-k="Does">The metric views and their tags, the definitions views, and the two empty Delta tables</td><td data-k="Proves"><code>tests/test_demo.py</code> checks each measure's identifiers against <code>kpi</code></td></tr>
 <tr><td><code>pricing_demo/aura_test.py</code>, <code>pricing_demo/aura_probe.py</code></td><td data-k="Does">Try reaching AuraDB from a Databricks job</td><td data-k="Proves">The DNS lookup, the connection and a query succeed from inside Databricks</td></tr>
-<tr><td><code>tests/test_demo.py</code></td><td data-k="Does">The demo's offline tests: <code>uv run --with pytest python -m pytest -q tests</code></td><td data-k="Proves">The committed files agree with each other, with no store</td></tr>
+<tr><td><code>tests/test_demo.py</code></td><td data-k="Does">The demo's offline tests: <code>uv run --with pytest --with pyshacl python -m pytest -q tests</code></td><td data-k="Proves">The committed files agree with each other, with no store</td></tr>
   </tbody></table></div>
 
   <h3 class="rise" data-ss-id="tech-success">5. What success looks like, and common failures</h3>
@@ -2328,7 +2328,7 @@ uv run python -m pricing_demo.databricks build
 # from demos/downstream-pricing-databricks-free
 uv run python -m pricing_demo.genie</code></pre></dd>
 <dt>What you should see</dt><dd>The first window (142 trading days) gave a crack-spread gold table of 108,204 rows; the Chicago WTI 3-2-1 ex-RIN prompt crack at $49.84/bbl on the latest date (demo README, "The runs").</dd>
-<dt>How to check it worked</dt><dd><code>build</code> checks each replica table against the manifest and that every object holds rows; <code>uv run --with pytest python -m pytest -q tests</code>.</dd>
+<dt>How to check it worked</dt><dd><code>build</code> checks each replica table against the manifest and that every object holds rows; <code>uv run --with pytest --with pyshacl python -m pytest -q tests</code>.</dd>
 <dt>What it enables next</dt><dd>A working pricing workspace to extend.</dd>
 <dt>Explained in</dt><dd><a href="#demo">The pricing demo, file by file</a></dd>
 <dt>Files in the File map</dt><dd><a href="#fm-demo">The pricing demo</a></dd>
