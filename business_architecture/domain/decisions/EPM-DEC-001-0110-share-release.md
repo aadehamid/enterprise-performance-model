@@ -161,3 +161,42 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 - The plan for the cut, its inventory of every tracked path, and the validation report stay outside the repository in `release-cut/` (gitignored) until the export script and gate land under `scripts/share_release/`.
 - EPM-DEC-001-0086 carries a dated note: the full version's sharing is the trigger to ask question 17.
 - Every change on `main` for the cut goes through a pull request with `scripts/check.sh`, the independent review and the Cursor verdict; both repositories end private; major releases, Market Data accountability and question 17 stay with the decision owner.
+
+## Amendment, 2026-11-03: ship the viewer through the cut
+
+The decision owner instructed (`answers-2026-11-03-viewer.md`):
+
+> The owner wants the viewer shipped inside the shared release, through the cut; record that decision first.
+
+The viewer ships inside the shared release through the cut. This supersedes the local plan's statement that it is not part of either release. Decision 15 and consequence 9 still set the start after the full release. EPM-DEC-001-0112's confirmation has met that condition.
+
+The request pins the viewer's input to `share/epm-1.0` at `81f2f63b`, from its Turtle or JSON-LD, with no store. The scope interview is recorded below. Implementation and publication are pending.
+
+EPM-DEC-001-0112 records the earlier confirmation at `2b3f02e2`. The later viewer request explicitly selects `81f2f63b`; it does not change that historical confirmation or claim that the two commits have identical contents.
+
+The same request requires asking the decision owner before making any repository public, and returning all repositories to private when the work ends. This applies to every repository used for the viewer work. The viewer ships through the existing release cut; this decision creates no separate viewer repository.
+
+## Amendment, 2026-11-03: viewer scope
+
+The scope interview is saved in `answers-2026-11-03-viewer.md`, rounds 1 and 2. The decision owner accepted the recommendations for questions 1, 3, 4 and 5 with "aligned". For question 2, the decision owner answered:
+
+> A viwier should be able to view all the ontology using the viewer. We do not have to exclude anything except the tecchnical graph
+
+Asked whether to retain the technical-graph vocabulary and exclude its records, the decision owner answered:
+
+> keep the vocabulary
+
+The accepted recommendations, quoted from the saved questions:
+
+- Question 1: "I recommend plain labels and definitions first, with IRIs, predicates and provenance expandable."
+- Question 3: "I recommend classes, properties, concepts, concept schemes and designed individuals, including system attributes. Show evidence nodes within relationship details, with separate counts. Exclude technical-graph records and example datasets."
+- Question 4: "I recommend the selected term and its immediate relationships, with controls to expand further. Every term remains searchable and reachable through hierarchy or module navigation."
+- Question 5: "I recommend a read-only first release: browse, search, inspect and copy term identifiers. Comments, editing and saved review work stay outside this version."
+
+The whole ontology includes the customer schema. The earlier request that the customer model stays out of `main` still applies. Build code may live in `main`; the cut supplies the customer model from the release inputs. The separate logical-model view suggested in question 2 was not specifically accepted and is a presentation choice, not a requirement attributed to the decision owner.
+
+The decision owner also clarified the source boundary in `answers-2026-11-03-viewer.md`:
+
+> by the way only released ontology in the private release repo will be viewed from the user. makes sesne
+
+The viewer's user-facing data comes only from the released ontology in the private release repository.
