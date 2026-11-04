@@ -34,7 +34,8 @@ The rules, in order:
                    HOW-TO-UPDATE.md, "Inputs from outside the repository"; the skills' generic text stays.
 
 Rule source-descriptions removes the image-format reference from the exact customer-source title,
-after attribution and kept-out rewrites. The source identity and remaining wording stay the same.
+after attribution and kept-out rewrites. The source identity stays the same. The parenthetical
+becomes "including two Dealer Master documents".
 
 Rule 3 also rewrites the short forms that follow a citation ("EPM-DEC-001-0020, 0021 and 0036", "(0021)",
 "amending 0021") when the number is a record in the record-dates map; a four-digit number that is not a known
