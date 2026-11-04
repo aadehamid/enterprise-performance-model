@@ -2,26 +2,24 @@
 
 ## Master System Specification, Metadata Lifecycle & Data Contract Design
 
-> **Status: working draft. The foundation files and Turtle SoT are authoritative until I-11 closes.**
+> Status: non-authoritative scratch, reconciled for I-11 on 2026-11-04.
 >
-> This file is a working draft under reconciliation. The foundation
-> files (`EPM-FOUND-003`, `EPM-FOUND-004`, `EPM-FOUND-000`,
-> `EPM-FOUND-002`, `EPM-FOUND-005`, `EPM-FOUND-006`, ADR-HL-021) and
-> the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`) are
-> authoritative. This file does not override them; conflicts are open
-> items, not resolved positions. Inline `> ⚠️ I-11 conflict:`
-> callouts mark specific lines where this draft diverges from the
-> foundation; each callout cites the current seat.
+> The [reconciliation table](initial-draft-ontology-structure.md) records the
+> disposition of every prefix, class/property reference and identifier family
+> in this example. No part of this use case is adopted into the foundation or
+> released ontology by closing I-11. The foundation, process authority folders
+> and applicable Turtle remain authoritative after closure.
 >
-> Tracked as Open Issue I-11 in `EPM-FOUND-000` and GitHub issue #18.
+> All workflows, roles, contracts, targets and tool integrations below are
+> illustrative proposals. They do not report an implemented or approved system.
 
 ---
 
 ## 1. Executive Summary & Core Objectives
 
-The enterprise is establishing a centralized **KPI Store** hosted on the **Databricks Lakehouse Platform**. The Store seat is `dim_kpi_metadata`: identity, approval, and the formula pointer for each Named KPI. It is not the broad source of truth for meaning. Until I-11 closes, foundation files and Turtle in git win for meaning.
+This scratch explores a centralized **KPI Store** on the **Databricks Lakehouse Platform**. The Store seat is `dim_kpi_metadata`: identity, approval, and the formula pointer for each Named KPI. It is not the broad source of truth for meaning. The foundation and applicable Turtle in Git remain the sources for meaning.
 
-This architecture resolves a fundamental enterprise problem: client-side reporting solutions (e.g., Power BI), operational microservices, and AI query engines defining competing, divergent calculation logic for the exact same business metrics.
+The proposed architecture addresses the risk of client-side reporting solutions (e.g., Power BI), operational microservices, and AI query engines defining competing, divergent calculation logic for the exact same business metrics.
 
 ### Guiding Principles
 
@@ -165,28 +163,25 @@ Metadata moves through a structured, multi-stage lifecycle. Each stage has a sin
 
 ## 4. Metadata Mapping Matrix: Where It Lives vs. Where It Is Shared
 
-This matrix establishes the definitive boundaries between where metadata originates and how other architectural components consume it.
+This matrix illustrates metadata sharing. The reconciliation table distinguishes the existing Store and process boundaries from proposals that remain scratch-only.
 
 | Metadata Category | Specific Metadata Attributes | Authoritative Source (System of Record) | Consumed By / Shared With | Sharing Mechanism (Protocol / Pattern) |
 | --- | --- | --- | --- | --- |
-| Domain & Concept | Domain Name, Domain Description, Ubiquitous Language definitions | ER/Studio (CDM) & Meaning Plane (Git) | Purview Catalog, ODPS Contract, External AI Agents | By Reference: linked via canonical `skos:Concept` or Domain URI (`ex:domain/Refining` example/prefix-only placeholder; not a live SoT IRI). |
-| Business Process | Value stream name, Process Step ID, Explanatory context | `business_architecture/business_process/` + `business_architecture/schema/` only | Candidate KPI Register, Purview Catalog, ODPS Contract | By Reference: stable process/value-stream IDs from those folders (cite path + file SHA). Not `domain/`. Not Meaning Plane. Not Turtle. Do not use `ex:process/…` as process SoR. Not used as a SQL join key. |
-| Named KPI Identity | KPI Business Name, definition, catalog status (proposed \| approved \| drifted \| archived), 1:1 Gate status | **`dim_kpi_metadata`** (SQL Store seat; owns identity, approval, status, formula pointer); IRI declared in Turtle via `ekpi:` / `data:`; expose path Neo4j/Cypher per ADR-HL-021 (Fuseki/SPARQL lab-only) | Purview Catalog (discover/govern), Silver KPI Metadata Table (read-only join copy), ODPS Contract (downstream artifact) | **Current:** ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`. **Draft said:** permanent URI / Ontology IRI (`ex:kpi/CrackSpread321`). |
+| Domain & Concept | Domain Name, Domain Description, Ubiquitous Language definitions | ER/Studio (CDM) & Meaning Plane (Git) | Purview Catalog, ODPS Contract, External AI Agents | By Reference: linked via canonical `skos:Concept` or Domain URI (a scratch-only placeholder, not a live IRI). |
+| Business Process | Value stream name, Process Step ID, Explanatory context | `business_architecture/business_process/` + `business_architecture/schema/` only | Candidate KPI Register, Purview Catalog, ODPS Contract | By Reference: stable process/value-stream IDs from those folders (cite path + file SHA). Not `domain/`. Not Meaning Plane. Not Turtle. No scratch IRI is a process authority. Not used as a SQL join key. |
+| Named KPI Identity | KPI Business Name, definition, catalog status (proposed \| approved \| drifted \| archived), 1:1 Gate status | **`dim_kpi_metadata`** (SQL Store seat; owns identity, approval, status, formula pointer); IRI declared in Turtle via `ekpi:` / `data:`; expose path Neo4j/Cypher per ADR-HL-021 (Fuseki/SPARQL lab-only) | Purview Catalog (discover/govern), Silver KPI Metadata Table (read-only join copy), ODPS Contract (downstream artifact) | **Current:** ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`. The contract references that existing identity; it creates no third KPI identifier. |
 | Governance & Roles | Domain Data Owner, Product Owner, Data Steward, Technical Owner | Microsoft Purview / Unity Catalog | Candidate Register, Silver Metadata, ODPS Contract | By Identity URI / Email: synchronized into contract headers and graph agents (`foaf:Person`, `prov:wasAttributedTo`). |
 | Physical Schema & Grain | Column names, Data types, Primary/Foreign keys, Grain/Dimensionality | ER/Studio (PDM) & Databricks Silver | Semantic Layer, BigEye, ODPS Contract | By Value & Schema Reference: PDM generates DDL; contract embeds schema specification directly; grain links to dimension keys. |
 | Metric Logic & Math | Measure calculation object, Aggregation rules, Filter constraints | Semantic Layer (Metric Views / dbt / Cube) | Purview Catalog, Silver Metadata, ODPS Contract | By Formula Pointer: stored strictly as an abstract identifier (e.g., `metric_view_refining.crack_spread_321`). Never raw SQL/DAX. |
 | Physical Endpoints | SQL Warehouse JDBC/ODBC, REST APIs, Semantic Model connections | Databricks Platform / Unity Catalog | ODPS Contract, Consuming Applications, BI Tools | By Value (Output Ports): ODPS manifest declares explicit connection strings (`dcat:endpointURL` / `dcat:accessURL`). |
-| SLAs & Operational SLOs | Refresh schedule, Freshness window, Query latency, Availability rate | Databricks Orchestration & SRE Engine | ODPS Contract, BigEye Observability, BI Teams | By Value (Contract SLA): declared in ODPS YAML using ISO 8601 durations (`odps:freshnessTarget "PT6H"`). |
+| SLAs & Operational SLOs | Refresh schedule, Freshness window, Query latency, Availability rate | Databricks Orchestration & SRE Engine | ODPS Contract, BigEye Observability, BI Teams | By Value (Contract SLA): declared in ODPS YAML using ISO 8601 durations (illustrative YAML field `freshnessTarget: "PT6H"`). |
 | Data Quality Assertions | Range bounds, Nullability thresholds, Anomaly bounds, Completeness % | BigEye Observability Engine | Databricks Pipelines, ODPS Contract, AI Agents | Bi-Directional API: declarative rules authored in ODPS contract; BigEye pulls rules via API, runs tests, and emits execution metrics. |
 | Usage Boundaries | Certified Business Use Cases, Prohibited / Non-Certified Use Cases | Enterprise Data Governance Board | ODPS Contract, AI Agents, BI Dashboards | By Value (Contract Policy): textual rules enforced by AI agent system prompts and catalog validation flags. |
 | Audit & Traceability | Upstream tables used, Pipeline Run IDs, Execution Timestamps, SQL executed | Databricks Execution Engine & Compiler | Enterprise Knowledge Graph, BigEye, Compliance Logs | Automated Generation: captured during runtime via PROV-O (`prov:wasGeneratedBy`, `prov:used`). |
 
-### §4 row-level I-11 conflicts
+### Reconciled identity boundaries
 
-Remaining row-level I-11 notes (Business Process SoR is now in the table row itself):
-
-- **Domain & Concept row (Sharing Mechanism cell uses `ex:domain/Refining`)**. Current convention: domain identity routes through the human-readable semantic model (`EPM-FOUND-003`) and any formal URI is declared in the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`, prefixes `ekpi:` and `data:` only). `ex:` is illustrative here, not authoritative. Tracked in GH #18.
-- **Named KPI Identity row (rewritten in place; cell text above already cites `dim_kpi_metadata`)**. Original draft text in cell read `Graph of Meaning (Git / RDF)` for the SoR and `permanent URI / Ontology IRI (`ex:kpi/CrackSpread321`)` for the sharing mechanism. Current legal join: ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`. Tracked in GH #18.
+Domain labels remain business examples. Formal terms come from the applicable Turtle through FOUND-004. The Store binding stays ontology IRI → `dim_kpi_metadata` row → Metric View and measure compiled with `MEASURE()`. Process identity stays in `business_architecture/business_process/` and `business_architecture/schema/`. The [reconciliation table](initial-draft-ontology-structure.md) retires the competing scratch aliases and keeps the other proposed mappings scratch-only.
 
 ---
 
@@ -308,7 +303,7 @@ To eliminate manual configuration and prevent metadata drift, the architecture u
 
 ## 8. Complete Concrete Data Contract Example (ODPS YAML)
 
-Below is an enterprise-grade, production-ready Data Contract descriptor illustrating the Crack Spread KPI Data Product, incorporating all nine dimensions of the unified metadata framework.
+This illustrative YAML explores a Crack Spread data product. It is not validated against an ODPS schema, does not identify deployed assets, and is not ready for production. Its identifiers, formula, roles, thresholds and targets are examples requiring separate review before use.
 
 ```yaml
 dataProductSpecificationVersion: "2.1.0"
@@ -322,7 +317,7 @@ info:
   version: "2.1.0"
   status: "active"
   domain: "Downstream Refining & Trading"
-  domainIRI: "https://metadata.enterprise.org/domains/Refining"
+  domainIRI: "https://metadata.example.org/domains/Refining"
   purpose: >
     Provide an uncompromised, certified economic margin calculation representing
     the gross theoretical refining margin achieved by converting three barrels of
@@ -352,7 +347,7 @@ productDefinition:
     sulfur diesel (ULSD).
 
   # Strict 1:1 Gate Linking to Meaning Plane
-  ontologyIRI: "https://metadata.enterprise.org/kpis/CrackSpread321"
+  ontologyIRI: "https://metadata.example.org/kpis/CrackSpread321"
 
   # Centralized Semantic Layer Formula Pointer (Never raw SQL)
   calculationModel:
@@ -377,7 +372,7 @@ productDefinition:
     - name: "crack_spread_per_bbl"
       type: "decimal(10,4)"
       description: "Calculated certified 3:2:1 crack spread margin in USD per barrel"
-      mapsToConcept: "https://metadata.enterprise.org/concepts/DollarPerBarrel"
+      mapsToConcept: "https://metadata.example.org/concepts/DollarPerBarrel"
     - name: "calculation_timestamp"
       type: "timestamp"
       description: "System execution timestamp emitted by the compiler"
@@ -445,20 +440,20 @@ ownership:
     accountableEntity: "Downstream Commercial Operations Committee"
 
   dataProductOwner:
-    name: "Sarah Jenkins"
+    name: "Commercial Analytics Product Owner"
     title: "Lead Commercial Analytics Product Manager"
-    email: "sarah.jenkins@enterprise.org"
+    email: "product-owner@example.org"
 
   dataSteward:
-    name: "Marcus Vance"
+    name: "Refining Data Steward"
     title: "Enterprise Refining Data Steward"
-    email: "marcus.vance@enterprise.org"
+    email: "data-steward@example.org"
     purviewStewardID: "usr-steward-refining-042"
 
   technicalOwner:
     name: "Data Platform Engineering Team"
-    lead: "Alex Rostova"
-    email: "dataplatform-refining@enterprise.org"
+    lead: "Platform Engineering Lead"
+    email: "platform-team@example.org"
 
 # ==============================================================================
 # 7. DATA FLOW & INTEGRATION (PORTS & LINEAGE)
@@ -490,7 +485,7 @@ dataFlowAndIntegration:
     - id: "port-rest-api"
       name: "Enterprise Data Fabric REST API"
       type: "REST"
-      endpointURL: "https://api.enterprise.org/v2/refining/kpi/crack-spread"
+      endpointURL: "https://api.example.org/v2/refining/kpi/crack-spread"
       specificationFormat: "OpenAPI 3.1"
 
 # ==============================================================================
@@ -499,7 +494,7 @@ dataFlowAndIntegration:
 operationsAndSupport:
   supportIntakeModel: "ServiceNow Queue: DATA-PLATFORM-REFINING"
   incidentEscalation:
-    slaBreachWebhook: "https://alerts.enterprise.org/hooks/refining-data-sla"
+    slaBreachWebhook: "https://alerts.example.org/hooks/refining-data-sla"
     pagingThreshold: "Critical alert if Gold snapshot delayed > 60 minutes beyond SLA"
 
   changeManagement:
@@ -518,13 +513,9 @@ successMetrics:
     target: "95th percentile query latency < 1.5 seconds across all output ports"
 ```
 
-### §8 IRI conflicts
+### Example IRI disposition
 
-The example YAML above uses three IRIs that diverge from the Turtle SoT. Each IRI is preserved verbatim in the YAML; the conflicts are listed here so the YAML itself stays structurally and syntactically valid.
-
-- **`domainIRI: "https://metadata.enterprise.org/domains/Refining"`**. Current Turtle SoT prefixes: `ekpi:` (`https://ontology.enterprise.example.com/kpi-store/core#`) and `data:` (`https://data.enterprise.example.com/kpi-store/`) only. This IRI is illustrative. Tracked in GH #18.
-- **`ontologyIRI: "https://metadata.enterprise.org/kpis/CrackSpread321"`**. Same divergence: this IRI uses a host and path not declared in the Turtle SoT. The current Turtle SoT prefixes are `ekpi:` and `data:` only, on `ontology.enterprise.example.com` / `data.enterprise.example.com`. Tracked in GH #18.
-- **`mapsToConcept: "https://metadata.enterprise.org/concepts/DollarPerBarrel"`**. Same divergence: not declared in the Turtle SoT. Tracked in GH #18.
+The YAML's `domainIRI`, `ontologyIRI` and `mapsToConcept` values are scratch-only placeholders under `metadata.example.org`. They are not declared project terms and do not compete with the released vocabulary. The [reconciliation table](initial-draft-ontology-structure.md) records that disposition. A real contract must reference the applicable released IRI, the matching `dim_kpi_metadata` row and its formula pointer. This example supplies no such verified binding.
 
 ---
 
@@ -565,4 +556,4 @@ To ensure strict governance and prevent metric corruption, autonomous AI agents 
    - Returns certified value to the AI Agent.
 ```
 
-By enforcing this four-step sequence, the enterprise guarantees that whether a metric is queried by an executive dashboard, an ad-hoc analyst, or an autonomous LLM agent, the resulting calculation is certified, auditable, and identical across every interface.
+This proposed sequence aims to make consumers use the same governed measure. The scratch provides no evidence that these integrations, controls or resulting values have been implemented or validated.
