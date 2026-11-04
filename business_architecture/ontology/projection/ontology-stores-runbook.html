@@ -170,8 +170,9 @@ td:first-child { font-weight: 600; }
     <h1>Stores runbook</h1>
     <p class="sub">How the EPM ontology and the pricing demo's synthetic data reach six stores, and how to check, stop, start, purge, reload and keep in step each one. Every command runs on this Mac. No password appears on this page: each login stays in its env file.</p>
   </div>
-  <a class="btn" href="https://app.eraser.io/workspace/61pi63LF9M0UrBIq5tec">Open the Eraser diagram</a>
+  <a class="btn" href="https://app.eraser.io/workspace/kYfW8ry2o57A6qBDwjV0">Open the architecture snapshot (2026-11-03)</a>
 </div>
+<p class="note">This dated snapshot predates the completed viewer release; its viewer label describes work in progress on that date.</p>
 <p class="notice"><strong>The four ontology stores were reloaded on 2026-10-28</strong>, as the first step of Part 2, from the releases of that day, with <code>kpi</code> 1.3.0. Each store's figures below are from that reload, and every count and hash check in it passed; the reload's log is kept outside the repository. Check, below, gives the commands to count the graph stores again; rerunning the driver (Reload, step 4) recounts <code>epm_triples</code> and compares its hash. <em>Before that:</em> with the decision owner's approval, "Yes, purge those four (Recommended)", both local Neo4j stores, AuraDB and the Databricks table <code>epm_triples</code> were purged on 2026-10-27. The decision owner then chose "Wait, reload at Part 2 (Recommended)": the stores stayed empty, and the reload was the first step of Part 2, after the close-out answers ship, with the counts and hash checks (<code>../step4/review-evidence/decision-owner-answers/answers-2026-10-27-stores.md</code>). Reload, below, gives the commands. The pricing demo's Postgres and <code>idp_sbx</code> stayed loaded throughout. <em>2026-11-01:</em> the standard is now one local Neo4j plus a standing Jena, and this page describes that standard. The next reload applies it: until then the old container <code>epm-lpg</code> still runs, and the stores read as behind.</p>
 
 <div class="stats">
