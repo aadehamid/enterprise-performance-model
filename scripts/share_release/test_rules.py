@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import manifest  # noqa: E402
 import rules  # noqa: E402
 
-DATES = {"EPM-DEC-001-0038": "2026-10-13", "EPM-DEC-001-0044": "2026-10-18", "EPM-DEC-001-0102": "2026-10-25"}
+DATES = {"EPM-DEC-001-0038": "2026-10-13", "EPM-DEC-001-0044": "2026-10-18", "EPM-DEC-001-0102": "2026-10-25", "EPM-DEC-001-0108": "2026-10-27"}
 
 
 def run(text, path="doc.md"):
@@ -786,3 +786,25 @@ def test_generic_text_on_inputs_read_from_outside_the_repository_stays():
         out, counts = rules.apply(src, path, KEPT_DATES)
         assert out == src and "kept-out" not in counts, path
         assert not re.search(gate.KEPT_OUT, out, re.I) and not re.search(gate.KEPT_OUT_CUSTOMER, out, re.I), out
+
+
+@pytest.mark.parametrize("path", ["doc.md", "page.html", "graph.ttl", "graph.jsonld", "sources.csv"])
+def test_customer_source_title_loses_only_its_format_description(path):
+    original = ("The decision owner's customer inputs of 2026-10-27 "
+                "(two images and two Dealer Master documents, kept out of the repository by EPM-DEC-001-0108), "
+                "as the party module holds them")
+    expected = ("the subject matter expert's customer inputs of 2026-10-27, "
+                "as the party module holds them")
+    text = original + "\nTax Image Silo\nurn:customer-source"
+    out, counts = run(text, path)
+    assert out == expected + "\nTax Image Silo\nurn:customer-source"
+    assert counts["source-descriptions"] == 1
+    again, counts = run(out, path)
+    assert again == out
+    assert counts.get("source-descriptions", 0) == 0
+
+
+def test_source_description_rewrite_preserves_its_python_matching_literal():
+    from epm_source_descriptions import OLD_TITLE
+    out, count = rules.rule_source_descriptions(OLD_TITLE, {"path": "helper.py"})
+    assert out == OLD_TITLE and count == 0

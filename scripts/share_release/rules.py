@@ -33,11 +33,19 @@ The rules, in order:
                    named sources: the provenance stays) or, for the logical models, becomes a pointer to
                    HOW-TO-UPDATE.md, "Inputs from outside the repository"; the skills' generic text stays.
 
+Rule source-descriptions removes the image-format parenthesis from the exact customer-source title,
+after attribution and kept-out rewrites. The source identity and remaining wording stay the same.
+
 Rule 3 also rewrites the short forms that follow a citation ("EPM-DEC-001-0020, 0021 and 0036", "(0021)",
 "amending 0021") when the number is a record in the record-dates map; a four-digit number that is not a known
 record stays as it is.
 """
 import re
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from epm_source_descriptions import OLD_TITLE, neutral_source_description
 
 import manifest
 import owner
@@ -756,13 +764,22 @@ def rule_skills_layout(text, ctx):
     return text, n
 
 
+def rule_source_descriptions(text, ctx):
+    """Neutral source titles in documents and data; code retains its matching literal."""
+    if Path(ctx.get("path", "")).suffix not in {".md", ".html", ".ttl", ".nt", ".jsonld", ".json", ".csv", ".txt"}:
+        return text, 0
+    updated = neutral_source_description(text)
+    return updated, text.count(OLD_TITLE)
+
+
 RULES = [
     ("skills_layout", rule_skills_layout),
     ("iri", rule_iri), ("company", rule_company), ("records", rule_records), ("answers", rule_answers),
     ("attribution", rule_attribution), ("approvals", rule_approvals), ("hosts", rule_hosts),
     ("repository", rule_repository), ("numbers", rule_numbers), ("peers", rule_peers), ("left-out", rule_left_out),
     ("previous-paths", rule_previous_paths), ("underscores", rule_underscores), ("agents", rule_agents),
-    ("skills-left-out", rule_skills_left_out), ("kept-out", rule_kept_out), ("names", rule_names),
+    ("skills-left-out", rule_skills_left_out), ("kept-out", rule_kept_out),
+    ("source-descriptions", rule_source_descriptions), ("names", rule_names),
 ]
 
 

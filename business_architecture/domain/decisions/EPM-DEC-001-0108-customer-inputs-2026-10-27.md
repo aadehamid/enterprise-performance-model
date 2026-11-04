@@ -11,12 +11,12 @@
 
 On 2026-10-27 the decision owner shared four customer inputs, numbered 8 to 11 after the seven of EPM-DEC-001-0067:
 
-- **Input 8:** an image of how a new customer record is created, enriched and consumed across the applications, with 26 data flows.
-- **Input 9:** an image of the customer lifecycle and the five system stages of the six core systems, with each system's core and enrich fields.
+- **Input 8:** a customer input describing how a new customer record is created, enriched and consumed across the applications, with 26 data flows.
+- **Input 9:** a customer input describing the customer lifecycle and the five system stages of the six core systems, with each system's core and enrich fields.
 - **Input 10:** the notes of a meeting with Dealer Master's system expert on Dealer Master's business context and data flows.
 - **Input 11:** Dealer Master's architecture flow.
 
-As with the earlier inputs, they are kept out of the repository, and this record states only what the ontology takes from them. Claude transcribed the two images, and the decision owner settled every point the transcriptions left open (block 1 to block 6 of the answers file). Claude then compared the inputs with `party` 1.4.0 and `system` 1.4.0: 113 items as the ontology holds them, 45 new, and 9 conflicting rows in 6 places, with 13 modeling questions the facts leave open. The comparison and the plan stay with the inputs.
+As with the earlier inputs, they are kept out of the repository, and this record states only what the ontology takes from them. Claude recorded the inputs in working notes, and the decision owner settled every point those notes left open (block 1 to block 6 of the answers file). Claude then compared the inputs with `party` 1.4.0 and `system` 1.4.0: 113 items as the ontology holds them, 45 new, and 9 conflicting rows in 6 places, with 13 modeling questions the facts leave open. The comparison and the plan stay with the inputs.
 
 ## Decision
 
@@ -26,7 +26,7 @@ As with the earlier inputs, they are kept out of the repository, and this record
 2. **The direct dealers that sync from SAP MDG into Dealer Master are the replicated six-digit sold-tos.**
 3. **SAP MDG and SAP S/4HANA stay two systems.**
 4. **TMT is its own system,** as `party` holds it, and TMR is another. The decision owner first answered that the two are one, then, once Claude noted that `party` holds them apart, kept them apart.
-5. **The six core systems are as `party` holds them;** MAGIC is not one. Salesforce has 10 core fields. The images' repeated fields count once. Input 8's arrows from RightAngle to the Gravitate customer portal and from SAP MDG to Star are right, and its label for the new customer setup belongs to the arrow from Terminal Upload to Kittyhawk.
+5. **The six core systems are as `party` holds them;** MAGIC is not one. Salesforce has 10 core fields. Repeated fields in the inputs count once. Input 8's data flows from RightAngle to the Gravitate customer portal and from SAP MDG to Star are right, and its new-customer-setup description applies to the flow from Terminal Upload to Kittyhawk.
 6. **All 13 of Claude's recommendations, and the releases they lead to.** The decision owner aligned with the plan: `party` 2.0.0, a major release, so the decision owner's to approve; `system` 1.5.0 and an `integration` minor, Claude's under the delegation; no `core` change.
 
 **What follows (Claude, under EPM-DEC-001-0028):**

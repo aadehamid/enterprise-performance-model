@@ -103,6 +103,9 @@ PATTERNS = [
     ("a pull request of the build", re.compile(r"\bPRs\b|(?<!\.\d )(?<!\()\bPR\b(?! campaigns?\b| program\b| all\b|\)| strategy\b)|\b[Pp]ull requests?\b")),
     ("the work of an agent", re.compile(AGENT_WORK)),
     ("the agent, in a decision package", re.compile(r"\b[Tt]he agent\b")),
+    ("a customer source described by image format", re.compile(
+        r"\btwo\s+images\b|\b(?:the|expert's|owner's)\s+customer\s+inputs\b[^\n.]{0,160}\b(?:images?|screenshots?)\b"
+        r"|\b(?:images?|screenshots?)\s+as\s+(?:a\s+)?sources?\b", re.I)),
     ("the namespace note is missing", None),  # checked once, below
 ]
 # The method's own words on delegation and on a remote's pull requests, in the skills that teach any project: the skill
@@ -356,6 +359,8 @@ def scan(release):
                 for reason, pattern in PATTERNS:
                     if pattern is None:
                         continue
+                    if reason == "a customer source described by image format" and os.path.splitext(rel)[1] == ".py":
+                        continue  # source code includes the exact input literal and its regression fixtures
                     if binary and reason.startswith("the graph's"):
                         pattern = GRAPH_IN_BINARY
                     if binary and reason == "a pull request of the build":

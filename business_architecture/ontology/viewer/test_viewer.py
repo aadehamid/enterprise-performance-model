@@ -123,6 +123,44 @@ def test_cut_must_equal_source_packages(tmp_path):
     assert not out.exists()
 
 
+def test_cut_emits_the_approved_source_title_and_actual_file_hashes(tmp_path):
+    from epm_source_descriptions import OLD_TITLE, NEW_TITLE
+
+    source, cut = tmp_path / "source", tmp_path / "cut"
+    ttl = TTL + f'\nx:source <http://purl.org/dc/terms/title> "{OLD_TITLE}"@en .\n'
+    package(source, ttl=ttl)
+    current = package(cut, ttl=ttl.replace(OLD_TITLE, NEW_TITLE))
+    output = tmp_path / "index.html"
+    viewer.build(source, output, compare=cut, require_pin=False)
+    payload = output.read_text().split('<script id="ontology-data" type="application/json">')[1].split("</script>")[0]
+    data = json.loads(payload)
+    assert OLD_TITLE not in payload
+    assert NEW_TITLE in payload
+    assert data["inputs"][0]["sha256"] == hashlib.sha256((current / "core.ttl").read_bytes()).hexdigest()
+    assert_roundtrip(cut, data)
+
+
+@pytest.mark.parametrize("defect", ["unrewritten", "other-title", "meaning", "newline"])
+def test_source_title_permission_rejects_every_other_cut_change(tmp_path, defect):
+    from epm_source_descriptions import OLD_TITLE, NEW_TITLE
+
+    source, cut = tmp_path / "source", tmp_path / "cut"
+    ttl = TTL + f'\nx:source <http://purl.org/dc/terms/title> "{OLD_TITLE}"@en .\n'
+    package(source, ttl=ttl)
+    updated = ttl.replace(OLD_TITLE, NEW_TITLE)
+    bad = {
+        "unrewritten": ttl,
+        "other-title": updated.replace("A term", "An altered term"),
+        "meaning": updated + "\nx:Added a owl:Class .\n",
+        "newline": updated.replace("\n", "\r\n"),
+    }[defect]
+    package(cut, ttl=bad)
+    output = tmp_path / "index.html"
+    with pytest.raises(ValueError, match="differ"):
+        viewer.build(source, output, compare=cut, require_pin=False)
+    assert not output.exists()
+
+
 def test_no_package_is_an_error(tmp_path):
     (tmp_path / viewer.ONTOLOGY / "releases").mkdir(parents=True)
     with pytest.raises(ValueError, match="No released"):
@@ -202,9 +240,12 @@ def test_pinned_release_roundtrip_when_supplied(tmp_path):
         )
     viewer.pinned_source(root)
     output = tmp_path / "index.html"
-    viewer.build(root, output)
+    compared = os.environ.get("EPM_VIEWER_RELEASE_COMPARE")
+    viewer.build(root, output, compare=compared)
     payload = output.read_text().split('<script id="ontology-data" type="application/json">')[1].split("</script>")[0]
-    assert_roundtrip(Path(root), json.loads(payload))
+    assert_roundtrip(Path(compared or root), json.loads(payload))
+    if compared:
+        assert output.read_bytes() == (Path(compared) / "viewer/index.html").read_bytes()
 
 
 @pytest.mark.parametrize("defect", ["identity", "candidate", "escape", "missing-newest"])

@@ -13,10 +13,10 @@ EPM-DEC-001-0004 held the Customer domain until the decision owner shared their 
 
 In this session the decision owner sent seven inputs, one at a time:
 
-1. a diagram of how customer data is ingested, from the first request through credit and compliance approval to the systems that receive the customer;
-2. a diagram of the applications the customer passes through, in three columns: create, enrich and consume;
-3. a later, dated version of the second diagram's core path;
-4. a diagram of the customer lifecycle in six stages;
+1. a description of how customer data is ingested, from the first request through credit and compliance approval to the systems that receive the customer;
+2. a description of the applications the customer passes through during creation, enrichment and consumption;
+3. a later, dated version of the second input's core path;
+4. a description of the customer lifecycle in six stages;
 5. a table of six core systems, each with the attributes that define a customer there (Create) and the attributes that enrich it afterwards (Enrich);
 6. a conceptual data model of Customer: entities in four zones, their relationships, ten customer classes, and a pane showing where the customer shows up in systems;
 7. an external research report on the Customer domain in downstream oil and gas.
@@ -31,7 +31,7 @@ Claude asked questions about each input as it arrived. The decision owner's answ
 
 1. "Customer information" (block 1).
 2. "decide once you've seen my data. I will share them one at a time to process" (block 2).
-3. "all of the files and images should stay out of the repo, by the way." (block 4).
+3. The customer inputs stay outside the repository (block 4).
 4. "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point" (block 5), then "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domainhere is the next one" (block 6).
 5. "Now here are the core system and attributes that defines a customer in each system. And also attributes used to enrich customer in each system. These two categories of attrobutes must be captured" (block 7).
 6. Block 8, in full:
@@ -58,7 +58,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
 1. **Direct dealers sit under a Fuel Supply agreement.** MPC's filings describe "long-term supply contracts with direct dealers who operate locations mainly under the ARCO® brand" (`reference/mpc/customer-classification-evidence.md`, C2). MPC's FY2025 Form 10-K calls the brand its own ("Our Marathon and ARCO trademarks are material to the conduct of our refining and marketing operations", Item 1, Trademarks, Patents and Licenses), and a full-text search of MPC's 10-K filings on EDGAR on 2026-10-21 found no "brand license". Their brand reaches the site through a Site Brand Assignment.
 2. **Four classes from the repository's MPC customer classification are to be added**, in the `party` module's pull request (`reference/mpc/customer-classification-evidence.md`: C4 and C6 from MPC's Form 10-K, C5 from MPC's Unbranded Marketing page, and C8, which the decision owner added on 2026-09-29 for the crude oil revenue MPC reports): independent retailer (C4), unbranded customer (C5), spot market buyer (C6) and crude oil customer (C8). With the ten classes Claude read in the decision owner's model, that makes 14. *2026-10-21:* added (EPM-DEC-001-0068, item 7).
 3. **The exchange or trading counterparty stays a customer class.** The decision owner's model says it becomes a customer only when a revenue-recognized relationship exists.
-4. **"Authorizes brand at site" points to Site Brand Assignment,** not to Site. The model defines a site brand assignment as the link of a site to a brand under an agreement. The decision owner wrote that they did not see this relationship (block 11). Claude then showed where the image draws it. The decision owner has not answered on it since, so this item rests on their acceptance of recommendation 5 in block 14, and stays open to them.
+4. **"Authorizes brand at site" points to Site Brand Assignment,** not to Site. The model defines a site brand assignment as the link of a site to a brand under an agreement. The decision owner wrote that they did not see this relationship (block 11). Claude then identified the relationship in the supplied model. The decision owner has not answered on it since, so this item rests on their acceptance of recommendation 5 in block 14, and stays open to them.
 5. **MPLX's filings count as MPC's public information.** MPC consolidates MPLX.
 6. **Claude's reading of the decision owner's answers:**
    - Block 2 answers whether to accept two candidates that four peers' filings suggested: a delivery-mode facet and a brand-licensing relationship.
@@ -84,7 +84,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
 
 ## Alternatives considered
 
-- **Commit the decision owner's diagrams and table as reference files.** Not chosen: they asked for the files to stay out.
+- **Commit the decision owner's inputs as reference files.** Not chosen: they asked for the files to stay out.
 - **Put peers' filings into the repository for the Customer domain, as `customer-classification-evidence.md` did.** Not chosen: the decision owner wrote that peer data should not go into the repo, for the Customer domain.
 - **Keep Agreement, Site, Site Brand Assignment and Party Transaction Association out of scope**, as Claude first recommended. Not chosen: the decision owner put every entity in scope.
 - **Frame direct dealers with a Brand License agreement**, as the conceptual model's class note does. Not chosen: MPC's filings describe supply contracts with direct dealers, call the ARCO trademark MPC's own, and do not mention a brand licence (item 1).
@@ -96,7 +96,6 @@ In the Claude Code session of 2026-10-20 to 2026-10-21 (saved in `business_archi
 
 - "Customer information"
 - "decide once you've seen my data. I will share them one at a time to process"
-- "all of the files and images should stay out of the repo, by the way."
 - "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point"
 - "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domainhere is the next one"
 - "These two categories of attrobutes must be captured"

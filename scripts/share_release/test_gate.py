@@ -633,3 +633,25 @@ def test_the_gate_refuses_what_main_lacks_in_code_notes_too(tmp_path):
         (tmp_path / f"n{i}.py").write_text(text + "\n")
     reasons = [h["file"] for h in gate.scan(str(tmp_path)) if "kept out" in h["reason"]]
     assert sorted(reasons) == [f"n{i}.py" for i in range(7)]
+
+
+@pytest.mark.parametrize("path", ["doc.md", "page.html", "graph.ttl", "graph.jsonld", "sources.csv"])
+def test_customer_image_source_claim_fails_in_recipient_documents_and_data(tmp_path, path):
+    clean(tmp_path)
+    (tmp_path / path).write_text("customer inputs of 2026-10-27 (two images and two documents)")
+    assert any(hit["reason"] == "a customer source described by image format" for hit in gate.scan(str(tmp_path)))
+
+
+def test_image_source_gate_keeps_business_vocabulary_and_code_fixtures(tmp_path):
+    clean(tmp_path)
+    (tmp_path / "doc.md").write_text("Tax Image Silo; Manage product images; Docker image; customer inputs of 2026-10-27")
+    (tmp_path / "fixture.py").write_text('OLD_TITLE = "two images"')
+    assert gate.scan(str(tmp_path)) == []
+
+
+def test_customer_image_source_claim_in_embedded_viewer_data_fails(tmp_path):
+    import base64
+    clean(tmp_path)
+    data = base64.b64encode(b'{"source":"customer inputs (two images)"}').decode()
+    (tmp_path / "page.html").write_text('<script>const data="data:application/json;base64,' + data + '"</script>')
+    assert any(hit["reason"] == "a customer source described by image format" for hit in gate.scan(str(tmp_path)))
