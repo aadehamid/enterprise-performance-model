@@ -335,7 +335,8 @@ def test_finding_7_replication_is_full_snapshot_only():
     assert "--since" not in open(os.path.join(ROOT, "pricing_demo", "replicate.py")).read().split('"""', 2)[2]
 
 
-def test_finding_11_one_catalog_rule_for_every_step():
+def test_finding_11_one_catalog_rule_for_every_step(tmp_path, monkeypatch):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
     class Cursor:
         def __init__(self, catalogs, idp_schemas):
             self.catalogs, self.idp_schemas = catalogs, idp_schemas
@@ -345,7 +346,7 @@ def test_finding_11_one_catalog_rule_for_every_step():
 
         def fetchall(self):
             return [(c,) for c in self.catalogs] if self.q == "SHOW CATALOGS" else [(s,) for s in self.idp_schemas]
-    env = {"DEMO_CATALOG": None}  # unset: idp_sbx only when setup's landing schema is there, else workspace
+    env = {"DEMO_CATALOG": None, "DATABRICKS_HOST": "https://h", "DATABRICKS_HTTP_PATH": "/p"}  # no saved setup
     assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["default"]), env) == "workspace"  # visible, not ours
     assert databricks.current_catalog(Cursor(["workspace"], []), env) == "workspace"
     assert databricks.current_catalog(Cursor(["workspace", "idp_sbx"], ["replica_landing"]), env) == "idp_sbx"
@@ -548,7 +549,7 @@ def fake_connection(monkeypatch, catalog):
 
 def test_an_explicit_demo_catalog_is_used_as_given_and_idp_sbx_only_when_it_is_unset(monkeypatch):
     # The release validation set DEMO_CATALOG=epm_validate and must build there, never in the shared idp_sbx: the one
-    # rule (current_catalog) takes the value as given without a query; without DEMO_CATALOG the choice is idp_sbx.
+    # rule (current_catalog) takes the value as given without a query, before saved state or discovery.
     given = {"DEMO_CATALOG": "epm_validate"}
     assert databricks.explicit_catalog(given) == "epm_validate"
     assert databricks.explicit_catalog({"DEMO_CATALOG": None}) is None and databricks.explicit_catalog({}) is None
@@ -659,12 +660,113 @@ def test_every_step_builds_in_the_explicit_catalog(monkeypatch, tmp_path, capsys
     only_catalog(copied, "epm_validate")
 
 
-def test_without_demo_catalog_setup_builds_in_idp_sbx(monkeypatch):
-    cur = FakeCursor()
-    monkeypatch.setattr(databricks, "connect", lambda: (FakeConn(cur), {"DEMO_CATALOG": None}))
+def test_without_demo_catalog_setup_builds_in_idp_sbx(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    cur, env = fake_connection(monkeypatch, None)
     assert databricks.setup() == "idp_sbx"
     assert cur.statements[:2] == [f"CREATE CATALOG IF NOT EXISTS idp_sbx COMMENT '{databricks.DEMO_COMMENT}'",
                                   "CREATE SCHEMA IF NOT EXISTS idp_sbx.replica_landing"]
+
+
+
+def test_setup_fallback_survives_a_stale_visible_landing_schema(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    _, env = fake_connection(monkeypatch, None)
+    env["DATABRICKS_TOKEN"] = "test-token-must-not-be-persisted"
+
+    class Denied(FakeCursor):
+        def execute(self, statement, params=None):
+            if statement.startswith("CREATE SCHEMA IF NOT EXISTS idp_sbx."):
+                raise PermissionError("no schema privilege")
+            super().execute(statement, params)
+
+    cur = Denied()
+    monkeypatch.setattr(databricks, "connect", lambda: (FakeConn(cur), env))
+    assert databricks.setup() == "workspace"
+    # This cursor would rediscover the stale schema if the saved fallback were lost.
+    class Stale(FakeCursor):
+        def execute(self, statement, params=None):
+            self.statements.append(statement)
+
+        def fetchall(self):
+            return [("idp_sbx",)] if self.statements[-1] == "SHOW CATALOGS" else [("replica_landing",)]
+
+    later = Stale()
+    assert databricks.current_catalog(later, env) == "workspace"
+    assert later.statements == []
+    state, _ = databricks.catalog_state(env)
+    assert set(json.loads(state.read_text())) == {"endpoint", "catalog"}
+    assert "DATABRICKS_TOKEN" not in state.read_text()
+    assert env["DATABRICKS_TOKEN"] not in state.read_text()
+
+
+def test_catalog_state_is_endpoint_specific_and_explicit_override_wins(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    _, env = fake_connection(monkeypatch, None)
+    databricks.remember_catalog(env, "workspace")
+    same = dict(env, DATABRICKS_HOST="H/", DATABRICKS_HTTP_PATH="p/")
+    assert databricks.current_catalog(FakeCursor(), same) == "workspace"
+    other = dict(env, DATABRICKS_HTTP_PATH="/other")
+    databricks.remember_catalog(other, "idp_sbx")
+    assert databricks.current_catalog(FakeCursor(), other) == "idp_sbx"
+    assert databricks.current_catalog(FakeCursor(), env) == "workspace"
+    path, _ = databricks.catalog_state(env)
+    path.write_text("broken json")
+    assert databricks.current_catalog(FakeCursor(), dict(env, DEMO_CATALOG="epm_validate")) == "epm_validate"
+    with pytest.raises(SystemExit, match="rerun setup or set DEMO_CATALOG"):
+        databricks.current_catalog(FakeCursor(), env)
+
+
+@pytest.mark.parametrize("state", [None, {"catalog": "other"},
+    {"catalog": "workspace", "endpoint": {"host": "wrong", "http_path": "/p"}}])
+def test_catalog_state_rejects_invalid_or_wrong_endpoint_data(monkeypatch, tmp_path, state):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    _, env = fake_connection(monkeypatch, None)
+    path, _ = databricks.catalog_state(env)
+    path.parent.mkdir()
+    path.write_text(json.dumps(state))
+    with pytest.raises(SystemExit, match="Invalid catalog state"):
+        databricks.current_catalog(FakeCursor(), env)
+
+
+def test_failed_setup_and_explicit_setup_keep_last_implicit_choice(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    _, env = fake_connection(monkeypatch, None)
+    databricks.remember_catalog(env, "workspace")
+    path, _ = databricks.catalog_state(env)
+    before = path.read_bytes()
+
+    class Fails(FakeCursor):
+        def execute(self, statement, params=None):
+            if statement.startswith("CREATE VOLUME"):
+                raise RuntimeError("volume failed")
+            super().execute(statement, params)
+
+    monkeypatch.setattr(databricks, "connect", lambda: (FakeConn(Fails()), env))
+    with pytest.raises(RuntimeError, match="volume failed"):
+        databricks.setup()
+    assert path.read_bytes() == before
+    fake_connection(monkeypatch, "epm_validate")
+    assert databricks.setup() == "epm_validate"
+    assert path.read_bytes() == before
+
+
+
+def test_failed_catalog_state_write_preserves_previous_file(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    _, env = fake_connection(monkeypatch, None)
+    databricks.remember_catalog(env, "workspace")
+    path, _ = databricks.catalog_state(env)
+    before = path.read_bytes()
+
+    def denied(*args):
+        raise PermissionError("replace denied")
+
+    monkeypatch.setattr(databricks.os, "replace", denied)
+    with pytest.raises(PermissionError, match="replace denied"):
+        databricks.remember_catalog(env, "idp_sbx")
+    assert path.read_bytes() == before
+    assert list(path.parent.iterdir()) == [path]
 
 
 def test_finding_20_a_database_commits_only_after_every_table_loaded(monkeypatch):
@@ -823,47 +925,55 @@ def _drops(cur):
     return [s for s in cur.ran if s.startswith("DROP")]
 
 
-def test_purge_lists_without_dropping_unless_yes():
+def test_purge_lists_without_dropping_unless_yes(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    env = {"DATABRICKS_HOST": "https://h", "DATABRICKS_HTTP_PATH": "/p"}
     from pricing_demo import databricks as dbx
     cur = _Cursor(dbx.DEMO_COMMENT)
-    dbx.purge(execute=False, connection=(_Conn(cur), {}))
+    dbx.purge(execute=False, connection=(_Conn(cur), env))
     assert _drops(cur) == []
     cur = _Cursor(dbx.DEMO_COMMENT)
-    dbx.purge(execute=True, connection=(_Conn(cur), {}))
+    dbx.purge(execute=True, connection=(_Conn(cur), env))
     assert _drops(cur) == dbx.purge_statements("idp_sbx")
 
 
-def test_purge_refuses_a_catalog_the_demo_did_not_create():
+def test_purge_refuses_a_catalog_the_demo_did_not_create(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    env = {"DATABRICKS_HOST": "https://h", "DATABRICKS_HTTP_PATH": "/p"}
     from pricing_demo import databricks as dbx
     cur = _Cursor("someone else's catalog")
     try:
-        dbx.purge(execute=True, connection=(_Conn(cur), {}))
+        dbx.purge(execute=True, connection=(_Conn(cur), env))
         raise AssertionError("purge ran on a catalog the demo does not own")
     except SystemExit as err:
         assert "--catalog idp_sbx" in str(err)
     assert _drops(cur) == []
     cur = _Cursor("someone else's catalog")
-    dbx.purge(execute=True, catalog="idp_sbx", connection=(_Conn(cur), {}))
+    dbx.purge(execute=True, catalog="idp_sbx", connection=(_Conn(cur), env))
     assert _drops(cur) == dbx.purge_statements("idp_sbx")
 
 
 
-def test_purge_never_lets_catalog_choose_another_catalog():
-    # cleanup.py purges a validation's test catalog with --catalog; without DEMO_CATALOG the chosen catalog is idp_sbx
+def test_purge_never_lets_catalog_choose_another_catalog(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    env = {"DATABRICKS_HOST": "https://h", "DATABRICKS_HTTP_PATH": "/p"}
+    # With no saved state, this fixture discovers idp_sbx; --catalog must not select a different target.
     from pricing_demo import databricks as dbx
     cur = _Cursor(dbx.DEMO_COMMENT)
     try:
-        dbx.purge(execute=True, catalog="epm_release_validate_demo", connection=(_Conn(cur), {}))
+        dbx.purge(execute=True, catalog="epm_release_validate_demo", connection=(_Conn(cur), env))
         raise AssertionError("purge dropped idp_sbx's objects when --catalog named another catalog")
     except SystemExit as err:
         assert "set DEMO_CATALOG=epm_release_validate_demo" in str(err)
     assert _drops(cur) == []
 
-def test_purge_stops_at_a_schema_that_holds_something_else():
+def test_purge_stops_at_a_schema_that_holds_something_else(monkeypatch, tmp_path):
+    monkeypatch.setattr(databricks, "OUT", str(tmp_path))
+    env = {"DATABRICKS_HOST": "https://h", "DATABRICKS_HTTP_PATH": "/p"}
     from pricing_demo import databricks as dbx
     cur = _Cursor(dbx.DEMO_COMMENT, fail_on="DROP SCHEMA")
     try:
-        dbx.purge(execute=True, connection=(_Conn(cur), {}))
+        dbx.purge(execute=True, connection=(_Conn(cur), env))
         raise AssertionError("purge went on past a failed schema drop")
     except RuntimeError:
         pass

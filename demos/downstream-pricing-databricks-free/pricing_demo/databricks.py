@@ -11,8 +11,9 @@ validation run that names its own catalog builds there and nowhere else. When DE
 idp_sbx, created if the workspace lets you, else workspace (Free Edition's own). Every schema except the replica
 schemas keeps the name it has in idp_sbx, so the objects read like the shared ones; the replica schemas follow the
 source databases' names since 2026-10-28 (README.md, "The source systems"). One rule picks the catalog for every step
-(chosen_catalog); without DEMO_CATALOG, idp_sbx counts only if it holds this demo's landing schema, which setup
-creates (Kimi round 1, finding 11).
+(chosen_catalog). Successful setup saves its implicit choice per Databricks endpoint under out/catalog-choice/.
+Later steps reuse that choice. Without saved state, they discover idp_sbx only if its landing schema is visible,
+otherwise workspace; run setup before relying on this legacy discovery.
 Upload refuses an incomplete replica, and build checks each replica table against the replica's manifest (finding 5).
 Secrets stay in variables. The schema tags follow Databricks, "ALTER SCHEMA" (updated 2026-09-16: SET TAGS, in
 Databricks SQL and Runtime 13.3 LTS and above).
@@ -20,8 +21,12 @@ Databricks SQL and Runtime 13.3 LTS and above).
 import argparse
 import glob
 import io
+import hashlib
+import json
 import os
 import re
+import tempfile
+from pathlib import Path
 
 from . import replicate
 from .config import OUT, SOURCE_TAG, SQL, SYSTEM_MODULE, SYSTEMS, databricks_env
@@ -49,7 +54,7 @@ BUILT = {
 }
 VOLUME = "replica_landing.raw"
 DEMO_COMMENT = "Synthetic sandbox mirror for the pricing demo"
-DEFAULT_CATALOG = "idp_sbx"  # when DEMO_CATALOG is unset
+DEFAULT_CATALOG = "idp_sbx"  # setup tries this first when DEMO_CATALOG is unset
 FALLBACK_CATALOG = "workspace"  # Free Edition's own catalog, when idp_sbx can be neither created nor used
 
 
@@ -91,6 +96,45 @@ def catalog(cur, e):
         return FALLBACK_CATALOG
 
 
+def catalog_state(e):
+    """The local state file and endpoint identity; credentials are never part of either."""
+    endpoint = {
+        "host": e["DATABRICKS_HOST"].removeprefix("https://").rstrip("/").lower(),
+        "http_path": "/" + e["DATABRICKS_HTTP_PATH"].strip("/"),
+    }
+    key = hashlib.sha256(json.dumps(endpoint, sort_keys=True).encode()).hexdigest()
+    return Path(OUT) / "catalog-choice" / f"{key}.json", endpoint
+
+
+def saved_catalog(e):
+    path, endpoint = catalog_state(e)
+    try:
+        state = json.loads(path.read_text())
+    except FileNotFoundError:
+        return None
+    except ValueError as err:
+        raise SystemExit(f"Invalid catalog state at {path}; rerun setup or set DEMO_CATALOG") from err
+    if (not isinstance(state, dict) or state.get("endpoint") != endpoint
+            or state.get("catalog") not in (DEFAULT_CATALOG, FALLBACK_CATALOG)):
+        raise SystemExit(f"Invalid catalog state at {path}; rerun setup or set DEMO_CATALOG")
+    return state["catalog"]
+
+
+def remember_catalog(e, cat):
+    path, endpoint = catalog_state(e)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, delete=False) as stream:
+            temporary = Path(stream.name)
+            json.dump({"endpoint": endpoint, "catalog": cat}, stream, sort_keys=True)
+            stream.write("\n")
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
 def setup():
     conn, e = connect()
     with conn, conn.cursor() as cur:
@@ -106,17 +150,20 @@ def setup():
         for database, system in SYSTEM_MODULE.items():  # Databricks cannot see what a replica copies; its owner says so
             run(cur, f"ALTER SCHEMA {cat}.replica_{database} SET TAGS ('{SOURCE_TAG}' = '{system}')")
         run(cur, f"CREATE VOLUME IF NOT EXISTS {cat}.{VOLUME}")
-        print(f"catalog {cat}: {len(SCHEMAS)} schemas, volume {cat}.{VOLUME}")
-        return cat
+    if not explicit_catalog(e):
+        remember_catalog(e, cat)
+    print(f"catalog {cat}: {len(SCHEMAS)} schemas, volume {cat}.{VOLUME}")
+    return cat
 
 
 def current_catalog(cur, e):
-    """The catalog every later step uses (chosen_catalog): DEMO_CATALOG as given when set, without a query. Without
-    it, idp_sbx only when it holds this demo's landing schema, which setup creates there; otherwise workspace. A
-    visible idp_sbx that setup could not use does not count."""
+    """Use an explicit catalog, then setup's saved choice. With no state, use legacy schema discovery."""
     explicit = explicit_catalog(e)
     if explicit:
         return explicit
+    saved = saved_catalog(e)
+    if saved:
+        return saved
     cats = {r[0] for r in run(cur, "SHOW CATALOGS")}
     if DEFAULT_CATALOG in cats and "replica_landing" in {r[0] for r in run(cur, f"SHOW SCHEMAS IN {DEFAULT_CATALOG}")}:
         return DEFAULT_CATALOG
@@ -237,8 +284,8 @@ def demo_owns(cur, cat):
 def purge(execute=False, catalog=None, connection=None):
     """Prints the drop statements; runs them only with --yes. Stops at the first statement that fails. A catalog the
     demo did not create (one without setup's comment) is purged only when --catalog names it. --catalog confirms the
-    catalog DEMO_CATALOG chooses and never chooses one: a --catalog that names another is refused, since without
-    DEMO_CATALOG the purge would act on idp_sbx."""
+    catalog selected by current_catalog; it never selects one. A different name is refused. Selection follows
+    the explicit setting, saved setup choice, then schema discovery."""
     conn, e = connection or connect()
     with conn, conn.cursor() as cur:
         cat = current_catalog(cur, e)

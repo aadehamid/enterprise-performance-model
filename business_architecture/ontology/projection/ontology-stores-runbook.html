@@ -525,7 +525,7 @@ uv run python -m pricing_demo.load_postgres</code></pre>
 <h3>2. Databricks: the demo catalog</h3>
 <pre><code>cd "$DEMO"
 uv run python -m pricing_demo.replicate          # Postgres to Parquet, with DuckDB
-uv run python -m pricing_demo.databricks setup   # catalog DEMO_CATALOG as given, or idp_sbx when it is unset; schemas, volume
+uv run python -m pricing_demo.databricks setup   # catalog, schemas, volume; saves an implicit catalog choice (demo README)
 uv run python -m pricing_demo.databricks upload  # Parquet to the volume
 uv run python -m pricing_demo.databricks build   # replica, silver, gold, metric views, definitions views, empty tech_graph tables
 uv run python -m pricing_demo.genie              # the four Genie agents

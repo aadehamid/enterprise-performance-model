@@ -130,7 +130,7 @@ def test_the_demo_s_compose_project_goes_down_before_its_override_file_is_remove
 
 
 def test_the_demo_s_purge_runs_with_demo_catalog_set_to_the_ledgered_catalog(tmp_path):
-    # without DEMO_CATALOG the demo's purge chooses idp_sbx, and --catalog only confirms
+    # DEMO_CATALOG selects the test catalog; --catalog only confirms, never selects it
     (tmp_path / "demos" / "downstream-pricing-databricks-free").mkdir(parents=True)
     ledger, envf, env = setup(tmp_path, [{"kind": "databricks-catalog", "name": "epm_release_validate_a", "detail_created_by_run": True}])
     with open(tmp_path / "bin" / "uv", "w") as f:
