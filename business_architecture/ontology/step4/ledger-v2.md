@@ -2041,8 +2041,7 @@ Step 4 was re-pinned to `d8b4827`. Row verdicts:
   REL-00008 and REL-01223 are the same forecast handoff at two hierarchy
   levels. REL-00112 is a step-level sequence ending at plan selection and
   approval within CM-1-1-4, an ancestor of its source (parent CM-1-1-4-7).
-  the decision owner gave all seven answers as "adopted reference-model positions …,
-  not verified MPC internal procedures".
+  The decision owner gave all seven answers as "adopted reference-model positions informed by the downstream business context and industry practice, not verified MPC internal procedures" (`205-batch2.md`).
 
 All 20 #205 rows now have fresh verdicts. No mention changes bucket and no
 fact changes.

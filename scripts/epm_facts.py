@@ -1078,14 +1078,14 @@ def cmd_decisions(args):
     return 1 if problems else 0
 
 
-# Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): each verb of
-# saying that follows "the decision owner" closely (within 120 characters, in the same sentence, no quote mark between),
+# Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): each attribution
+# verb that follows "the decision owner" closely (within 120 characters, in the same sentence, no quote mark between),
 # or follows a quote already theirs through a plain connective ("asked: ..., then chose ..." gives two), and the quote
-# after it. A quote another subject says ("GitHub's documentation says") or one with no verb of saying before it, such
+# after it. A quote another subject says ("GitHub's documentation says") or one with no attribution verb before it, such
 # as a process name, is not attributed. citation_problems says which sources count.
 OWNER = re.compile(r'\bdecision owner\b', re.I)  # the repo's one name for the role (EPM-DEC-001-0049); "the owner" also
 # names owners of processes and data
-VERB = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added)\b', re.I)
+VERB = re.compile(r'\b(?:said|says|asked|asks|chose|chooses|answered|replied|wrote|typed|told|decided|added|allowed|approved|gave|accepted|agreed|set|confirmed|requested)\b', re.I)
 SENTENCE_END = r'[.!?][*_)\]]*\s'  # a sentence ends at a stop, even inside emphasis or brackets (".* (A" ends one)
 SAID = re.compile(r'(?:(?!' + SENTENCE_END + r')[^"”“]){0,160}?["“]([^"”]+)["”]')  # the quote in the verb's own sentence
 # "..." (answers-x.md), then chose": between a quote of theirs and the next verb, only a citation in brackets (answers
