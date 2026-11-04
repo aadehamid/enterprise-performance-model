@@ -191,11 +191,12 @@ def test_the_package_is_built_registered_and_counted(tmp_path, folder):
     from rdflib import Graph, Literal, URIRef
     from rdflib.namespace import DCTERMS, XSD
     version = URIRef(m["version_iri"])
+    ontology = URIRef(m["ontology_iri"])
     issued = Literal("2026-11-03", datatype=XSD.date)
     content = Graph().parse(package / "logical-model.ttl")
     catalog = Graph().parse(package / "catalog.ttl")
-    assert content.value(version, DCTERMS.issued) == issued
-    assert content.value(version, DCTERMS.modified) == issued
+    assert content.value(ontology, DCTERMS.issued) == issued
+    assert content.value(ontology, DCTERMS.modified) == issued
     assert catalog.value(version, DCTERMS.issued) == issued
     assert m["augment"] == augment.inputs(str(folder)) and m["approved_by"]["words"] == WORDS
     for kind in ("erstudio", "layer"):  # each model's two graphs ship as the builder wrote them
