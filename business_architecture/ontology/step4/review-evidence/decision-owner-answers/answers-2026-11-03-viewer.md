@@ -65,3 +65,30 @@ One release · definitions and relationships
 
 do you think we can do below. not easy to see at the moment
 The conceptual model is currently browsable term by term; there is no dedicated whole-model diagram yet. Likewise, the lifecycle lacks a prominent entry point. Both need clearer navigation to make them easy to find.
+
+<!-- Design-review cadence and subtitle, 2026-11-03. The decision owner's words, verbatim: -->
+
+I think we should do a review before we do repository checks. Validation that everything exists in the viewer is important. But we should be able to review at a faster iteration. Once we align on a design we can do full validation and repository check before we pubslish and cut a new release with the viewer.
+
+by the way remove "One release" from the heading
+
+<!-- Grouped navigation request, 2026-11-03. The decision owner's words, verbatim: -->
+
+This great I like it. Can we also have the same top tab for Order to Cash (OTC) and Commercial Hydrocarbon Lifecycle value chaisn. That way in additoon to the navigation pane we can also select them at the top of he page.
+can we even generalize this for each module of the ontology.. so that the top navigation provide a way to see an overview of the modules .. we cn them drill down. We should some separate the mdoules from value streams and the customer lifecylces and conceptual data model
+
+let us discuiss
+
+<!-- Navigation implementation instruction, 2026-11-03. The decision owner's words, verbatim: -->
+
+Can you go ahead an implement all of this. again let me review before we do repo wide test . Once we align on the design we can do a final comprehensive checks and repo restig and make another release that will include the viewer. makes sesne?
+
+<!-- Temporary repository visibility permission, 2026-11-03. The decision owner's words, verbatim: -->
+
+you can swithc the repo to public while working. Switch back to private when you are done working
+
+<!-- Final design feedback and release authorization, 2026-11-03. The decision owner's words, verbatim: -->
+
+Looks great! Any other improvement you will suggest or should we release this.
+
+go ahead and cut a new release. Once this is done do we have anything else that is outstanding or is this it?

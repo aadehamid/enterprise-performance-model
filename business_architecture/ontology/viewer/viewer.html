@@ -773,7 +773,7 @@
         graphLimit = 8;
       let overviewReturn = null, modelFocus = null;
       const overviewCache = new Map(), browseCache = new Map();
-      let browseContext = "browse", trail = [], activeDiagramExit = null;
+      let browseContext = "browse", trail = [], activeDiagramExit = null, appliedRoute = null;
       function viewTrail(name) {
         const item = {kind: "view", id: name, label: overviewTitle(name)};
         return name.startsWith("module:") ? [{kind:"view",id:"modules",label:"Module overview"}, item] : [item];
@@ -802,7 +802,10 @@
       }
       function route(hash, push) {
         breadcrumbs();
-        if (push) history.pushState({trail}, "", "#" + hash);
+        if (push) {
+          history.pushState({trail}, "", "#" + hash);
+          appliedRoute = location.href + JSON.stringify(history.state);
+        }
       }
       function saveOverview() {
         activeDiagramExit?.();
@@ -861,6 +864,12 @@
         const e = document.createElement(tag);
         if (text !== undefined) e.textContent = text;
         if (cls) e.className = cls;
+        return e;
+      }
+      function svg(tag, attrs, text) {
+        const e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+        for (const [key, value] of Object.entries(attrs)) e.setAttribute(key, value);
+        if (text) e.textContent = text;
         return e;
       }
       function termButton(node) {
@@ -1089,12 +1098,6 @@
         const width = Math.max(900, Math.max(...[...layers.values()].map((items) => items.length)) * 210 + 40);
         const positions = new Map();
         for (const [level, items] of layers) items.forEach((info,i) => positions.set(info.name, {x:(width-items.length*210)/2+i*210, y:30+level*120}));
-        const svg = (tag, attrs, text) => {
-          const e = document.createElementNS("http://www.w3.org/2000/svg", tag);
-          for (const [key,value] of Object.entries(attrs)) e.setAttribute(key,value);
-          if (text) e.textContent = text;
-          return e;
-        };
         const root = svg("svg", {id:"module-diagram", viewBox:`0 0 ${width} ${(Math.max(...layers.keys())+1)*120}`, role:"group", "aria-label":"Released module dependencies"});
         const defs = svg("defs",{}), marker = svg("marker",{id:"module-arrow",viewBox:"0 0 10 10",refX:9,refY:5,markerWidth:6,markerHeight:6,orient:"auto"});
         marker.append(svg("path",{d:"M 0 0 L 10 5 L 0 10 z",fill:"#1b6c80"}));defs.append(marker);root.append(defs);
@@ -1212,13 +1215,6 @@
         scroll.setAttribute("role", "region");
         scroll.setAttribute("aria-label", "Customer conceptual model diagram; scroll horizontally on a narrow screen");
         panel.append(focus, reset, element("p", "On a narrow screen, scroll within the diagram to see every entity. The relationship list below provides the same connections as text.", "muted"), scroll);
-        const ns = "http://www.w3.org/2000/svg";
-        function svg(tag, attrs, text) {
-          const e = document.createElementNS(ns, tag);
-          for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
-          if (text) e.textContent = text;
-          return e;
-        }
         const diagram = svg("svg", {id: "model-diagram", viewBox: "0 0 1140 630", role: "group", "aria-label": "Customer conceptual entities and relationships"});
         const marker = svg("marker", {id: "model-arrow", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse"});
         marker.append(svg("path", {d: "M 0 0 L 10 5 L 0 10 z", fill: "#6d858d"}));
@@ -1575,13 +1571,6 @@
           shown = links.slice(0, graphLimit);
         $("graph").replaceChildren();
         $("relations").replaceChildren();
-        const ns = "http://www.w3.org/2000/svg";
-        function svg(tag, attrs, text) {
-          const e = document.createElementNS(ns, tag);
-          for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
-          if (text) e.textContent = text;
-          return e;
-        }
         const height = Math.max(180, shown.length * 70 + 20),
           root = svg("svg", {
             viewBox: `0 0 650 ${height}`,
@@ -1852,6 +1841,8 @@
         $("sources").append(p);
       }
       window.onhashchange = () => {
+        const routeKey = location.href + JSON.stringify(history.state);
+        if (routeKey === appliedRoute) return;
         let id;
         try {
           id = decodeURIComponent(location.hash.slice(1));
@@ -1876,6 +1867,7 @@
           select(id);
         }
         if (history.state?.trail) {trail = history.state.trail; breadcrumbs();}
+        appliedRoute = routeKey;
       };
       window.onpopstate = window.onhashchange;
       let first;
