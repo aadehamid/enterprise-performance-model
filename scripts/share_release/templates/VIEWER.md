@@ -1,6 +1,6 @@
 # View the ontology
 
-Open [index.html](index.html) in a browser after unzipping the release. The page contains its ontology data, scripts and fonts. It works offline and needs no installation or server.
+Open `viewer/index.html` in a browser after unzipping the release. The page contains its ontology data, scripts and fonts. It works offline and needs no installation or server.
 
 The viewer opens on Module overview. The top navigation separates Modules, Value streams and Customer views. Use Module overview to find a module by name or description, read its purpose and see its vocabulary and dependencies. The optional module dependency diagram opens the same overviews. Use Browse all terms to enter that module's complete search and hierarchy. The Order to Cash and Commercial Hydrocarbon Lifecycle buttons open each stream's ordered stages directly; expand a stage's processes or open its details to drill down. Breadcrumbs and return buttons take you back while keeping your searches, filters and expanded sections. This browsing state lasts until you close or reload the page.
 
@@ -14,4 +14,4 @@ Use Customer conceptual model to see the customer entities together. Select an e
 
 Release details identifies the source release, the Turtle inputs and their checksums. Counts distinguish ontology terms from evidence, constraints and package metadata. Technical-graph vocabulary is included; runtime records and example datasets are not viewer inputs.
 
-This page shows the ontology as received. Editing files beside it does not refresh its embedded data. A newly cut viewer is needed to view a later release. See [How to update this ontology](../HOW-TO-UPDATE.md) for changes to the ontology itself.
+This page shows the ontology as received. Editing files beside it does not refresh its embedded data. A newly cut viewer is needed to view a later release. Read `HOW-TO-UPDATE.md` at the release root for changes to the ontology itself.
