@@ -121,8 +121,8 @@ def main(argv=None):
             if why:
                 refused.append((kind, name, why))
                 continue
-            # The purge acts on DEMO_CATALOG, set to this name below; --catalog only confirms it. Without DEMO_CATALOG the
-            # demo would choose idp_sbx.
+            # The purge acts on DEMO_CATALOG, set to this name below; --catalog only confirms it.
+            # Explicit selection takes precedence over saved setup state and discovery.
             cmd = ["uv", "run", "python", "-m", "pricing_demo.databricks", "purge", "--yes", "--catalog", name]
             cwd = os.path.join(a.tree, "demos", "downstream-pricing-databricks-free")
         elif kind == "databricks-table":

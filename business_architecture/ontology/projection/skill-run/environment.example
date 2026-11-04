@@ -35,7 +35,8 @@
 # EPM_DATABRICKS_ENV=<file>
 # EPM_TRIPLES_TABLE=epm_triples
 
-# The demo, with Databricks. Without SOURCE_PG_DSN the run starts the demo's local Postgres; without DEMO_CATALOG it builds in idp_sbx.
+# The demo, with Databricks. Without SOURCE_PG_DSN the run starts the demo's local Postgres.
+# Without DEMO_CATALOG, setup tries idp_sbx, falls back to workspace when needed, and saves its choice (demo README).
 # SOURCE_PG_DSN=postgresql://<user>:<password>@<host>:<port>
 # DEMO_CATALOG=<catalog>
 # How long to wait for Unity Catalog's lineage to arrive after the demo's build.

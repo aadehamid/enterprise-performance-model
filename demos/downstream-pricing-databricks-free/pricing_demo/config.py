@@ -85,7 +85,7 @@ def databricks_env():
     missing = [k for k in ("DATABRICKS_HOST", "DATABRICKS_TOKEN", "DATABRICKS_HTTP_PATH") if not values[k]]
     if missing:
         raise SystemExit("Databricks settings missing: " + ", ".join(missing))
-    # DEMO_CATALOG stays unset when nothing names it: the Databricks steps then use idp_sbx (databricks.py). The
+    # DEMO_CATALOG stays unset when nothing names it: databricks.py selects and remembers the implicit catalog. The
     # projection's DATABRICKS_CATALOG in epm.env is its own setting and no longer stands in for it.
     values["DEMO_CATALOG"] = values["DEMO_CATALOG"] or None
     values["EPM_TRIPLES"] = values["EPM_TRIPLES"] or "{DATABRICKS_CATALOG}.{DATABRICKS_SCHEMA}.epm_triples".format(**projection)

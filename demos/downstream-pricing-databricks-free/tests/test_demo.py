@@ -957,7 +957,7 @@ def test_purge_refuses_a_catalog_the_demo_did_not_create(monkeypatch, tmp_path):
 def test_purge_never_lets_catalog_choose_another_catalog(monkeypatch, tmp_path):
     monkeypatch.setattr(databricks, "OUT", str(tmp_path))
     env = {"DATABRICKS_HOST": "https://h", "DATABRICKS_HTTP_PATH": "/p"}
-    # cleanup.py purges a validation's test catalog with --catalog; without DEMO_CATALOG the chosen catalog is idp_sbx
+    # With no saved state, this fixture discovers idp_sbx; --catalog must not select a different target.
     from pricing_demo import databricks as dbx
     cur = _Cursor(dbx.DEMO_COMMENT)
     try:

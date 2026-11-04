@@ -54,7 +54,7 @@ BUILT = {
 }
 VOLUME = "replica_landing.raw"
 DEMO_COMMENT = "Synthetic sandbox mirror for the pricing demo"
-DEFAULT_CATALOG = "idp_sbx"  # when DEMO_CATALOG is unset
+DEFAULT_CATALOG = "idp_sbx"  # setup tries this first when DEMO_CATALOG is unset
 FALLBACK_CATALOG = "workspace"  # Free Edition's own catalog, when idp_sbx can be neither created nor used
 
 
