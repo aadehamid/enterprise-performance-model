@@ -2,6 +2,8 @@
 
 The viewer shows one released ontology from the private release repository. Recipients unzip the shared release and open `viewer/index.html`. The page embeds its data, JavaScript and fonts, so it works offline with no installation or server.
 
+The top navigation separates Modules, Value streams and Customer views. Module overview lists every released module with its recorded description, version and term count. Selecting a module opens its vocabulary groups, declared dependencies and links into the complete term browser. An optional dependency diagram links to the same module overviews. The Order to Cash and Commercial Hydrocarbon Lifecycle buttons open their definitions, trigger, outcome and ordered stages directly. Each stage exposes its process links. Module and stream overviews support drilldown, return navigation, browser history and reload.
+
 Search finds labels, definitions and IRIs. Module navigation includes a hierarchy and an alphabetical fallback for terms without parents or with cycles. Selecting a term opens its definitions, scope notes, sources, module versions and relationships. Evidence, anonymous restrictions and constraints remain available through property links and the supporting-node search option. On a phone, choosing a term opens its detail pane; Back to terms returns to navigation.
 
 Choosing the value-stream module lists the released value streams first. Each opens its stages in their recorded sequence, then their processes and realized core processes. Links to the containing stage or stream provide a way back. The module's vocabulary remains searchable and accessible in the hierarchy.

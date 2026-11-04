@@ -117,9 +117,41 @@
       #views {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 12px 24px;
         padding: 0 24px 16px;
       }
+      .nav-group { display: flex; flex-wrap: wrap; gap: 6px; align-content: start; min-width: 0; }
+      .nav-group-label { flex-basis: 100%; color: var(--muted); font-size: 12px; }
+      .module-catalogue { margin-top: 20px; }
+      .module-row {
+        display: grid;
+        grid-template-columns: minmax(180px, 1fr) minmax(0, 2fr) 140px;
+        gap: 24px;
+        padding: 20px 0;
+        border-top: 1px solid var(--line);
+        align-items: start;
+      }
+      .module-row p { margin: 0; }
+      .module-row button { text-align: left; }
+      .module-row small { display: block; margin-top: 8px; }
+      #module-query { max-width: 480px; }
+      #module-diagram { display: block; width: 100%; min-width: 900px; }
+      #module-diagram text { font: 14px "IBM Plex Sans", sans-serif; fill: #202527; }
+      #module-diagram .dependency-edge { fill: none; stroke: var(--accent); stroke-width: 1.3; }
+      #module-diagram [role="button"] { cursor: pointer; }
+      #module-diagram rect { fill: #f7f9f9; stroke: #bbc8cb; }
+      #module-diagram [role="button"]:focus rect { stroke: var(--accent); stroke-width: 3; }
+      .module-connections, .overview-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+      .module-connections button { margin: 4px 4px 4px 0; }
+      .module-connections a { overflow-wrap: anywhere; }
+      .term-group { margin: 16px 0; border-top: 1px solid var(--line); padding-top: 12px; }
+      .term-group-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 16px; margin: 12px 0; }
+      .term-group-list button { text-align: left; overflow-wrap: anywhere; }
+      .overview-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+      .stream-overview-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 40px; padding-left: 24px; }
+      .stream-overview-list > li { padding: 12px 0; border-top: 1px solid var(--line); min-width: 0; }
+      .stream-overview-list > li::marker { color: var(--accent); font-weight: 600; }
+      .stream-overview-list > li > button { font-size: 17px; text-align: left; }
       #views button[aria-current="page"] {
         background: #e0e9eb;
         border-color: var(--accent);
@@ -450,6 +482,7 @@
         padding: 24px;
       }
       @media (max-width: 1100px) {
+        .term-group-list, .stream-overview-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .lifecycle-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         #layout {
           grid-template-columns: 270px minmax(0, 1fr);
@@ -468,6 +501,10 @@
         }
       }
       @media (max-width: 640px) {
+        #views button { padding: 8px 10px; font-size: 13px; }
+        .module-row { grid-template-columns: 1fr; gap: 12px; }
+        .module-connections, .overview-facts, .term-group-list, .stream-overview-list { grid-template-columns: 1fr; }
+        .stream-overview-list { gap: 12px; }
         #views { padding: 0 16px 12px; }
         #overview { margin: 0 8px 16px; padding: 16px; }
         .lifecycle-grid { grid-template-columns: 1fr; }
@@ -562,11 +599,21 @@
       <button id="about">Release details</button>
     </header>
     <nav id="views" aria-label="Explore the ontology">
-      <button id="view-browse" aria-current="page">All ontology</button>
-      <button id="view-lifecycle">Customer lifecycle</button>
-      <button id="view-model">Customer conceptual model</button>
+      <div class="nav-group" role="group" aria-label="Modules">
+        <span class="nav-group-label">Modules</span>
+        <button id="view-modules" data-view="modules">Module overview</button>
+        <button id="view-browse" data-view="browse" aria-current="page">All ontology</button>
+      </div>
+      <div id="stream-nav" class="nav-group" role="group" aria-label="Value streams">
+        <span class="nav-group-label">Value streams</span>
+      </div>
+      <div class="nav-group" role="group" aria-label="Customer views">
+        <span class="nav-group-label">Customer views</span>
+        <button id="view-lifecycle" data-view="lifecycle">Customer lifecycle</button>
+        <button id="view-model" data-view="model">Customer conceptual model</button>
+      </div>
     </nav>
-    <section id="overview" aria-label="Customer overview" hidden></section>
+    <section id="overview" aria-label="Ontology overview" hidden></section>
     <div id="layout">
       <aside aria-label="Find ontology terms">
         <label for="query">Find a term</label
@@ -765,7 +812,34 @@
             modelEdges.push({source, target, predicate, label});
       const lifecycleScheme = byId.get(PARTY + "lifecycle-stage");
       const lifecycleStages = ordered.filter((n) => linked(n, SKOS + "inScheme").some((s) => s.id === lifecycleScheme?.id));
-      const overviewNames = {lifecycle: "Customer lifecycle", model: "Customer conceptual model"};
+      const overviewNames = {modules: "Module overview", lifecycle: "Customer lifecycle", model: "Customer conceptual model"};
+      const MODULE_ROOT = "https://w3id.org/mpc/ontology/modules/";
+      const moduleInfo = modules.map((name) => {
+        const members = ordered.filter((n) => n.modules.some((m) => m.name === name));
+        const node = byId.get(MODULE_ROOT + name);
+        const dependencies = (node?.values || []).filter((v) => !v.literal &&
+          ["http://purl.org/dc/terms/requires", "http://www.w3.org/2002/07/owl#imports"].includes(v.p));
+        return {name, node, members, terms: members.filter((n) => !supporting.has(n.kind)), dependencies,
+          version: [...new Set(members.flatMap((n) => n.modules.filter((m) => m.name === name).map((m) => m.version)))].join(", ")};
+      });
+      const moduleByName = new Map(moduleInfo.map((m) => [m.name, m]));
+      function overviewTitle(name) {
+        if (name?.startsWith("module:")) {
+          const info = moduleByName.get(name.slice(7));
+          return info && (info.node?.label || info.name);
+        }
+        if (name?.startsWith("stream:")) return streams.find((s) => s.id === name.slice(7))?.label;
+        return overviewNames[name];
+      }
+      function moduleDescription(info) {
+        return info.node?.values.filter((v) => v.literal && v.p === "http://purl.org/dc/terms/description").map((v) => v.v).join(" ") || "No module description is recorded.";
+      }
+      function moduleButton(info, label = info.node?.label || info.name) {
+        const button = element("button", label);
+        button.dataset.module = info.name;
+        button.onclick = () => showOverview("module:" + info.name);
+        return button;
+      }
       function definitionOf(node) {
         return node.values.filter((v) => v.literal && v.p === SKOS + "definition").map((v) => v.v).join(" ");
       }
@@ -805,9 +879,10 @@
         if (systems.length) container.append(element("h3", "Systems"), termList(systems));
       }
       function navCurrent(name) {
-        for (const id of ["browse", "lifecycle", "model"])
-          if (id === name) $("view-" + id).setAttribute("aria-current", "page");
-          else $("view-" + id).removeAttribute("aria-current");
+        const key = name?.startsWith("module:") ? "modules" : name;
+        for (const button of $("views").querySelectorAll("[data-view]"))
+          if (button.dataset.view === key) button.setAttribute("aria-current", "page");
+          else button.removeAttribute("aria-current");
       }
       function showBrowse(push = true) {
         overviewReturn = null;
@@ -819,6 +894,8 @@
         if (push) location.hash = "";
       }
       function showOverview(name, push = true) {
+        const title = overviewTitle(name);
+        if (!title) return;
         overviewReturn = name;
         navCurrent(name);
         $("layout").hidden = true;
@@ -826,7 +903,7 @@
         panel.hidden = false;
         panel.dataset.view = name;
         panel.replaceChildren();
-        const heading = element("h2", overviewNames[name]);
+        const heading = element("h2", title);
         heading.tabIndex = -1;
         panel.append(heading);
         if (name === "lifecycle") {
@@ -843,12 +920,170 @@
             grid.append(card);
           }
           panel.append(grid);
-        } else renderModel(panel);
+        } else if (name === "model") renderModel(panel);
+        else if (name === "modules") renderModuleCatalogue(panel);
+        else if (name.startsWith("module:")) renderModuleOverview(panel, moduleByName.get(name.slice(7)));
+        else if (name.startsWith("stream:")) renderStreamOverview(panel, byId.get(name.slice(7)));
         if (push) {
-          location.hash = "view=" + name;
+          location.hash = "view=" + encodeURIComponent(name);
           heading.focus({preventScroll: true});
           window.scrollTo(0, 0);
         }
+      }
+      function renderModuleCatalogue(panel) {
+        panel.append(element("p", "Choose a module to explore its purpose, vocabulary and connections. Module names and descriptions come from the released ontology.", "overview-intro"));
+        const label = element("label", "Find a module"); label.htmlFor = "module-query";
+        const query = element("input"); query.id = "module-query"; query.type = "search"; query.placeholder = "Search module names and descriptions";
+        const count = element("p", undefined, "muted"); count.id = "module-catalogue-count"; count.setAttribute("role", "status");
+        const list = element("div", undefined, "module-catalogue"); list.id = "module-catalogue";
+        const map = element("details"); map.id = "module-map"; map.append(element("summary", "Module dependency diagram"));
+        map.addEventListener("toggle", () => {if (map.open && !map.querySelector("svg")) renderModuleMap(map);});
+        panel.append(label, query, count, map, list, element("p", "Term counts exclude supporting nodes. Some terms belong to more than one module, so module counts do not add up to the release total.", "muted"));
+        function render() {
+          const found = moduleInfo.filter((info) => [info.name, info.node?.label, moduleDescription(info)].join(" ").toLowerCase().includes(query.value.trim().toLowerCase()));
+          count.textContent = found.length + " of " + moduleInfo.length + " modules";
+          list.replaceChildren();
+          for (const info of found) {
+            const row = element("article", undefined, "module-row"); row.dataset.module = info.name;
+            const name = element("div"); name.append(moduleButton(info), element("small", info.name + " · " + info.version));
+            const stats = element("p", info.terms.length.toLocaleString() + " terms");
+            stats.append(element("small", (info.members.length - info.terms.length).toLocaleString() + " supporting nodes"));
+            row.append(name, element("p", moduleDescription(info)), stats); list.append(row);
+          }
+          if (!found.length) list.append(element("p", "No matching modules. Try another name or phrase.", "empty"));
+        }
+        query.oninput = render; render();
+      }
+      function renderModuleMap(panel) {
+        panel.append(element("p", "Arrows point from a module to the current module version it declares as a dependency. Select a module to open its overview. This diagram includes all modules, regardless of the search above; other dependency references remain in module details.", "muted"));
+        const edges = moduleInfo.flatMap((info) => [...new Set(info.dependencies.map((v) => dependencyModule(v.v)?.name).filter(Boolean))].map((target) => [info.name, target]));
+        function depth(name, path = new Set()) {
+          if (path.has(name)) return 0;
+          const targets = edges.filter(([source]) => source === name).map(([,target]) => target);
+          return targets.length ? 1 + Math.max(...targets.map((target) => depth(target, new Set([...path, name])))) : 0;
+        }
+        const layers = new Map();
+        for (const info of moduleInfo) {
+          const level = depth(info.name);
+          if (!layers.has(level)) layers.set(level, []);
+          layers.get(level).push(info);
+        }
+        const width = Math.max(900, Math.max(...[...layers.values()].map((items) => items.length)) * 210 + 40);
+        const positions = new Map();
+        for (const [level, items] of layers) items.forEach((info,i) => positions.set(info.name, {x:(width-items.length*210)/2+i*210, y:30+level*120}));
+        const svg = (tag, attrs, text) => {
+          const e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+          for (const [key,value] of Object.entries(attrs)) e.setAttribute(key,value);
+          if (text) e.textContent = text;
+          return e;
+        };
+        const root = svg("svg", {id:"module-diagram", viewBox:`0 0 ${width} ${(Math.max(...layers.keys())+1)*120}`, role:"group", "aria-label":"Released module dependencies"});
+        const defs = svg("defs",{}), marker = svg("marker",{id:"module-arrow",viewBox:"0 0 10 10",refX:9,refY:5,markerWidth:6,markerHeight:6,orient:"auto"});
+        marker.append(svg("path",{d:"M 0 0 L 10 5 L 0 10 z",fill:"#1b6c80"}));defs.append(marker);root.append(defs);
+        for (const [source,target] of edges) {
+          const a = positions.get(source), b = positions.get(target);
+          const path = svg("path",{class:"dependency-edge", "data-source":source,"data-target":target,"marker-end":"url(#module-arrow)", d:`M ${a.x+90} ${a.y} C ${a.x+90} ${(a.y+b.y+48)/2},${b.x+90} ${(a.y+b.y+48)/2},${b.x+90} ${b.y+48}`});
+          path.append(svg("title",{},source+" depends on "+target));root.append(path);
+        }
+        for (const info of moduleInfo) {
+          const p=positions.get(info.name), g=svg("g",{transform:`translate(${p.x},${p.y})`,role:"button",tabindex:0,"aria-label":info.node?.label||info.name,"data-module":info.name});
+          g.append(svg("rect",{width:180,height:48,rx:6}),svg("text",{x:12,y:29},info.name));
+          g.onclick=()=>showOverview("module:"+info.name);
+          g.onkeydown=(e)=>{if (["Enter"," "].includes(e.key)){e.preventDefault();showOverview("module:"+info.name);}};
+          root.append(g);
+        }
+        const scroll=element("div",undefined,"model-scroll");scroll.tabIndex=0;scroll.setAttribute("role","region");scroll.setAttribute("aria-label","Module dependency diagram; scroll horizontally on a narrow screen");
+        scroll.append(root);panel.append(scroll);
+      }
+      function browseModule(name, push = true) {
+        const info = moduleByName.get(name);
+        if (!info) return;
+        showBrowse(false);
+        overviewReturn = "module:" + name;
+        $("query").value = ""; $("module").value = name; $("support").checked = false;
+        pageSize = 80;
+        renderList();
+        if (info.node || info.terms.length) select((info.node || info.terms[0]).id);
+        document.body.classList.remove("show-detail");
+        if (push) {location.hash = "browse-module=" + encodeURIComponent(name); window.scrollTo(0, 0);}
+      }
+      function dependencyModule(iri) {
+        return moduleInfo.find((info) => iri === info.node?.id || iri === MODULE_ROOT + info.name + "/" + info.version);
+      }
+      function renderModuleOverview(panel, info) {
+        panel.append(element("p", info.name + " · " + info.version + " · " + info.terms.length.toLocaleString() + " terms", "muted"),
+          element("p", moduleDescription(info), "overview-intro"));
+        const actions = element("div", undefined, "overview-actions");
+        const back = element("button", "Back to module overview"); back.onclick = () => showOverview("modules");
+        const browse = element("button", "Browse all terms in " + info.name); browse.id = "browse-module"; browse.onclick = () => browseModule(info.name);
+        actions.append(back, browse);
+        if (info.node) {const source = simpleTermButton(info.node); source.textContent = "Module definition and source"; actions.append(source);}
+        if (info.name === "party") for (const name of ["lifecycle", "model"]) {
+          const b = element("button", overviewNames[name]); b.onclick = () => showOverview(name); actions.append(b);
+        }
+        if (info.name === "value-stream") for (const stream of streams) {
+          const b = element("button", stream.label); b.onclick = () => showOverview("stream:" + stream.id); actions.append(b);
+        }
+        panel.append(actions);
+        const connections = element("div", undefined, "module-connections");
+        const outgoing = element("section"); outgoing.id = "module-dependencies"; outgoing.append(element("h3", "Depends on"));
+        for (const value of info.dependencies) {
+          const target = dependencyModule(value.v);
+          const line = element("p");
+          line.dataset.reference = value.v;
+          if (target) line.append(moduleButton(target, target.name + " · " + target.version));
+          else line.append(valueElement(value));
+          outgoing.append(line);
+        }
+        if (!info.dependencies.length) outgoing.append(element("p", "No module dependencies are declared.", "muted"));
+        const incoming = element("section"); incoming.id = "module-used-by"; incoming.append(element("h3", "Used by"));
+        const dependents = moduleInfo.filter((other) => other.dependencies.some((v) => dependencyModule(v.v)?.name === info.name));
+        for (const other of dependents) incoming.append(moduleButton(other));
+        if (!dependents.length) incoming.append(element("p", "No released module declares a dependency on this version.", "muted"));
+        connections.append(outgoing, incoming); panel.append(connections);
+        const memberIds = new Set(info.terms.map((n) => n.id));
+        function group(title, nodes, open = false) {
+          if (!nodes.length) return;
+          const details = element("details", undefined, "term-group"); details.open = open;
+          details.dataset.group = title;
+          details.append(element("summary", title + " · " + nodes.length.toLocaleString()));
+          const list = element("div", undefined, "term-group-list");
+          const more = element("button", "Show more"); let limit = 12, built = false;
+          function render() {
+            list.replaceChildren(...nodes.slice(0, limit).map(simpleTermButton));
+            more.hidden = limit >= nodes.length; built = true;
+          }
+          more.onclick = () => {limit += 40; render();};
+          details.addEventListener("toggle", () => {if (details.open && !built) render();});
+          details.append(list, more); panel.append(details);
+          if (open) render();
+        }
+        group("Classes", info.terms.filter((n) => n.kind === "Class"), true);
+        group("Concept schemes", info.terms.filter((n) => n.kind === "Concept scheme"), true);
+        group("Top-level concepts", info.terms.filter((n) => n.kind === "Concept" && !n.parents.some((p) => memberIds.has(p))), true);
+        group("Individuals", info.terms.filter((n) => n.kind === "Individual"), !info.terms.some((n) => ["Class", "Concept scheme", "Concept"].includes(n.kind)));
+        group("Properties", info.terms.filter((n) => n.kind === "Property"));
+        panel.append(element("p", "Use Browse all terms for the complete module hierarchy and search, including concepts below these starting points. Enable Include evidence and constraints there to find supporting nodes.", "muted"));
+      }
+      function renderStreamOverview(panel, stream) {
+        panel.append(element("p", definitionOf(stream), "overview-intro"));
+        const facts = element("dl", undefined, "overview-facts");
+        for (const [title, predicate] of [["Trigger", "trigger"], ["Outcome", "outcome"]])
+          field(title, stream.values.filter((v) => v.p === VS + predicate), facts);
+        panel.append(facts);
+        const source = simpleTermButton(stream); source.textContent = "Stream definition and source"; panel.append(source);
+        panel.append(element("h3", "Stages"), element("p", "Stages follow the recorded sequence. Open a stage to inspect it, or expand its processes to drill down.", "muted"));
+        const list = element("ol", undefined, "stream-overview-list"); list.id = "stream-overview-stages";
+        for (const stage of linked(stream, VS + "hasStage").sort(stageOrder)) {
+          const li = element("li"); li.dataset.stage = stage.id;
+          if (Number.isFinite(sequence(stage))) li.value = sequence(stage);
+          li.append(simpleTermButton(stage));
+          const definition = definitionOf(stage); if (definition) li.append(element("p", definition));
+          const processes = linked(stage, VS + "hasProcess").sort((a,b) => a.label.localeCompare(b.label));
+          const details = element("details"); details.append(element("summary", "Processes · " + processes.length), termList(processes));
+          li.append(details); list.append(li);
+        }
+        panel.append(list);
       }
       function renderModel(panel) {
         panel.append(element("p", "Select an entity to highlight its connections and read its definition. Open its details to inspect every property.", "overview-intro"));
@@ -958,6 +1193,12 @@
         !v.literal && v.v === VS + "ValueStream"));
       const sequence = (n) => Number(n.values.find((v) => v.p === VS + "sequence" && v.literal)?.v ?? Infinity);
       const stageOrder = (a, b) => sequence(a) - sequence(b) || a.label.localeCompare(b.label);
+      for (const stream of streams.slice().reverse()) {
+        const button = element("button", stream.label);
+        button.dataset.view = "stream:" + stream.id;
+        button.onclick = () => showOverview(button.dataset.view);
+        $("stream-nav").append(button);
+      }
       function renderStreamEntry() {
         const entry = $("stream-entry");
         entry.replaceChildren();
@@ -1135,7 +1376,7 @@
         $("layout").hidden = false;
         navCurrent(overviewReturn || "browse");
         $("return-overview").hidden = !overviewReturn;
-        if (overviewReturn) $("return-overview").textContent = "Back to " + overviewNames[overviewReturn];
+        if (overviewReturn) $("return-overview").textContent = "Back to " + overviewTitle(overviewReturn);
         if (!document.body.classList.contains("show-detail"))
           listScroll = window.scrollY;
         selected = n;
@@ -1359,7 +1600,11 @@
       };
       $("about").onclick = () => $("release-info").showModal();
       $("close-about").onclick = () => $("release-info").close();
-      $("view-browse").onclick = () => showBrowse();
+      $("view-browse").onclick = () => {
+        showBrowse(); $("query").value = ""; $("module").value = "";
+        pageSize = 80; renderList();
+      };
+      $("view-modules").onclick = () => showOverview("modules");
       $("view-lifecycle").onclick = () => showOverview("lifecycle");
       $("view-model").onclick = () => showOverview("model");
       $("return-overview").onclick = () => showOverview(overviewReturn);
@@ -1388,9 +1633,10 @@
           return;
         }
         const view = id.startsWith("view=") ? id.slice(5) : null;
-        if (overviewNames[view]) {
+        if (overviewTitle(view)) {
           if ($("overview").hidden || $("overview").dataset.view !== view) showOverview(view, false);
-        } else if (!id) showBrowse(false);
+        } else if (id.startsWith("browse-module=")) browseModule(id.slice(14), false);
+        else if (!id) showBrowse(false);
         else if (byId.has(id) && (id !== selected?.id || !$("overview").hidden)) select(id);
       };
       let first;

@@ -291,6 +291,77 @@ try {
     assert.equal(await page.locator("#overview").isVisible(),false);
     assert.equal(await page.locator("aside").isVisible(),true);
   }
+  const catalogue = await page.evaluate(() => {
+    const root = "https://w3id.org/mpc/ontology/modules/";
+    const names = [...new Set(data.nodes.flatMap(n=>n.modules.map(m=>m.name)))].sort();
+    return names.map(name=>{
+      const node=data.nodes.find(n=>n.id===root+name);
+      const terms=data.nodes.filter(n=>n.modules.some(m=>m.name===name)&&!data.supportingKinds.includes(n.kind));
+      return {name,label:node.label,terms:terms.length,groups:Object.fromEntries(["Class","Concept scheme","Property","Individual"].map(kind=>[kind,terms.filter(n=>n.kind===kind).map(n=>n.id).sort()])),deps:node.values.filter(v=>!v.literal&&["http://purl.org/dc/terms/requires","http://www.w3.org/2002/07/owl#imports"].includes(v.p)).map(v=>v.v).sort(),version:node.values.find(v=>v.p==="http://www.w3.org/2002/07/owl#versionInfo").v};
+    });
+  });
+  const moduleEdges=catalogue.flatMap(m=>[...new Set(m.deps.map(iri=>catalogue.find(target=>iri==="https://w3id.org/mpc/ontology/modules/"+target.name || iri==="https://w3id.org/mpc/ontology/modules/"+target.name+"/"+target.version)?.name).filter(Boolean))].map(target=>[m.name,target])).sort();
+  const expectedStreams = await page.evaluate(()=>data.nodes.filter(n=>n.values.some(v=>!v.literal&&v.p==="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"&&v.v==="https://w3id.org/mpc/ontology/modules/value-stream/ValueStream")).map(n=>{
+    const ns="https://w3id.org/mpc/ontology/modules/value-stream/";
+    const refs=(x,p)=>x.values.filter(v=>!v.literal&&v.p===ns+p).map(v=>byId.get(v.v));
+    return {id:n.id,label:n.label,stages:refs(n,"hasStage").map(s=>({id:s.id,sequence:Number(s.values.find(v=>v.p===ns+"sequence").v),processes:refs(s,"hasProcess").map(p=>p.id).sort()})).sort((a,b)=>a.sequence-b.sequence)};
+  }));
+  for (const width of [1440,390]) {
+    await page.setViewportSize({width,height:900});
+    await page.locator("#view-modules").click();
+    assert.deepEqual((await page.locator("#module-catalogue article").evaluateAll(els=>els.map(e=>e.dataset.module))).sort(),catalogue.map(m=>m.name));
+    await page.locator("#module-query").fill("no-module-matches-this");
+    assert.equal(await page.locator("#module-catalogue article").count(),0);
+    await page.locator("#module-query").fill("");
+    await page.locator("#module-map > summary").click();
+    await page.locator("#module-diagram").waitFor();
+    assert.deepEqual((await page.locator("#module-diagram [data-module]").evaluateAll(els=>els.map(e=>e.dataset.module))).sort(),catalogue.map(m=>m.name));
+    assert.deepEqual(await page.locator("#module-diagram .dependency-edge").evaluateAll(els=>els.map(e=>[e.dataset.source,e.dataset.target]).sort()),moduleEdges);
+    await page.locator('#module-diagram [data-module="party"]').focus();await page.keyboard.press("Enter");
+    assert.equal(await page.locator("#overview").getAttribute("data-view"),"module:party");
+    await page.locator("#view-modules").click();
+    for (const mod of catalogue) {
+      await page.locator(`#module-catalogue button[data-module="${mod.name}"]`).click();
+      assert.equal(await page.locator("#overview > h2").textContent(),mod.label);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+      assert.deepEqual(await page.locator("#module-dependencies [data-reference]").evaluateAll(els=>els.map(e=>e.dataset.reference).sort()),mod.deps);
+      assert.deepEqual((await page.locator("#module-used-by [data-module]").evaluateAll(els=>els.map(e=>e.dataset.module))).sort(),moduleEdges.filter(([,to])=>to===mod.name).map(([from])=>from).sort());
+      for (const [kind,title] of [["Class","Classes"],["Concept scheme","Concept schemes"],["Property","Properties"],["Individual","Individuals"]]) {
+        const group=page.locator(`.term-group[data-group="${title}"]`);
+        if (!mod.groups[kind].length) {assert.equal(await group.count(),0);continue;}
+        assert.match(await group.locator("summary").textContent(),new RegExp(mod.groups[kind].length.toLocaleString()+"$"));
+        if (!(await group.getAttribute("open")!==null)) await group.locator("summary").click();
+        await group.locator(".term-group-list button").first().waitFor();
+        const visible=await group.locator(".term-group-list button").evaluateAll(els=>els.map(e=>e.dataset.term));
+        assert.ok(visible.every(id=>mod.groups[kind].includes(id)));
+        if (mod.groups[kind].length>12) {await group.locator(":scope > button").click();assert.equal(await group.locator(".term-group-list button").count(),Math.min(52,mod.groups[kind].length));}
+      }
+      const term=page.locator(".term-group-list button:visible").first(),id=await term.getAttribute("data-term");
+      await term.click();assert.equal(await page.locator("#iri").textContent(),id);
+      await page.locator("#return-overview").click();
+      assert.equal(await page.locator("#overview").getAttribute("data-view"),"module:"+mod.name);
+      await page.locator("#browse-module").click();
+      assert.equal(await page.locator("#module").inputValue(),mod.name);
+      assert.match(await page.locator("#summary").textContent(),new RegExp("^"+mod.terms.toLocaleString()+" results"));
+      await page.reload();assert.equal(await page.locator("#module").inputValue(),mod.name);
+      await page.locator("#view-modules").click();
+    }
+    for (const stream of expectedStreams) {
+      const nav=page.locator(`#stream-nav button[data-view="stream:${stream.id}"]`);
+      await nav.click();assert.equal(await nav.getAttribute("aria-current"),"page");
+      assert.equal(await page.locator("#overview > h2").textContent(),stream.label);
+      assert.deepEqual(await page.locator("#stream-overview-stages > li").evaluateAll(els=>els.map(e=>[e.dataset.stage,e.value])),stream.stages.map(s=>[s.id,s.sequence]));
+      for (const stage of stream.stages) {
+        const card=page.locator(`#stream-overview-stages > li[data-stage="${stage.id}"]`);
+        await card.locator("summary").click();
+        assert.deepEqual((await card.locator("details [data-term]").evaluateAll(els=>els.map(e=>e.dataset.term))).sort(),stage.processes);
+        await card.locator(":scope > button").click();assert.equal(await page.locator("#iri").textContent(),stage.id);
+        await page.locator("#return-overview").click();
+      }
+      await page.reload();assert.equal(await page.locator("#overview").getAttribute("data-view"),"stream:"+stream.id);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    }
+  }
   assert.deepEqual(errors, []);
   assert.equal(network, 0);
   console.log(
@@ -304,6 +375,8 @@ try {
       valueStreamDrilldown: true,
       customerLifecycle: true,
       customerConceptualModel: true,
+      moduleOverviews: true,
+      valueStreamOverviews: true,
       graph: true,
       mobile: true,
     }),

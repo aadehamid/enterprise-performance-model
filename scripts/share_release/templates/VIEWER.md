@@ -2,6 +2,8 @@
 
 Open [index.html](index.html) in a browser after unzipping the release. The page contains its ontology data, scripts and fonts. It works offline and needs no installation or server.
 
+The top navigation separates Modules, Value streams and Customer views. Start with Module overview to find a module by name or description, read its purpose and see its vocabulary and dependencies. The optional module dependency diagram opens the same overviews. Use Browse all terms to enter that module's complete search and hierarchy. The Order to Cash and Commercial Hydrocarbon Lifecycle buttons open each stream's ordered stages directly; expand a stage's processes or open its details to drill down. Return buttons take you back to the overview.
+
 Search by a label, definition or IRI, or browse the module hierarchy. Select a term to read its definition, source and relationships. Select a connected term to follow a relationship. Expand All properties and evidence to inspect the recorded predicates and values. Include evidence and constraints to find supporting nodes directly.
 
 Choose the value-stream module to list the value streams. Open a stream to see its stages in sequence, then open a stage to see its processes. Each process links to the core processes it realizes. Use Part of to return to the containing stage or stream.
