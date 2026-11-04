@@ -170,7 +170,7 @@ The decision owner instructed (`answers-2026-11-03-viewer.md`):
 
 The viewer ships inside the shared release through the cut. This supersedes the local plan's statement that it is not part of either release. Decision 15 and consequence 9 still set the start after the full release. EPM-DEC-001-0112's confirmation has met that condition.
 
-The request pins the viewer's input to `share/epm-1.0` at `81f2f63b`, from its Turtle or JSON-LD, with no store. The scope interview is recorded below. Implementation and publication are pending.
+The request pins the viewer's input to `share/epm-1.0` at `81f2f63b`, from its Turtle or JSON-LD, with no store. The scope interview is recorded below. At this scope decision, implementation and publication were pending.
 
 EPM-DEC-001-0112 records the earlier confirmation at `2b3f02e2`. The later viewer request explicitly selects `81f2f63b`; it does not change that historical confirmation or claim that the two commits have identical contents.
 
@@ -200,3 +200,54 @@ The decision owner also clarified the source boundary in `answers-2026-11-03-vie
 > by the way only released ontology in the private release repo will be viewed from the user. makes sesne
 
 The viewer's user-facing data comes only from the released ontology in the private release repository.
+
+## Amendment, 2026-11-03: value-stream navigation
+
+The decision owner requested in `answers-2026-11-03-viewer.md`:
+
+> for value stream, can we make sure that we can list the two value streams that we have. and then be able to drill into each one of the value stream
+
+The viewer must list the released value streams and let the reader drill into each. The stages, their sequence and their process links come from the released ontology. The full module vocabulary remains accessible.
+
+## Amendment, 2026-11-03: viewer heading and customer navigation
+
+The decision owner requested the title "MPC Business Process and Architecture Ontology" in `answers-2026-11-03-viewer.md`. Additional heading information was requested as advice and remained undecided at this point. The reviewed-design amendment below settles the subtitle.
+
+The decision owner then requested clearer customer navigation, quoting the preceding explanation in full:
+
+> do you think we can do below. not easy to see at the moment
+> The conceptual model is currently browsable term by term; there is no dedicated whole-model diagram yet. Likewise, the lifecycle lacks a prominent entry point. Both need clearer navigation to make them easy to find.
+
+This adds a whole-model diagram and a prominent lifecycle entry point to the viewer scope. The earlier selected-term graph remains available for inspecting each term. Implementation and publication of these additions are pending.
+
+Implementation approach: derive definitions, lifecycle links and relationships from the pinned released RDF. Presentation groups arrange the conceptual entities without changing the ontology. The release records lifecycle stages without a mandatory sequence, so their overview must not invent one.
+
+## Amendment, 2026-11-03: reviewed viewer design and release authorization
+
+The decision owner requested in `answers-2026-11-03-viewer.md`:
+
+> by the way remove "One release" from the heading
+
+This settles the subtitle question above. The implementation uses "Definitions and relationships". The same answers file records the request for separate module, value-stream and customer navigation, with direct Order to Cash and Commercial Hydrocarbon Lifecycle entries.
+
+The decision owner required design review before repository-wide checks:
+
+> I think we should do a review before we do repository checks. Validation that everything exists in the viewer is important. But we should be able to review at a faster iteration. Once we align on a design we can do full validation and repository check before we pubslish and cut a new release with the viewer.
+
+The reviewed implementation provides a module landing page, breadcrumbs that preserve browsing state, global search, term-type filters and diagram zoom, fit and full-screen controls. This describes the implementation presented for review; it does not change the released ontology or its vocabulary.
+
+After reviewing the viewer, the decision owner said:
+
+> Looks great! Any other improvement you will suggest or should we release this.
+
+The decision owner then authorized the release:
+
+> go ahead and cut a new release. Once this is done do we have anything else that is outstanding or is this it?
+
+The owner-review checkpoint is satisfied. Comprehensive checks, independent review, the Cursor PR verdict and the release cut remain required before publication. Implementation merge and publication are pending. This authorization does not close Q17, Market Data accountability or the other open business questions.
+
+The saved permission for temporary repository visibility is:
+
+> you can swithc the repo to public while working. Switch back to private when you are done working
+
+All repositories must end private. The customer model remains outside `main`; the cut supplies it from the existing approved release inputs.

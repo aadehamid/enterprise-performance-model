@@ -7,7 +7,8 @@ the tool; it never ships.
 ```sh
 scripts/share_release/cut.sh --epm . --skills ../personal-agent-skills --out /tmp/release --env <stores env> \
     [--baseline <main's validate json>] [--store-rows <rows>|all] [--no-cleanroom] [--replace] \
-    [--augment <folder> --approval <answers file> --approval-words <words>]
+    [--augment <folder> --approval <answers file> --approval-words <words>] \
+    [--viewer-source <pinned private release clone>]
 ```
 
 After any pull request that changes shipped documents or this tool, run a trial cut with the default store rows
@@ -15,7 +16,7 @@ before the cut with every row. On the follow-up release a trial cut found three 
 pass, agent names in shipped text, snippet folders) that each passed `scripts/check.sh` on `main` and would each
 have stopped the 1.5-hour cut (the retro of 2026-11-03).
 
-`cut.sh` runs the steps below in order and stops at the first failure: export, rebuild, gate, the store rows on
+`cut.sh` runs the steps below in order and stops at the first failure: export, rebuild, the optional viewer build, gate, the store rows on
 the test stores (`--env` names them; the release's own `rebuild_stores.py` writes its report and figures),
 the release's `check.sh` from the folder and from a Git clone of it (`clonecheck.py`), the tree rows, the comparison with main, every snippet, the gate again, the zip, the
 clean room, and with `--baseline` the validation report. Each step writes beside the output folder. By default
@@ -105,3 +106,11 @@ still equals the release as shipped, using the list `templates/pinned-tests.txt`
 
 The option `--remove-internal` leaves `reference/internal/` out. It is off by default, and the plan says a
 review report of what changes comes before anyone turns it on.
+
+## Include the offline ontology viewer
+
+Pass `--viewer-source <release clone>` to `cut.sh` to include `viewer/index.html`, recipient instructions and a link at the top of the release README. The source must be a clean clone of `share/epm-1.0` at `81f2f63b128820854a25204641b6899d55051ae3`. The cut validates the source before replacing an output folder. After rebuilding, it requires the cut's current package Turtle files and release catalog to match the source files by path and SHA-256. A changed input stops the cut instead of shipping a stale viewer. The cut also checks that RDF reconstructed from the generated HTML equals the source graph, using RDFLib 7.6.0.
+
+The page embeds the current released ontology, its customer schema, scripts and fonts. Recipients unzip the release and open `viewer/index.html` in a browser. It needs no server, store, install or network connection. Previous packages, examples and technical-graph records are outside its inputs; technical-graph vocabulary remains included. Build details and coverage are in [the viewer guide](../../business_architecture/ontology/viewer/README.md).
+
+Run the trial cut with `--viewer-source` before the full cut. The viewer is generated before the first leak gate and passes through the remaining checks, zip and clean room. Publish only the cut output through the existing release process.

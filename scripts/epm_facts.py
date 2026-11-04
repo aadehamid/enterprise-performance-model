@@ -1537,10 +1537,25 @@ def cmd_coverage(args):
     return 0
 
 
+def cmd_viewer(args):
+    """The viewer population, from the same parser used to build the page."""
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("epm_viewer_build", Path(ROOT) / "business_architecture/ontology/viewer/build.py")
+    viewer = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(viewer)
+    viewer.pinned_source(Path(args.tree).resolve())
+    data = viewer.build_data(Path(args.tree).resolve())
+    print(json.dumps({"commit": commit(), "sourceCommit": data["sourceCommit"], "tree": str(Path(args.tree).resolve()), "terms": data["terms"], "triples": data["triples"], "counts": data["counts"], "inputs": data["inputs"]}, indent=2))
+    return 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="epm-facts", description=__doc__.split("\n")[0])
     parser.add_argument("--json", action="store_true", help="machine-readable output")
     sub = parser.add_subparsers(dest="cmd", required=True)
+    p = sub.add_parser("viewer", help="viewer term population and input hashes from a release tree")
+    p.add_argument("--tree", required=True)
     sub.add_parser("counts", help="ledger, scoped sequences, gate, facts, Phase 1, review holds, taxonomy")
     p = sub.add_parser("row", help="where one row stands")
     p.add_argument("row_id")
@@ -1559,7 +1574,7 @@ def main(argv=None):
     p = sub.add_parser("coverage", help="how many processes have a RACI assignment, system, KPI, lane, value-stream step, data product")
     p.add_argument("--processes", default="core", help="core (default), module:<name>, lifecycle or stage:<name>")
     args = parser.parse_args(argv)
-    return {"projection": cmd_projection, "counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
+    return {"viewer": cmd_viewer, "projection": cmd_projection, "counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
             "quotes": cmd_quotes, "names": cmd_names, "citations": cmd_citations, "sweep": cmd_sweep,
             "modules": cmd_modules, "coverage": cmd_coverage}[args.cmd](args)
 

@@ -3,9 +3,9 @@
 #
 #   scripts/share_release/cut.sh --epm <main checkout> --skills <skills checkout> --out <folder> \
 #       --env <stores env> [--baseline <main's validate json>] [--store-rows <rows>|all] [--no-cleanroom] [--replace] \
-#       [--augment <folder> --approval <answers file> --approval-words <words>]
+#       [--augment <folder> --approval <answers file> --approval-words <words>] [--viewer-source <release clone>]
 #
-# In order: export (the allowlist and the rewrite rules); rebuild inside the release; the leak gate; the store
+# In order: export (the allowlist and the rewrite rules); rebuild inside the release; the optional viewer; the leak gate; the store
 # rows on the test stores named in --env (the release's own rebuild_stores.py writes its report and
 # figures); the release's own check.sh; the tree rows; the comparison with main; every snippet; the gate again;
 # the zip; the clean room on the zip; and, with --baseline, the validation report. Each step writes beside the
@@ -41,13 +41,14 @@
 # a stalled download, store or daemon is a failed step, never a hung cut.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
-EPM=""; SKILLS=""; OUT=""; ENVF=""; BASELINE=""; CLEANROOM=1; REPLACE=0; AUGMENT=""; APPROVAL=""; APPROVAL_WORDS=""; STEP_TIMEOUT="${STEP_TIMEOUT:-7200}"; STORE_ROWS="projection-pipeline,underscores,demo-offline,store-map"
+EPM=""; SKILLS=""; OUT=""; ENVF=""; BASELINE=""; CLEANROOM=1; REPLACE=0; AUGMENT=""; APPROVAL=""; APPROVAL_WORDS=""; VIEWER_SOURCE=""; STEP_TIMEOUT="${STEP_TIMEOUT:-7200}"; STORE_ROWS="projection-pipeline,underscores,demo-offline,store-map"
 ALL_STORE_ROWS="projection-pipeline,underscores,projection-driver,demo-offline,demo-live,tech-graph,sync,store-map"
 while [ $# -gt 0 ]; do
   case "$1" in
     --epm) EPM="$2"; shift 2;; --skills) SKILLS="$2"; shift 2;; --out) OUT="$2"; shift 2;;
     --env) ENVF="$2"; shift 2;; --baseline) BASELINE="$2"; shift 2;; --no-cleanroom) CLEANROOM=0; shift;;
     --store-rows) STORE_ROWS="$2"; shift 2;; --replace) REPLACE=1; shift;;
+    --viewer-source) VIEWER_SOURCE="$2"; shift 2;;
     --augment) AUGMENT="$2"; shift 2;; --approval) APPROVAL="$2"; shift 2;; --approval-words) APPROVAL_WORDS="$2"; shift 2;;
     *) echo "unknown option: $1" >&2; exit 2;;
   esac
@@ -65,13 +66,17 @@ if [ -n "$AUGMENT" ]; then
 fi
 export PYTHONDONTWRITEBYTECODE=1
 unset GIT_DIR GIT_INDEX_FILE GIT_WORK_TREE
+if [ -n "$VIEWER_SOURCE" ]; then
+  VIEWER_SOURCE="$(cd "$VIEWER_SOURCE" && pwd -P)"
+  uv run -q --no-project --with rdflib==7.6.0 python3 -c 'import sys; sys.path.insert(0, sys.argv[1]); import build; build.pinned_source(sys.argv[2]); build.release_files(sys.argv[2])' "$EPM/business_architecture/ontology/viewer" "$VIEWER_SOURCE"
+fi
 
 # The output folder: never a folder that holds something else.
 refuse() { echo "refusing --out $OUT: $1" >&2; exit 2; }
 HOMEDIR="$(python3 -c 'import os; print(os.path.realpath(os.path.expanduser("~")))')"
 [ "$OUT" = "/" ] && refuse "it is the root"
 [ "$OUT" = "$HOMEDIR" ] && refuse "it is the home folder"
-for tree in "$EPM" "$SKILLS" "$HERE"; do
+for tree in "$EPM" "$SKILLS" "$HERE" ${VIEWER_SOURCE:+"$VIEWER_SOURCE"}; do
   case "$tree/" in "$OUT/"*) refuse "it is the checkout $tree or a parent of it";; esac
 done
 if [ -e "$OUT" ]; then
@@ -103,6 +108,19 @@ PY
 
 step "export"; rm -rf "$OUT"; within "$OUT-export.log" python3 -I "$HERE/export.py" --epm "$EPM" --skills "$SKILLS" --out "$OUT" ${AUGMENT_ARGS[@]+"${AUGMENT_ARGS[@]}"} > /dev/null || { tail -20 "$OUT-export.log"; exit 1; }; tail -1 "$OUT-export.log"
 step "rebuild"; within "$OUT-rebuild.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/rebuild.py" --release "$OUT" --epm "$EPM" ${AUGMENT_ARGS[@]+"${AUGMENT_ARGS[@]}"} ${APPROVAL_ARGS[@]+"${APPROVAL_ARGS[@]}"} > /dev/null || { tail -20 "$OUT-rebuild.log"; exit 1; }; tail -1 "$OUT-rebuild.log"
+if [ -n "$VIEWER_SOURCE" ]; then
+  step "offline viewer"
+  within "$OUT-viewer.log" uv run -q --no-project --with rdflib==7.6.0 python3 "$EPM/business_architecture/ontology/viewer/build.py" --source "$VIEWER_SOURCE" --compare "$OUT" --out "$OUT/viewer/index.html" > /dev/null || { tail -20 "$OUT-viewer.log"; exit 1; }
+  within "$OUT-viewer-check.log" env EPM_VIEWER_RELEASE_SOURCE="$VIEWER_SOURCE" uv run -q --no-project --with rdflib==7.6.0 --with pytest python3 -m pytest -q -p no:cacheprovider "$EPM/business_architecture/ontology/viewer/test_viewer.py::test_pinned_release_roundtrip_when_supplied" > /dev/null || { tail -20 "$OUT-viewer-check.log"; exit 1; }
+  cp "$HERE/templates/VIEWER.md" "$OUT/viewer/README.md"
+  python3 - "$OUT/README.md" <<'PY'
+from pathlib import Path
+import sys
+path = Path(sys.argv[1])
+title, separator, body = path.read_text().partition("\n")
+path.write_text(title + "\n\nUnzip the release and open [the ontology viewer](viewer/index.html) in a browser. It shows this release as received, works offline and needs no setup. See [viewer instructions](viewer/README.md).\n" + body)
+PY
+fi
 step "gate"; within "$OUT-gate.log" python3 -I "$HERE/gate.py" "$OUT" > /dev/null || { tail -20 "$OUT-gate.log"; exit 1; }; tail -1 "$OUT-gate.log"
 step "store rows ($STORE_ROWS)"; within "$OUT-stores.log" uv run -q --no-project --with rdflib --with pyshacl --with neo4j --with "markdown-it-py>=4,<5" python3 "$HERE/validate.py" run --tree "$OUT" --out "$OUT-stores.json" --env "$ENVF" \
   --rows "$STORE_ROWS" > /dev/null || { tail -20 "$OUT-stores.log"; exit 1; }

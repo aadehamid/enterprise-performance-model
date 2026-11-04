@@ -36,6 +36,7 @@ ONT = "business_architecture/ontology"
 EPM_RULES = [
     # The ontology: sources, builders, regression, projection, validation, documents.
     ("ship", f"{ONT}/*"),
+    ("out", f"{ONT}/viewer/README.md"),  # the cut adds recipient instructions beside the generated page
     ("out", f"{ONT}/releases/*"),                       # re-added per version below
     ("out", f"{ONT}/step4/*"),                          # re-added: the frozen inputs and the checks that still run
     ("ship", f"{ONT}/step4/baseline/*"),
@@ -87,6 +88,7 @@ EPM_RULES = [
     ("ship", f"{ONT}/epm-ontology-guide.html"),
     ("ship", f"{ONT}/projection/ontology-stores-runbook.html"),
     ("ship", "scripts/docs_template.html"),  # the page template is a source, not a generated page
+    ("ship", f"{ONT}/viewer/viewer.html"),  # the offline viewer template is source too
     ("ship", "best-practices/*.html"),
     ("ship", "demos/downstream-pricing-databricks-free/*.html"),
 ]

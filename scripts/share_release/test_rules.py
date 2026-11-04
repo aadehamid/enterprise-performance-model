@@ -186,6 +186,7 @@ def test_manifest_ships_the_two_versions_and_leaves_older_ones_out():
     assert manifest.disposition("business_architecture/domain/decision-packages/2026-10-14/pr-reviews-262-266-269.md", r) == "out"
     assert manifest.disposition("business_architecture/ontology/step4/playbook/ontology-worklog.md", r) == "out"
     assert manifest.disposition("business_architecture/ontology/README.html", r) == "out"
+    assert manifest.disposition("business_architecture/ontology/viewer/README.md", r) == "out"
     assert manifest.disposition("scripts/docs_template.html", r) == "ship"
     assert manifest.disposition("business_architecture/ontology/epm-walkthrough.html", r) == "ship"
     assert manifest.disposition("AGENTS.md", r) == "out"
@@ -447,6 +448,13 @@ def test_the_paths_the_agent_rules_name_are_files_of_main():
 
 def test_a_retro_citation_goes_from_python():
     assert rules.apply("x (retro of 2026-10-28) y; z (a; retro of 2026-10-26).\n", "scripts/a.py")[0] == "x y; z (a).\n"
+
+
+def test_live_graph_refresh_rule_survives_without_the_build_retro_citation():
+    src = "Refresh `graph/*.ttl` from a live run (`collect`, then `build --to-repo`), or state that the refresh is pending (the retro of 2026-11-03)."
+    expected = "Refresh `graph/*.ttl` from a live run (`collect`, then `build --to-repo`), or state that the refresh is pending."
+    for path in ("demos/downstream-pricing-databricks-free/README.md", "demos/downstream-pricing-databricks-free/README.html"):
+        assert rules.apply(src, path)[0] == expected
 
 
 def test_the_peer_forms_a_headline_or_a_link_takes_go():
