@@ -88,9 +88,28 @@
         font-size: 18px;
         line-height: 1.3;
       }
-      header > button {
+      .header-actions {
+        display: flex;
+        gap: 8px;
         flex-shrink: 0;
       }
+      #breadcrumbs { padding: 0 24px 12px; }
+      #breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; align-items: baseline; }
+      #breadcrumbs li { display: flex; gap: 6px; align-items: baseline; min-width: 0; }
+      #breadcrumbs li + li::before { content: "›"; color: var(--muted); }
+      #breadcrumbs button { padding: 4px 6px; border: 0; background: transparent; color: var(--accent); text-align: left; }
+      #breadcrumbs [aria-current] { padding: 4px 6px; overflow-wrap: anywhere; }
+      #global-search { width: min(720px, calc(100vw - 32px)); max-height: 85vh; padding: 24px; }
+      .search-heading { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+      .search-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: end; margin: 12px 0; }
+      #global-results h3 { margin: 20px 0 8px; }
+      #global-results button { display: block; width: 100%; text-align: left; margin: 4px 0; }
+      #global-results small { display: block; margin-top: 4px; }
+      .diagram-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0; }
+      .diagram-tools output { color: var(--muted); min-width: 4ch; }
+      .diagram-dialog { width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 16px; border: 0; border-radius: 0; }
+      .diagram-dialog .diagram-shell { height: 100%; display: flex; flex-direction: column; }
+      .diagram-dialog .model-scroll { flex: 1; max-height: none !important; min-height: 0; }
       .brand {
         display: flex;
         align-items: center;
@@ -501,6 +520,10 @@
         }
       }
       @media (max-width: 640px) {
+        .header-actions { flex-direction: column; gap: 6px; }
+        .header-actions button { font-size: 13px; padding: 8px 10px; }
+        #breadcrumbs { padding: 0 16px 12px; }
+        .search-filters { grid-template-columns: 1fr; gap: 8px; }
         #views button { padding: 8px 10px; font-size: 13px; }
         .module-row { grid-template-columns: 1fr; gap: 12px; }
         .module-connections, .overview-facts, .term-group-list, .stream-overview-list { grid-template-columns: 1fr; }
@@ -596,7 +619,10 @@
           <span class="muted">Definitions and relationships</span>
         </div>
       </div>
-      <button id="about">Release details</button>
+      <div class="header-actions">
+        <button id="global-search-open">Search ontology</button>
+        <button id="about">Release details</button>
+      </div>
     </header>
     <nav id="views" aria-label="Explore the ontology">
       <div class="nav-group" role="group" aria-label="Modules">
@@ -613,6 +639,7 @@
         <button id="view-model" data-view="model">Customer conceptual model</button>
       </div>
     </nav>
+    <nav id="breadcrumbs" aria-label="Breadcrumb"><ol></ol></nav>
     <section id="overview" aria-label="Ontology overview" hidden></section>
     <div id="layout">
       <aside aria-label="Find ontology terms">
@@ -624,8 +651,10 @@
           autocomplete="off"
         /><label for="module">Module</label
         ><select id="module">
-          <option value="">All modules</option></select
-        ><label class="inline"
+          <option value="">All modules</option></select>
+        <label for="term-type">Term type</label>
+        <select id="term-type"><option value="">All types</option></select>
+        <label class="inline"
           ><input type="checkbox" id="support" />Include evidence and
           constraints</label
         >
@@ -683,6 +712,18 @@
         </div>
       </main>
     </div>
+    <dialog id="global-search" aria-labelledby="global-search-title">
+      <div class="search-heading"><h2 id="global-search-title">Search ontology</h2><button id="global-search-close">Close</button></div>
+      <label for="global-query">Find a module, view or term</label>
+      <input id="global-query" type="search" placeholder="Search labels, definitions or IRIs" autocomplete="off" />
+      <div class="search-filters">
+        <div><label for="global-type">Term type</label><select id="global-type"><option value="">All types</option></select></div>
+        <label class="inline"><input id="global-support" type="checkbox" />Include evidence and constraints</label>
+      </div>
+      <p id="global-count" role="status" class="muted"></p>
+      <div id="global-results"></div>
+      <button id="global-more" hidden>Show more terms</button>
+    </dialog>
     <dialog id="release-info">
       <h2>Release details</h2>
       <p id="release-pin"></p>
@@ -731,6 +772,69 @@
         listScroll = 0,
         graphLimit = 8;
       let overviewReturn = null, modelFocus = null;
+      const overviewCache = new Map(), browseCache = new Map();
+      let browseContext = "browse", trail = [], activeDiagramExit = null;
+      function viewTrail(name) {
+        const item = {kind: "view", id: name, label: overviewTitle(name)};
+        return name.startsWith("module:") ? [{kind:"view",id:"modules",label:"Module overview"}, item] : [item];
+      }
+      function breadcrumbs() {
+        const list = $("breadcrumbs").querySelector("ol"); list.replaceChildren();
+        trail.forEach((item, i) => {
+          const li = element("li");
+          if (i === trail.length - 1) {
+            const current = element("span", item.label); current.setAttribute("aria-current", "page"); li.append(current);
+          } else {
+            const button = element("button", item.label);
+            button.onclick = () => {
+              const path = trail.slice(0, i + 1);
+              if (item.kind === "search") {openSearch(); return;}
+              if (item.kind === "view") showOverview(item.id);
+              else if (item.kind === "module-browser") browseModule(item.id);
+              else if (item.kind === "browse") showBrowse();
+              else select(item.id, true);
+              trail = path; breadcrumbs(); history.replaceState({trail}, "");
+            };
+            li.append(button);
+          }
+          list.append(li);
+        });
+      }
+      function route(hash, push) {
+        breadcrumbs();
+        if (push) history.pushState({trail}, "", "#" + hash);
+      }
+      function saveOverview() {
+        activeDiagramExit?.();
+        const panel = $("overview");
+        if (!panel.hidden && panel.dataset.view) overviewCache.set(panel.dataset.view, {
+          nodes: [...panel.childNodes], y: window.scrollY,
+          scrolls: [...panel.querySelectorAll(".model-scroll")].map(el => [el, el.scrollLeft, el.scrollTop]),
+        });
+      }
+      function saveBrowse() {
+        if ($("layout").hidden) return;
+        browseCache.set(browseContext, {
+          query: $("query").value, module: $("module").value, type: $("term-type").value,
+          support: $("support").checked, mode, pageSize, nodes: [...$("results").childNodes],
+          summary: $("summary").textContent, more: $("pagination").hidden,
+          y: document.body.classList.contains("show-detail") ? listScroll : window.scrollY,
+        });
+      }
+      function restoreBrowse(context) {
+        browseContext = context;
+        const state = browseCache.get(context);
+        $("query").value = state?.query || "";
+        $("module").value = state?.module || (context.startsWith("module:") ? context.slice(7) : "");
+        $("term-type").value = state?.type || ""; $("support").checked = state?.support || false;
+        mode = state?.mode || "list"; pageSize = state?.pageSize || 80;
+        $("list-mode").setAttribute("aria-pressed", String(mode === "list"));
+        $("tree-mode").setAttribute("aria-pressed", String(mode === "tree"));
+        if (state) {
+          $("results").replaceChildren(...state.nodes); $("summary").textContent = state.summary;
+          $("pagination").hidden = state.more; listScroll = state.y;
+        } else renderList();
+      }
       const ordered = data.nodes
         .slice()
         .sort(
@@ -779,6 +883,7 @@
         return ordered.filter(
           (n) =>
             ($("support").checked || !supporting.has(n.kind)) &&
+            (!$("term-type").value || n.kind === $("term-type").value) &&
             (!m || n.modules.some((x) => x.name === m)) &&
             (!q || searchText.get(n.id).includes(q)),
         );
@@ -884,24 +989,37 @@
           if (button.dataset.view === key) button.setAttribute("aria-current", "page");
           else button.removeAttribute("aria-current");
       }
-      function showBrowse(push = true) {
-        overviewReturn = null;
+      function showBrowse(push = true, context = "browse") {
+        saveOverview(); saveBrowse(); restoreBrowse(context);
+        overviewReturn = context.startsWith("module:") ? context : null;
         $("overview").hidden = true;
         $("layout").hidden = false;
         $("return-overview").hidden = true;
         document.body.classList.remove("show-detail");
-        navCurrent("browse");
-        if (push) location.hash = "";
+        navCurrent(overviewReturn || "browse");
+        trail = overviewReturn ? [...viewTrail(context), {kind:"module-browser", id:context.slice(7), label:"Browse terms"}]
+          : [{kind:"browse", id:"browse", label:"All ontology"}];
+        route(overviewReturn ? "browse-module=" + encodeURIComponent(context.slice(7)) : "view=browse", push);
+        window.scrollTo(0, listScroll);
       }
       function showOverview(name, push = true) {
         const title = overviewTitle(name);
         if (!title) return;
+        saveOverview(); saveBrowse();
         overviewReturn = name;
+        trail = viewTrail(name);
         navCurrent(name);
         $("layout").hidden = true;
         const panel = $("overview");
         panel.hidden = false;
         panel.dataset.view = name;
+        const cached = overviewCache.get(name);
+        if (cached) {
+          panel.replaceChildren(...cached.nodes);
+          for (const [el, x, y] of cached.scrolls) {el.scrollLeft = x; el.scrollTop = y;}
+          route("view=" + encodeURIComponent(name), push);
+          window.scrollTo(0, cached.y); return;
+        }
         panel.replaceChildren();
         const heading = element("h2", title);
         heading.tabIndex = -1;
@@ -924,8 +1042,8 @@
         else if (name === "modules") renderModuleCatalogue(panel);
         else if (name.startsWith("module:")) renderModuleOverview(panel, moduleByName.get(name.slice(7)));
         else if (name.startsWith("stream:")) renderStreamOverview(panel, byId.get(name.slice(7)));
+        route("view=" + encodeURIComponent(name), push);
         if (push) {
-          location.hash = "view=" + encodeURIComponent(name);
           heading.focus({preventScroll: true});
           window.scrollTo(0, 0);
         }
@@ -993,19 +1111,12 @@
           root.append(g);
         }
         const scroll=element("div",undefined,"model-scroll");scroll.tabIndex=0;scroll.setAttribute("role","region");scroll.setAttribute("aria-label","Module dependency diagram; scroll horizontally on a narrow screen");
-        scroll.append(root);panel.append(scroll);
+        scroll.append(root);panel.append(scroll);enableDiagramTools(scroll,root,"Module dependency diagram");
       }
       function browseModule(name, push = true) {
         const info = moduleByName.get(name);
         if (!info) return;
-        showBrowse(false);
-        overviewReturn = "module:" + name;
-        $("query").value = ""; $("module").value = name; $("support").checked = false;
-        pageSize = 80;
-        renderList();
-        if (info.node || info.terms.length) select((info.node || info.terms[0]).id);
-        document.body.classList.remove("show-detail");
-        if (push) {location.hash = "browse-module=" + encodeURIComponent(name); window.scrollTo(0, 0);}
+        showBrowse(push, "module:" + name);
       }
       function dependencyModule(iri) {
         return moduleInfo.find((info) => iri === info.node?.id || iri === MODULE_ROOT + info.name + "/" + info.version);
@@ -1154,6 +1265,7 @@
           buttons.push([g, entity]); diagram.append(g);
         }
         scroll.append(diagram);
+        enableDiagramTools(scroll,diagram,"Customer conceptual model");
         const count = element("p", undefined, "muted"); count.id = "model-count";
         const table = element("table", undefined, "model-relations"); table.id = "model-relations";
         const caption = element("caption", "Declared relationships between conceptual entities");
@@ -1372,6 +1484,11 @@
       function select(id, push = false) {
         const n = byId.get(id);
         if (!n) return;
+        saveOverview();
+        if (!trail.length) trail = [{kind:"browse",id:"browse",label:"All ontology"}];
+        const previous = trail.findIndex(item => item.kind === "term" && item.id === id);
+        if (previous >= 0) trail = trail.slice(0, previous + 1);
+        else trail = [...trail, {kind:"term", id, label:n.label}];
         $("overview").hidden = true;
         $("layout").hidden = false;
         navCurrent(overviewReturn || "browse");
@@ -1426,7 +1543,7 @@
             true,
           );
         document.body.classList.add("show-detail");
-        if (push) location.hash = encodeURIComponent(id);
+        route(encodeURIComponent(id), push);
         if (!$("results").hasChildNodes()) renderList();
         for (const button of document.querySelectorAll("#results [data-term], #stream-entry [data-term]"))
           button.setAttribute("aria-current", String(button.dataset.term === id));
@@ -1542,6 +1659,113 @@
             ),
           );
       }
+      for (const kind of [...new Set(ordered.map(n => n.kind))].sort())
+        for (const id of ["term-type", "global-type"]) {
+          const option = element("option", kind); option.value = kind; $(id).append(option);
+        }
+      let globalLimit = 80;
+      function openSearch() {
+        renderSearch();
+        if (!$("global-search").open) $("global-search").showModal();
+        $("global-query").focus();
+      }
+      function renderSearch() {
+        const query = $("global-query").value.trim().toLowerCase(), kind = $("global-type").value;
+        const results = $("global-results"); results.replaceChildren();
+        const matches = text => !query || text.toLowerCase().includes(query);
+        function group(title, items, open) {
+          if (!items.length) return;
+          results.append(element("h3", title));
+          for (const item of items) {
+            const button = element("button", item.label);
+            if (item.detail) button.append(element("small", item.detail));
+            button.dataset.result = item.id;
+            button.onclick = () => {
+              $("global-search").close(); open(item.id);
+              trail = [{kind:"search", id:"search", label:"Search results"}, ...trail];
+              breadcrumbs(); history.replaceState({trail}, "");
+            };
+            results.append(button);
+          }
+        }
+        group("Modules", moduleInfo.filter(info => matches([info.name, info.node?.label, moduleDescription(info)].join(" ")))
+          .map(info => ({id:"module:"+info.name,label:info.node?.label || info.name,detail:info.name})), showOverview);
+        const views = ["lifecycle", "model", ...streams.map(s => "stream:"+s.id)];
+        group("Business views", views.filter(id => matches(overviewTitle(id))).map(id => ({id,label:overviewTitle(id)})), showOverview);
+        const found = query ? ordered.filter(n => ($( "global-support").checked || !supporting.has(n.kind)) &&
+          (!kind || n.kind === kind) && searchText.get(n.id).includes(query)) : [];
+        found.sort((a,b) => {
+          const rank = n => n.label.toLowerCase() === query ? 0 : n.label.toLowerCase().startsWith(query) ? 1 : 2;
+          return rank(a)-rank(b) || a.label.localeCompare(b.label) || a.id.localeCompare(b.id);
+        });
+        group("Terms", found.slice(0, globalLimit).map(n => ({id:n.id,label:n.label,detail:n.kind+" · "+n.modules.map(m=>m.name).join(", ")})), id => {
+          trail = []; overviewReturn = null; select(id, true);
+        });
+        $("global-count").textContent = query ? Math.min(globalLimit,found.length)+" of "+found.length+" matching terms" : "Enter a label, definition or IRI to search terms.";
+        $("global-more").hidden = found.length <= globalLimit;
+        if (query && !results.childElementCount) results.append(element("p", "No matches. Try another name or phrase."));
+      }
+      $("global-search-open").onclick = openSearch;
+      $("global-search-close").onclick = () => $("global-search").close();
+      $("global-query").oninput = () => {globalLimit=80;renderSearch();};
+      $("global-type").onchange = () => {
+        if (supporting.has($("global-type").value)) $("global-support").checked = true;
+        globalLimit=80;renderSearch();
+      };
+      $("global-support").onchange = () => {
+        if (!$("global-support").checked && supporting.has($("global-type").value)) $("global-type").value = "";
+        globalLimit=80;renderSearch();
+      };
+      $("global-more").onclick = () => {globalLimit+=80;renderSearch();};
+      document.addEventListener("keydown", event => {
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k" && !document.querySelector(".diagram-dialog[open]")) {
+          event.preventDefault();openSearch();
+        }
+      });
+      function enableDiagramTools(scroll, svg, label) {
+        const shell = element("div", undefined, "diagram-shell"), toolbar = element("div", undefined, "diagram-tools");
+        toolbar.setAttribute("role", "group"); toolbar.setAttribute("aria-label", label + " controls");
+        scroll.replaceWith(shell); shell.append(toolbar, scroll);
+        const size = svg.viewBox.baseVal;
+        let scale = 1;
+        const buttons = {};
+        for (const [action, text] of [["zoom-out","Zoom out"],["zoom-in","Zoom in"],["fit","Fit diagram"],["fullscreen","Full screen"]]) {
+          const b = element("button",text); b.dataset.action=action; buttons[action]=b; toolbar.append(b);
+        }
+        const output = element("output"); output.setAttribute("aria-live","polite"); toolbar.append(output);
+        svg.style.minWidth="0";svg.style.maxWidth="none";svg.style.maxHeight="none";
+        scroll.style.maxHeight="540px";
+        function zoom(next) {
+          const old = scale, x=(scroll.scrollLeft+scroll.clientWidth/2)/old, y=(scroll.scrollTop+scroll.clientHeight/2)/old;
+          scale=Math.max(.15,Math.min(3,next));
+          svg.style.width=size.width*scale+"px";svg.style.height=size.height*scale+"px";
+          output.value=Math.round(scale*100)+"%";
+          buttons["zoom-in"].disabled=scale>=3; buttons["zoom-out"].disabled=scale<=.15;
+          scroll.scrollLeft=x*scale-scroll.clientWidth/2;scroll.scrollTop=y*scale-scroll.clientHeight/2;
+        }
+        buttons["zoom-in"].onclick=()=>zoom(scale*1.25);
+        buttons["zoom-out"].onclick=()=>zoom(scale/1.25);
+        buttons.fit.onclick=()=>{
+          const height=shell.closest("dialog") ? scroll.clientHeight : 540;
+          zoom(Math.min((scroll.clientWidth-4)/size.width,(height-4)/size.height));scroll.scrollLeft=0;scroll.scrollTop=0;
+        };
+        buttons.fullscreen.onclick=()=>{
+          if (activeDiagramExit) {activeDiagramExit();return;}
+          const placeholder=document.createComment("diagram position"), dialog=element("dialog",undefined,"diagram-dialog");
+          dialog.setAttribute("aria-label",label+" full screen");
+          shell.replaceWith(placeholder);dialog.append(shell);document.body.append(dialog);
+          buttons.fullscreen.textContent="Exit full screen";
+          const exit=()=>{
+            const x=scroll.scrollLeft,y=scroll.scrollTop;
+            placeholder.replaceWith(shell);dialog.close();dialog.remove();activeDiagramExit=null;
+            buttons.fullscreen.textContent="Full screen";scroll.scrollLeft=x;scroll.scrollTop=y;
+            buttons.fullscreen.focus({preventScroll:true});
+          };
+          activeDiagramExit=exit;
+          dialog.addEventListener("cancel",e=>{e.preventDefault();exit();});dialog.showModal();buttons.fullscreen.focus();
+        };
+        zoom(1);
+      }
       $("query").oninput = () => {
         pageSize = 80;
         renderList();
@@ -1550,7 +1774,12 @@
         pageSize = 80;
         renderList();
       };
+      $("term-type").onchange = () => {
+        if (supporting.has($("term-type").value)) $("support").checked = true;
+        pageSize = 80; renderList();
+      };
       $("support").onchange = () => {
+        if (!$("support").checked && supporting.has($("term-type").value)) $("term-type").value = "";
         pageSize = 80;
         renderList();
       };
@@ -1600,10 +1829,7 @@
       };
       $("about").onclick = () => $("release-info").showModal();
       $("close-about").onclick = () => $("release-info").close();
-      $("view-browse").onclick = () => {
-        showBrowse(); $("query").value = ""; $("module").value = "";
-        pageSize = 80; renderList();
-      };
+      $("view-browse").onclick = () => showBrowse();
       $("view-modules").onclick = () => showOverview("modules");
       $("view-lifecycle").onclick = () => showOverview("lifecycle");
       $("view-model").onclick = () => showOverview("model");
@@ -1636,9 +1862,22 @@
         if (overviewTitle(view)) {
           if ($("overview").hidden || $("overview").dataset.view !== view) showOverview(view, false);
         } else if (id.startsWith("browse-module=")) browseModule(id.slice(14), false);
-        else if (!id) showBrowse(false);
-        else if (byId.has(id) && (id !== selected?.id || !$("overview").hidden)) select(id);
+        else if (view === "browse") showBrowse(false);
+        else if (!id) showOverview("modules", false);
+        else if (byId.has(id)) {
+          const saved = history.state?.trail;
+          if (saved) {
+            trail = saved;
+            overviewReturn = [...saved].reverse().find(item => item.kind === "view")?.id || null;
+            const browser = saved.find(item => ["browse", "module-browser"].includes(item.kind));
+            const context = browser?.kind === "module-browser" ? "module:" + browser.id : "browse";
+            if (browser && context !== browseContext) {saveBrowse(); restoreBrowse(context);}
+          }
+          select(id);
+        }
+        if (history.state?.trail) {trail = history.state.trail; breadcrumbs();}
       };
+      window.onpopstate = window.onhashchange;
       let first;
       try {
         first = byId.get(decodeURIComponent(location.hash.slice(1)));
@@ -1653,6 +1892,7 @@
       select(first.id);
       if (!location.hash) document.body.classList.remove("show-detail");
       window.onhashchange();
+      history.replaceState({trail}, "");
     </script>
   </body>
 </html>

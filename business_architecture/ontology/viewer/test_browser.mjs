@@ -22,6 +22,8 @@ try {
   });
   assert.ok(process.argv[2], "Pass the generated viewer HTML path");
   await page.goto(pathToFileURL(resolve(process.argv[2])).href);
+  assert.equal(await page.locator("#overview").getAttribute("data-view"), "modules");
+  await page.locator("#view-browse").click();
   await page.locator("#results button").first().waitFor();
   const initial = await page.locator("#summary").innerText();
   assert.match(initial, /terms in release/);
@@ -362,6 +364,97 @@ try {
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
     }
   }
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({width,height:900});
+    await page.goto(pathToFileURL(resolve(process.argv[2])).href);
+    assert.equal(await page.locator("#overview").getAttribute("data-view"),"modules");
+    await page.locator("#module-query").fill("party");
+    await page.locator('#module-catalogue button[data-module="party"]').click();
+    const classes=page.locator('.term-group[data-group="Classes"]');
+    if (!(await classes.evaluate(el=>el.open))) await classes.locator("summary").click();
+    await classes.locator(".term-group-list button").first().click();
+    const selectedClass = await page.locator("#iri").textContent();
+    await page.locator("#view-lifecycle").click(); await page.goBack();
+    await page.waitForFunction(id => !document.getElementById("layout").hidden && document.getElementById("iri").textContent === id, selectedClass);
+    assert.match(await page.locator("#return-overview").textContent(), /Party/);
+    await page.goBack(); assert.equal(await page.locator("#overview").getAttribute("data-view"),"module:party");
+    await page.goForward(); await page.locator("#breadcrumbs button").last().click();
+    assert.equal(await classes.evaluate(el=>el.open),true);
+    await page.locator("#breadcrumbs button").first().click();
+    assert.equal(await page.locator("#module-query").inputValue(),"party");
+    await page.locator("#view-browse").click();
+    await page.locator("#module").selectOption("party");
+    await page.locator("#term-type").selectOption("Class");
+    await page.locator("#query").fill("customer");
+    const expected=await page.evaluate(()=>ordered.filter(n=>n.kind==="Class" && n.modules.some(m=>m.name==="party") && searchText.get(n.id).includes("customer")).map(n=>n.id));
+    assert.deepEqual(await page.locator("#results button[data-term]").evaluateAll(els=>els.map(el=>el.dataset.term)),expected);
+    await page.locator("#results button[data-term]").first().click();
+    await page.locator("#breadcrumbs button").first().click();
+    assert.equal(await page.locator("#query").inputValue(),"customer");
+    assert.equal(await page.locator("#term-type").inputValue(),"Class");
+    await page.locator("#view-model").click();
+    await page.locator("#view-browse").click();
+    assert.equal(await page.locator("#query").inputValue(),"customer");
+    await page.locator("#query").fill(""); await page.locator("#term-type").selectOption("");
+    await page.locator("#tree-mode").click();
+    const tree=page.locator("#results > details").first();
+    await tree.locator(":scope > summary").click();
+    await page.locator("#view-model").click();await page.locator("#view-browse").click();
+    assert.equal(await tree.evaluate(el=>el.open),true);
+    for (const view of ["modules","model","lifecycle"]) {
+      await page.locator("#view-"+view).click();await page.locator("#global-search-open").click();
+      await page.locator("#global-query").fill("customer");await page.locator("#global-type").selectOption("Class");
+      const found=await page.locator("#global-results button[data-result]").evaluateAll(els=>els.map(el=>el.dataset.result).filter(id=>byId.has(id)));
+      const expectedGlobal=await page.evaluate(()=>ordered.filter(n=>n.kind==="Class" && searchText.get(n.id).includes("customer")).map(n=>n.id).sort());
+      assert.deepEqual(found.sort(),expectedGlobal);
+      const first=page.locator('#global-results button[data-result^="https:"]').first(), id=await first.getAttribute("data-result");
+      await first.click();assert.equal(await page.locator("#iri").textContent(),id);
+      await page.locator("#breadcrumbs button").filter({hasText:"Search results"}).click();
+      assert.equal(await page.locator("#global-query").inputValue(),"customer");
+      assert.equal(await page.locator("#global-type").inputValue(),"Class");
+      await page.locator("#global-search-close").click();
+    }
+    await page.locator("#global-search-open").click();
+    await page.locator("#global-type").selectOption(""); await page.locator("#global-query").fill("process");
+    assert.equal(await page.locator('#global-results button[data-result^="https:"]').count(),80);
+    await page.locator("#global-more").click();
+    assert.equal(await page.locator('#global-results button[data-result^="https:"]').count(),160);
+    await page.locator("#global-query").fill("no-such-ontology-term-987654");
+    assert.equal(await page.locator("#global-results button").count(),0);
+    await page.locator("#global-type").selectOption("Constraint");
+    assert.equal(await page.locator("#global-support").isChecked(),true);
+    await page.locator("#global-support").uncheck(); assert.equal(await page.locator("#global-type").inputValue(),"");
+    await page.locator("#global-query").fill("Order to Cash");
+    await page.locator('#global-results button[data-result^="stream:"]').click();
+    assert.match(await page.locator("#overview").getAttribute("data-view"),/^stream:/);
+    await page.locator("#global-search-open").click();await page.locator("#global-query").fill("party");
+    await page.locator('#global-results button[data-result="module:party"]').click();
+    assert.equal(await page.locator("#overview").getAttribute("data-view"),"module:party");
+    for (const [view,id] of [["model","model-diagram"],["modules","module-diagram"]]) {
+      await page.locator("#view-"+view).click();
+      if (view==="modules") {
+        const map=page.locator("#module-map"); if (!(await map.evaluate(el=>el.open))) await map.locator(":scope > summary").click();
+      }
+      const shell=page.locator(".diagram-shell").filter({has:page.locator("#"+id)});
+      await shell.locator('[data-action="zoom-in"]').click();assert.equal(await shell.locator("output").textContent(),"125%");
+      await shell.locator('[data-action="zoom-out"]').click();assert.equal(await shell.locator("output").textContent(),"100%");
+      await shell.locator('[data-action="fit"]').click();
+      assert.equal(await shell.locator(".model-scroll").evaluate(el=>el.scrollWidth<=el.clientWidth+2),true);
+      const zoom=await shell.locator("output").textContent();
+      await shell.locator('[data-action="fullscreen"]').click();
+      assert.equal(await page.locator(".diagram-dialog").evaluate(el=>el.open),true);
+      await page.keyboard.press("Escape");assert.equal(await page.locator(".diagram-dialog").count(),0);
+      assert.equal(await shell.locator("output").textContent(),zoom);
+      await shell.locator('[data-action="fullscreen"]').click();
+      if (view==="modules") {
+        await page.locator('#module-diagram [data-module="party"]').click();
+        assert.equal(await page.locator(".diagram-dialog").count(),0);
+        assert.equal(await page.locator("#overview").getAttribute("data-view"),"module:party");
+      } else await shell.locator('[data-action="fullscreen"]').click();
+    }
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    await page.screenshot({path:`/tmp/epm-viewer-navigation-review/navigation-${width}.png`});
+  }
   assert.deepEqual(errors, []);
   assert.equal(network, 0);
   console.log(
@@ -370,6 +463,10 @@ try {
       networkRequests: network,
       pageErrors: errors,
       search: true,
+      globalSearch: true,
+      termTypeFilters: true,
+      preservedNavigation: true,
+      diagramControls: true,
       modules: true,
       hierarchy: true,
       valueStreamDrilldown: true,
