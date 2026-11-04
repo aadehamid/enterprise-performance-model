@@ -338,7 +338,7 @@ def row_demo_offline(tree, env):
     # uv's environment for the demo's project goes outside the tree: a .venv inside the release would be a defect.
     venv = demo_venv()
     ledger(env, "folder", venv, "the demo's virtual environment for the validation")
-    r = sh(["uv", "run", "python", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_demo.py"], demo,
+    r = sh(["uv", "run", "--with", "pytest", "--with", "pyshacl", "python", "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/test_demo.py"], demo,
            env={**release_env(tree), "UV_PROJECT_ENVIRONMENT": venv}); out["steps"].append(r)
     m = re.search(r"(\d+) passed", r["tail"]); out["tests_passed"] = int(m.group(1)) if m else None
     # Re-judge each recorded run from a copy in a scratch folder (rejudge writes <run>-rejudged.json beside its input),
