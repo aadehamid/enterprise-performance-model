@@ -83,8 +83,8 @@ shows the source folders the builder packages today ("sources (builder today)"),
 change to the builder can move away from what the release was built from. For which processes have a RACI
 assignment, a system, a KPI, a lane, a value-stream step or a data product, run
 `uv run --with rdflib python scripts/epm_facts.py coverage` (see `--help` for other process sets).
-The diagram "EPM ontology: modules and how they connect" draws the modules with an arrow from each to
-each module it requires: https://app.eraser.io/workspace/GogQQcK6yNMwogKucbtj.
+The dated diagram "EPM ontology: modules and how they connect (2026-11-03)" shows module dependencies,
+including the logical-model module added by the shared release cut: https://app.eraser.io/workspace/9DdOmNiXb6E8R0XDovIm.
 
 ## Contents
 
