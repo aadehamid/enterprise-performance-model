@@ -28,6 +28,9 @@ Postgres, one database per source system (the exe.dev VM through an SSH tunnel; 
 
 You need Docker, [uv](https://docs.astral.sh/uv/), and a Databricks Free Edition workspace with a personal access token. Every tool the demo uses, with its version, is in the ontology guide's "The tools behind it" (`business_architecture/ontology/epm-ontology-guide.html#tools`). Copy `.env.example` to `.env` and fill it in; the scripts also read `~/.config/databricks/epm.env`. They never print a secret. To stop, restart, purge or reload the demo's stores together with the ontology's, see `business_architecture/ontology/projection/ontology-stores-runbook.html`.
 
+
+`DEMO_CATALOG`, when set, is used as given. Otherwise, `setup` tries `idp_sbx` and falls back to `workspace` if it cannot create the catalog or its landing schema. After setup succeeds, it saves that choice under `out/catalog-choice/`, separately for each Databricks host and SQL HTTP path. Later commands reuse it, including upload, build, counts, purge, Genie and technical-graph commands. These files contain no token. Without a saved choice, commands use the older discovery rule: a visible `idp_sbx.replica_landing` selects `idp_sbx`, otherwise `workspace`. Run `setup` first to confirm usability and save the choice. If a state file is invalid, rerun `setup` or set `DEMO_CATALOG`; do not delete state merely to force discovery. An explicit catalog does not replace a saved implicit choice.
+
 ```bash
 cd demos/downstream-pricing-databricks-free
 docker compose -f docker/docker-compose.yml up -d          # the seven source databases and the hidden decision_truth
@@ -40,7 +43,7 @@ docker compose -f docker/docker-compose.yml up -d          # the seven source da
 uv sync
 uv run python -m pricing_demo.load_postgres                # generate and load the source tables
 uv run python -m pricing_demo.replicate                    # Postgres -> Parquet with DuckDB
-uv run python -m pricing_demo.databricks setup             # catalog DEMO_CATALOG as given, or idp_sbx when it is unset; schemas, their epm_source_system tags, volume
+uv run python -m pricing_demo.databricks setup             # catalog, schemas, their epm_source_system tags, volume; saves an implicit catalog choice
 uv run python -m pricing_demo.databricks upload            # Parquet -> the volume
 uv run python -m pricing_demo.databricks build             # replica, silver, gold, metric views, definitions views, empty tech_graph tables
 uv run python -m pricing_demo.genie                        # the four Genie agents
