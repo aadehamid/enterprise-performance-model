@@ -1078,10 +1078,10 @@ def cmd_decisions(args):
     return 1 if problems else 0
 
 
-# Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): each verb of
-# saying that follows "the decision owner" closely (within 120 characters, in the same sentence, no quote mark between),
+# Words a document attributes to the decision owner, outside the decision records (which `quotes` checks): each attribution
+# verb that follows "the decision owner" closely (within 120 characters, in the same sentence, no quote mark between),
 # or follows a quote already theirs through a plain connective ("asked: ..., then chose ..." gives two), and the quote
-# after it. A quote another subject says ("GitHub's documentation says") or one with no verb of saying before it, such
+# after it. A quote another subject says ("GitHub's documentation says") or one with no attribution verb before it, such
 # as a process name, is not attributed. citation_problems says which sources count.
 OWNER = re.compile(r'\bdecision owner\b', re.I)  # the repo's one name for the role (EPM-DEC-001-0049); "the owner" also
 # names owners of processes and data
