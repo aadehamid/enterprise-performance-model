@@ -81,7 +81,7 @@ A new cut is a small edit: `manifest.py` holds its facts in one place (`RELEASE_
   pull request #460 on 2026-11-01.
 - `gate.py` fails on any name, handle, repository, host, peer (by name, ticker or EDGAR filing, except in market
   news, below), record number (full or short form), issue number (also inside the IRI of an answer given as an issue comment), left-out document, the left-out `way-of-working` skill, agent or review tool, agent-work phrase, double-underscore graph name, or statement that the build kept something out of the repository (rule 17 of `rules.py` removes each one main has or points it to `HOW-TO-UPDATE.md`, "Inputs from outside the repository", the decision owner's request of 2026-11-03; text saying an input is read from outside the repository, and the skills' generic text, pass); a name matches when no letter or digit touches it, so it also fails inside an identifier such as `test_x_y`, and "Adam" or "metadata" do not match;
-  binaries and base64 data are read as the printable text inside them.
+  binaries and base64 data are read as the printable text inside them. Customer-source descriptions that identify images as inputs also fail in documents and data; Python matching literals and regression fixtures are code, not source descriptions.
 - `validate.py`, `stores.py` and `snippets.py` are the validation: each row judges what it finds (a planted
   violation fails it), every command exits nonzero on a failure, and no output file holds a password: every
   command runs through `procs.py` (its own process group, a deadline, the whole group killed on expiry) and every
@@ -107,9 +107,11 @@ still equals the release as shipped, using the list `templates/pinned-tests.txt`
 The option `--remove-internal` leaves `reference/internal/` out. It is off by default, and the plan says a
 review report of what changes comes before anyone turns it on.
 
+The logical-model 1.0.0 issue date stays 2026-11-03, as in its first published package at `81f2f63b`. Repeating a cut changes the cut date in `release.json`, not that module version's issue date.
+
 ## Include the offline ontology viewer
 
-Pass `--viewer-source <release clone>` to `cut.sh` to include `viewer/index.html`, recipient instructions and a link at the top of the release README. The source must be a clean clone of `share/epm-1.0` at `81f2f63b128820854a25204641b6899d55051ae3`. The cut validates the source before replacing an output folder. After rebuilding, it requires the cut's current package Turtle files and release catalog to match the source files by path and SHA-256. A changed input stops the cut instead of shipping a stale viewer. The cut also checks that RDF reconstructed from the generated HTML equals the source graph, using RDFLib 7.6.0.
+Pass `--viewer-source <release clone>` to `cut.sh` to include `viewer/index.html`, recipient instructions and a link at the top of the release README. The source must be a clean clone of `share/epm-1.0` at `81f2f63b128820854a25204641b6899d55051ae3`. The cut validates the source before replacing an output folder. After rebuilding, it requires the cut's current package Turtle files and release catalog to match the source files by path and SHA-256 after the exact customer-source title substitution in `scripts/epm_source_descriptions.py` (EPM-DEC-001-0110, amendment of 2026-11-04). Every other byte difference stops the cut. The viewer reads the verified cut's packages, including their neutral source descriptions. Using RDFLib 7.6.0, the cut reconstructs the generated HTML's RDF and checks it against those packages; it also verifies that the tested page is byte-identical to the page it ships.
 
 The page embeds the current released ontology, its customer schema, scripts and fonts. Recipients unzip the release and open `viewer/index.html` in a browser. It needs no server, store, install or network connection. Previous packages, examples and technical-graph records are outside its inputs; technical-graph vocabulary remains included. Build details and coverage are in [the viewer guide](../../business_architecture/ontology/viewer/README.md).
 

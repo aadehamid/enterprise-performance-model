@@ -9,7 +9,7 @@
 
 ## Context
 
-EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3 are diagrams of the systems the customer passes through and the flows between them. Input 5 is a table of six core systems, each with the attributes that define the customer there (Create) and the attributes that enrich it (Enrich). Input 6 adds a pane on where the customer shows up in systems. That pane covers six core systems with the model entities each implements, the origin and sync patterns, and other systems in the landscape. The decision owner asked for "both the life cycle and data flow of Customer" and for both categories of attributes to be captured (EPM-DEC-001-0067). None of the inputs is in the repository. This record turns their systems, flows and attributes into the `party` module (EPM-DEC-001-0068).
+EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3 describe the systems the customer passes through and the flows between them. Input 5 is a table of six core systems, each with the attributes that define the customer there (Create) and the attributes that enrich it (Enrich). Input 6 adds a pane on where the customer shows up in systems. That pane covers six core systems with the model entities each implements, the origin and sync patterns, and other systems in the landscape. The decision owner asked for "both the life cycle and data flow of Customer" and for both categories of attributes to be captured (EPM-DEC-001-0067). None of the inputs is in the repository. This record turns their systems, flows and attributes into the `party` module (EPM-DEC-001-0068).
 
 ## Decision
 
@@ -37,7 +37,7 @@ EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3
    | Dealer Master | Party Role, Site, Site Brand Assignment, Agreement |
 
 4. **35 data flows**, each a `party:DataFlow` with what it carries and the inputs that show it, plus a direct `party:feeds` link.
-   - Where the inputs disagree, this record takes input 3, the only dated diagram, over input 2. Input 6 confirms the core path: the SAP customer number is generated in SAP MDG and backfilled to Salesforce through MAGIC.
+   - Where the inputs disagree, this record takes input 3, the only dated input, over input 2. Input 6 confirms the core path: the SAP customer number is generated in SAP MDG and backfilled to Salesforce through MAGIC.
    - Input 2's edges that were hard to read and that input 3 does not confirm are left out: S/4HANA to Bridger Insight, RightAngle to TFR, Kittyhawk to RCMS, and FuelFacs to TASDM.
    - Input 1 draws ten boxes below MAGIC that feed Profisee. Nine are systems and feed Profisee here. The tenth, Marketing Users, is a user group and is left out (item 2).
 5. **24 customer sourcings** say how a system relates to a kind of customer:

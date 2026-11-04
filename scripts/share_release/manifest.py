@@ -73,6 +73,7 @@ EPM_RULES = [
     ("ship", "scripts/check.sh"),
     ("ship", "scripts/conftest.py"),  # skips the tests of checks whose inputs do not ship
     ("ship", "scripts/epm_facts.py"),
+    ("ship", "scripts/epm_source_descriptions.py"),  # exact source-title rewrite used by the viewer's cut comparison
     ("ship", "scripts/test_epm_facts.py"),
     ("ship", "scripts/build_docs_html.py"),
     ("ship", "scripts/docs_template.html"),

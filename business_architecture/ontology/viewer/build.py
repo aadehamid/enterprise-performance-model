@@ -8,12 +8,16 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
 
 from rdflib import BNode, Graph, Literal, RDF, RDFS, OWL, SKOS
 from rdflib.namespace import DCTERMS
 from rdflib.compare import to_canonical_graph
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parents[2] / "scripts"))
+from epm_source_descriptions import neutral_source_description
+
 ONTOLOGY = Path("business_architecture/ontology")
 SOURCE_COMMIT = "81f2f63b128820854a25204641b6899d55051ae3"
 LABELS = (SKOS.prefLabel, RDFS.label, DCTERMS.title)
@@ -214,6 +218,15 @@ def build(root, output, compare=None, require_pin=True):
     data = build_data(root)
     if compare:
         compare = Path(compare).resolve()
+        expected_inputs = [
+            {
+                "path": str(path.relative_to(root)),
+                "sha256": hashlib.sha256(
+                    neutral_source_description(path.read_bytes().decode("utf-8")).encode("utf-8")
+                ).hexdigest(),
+            }
+            for path, _, _ in release_files(root)
+        ]
         other_inputs = [
             {
                 "path": str(path.relative_to(compare)),
@@ -221,8 +234,12 @@ def build(root, output, compare=None, require_pin=True):
             }
             for path, _, _ in release_files(compare)
         ]
-        if other_inputs != data["inputs"]:
+        if other_inputs != expected_inputs:
             raise ValueError("Cut packages differ from the pinned viewer release")
+        # Emit the verified cut's data, so its source titles and file hashes agree
+        # with the files recipients receive. Only the exact source-title substitution
+        # above may differ from the pinned release, even in a metadata graph.
+        data = build_data(compare)
     payload = (
         json.dumps(data, ensure_ascii=False, separators=(",", ":"))
         .replace("<", "\\u003c")

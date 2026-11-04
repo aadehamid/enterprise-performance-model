@@ -27,7 +27,6 @@ The package names the decision owner's approval: the cut refuses `--augment` unt
 answers file, in the main checkout's answers folder, whose text holds the `--approval-words`, which must approve logical-model 1.0.0 by name (EPM-DEC-001-0113,
 decision 10: the module's 1.0.0 waits for the decision owner's approval from one page).
 """
-import datetime
 import hashlib
 import json
 import os
@@ -38,6 +37,7 @@ import rules
 
 ONT = "business_architecture/ontology"
 MODULE, VERSION = "logical-model", "1.0.0"
+ISSUED = "2026-11-03"  # first published 1.0.0; a later cut keeps this version's issue date
 MODELS = f"{ONT}/logical-model/models"  # where the staged inputs and the built graphs sit in the release
 ANSWERS = "step4/review-evidence/decision-owner-answers"  # relative to the ontology folder, as every module's approval
 ER_STUDIO = "https://www.erstudio.com/semanticmodel/"
@@ -478,7 +478,7 @@ def apply(release, places, ctx):
 def context(release, epm, approved, folder, dates, issued=None):
     """What the patches need: the slugs, the entry, the approval as the release writes it, the counts."""
     slugs = staged_slugs(release)
-    issued = issued or datetime.date.today().isoformat()
+    issued = issued or ISSUED
     return {"slugs": slugs, "issued": issued, "approval": approved, "dates": dates,
             "entry": entry(slugs, approved, inputs(folder), issued, dates),
             "count_main": len(manifest.MODULES), "count_release": len(manifest.MODULES) + 1}
