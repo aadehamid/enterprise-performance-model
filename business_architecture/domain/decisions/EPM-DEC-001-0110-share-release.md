@@ -258,7 +258,7 @@ All repositories must end private. The customer model remains outside `main`; th
 
 PR #491 merged the viewer as `ae9be6d3` after independent review, Cursor's MERGE verdict and the repository checks. The cut published the viewer on the private release branch at `5132e75f`. Cut validation, the offline browser check and a fresh-reader check passed. The production reload from that release passed, with every ontology, technical-graph and logical-model sync marker current. The release report and logs are retained under the ignored `release-cut/` folder.
 
-The agent's maintenance list comprised the standalone demo test instructions, citation-check issue #428, catalog-fallback issue #384 and legacy-example issue #18. The agent proposed completing these after the viewer release and batching recipient-facing changes into one follow-up cut. This is context for the owner's messages, not a quotation of them.
+The agent's maintenance list comprised the standalone demo test command's missing pyshacl dependency, citation-check issue #428, catalog-fallback issue #384 and legacy-example issue #18. The agent proposed completing these after the viewer release and batching recipient-facing changes into one follow-up cut. This is context for the owner's messages, not a quotation of them.
 
 ### Decision and recorded words
 
@@ -277,15 +277,15 @@ The same answers file records the additional request:
 
 ### Follow-through
 
-The agent will complete the maintenance list and investigate the diagram links through separate PRs, with the existing checks and reviewers. The follow-up release uses the existing cut and validation process. Business decisions and pricing-demo acceptance remain parked. No change to ontology meaning or vocabulary is planned; an unresolved modeling choice stays open. The later source-description instruction below permits an editorial change to provenance text. This work grants no new business-model decision or paid service.
+The agent will complete the maintenance list and investigate the diagram links through separate PRs, with the existing checks and reviewers. The follow-up release uses the existing cut and validation process. Business decisions and pricing-demo acceptance remain parked. No change to ontology meaning or vocabulary is planned; an unresolved modeling choice stays open. The later instruction below requires removal of image-source references from the documents before the follow-up release. This work grants no new business-model decision or paid service.
 
 The earlier temporary-visibility permission and requirement to finish with every repository private still apply. The customer model remains outside `main`. The alternative of leaving all maintenance for another session was not chosen. Maintenance and its follow-up release remain pending.
 
 
-### Later instruction: neutral source descriptions
+### Later instruction: remove image-source references
 
-The same answers file records the request to remove source-format references from the documents, with the timing specified as:
+The same answers file records the request to check where the documents say images were used as a source and remove those image references, with the timing specified as:
 
 > before we do the follow up release.
 
-The agent will use neutral customer-input descriptions in authored documentation and recipient-facing provenance, including the viewer. This changes how sources are described, not which inputs support the ontology. Original saved answers remain verbatim audit evidence. Existing frozen packages remain historical inputs; the cut must apply the approved editorial rewrite consistently and verify that no other ontology change passes through it. The final release check must cover the generated documents and the viewer as well as source text.
+The following implementation approach is the agent's reading of that request: replace references to customer images as sources with neutral customer-input descriptions in authored documentation and recipient-facing provenance, including the viewer. Other source formats stay as they are. This changes how those image sources are described, not which inputs support the ontology. Original saved answers remain verbatim audit evidence. Existing frozen packages remain historical inputs; the cut must apply the approved editorial rewrite consistently and verify that no other ontology change passes through it. The final release check must cover the generated documents and the viewer as well as source text.
