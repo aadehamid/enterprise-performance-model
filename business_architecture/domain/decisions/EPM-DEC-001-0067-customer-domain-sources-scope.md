@@ -31,7 +31,7 @@ Claude asked questions about each input as it arrived. The decision owner's answ
 
 1. "Customer information" (block 1).
 2. "decide once you've seen my data. I will share them one at a time to process" (block 2).
-3. The customer inputs stay outside the repository (block 4).
+3. "all of the files and images should stay out of the repo, by the way." (block 4).
 4. "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point" (block 5), then "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domainhere is the next one" (block 6).
 5. "Now here are the core system and attributes that defines a customer in each system. And also attributes used to enrich customer in each system. These two categories of attrobutes must be captured" (block 7).
 6. Block 8, in full:
@@ -96,6 +96,7 @@ In the Claude Code session of 2026-10-20 to 2026-10-21 (saved in `business_archi
 
 - "Customer information"
 - "decide once you've seen my data. I will share them one at a time to process"
+- "all of the files and images should stay out of the repo, by the way."
 - "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point"
 - "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domainhere is the next one"
 - "These two categories of attrobutes must be captured"
