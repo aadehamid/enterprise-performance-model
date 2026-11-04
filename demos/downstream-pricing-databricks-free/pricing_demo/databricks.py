@@ -284,8 +284,8 @@ def demo_owns(cur, cat):
 def purge(execute=False, catalog=None, connection=None):
     """Prints the drop statements; runs them only with --yes. Stops at the first statement that fails. A catalog the
     demo did not create (one without setup's comment) is purged only when --catalog names it. --catalog confirms the
-    catalog DEMO_CATALOG chooses and never chooses one: a --catalog that names another is refused, since without
-    DEMO_CATALOG the purge would act on idp_sbx."""
+    catalog selected by current_catalog; it never selects one. A different name is refused. Selection follows
+    the explicit setting, saved setup choice, then schema discovery."""
     conn, e = connection or connect()
     with conn, conn.cursor() as cur:
         cat = current_catalog(cur, e)
