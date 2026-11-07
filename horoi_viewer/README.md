@@ -29,7 +29,7 @@ uv run --with rdflib==7.6.0 python -m horoi_viewer.release stage \
   --out <new-staging-folder> --report <outside-staging>/comparison.json
 ```
 
-Staging copies every tracked baseline file with its permissions and adds only the four documentation files. Verification compares every baseline path, hash and permission mode. It compares the embedded data with the verified source packages and regenerates all four documentation files for an exact byte comparison. An extra file, missing file, changed byte, changed permission mode or changed semantic payload fails the comparison. Only Git metadata at the release root is excluded.
+Staging copies every tracked baseline file with its permissions and adds only the four documentation files. Verification compares every baseline path, hash and permission mode. It compares the embedded data with the verified source packages and regenerates all four documentation files for an exact byte comparison. An extra file, missing file, changed byte, changed permission mode or changed semantic payload fails the comparison. Verify a staging folder or extracted archive without Git metadata. The comparison has no filename exemptions, including `.git`; a Git checkout must first be staged as shown above.
 
 Choose a new audit report path in an existing directory outside the source, generated documentation and staging folders. The command refuses to replace an existing report. A failed build or staging command can leave output for inspection; choose a new folder when retrying. Only a successful verification produces an audit report.
 

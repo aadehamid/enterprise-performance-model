@@ -33,9 +33,6 @@ def verify(source, release):
     baseline = {p.as_posix(): fingerprint(source / p) for p in tracked_files(source)}
     current = {}
     for root, dirs, files in os.walk(release):
-        if Path(root) == release:
-            dirs[:] = [d for d in dirs if d != ".git"]
-            files = [name for name in files if name != ".git"]
         if any((Path(root) / d).is_symlink() for d in dirs):
             raise ValueError("Release directories must not be symlinks")
         for name in files:

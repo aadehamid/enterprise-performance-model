@@ -105,7 +105,7 @@ def test_stage_preserves_every_original_file(source, tmp_path, sample_data):
     assert result["added_files"] == sorted("horoi_viewer/" + n for n in r.DOC_FILES)
 
 
-@pytest.mark.parametrize("mutation", ["change", "delete", "mode", "read_mode", "nested_git", "extra", "symlink"])
+@pytest.mark.parametrize("mutation", ["change", "delete", "mode", "read_mode", "nested_git", "root_git_file", "root_git_directory", "extra", "symlink"])
 def test_release_guard_rejects_changes(source, tmp_path, sample_data, mutation):
     output = tmp_path / "release"
     r.stage(source, make_docs(tmp_path / "docs", sample_data), output)
@@ -121,6 +121,11 @@ def test_release_guard_rejects_changes(source, tmp_path, sample_data, mutation):
         hidden = output / "horoi_viewer/.git"
         hidden.mkdir()
         (hidden / "extra.ttl").write_text("extra data")
+    elif mutation == "root_git_file":
+        (output / ".git").write_text("not git metadata")
+    elif mutation == "root_git_directory":
+        (output / ".git").mkdir()
+        (output / ".git/payload").write_text("extra data")
     elif mutation == "extra":
         (output / "extra.ttl").write_text("extra data")
     else:
