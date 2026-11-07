@@ -237,7 +237,12 @@ function render() {
   window.scrollTo(0,0);
   main.focus({preventScroll:true});
 }
-document.getElementById("theme").onclick=()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==="dark"?"light":"dark";};
+const themeRoot=document.documentElement,systemTheme=matchMedia("(prefers-color-scheme: dark)");
+let chosenTheme=null;
+function applyTheme(){themeRoot.dataset.theme=chosenTheme||(systemTheme.matches?"dark":"light");}
+systemTheme.addEventListener("change",applyTheme);
+applyTheme();
+document.getElementById("theme").onclick=()=>{chosenTheme=themeRoot.dataset.theme==="dark"?"light":"dark";applyTheme();};
 document.querySelector(".skip").onclick=event=>{event.preventDefault();main.focus();main.scrollIntoView();};
 window.addEventListener("hashchange",render);
 render();

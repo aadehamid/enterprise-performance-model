@@ -16,6 +16,40 @@ try {
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto(pathToFileURL(file).href);
   await page.getByRole('heading',{name:'Understand the concepts. Follow their connections.'}).waitFor();
+  const themeCases=[];
+  for(const systemTheme of ['light','dark']) {
+    await page.emulateMedia({colorScheme:systemTheme});
+    await page.goto(pathToFileURL(file).href);
+    for(let clicks=0;clicks<3;clicks++) {
+      if(clicks) await page.getByRole('button',{name:'Switch colour theme'}).click();
+      const colors=await page.evaluate(()=>{
+        const root=getComputedStyle(document.documentElement);
+        const primary=getComputedStyle(document.querySelector('.actions a.primary'));
+        return {accent:root.getPropertyValue('--accent').trim(),background:primary.backgroundColor,text:primary.color};
+      });
+      themeCases.push({systemTheme,clicks,...colors});
+      if(evidence && clicks===0) await page.screenshot({path:resolve(evidence,`system-${systemTheme}.png`),fullPage:true});
+    }
+  }
+  if(evidence) await writeFile(resolve(evidence,'theme-results.json'),JSON.stringify(themeCases,null,2));
+  const luminance=color=>color.match(/[\d.]+/g).slice(0,3).map(Number).map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+  for(const state of themeCases) {
+    const expected=state.clicks===1?(state.systemTheme==='dark'?'light':'dark'):state.systemTheme;
+    assert.equal(state.accent,expected==='dark'?'#8bd6c9':'#17665d',`Custom palette under ${state.systemTheme} system theme after ${state.clicks} clicks`);
+    const values=[luminance(state.background),luminance(state.text)].sort((a,b)=>a-b);
+    assert.ok((values[1]+.05)/(values[0]+.05)>=4.5,'Primary link text meets 4.5:1 contrast in each effective theme');
+  }
+  await page.emulateMedia({colorScheme:'light'});
+  await page.goto(pathToFileURL(file).href);
+  await page.emulateMedia({colorScheme:'dark'});
+  await page.waitForFunction(()=>document.documentElement.dataset.theme==='dark');
+  assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()),'#8bd6c9');
+  await page.getByRole('button',{name:'Switch colour theme'}).click();
+  await page.emulateMedia({colorScheme:'light'});
+  await page.emulateMedia({colorScheme:'dark'});
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'light','An explicit reader choice survives later system preference changes');
+  await page.emulateMedia({colorScheme:'light'});
+  await page.goto(pathToFileURL(file).href);
   if(evidence) await page.screenshot({path:resolve(evidence,'overview-desktop.png'),fullPage:true});
   await page.getByRole('link',{name:'Explore the customer domain'}).click();
   await page.getByRole('heading',{name:'Party · Customer domain',exact:true}).waitFor();
@@ -224,7 +258,7 @@ try {
   }
   assert.deepEqual(errors,[],'No JavaScript errors');
   assert.deepEqual(requests,[],'No network requests, even when navigating');
-  const result={passed:true,coverage,requests,errors,viewports:[1440,768,390]};
+  const result={passed:true,coverage,themeCases,requests,errors,viewports:[1440,768,390]};
   if(evidence) await writeFile(resolve(evidence,'browser-results.json'),JSON.stringify(result,null,2));
   console.log(JSON.stringify(result,null,2));
 } finally {await browser.close();}
