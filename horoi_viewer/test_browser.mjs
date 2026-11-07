@@ -24,7 +24,17 @@ try {
   assert.match(await page.locator('#term-iri').innerText(),/\/CustomerAccount$/);
   assert.match(await page.locator('.term-definition').innerText(),/account/i);
   await page.getByText('All recorded facts, types and sources',{exact:true}).click();
-  assert.ok(await page.locator('#facts td').count()>0);
+  const factRows=await page.locator('#facts tbody tr').evaluateAll(rows=>rows.map(row=>{
+    const [property,value]=row.cells;
+    return {p:property.querySelector('code').textContent,value:value.textContent.replace(/\s+/g,' ').trim(),target:value.querySelector('[title]')?.title||null};
+  }));
+  const rawFacts=await page.evaluate(()=>nodes.get(document.getElementById('term-iri').textContent).values);
+  assert.equal(factRows.length,rawFacts.length);
+  for(let i=0;i<rawFacts.length;i++) {
+    const value=rawFacts[i];assert.equal(factRows[i].p,value.p);
+    if(value.literal) assert.equal(factRows[i].value,[value.v,value.lang?'Language: '+value.lang:'',value.datatype?'Datatype: '+value.datatype:''].filter(Boolean).join(' ').replace(/\s+/g,' ').trim());
+    else assert.equal(factRows[i].target,value.v);
+  }
   await page.getByRole('button',{name:'Copy identifier'}).click();
   await page.waitForFunction(()=>/Copied|selected/.test(document.getElementById('copy-status').textContent));
   assert.match(await page.locator('#copy-status').innerText(),/Copied|selected/);
@@ -51,6 +61,88 @@ try {
   await page.locator('#search').fill('this term cannot exist 5789');
   assert.equal(await page.locator('#results li').count(),0);
   assert.match(await page.locator('#result-count').innerText(),/No matching/);
+  // Paging survives term navigation and reload, including keyboard focus.
+  await page.goto(pathToFileURL(file).href+'#browse');
+  await page.locator('#next').focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'next');
+  const secondPage=await page.locator('#result-count').innerText();
+  const secondResult=await page.locator('#results a').first().getAttribute('href');
+  await page.locator('#results a').first().click();
+  await page.locator('#term-iri').waitFor();
+  await page.goBack();
+  assert.equal(await page.locator('#result-count').innerText(),secondPage);
+  assert.equal(await page.locator('#results a').first().getAttribute('href'),secondResult);
+  await page.reload();
+  assert.equal(await page.locator('#result-count').innerText(),secondPage);
+  await page.locator('#prev').focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'next','Move focus to an enabled control at the first page');
+  for(const value of ['-1','NaN','999999']) {
+    await page.goto(pathToFileURL(file).href+'#browse?page='+value);
+    assert.ok(await page.locator('#results li').count()>0,'Invalid or excessive page values stay usable');
+  }
+  await page.locator('#prev').focus();
+  await page.keyboard.press('Enter');
+  await page.locator('#next').focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'prev','Move focus to an enabled control at the last page');
+  // A delayed clipboard result belongs only to the page that started it.
+  const copyTerms=await page.evaluate(()=>data.pilotTerms.slice(0,2));
+  for(const outcome of ['resolve','reject']) {
+    for(const destination of ['#term='+encodeURIComponent(copyTerms[1]),'#overview']) {
+      await page.goto(pathToFileURL(file).href+'#term='+encodeURIComponent(copyTerms[0]));
+      await page.locator('#term-iri').waitFor();
+      await page.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:()=>new Promise((resolve,reject)=>{window.settleCopy={resolve,reject};})}}));
+      await page.locator('#copy-iri').click();
+      await page.goto(pathToFileURL(file).href+destination);
+      await page.locator('h1').waitFor();
+      await page.evaluate(outcome=>window.settleCopy[outcome](),outcome);
+      if(destination.startsWith('#term')) assert.equal(await page.locator('#copy-status').innerText(),'');
+      assert.equal(await page.evaluate(()=>String(getSelection())),'');
+    }
+  }
+  await page.goto(termURL);
+  await page.locator('#term-iri').waitFor();
+  await page.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:()=>Promise.reject(new Error('Clipboard unavailable'))}}));
+  await page.locator('#copy-iri').click();
+  assert.match(await page.locator('#copy-status').innerText(),/Identifier selected/);
+  assert.equal(await page.evaluate(()=>String(getSelection())),await page.locator('#term-iri').innerText());
+  // Group filters must show the complete expected population from raw kinds.
+  for(const group of ['Business concepts','Vocabulary','Rules and evidence']) {
+    await page.goto(pathToFileURL(file).href+'#browse');
+    await page.locator('#layer-filter').selectOption(group);
+    const expected=await page.evaluate(group=>data.nodes.filter(n=>{
+      const local=n.modules.some(m=>data.pilotModules.includes(m.name));
+      const vocabulary=['Class','Property'].includes(n.kind);
+      const supporting=[...data.supportingKinds,'Metadata'].includes(n.kind);
+      return local&&(group==='Vocabulary'?vocabulary:group==='Rules and evidence'?supporting:!vocabulary&&!supporting);
+    }).map(n=>n.id).sort(),group);
+    const shown=[];
+    while(true) {
+      shown.push(...await page.locator('#results a').evaluateAll(links=>links.map(a=>a.title)));
+      if(await page.locator('#next').isDisabled()) break;
+      await page.locator('#next').click();
+    }
+    assert.deepEqual(shown.sort(),expected,group+' covers each matching term once');
+  }
+  // Compare every displayed cross-module tuple with the source statements.
+  for(const module of ['party','core']) {
+    await page.goto(pathToFileURL(file).href+'#connections='+module);
+    const expected=await page.evaluate(module=>{
+      const terms=new Map(data.nodes.map(n=>[n.id,n]));const rows=[];
+      for(const source of data.nodes.filter(n=>data.pilotTerms.includes(n.id)&&n.modules.some(m=>m.name===module))) {
+        for(const statement of source.values.filter(v=>!v.literal)) {
+          const target=terms.get(statement.v);
+          if(!target||[...data.supportingKinds,'Metadata'].includes(target.kind)) continue;
+          for(const other of target.modules) if(other.name!=='Release metadata'&&other.name!==module&&!source.modules.some(m=>m.name===other.name)) rows.push([source.id,statement.p,statement.v]);
+        }
+      }
+      return rows.map(row=>JSON.stringify(row)).sort();
+    },module);
+    const actual=await page.locator('.relationship-table tbody tr').evaluateAll(rows=>rows.map(row=>JSON.stringify([...row.cells].map(cell=>cell.querySelector('[title]').title))).sort());
+    assert.deepEqual(actual,expected,module+' shows every recorded cross-module tuple');
+  }
   await page.goto(pathToFileURL(file).href+'#connections=party');
   await page.getByRole('heading',{name:'Connections from Party · Customer domain'}).waitFor();
   assert.ok(await page.locator('tbody tr').count()>0);
@@ -70,7 +162,7 @@ try {
   assert.equal(new Set(coverage.modules).size,coverage.modules.length);
   const connected=await page.evaluate(()=>data.nodes.find(n=>pilot.has(n.id)&&n.values.filter(v=>!v.literal&&v.p!==RDF+'type'&&nodes.has(v.v)&&!v.v.startsWith('_:')&&!data.supportingKinds.includes(nodes.get(v.v).kind)).length>=3).id);
   await page.goto(pathToFileURL(file).href+'#term='+encodeURIComponent(connected));
-  await page.locator('.graph svg').waitFor();
+  await page.locator('.graph svg:visible').waitFor();
   if(evidence) await page.screenshot({path:resolve(evidence,'connected-term-desktop.png'),fullPage:true});
   const unknownTargets=await page.locator('a[href^="../viewer/index.html#"]').evaluateAll(links=>links.filter(a=>!nodes.has(decodeURIComponent(a.getAttribute('href').split('#')[1]))).map(a=>a.href));
   assert.deepEqual(unknownTargets,[],'Every linked full-viewer term exists');
@@ -94,6 +186,16 @@ try {
   await externalModule.click();
   await page.locator('#overview').waitFor();
   assert.equal(await page.locator('#overview').getAttribute('data-view'),decodeURIComponent(expected));
+  // Direct term routes into the existing viewer must select the exact term.
+  await page.goto(termURL);
+  const expectedTerm=await page.locator('#term-iri').innerText();
+  await page.getByRole('link',{name:'Open this term in the full viewer'}).click();
+  await page.waitForFunction(id=>document.getElementById('iri')?.textContent===id,expectedTerm);
+  await page.goto(pathToFileURL(file).href+'#connections=party');
+  const externalTerm=page.locator('td a[href^="../viewer/index.html#"]').first();
+  const externalId=decodeURIComponent((await externalTerm.getAttribute('href')).split('#')[1]);
+  await externalTerm.click();
+  await page.waitForFunction(id=>document.getElementById('iri')?.textContent===id,externalId);
   for(const width of [768,390]) {
     await page.setViewportSize({width,height:844});
     await page.goto(pathToFileURL(file).href);
@@ -109,6 +211,16 @@ try {
     await page.getByRole('button',{name:'Switch colour theme'}).click();
     assert.equal(await page.locator('html').getAttribute('data-theme'),oldTheme==='dark'?'light':'dark');
     if(evidence) await page.screenshot({path:resolve(evidence,`term-${width}.png`),fullPage:true});
+    await page.goto(pathToFileURL(file).href+'#connections=party');
+    assert.ok(await page.locator('.relationship-table tbody tr').count()>0);
+    assert.ok(await page.locator('.relationship-table').evaluateAll(tables=>tables.every(t=>t.scrollWidth<=t.clientWidth+1)));
+    if(evidence) await page.screenshot({path:resolve(evidence,`connections-${width}.png`),fullPage:true});
+    await page.goto(pathToFileURL(file).href+'#term='+encodeURIComponent(connected));
+    await page.locator('.graph svg:visible').waitFor();
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+    assert.ok(await page.locator('.relationship-table tbody tr').count()>0);
+    if(evidence) await page.screenshot({path:resolve(evidence,`graph-${width}.png`),fullPage:true});
+
   }
   assert.deepEqual(errors,[],'No JavaScript errors');
   assert.deepEqual(requests,[],'No network requests, even when navigating');

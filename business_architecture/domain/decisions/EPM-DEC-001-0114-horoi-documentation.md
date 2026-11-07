@@ -9,7 +9,7 @@
 
 ## Context
 
-The decision owner proposed Horoi as another way to document the ontology, in a separate `horoi_viewer/` folder. The agent inspected Horoi's source and the Brick site. Horoi supplies a readable reference-page design, but its original term renderer does not cover the project's SKOS concepts, definitions, or supporting nodes. The agent recommended a Party/Core pilot with a short usage guide and links to the existing full viewer. Brick supplied navigation ideas; adoption of another explorer remains undecided.
+The decision owner proposed evaluating Horoi and, if used, placing it in a separate `horoi_viewer/` folder. The initial proposal is quoted below. The agent inspected Horoi's source and the Brick site. Horoi supplies a readable reference-page design, but its original term renderer does not cover the project's SKOS concepts, definitions, or supporting nodes. The agent recommended a Party/Core pilot with a short usage guide and links to the existing full viewer. Brick supplied navigation ideas; adoption of another explorer remains undecided.
 
 ## Decision
 
@@ -29,7 +29,7 @@ These are the agent's implementation choices within the approved scope, not addi
 - Keep the build code, adapted page design, usage guide and tests in `horoi_viewer/` in the original repository.
 - Read the published release at `8307c88d8896504d342a0d44880271ed4e6846ab`. The fetched private release branch still named that commit on 2026-11-07. Check source bytes, package manifests and hashes before building.
 - Separate business concepts, vocabulary, and rules and evidence as reading groups. Preserve the predicates' meanings and distinguish module dependencies from business relationships.
-- Add the generated documentation to a copy of the release. Compare every existing path, file hash and executable mode against the baseline. No existing release file may change.
+- Add the generated documentation to a copy of the release. Compare every existing path, file hash and permission mode against the baseline. No existing release file may change.
 - Test navigation, search, cross-module links, source fidelity, malformed inputs, and desktop, tablet and phone layouts through `file:` with HTTP requests blocked.
 - Follow the existing independent-review and Cursor-verdict process. Keep both repositories private. No new authority over business or modeling decisions is granted.
 
@@ -47,6 +47,8 @@ Publication waits for that feedback.
 ## The decision owner's recorded words
 
 From `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-11-07-horoi.md`:
+
+> can you take a look at and see if we can use it to document the ontology and how we can use it. If we happen to use this I am thinking we should create a new folder called horoi_viewer that contains this viewer separate from what we originally have. let us discuss
 
 > Let us go with your recommendation. And alos we are not chnaging the ontology so we should not have to relaod or remove the data or projection. we only need to work on the docs in the original repo and then release the docs as a new release with only the docs added to the release repo.
 

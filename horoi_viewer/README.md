@@ -15,7 +15,7 @@ uv run --with rdflib==7.6.0 python horoi_viewer/build.py \
   --source <clean-release-clone> --out <new-output>/horoi_viewer
 ```
 
-The source must be the commit named by `config.json`. The builder checks the checkout's bytes and executable modes, refuses untracked documentation inputs, and uses the existing viewer reader to verify package hashes and keep blank nodes separate across files. It reads only current release packages and their catalog. It does not change packages, use live stores, or infer relationships. Supporting nodes and references from other modules provide context; Party and Core supply the pilot's main term navigation.
+The source must be the commit named by `config.json`. The builder checks the checkout's bytes and executable modes, refuses untracked documentation inputs, and uses the existing viewer reader to verify package hashes and keep blank nodes separate across files. It preserves literal lexical forms, languages and datatypes. It reads only current release packages and their catalog. It does not change packages, use live stores, or infer relationships. Supporting nodes and references from other modules provide context; Party and Core supply the pilot's main term navigation.
 
 The output directory must be new or empty. The builder never deletes an existing output. It emits `index.html`, `build.json`, `LICENSE.txt` and `NOTICE.txt`. Keep that folder alongside the existing `viewer/` and `business_architecture/` directories so its relative links work.
 
@@ -29,9 +29,11 @@ uv run --with rdflib==7.6.0 python -m horoi_viewer.release stage \
   --out <new-staging-folder> --report <outside-staging>/comparison.json
 ```
 
-Staging copies every tracked baseline file with its executable mode and adds only the four documentation files. Verification compares every baseline path, hash and executable mode. It also compares the embedded documentation data with the verified source packages. An extra file, missing file, changed byte, changed executable mode or changed semantic payload fails the comparison.
+Staging copies every tracked baseline file with its permissions and adds only the four documentation files. Verification compares every baseline path, hash and permission mode. It compares the embedded data with the verified source packages and regenerates all four documentation files for an exact byte comparison. An extra file, missing file, changed byte, changed permission mode or changed semantic payload fails the comparison. Only Git metadata at the release root is excluded.
 
-Use the repository's ZIP tool on the verified staging folder. Extract that exact ZIP, repeat the comparison and browser check, and publish the additions through a pull request in the private release repository. The original repository's reviewed implementation must land first. A documentation release tag does not change ontology module versions. No existing release file is edited, including the original viewer, README, manifests and projections.
+Choose a new audit report path in an existing directory outside the source, generated documentation and staging folders. The command refuses to replace an existing report. A failed build or staging command can leave output for inspection; choose a new folder when retrying. Only a successful verification produces an audit report.
+
+Use the repository's ZIP tool on the verified staging folder. Extract that exact ZIP, repeat the comparison and browser check, and prepare the additions for a pull request in the private release repository. Obtain the decision owner's review of the final candidate and address their feedback before merging that release pull request or publishing the release. The original repository's reviewed implementation must land first. A documentation release tag does not change ontology module versions. No existing release file is edited, including the original viewer, README, manifests and projections.
 
 ## Verify
 

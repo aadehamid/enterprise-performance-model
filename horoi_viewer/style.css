@@ -55,3 +55,6 @@ footer { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
   .relationship-table td { display:block; border:0; padding:5px 0; }
   .relationship-table td::before { content:attr(data-label); display:block; font-size:12px; color:var(--muted); }
 }
+
+.graph .compact-graph { display:none; }
+@media(max-width:760px) { .graph .wide-graph { display:none; }.graph .compact-graph { display:block; min-width:0; max-height:none; }.graph { overflow:visible; } }

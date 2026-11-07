@@ -111,24 +111,30 @@ function relationshipList(rows) {
     : preview;
 }
 function browsePage(params) {
-  browseState.q=params.get("q")||""; browseState.module=params.get("module")||""; browseState.layer=params.get("layer")||""; browseState.page=0;
+  browseState.q=params.get("q")||""; browseState.module=params.get("module")||""; browseState.layer=params.get("layer")||"";
+  const requestedPage=Number(params.get("page"));
+  browseState.page=Number.isSafeInteger(requestedPage)&&requestedPage>=0?requestedPage:0;
   return `${crumb(["Find a term"])}<h1>Find a term</h1><p>Search labels, definitions and identifiers. Filter by module or reading group to narrow the result.</p>
   <div class="filters"><label class="search">Search terms<input id="search" type="search" placeholder="Try customer account or a process name" value="${e(browseState.q)}"></label>
   <label>Module<select id="module-filter"><option value="">Party and Core</option>${data.pilotModules.map(m=>`<option value="${e(m)}" ${m===browseState.module?"selected":""}>${e(moduleLabel(m))}</option>`).join("")}</select></label>
   <label>Reading group<select id="layer-filter"><option value="">All groups</option>${["Business concepts","Vocabulary","Rules and evidence"].map(l=>`<option ${l===browseState.layer?"selected":""}>${e(l)}</option>`).join("")}</select></label></div>
-  <p id="result-count" role="status" class="quiet"></p><ul class="results" id="results"></ul><div id="pager" class="pager"></div>`;
+  <p id="result-count" role="status" class="quiet"></p><ul class="results" id="results"></ul><div id="pager" class="pager"><button id="prev">Previous</button><button id="next">Next</button></div>`;
 }
 function refreshResults() {
   const s=browseState;
   const found=data.nodes.filter(n=>isLocal(n) && (s.layer==="Rules and evidence" ? layer(n)===s.layer : pilot.has(n.id))
     && (!s.module||moduleNames(n).includes(s.module)) && (!s.layer||layer(n)===s.layer)
     && (n.label+" "+n.id+" "+definition(n)).toLowerCase().includes(s.q.toLowerCase())).sort((a,b)=>a.label.localeCompare(b.label)||a.id.localeCompare(b.id));
+  s.page=Math.min(s.page,Math.max(0,Math.ceil(found.length/40)-1));
   const start=s.page*40;
   document.getElementById("result-count").textContent=found.length ? `${found.length} results. Showing ${start+1} to ${Math.min(start+40,found.length)}.` : "No matching terms. Try a shorter name or clear the filters.";
   document.getElementById("results").innerHTML=found.slice(start,start+40).map(n=>`<li>${link(n.id)}<span class="badge">${e(n.kind)}</span><p>${e(moduleNames(n).join(", "))} · ${e(definition(n))}</p></li>`).join("");
-  document.getElementById("pager").innerHTML=`<button id="prev" ${!s.page?"disabled":""}>Previous</button><button id="next" ${start+40>=found.length?"disabled":""}>Next</button>`;
-  document.getElementById("prev").onclick=()=>{s.page--;refreshResults();};
-  document.getElementById("next").onclick=()=>{s.page++;refreshResults();};
+  const prev=document.getElementById("prev"),next=document.getElementById("next");
+  const focused=document.activeElement;
+  prev.disabled=!s.page;next.disabled=start+40>=found.length;
+  if(focused===prev&&prev.disabled&&!next.disabled) next.focus();
+  if(focused===next&&next.disabled&&!prev.disabled) prev.focus();
+  history.replaceState(null,"","#browse?"+new URLSearchParams({q:s.q,module:s.module,layer:s.layer,page:s.page}));
 }
 function kindExplanation(kind) {
   const descriptions = {
@@ -165,9 +171,12 @@ function termPage(id) {
 }
 function smallGraph(n,rows) {
   const height=rows.length*76+32, middle=height/2;
-  return `<div class="graph"><svg viewBox="0 0 900 ${height}" role="img" aria-label="Outgoing connections from ${e(n.label)}. The same statements appear in the table below.">
+  return `<div class="graph"><svg class="wide-graph" viewBox="0 0 900 ${height}" role="img" aria-label="Outgoing connections from ${e(n.label)}. The same statements appear in the table below.">
   <rect x="8" y="${middle-28}" width="240" height="56" rx="8"/><text x="20" y="${middle+5}" font-size="14">${e(n.label.slice(0,27))}</text>
-  ${rows.map((r,i)=>{const y=i*76+48;return `<line x1="248" y1="${middle}" x2="615" y2="${y}"/><polygon points="615,${y} 605,${y-5} 605,${y+5}"/><text class="edge-label" x="395" y="${(middle+y)/2-9}">${e(title(r.p).slice(0,29))}</text><a href="${e(termHref(r.o))}"><rect x="620" y="${y-26}" width="265" height="52" rx="8"/><text x="635" y="${y+5}" font-size="14">${e(title(r.o).slice(0,29))}</text><title>${e(title(r.o))}</title></a>`;}).join("")}</svg></div>`;
+  ${rows.map((r,i)=>{const y=i*76+48;return `<line x1="248" y1="${middle}" x2="615" y2="${y}"/><polygon points="615,${y} 605,${y-5} 605,${y+5}"/><text class="edge-label" x="395" y="${(middle+y)/2-9}">${e(title(r.p).slice(0,29))}</text><a href="${e(termHref(r.o))}"><rect x="620" y="${y-26}" width="265" height="52" rx="8"/><text x="635" y="${y+5}" font-size="14">${e(title(r.o).slice(0,29))}</text><title>${e(title(r.o))}</title></a>`;}).join("")}</svg>
+  <svg class="compact-graph" viewBox="0 0 360 ${rows.length*116+90}" role="img" aria-label="Outgoing connections from ${e(n.label)}. The same statements appear in the cards below.">
+  <rect x="12" y="8" width="336" height="50" rx="8"/><text x="24" y="38" font-size="14">${e(n.label.slice(0,38))}</text><title>${e(n.label)}</title>
+  ${rows.map((r,i)=>{const y=i*116+106;return `<path d="M 36 58 V ${y+26} H 98" fill="none" stroke="currentColor"/><polygon points="100,${y+26} 90,${y+21} 90,${y+31}"/><text class="edge-label" x="100" y="${y-12}">${e(title(r.p).slice(0,29))}</text><a href="${e(termHref(r.o))}"><rect x="100" y="${y}" width="248" height="52" rx="8"/><text x="112" y="${y+31}" font-size="14">${e(title(r.o).slice(0,27))}</text><title>${e(title(r.o))}</title></a>`;}).join("")}</svg></div>`;
 }
 function facts(n) {
   return `<div class="table-wrap"><table><thead><tr><th scope="col">Property</th><th scope="col">Value</th></tr></thead><tbody>${n.values.map(v=>`<tr><td>${link(v.p)}<br><code>${e(v.p)}</code></td><td>${v.literal?`${e(v.v)} ${v.lang?`<span class="lang">Language: ${e(v.lang)}</span>`:""}${v.datatype?`<br><code>Datatype: ${e(v.datatype)}</code>`:""}`:link(v.v)}</td></tr>`).join("")}</tbody></table></div>`;
@@ -207,16 +216,23 @@ function render() {
   document.querySelectorAll(".masthead nav a[aria-current]").forEach(a=>a.setAttribute("aria-current","page"));
   if(route==="browse") {
     refreshResults();
+    document.getElementById("prev").onclick=()=>{browseState.page--;refreshResults();};
+    document.getElementById("next").onclick=()=>{browseState.page++;refreshResults();};
     for(const [id,key] of [["search","q"],["module-filter","module"],["layer-filter","layer"]]) document.getElementById(id).addEventListener("input",event=>{
       browseState[key]=event.target.value;browseState.page=0;
-      history.replaceState(null,"","#browse?"+new URLSearchParams({q:browseState.q,module:browseState.module,layer:browseState.layer}));refreshResults();
+      refreshResults();
     });
   }
   const copy=document.getElementById("copy-iri");
   if(copy) copy.onclick=async()=>{
-    const text=document.getElementById("term-iri").textContent;
-    try { await navigator.clipboard.writeText(text);document.getElementById("copy-status").textContent="Copied"; }
-    catch { const r=document.createRange();r.selectNodeContents(document.getElementById("term-iri"));getSelection().removeAllRanges();getSelection().addRange(r);document.getElementById("copy-status").textContent="Identifier selected. Use Copy from your browser."; }
+    const iri=document.getElementById("term-iri"),status=document.getElementById("copy-status");
+    const text=iri.textContent;
+    try { await navigator.clipboard.writeText(text);if(status.isConnected) status.textContent="Copied"; }
+    catch {
+      if(!iri.isConnected||!status.isConnected) return;
+      const r=document.createRange();r.selectNodeContents(iri);getSelection().removeAllRanges();getSelection().addRange(r);
+      status.textContent="Identifier selected. Use Copy from your browser.";
+    }
   };
   window.scrollTo(0,0);
   main.focus({preventScroll:true});

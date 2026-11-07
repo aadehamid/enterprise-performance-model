@@ -22,3 +22,9 @@ turn on caffeine to make the computer stay on
 let me review before the final release so that I can provide feedback as needed
 
 I need to step out. Do you need the review to move on. Or can you continue towards the goal since I am not here. I can review the final version when I am back and provide feedback. thoughts?
+
+<!-- The initial proposal, before the scope instruction above. -->
+
+can you take a look at and see if we can use it to document the ontology and how we can use it. If we happen to use this I am thinking we should create a new folder called horoi_viewer that contains this viewer separate from what we originally have. let us discuss
+
+https://github.com/kvistgaard/horoi

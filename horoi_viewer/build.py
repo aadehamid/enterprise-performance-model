@@ -9,6 +9,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+import rdflib
+
 HERE = Path(__file__).resolve().parent
 CONFIG = json.loads((HERE / "config.json").read_text())
 sys.path.insert(0, str(HERE / "vendor"))
@@ -51,7 +53,12 @@ def verify_source(root):
 
 def payload(root):
     """Use the existing reader's file-scoped blank nodes and package hash checks."""
-    data = reader.build_data(root)
+    normalize = rdflib.NORMALIZE_LITERALS
+    try:
+        rdflib.NORMALIZE_LITERALS = False
+        data = reader.build_data(root)
+    finally:
+        rdflib.NORMALIZE_LITERALS = normalize
     data["sourceCommit"] = CONFIG["source_commit"]
     data["pilotModules"] = CONFIG["modules"]
     data["horoiCommit"] = CONFIG["horoi_commit"]
@@ -88,14 +95,8 @@ def script_json(value):
     return json.dumps(value, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c").replace("&", "\\u0026")
 
 
-def build(source, out):
-    source = verify_source(source)
-    out = Path(out).resolve()
-    if out == source or source in out.parents:
-        raise ValueError("Build output must be outside the source release")
-    if out.exists() and any(out.iterdir()):
-        raise ValueError("Choose a new or empty output folder; existing files are never replaced")
-    data = payload(source)
+def render_files(data):
+    """The complete deterministic output, used by the builder and release verifier."""
     css = TEMPLATE.split("<style>", 1)[1].split("</style>", 1)[0]
     css = css.replace("{dark}", DARK_CSS).replace("{svg_light}", "").replace("{svg_dark}", "")
     css = css.replace("{{", "{").replace("}}", "}")
@@ -103,16 +104,30 @@ def build(source, out):
     page = page.replace("<!-- HOROI_CSS -->", css + "\n" + (HERE / "style.css").read_text())
     page = page.replace("<!-- DATA -->", script_json(data))
     page = page.replace("<!-- APP -->", (HERE / "app.js").read_text())
-    out.mkdir(parents=True, exist_ok=True)
-    (out / "index.html").write_text(page, encoding="utf-8")
-    (out / "LICENSE.txt").write_bytes((HERE / "vendor/LICENSE").read_bytes())
-    (out / "NOTICE.txt").write_bytes((HERE / "NOTICE.txt").read_bytes())
+    index = page.encode("utf-8")
     report = {"source_commit": CONFIG["source_commit"], "horoi_commit": CONFIG["horoi_commit"],
         "modules": CONFIG["modules"], "inputs": data["inputs"],
         "pilot_terms": len(data["pilotTerms"]), "triples_available": data["triples"],
-        "index_sha256": hashlib.sha256((out / "index.html").read_bytes()).hexdigest()}
-    (out / "build.json").write_text(json.dumps(report, indent=2) + "\n")
-    return report
+        "index_sha256": hashlib.sha256(index).hexdigest()}
+    return {"index.html": index, "LICENSE.txt": (HERE / "vendor/LICENSE").read_bytes(),
+            "NOTICE.txt": (HERE / "NOTICE.txt").read_bytes(),
+            "build.json": (json.dumps(report, indent=2) + "\n").encode("utf-8")}
+
+
+def build(source, out):
+    source = verify_source(source)
+    out = Path(out).resolve()
+    if out == source or source in out.parents:
+        raise ValueError("Build output must be outside the source release")
+    if out.exists() and any(out.iterdir()):
+        raise ValueError("Choose a new or empty output folder; existing files are never replaced")
+    files = render_files(payload(source))
+    out.mkdir(parents=True, exist_ok=True)
+    for name, content in files.items():
+        with (out / name).open("xb") as stream:
+            stream.write(content)
+        (out / name).chmod(0o644)
+    return json.loads(files["build.json"])
 
 
 def main():

@@ -3,6 +3,7 @@
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 import pytest
 
@@ -41,12 +42,8 @@ def sample_data(monkeypatch):
 
 def make_docs(path, data):
     path.mkdir()
-    for name in r.DOC_FILES:
-        (path / name).write_text("document\n")
-    html = '<script id="ontology-data" type="application/json">' + b.script_json(data) + '</script>'
-    (path / "index.html").write_text(html)
-    (path / "build.json").write_text(json.dumps({"source_commit": b.CONFIG["source_commit"],
-        "index_sha256": hashlib.sha256(html.encode()).hexdigest(), "inputs": data["inputs"]}))
+    for name, content in b.render_files(data).items():
+        (path / name).write_bytes(content)
     return path
 
 
@@ -108,7 +105,7 @@ def test_stage_preserves_every_original_file(source, tmp_path, sample_data):
     assert result["added_files"] == sorted("horoi_viewer/" + n for n in r.DOC_FILES)
 
 
-@pytest.mark.parametrize("mutation", ["change", "delete", "mode", "extra", "symlink"])
+@pytest.mark.parametrize("mutation", ["change", "delete", "mode", "read_mode", "nested_git", "extra", "symlink"])
 def test_release_guard_rejects_changes(source, tmp_path, sample_data, mutation):
     output = tmp_path / "release"
     r.stage(source, make_docs(tmp_path / "docs", sample_data), output)
@@ -116,8 +113,14 @@ def test_release_guard_rejects_changes(source, tmp_path, sample_data, mutation):
         (output / "README.md").write_text("Changed")
     elif mutation == "delete":
         (output / "README.md").unlink()
+    elif mutation == "read_mode":
+        (output / "script.sh").chmod(0o555)
     elif mutation == "mode":
         (output / "script.sh").chmod(0o644)
+    elif mutation == "nested_git":
+        hidden = output / "horoi_viewer/.git"
+        hidden.mkdir()
+        (hidden / "extra.ttl").write_text("extra data")
     elif mutation == "extra":
         (output / "extra.ttl").write_text("extra data")
     else:
@@ -167,3 +170,80 @@ def test_vendor_matches_recorded_upstream_bytes():
     assert lock["commit"] == b.CONFIG["horoi_commit"]
     for name, expected in lock["files"].items():
         assert hashlib.sha256((b.HERE / "vendor" / name).read_bytes()).hexdigest() == expected
+
+
+@pytest.mark.parametrize("mutation", ["javascript", "license", "notice", "metadata"])
+def test_generated_files_must_match_the_builder(source, tmp_path, sample_data, mutation):
+    docs = tmp_path / "docs"
+    b.build(source, docs)
+    output = tmp_path / "release"
+    r.stage(source, docs, output)
+    generated = output / "horoi_viewer"
+    if mutation == "javascript":
+        index = generated / "index.html"
+        index.write_text(index.read_text().replace("</body>", "<script>window.changed=true</script></body>"))
+        record = json.loads((generated / "build.json").read_text())
+        record["index_sha256"] = hashlib.sha256(index.read_bytes()).hexdigest()
+        (generated / "build.json").write_text(json.dumps(record))
+    elif mutation == "metadata":
+        record = json.loads((generated / "build.json").read_text())
+        record["pilot_terms"] = 99999
+        (generated / "build.json").write_text(json.dumps(record))
+    else:
+        name = "LICENSE.txt" if mutation == "license" else "NOTICE.txt"
+        (generated / name).write_text("Replaced notices")
+    with pytest.raises(ValueError, match="generated documentation"):
+        r.verify(source, output)
+
+
+@pytest.mark.parametrize("target", ["source-new", "source-existing", "git-config", "docs", "existing-report", "missing-parent"])
+def test_report_never_changes_inputs_or_existing_files(source, tmp_path, sample_data, monkeypatch, target):
+    docs = tmp_path / "docs"
+    b.build(source, docs)
+    report = {"source-new": source / "audit.json", "source-existing": source / "README.md",
+              "git-config": source / ".git/config", "docs": docs / "NOTICE.txt",
+              "existing-report": tmp_path / "audit.json",
+              "missing-parent": tmp_path / "missing/audit.json"}[target]
+    if target == "existing-report":
+        report.write_text("Keep this evidence")
+    before = report.read_bytes() if report.exists() else None
+    output = tmp_path / "release"
+    monkeypatch.setattr(sys, "argv", ["release", "stage", "--source", str(source),
+        "--docs", str(docs), "--out", str(output), "--report", str(report)])
+    with pytest.raises(SystemExit) as exc:
+        r.main()
+    assert exc.value.code == 2
+    assert not output.exists()
+    assert (report.read_bytes() if report.exists() else None) == before
+
+
+def test_real_payload_and_embedded_rdf_match_raw_packages(source, tmp_path, monkeypatch):
+    import importlib.util
+    import rdflib
+
+    spec = importlib.util.spec_from_file_location(
+        "reference_roundtrip_tests", b.HERE.parent / "business_architecture/ontology/viewer/test_viewer.py"
+    )
+    helpers = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(helpers)
+    for module in ("core", "party"):
+        ontology = f"https://example.test/{module}"
+        ttl = helpers.TTL + f'\n<{ontology}> a owl:Ontology; rdfs:label "{module}" .\n'
+        ttl += f'<{ontology}/Shape> <urn:path> _:detail .\n_:detail <urn:code> "01"^^<http://www.w3.org/2001/XMLSchema#integer> .\n'
+        path = helpers.package(source, module=module, ttl=ttl)
+        manifest_path = path / "manifest.json"
+        manifest = json.loads(manifest_path.read_text())
+        manifest["ontology_iri"] = ontology
+        manifest_path.write_text(json.dumps(manifest))
+    git(source, "add", ".")
+    git(source, "commit", "-qm", "Add nested RDF packages")
+    monkeypatch.setitem(b.CONFIG, "source_commit", git(source, "rev-parse", "HEAD"))
+    data = b.payload(source)
+    output = tmp_path / "built"
+    b.build(source, output)
+    embedded = json.loads((output / "index.html").read_text().split(
+        '<script id="ontology-data" type="application/json">', 1)[1].split("</script>", 1)[0])
+    monkeypatch.setattr(rdflib, "NORMALIZE_LITERALS", False)
+    helpers.assert_roundtrip(source, data)
+    helpers.assert_roundtrip(source, embedded)
+    assert embedded == data

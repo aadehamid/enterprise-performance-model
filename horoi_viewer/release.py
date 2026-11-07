@@ -17,7 +17,8 @@ def fingerprint(path):
     if path.is_symlink() or not path.is_file():
         raise ValueError(f"Expected a regular file: {path}")
     return {"sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-            "executable": bool(path.stat().st_mode & stat.S_IXUSR)}
+            "executable": bool(path.stat().st_mode & stat.S_IXUSR),
+            "mode": stat.S_IMODE(path.stat().st_mode)}
 
 
 def tracked_files(source):
@@ -32,14 +33,16 @@ def verify(source, release):
     baseline = {p.as_posix(): fingerprint(source / p) for p in tracked_files(source)}
     current = {}
     for root, dirs, files in os.walk(release):
-        dirs[:] = [d for d in dirs if d != ".git"]
+        if Path(root) == release:
+            dirs[:] = [d for d in dirs if d != ".git"]
+            files = [name for name in files if name != ".git"]
         if any((Path(root) / d).is_symlink() for d in dirs):
             raise ValueError("Release directories must not be symlinks")
         for name in files:
             path = Path(root) / name
             current[path.relative_to(release).as_posix()] = fingerprint(path)
     if any(current.get(p) != state for p, state in baseline.items()):
-        raise ValueError("A pre-existing release file was changed, removed, or had its executable mode changed")
+        raise ValueError("A pre-existing release file was changed, removed, or had its permissions changed")
     expected = {"horoi_viewer/" + name for name in DOC_FILES}
     if set(current) - set(baseline) != expected:
         raise ValueError("The release must add only the documented Horoi output files")
@@ -55,6 +58,10 @@ def verify(source, release):
     expected_data = builder.payload(source)
     if embedded != expected_data or report["inputs"] != expected_data["inputs"]:
         raise ValueError("Documentation data differs from the verified release")
+    for name, content in builder.render_files(expected_data).items():
+        path = "horoi_viewer/" + name
+        if current[path] != {"sha256": hashlib.sha256(content).hexdigest(), "executable": False, "mode": 0o644}:
+            raise ValueError(f"The generated documentation differs from the current builder: {path}")
     return {"source_commit": builder.CONFIG["source_commit"],
             "unchanged_files": len(baseline), "added_files": sorted(expected),
             "baseline": baseline, "added": {p: current[p] for p in sorted(expected)}}
@@ -91,12 +98,21 @@ def main():
     ap.add_argument("--docs", type=Path)
     ap.add_argument("--report", required=True, type=Path, help="Audit report outside the release folder")
     args = ap.parse_args()
-    if args.report.resolve() == args.out.resolve() or args.out.resolve() in args.report.resolve().parents:
-        ap.error("Write the audit report outside the staged release")
+    protected = [args.source.resolve(), args.out.resolve()]
+    if args.docs:
+        protected.append(args.docs.resolve())
+    report_path = args.report.resolve()
+    if any(report_path == root or root in report_path.parents for root in protected):
+        ap.error("Write the audit report outside the source, documentation and staged release")
+    if args.report.exists() or args.report.is_symlink():
+        ap.error("Choose a new audit report path; existing files are never replaced")
+    if not args.report.parent.is_dir():
+        ap.error("Choose an audit report path with an existing parent directory")
     if args.command == "stage" and not args.docs:
         ap.error("stage requires --docs")
     result = stage(args.source, args.docs, args.out) if args.command == "stage" else verify(args.source, args.out)
-    args.report.write_text(json.dumps(result, indent=2) + "\n")
+    with args.report.open("x", encoding="utf-8") as stream:
+        stream.write(json.dumps(result, indent=2) + "\n")
     print(f"Verified {result['unchanged_files']} unchanged files; added only horoi_viewer documentation")
 
 
