@@ -1,0 +1,5 @@
+{
+  "source_commit": "8307c88d8896504d342a0d44880271ed4e6846ab",
+  "modules": ["party", "core"],
+  "horoi_commit": "33caa8cc916e7efb767a5c2831216ff1cb11c509"
+}

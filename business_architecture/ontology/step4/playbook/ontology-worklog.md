@@ -968,6 +968,17 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Offline Party/Core documentation pilot (2026-11-07)
+
+EPM-DEC-001-0114 records the decision owner's approval of an offline Party/Core
+reference, a usage guide, and a new release that adds only documentation.
+Usability is the priority: readers must understand the layers and follow
+connections within and between modules. The implementation belongs in the
+original repository's `horoi_viewer/`; its generated pages belong alongside
+the existing viewer in the private release. Publication is pending. Existing
+release files, ontology versions, data and projections must remain unchanged.
+The documentation-only route does not rebuild packages or reload stores.
+
 ### The playbook becomes the `ontology` skill's guide (2026-10-25)
 - On 2026-10-25 the decision owner asked whether to move it: "Should we
   move to he ontology skills itesef since the Playbook is a guide on how to

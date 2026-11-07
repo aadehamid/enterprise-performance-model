@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/kvistgaard/horoi",
+  "commit": "33caa8cc916e7efb767a5c2831216ff1cb11c509",
+  "retrieved": "2026-11-07",
+  "files": {
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "horoi/diagram.py": "e4f129e108e42a587bd522d8c432093cefdb40a880e884b3853b71e4dce13cec",
+    "horoi/__init__.py": "55ad35153c7066e045267410bb3adb008a54ad18b399eec44fd054521913fb8b",
+    "horoi/page.py": "ad9bea195d76e383f61a75c435020aea7eef611d8b1f547bbfae5df91625f428"
+  }
+}

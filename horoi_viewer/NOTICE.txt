@@ -1,0 +1,12 @@
+This documentation uses the Horoi page styles from commit
+33caa8cc916e7efb767a5c2831216ff1cb11c509, retrieved 2026-11-07.
+Source: https://github.com/kvistgaard/horoi
+Horoi is licensed under the Apache License, Version 2.0 (LICENSE.txt).
+
+The navigation, guided overview, RDF rendering, search, and relationship views
+are adaptations for the MPC Business Process and Architecture Ontology.
+These adaptations do not change the released ontology.
+
+The software license does not replace the rights and source notices in the
+ontology packages. Those notices remain available in the term facts and the
+release documents.
