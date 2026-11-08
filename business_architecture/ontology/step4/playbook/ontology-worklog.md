@@ -968,6 +968,12 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Reference expansion and guided explorers (2026-11-07)
+
+The initial reference implementation merged in PR #500. The later amendments to EPM-DEC-001-0114 authorize Process and Customer lifecycle explorers, Commercial Hydrocarbon Lifecycle and Order to Cash, and expansion of the primary reference to every current module after preview review. The source answers file records the instruction to proceed with all modules.
+
+The expansion is in development. It retains the pinned release at `8307c88d8896504d342a0d44880271ed4e6846ab` and changes navigation rather than ontology statements. The builder discovers modules from the current release manifests. Process hierarchy follows `skos:broader`; value-stream stages follow their recorded numeric positions. A connection trail preserves each traversed predicate and direction. Missing or ambiguous positions remain explicit. Final publication still requires the requested final review and the additive documentation checks in `horoi_viewer/README.md`. No ontology, store or projection change is part of this work.
+
 ### Offline Party/Core documentation pilot (2026-11-07)
 
 EPM-DEC-001-0114 records the decision owner's approval of an offline Party/Core

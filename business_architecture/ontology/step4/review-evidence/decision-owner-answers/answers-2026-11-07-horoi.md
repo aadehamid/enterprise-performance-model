@@ -28,3 +28,21 @@ I need to step out. Do you need the review to move on. Or can you continue towar
 can you take a look at and see if we can use it to document the ontology and how we can use it. If we happen to use this I am thinking we should create a new folder called horoi_viewer that contains this viewer separate from what we originally have. let us discuss
 
 https://github.com/kvistgaard/horoi
+
+<!-- Follow-up viewer review in the same session. The agent proposed Process and Customer lifecycle entry points within the existing reference. The full-release scope question was: "For the final release, should the reference cover every ontology module, expanding beyond the original Party/Core pilot? I recommend full module coverage, with guided Process and Customer lifecycle explorers." Options: "Cover all modules in this release"; "Keep Party/Core for this release; expand later". -->
+
+in such a way that you can start from the business process and walk down everything else that is connected from the top of the tree to the lowest part of the tree.
+
+I love what you had. We are just making improvemnet to it. let us do that. We should also have one for customer lifecycle. Once we do this do we plan to now build for all modules in the ontology before we release?
+
+cover all modules for ful release
+
+let us review the improvement first before we go full module release.
+
+<!-- The next preview request, in the same session. -->
+
+this is awesome. can we alos have the two value stream - Commercial Hydrocarbob lifecyle, Order to Cash. Of course each concepts they connect to is easy to navigate too in an intutive way. Once we do this. I will review then we do a full release for all modules in the ontology
+
+<!-- After reviewing the value-stream preview, the owner authorized the module expansion. -->
+
+Please go ahead and include all modules

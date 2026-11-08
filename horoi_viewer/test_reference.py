@@ -3,12 +3,19 @@
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 import pytest
 
 from horoi_viewer import build as b
 from horoi_viewer import release as r
+
+
+def test_explorer_model_counterexamples():
+    """Run the same assertion index used by the browser on adversarial graphs."""
+    subprocess.run(["node", str(Path(__file__).with_name("test_explorer_model.cjs"))],
+                   check=True, capture_output=True, text=True, timeout=30)
 
 
 def git(path, *args):
@@ -34,7 +41,7 @@ def source(tmp_path, monkeypatch):
 
 @pytest.fixture
 def sample_data(monkeypatch):
-    data = {"sourceCommit": b.CONFIG["source_commit"], "inputs": [], "pilotTerms": ["urn:term"],
+    data = {"sourceCommit": b.CONFIG["source_commit"], "inputs": [], "referenceTerms": ["urn:term"], "referenceModules": ["party"],
             "triples": 1, "nodes": [{"id": "urn:term", "values": [{"p": "urn:definition", "v": "A definition", "literal": True}]}]}
     monkeypatch.setattr(b, "payload", lambda source: data)
     return data
@@ -90,9 +97,34 @@ def test_payload_round_trip_keeps_layers_and_one_header_per_module(source, monke
     monkeypatch.setattr(b.reader, "SUPPORTING_KINDS", ("Shape",))
     payload = b.payload(source)
     assert json.loads(b.script_json(payload)) == payload
-    assert payload["pilotTerms"] == ["urn:Party", "urn:Stage"]
+    assert payload["referenceTerms"] == ["urn:Party", "urn:Stage"]
     assert [m["id"] for m in payload["moduleInfo"]] == ["urn:party"]
     assert len(payload["nodes"]) == 5
+
+
+def test_all_modules_are_discovered_from_the_release_manifests(source, monkeypatch):
+    raw_nodes, files = [], []
+    for module in ["party", "new-module"]:
+        folder = source / module
+        folder.mkdir()
+        (folder / "manifest.json").write_text(json.dumps({"ontology_iri": "urn:" + module, "version": "1.0"}))
+        files.append((folder / "ontology.ttl", module, "1.0"))
+        for suffix, kind in [("", "Metadata"), ("/Term", "Class"), ("/Rule", "Shape")]:
+            raw_nodes.append({"id": "urn:" + module + suffix, "kind": kind, "label": module + suffix,
+                              "modules": [{"name": module}], "values": []})
+    git(source, "add", ".")
+    monkeypatch.setitem(b.CONFIG, "modules", "all")
+    monkeypatch.setattr(b.reader, "release_files", lambda root: files)
+    monkeypatch.setattr(b.reader, "build_data", lambda root: {"nodes": raw_nodes, "inputs": [], "supportingKinds": ["Shape"]})
+    monkeypatch.setattr(b.reader, "SUPPORTING_KINDS", ("Shape",))
+    before = json.dumps(raw_nodes, sort_keys=True)
+    data = b.payload(source)
+    assert data["referenceModules"] == ["new-module", "party"]
+    assert set(data["referenceTerms"]) == {"urn:party/Term", "urn:new-module/Term"}
+    assert json.dumps(data["nodes"], sort_keys=True) == before
+    monkeypatch.setitem(b.CONFIG, "modules", ["party", "absent"])
+    with pytest.raises(ValueError, match="release module"):
+        b.payload(source)
 
 
 def test_stage_preserves_every_original_file(source, tmp_path, sample_data):
@@ -192,7 +224,7 @@ def test_generated_files_must_match_the_builder(source, tmp_path, sample_data, m
         (generated / "build.json").write_text(json.dumps(record))
     elif mutation == "metadata":
         record = json.loads((generated / "build.json").read_text())
-        record["pilot_terms"] = 99999
+        record["reference_terms"] = 99999
         (generated / "build.json").write_text(json.dumps(record))
     else:
         name = "LICENSE.txt" if mutation == "license" else "NOTICE.txt"
