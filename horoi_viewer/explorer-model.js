@@ -14,8 +14,13 @@ function createExplorerIndex(data) {
   const objects = (id,p) => sorted(values(id,p).filter(v=>!v.literal).map(v=>v.v));
   function streamStages(id) {
     return objects(id,streamNamespace+"hasStage").map(stage=>{
-      const recorded=values(stage,streamNamespace+"sequence").filter(v=>v.literal).map(v=>v.v);
-      const numbers=recorded.map(v=>/^\+?\d+$/.test(v)?Number(v):NaN);
+      const literals=values(stage,streamNamespace+"sequence").filter(v=>v.literal);
+      const recorded=literals.map(v=>v.v);
+      const numbers=literals.map(v=>{
+        const lexical=v.datatype==="http://www.w3.org/2001/XMLSchema#integer"
+          ? v.v.replace(/^[\t\n\r ]+|[\t\n\r ]+$/g,"") : v.v;
+        return /^\+?\d+$/.test(lexical)?Number(lexical):NaN;
+      });
       const position=recorded.length===1 && Number.isSafeInteger(numbers[0]) && numbers[0]>0?numbers[0]:null;
       return {id:stage,position,recorded};
     }).sort((a,b)=>(a.position??Infinity)-(b.position??Infinity)||compare(a.id,b.id));

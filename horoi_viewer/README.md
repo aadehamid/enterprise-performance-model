@@ -16,6 +16,8 @@ Open **Customer lifecycle** and choose a stage. The stage list is alphabetical b
 
 Open **Value streams** and choose Commercial Hydrocarbon Lifecycle or Order to Cash. Each view shows the recorded trigger, outcome and stage positions. Open a stage to choose one of its processes, then follow its connections into the process tree, capabilities, data products, measures or other concepts. The sidebar keeps the starting value stream available throughout the path.
 
+If a release lacks one of these value streams, its entry states that it is unavailable. The other reference pages remain usable. A saved trail that begins in another named value stream restores that stream's view and preserves the path.
+
 Stage membership follows `hasStage`; process membership follows `hasProcess`. Stage order follows the numeric `sequence` values. Processes within a stage are listed alphabetically because membership does not establish their execution order. Missing, ambiguous or shared stage positions are disclosed. The `feeds`, `informs` and `loopsTo` connections keep their recorded meanings. A value-stream process and the process-map concept it `realizes` remain separate items, even when their labels match.
 
 The connection trail retains the statements followed, including across modules. Parent and child links retain that trail. Selecting a new item in the process or customer sidebar, or in process ancestry, starts a new trail. Value-stream stage and process choices start a recorded path from their stream. A repeat visit returns to the earlier item; after 100 hops the link explicitly starts a new trail. The explorer and primary reference can inspect connected concepts across every included module.
@@ -28,7 +30,7 @@ NODE_PATH=<node_modules> node horoi_viewer/test_explorers.mjs \
   <staged-release>/horoi_viewer/index.html <evidence-folder>
 ```
 
-These checks cover hierarchy depth, multiple parents, cycles, duplicate labels, asserted trails, complete adjacent statements, real customer and value-stream paths, stage ordering and membership, keyboard navigation, browser history and offline layouts. The Python reference suite also runs the model checks and requires Node.js. Run the existing reference checks as well. Full repository checks and independent review follow reader agreement on the design.
+These checks cover hierarchy depth, multiple parents, cycles, duplicate labels, asserted trails, complete adjacent statements, real customer and value-stream paths, stage ordering and membership, keyboard navigation, browser history and offline layouts. Browser counterexamples also exercise synthetic hierarchy branches, the trail-length boundary, missing value streams, label escaping and invalid filter or page addresses. The Python reference suite runs the model checks and requires Node.js. Run the existing reference checks as well. Full repository checks and independent review follow reader agreement on the design.
 
 ## Build
 

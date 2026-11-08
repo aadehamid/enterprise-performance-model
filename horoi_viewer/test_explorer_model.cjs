@@ -37,6 +37,16 @@ const rawIncoming=nodes.flatMap(n=>n.values.filter(v=>!v.literal&&v.v==='p9').ma
 assert.equal(JSON.stringify(ix.incoming.get('p9')),JSON.stringify(rawIncoming),'The shared incoming index preserves raw order and records for both views');
 console.log('Explorer model counterexamples passed: depth, multiple parents, cycles, identity and asserted trails.');
 
+const integer='http://www.w3.org/2001/XMLSchema#integer';
+const whitespaceData={moduleInfo:[{name:'value-stream',id:'urn:ws'}],nodes:[
+  {id:'ordered-stream',label:'Stream',values:['first','second','invalid-space'].map(v=>edge('urn:ws/hasStage',v))},
+  ...[['first',' 1 '],['second','\t+2\n'],['invalid-space','1 2']].map(([id,v])=>({id,label:id,values:[{p:'urn:ws/sequence',v,literal:true,datatype:integer}]}))
+]};
+const rawWhitespace=JSON.stringify(whitespaceData), positions=makeIndex(whitespaceData).streamStages('ordered-stream');
+assert.equal(JSON.stringify(positions.map(s=>[s.id,s.position])),JSON.stringify([['first',1],['second',2],['invalid-space',null]]));
+assert.equal(positions[0].recorded[0],' 1 ','Numeric display keeps the recorded lexical form');
+assert.equal(JSON.stringify(whitespaceData),rawWhitespace,'Parsing integer whitespace does not rewrite RDF');
+
 const stream='urn:vs/stream', vs='urn:vs/';
 const stage=(id,positions)=>({id,label:id,values:positions.map(v=>({p:vs+'sequence',v,literal:true}))});
 const streamData={moduleInfo:[{name:'value-stream',id:'urn:vs'}],nodes:[

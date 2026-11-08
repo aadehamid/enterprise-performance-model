@@ -32,6 +32,7 @@ const moduleInfo = m => data.moduleInfo.find(i => i.name === m);
 const valuesHtml = vs => vs.map(v => `<p>${e(v.v)}${v.lang ? `<span class="lang">${e(v.lang)}</span>` : ""}</p>`).join("");
 const crumb = trail => `<div class="crumb"><a href="#overview">Overview</a>${trail.map(x=>` / ${x}`).join("")}</div>`;
 const browseState = {q:"",module:"",layer:"",page:0};
+const readingGroups = ["Business concepts","Vocabulary","Rules and evidence"];
 
 function intro() {
   return `<div class="eyebrow">MPC Business Process and Architecture Ontology</div>
@@ -127,12 +128,14 @@ function relationshipList(rows) {
 }
 function browsePage(params) {
   browseState.q=params.get("q")||""; browseState.module=params.get("module")||""; browseState.layer=params.get("layer")||"";
+  if(!data.referenceModules.includes(browseState.module)) browseState.module="";
+  if(!readingGroups.includes(browseState.layer)) browseState.layer="";
   const requestedPage=Number(params.get("page"));
   browseState.page=Number.isSafeInteger(requestedPage)&&requestedPage>=0?requestedPage:0;
   return `${crumb(["Find a term"])}<h1>Find a term</h1><p>Search labels, definitions and identifiers. Filter by module or reading group to narrow the result.</p>
   <div class="filters"><label class="search">Search terms<input id="search" type="search" placeholder="Try customer account or a process name" value="${e(browseState.q)}"></label>
   <label>Module<select id="module-filter"><option value="">All modules</option>${data.referenceModules.map(m=>`<option value="${e(m)}" ${m===browseState.module?"selected":""}>${e(moduleLabel(m))}</option>`).join("")}</select></label>
-  <label>Reading group<select id="layer-filter"><option value="">All groups</option>${["Business concepts","Vocabulary","Rules and evidence"].map(l=>`<option ${l===browseState.layer?"selected":""}>${e(l)}</option>`).join("")}</select></label></div>
+  <label>Reading group<select id="layer-filter"><option value="">All groups</option>${readingGroups.map(l=>`<option ${l===browseState.layer?"selected":""}>${e(l)}</option>`).join("")}</select></label></div>
   <p id="result-count" role="status" class="quiet"></p><ul class="results" id="results"></ul><div id="pager" class="pager"><button id="prev">Previous</button><button id="next">Next</button></div>`;
 }
 function refreshResults() {
@@ -229,7 +232,8 @@ function render() {
   else if(route==="about") html=about();
   else if(route==="streams") html=valueStreamsPage();
   else if(isExplorerRoute(route)) html=explorerPage(route,new URLSearchParams(query));
-  else html=intro();
+  else if(route==="overview") html=intro();
+  else html=missing("This page is not available. Choose a starting point.");
   main.innerHTML=html;
   if(isExplorerRoute(route)) bindExplorer();
   document.querySelectorAll(".masthead nav a").forEach(a=>a.toggleAttribute("aria-current",a.hash.slice(1)===route || (a.hash==="#streams" && Object.hasOwn(streamModes,route))));

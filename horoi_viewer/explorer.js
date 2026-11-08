@@ -1,7 +1,8 @@
 "use strict";
 let explorerState = null;
 const streamModes = {commercial:explorer.streamNamespace+"stream/commercial-hydrocarbon-lifecycle","order-to-cash":explorer.streamNamespace+"stream/order-to-cash"};
-const explorerNames = {process:"Process explorer",customer:"Customer lifecycle",...Object.fromEntries(Object.entries(streamModes).map(([mode,id])=>[mode,title(id)]))};
+const streamNames = {commercial:"Commercial Hydrocarbon Lifecycle","order-to-cash":"Order to Cash"};
+const explorerNames = {process:"Process explorer",customer:"Customer lifecycle",...Object.fromEntries(Object.entries(streamModes).map(([mode,id])=>[mode,nodes.get(id)?.label||streamNames[mode]]))};
 const isExplorerRoute = route => Object.hasOwn(explorerNames,route);
 const explorerHref = (mode,id="",trail=null) => "#"+mode+"?"+new URLSearchParams({at:id,...(trail?.steps.length?{trail:JSON.stringify({start:trail.start,steps:trail.steps})}:{})});
 const explorerLabel = id => {
@@ -13,7 +14,12 @@ const exploreLink = (mode,id,label=null,trail=null) => nodes.has(id)
   : `<span title="${e(id)}">${label||e(title(id))}</span>`;
 
 function valueStreamTiles() {
-  return `<div class="grid">${Object.entries(streamModes).map(([mode,id])=>`<a class="tile" href="#${e(mode)}"><span class="eyebrow">Value stream</span><h3>${e(title(id))}</h3><p>${e(definition(nodes.get(id)))}</p><span class="go">Explore stages and connections →</span></a>`).join("")}</div>`;
+  return `<div class="grid">${Object.entries(streamModes).map(([mode,id])=>{
+    const node=nodes.get(id), heading=`<span class="eyebrow">Value stream</span><h3>${e(explorerNames[mode])}</h3>`;
+    return node
+      ? `<a class="tile" href="#${e(mode)}">${heading}<p>${e(definition(node))}</p><span class="go">Explore stages and connections →</span></a>`
+      : `<article class="tile">${heading}<p>This value stream is not included in this release.</p></article>`;
+  }).join("")}</div>`;
 }
 function valueStreamsPage() {
   return `${crumb(["Value streams"])}<h1>Value streams</h1><p class="lead">Follow a value stream through its stages, then explore the processes and concepts connected to each stage.</p>${valueStreamTiles()}<p class="note">Stage positions come from the released ontology. Processes within a stage are listed alphabetically. Feedback and other process relationships keep their own labels and directions.</p>`;
@@ -167,12 +173,18 @@ function explorerSelection() {
 function explorerPage(mode,params) {
   const requested=params.get("at"), id=requested===null?(streamModes[mode]||(mode==="process"?explorer.roots[0]||"":"")):requested;
   if (id && !nodes.has(id)) return missing("This item is not included in the release. Choose a process, customer lifecycle stage or value stream.");
-  explorerState={mode,id,query:params.get("q")||"",trail:explorer.readTrail(params.get("trail"),id)};
+  const trail=explorer.readTrail(params.get("trail"),id);
+  const origin=trail.valid && trail.steps.length ? Object.keys(streamModes).find(key=>streamModes[key]===trail.start) : null;
+  if(Object.hasOwn(streamModes,mode) && origin && origin!==mode) {
+    mode=origin;params.set("at",id);
+    history.replaceState(null,"","#"+mode+"?"+params);
+  }
+  explorerState={mode,id,query:params.get("q")||"",trail};
   const expanded=new Set(explorer.ancestry(id));
   const sidebar=streamModes[mode]?streamSidebar(mode,streamModes[mode],id):mode==="process"
     ? `<aside class="explorer-sidebar" id="explorer-start"><h2>Process tree</h2><p class="quiet">Expand a branch, then select a process. L labels show the recorded depth.</p><label>Find a process<input type="search" id="process-search" placeholder="Name, definition or code" value="${e(explorerState.query)}"></label><div id="process-search-results" aria-live="polite"></div><ul class="process-tree">${explorer.roots.map(r=>processTreeItem(r,[],expanded)).join("")}</ul>${explorer.unplaced.length?`<details><summary>Processes without a route from a root</summary><ul>${explorer.unplaced.map(r=>processTreeItem(r)).join("")}</ul></details>`:""}</aside>`
     : `<aside class="explorer-sidebar" id="explorer-start"><h2>Lifecycle stages</h2><p class="quiet">Choose any stage. The source records these stages without a sequence; the list is alphabetical.</p><ul class="stage-list">${explorer.stages.map(s=>`<li${s===id?' class="selected-stage"':""}>${exploreLink(mode,s)}<p>${e(definition(nodes.get(s)))}</p></li>`).join("")}</ul><a href="#module=party">Read the customer domain reference</a></aside>`;
-  return `${crumb([explorerNames[mode]])}<h1>${explorerNames[mode]}</h1><p class="lead">${streamModes[mode]?"Follow the stages, choose a process, and explore its connected concepts. Your trail keeps the path back to this value stream.":mode==="process"?"Start at the top of the process tree. Walk down each branch, then follow the people, systems, data and other items connected to it.":"Start with a customer lifecycle stage. Follow its processes and system stages, then explore the connections around each one."}</p>
+  return `${crumb([e(explorerNames[mode])])}<h1>${e(explorerNames[mode])}</h1><p class="lead">${streamModes[mode]?"Follow the stages, choose a process, and explore its connected concepts. Your trail keeps the path back to this value stream.":mode==="process"?"Start at the top of the process tree. Walk down each branch, then follow the people, systems, data and other items connected to it.":"Start with a customer lifecycle stage. Follow its processes and system stages, then explore the connections around each one."}</p>
     <div class="actions"><a href="#process" ${mode==="process"?'aria-current="page"':""}>Process explorer</a><a href="#customer" ${mode==="customer"?'aria-current="page"':""}>Customer lifecycle</a><a href="#streams" ${streamModes[mode]?'aria-current="page"':""}>Value streams</a></div>
     <div class="explorer-layout">${sidebar}<div>${explorerSelection()}</div></div>`;
 }
