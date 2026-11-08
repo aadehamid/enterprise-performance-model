@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import {browserCounterexamples} from './test_browser_cases.mjs';
 const {chromium}=createRequire(import.meta.url)('playwright-core');
 assert.ok(process.argv[2], 'Pass the generated index.html and an existing evidence directory');
-const base=pathToFileURL(resolve(process.argv[2])).href, evidence=process.argv[3];
+const artifact=resolve(process.argv[2]), base=pathToFileURL(artifact).href, evidence=process.argv[3];
 const browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
 const errors=[],requests=[],screens=[];
 try {
@@ -180,7 +180,7 @@ try {
     }
   }
   assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);
-  const counterexamples=await browserCounterexamples(browser,resolve(process.argv[2]));
+  const counterexamples=await browserCounterexamples(browser,artifact);
   const result={status:'passed',levels:index.levels,deepPath:index.path,errors,requests,screens,counterexamples};
   if(evidence) await writeFile(resolve(evidence,'explorer-results.json'),JSON.stringify(result,null,2));
   console.log(JSON.stringify(result));
