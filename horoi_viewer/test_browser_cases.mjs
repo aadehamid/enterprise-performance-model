@@ -30,6 +30,28 @@ export async function browserCounterexamples(browser,file) {
       assert.equal(await page.evaluate(()=>window.__rdfXss),undefined);
     }
     passed.push('Both stream labels render as text');
+    const integer='http://www.w3.org/2001/XMLSchema#integer';
+    const ordered=[['z-first',' 1 '],['m-second','\t+2\n'],['a-invalid','1 2']];
+    const stageId=name=>'urn:stage-fixture:'+name;
+    const ordering=await fixture('integer-stages',d=>{
+      const source=d.nodes.find(n=>n.id===streams.commercial);
+      source.values=source.values.filter(v=>v.p!==ns+'hasStage');
+      source.values.push(...ordered.map(([name])=>({p:ns+'hasStage',v:stageId(name),literal:false})));
+      d.nodes.push(...ordered.map(([name,value])=>({id:stageId(name),label:name,kind:'Concept',modules:source.modules,values:[{p:ns+'sequence',v:value,literal:true,datatype:integer}]})));
+    });
+    await page.goto(ordering+'#commercial');
+    assert.deepEqual(await page.locator('.stream-map h3 a').evaluateAll(as=>as.map(a=>a.title)),ordered.map(([name])=>stageId(name)));
+    assert.deepEqual(await page.locator('.stream-map .stage-number').allTextContents(),['1','2','?']);
+    assert.deepEqual(await page.locator('.stream-stage-heading .level').allTextContents(),['1','2','?']);
+    assert.match(await page.locator('.stream-overview').innerText(),/positions are missing, invalid or shared/);
+    for(const [name,value] of ordered) {
+      await page.goto(ordering+'#commercial?'+new URLSearchParams({at:stageId(name)}));
+      await page.getByText('All recorded facts, types and sources',{exact:true}).click();
+      const cell=page.locator('.explorer-selection > details tbody td').nth(1);
+      assert.equal(await cell.evaluate(el=>el.firstChild.textContent),value+' ','Recorded literal text retains its lexical form');
+      assert.equal(await cell.locator('code').innerText(),'Datatype: '+integer);
+    }
+    passed.push('Typed integer stages render in numeric order and preserve recorded literals');
     for(const removed of [...Object.values(streams).map(id=>[id]),Object.values(streams)]) {
       const url=await fixture('missing-'+removed.length+'-'+removed[0].split('/').pop(),d=>{d.nodes=d.nodes.filter(n=>!removed.includes(n.id));});
       for(const route of ['overview','streams']) {
@@ -108,6 +130,22 @@ export async function browserCounterexamples(browser,file) {
     assert.match(await page.locator('.explorer-selection').innerText(),/saved trail contains an unavailable or unconnected statement/);
     assert.equal(await page.locator('.reading-trail').count(),0);
     passed.push('The 100-hop limit restarts explicitly and rejects longer saved trails');
+    await page.goto(hundred.replace('#process?','#order-to-cash?'));
+    const streamGroup=page.locator('.connection-group').filter({has:page.locator('.connection-card[data-object="'+id('trail-101')+'"]')});
+    if(!await streamGroup.evaluate(el=>el.open))await streamGroup.locator(':scope > summary').click();
+    await streamGroup.getByRole('link',{name:'Start a new trail here',exact:false}).click();
+    await page.waitForFunction(selected=>explorerState.id===selected,id('trail-101'));
+    const incoming=page.locator('.connection-card[data-subject="'+id('trail-100')+'"][data-object="'+id('trail-101')+'"]');
+    const incomingGroup=page.locator('.connection-group').filter({has:incoming});
+    if(!await incomingGroup.evaluate(el=>el.open))await incomingGroup.locator(':scope > summary').click();
+    await incoming.getByRole('link',{name:'Follow connection',exact:false}).click();
+    const assertRestart=async()=>{
+      await page.waitForFunction(selected=>explorerState.id===selected,id('trail-100'));
+      assert.deepEqual(await page.evaluate(()=>({mode:explorerState.mode,start:explorerState.trail.start,steps:explorerState.trail.steps.length,valid:explorerState.trail.valid})),{mode:'order-to-cash',start:id('trail-101'),steps:1,valid:true});
+      assert.equal(await page.locator('.reading-trail li').count(),2);
+    };
+    await assertRestart();await page.reload();await assertRestart();
+    passed.push('An arbitrary-concept restart remains usable in a value-stream view after follow and reload');
     assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);
     return passed;
   } finally {await context.close();await rm(folder,{recursive:true,force:true});}
