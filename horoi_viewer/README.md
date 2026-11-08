@@ -8,9 +8,13 @@ The design adapts Horoi's page styles at the commit in `config.json`. Horoi's up
 
 ## Guided explorers
 
-The reference includes every current module from the pinned release under the 2026-11-07 amendments to EPM-DEC-001-0114. Process, Customer lifecycle and both value-stream explorers offer guided entry points across those modules. Publication still requires review of the final candidate.
+The reference includes every current module from the pinned release under EPM-DEC-001-0114 and its amendments. Process, Measures and KPIs, Customer lifecycle and both value-stream explorers offer guided entry points across those modules. Publication still requires review of the final candidate.
 
 Open **Processes** to expand the process tree from its roots. Select an item to read its definition, find its parent and children, and follow its connections. Levels come from the released taxonomy; the viewer does not stop at a fixed depth. The tree follows `skos:broader`, which describes hierarchy rather than workflow order. Multiple parents remain visible. Cycles stop expanding and link back to the existing item.
+
+Open **Measures and KPIs** to choose a definition by its recorded kind, including operational metrics and other entries. Follow its incoming or outgoing connections to processes, data products, planning roles, systems and other terms. The measure's starting point stays in the connection trail. Its recorded kind, identifier, notation, basis and grain appear when supplied. The `kpi` module's name, an identifier or a candidate flag does not make every entry a designated KPI. For example, Crack Spreads Pricing retains its recorded market-indicator classification despite its KPI-prefixed identifier. Some measures lack a process or system link; the viewer does not manufacture one.
+
+Expand **What does this relationship mean?** beside a relationship to read its recorded definition in place. A relationship with no included definition says so. The connection-group buttons show statement counts, open the chosen group and move keyboard focus to its heading without changing the trail. Planning roles appear under People and responsibilities.
 
 Open **Customer lifecycle** and choose a stage. The stage list is alphabetical because the source does not assert a sequence. Follow `stageProcess` to a process or `correspondsTo` to a system stage. Follow that stage's `stageSystem` statement to a system. Each connection card keeps the subject, predicate and object in their original order. Incoming connections can be followed without reversing their meaning.
 
@@ -20,7 +24,7 @@ If a release lacks one of these value streams, its entry states that it is unava
 
 Stage membership follows `hasStage`; process membership follows `hasProcess`. Stage order follows the numeric `sequence` values. Processes within a stage are listed alphabetically because membership does not establish their execution order. Missing, ambiguous or shared stage positions are disclosed. The `feeds`, `informs` and `loopsTo` connections keep their recorded meanings. A value-stream process and the process-map concept it `realizes` remain separate items, even when their labels match.
 
-The connection trail retains the statements followed, including across modules. Parent and child links retain that trail. Selecting a new item in the process or customer sidebar, or in process ancestry, starts a new trail. Value-stream stage and process choices start a recorded path from their stream. A repeat visit returns to the earlier item; after 100 hops the link explicitly starts a new trail. The explorer and primary reference can inspect connected concepts across every included module.
+The connection trail retains the statements followed, including across modules. Parent and child links retain that trail. Selecting a new item in the process, measure or customer sidebar, or in process ancestry, starts a new trail. Value-stream stage and process choices start a recorded path from their stream. A repeat visit returns to the earlier item; after 100 hops the link explicitly starts a new trail. The explorer and primary reference can inspect connected concepts across every included module.
 
 Run the focused explorer checks with:
 
@@ -72,3 +76,13 @@ NODE_PATH=<node_modules> node horoi_viewer/test_browser.mjs \
 The browser check uses `playwright-core` and installed Chrome. `CHROME_PATH` can select another Chrome executable. It opens the page through `file:`, blocks and counts HTTP requests, exercises desktop, tablet and phone navigation, follows links into the existing viewer, and saves screenshots and results. The evidence folder must already exist. Review the screenshots for readable layers, definitions and relationships; a passing script alone does not establish usability.
 
 `scripts/check.sh` includes the Python tests. Browser validation also runs on the exact release artifact before publication. Build output and evidence stay outside the source checkout. The new release keeps all existing files unchanged, so it does not alter the existing release's tests or validation instructions.
+
+
+For the focused measure-navigation and readability checks:
+
+```sh
+NODE_PATH=<node_modules> node horoi_viewer/test_usability.mjs \
+  <staged-release>/horoi_viewer/index.html <evidence-folder>
+```
+
+The default is installed Chrome. Set `TEST_BROWSER=firefox` or `TEST_BROWSER=webkit` to use the corresponding installed Playwright engine. The suite checks catalogue coverage, recorded classification, exact relationship explanations, keyboard shortcuts, measure-to-process and data-product paths, a process-to-system path, saved trails and responsive layouts. It blocks HTTP requests. Its half-width viewport checks reflow; it does not claim native browser zoom was exercised. WebKit engine checks do not establish Safari application coverage. Record browser startup failures and manual-check limits in the release evidence.

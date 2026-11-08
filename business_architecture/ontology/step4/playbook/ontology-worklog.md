@@ -972,7 +972,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 The initial reference implementation merged in PR #500. The later amendments to EPM-DEC-001-0114 authorize Process and Customer lifecycle explorers, Commercial Hydrocarbon Lifecycle and Order to Cash, and expansion of the primary reference to every current module after preview review. The source answers file records the instruction to proceed with all modules.
 
-The expansion is in development. It retains the pinned release at `8307c88d8896504d342a0d44880271ed4e6846ab` and changes navigation rather than ontology statements. The builder discovers modules from the current release manifests. Process hierarchy follows `skos:broader`; value-stream stages follow their recorded numeric positions. A connection trail preserves each traversed predicate and direction. Missing or ambiguous positions remain explicit. Final publication still requires the requested final review and the additive documentation checks in `horoi_viewer/README.md`. No ontology, store or projection change is part of this work.
+The expansion merged in PR #501. It retains the pinned release at `8307c88d8896504d342a0d44880271ed4e6846ab` and changes navigation rather than ontology statements. The builder discovers modules from the current release manifests. Process hierarchy follows `skos:broader`; value-stream stages follow their recorded numeric positions. A connection trail preserves each traversed predicate and direction. Missing or ambiguous positions remain explicit. Final publication still requires the requested final review and the additive documentation checks in `horoi_viewer/README.md`. No ontology, store or projection change is part of this work.
 
 ### Offline Party/Core documentation pilot (2026-11-07)
 
@@ -3536,3 +3536,8 @@ When APQC publishes v7.3 or v8:
 Minor and patch: the module owner. Major (including any deprecation):
 The decision owner. No exceptions — majors change the meaning of published truth.
 *2026-10-25 (evening):* for the work queue after the ontology closed, a minor or patch release is approved by the decision owner or, under the delegation, by Claude; a major is deferred to the decision owner (EPM-DEC-001-0028, amendment of 2026-10-25, evening).
+
+
+## Measure navigation and final usability, 2026-11-08
+
+The next documentation revision is in development under EPM-DEC-001-0114's 2026-11-08 amendment. It adds a Measures and KPIs entry with recorded-kind browsing and the existing statement trail, inline relationship definitions and shortcuts to connection groups. A measure can lead to processes, data products, planning roles, systems and other connected items through actual assertions. The UI retains distinctions among KPI classification, identifiers and candidate flags. It reports absent definitions or connections without inventing them. The ontology source pin and additive-only release contract remain unchanged.
