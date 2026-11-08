@@ -92,6 +92,17 @@ After the value-stream preview, the decision owner authorized the expansion. Fro
 
 The earlier requirement to review the explorer improvements before expansion is satisfied by this instruction. The agent will include every current module from the pinned release in the primary reference, search and connection views. The source ontology and existing release files remain unchanged. Final publication still follows the requested final review.
 
+## Further amendment, 2026-11-08: measure navigation and final usability
+
+The decision owner accepted the proposed relationship explanations, connection-group shortcuts and additional browser, keyboard and zoom checks. The same source answers file records the response and the requested measure journey:
+
+> I am aligned with your recommendations.
+> Also I am not seaing measure or KPI. is it not a module?
+
+> so I can walk the measures wether KPI , operaytional metrics or something else to the process they measure , the data products, and the system. Basically anything they are connected with
+
+The all-module reference and its earlier explorers merged in PR #501. The next revision is pending. The agent will add a direct Measures and KPIs entry and let readers follow a measure's asserted connections using the existing connection trail. Recorded measure kinds remain distinct; a KPI identifier or candidate flag does not itself change the classification. Relationship explanations use recorded definitions. Missing links remain missing, and a relationship such as `informsProcess` is not relabelled as measurement, ownership or computation. This revision changes the documentation only. Final publication still requires review of the candidate.
+
 ## Evidence
 
 - Horoi source at `33caa8cc916e7efb767a5c2831216ff1cb11c509`, retrieved 2026-11-07: https://github.com/kvistgaard/horoi/tree/33caa8cc916e7efb767a5c2831216ff1cb11c509. Its changelog dates the first release, 0.1.0, to 2026-11-03. The selected commit includes later changes.

@@ -122,3 +122,20 @@ footer { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
 @media(max-width:560px) { .stream-map > li { padding:16px 12px; gap:12px; } }
 
 @media(min-width:1000px) { .module-directory { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+
+.relationship-definition { margin:10px 0 0; padding:0; border:0; text-align:left; }
+.relationship-definition summary { font-size:13px; font-weight:450; overflow-wrap:anywhere; }
+.relationship-definition p { font-size:14px; overflow-wrap:anywhere; }
+.connection-shortcuts { display:flex; flex-wrap:wrap; gap:8px; margin:18px 0; }
+.connection-shortcuts button { font-size:14px; text-align:left; }
+
+.measure-sidebar .section { margin-top:12px; }
+.measure-sidebar .section > h2 { font-size:17px; }
+.measure-sidebar .section > p { font-size:13px; }
+.measure-sidebar .results li { padding:10px 0; }
+.measure-sidebar details { padding:10px; }
+
+.measure-context dt { font-weight:650; margin-top:12px; }
+.measure-context dd { margin:4px 0 0; overflow-wrap:anywhere; }
+
+.measure-sidebar .selected-measure { border-left:3px solid var(--accent); padding-left:8px; background:var(--accent-soft); }
