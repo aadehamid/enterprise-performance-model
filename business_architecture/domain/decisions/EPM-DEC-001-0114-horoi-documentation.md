@@ -74,7 +74,7 @@ The decision owner requested improvements to the existing reference, including a
 
 > let us review the improvement first before we go full module release.
 
-The initial Party/Core implementation merged in PR #500. This amendment expands the final release scope; the original pilot decision remains its starting point. At this amendment, the improvements, full module expansion and final publication were pending. The final approval amendment below records the completed implementation and candidate review. The agent will prepare Process and Customer lifecycle entry points inside the existing reference, using its unchanged released RDF. At this amendment, the owner requested review of those improvements before expansion. The later instruction below authorizes proceeding with all modules. Final publication still requires review of the final candidate. No ontology, data or projection change is authorized.
+The initial Party/Core implementation merged in PR #500. This amendment expands the final release scope; the original pilot decision remains its starting point. At this amendment, the improvements, full module expansion and final publication were pending. The final approval amendment below records the completed implementation and candidate review. The plan at this amendment was to prepare Process and Customer lifecycle entry points inside the existing reference, using its unchanged released RDF. At this amendment, the owner requested review of those improvements before expansion. The later instruction below authorizes proceeding with all modules. At this amendment, publication required a later review of the final candidate. The final approval below satisfies that requirement for the named candidate. No ontology, data or projection change is authorized.
 
 ## Further amendment, 2026-11-07: value-stream explorers
 
@@ -82,7 +82,7 @@ The decision owner requested Commercial Hydrocarbon Lifecycle and Order to Cash 
 
 > this is awesome. can we alos have the two value stream - Commercial Hydrocarbob lifecyle, Order to Cash. Of course each concepts they connect to is easy to navigate too in an intutive way. Once we do this. I will review then we do a full release for all modules in the ontology
 
-The agent will add both entry points inside the existing viewer and retain the connection trail. Stage order comes from the released value-stream sequence statements. This work remains part of the documentation-only scope. At this amendment, the expanded preview and full release were pending. The final approval amendment below records the completed preview review.
+The plan at this amendment was to add both entry points inside the existing viewer and retain the connection trail. Stage order comes from the released value-stream sequence statements. This work remains part of the documentation-only scope. At this amendment, the expanded preview and full release were pending. The final approval amendment below records the completed preview review.
 
 ## Further amendment, 2026-11-07: proceed with all modules
 
@@ -90,7 +90,7 @@ After the value-stream preview, the decision owner authorized the expansion. Fro
 
 > Please go ahead and include all modules
 
-The earlier requirement to review the explorer improvements before expansion is satisfied by this instruction. The agent will include every current module from the pinned release in the primary reference, search and connection views. The source ontology and existing release files remain unchanged. Final publication still follows the requested final review.
+The earlier requirement to review the explorer improvements before expansion is satisfied by this instruction. The plan at this amendment was to include every current module from the pinned release in the primary reference, search and connection views. The source ontology and existing release files remain unchanged. At this amendment, the final review was pending. The final approval below records its completion for the named candidate.
 
 ## Further amendment, 2026-11-08: measure navigation and final usability
 
@@ -101,7 +101,7 @@ The decision owner accepted the proposed relationship explanations, connection-g
 
 > so I can walk the measures wether KPI , operaytional metrics or something else to the process they measure , the data products, and the system. Basically anything they are connected with
 
-The all-module reference and its earlier explorers merged in PR #501. The revision merged in PR #502. The final approval amendment below records the candidate review. The agent will add a direct Measures and KPIs entry and let readers follow a measure's asserted connections using the existing connection trail. Recorded measure kinds remain distinct; a KPI identifier or candidate flag does not itself change the classification. Relationship explanations use recorded definitions. Missing links remain missing, and a relationship such as `informsProcess` is not relabelled as measurement, ownership or computation. This revision changes the documentation only. Final publication still requires review of the candidate.
+The all-module reference and its earlier explorers merged in PR #501. The revision merged in PR #502. The final approval amendment below records the candidate review. PR #502 added a direct Measures and KPIs entry and lets readers follow a measure's asserted connections using the existing connection trail. Recorded measure kinds remain distinct; a KPI identifier or candidate flag does not itself change the classification. Relationship explanations use recorded definitions. Missing links remain missing, and a relationship such as `informsProcess` is not relabelled as measurement, ownership or computation. This revision changes the documentation only. At this amendment, the candidate review was pending. The final approval below records its completion and authorizes publication of the named candidate.
 
 ## Final approval, 2026-11-08: publish the reviewed documentation
 
