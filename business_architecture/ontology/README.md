@@ -24,6 +24,7 @@ roles, and a fourth to read first if you are new (`epm-ontology-guide.html`, bel
 | What did this build do at each step, and when? | `step4/playbook/ontology-worklog.md` |
 | What must the ontology be able to answer? | `competency-questions.md`, and the guide's list with each status |
 | What does the finished ontology hold, and why these modules? | `epm-ontology-guide.html`, then `MODULES.md` |
+| How do I explore Party and Core as a reference, with definitions and connections? | The [offline reference build](../../horoi_viewer/README.md). EPM-DEC-001-0114 authorizes this documentation-only pilot; publication is tracked separately from ontology releases. |
 | How do I load it into a store and query it? | `projection/ontology-stores-runbook.html` |
 | How do I change the ontology, or add a module? | `epm-walkthrough.html`, "How to change the ontology" |
 | How do I add a logical data model, such as an ER Studio export? | `epm-ontology-guide.html`, "Adding a logical model", for the design; `epm-walkthrough.html`, "Add a logical model", for the steps; the `ontology` skill's `references/logical-model.md` for the method |

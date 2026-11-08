@@ -9,6 +9,8 @@
 
 ## Context
 
+*2026-11-07:* EPM-DEC-001-0114 authorizes a documentation-only Party/Core reference release. It adds documentation to the existing release without rebuilding ontology packages, changing existing release files, or removing or reloading data and projections. The full-cut sequence below still applies to other kinds of release.
+
 The ontology is done (EPM-DEC-001-0107) and its documents were tightened for the cut (#456, #458). The decision owner then asked for a release that colleagues outside the build can use, holding the newest release of each module and the one before it, every build and validation script, the demos, a copy of the agent skills used, and the documents. Nothing in it may name the repository or the decision owner, and no peer may be named (*2026-11-02:* except in market news: EPM-DEC-001-0112, point 7). Claude scanned `main` and put seven points to the decision owner, then a plan whose "Decisions" list carried a recommendation for each open choice. The plan lives outside the repository (`release-cut/`, gitignored), because it names what the release must hide.
 
 What Claude found, from the repository on 2026-10-31 (`git grep`, `git ls-files`):
