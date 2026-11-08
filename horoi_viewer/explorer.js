@@ -109,8 +109,8 @@ function connectionGroup(row,id) {
   if ([RDF+"type",RDFS+"subClassOf",RDFS+"subPropertyOf",RDFS+"domain",RDFS+"range",SKOS+"inScheme",SKOS+"topConceptOf",SKOS+"hasTopConcept"].includes(p)) return "Vocabulary and types";
   if (explorer.processes.has(other.id)) return "Processes";
   const ms=moduleNames(other);
-  const party=moduleInfo("party").id+"/";
-  if (ms.includes("system") || vals(other,SKOS+"inScheme").some(v=>!v.literal && v.v===party+"system-stage") || p===party+"stageSystem") return "Systems and system stages";
+  const party=moduleInfo("party");
+  if (ms.includes("system") || (party && (vals(other,SKOS+"inScheme").some(v=>!v.literal && v.v===party.id+"/system-stage") || p===party.id+"/stageSystem"))) return "Systems and system stages";
   if (ms.includes("organization") || vals(other,RDF+"type").some(v=>!v.literal && v.v==="http://www.w3.org/ns/org#Role")) return "People and responsibilities";
   if (ms.includes("kpi")) return "Measures";
   if (ms.includes("data-product")||ms.includes("logical-model")||ms.includes("integration")||ms.includes("technical-graph")) return "Data and integration";
@@ -167,7 +167,13 @@ function measureContext(n) {
   const ns=info.id+"/";
   if (!vals(n,RDF+"type").some(v=>!v.literal && v.v===ns+"MeasureDefinition")) return "";
   const fields=[["Recorded kind",ns+"measureKind"],["Identifier","http://purl.org/dc/terms/identifier"],["Notation",SKOS+"notation"],["Basis",ns+"basis"],["Grain",ns+"grain"],["Compared against",ns+"comparedAgainst"],["KPI candidate",ns+"kpiCandidate"]];
-  return `<section class="section measure-context"><h3>About this measure</h3><dl>${fields.filter(([,p])=>vals(n,p).length).map(([label,p])=>`<dt>${e(label)}</dt><dd>${vals(n,p).map(v=>v.literal?e(v.v):exploreLink(explorerState.mode,v.v)).join("; ")}</dd>`).join("")}</dl><p class="quiet">The recorded kind determines its classification. An identifier or candidate flag does not change that kind. Connections below retain their own meanings; informing a process does not mean owning or computing it.</p></section>`;
+  const value = v => {
+    if (v.literal) return e(v.v);
+    if (!nodes.has(v.v)) return `<span title="${e(v.v)}">${e(title(v.v))}</span>`;
+    const follow=explorerFollow({s:n.id,p:v.p,o:v.v});
+    return `<a href="${e(follow.href)}" title="${e(v.v)}">${e(title(v.v))}${follow.restart?' (start a new trail)':''}</a>`;
+  };
+  return `<section class="section measure-context"><h3>About this measure</h3><dl>${fields.filter(([,p])=>vals(n,p).length).map(([label,p])=>`<dt>${e(label)}</dt><dd>${vals(n,p).map(value).join("; ")}</dd>`).join("")}</dl><p class="quiet">The recorded kind determines its classification. An identifier or candidate flag does not change that kind. Connections below retain their own meanings; informing a process does not mean owning or computing it.</p></section>`;
 }
 
 function explorerSelection() {

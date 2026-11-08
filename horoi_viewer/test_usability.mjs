@@ -1,7 +1,7 @@
 import {createRequire} from 'node:module';
 import {pathToFileURL} from 'node:url';
 import {resolve} from 'node:path';
-import {mkdir,writeFile} from 'node:fs/promises';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const engines=createRequire(import.meta.url)('playwright-core');
 const engine=process.env.TEST_BROWSER||'chromium';
@@ -53,6 +53,13 @@ try {
  await relation.locator('summary').click();
  assert.equal(await relation.locator('p').innerText(),'A process the measure informs. The link is context for where the measure is used, not a certification that the process owns or computes it.');
  assert.equal(page.url(),before,'Explanation stays in context');
+ const kind=k+'measure-kind/market-indicator';
+ await page.locator(`.measure-context a[title="${kind}"]`).click();
+ await page.waitForFunction(id=>explorerState.id===id,kind);
+ assert.deepEqual(await page.evaluate(()=>explorerState.trail.steps),[{s:crack,p:k+'measureKind',o:kind}]);
+ assert.equal(await page.evaluate(()=>explorerState.trail.start),crack,'Recorded-kind links retain the starting measure');
+ await page.reload();assert.equal(await page.evaluate(()=>explorerState.trail.start),crack);
+ await page.goBack();await page.waitForFunction(id=>explorerState.id===id,crack);
  await follow(crack,k+'informsProcess',process);
  assert.equal(await page.evaluate(()=>explorerState.trail.start),crack);
  await page.goBack();await page.waitForFunction(id=>explorerState.id===id,crack);
@@ -88,6 +95,19 @@ try {
  await page.goto(base+'#module=kpi');
  await page.getByRole('heading',{name:'Measures and KPIs',exact:true}).waitFor();
  await page.locator('#measure-catalogue').waitFor();
+ // Exercise a release without Party before startup, including its absent metadata.
+ const original=await readFile(artifact,'utf8'),marker='<script id="ontology-data" type="application/json">';
+ const start=original.indexOf(marker)+marker.length,end=original.indexOf('</script>',start);
+ const payload=JSON.parse(original.slice(start,end));
+ payload.nodes=payload.nodes.filter(n=>!n.modules.some(m=>m.name==='party'));
+ payload.moduleInfo=payload.moduleInfo.filter(m=>m.name!=='party');
+ payload.referenceModules=payload.referenceModules.filter(m=>m!=='party');
+ const fixture=resolve(evidence,'without-party.html');
+ await writeFile(fixture,original.slice(0,start)+JSON.stringify(payload).replace(/</g,'\\u003c')+original.slice(end));
+ await page.goto(pathToFileURL(fixture).href+'#measures?at='+encodeURIComponent(crack));
+ await page.locator('#selected-title').waitFor();
+ assert.ok(await page.locator('.connection-card').count()>0,'Measures remain usable without the Party module');
+ results.push('recorded-kind trail survives navigation and reload; missing Party module does not break measure connections');
  assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);
  await writeFile(resolve(evidence,'results.json'),JSON.stringify({engine,version:browser.version(),artifact,results,errors,requests,limits:['Half-width reflow is tested; native browser zoom is a separate manual check.','WebKit is engine coverage, not Safari application coverage.']},null,2));
  console.log(JSON.stringify({engine,results,errors,requests}));
