@@ -8,7 +8,7 @@ The design adapts Horoi's page styles at the commit in `config.json`. Horoi's up
 
 ## Guided explorers
 
-The reference includes every current module from the pinned release under EPM-DEC-001-0114 and its amendments. Process, Measures and KPIs, Customer lifecycle and both value-stream explorers offer guided entry points across those modules. Publication still requires review of the final candidate.
+The reference includes every current module from the pinned release under EPM-DEC-001-0114 and its amendments. Process, Measures and KPIs, Customer lifecycle and both value-stream explorers offer guided entry points across those modules. Each release candidate requires final review before publication. EPM-DEC-001-0114's final approval identifies the reviewed candidate authorized for release.
 
 Open **Processes** to expand the process tree from its roots. Select an item to read its definition, find its parent and children, and follow its connections. Levels come from the released taxonomy; the viewer does not stop at a fixed depth. The tree follows `skos:broader`, which describes hierarchy rather than workflow order. Multiple parents remain visible. Cycles stop expanding and link back to the existing item.
 
