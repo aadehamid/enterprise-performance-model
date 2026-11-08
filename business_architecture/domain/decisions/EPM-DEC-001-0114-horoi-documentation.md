@@ -9,7 +9,7 @@
 
 ## Context
 
-The decision owner proposed evaluating Horoi and, if used, placing it in a separate `horoi_viewer/` folder. The initial proposal is quoted below. The agent inspected Horoi's source and the Brick site. Horoi supplies a readable reference-page design, but its original term renderer does not cover the project's SKOS concepts, definitions, or supporting nodes. The agent recommended a Party/Core pilot with a short usage guide and links to the existing full viewer. Brick supplied navigation ideas; adoption of another explorer remains undecided.
+The decision owner proposed evaluating Horoi and, if used, placing it in a separate `horoi_viewer/` folder. The initial proposal is quoted below. The agent inspected Horoi's source and the Brick site. Horoi supplies a readable reference-page design, but its original term renderer does not cover the project's SKOS concepts, definitions, or supporting nodes. The agent recommended a Party/Core pilot with a short usage guide and links to the existing full viewer. Brick supplied navigation ideas; adoption of another explorer was undecided at this initial decision. The later amendments below authorize guided explorers within the same reference.
 
 ## Decision
 
@@ -31,7 +31,7 @@ These are the agent's implementation choices within the approved scope, not addi
 - Separate business concepts, vocabulary, and rules and evidence as reading groups. Preserve the predicates' meanings and distinguish module dependencies from business relationships.
 - Add the generated documentation to a copy of the release. Compare every existing path, file hash and permission mode against the baseline. No existing release file may change.
 - Test navigation, search, cross-module links, source fidelity, malformed inputs, and desktop, tablet and phone layouts through `file:` with HTTP requests blocked.
-- Follow the existing independent-review and Cursor-verdict process. Keep both repositories private. No new authority over business or modeling decisions is granted.
+- Follow the existing independent-review and Cursor-verdict process. Keep the release repository private. No new authority over business or modeling decisions is granted.
 
 Implementation and publication are pending at this decision.
 
@@ -41,7 +41,7 @@ Publication waits for that feedback.
 ## Alternatives considered
 
 - A hosted-only viewer was not selected; the accepted requirement is offline use without a server.
-- A second new explorer remains deferred until the Party/Core pilot can be assessed.
+- A second new explorer was deferred until the Party/Core pilot could be assessed. The later amendments below authorize guided views within the same reference.
 - Rebuilding the ontology or reloading stores is outside the documentation-only scope.
 
 ## The decision owner's recorded words
@@ -61,6 +61,36 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 > The most importatn thing is usability for the viewer. The user must be able to clearly undrestand the ontology and must be easy for him to underatnd the different layesr and connections withing and between modules
 
 > let me review before the final release so that I can provide feedback as needed
+
+## Amendment, 2026-11-07: explorers, full coverage and review order
+
+The decision owner requested improvements to the existing reference, including a customer lifecycle view and a way to walk down from a business process to its connected items. The decision owner then chose full module coverage for the final release and asked to review the improvements before that expansion. These words are saved in the same source answers file:
+
+> in such a way that you can start from the business process and walk down everything else that is connected from the top of the tree to the lowest part of the tree.
+
+> I love what you had. We are just making improvemnet to it. let us do that. We should also have one for customer lifecycle. Once we do this do we plan to now build for all modules in the ontology before we release?
+
+> cover all modules for ful release
+
+> let us review the improvement first before we go full module release.
+
+The initial Party/Core implementation merged in PR #500. This amendment expands the final release scope; the original pilot decision remains its starting point. The improvements, full module expansion and final publication remain pending. The agent will prepare Process and Customer lifecycle entry points inside the existing reference, using its unchanged released RDF. At this amendment, the owner requested review of those improvements before expansion. The later instruction below authorizes proceeding with all modules. Final publication still requires review of the final candidate. No ontology, data or projection change is authorized.
+
+## Further amendment, 2026-11-07: value-stream explorers
+
+The decision owner requested Commercial Hydrocarbon Lifecycle and Order to Cash in the next preview, with easy navigation to their connected concepts. Review precedes the full release covering all ontology modules. From the same source answers file:
+
+> this is awesome. can we alos have the two value stream - Commercial Hydrocarbob lifecyle, Order to Cash. Of course each concepts they connect to is easy to navigate too in an intutive way. Once we do this. I will review then we do a full release for all modules in the ontology
+
+The agent will add both entry points inside the existing viewer and retain the connection trail. Stage order comes from the released value-stream sequence statements. This work remains part of the documentation-only scope. The expanded preview and full release are pending.
+
+## Further amendment, 2026-11-07: proceed with all modules
+
+After the value-stream preview, the decision owner authorized the expansion. From the same source answers file:
+
+> Please go ahead and include all modules
+
+The earlier requirement to review the explorer improvements before expansion is satisfied by this instruction. The agent will include every current module from the pinned release in the primary reference, search and connection views. The source ontology and existing release files remain unchanged. Final publication still follows the requested final review.
 
 ## Evidence
 

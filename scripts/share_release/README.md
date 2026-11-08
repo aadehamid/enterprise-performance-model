@@ -4,7 +4,7 @@ One command builds a release of the ontology and demo for people outside the bui
 skills repository's `main` (the decision of 2026-10-31, EPM-DEC-001-0110, and its amendment). This folder is
 the tool; it never ships.
 
-The Party/Core documentation-only pilot follows EPM-DEC-001-0114 and the
+The documentation-only reference for all current modules follows EPM-DEC-001-0114 and the
 [additive documentation workflow](../../horoi_viewer/README.md). That route
 keeps every existing release file unchanged and does not run the full cut
 or reload stores. The steps below remain the full-cut workflow.

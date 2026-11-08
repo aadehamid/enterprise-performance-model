@@ -122,7 +122,7 @@ try {
   await page.keyboard.press('Enter');
   assert.equal(await page.evaluate(()=>document.activeElement.id),'prev','Move focus to an enabled control at the last page');
   // A delayed clipboard result belongs only to the page that started it.
-  const copyTerms=await page.evaluate(()=>data.pilotTerms.slice(0,2));
+  const copyTerms=await page.evaluate(()=>data.referenceTerms.slice(0,2));
   for(const outcome of ['resolve','reject']) {
     for(const destination of ['#term='+encodeURIComponent(copyTerms[1]),'#overview']) {
       await page.goto(pathToFileURL(file).href+'#term='+encodeURIComponent(copyTerms[0]));
@@ -147,7 +147,7 @@ try {
     await page.goto(pathToFileURL(file).href+'#browse');
     await page.locator('#layer-filter').selectOption(group);
     const expected=await page.evaluate(group=>data.nodes.filter(n=>{
-      const local=n.modules.some(m=>data.pilotModules.includes(m.name));
+      const local=n.modules.some(m=>data.referenceModules.includes(m.name));
       const vocabulary=['Class','Property'].includes(n.kind);
       const supporting=[...data.supportingKinds,'Metadata'].includes(n.kind);
       return local&&(group==='Vocabulary'?vocabulary:group==='Rules and evidence'?supporting:!vocabulary&&!supporting);
@@ -161,11 +161,11 @@ try {
     assert.deepEqual(shown.sort(),expected,group+' covers each matching term once');
   }
   // Compare every displayed cross-module tuple with the source statements.
-  for(const module of ['party','core']) {
+  for(const module of await page.evaluate(()=>data.referenceModules)) {
     await page.goto(pathToFileURL(file).href+'#connections='+module);
     const expected=await page.evaluate(module=>{
       const terms=new Map(data.nodes.map(n=>[n.id,n]));const rows=[];
-      for(const source of data.nodes.filter(n=>data.pilotTerms.includes(n.id)&&n.modules.some(m=>m.name===module))) {
+      for(const source of data.nodes.filter(n=>data.referenceTerms.includes(n.id)&&n.modules.some(m=>m.name===module))) {
         for(const statement of source.values.filter(v=>!v.literal)) {
           const target=terms.get(statement.v);
           if(!target||[...data.supportingKinds,'Metadata'].includes(target.kind)) continue;
@@ -186,15 +186,15 @@ try {
   if(evidence) await page.screenshot({path:resolve(evidence,'connections-desktop.png')});
   // Every term and predicate row is bound to the raw release data, not inferred.
   const coverage=await page.evaluate(()=>({
-    terms:data.pilotTerms.length,
-    definitions:data.nodes.filter(n=>pilot.has(n.id)&&definitions(n).length).length,
+    terms:data.referenceTerms.length,
+    definitions:data.nodes.filter(n=>referenceTerms.has(n.id)&&definitions(n).length).length,
     modules:data.moduleInfo.map(m=>m.name),
     connectionRows:connectionRows('party').length,
     invalidConnections:connectionRows('party').filter(r=>!nodes.get(r.s).values.some(v=>!v.literal&&v.p===r.p&&v.v===r.o)).length
   }));
   assert.equal(coverage.invalidConnections,0);
   assert.equal(new Set(coverage.modules).size,coverage.modules.length);
-  const connected=await page.evaluate(()=>data.nodes.find(n=>pilot.has(n.id)&&n.values.filter(v=>!v.literal&&v.p!==RDF+'type'&&nodes.has(v.v)&&!v.v.startsWith('_:')&&!data.supportingKinds.includes(nodes.get(v.v).kind)).length>=3).id);
+  const connected=await page.evaluate(()=>data.nodes.find(n=>referenceTerms.has(n.id)&&n.values.filter(v=>!v.literal&&v.p!==RDF+'type'&&nodes.has(v.v)&&!v.v.startsWith('_:')&&!data.supportingKinds.includes(nodes.get(v.v).kind)).length>=3).id);
   await page.goto(pathToFileURL(file).href+'#term='+encodeURIComponent(connected));
   await page.locator('.graph svg:visible').waitFor();
   if(evidence) await page.screenshot({path:resolve(evidence,'connected-term-desktop.png'),fullPage:true});
@@ -213,23 +213,34 @@ try {
       await stat(decodeURIComponent(path.pathname));
     }
   }
-  // Following a cross-module destination reaches the expected full-viewer view.
+  // Every source module has a local page, useful starting terms and searchable content.
   await page.goto(pathToFileURL(file).href+'#modules');
-  const externalModule=page.locator('a.tile[href*="view=module:"]').first();
-  const expected=(await externalModule.getAttribute('href')).split('view=')[1];
-  await externalModule.click();
-  await page.locator('#overview').waitFor();
-  assert.equal(await page.locator('#overview').getAttribute('data-view'),decodeURIComponent(expected));
+  const available=await page.evaluate(()=>data.moduleInfo.map(m=>m.name).sort());
+  assert.deepEqual(await page.evaluate(()=>[...data.referenceModules].sort()),available);
+  assert.equal(await page.locator('a.tile[href*="view=module:"]').count(),0);
+  for(const module of available) {
+    await page.goto(pathToFileURL(file).href+'#module='+encodeURIComponent(module));
+    await page.getByRole('heading',{name:'Start here',exact:true}).waitFor();
+    assert.ok(await page.locator('a.tile[href^="#term="]').count()>0,module+' has useful starting terms');
+    const first=page.locator('a.tile[href^="#term="]').first(), id=decodeURIComponent((await first.getAttribute('href')).slice(6));
+    await first.click();await page.locator('#term-iri').waitFor();
+    assert.equal(await page.locator('#term-iri').innerText(),id);
+    await page.goto(pathToFileURL(file).href+'#browse?module='+encodeURIComponent(module));
+    await page.locator('#results a').first().waitFor();
+    assert.equal(await page.locator('#module-filter').inputValue(),module);
+    const expected=await page.evaluate(module=>data.referenceTerms.filter(id=>nodes.get(id).modules.some(m=>m.name===module)).length,module);
+    assert.match(await page.locator('#result-count').innerText(),new RegExp('^'+expected+' results'));
+  }
   // Direct term routes into the existing viewer must select the exact term.
   await page.goto(termURL);
   const expectedTerm=await page.locator('#term-iri').innerText();
   await page.getByRole('link',{name:'Open this term in the full viewer'}).click();
   await page.waitForFunction(id=>document.getElementById('iri')?.textContent===id,expectedTerm);
   await page.goto(pathToFileURL(file).href+'#connections=party');
-  const externalTerm=page.locator('td a[href^="../viewer/index.html#"]').first();
-  const externalId=decodeURIComponent((await externalTerm.getAttribute('href')).split('#')[1]);
-  await externalTerm.click();
-  await page.waitForFunction(id=>document.getElementById('iri')?.textContent===id,externalId);
+  const crossModuleTerm=page.locator('td a[href^="#term="]').first();
+  const crossModuleId=decodeURIComponent((await crossModuleTerm.getAttribute('href')).slice(6));
+  await crossModuleTerm.click();await page.locator('#term-iri').waitFor();
+  assert.equal(await page.locator('#term-iri').innerText(),crossModuleId);
   for(const width of [768,390]) {
     await page.setViewportSize({width,height:844});
     await page.goto(pathToFileURL(file).href);

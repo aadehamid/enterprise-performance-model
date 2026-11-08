@@ -60,18 +60,22 @@ def payload(root):
     finally:
         rdflib.NORMALIZE_LITERALS = normalize
     data["sourceCommit"] = CONFIG["source_commit"]
-    data["pilotModules"] = CONFIG["modules"]
     data["horoiCommit"] = CONFIG["horoi_commit"]
     data["supportingKinds"] = list(data["supportingKinds"])
-    # Context nodes let the reference name every relationship endpoint, including
-    # supporting nodes. Only the selected modules have term-browser entry points.
+    # Preserve every source node; navigation indexes do not alter its statements.
     by_id = {n["id"]: n for n in data["nodes"]}
-    for module in CONFIG["modules"]:
-        if not any(any(m["name"] == module for m in n["modules"]) for n in data["nodes"]):
-            raise ValueError(f"Missing pilot module: {module}")
     data["moduleInfo"] = []
     manifests = {module: path.parent / "manifest.json"
                  for path, module, _ in reader.release_files(root) if module}
+    selected = sorted(manifests) if CONFIG["modules"] == "all" else CONFIG["modules"]
+    if not isinstance(selected, list) or not selected or any(not isinstance(m, str) for m in selected):
+        raise ValueError("Choose all modules or a nonempty list of module names")
+    if len(set(selected)) != len(selected) or any(m not in manifests for m in selected):
+        raise ValueError("Module selection must name each included release module once")
+    for module in selected:
+        if not any(any(m["name"] == module for m in n["modules"]) for n in data["nodes"]):
+            raise ValueError(f"Missing reference module: {module}")
+    data["referenceModules"] = selected
     tracked = {os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p}
     used = [entry["path"] for entry in data["inputs"]]
     used += [str(path.relative_to(root)) for path in manifests.values()]
@@ -84,10 +88,10 @@ def payload(root):
             "id": node["id"], "label": node["label"],
             "description": next((v["v"] for v in node["values"] if v["p"] == str(reader.DCTERMS.description)), ""),
             "requires": [v["v"] for v in node["values"] if v["p"] == str(reader.DCTERMS.requires)]})
-    data["pilotTerms"] = [n["id"] for n in data["nodes"]
+    data["referenceTerms"] = [n["id"] for n in data["nodes"]
         if n["kind"] not in (*reader.SUPPORTING_KINDS, "Metadata")
-        and any(m["name"] in CONFIG["modules"] for m in n["modules"])]
-    assert all(i in by_id for i in data["pilotTerms"])
+        and any(m["name"] in selected for m in n["modules"])]
+    assert all(i in by_id for i in data["referenceTerms"])
     return data
 
 
@@ -103,11 +107,13 @@ def render_files(data):
     page = (HERE / "page.html").read_text()
     page = page.replace("<!-- HOROI_CSS -->", css + "\n" + (HERE / "style.css").read_text())
     page = page.replace("<!-- DATA -->", script_json(data))
-    page = page.replace("<!-- APP -->", (HERE / "app.js").read_text())
+    app = (HERE / "app.js").read_text().replace("/* EXPLORER_CODE */",
+        (HERE / "explorer-model.js").read_text() + "\n" + (HERE / "explorer.js").read_text())
+    page = page.replace("<!-- APP -->", app)
     index = page.encode("utf-8")
     report = {"source_commit": CONFIG["source_commit"], "horoi_commit": CONFIG["horoi_commit"],
-        "modules": CONFIG["modules"], "inputs": data["inputs"],
-        "pilot_terms": len(data["pilotTerms"]), "triples_available": data["triples"],
+        "modules": data["referenceModules"], "inputs": data["inputs"],
+        "reference_terms": len(data["referenceTerms"]), "triples_available": data["triples"],
         "index_sha256": hashlib.sha256(index).hexdigest()}
     return {"index.html": index, "LICENSE.txt": (HERE / "vendor/LICENSE").read_bytes(),
             "NOTICE.txt": (HERE / "NOTICE.txt").read_bytes(),
