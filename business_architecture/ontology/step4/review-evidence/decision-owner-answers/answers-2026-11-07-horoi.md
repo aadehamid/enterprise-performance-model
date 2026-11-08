@@ -54,3 +54,8 @@ I am aligned with your recommendations.
 Also I am not seaing measure or KPI. is it not a module?
 
 so I can walk the measures wether KPI , operaytional metrics or something else to the process they measure , the data products, and the system. Basically anything they are connected with
+
+
+<!-- Final candidate review, 2026-11-08. The preceding handoff linked the combined 5bddff68 preview, reported PR #502 merged, and disclosed Firefox/Safari/native zoom limits and the optional CI link-check download failure. -->
+
+I have reviewed the viewer it looks great. I think we can release it. Any other usability improvement that you may think of?

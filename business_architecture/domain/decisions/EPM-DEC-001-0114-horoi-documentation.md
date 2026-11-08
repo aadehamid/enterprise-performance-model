@@ -36,7 +36,7 @@ These are the agent's implementation choices within the approved scope, not addi
 Implementation and publication are pending at this decision.
 
 The decision owner later requested a preview review before the final release.
-Publication waits for that feedback.
+The final approval amendment below records that feedback and authorizes publication of the reviewed candidate.
 
 ## Alternatives considered
 
@@ -74,7 +74,7 @@ The decision owner requested improvements to the existing reference, including a
 
 > let us review the improvement first before we go full module release.
 
-The initial Party/Core implementation merged in PR #500. This amendment expands the final release scope; the original pilot decision remains its starting point. The improvements, full module expansion and final publication remain pending. The agent will prepare Process and Customer lifecycle entry points inside the existing reference, using its unchanged released RDF. At this amendment, the owner requested review of those improvements before expansion. The later instruction below authorizes proceeding with all modules. Final publication still requires review of the final candidate. No ontology, data or projection change is authorized.
+The initial Party/Core implementation merged in PR #500. This amendment expands the final release scope; the original pilot decision remains its starting point. At this amendment, the improvements, full module expansion and final publication were pending. The final approval amendment below records the completed implementation and candidate review. The agent will prepare Process and Customer lifecycle entry points inside the existing reference, using its unchanged released RDF. At this amendment, the owner requested review of those improvements before expansion. The later instruction below authorizes proceeding with all modules. Final publication still requires review of the final candidate. No ontology, data or projection change is authorized.
 
 ## Further amendment, 2026-11-07: value-stream explorers
 
@@ -82,7 +82,7 @@ The decision owner requested Commercial Hydrocarbon Lifecycle and Order to Cash 
 
 > this is awesome. can we alos have the two value stream - Commercial Hydrocarbob lifecyle, Order to Cash. Of course each concepts they connect to is easy to navigate too in an intutive way. Once we do this. I will review then we do a full release for all modules in the ontology
 
-The agent will add both entry points inside the existing viewer and retain the connection trail. Stage order comes from the released value-stream sequence statements. This work remains part of the documentation-only scope. The expanded preview and full release are pending.
+The agent will add both entry points inside the existing viewer and retain the connection trail. Stage order comes from the released value-stream sequence statements. This work remains part of the documentation-only scope. At this amendment, the expanded preview and full release were pending. The final approval amendment below records the completed preview review.
 
 ## Further amendment, 2026-11-07: proceed with all modules
 
@@ -101,7 +101,21 @@ The decision owner accepted the proposed relationship explanations, connection-g
 
 > so I can walk the measures wether KPI , operaytional metrics or something else to the process they measure , the data products, and the system. Basically anything they are connected with
 
-The all-module reference and its earlier explorers merged in PR #501. The next revision is pending. The agent will add a direct Measures and KPIs entry and let readers follow a measure's asserted connections using the existing connection trail. Recorded measure kinds remain distinct; a KPI identifier or candidate flag does not itself change the classification. Relationship explanations use recorded definitions. Missing links remain missing, and a relationship such as `informsProcess` is not relabelled as measurement, ownership or computation. This revision changes the documentation only. Final publication still requires review of the candidate.
+The all-module reference and its earlier explorers merged in PR #501. The revision merged in PR #502. The final approval amendment below records the candidate review. The agent will add a direct Measures and KPIs entry and let readers follow a measure's asserted connections using the existing connection trail. Recorded measure kinds remain distinct; a KPI identifier or candidate flag does not itself change the classification. Relationship explanations use recorded definitions. Missing links remain missing, and a relationship such as `informsProcess` is not relabelled as measurement, ownership or computation. This revision changes the documentation only. Final publication still requires review of the candidate.
+
+## Final approval, 2026-11-08: publish the reviewed documentation
+
+The decision owner reviewed the combined viewer and authorized release. The same source answers file records the complete response:
+
+> I have reviewed the viewer it looks great. I think we can release it. Any other usability improvement that you may think of?
+
+The approved candidate includes every current module and the Process, Measures and KPIs, Customer lifecycle, Commercial Hydrocarbon Lifecycle and Order to Cash explorers. Source implementation PRs #500, #501 and #502 are merged. The candidate uses the viewer source merged in PR #502 at `506a2840d51422c69fdcaee47b5364c3e805dbbd`; its tested implementation head is `5bddff687512347bfbdc6a3dfe9799c6afd8a1a8`.
+
+The approval applies to the reviewed HTML with SHA-256 `feeaa56bb0f1a9f872b2a736565db758fd7829ac1c0b24baa80c8a84afb94c41`, in the tested ZIP with SHA-256 `15474c4dff361b796bd4b9184195b9e33c5d68b1ee099cd227e35a5c653e7e5d`. These hashes bind the review to the candidate; the release retains the baseline at `8307c88d8896504d342a0d44880271ed4e6846ab` and adds only the generated `horoi_viewer/` files.
+
+The final handoff disclosed unverified Firefox, Safari application and native 200% zoom coverage, plus an optional CI link-check job that failed while downloading its tool. Chrome and WebKit checks, required repository checks, exact-artifact recipient checks and independent review passed. The release evidence retains those limits.
+
+This approval satisfies the requested final review for this candidate. Publication follows the existing documentation-only comparison and PR process. The question about other usability improvements authorizes discussion; no additional feature is part of the approved artifact. No ontology, data or projection change is authorized.
 
 ## Evidence
 

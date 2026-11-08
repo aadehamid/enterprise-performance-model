@@ -3540,4 +3540,9 @@ The decision owner. No exceptions — majors change the meaning of published tru
 
 ## Measure navigation and final usability, 2026-11-08
 
-The next documentation revision is in development under EPM-DEC-001-0114's 2026-11-08 amendment. It adds a Measures and KPIs entry with recorded-kind browsing and the existing statement trail, inline relationship definitions and shortcuts to connection groups. A measure can lead to processes, data products, planning roles, systems and other connected items through actual assertions. The UI retains distinctions among KPI classification, identifiers and candidate flags. It reports absent definitions or connections without inventing them. The ontology source pin and additive-only release contract remain unchanged.
+The documentation revision merged in PR #502 under EPM-DEC-001-0114's 2026-11-08 amendment. It adds a Measures and KPIs entry with recorded-kind browsing and the existing statement trail, inline relationship definitions and shortcuts to connection groups. A measure can lead to processes, data products, planning roles, systems and other connected items through actual assertions. The UI retains distinctions among KPI classification, identifiers and candidate flags. It reports absent definitions or connections without inventing them. The ontology source pin and additive-only release contract remain unchanged.
+
+
+## Documentation candidate approved, 2026-11-08
+
+EPM-DEC-001-0114's final approval amendment records the decision owner's review and authorization to release the combined viewer. PRs #500, #501 and #502 contain the merged implementation. The reviewed HTML and ZIP hashes in that amendment identify the approved candidate. Publication follows the additive documentation route in `horoi_viewer/README.md`; it preserves all existing release files, ontology packages, data and projections. The release notes will identify the source pin and retain the disclosed browser and optional CI coverage limits. Suggested bookmarks, printable trails and release comparisons remain ideas for later work.
