@@ -1,0 +1,104 @@
+{
+  "skill_name": "cypher-query-generator",
+  "description": "Output quality evaluation test cases. Each prompt is a realistic user request; the agent should generate paste-ready Cypher for Neo4j Browser.",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Show me the full lineage of sem_wholesale.Margin_vw",
+      "expected_output": "Full upstream chain: Semantic → Gold → Silver → Replica → Operational → DataSystem → Server, plus downstream Reports and Data Analyst owner",
+      "assertions": [
+        "Query is syntactically valid Cypher",
+        "Query uses DERIVED_FROM*1..5 for variable-length lineage traversal",
+        "Query uses OPTIONAL MATCH for hops beyond the anchor node",
+        "Query returns nodes and relationships (not scalar-only)",
+        "Result includes Table nodes from multiple layers",
+        "Result includes DataSystem and Server nodes in the upstream chain",
+        "All node labels used exist in the schema",
+        "All relationship types used exist in the schema"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Which reports consume data from Helios?",
+      "expected_output": "Reports connected via CONSUMES → Semantic ← DERIVED_FROM chain from DataSystem Helios",
+      "assertions": [
+        "Query is syntactically valid Cypher",
+        "Query starts from DataSystem with name 'Helios'",
+        "Query traverses CONTAINS → REPLICATED_TO → DERIVED_FROM → CONSUMES",
+        "Query returns nodes and relationships (not scalar-only)",
+        "Result includes Report nodes",
+        "All node labels used exist in the schema",
+        "All relationship types used exist in the schema"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Who is the data analyst for the Rack_Price_Weekly_vw semantic view?",
+      "expected_output": "Person → RoleAssignment → Table graph showing the assigned Data Analyst",
+      "assertions": [
+        "Query is syntactically valid Cypher",
+        "Query uses ra.type = 'Data Analyst' to filter role assignments",
+        "Query matches on correct qualifiedName for Rack_Price_Weekly_vw (sem_wholesale.Rack_Price_Weekly_vw)",
+        "Query returns nodes and relationships (not scalar-only)",
+        "Result includes Person and RoleAssignment nodes",
+        "All node labels used exist in the schema",
+        "All relationship types used exist in the schema"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Show me column-level lineage for wholesale_core.Margin_Fact",
+      "expected_output": "Table → HAS_COLUMN → Column → DERIVED_FROM → source Column → source Table",
+      "assertions": [
+        "Query is syntactically valid Cypher",
+        "Query returns Column nodes (not just Table nodes)",
+        "Query uses HAS_COLUMN relationship",
+        "Query uses DERIVED_FROM for column-level lineage",
+        "Query returns nodes and relationships (not scalar-only)",
+        "All node labels used exist in the schema",
+        "All relationship types used exist in the schema"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "What legacy tables were refactored into udm_core tables?",
+      "expected_output": "Legacy:Table → REFACTORED_TO → Table in udm_core schema",
+      "assertions": [
+        "Query is syntactically valid Cypher",
+        "Query uses MATCH (t:Table:Legacy) multi-label syntax (not WHERE t.layer = 'Legacy')",
+        "Query uses REFACTORED_TO relationship",
+        "Query returns nodes and relationships (not scalar-only)",
+        "All node labels used exist in the schema",
+        "All relationship types used exist in the schema"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Show me all the flat file sourced tables and their downstream lineage",
+      "expected_output": "FlatFile → Operational → Replica → Silver → Semantic chain",
+      "assertions": [
+        "Query is syntactically valid Cypher",
+        "Query uses FlatFile node (not DataSystem)",
+        "Query uses OPTIONAL MATCH for downstream hops",
+        "Query returns nodes and relationships (not scalar-only)",
+        "Result includes FlatFile node",
+        "All node labels used exist in the schema",
+        "All relationship types used exist in the schema"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Trace data lineage for the MarginDetail table from Helios all the way to reports",
+      "expected_output": "Full end-to-end: DataSystem(Helios) → Operational(MarginDetail) → Replica → Silver/Gold → Semantic → Report",
+      "assertions": [
+        "Query is syntactically valid Cypher",
+        "Query starts from DataSystem Helios or anchors on the MarginDetail table",
+        "Query handles the full multi-hop chain from operational to semantic",
+        "Query includes Report consumption at the end",
+        "Query returns nodes and relationships (not scalar-only)",
+        "All node labels used exist in the schema",
+        "All relationship types used exist in the schema"
+      ]
+    }
+  ]
+}

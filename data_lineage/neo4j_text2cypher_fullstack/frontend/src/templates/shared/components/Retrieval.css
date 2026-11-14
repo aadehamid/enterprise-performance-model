@@ -1,0 +1,49 @@
+.ndl-modal.ndl-medium{
+    max-width: 38rem !important;
+}
+
+.bg-neutral-bg-weak {
+    position: relative;
+    overflow: visible;
+  }
+  
+  .popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background-color: var(--theme-color-neutral-bg-weak);
+    color: var(--theme-color-neutral-text-default);
+    border: 1px solid var(--theme-color-neutral-border-strong);
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(100vh - 200px);
+    min-height: 550px;
+    flex-grow: 1;
+  }
+
+  .entities-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .entity-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .entity-label {
+    margin-right: 10px;
+  }
+  
+  .entity-text {
+    display: inline;
+  }
+  

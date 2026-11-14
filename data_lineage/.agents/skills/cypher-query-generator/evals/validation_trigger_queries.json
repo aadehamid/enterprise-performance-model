@@ -1,0 +1,88 @@
+{
+  "skill_name": "cypher-query-generator",
+  "description": "Validation set (~40%) — held out. Only use to check generalization. NEVER use failures here to guide description changes.",
+  "queries": [
+    {
+      "id": 1,
+      "prompt": "Trace the data lineage for the TransactionType table from RightAngle all the way to reports",
+      "should_trigger": true,
+      "category": "end-to-end-lineage"
+    },
+    {
+      "id": 2,
+      "prompt": "who owns the Rack_Price_Weekly_vw view?",
+      "should_trigger": true,
+      "category": "analyst-lookup"
+    },
+    {
+      "id": 3,
+      "prompt": "where does the data in sem_masterdata.TransactionType_vw come from originally?",
+      "should_trigger": true,
+      "category": "implicit-lineage"
+    },
+    {
+      "id": 4,
+      "prompt": "show me how the value stream stages connect to business processes",
+      "should_trigger": true,
+      "category": "business-context"
+    },
+    {
+      "id": 5,
+      "prompt": "which data systems are hosted on the HELIOS.prod.db.lsc.internal server?",
+      "should_trigger": true,
+      "category": "infrastructure"
+    },
+    {
+      "id": 6,
+      "prompt": "I need to understand what master data domains are realized in our silver tables",
+      "should_trigger": true,
+      "category": "master-data"
+    },
+    {
+      "id": 7,
+      "prompt": "graph all the tables that belong to the Legacy_DWH_Inventory.xlsx source file",
+      "should_trigger": true,
+      "category": "sourcefile-grouping"
+    },
+    {
+      "id": 8,
+      "prompt": "show me which data products are realized by semantic views",
+      "should_trigger": true,
+      "category": "data-product"
+    },
+    {
+      "id": 9,
+      "prompt": "can u show me lineage for the price batch tbl pls",
+      "should_trigger": true,
+      "category": "casual-typo"
+    },
+    {
+      "id": 10,
+      "prompt": "What's the difference between Silver and Gold layers?",
+      "should_trigger": false,
+      "category": "near-miss-conceptual",
+      "rationale": "Conceptual question about the architecture, not a query request"
+    },
+    {
+      "id": 11,
+      "prompt": "can you update the README with the new table counts?",
+      "should_trigger": false,
+      "category": "near-miss-documentation",
+      "rationale": "Mentions project data but is documentation editing"
+    },
+    {
+      "id": 12,
+      "prompt": "deploy the Neo4j graph to our production cluster",
+      "should_trigger": false,
+      "category": "near-miss-deployment",
+      "rationale": "Involves Neo4j but is deployment not querying"
+    },
+    {
+      "id": 13,
+      "prompt": "create an ERD diagram for the IDP data warehouse",
+      "should_trigger": false,
+      "category": "near-miss-diagramming",
+      "rationale": "Involves data modeling but is diagramming not graph querying"
+    }
+  ]
+}

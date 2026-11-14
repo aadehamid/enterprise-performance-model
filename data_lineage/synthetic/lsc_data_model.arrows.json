@@ -1,0 +1,697 @@
+{
+  "nodes": [
+    {
+      "id": "Server",
+      "labels": [
+        "Server"
+      ],
+      "properties": {
+        "createdAt": "DATETIME",
+        "serverName": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "caption": ""
+    },
+    {
+      "id": "DataSystem",
+      "labels": [
+        "DataSystem"
+      ],
+      "properties": {
+        "description": "STRING",
+        "scope": "STRING",
+        "systemId": "STRING",
+        "isRecordActive": "BOOLEAN",
+        "applicationType": "STRING",
+        "ingestionMethod": "STRING",
+        "refreshFrequency": "STRING",
+        "confidentialityClassification": "STRING",
+        "isSoxRelevant": "BOOLEAN",
+        "platform": "STRING",
+        "status": "STRING",
+        "dataModality": "STRING",
+        "applicationService": "STRING",
+        "purviewReplicaSchemaName": "STRING",
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 200,
+        "y": 0
+      },
+      "caption": ""
+    },
+    {
+      "id": "FlatFile",
+      "labels": [
+        "FlatFile"
+      ],
+      "properties": {
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 400,
+        "y": 0
+      },
+      "caption": ""
+    },
+    {
+      "id": "Schema",
+      "labels": [
+        "Schema"
+      ],
+      "properties": {
+        "name": "STRING",
+        "layer": "STRING",
+        "role": "STRING",
+        "isCrossCutting": "BOOLEAN",
+        "refactorTarget": "STRING",
+        "createdAt": "DATETIME",
+        "qualifiedName": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 600,
+        "y": 0
+      },
+      "caption": "+ :Legacy"
+    },
+    {
+      "id": "Table",
+      "labels": [
+        "Table"
+      ],
+      "properties": {
+        "name": "STRING",
+        "tableName": "STRING",
+        "layer": "STRING",
+        "sourceFile": "STRING",
+        "viewDefinition": "STRING",
+        "sttmLink": "STRING",
+        "tableauReportEntity": "STRING",
+        "comment": "STRING",
+        "sourceDataSystem": "STRING",
+        "createdAt": "DATETIME",
+        "updatedAt": "DATETIME",
+        "qualifiedName": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 800,
+        "y": -200
+      },
+      "caption": "+ :Fact | :Dimension | :View | :Legacy"
+    },
+    {
+      "id": "Column",
+      "labels": [
+        "Column"
+      ],
+      "properties": {
+        "name": "STRING",
+        "dataType": "STRING",
+        "sourceDataType": "STRING",
+        "keyType": "STRING",
+        "isPrimaryKey": "BOOLEAN",
+        "definition": "STRING",
+        "transformation": "STRING",
+        "sourceFile": "STRING",
+        "createdAt": "DATETIME",
+        "qualifiedName": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 0,
+        "y": -200
+      },
+      "caption": ""
+    },
+    {
+      "id": "Report",
+      "labels": [
+        "Report"
+      ],
+      "properties": {
+        "name": "STRING",
+        "webUrl": "STRING",
+        "workspaceName": "STRING",
+        "connectionType": "STRING",
+        "source": "STRING",
+        "state": "STRING",
+        "lastSeen": "DATETIME",
+        "sourceFile": "STRING",
+        "createdAt": "DATETIME",
+        "updatedAt": "DATETIME",
+        "reportKey": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 200,
+        "y": -200
+      },
+      "caption": ""
+    },
+    {
+      "id": "BusinessArea",
+      "labels": [
+        "BusinessArea"
+      ],
+      "properties": {
+        "description": "STRING",
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 400,
+        "y": -200
+      },
+      "caption": ""
+    },
+    {
+      "id": "CapabilityDataDomain",
+      "labels": [
+        "CapabilityDataDomain"
+      ],
+      "properties": {
+        "description": "STRING",
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 600,
+        "y": -200
+      },
+      "caption": ""
+    },
+    {
+      "id": "DataProductLine",
+      "labels": [
+        "DataProductLine"
+      ],
+      "properties": {
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 800,
+        "y": -400
+      },
+      "caption": ""
+    },
+    {
+      "id": "ValueStreamStage",
+      "labels": [
+        "ValueStreamStage"
+      ],
+      "properties": {
+        "description": "STRING",
+        "sequenceOrder": "INTEGER",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 0,
+        "y": -400
+      },
+      "caption": ""
+    },
+    {
+      "id": "BusinessProcess",
+      "labels": [
+        "BusinessProcess"
+      ],
+      "properties": {
+        "description": "STRING",
+        "sequenceLabel": "STRING",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 200,
+        "y": -400
+      },
+      "caption": ""
+    },
+    {
+      "id": "Policy",
+      "labels": [
+        "Policy"
+      ],
+      "properties": {
+        "description": "STRING",
+        "confidentialityClassification": "STRING",
+        "isSoxRelevant": "BOOLEAN",
+        "createdAt": "DATETIME",
+        "type": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 400,
+        "y": -400
+      },
+      "caption": ""
+    },
+    {
+      "id": "MasterDataDomain",
+      "labels": [
+        "MasterDataDomain"
+      ],
+      "properties": {
+        "status": "STRING",
+        "sourceFile": "STRING",
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 600,
+        "y": -400
+      },
+      "caption": ""
+    },
+    {
+      "id": "DataProduct",
+      "labels": [
+        "DataProduct"
+      ],
+      "properties": {
+        "sourceFile": "STRING",
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 800,
+        "y": -600
+      },
+      "caption": ""
+    },
+    {
+      "id": "DataPipeline",
+      "labels": [
+        "DataPipeline"
+      ],
+      "properties": {
+        "synapseDataflow": "STRING",
+        "alteryxWorkflow": "STRING",
+        "sourceFile": "STRING",
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 0,
+        "y": -600
+      },
+      "caption": ""
+    },
+    {
+      "id": "DataModel",
+      "labels": [
+        "DataModel"
+      ],
+      "properties": {
+        "fileName": "STRING",
+        "modelType": "STRING",
+        "folderLink": "STRING",
+        "sourceFile": "STRING",
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 200,
+        "y": -600
+      },
+      "caption": ""
+    },
+    {
+      "id": "Person",
+      "labels": [
+        "Person"
+      ],
+      "properties": {
+        "createdAt": "DATETIME",
+        "name": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 400,
+        "y": -600
+      },
+      "caption": ""
+    },
+    {
+      "id": "RoleAssignment",
+      "labels": [
+        "RoleAssignment"
+      ],
+      "properties": {
+        "type": "STRING",
+        "status": "STRING",
+        "createdAt": "DATETIME",
+        "scope": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 600,
+        "y": -600
+      },
+      "caption": ""
+    },
+    {
+      "id": "Session",
+      "labels": [
+        "Session"
+      ],
+      "properties": {
+        "id": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 800,
+        "y": -800
+      },
+      "caption": ""
+    },
+    {
+      "id": "Message",
+      "labels": [
+        "Message"
+      ],
+      "properties": {
+        "question": "STRING",
+        "cypher": "STRING",
+        "answer": "STRING",
+        "feedback": "STRING",
+        "feedbackComment": "STRING",
+        "timestamp": "DATETIME",
+        "id": "STRING | KEY"
+      },
+      "style": {},
+      "position": {
+        "x": 0,
+        "y": -800
+      },
+      "caption": ""
+    }
+  ],
+  "relationships": [
+    {
+      "fromId": "Server",
+      "toId": "DataSystem",
+      "type": "HOSTS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataSystem",
+      "toId": "Schema",
+      "type": "HOSTS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataSystem",
+      "toId": "Table",
+      "type": "CONTAINS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Schema",
+      "toId": "Table",
+      "type": "CONTAINS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "FlatFile",
+      "toId": "Table",
+      "type": "CONTAINS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Table",
+      "toId": "Column",
+      "type": "HAS_COLUMN",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Table",
+      "toId": "Table",
+      "type": "DERIVED_FROM",
+      "properties": {
+        "transformation": "STRING"
+      },
+      "style": {}
+    },
+    {
+      "fromId": "Column",
+      "toId": "Column",
+      "type": "DERIVED_FROM",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Table",
+      "toId": "Table",
+      "type": "REPLICATED_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataSystem",
+      "toId": "Schema",
+      "type": "REPLICATED_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataSystem",
+      "toId": "Table",
+      "type": "MIGRATED_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Table",
+      "toId": "DataSystem",
+      "type": "MIGRATED_FROM",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Table",
+      "toId": "Table",
+      "type": "REFACTORED_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Report",
+      "toId": "Table",
+      "type": "CONSUMES",
+      "properties": {
+        "expression": "STRING",
+        "source": "STRING",
+        "lastSeen": "DATETIME"
+      },
+      "style": {}
+    },
+    {
+      "fromId": "Report",
+      "toId": "CapabilityDataDomain",
+      "type": "BELONGS_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Table",
+      "toId": "CapabilityDataDomain",
+      "type": "BELONGS_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataProduct",
+      "toId": "CapabilityDataDomain",
+      "type": "BELONGS_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataSystem",
+      "toId": "BusinessArea",
+      "type": "BELONGS_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Schema",
+      "toId": "BusinessArea",
+      "type": "BELONGS_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataModel",
+      "toId": "DataSystem",
+      "type": "BELONGS_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataModel",
+      "toId": "CapabilityDataDomain",
+      "type": "MODELS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataProduct",
+      "toId": "Table",
+      "type": "REALIZED_BY",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "MasterDataDomain",
+      "toId": "Table",
+      "type": "REALIZED_IN",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataPipeline",
+      "toId": "Table",
+      "type": "READS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataPipeline",
+      "toId": "Table",
+      "type": "LOADS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataSystem",
+      "toId": "Policy",
+      "type": "SUBJECT_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "BusinessArea",
+      "toId": "DataProductLine",
+      "type": "HAS_PRODUCT_LINE",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "DataProductLine",
+      "toId": "CapabilityDataDomain",
+      "type": "OWNS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "CapabilityDataDomain",
+      "toId": "BusinessProcess",
+      "type": "SUPPORTS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "BusinessArea",
+      "toId": "ValueStreamStage",
+      "type": "HAS_STAGE",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "BusinessProcess",
+      "toId": "ValueStreamStage",
+      "type": "BELONGS_TO_STAGE",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "ValueStreamStage",
+      "toId": "ValueStreamStage",
+      "type": "NEXT_STAGE",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "ValueStreamStage",
+      "toId": "ValueStreamStage",
+      "type": "LOOPS_BACK_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "BusinessProcess",
+      "toId": "BusinessProcess",
+      "type": "INFORMS",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Person",
+      "toId": "RoleAssignment",
+      "type": "HAS_ROLE",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "RoleAssignment",
+      "toId": "Table",
+      "type": "APPLIES_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "RoleAssignment",
+      "toId": "Report",
+      "type": "APPLIES_TO",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Session",
+      "toId": "Message",
+      "type": "HAS_MESSAGE",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Session",
+      "toId": "Message",
+      "type": "LAST_MESSAGE",
+      "properties": {},
+      "style": {}
+    },
+    {
+      "fromId": "Message",
+      "toId": "Message",
+      "type": "NEXT",
+      "properties": {},
+      "style": {}
+    }
+  ],
+  "style": {}
+}

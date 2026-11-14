@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Metadata Ingestion Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #131a2e;
+            --bg-card: rgba(22, 30, 53, 0.65);
+            --border-color: rgba(56, 189, 248, 0.15);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-purple: #a855f7;
+            --accent-green: #34d399;
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(19, 26, 46, 0.9) 0%, rgba(11, 15, 25, 0) 100%);
+            padding: 2.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        .badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            gap: 2.5rem;
+        }
+
+        aside {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .toc-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .toc-link:hover {
+            color: var(--accent-blue);
+            transform: translateX(4px);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s ease;
+        }
+
+        section:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 4px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Flow diagram placeholder styling */
+        .diagram-container {
+            background: rgba(11, 15, 25, 0.5);
+            border: 1px dashed rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .node-path {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .node-box {
+            background: rgba(22, 30, 53, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            min-width: 140px;
+        }
+
+        .node-box.person { border-color: #f59e0b; color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
+        .node-box.role { border-color: var(--accent-purple); color: var(--accent-purple); background: rgba(168, 85, 247, 0.05); }
+        .node-box.report { border-color: #ec4899; color: #ec4899; background: rgba(236, 72, 153, 0.05); }
+        .node-box.table { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(56, 189, 248, 0.05); }
+        .node-box.schema { border-color: var(--accent-green); color: var(--accent-green); background: rgba(52, 211, 153, 0.05); }
+        .node-box.ds { border-color: #64748b; color: #cbd5e1; background: rgba(100, 116, 139, 0.05); }
+
+        .arrow {
+            color: var(--text-secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .arrow-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: block;
+            margin-top: -0.25rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Rules card */
+        .rule-card {
+            background: rgba(168, 85, 247, 0.04);
+            border-left: 4px solid var(--accent-purple);
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .rule-card h4 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code Block */
+        pre {
+            background: #070913;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        .code-keyword { color: #f472b6; }
+        .code-string { color: #34d399; }
+        .code-comment { color: #64748b; font-style: italic; }
+        .code-number { color: #fb923c; }
+
+        /* Step cards list */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .step-card {
+            display: grid;
+            grid-template-columns: 50px 1fr;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 1.5rem;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .step-num {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+        .step-details h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1200px;
+            margin: 4rem auto 2rem auto;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div>
+                <h1>Power BI Metadata Ingestion</h1>
+                <p style="margin-bottom: 0.5rem; margin-top: 0.5rem;">LSC Data Platform (IDP) Data Lineage Architecture</p>
+                <p style="font-size: 0.9rem; color: var(--accent-blue); margin-bottom: 0;"><strong style="color: var(--accent-blue);">Active Lineage Dashboard:</strong> <a href="https://app.powerbi.com/" target="_blank" style="color: var(--accent-blue); text-decoration: underline; font-weight: 500;">Open Power BI Lineage Report</a></p>
+            </div>
+            <span class="badge">Architecture Doc</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside>
+            <div class="sidebar-card">
+                <div class="sidebar-title">Sections</div>
+                <ul class="toc-list">
+                    <li class="toc-item"><a href="#overview" class="toc-link">1. Pipeline Overview</a></li>
+                    <li class="toc-item"><a href="#cleaning" class="toc-link">2. Conformance & Cleaning</a></li>
+                    <li class="toc-item"><a href="#model" class="toc-link">3. Knowledge Graph Model</a></li>
+                    <li class="toc-item"><a href="#ingestion" class="toc-link">4. Transactional Ingestion</a></li>
+                    <li class="toc-item"><a href="#stale-pruning" class="toc-link">5. Stale Pruning (Sync)</a></li>
+                    <li class="toc-item"><a href="#reproducibility" class="toc-link">6. Reproducing Ingestion</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main>
+            <section id="overview">
+                <h2>Pipeline Overview</h2>
+                <p>To capture and map the enterprise-wide report lineage, a robust, automated metadata ingestion pipeline was implemented. This pipeline bridges the Power BI workspace metadata with any existing full lineage in the knowledge graph.</p>
+                
+                <div class="rule-card" style="border-left-color: var(--accent-blue); background: rgba(56, 189, 248, 0.04); margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--accent-blue); font-family: 'Outfit', sans-serif; font-weight: 700;">Active Power BI Lineage Dashboard</h4>
+                    <p style="margin-bottom: 0;">The PowerBI workspace metadata ingested into the knowledge graph by this pipeline is originally consumed by the following active report: <a href="https://app.powerbi.com/" target="_blank" style="color: var(--accent-blue); text-decoration: underline; font-weight: 600;">Open Active Power BI Lineage Report</a>.</p>
+                </div>
+
+                <p>The ingestion lifecycle is separated into three distinct, robust stages:</p>
+                <div class="step-list">
+                    <div class="step-card">
+                        <div class="step-num">1</div>
+                        <div class="step-details">
+                            <h3>High-Fidelity Extraction</h3>
+                            <p>Reads raw data extraction views from the source SQL databases containing datasets and workspace attributes. The tables are inner joined to pair active datasets directly with reports using the following SQL query:</p>
+                            <pre style="margin: 0.75rem 0; padding: 1rem;"><code style="font-size: 0.8rem;">SELECT 
+    pbid.Workspace_Name, 
+    pbir.Creator_Principal_Display_Name, 
+    pbir.Report_Name, 
+    pbid.Table_Name AS PBI_Table_Name, 
+    pbid.Source_Text AS Expression,
+    pbid.Connection_Type_Code, 
+    pbid.Dataset_Id,   -- Added 'pbid.' here to prevent ambiguity
+    pbid.Server_Name, 
+    pbid.Database_File_Name AS [Database], -- Added brackets around Database
+    pbid.Schema_Name, 
+    pbid.View_Name, 
+    pbir.State_Code, 
+    pbir.Web_Url_Text, 
+    pbir.Embed_Url_Text
+FROM sem_internal_x.PowerBi_Dataset_Table_Dim_vw  pbid
+INNER JOIN sem_internal_x.PowerBi_Report_Dim_vw  pbir
+  ON pbid.Dataset_Id = pbir.Dataset_Id
+WHERE Schema_Name IS NOT NULL 
+  AND Schema_Name NOT IN ('None', 'nan', '')
+  AND View_Name IS NOT NULL 
+  AND View_Name NOT IN ('None', 'nan', '')</code></pre>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">2</div>
+                        <div class="step-details">
+                            <h3>Conformance and View Resolution</h3>
+                            <p>Explodes multi-value cells, cleanses invalid placeholders, resolves schemas case-insensitively using live SQL catalog metadata, maps business areas, and derives appropriate Azure Synapse server endpoints.</p>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">3</div>
+                        <div class="step-details">
+                            <h3>Knowledge Graph Sync & Prune</h3>
+                            <p>Ingests conformed records into the Neo4j database using a 500-row transactional batch pattern and dynamically tags active nodes. It then executes structural pruning to eliminate orphan relationships or stale reports.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cleaning">
+                <h2>Conformance & Cleaning Rules</h2>
+                <p>To prevent dirty or unstandardized metadata from polluting the graph model, the pipeline automatically executes a series of advanced conformance algorithms, mapping heuristics, and catalog-validation rules:</p>
+                
+                <div class="rule-card">
+                    <h4>1. Multi-Value Array Splitting & Positional Exploding</h4>
+                    <p>When the raw SQL extraction returns records with multiple schema names or view names packed into single cells, the loader applies a standard regex pattern <code>[,;\n\r\t/|]</code> to identify the delimiters. It splits the cells into clean lists, trims whitespace, and explodes the records positionally into clean individual rows.</p>
+                </div>
+
+                <div class="rule-card">
+                    <h4>2. Live View Catalog Resolution (Mapping_Status)</h4>
+                    <p>To audit and catalog the conformed rows, the script queries the live SQL Server <code>sys.views</code> catalog to build a ground-truth map. Every exploded view name is validated case-insensitively, and one of three distinct statuses is assigned to the <code>Mapping_Status</code> column:</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.35rem;"><strong>Clean</strong>: Assigned to rows that were already conformed at extraction time, requiring no splitting or array mapping.</li>
+                        <li style="margin-bottom: 0.35rem;"><strong>Mapped</strong>: Assigned to exploded rows where the view name was successfully resolved and verified in the live <code>sys.views</code> SQL catalog under that schema.</li>
+                        <li style="margin-bottom: 0.35rem;"><strong>Fallback (Not in Catalog)</strong>: Assigned when the view name could not be found in the live view catalog. In this case, the system gracefully falls back to positional mapping or defaults to the first schema in the list to prevent dropping data.</li>
+                    </ul>
+                </div>
+
+                <div class="rule-card">
+                    <h4>3. Business Area Mapping Logic</h4>
+                    <p>To bridge technical database schemas with organizational structures, a schema-to-business-area lookup translates lowercase schema prefixes (e.g. <code>sem_*</code> or <code>replica_*</code>) into enterprise Business Areas. LSC examples:</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.35rem;"><strong>Wholesale Marketing</strong>: Mapped from schemas like <code>sem_wholesale</code>, <code>sem_wholesale_pricing</code>, <code>replica_helios</code>, and <code>replica_rightangle</code>.</li>
+                        <li style="margin-bottom: 0.35rem;"><strong>Pipelines & Terminals</strong>: Mapped from schemas like <code>sem_supplychain</code>, <code>sem_supplychain_ops</code>, and <code>replica_atlas</code>.</li>
+                        <li style="margin-bottom: 0.35rem;"><strong>Manufacturing Operations</strong>: Mapped from schemas like <code>sem_manufacturing</code>, <code>sem_manufacturing_ops</code>, and <code>replica_kestrel</code>.</li>
+                        <li style="margin-bottom: 0.35rem;"><strong>Finance</strong>: Mapped from schemas like <code>sem_finance</code>, <code>sem_finance_kpi</code>, and <code>replica_orion</code>.</li>
+                        <li style="margin-bottom: 0.35rem;"><strong>Human Resources</strong>: Mapped from schemas like <code>sem_hr</code>, <code>sem_hr_kpi</code>, and <code>sem_hr_ops</code>.</li>
+                    </ul>
+                </div>
+
+                <div class="rule-card">
+                    <h4>4. Medallion Schema to IDP Server Defaults</h4>
+                    <p>If the raw server name or database name are empty/null, but the schema name matches standard IDP medallion patterns (such as starting with <code>replica_</code>, <code>sem_</code>, or ending in <code>_core</code>), they are mapped to standard production Azure Synapse defaults:
+                    <br><strong>Server</strong>: <code>lsc-idp-prod.sql.azuresynapse.net</code>
+                    <br><strong>Database</strong>: <code>LSC Data Platform (IDP)</code></p>
+                </div>
+
+                <div class="rule-card">
+                    <h4>5. Invalidation & Placeholder Filtering</h4>
+                    <p style="margin-bottom: 0;">During data extraction, any rows with invalid schema or view names containing string placeholders such as <code>'None'</code>, <code>'nan'</code>, <code>'NULL'</code>, or empty strings are automatically filtered out and excluded from entering the ingestion pipeline.</p>
+                </div>
+            </section>
+
+            <section id="model">
+                <h2>Knowledge Graph Model</h2>
+                <p>The conformed graph models the entire path from Person down to Server database structures without introducing non-standard node labels or visually cluttered hubs.</p>
+                
+                <div class="diagram-container">
+                    <p style="font-weight: 700; color: var(--accent-blue); margin-bottom: 0.5rem;">Conformed Database Schema Wiring</p>
+                    <div class="node-path">
+                        <div class="node-box person">Person</div>
+                        <div class="arrow">─▶<span class="arrow-text">:HAS_ROLE</span></div>
+                        <div class="node-box role">RoleAssignment</div>
+                        <div class="arrow">─▶<span class="arrow-text">:APPLIES_TO</span></div>
+                        <div class="node-box report">Report</div>
+                    </div>
+                    <div class="node-path" style="margin-top: 0.5rem;">
+                        <div class="node-box report">Report</div>
+                        <div class="arrow">─▶<span class="arrow-text">:CONSUMES</span></div>
+                        <div class="node-box table">Table (View)</div>
+                        <div class="arrow">◀─<span class="arrow-text">:CONTAINS</span></div>
+                        <div class="node-box schema">Schema</div>
+                        <div class="arrow">◀─<span class="arrow-text">:HOSTS</span></div>
+                        <div class="node-box ds">DataSystem</div>
+                    </div>
+                </div>
+
+                <p><strong>Workspace Modeling</strong>: To keep the graph highly conformed and avoid clutter, <code>Workspace_Name</code> is modeled directly as a property (<code>workspaceName</code>) on the <code>Report</code> node itself rather than a separate hub node.</p>
+                <p><strong>Uniqueness Constraint Merging</strong>: Because <code>Table(qualifiedName)</code> holds a strict uniqueness constraint, merging directly on multiple labels (e.g. <code>MERGE (t:Table:View)</code>) can cause Neo4j database validation errors if a node exists with only one label. We resolve this elegantly using a safe merging pattern: merge on the primary <code>:Table</code> label first, then apply <code>SET t:View</code>.</p>
+            </section>
+
+            <section id="ingestion">
+                <h2>Transactional Ingestion Code</h2>
+                <p>Below is the conformed Cypher ingestion statement executed transactionally in the notebook using 500-row batching:</p>
+                <pre><code><span class="code-comment">// Ingest database nodes and report lineage</span>
+UNWIND $rows AS row
+
+<span class="code-comment">// 1. Server & Database Infrastructure</span>
+WITH row WHERE row.Server_Name IS NOT NULL AND row.Database IS NOT NULL
+MERGE (srv:Server {serverName: row.Server_Name})
+MERGE (ds:DataSystem {name: row.Database})
+MERGE (srv)-[:HOSTS]->(ds)
+
+<span class="code-comment">// 2. Schema and Tables</span>
+WITH row, ds
+WHERE row.Schema_Name IS NOT NULL AND row.View_Name IS NOT NULL
+MERGE (sch:Schema {qualifiedName: row.Schema_Name})
+ON CREATE SET sch.layer = <span class="code-string">"Semantic"</span>
+MERGE (ds)-[:HOSTS]->(sch)
+
+MERGE (t:Table {qualifiedName: row.Schema_Name + <span class="code-string">'.'</span> + row.View_Name})
+ON CREATE SET t.name = row.View_Name,
+              t.layer = <span class="code-string">"Semantic"</span>,
+              t.createdAt = datetime()
+ON MATCH SET t.updatedAt = datetime()
+SET t:View
+MERGE (sch)-[:CONTAINS]->(t)
+
+<span class="code-comment">// 3. Wire Business Area</span>
+WITH row, ds, sch, t
+FOREACH (ba_name IN CASE WHEN row['Business Area'] IS NOT NULL THEN [row['Business Area']] ELSE [] END |
+    MERGE (ba:BusinessArea {name: ba_name})
+    MERGE (ds)-[:BELONGS_TO]->(ba)
+    MERGE (sch)-[:BELONGS_TO]->(ba)
+)
+
+<span class="code-comment">// 4. Power BI Report</span>
+WITH row, t
+MERGE (rpt:Report {name: row.Report_Name})
+ON CREATE SET rpt.connectionType = row.Connection_Type_Code,
+              rpt.webUrl = row.Web_Url_Text,
+              rpt.state = row.State_Code,
+              rpt.workspaceName = row.Workspace_Name,
+              rpt.lastSeen = datetime($runStart),
+              rpt.createdAt = datetime()
+ON MATCH SET rpt.connectionType = row.Connection_Type_Code,
+             rpt.webUrl = row.Web_Url_Text,
+             rpt.state = row.State_Code,
+             rpt.workspaceName = row.Workspace_Name,
+             rpt.lastSeen = datetime($runStart),
+             rpt.updatedAt = datetime()
+
+<span class="code-comment">// 5. Report Creator Role Assignment</span>
+FOREACH (creator IN CASE WHEN row.Creator_Principal_Display_Name IS NOT NULL THEN [row.Creator_Principal_Display_Name] ELSE [] END |
+    MERGE (p:Person {name: creator})
+    MERGE (ra:RoleAssignment {type: <span class="code-string">"Report Creator"</span>, scope: row.Report_Name})
+    ON CREATE SET ra.status = <span class="code-string">"Active"</span>, ra.createdAt = datetime()
+    MERGE (p)-[:HAS_ROLE]->(ra)
+    MERGE (ra)-[:APPLIES_TO]->(rpt)
+)
+
+<span class="code-comment">// 6. Lineage link (CONSUMES)</span>
+MERGE (rpt)-[con:CONSUMES]->(t)
+ON CREATE SET con.expression = row.Expression,
+              con.lastSeen = datetime($runStart),
+              con.createdAt = datetime()
+ON MATCH SET con.expression = row.Expression,
+             con.lastSeen = datetime($runStart),
+             con.updatedAt = datetime()</code></pre>
+            </section>
+
+            <section id="stale-pruning">
+                <h2>Stale Pruning (State Sync)</h2>
+                <p>Because report deployments and workspace contents evolve rapidly, we use a <strong>Sync and Prune</strong> design to systematically delete relationships and reports that have disappeared from the source databases.</p>
+                <div class="rule-card" style="border-left-color: var(--accent-purple); background: rgba(168, 85, 247, 0.04); margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--accent-purple); font-family: 'Outfit', sans-serif; font-weight: 700;">Multi-Source Safe Isolation Guarantee</h4>
+                    <p style="margin-bottom: 0;">To prevent the pruning process from accidentally affecting or deleting Report nodes or relationships loaded by other ingestion scripts or distinct projects, both the <code>Report</code> nodes and the <code>CONSUMES</code> edges loaded by this script are tagged with <code>source: "PowerBI_Workspace"</code>. The sync-and-prune queries are strictly constrained to this namespace, leaving all other graph data completely safe and untouched.</p>
+                </div>
+                <ol style="margin-left: 1.5rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    <li style="margin-bottom: 0.5rem;">The run captures a UTC timestamp at the start of the job (<code>runStart = datetime.now(timezone.utc).isoformat()</code>).</li>
+                    <li style="margin-bottom: 0.5rem;">Every successfully processed <code>Report</code> and <code>CONSUMES</code> relationship has its <code>lastSeen</code> property updated to this exact timestamp and tagged with <code>source: "PowerBI_Workspace"</code>.</li>
+                    <li style="margin-bottom: 0.5rem;">After ingestion completes, only the <code>CONSUMES</code> edges and <code>Report</code> nodes that belong to this namespace (<code>source: "PowerBI_Workspace"</code>) and whose <code>lastSeen</code> is less than the run start time (or null) are pruned:</li>
+                </ol>
+                <pre><code><span class="code-comment">// Delete only stale Power BI workspace consumption edges</span>
+MATCH (rpt:Report {source: "PowerBI_Workspace"})-[con:CONSUMES {source: "PowerBI_Workspace"}]->(t:Table)
+WHERE con.lastSeen < datetime($runStart) OR con.lastSeen IS NULL
+DELETE con
+
+<span class="code-comment">// Delete only stale Power BI workspace report nodes</span>
+MATCH (rpt:Report {source: "PowerBI_Workspace"})
+WHERE rpt.lastSeen < datetime($runStart) OR rpt.lastSeen IS NULL
+DETACH DELETE rpt</code></pre>
+            </section>
+
+            <section id="reproducibility">
+                <h2>Reproducing Ingestion</h2>
+                <p>To refresh the Power BI lineage or run the ingestion again, follow these exact steps using the production-grade load script:</p>
+                <div class="step-list">
+                    <div class="step-card">
+                        <div class="step-num">A</div>
+                        <div class="step-details">
+                            <h3>Activate the Virtual Environment</h3>
+                            <p>Open your terminal in the project root directory and activate the virtual environment:
+                            <br><code>.venv\Scripts\activate</code></p>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">B</div>
+                        <div class="step-details">
+                            <h3>Run the Standalone Script</h3>
+                            <p>Execute the conformed load script directly from your terminal:
+                            <br><code>python src/load_powerbi_lineage.py</code></p>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">C</div>
+                        <div class="step-details">
+                            <h3>MFA Authentication</h3>
+                            <p>An interactive browser window will pop up prompting you to authenticate your SQL Server connection via MFA. Once authenticated, the script will automatically clean, explode, map, and transactionally load the conformed lineage to Neo4j, followed by structural pruning of stale nodes.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>Lagos Refining & Supply Company (fictional). Data Lineage Knowledge Graph Documentation.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "skill_name": "cypher-query-generator",
+  "description": "Fresh verification queries — never used during optimization. Run these AFTER description optimization is complete to verify generalization on totally unseen prompts.",
+  "queries": [
+    {
+      "id": 1,
+      "prompt": "what's the full data path for Refinery_Margin_Fact?",
+      "should_trigger": true,
+      "category": "lineage"
+    },
+    {
+      "id": 2,
+      "prompt": "show me everything connected to the Wholesale Marketing business area",
+      "should_trigger": true,
+      "category": "business-context"
+    },
+    {
+      "id": 3,
+      "prompt": "which semantic views don't have a data analyst assigned?",
+      "should_trigger": true,
+      "category": "role-lookup"
+    },
+    {
+      "id": 4,
+      "prompt": "find all replica tables that come from the Helios system",
+      "should_trigger": true,
+      "category": "infrastructure"
+    },
+    {
+      "id": 5,
+      "prompt": "my boss needs to see what reports are powered by master data",
+      "should_trigger": true,
+      "category": "implicit-consumption"
+    },
+    {
+      "id": 6,
+      "prompt": "add a new constraint for the DataPipeline node label",
+      "should_trigger": false,
+      "category": "near-miss-schema-change",
+      "rationale": "Involves Neo4j schema DDL, not querying the graph"
+    },
+    {
+      "id": 7,
+      "prompt": "write unit tests for the neo4j_loader.py module",
+      "should_trigger": false,
+      "category": "near-miss-testing",
+      "rationale": "Mentions the project but is Python testing not graph querying"
+    },
+    {
+      "id": 8,
+      "prompt": "compare the performance of two different Cypher query approaches",
+      "should_trigger": false,
+      "category": "near-miss-optimization",
+      "rationale": "Involves Cypher but is query optimization not lineage exploration"
+    }
+  ]
+}
