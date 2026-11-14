@@ -1,0 +1,64 @@
+[project]
+name = "data-lineage-kg"
+version = "0.1.0"
+description = "Knowledge graph built from data modeling artifacts, data engineering artifacts, and business context."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "azure-core>=1.41.0",
+    "azure-identity>=1.25.3",
+    "duckdb>=1.5.2",
+    "duckdb-engine>=0.17.0",
+    "psycopg[binary]>=3.2.0",
+    "ipykernel>=7.2.0",
+    "nbformat>=5.10.4",
+    "neo4j>=6.1.0",
+    "neo4j-graphrag[openai,anthropic,google]>=1.22.0",
+    "fastapi[standard]>=0.115.0",
+    "openai>=2.38.0",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.1",
+    "polars>=1.40.1",
+    "pyarrow>=24.0.0",
+    "pyodbc>=5.2.0",
+    "python-dotenv>=1.2.2",
+    "rich>=15.0.0",
+    "setuptools>=80.0.0",
+    "sqlalchemy>=2.0.40",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.2.0",
+    "python-dotenv>=1.2.2",
+    "pytest>=9.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "src/data_cleaning_utils"]
+markers = ["integration: reads the live Neo4j graph (skipped without credentials)"]
+
+# ── Build system ────────────────────────────────────────────────────────
+# This tells Python *how* to build/install the package.
+# setuptools is the most common build backend.
+[build-system]
+requires = ["setuptools>=75.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# ── Package discovery ───────────────────────────────────────────────────
+# Map the importable package root ("") to the "src" directory.
+# This means every .py in src/ is directly importable by its filename:
+#   from neo4j_loader import Neo4jLoader
+#   from load_lineage import ...
+# Without this, Python would look for modules at the project root level.
+[tool.setuptools.package-dir]
+"" = "src"
+
+# Auto-discover all packages (dirs with __init__.py) under src/.
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv]
+link-mode = "copy"
+compile-bytecode = true

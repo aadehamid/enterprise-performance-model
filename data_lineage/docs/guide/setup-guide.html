@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LSC lineage portal: setup guide</title>
+<style>
+body { margin: 0; background: #fff; color: #111; font: 16px/1.55 system-ui, "Segoe UI", sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+h1 { font-size: 2rem; margin: 0 0 8px; }
+h2 { font-size: 1.4rem; margin: 48px 0 12px; padding-top: 8px; border-top: 1px solid #ddd; }
+h3 { font-size: 1.1rem; margin: 28px 0 8px; }
+code { font: 0.9em ui-monospace, Consolas, monospace; background: #f2f3f5; padding: 1px 4px; border-radius: 3px; }
+pre { position: relative; background: #f2f3f5; padding: 12px 14px; border-radius: 4px; overflow-x: auto; font: 14px/1.5 ui-monospace, Consolas, monospace; }
+pre code { background: none; padding: 0; }
+pre.out { background: #eef7ef; color: #1d5e2a; }
+.copy { position: absolute; top: 6px; right: 6px; font: 12px system-ui, sans-serif; padding: 3px 8px; cursor: pointer; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 6px 8px; border-bottom: 1px solid #e3e3e3; }
+th { background: #f7f7f8; }
+.note { background: #fff8e1; padding: 10px 14px; border-radius: 4px; }
+figure { margin: 16px 0; }
+figure img { width: 100%; height: auto; border: 1px solid #ddd; }
+figcaption { font-size: 14px; color: #555; margin-top: 4px; }
+nav ol { padding-left: 20px; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>LSC lineage portal: setup guide</h1>
+<p>This zip holds the code, the synthetic-data generator and the text2cypher chat portal for Lagos Refining &amp; Supply Company (LSC), a fictional downstream refiner. It contains no data, no installed packages and no keys. Follow the steps below in order. Allow about an hour, most of it waiting on installs.</p>
+<p>Commands are for Windows PowerShell. On macOS or Linux, use <code>.venv/bin/python</code> instead of <code>.venv\Scripts\python.exe</code> and forward slashes in paths.</p>
+
+<nav>
+<ol>
+  <li><a href="#prereqs">Install the prerequisites</a></li>
+  <li><a href="#unzip">Unzip and install dependencies</a></li>
+  <li><a href="#env">Fill in the settings file</a></li>
+  <li><a href="#db">Create the Neo4j database</a></li>
+  <li><a href="#data">Generate and load the data</a></li>
+  <li><a href="#run">Start the backend and frontend</a></li>
+  <li><a href="#check">Check the answers</a></li>
+  <li><a href="#tests">Run the tests (optional)</a></li>
+  <li><a href="#trouble">Troubleshooting</a></li>
+</ol>
+</nav>
+
+<h2 id="prereqs">1. Install the prerequisites</h2>
+<table>
+  <tr><th>What</th><th>Version</th><th>Notes</th></tr>
+  <tr><td>Neo4j</td><td>5.x or 2025.x</td><td>Desktop or Enterprise lets you create a separate <code>lsc</code> database. Community and Aura use the built-in <code>neo4j</code> database, which must be empty.</td></tr>
+  <tr><td>uv</td><td>any recent</td><td>Python package manager, <a href="https://docs.astral.sh/uv/">docs.astral.sh/uv</a>. Installs Python 3.12 if missing.</td></tr>
+  <tr><td>Node.js</td><td>20 or later</td><td></td></tr>
+  <tr><td>pnpm</td><td>any recent</td><td><code>npm install -g pnpm</code></td></tr>
+  <tr><td>LLM API key</td><td></td><td>One of OpenAI, Azure OpenAI, Anthropic, Google Vertex AI or an OpenAI-compatible service.</td></tr>
+  <tr><td>Disk and ports</td><td></td><td>About 1.5 GB free after installing. Ports 8000 (backend) and 5173 (frontend).</td></tr>
+</table>
+<p>Open a new terminal after installing uv and pnpm so they are on your PATH.</p>
+
+<h2 id="unzip">2. Unzip and install dependencies</h2>
+<pre><code>Expand-Archive .\KG_Data_Lineage_LSC_20261101.zip -DestinationPath $HOME
+cd $HOME\KG_Data_Lineage_LSC
+uv sync</code></pre>
+<p>About 5 minutes. <code>uv sync</code> creates <code>.venv</code> from <code>uv.lock</code>. Then install the frontend packages:</p>
+<pre><code>cd neo4j_text2cypher_fullstack\frontend
+pnpm install
+cd ..\..</code></pre>
+<pre class="out">Done in 1m 16.8s using pnpm v11</pre>
+<p>Run every later command from the <code>KG_Data_Lineage_LSC</code> folder unless the command itself changes folder.</p>
+
+<h2 id="env">3. Fill in the settings file</h2>
+<pre><code>Copy-Item neo4j_instance_credentials.env.example neo4j_instance_credentials.env
+notepad neo4j_instance_credentials.env</code></pre>
+<p>Set the Neo4j lines. Use <code>NEO4J_DATABASE=neo4j</code> instead of <code>lsc</code> on Community or Aura, and the <code>neo4j+s://&lt;instance-id&gt;.databases.neo4j.io</code> URL on Aura.</p>
+<pre><code>NEO4J_URL=neo4j://localhost:7687
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your-neo4j-password
+NEO4J_DATABASE=lsc</code></pre>
+<p>Then set the lines for one LLM provider. Leave the other lines in the file as they are.</p>
+<table>
+  <tr><th>Provider</th><th>Lines to set</th></tr>
+  <tr><td>OpenAI</td><td><code>LLM_PROVIDER=openai</code><br><code>LLM_MODEL=&lt;model-name&gt;</code><br><code>OPENAI_API_KEY=&lt;key&gt;</code></td></tr>
+  <tr><td>OpenAI-compatible</td><td>As OpenAI, plus <code>OPENAI_BASE_URL=&lt;service URL&gt;</code>, for example <code>http://localhost:11434/v1</code> for Ollama</td></tr>
+  <tr><td>Azure OpenAI</td><td><code>LLM_PROVIDER=azure</code><br><code>AZURE_OPENAI_API_KEY=&lt;key&gt;</code><br><code>AZURE_OPENAI_ENDPOINT=https://&lt;resource&gt;.openai.azure.com/</code><br><code>AZURE_API_VERSION=2024-10-21</code><br><code>AZURE_DEPLOYMENT_NAME=&lt;deployment&gt;</code></td></tr>
+  <tr><td>Anthropic</td><td><code>LLM_PROVIDER=anthropic</code><br><code>LLM_MODEL=&lt;model-name&gt;</code><br><code>ANTHROPIC_API_KEY=&lt;key&gt;</code></td></tr>
+  <tr><td>Google Vertex AI</td><td><code>LLM_PROVIDER=google</code><br><code>LLM_MODEL=&lt;model-name&gt;</code><br><code>GOOGLE_PROJECT=&lt;project-id&gt;</code><br><code>GOOGLE_LOCATION=us-central1</code><br>Run <code>gcloud auth application-default login</code> once.</td></tr>
+</table>
+<p class="note">This file holds your keys. Never commit, zip or email it.</p>
+
+<h2 id="db">4. Create the Neo4j database</h2>
+<p>Desktop or Enterprise only. In Neo4j Browser, switch to the <code>system</code> database and run:</p>
+<pre><code>CREATE DATABASE lsc IF NOT EXISTS WAIT;</code></pre>
+<p>On Community or Aura, skip this step and make sure the <code>neo4j</code> database is empty. The loader refuses a database that holds other data.</p>
+
+<h2 id="data">5. Generate and load the data</h2>
+<p>The generator is deterministic. It writes the same 45,426 nodes and 77,946 relationships into <code>synthetic_data/</code> every time.</p>
+<pre><code>.venv\Scripts\python.exe src\generate_shareable_catalog.py
+.venv\Scripts\python.exe src\verify_synthetic_catalog.py</code></pre>
+<pre class="out">Wrote 45426 nodes and 77946 relationships
+[ok] profile  [ok] leaks  [ok] report lineage</pre>
+<pre><code>.venv\Scripts\python.exe src\load_synthetic_catalog.py --database lsc
+.venv\Scripts\python.exe src\verify_synthetic_catalog.py --database lsc</code></pre>
+<pre class="out">Database 'lsc' matches manifest: 45426 nodes, 77946 relationships
+[ok] database  [ok] competency  [ok] database report lineage</pre>
+<p>Every line must say <code>[ok]</code> before you go on. Use <code>--database neo4j</code> on Community or Aura. Load soon after generating: the portal archives chat messages older than 30 days, which empties the feedback questions.</p>
+<h3>Optional: run the real Power BI loader</h3>
+<pre><code>.venv\Scripts\python.exe src\load_powerbi_lineage.py --database lsc --source duckdb:///synthetic_data/source.duckdb</code></pre>
+<p>This reads the generated Power BI export the same way production does. The counts stay the same and verify still passes.</p>
+
+<h2 id="run">6. Start the backend and frontend</h2>
+<p>Open two terminals in the <code>KG_Data_Lineage_LSC</code> folder and leave both running.</p>
+<p>Terminal 1, the backend:</p>
+<pre><code>cd neo4j_text2cypher_fullstack\backend
+..\..\.venv\Scripts\python.exe -m app.main</code></pre>
+<pre class="out">Uvicorn running on http://0.0.0.0:8000</pre>
+<p>Terminal 2, the frontend:</p>
+<pre><code>cd neo4j_text2cypher_fullstack\frontend
+pnpm dev</code></pre>
+<pre class="out">Local:   http://localhost:5173/</pre>
+<p>Open <a href="http://localhost:5173">http://localhost:5173</a> and ask <code>How many Gold tables are there?</code> The answer is 43.</p>
+
+<h3>What a good answer looks like</h3>
+<p>Ask <code>Trace wholesale_core.Margin_Fact back to its replica source</code>. The chat names each hop, and the dashboard shows the same result three ways.</p>
+<figure>
+  <figcaption>Graph View: Gold to Silver to Replica to the operational table, its system and its server.</figcaption>
+</figure>
+<figure>
+  <figcaption>Table Grid: one row per lineage path, one column per layer.</figcaption>
+</figure>
+<figure>
+  <figcaption>Cypher: the query the LLM wrote, guided by the shipped <code>cypher-query-generator</code> skill.</figcaption>
+</figure>
+
+<h2 id="check">7. Check the answers</h2>
+<p>With the default seed these are the expected answers. LLM wording varies; the names and numbers should not. <code>synthetic_data/manifest.json</code> holds them for your run.</p>
+<table>
+  <tr><th>Ask</th><th>Expect</th></tr>
+  <tr><td>How many Gold tables are there?</td><td>43</td></tr>
+  <tr><td>Show the tables in the wholesale_core schema</td><td>13 tables, including Margin_Fact, Product_Dim and Price_Batch_Dim</td></tr>
+  <tr><td>Trace wholesale_core.Margin_Fact back to its replica source</td><td>replica_helios.Margin_Detail, through udm_core.Helios_Margin_Fact</td></tr>
+  <tr><td>Which source column is wholesale_core.Margin_Fact.Margin_Amount derived from?</td><td>udm_core.Helios_Margin_Fact.Margin_Amount, from replica_helios.Margin_Detail.MRGN_AMT</td></tr>
+  <tr><td>Which report consumes sem_wholesale.Margin_vw?</td><td>Rack Margin Dashboard and Customer Profitability Scorecard</td></tr>
+  <tr><td>Which master data domain is realized in wholesale_core.Product_Dim?</td><td>Product</td></tr>
+  <tr><td>Which legacy table refactors to wholesale_core.Product_Dim?</td><td>dwh.LSC_Product_Master</td></tr>
+  <tr><td>Which data product is realized by sem_wholesale.Margin_vw, and which capability domain owns that product?</td><td>Rack Margin Analytics, owned by Wholesale Marketing</td></tr>
+  <tr><td>Which pipeline reads the replica margin table and loads wholesale_core.Margin_Fact?</td><td>PL_Wholesale_Margin</td></tr>
+  <tr><td>hey</td><td>A short greeting. No Cypher runs and the dashboard stays empty.</td></tr>
+  <tr><td>Can you show the graph of all the data models that cover the Helios data system?</td><td>Helios_Conceptual_Data_Model_v2 and Helios_Logical_Data_Model_v3</td></tr>
+  <tr><td>Can you show all the feedback in the database in a graph?</td><td>30 rated messages, 10 poor and 20 good, with their sessions</td></tr>
+  <tr><td>Show me poor feedbacks?</td><td>10 messages rated poor</td></tr>
+  <tr><td>We plan to move the source of mdm_core.RightAngle_Transaction_Type_Dim from RightAngle to Profisee. Which BI reports use sem_masterdata.TransactionType_vw?</td><td>Trading Deal Activity and Transaction Type Reference</td></tr>
+  <tr><td>Is the Timestamp column of sem_masterdata.TransactionType_vw used in any report?</td><td>Yes, Trading Deal Activity</td></tr>
+  <tr><td>How is sem_wholesale.Price_Batch_Dim_vw loaded? Which table and pipeline feed it?</td><td>wholesale_core.Price_Batch_Dim, loaded by PL_Wholesale_Price_Batch</td></tr>
+</table>
+<p>Your own questions add sessions, and rating an answer changes the two feedback counts.</p>
+
+<h2 id="tests">8. Run the tests (optional)</h2>
+<pre><code>.venv\Scripts\python.exe -m pytest -q
+cd neo4j_text2cypher_fullstack\backend
+..\..\.venv\Scripts\python.exe -m pytest -q
+cd ..\frontend
+npx tsc --noEmit
+pnpm test:e2e</code></pre>
+<p>The e2e run needs the backend and Neo4j up. It asks all 16 questions above in the browser, calls your LLM about 25 times and takes about 9 minutes.</p>
+
+<h2 id="trouble">9. Troubleshooting</h2>
+<table>
+  <tr><th>Problem</th><th>Fix</th></tr>
+  <tr><td>uv or pnpm is not recognised</td><td>Reopen the terminal after installing. For pnpm, run <code>npm install -g pnpm</code> first.</td></tr>
+  <tr><td>Refusing to load: the database holds other data</td><td>Point <code>--database</code> at an empty database, or drop and recreate it.</td></tr>
+  <tr><td>Database does not match manifest</td><td>A partial load or other data is in the way. Drop and recreate the database, then load again.</td></tr>
+  <tr><td>The portal answers about the wrong database</td><td>Set <code>NEO4J_DATABASE</code> to the database you loaded and restart the backend.</td></tr>
+  <tr><td>LLM_PROVIDER is set but its key is empty</td><td>The key for your provider is missing or still a placeholder.</td></tr>
+  <tr><td>OpenAI calls fail with a URL error</td><td><code>OPENAI_BASE_URL</code> is set to an empty value. Comment it out unless you use a compatible service.</td></tr>
+  <tr><td>Feedback questions show nothing</td><td>The catalog was generated more than 30 days ago and its messages were archived. Generate and load again.</td></tr>
+  <tr><td>Port 8000 or 5173 is already in use</td><td>Stop the other copy, or run the backend with <code>$env:PORT="8001"</code> and the frontend with <code>$env:VITE_BACKEND_URL="http://localhost:8001/ask"; pnpm dev --port 5174</code>.</td></tr>
+  <tr><td>pnpm install fails on long paths</td><td>Run <code>pnpm install --store-dir C:\pnpm-store</code>.</td></tr>
+  <tr><td>An answer looks wrong</td><td>LLM answers vary. Ask again and compare with the table in step 7. The Cypher tab shows exactly what ran.</td></tr>
+</table>
+
+<p>More detail: <code>docs/SHAREABLE.md</code>, <code>README.md</code>, and <code>docs/adr/0001-shareable-synthetic-catalog.md</code>.</p>
+
+</main>
+<script>
+document.querySelectorAll('pre:not(.out)').forEach((pre) => {
+  const btn = document.createElement('button');
+  btn.className = 'copy';
+  btn.type = 'button';
+  btn.textContent = 'Copy';
+  btn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(pre.querySelector('code').textContent); btn.textContent = 'Copied'; }
+    catch (e) { btn.textContent = 'Select and copy'; }
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  });
+  pre.appendChild(btn);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Lineage KG — used file map</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #1c1915;
+      --muted: #5c564c;
+      --line: #d9d1c3;
+      --card: #fffdf8;
+      --accent: #0f6e6a;
+      --warn-bg: #fff4e0;
+      --warn-ink: #7a4b00;
+      --chip: #efeae0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.5 "Segoe UI", Calibri, sans-serif;
+    }
+    main { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+    h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px; }
+    h2 { font-size: 18px; margin: 36px 0 12px; }
+    p { margin: 0 0 12px; }
+    .meta { color: var(--muted); margin-bottom: 24px; }
+    .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 8px; }
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 12px 16px;
+      min-width: 140px;
+    }
+    .stat b { display: block; font-size: 22px; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .warn {
+      background: var(--warn-bg);
+      color: var(--warn-ink);
+      border: 1px solid #efd3a0;
+      padding: 12px 14px;
+      margin: 20px 0;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    button {
+      font: inherit;
+      border: 1px solid var(--line);
+      background: var(--chip);
+      color: var(--ink);
+      padding: 4px 12px;
+      cursor: pointer;
+    }
+    button[aria-pressed="true"] {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    table { width: 100%; border-collapse: collapse; background: var(--card); }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    th { font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+    td:nth-child(1) { width: 88px; white-space: nowrap; color: var(--accent); font-weight: 600; }
+    td:nth-child(2) { width: 34%; font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; }
+    .foot { margin-top: 16px; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Data lineage graph — files this project runs</h1>
+  <p class="meta">Neo4j database <b>governancemetadata</b>. Inventory from loader path constants, 24 Oct 2026. Data folders are described, not enumerated.</p>
+
+  <div class="stats">
+    <div class="stat"><b>5</b><span>Medallion layers</span></div>
+    <div class="stat"><b>21</b><span>Load and audit scripts</span></div>
+    <div class="stat"><b>367</b><span>STTM workbooks in Data/sttms</span></div>
+    <div class="stat"><b>12</b><span>Semantic-view workbooks</span></div>
+    <div class="stat"><b>22 MB</b><span>Entire Data folder on disk</span></div>
+  </div>
+
+  <p>Flow is Operational → Replica → Silver → Gold → Semantic. Reports consume semantic views. Master data, data products, legacy refactors, and Power BI datasets hang off the same tables. Every write is MERGE.</p>
+
+  <div class="warn">
+    <b>In Data, present, and not read by any loader.</b>
+    <code>Data/sttms_batch2</code> (more STTM workbooks) and
+    <code>Data/semantic_views_batch2</code> (5 workbooks) are not on a loader path.
+    <code>load_sttm.py</code> and <code>load_lineage.py</code> default to <code>Data/sttms</code>.
+    <code>load_semantic_views.py</code> defaults to <code>Data/semantic_views</code>.
+  </div>
+
+  <h2>Used paths</h2>
+  <div class="filters" role="group" aria-label="Filter by area">
+    <button type="button" data-area="All" aria-pressed="true">All</button>
+    <button type="button" data-area="Loaders" aria-pressed="false">Loaders</button>
+    <button type="button" data-area="Data" aria-pressed="false">Data</button>
+    <button type="button" data-area="Portal" aria-pressed="false">Portal</button>
+    <button type="button" data-area="Schema" aria-pressed="false">Schema</button>
+    <button type="button" data-area="Agents" aria-pressed="false">Agents</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Area</th><th>Path</th><th>Role</th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="foot">Source: path constants in src/load_*.py and src/data_cleaning_utils. Workbook counts and the 22 MB figure are from disk on 24 Oct 2026, not from Neo4j node counts.</p>
+</main>
+<script>
+const ROWS = [
+  ["Schema", "README.md", "Load order, phase behavior, and the last documented graph counts."],
+  ["Schema", "AGENTS.md", "Modeling rules: MERGE keys, layer assignment, Legacy label, relationship vocabulary."],
+  ["Schema", "llm_graph_cypher_query_generation_context.md", "Schema the text-to-Cypher agent is supposed to query against."],
+  ["Schema", "src/data_model_merge_template.cypher", "Canonical MERGE / constraint patterns for every node and relationship."],
+  ["Schema", "docs/medallion_architecture_graph_design.md", "Design write-up of the medallion graph."],
+  ["Schema", "pyproject.toml / uv.lock / .python-version", "Python 3.12 project. Runtime is .venv. Neo4j, pandas, openpyxl, FastAPI, polars."],
+  ["Schema", "neo4j_instance_credentials.env", "Neo4j connection. Loaded by neo4j_loader.py and the portal config. Database: governancemetadata."],
+  ["Loaders", "src/neo4j_loader.py", "Shared driver, credential load, and case-insensitive qualifiedName canonicalization."],
+  ["Loaders", "src/load_datasystems.py", "Phase 0. DataSystem nodes from Data/Source_System_from_IDP.csv."],
+  ["Loaders", "src/load_schemas.py", "Phase 1. Schema nodes from Data/schemas.csv."],
+  ["Loaders", "src/load_tables.py", "Phase 2. Core Table nodes from Data/tables.csv."],
+  ["Loaders", "src/load_lineage.py", "Phase 3. Table DERIVED_FROM from the Phase 3 mapping workbook, overridden by Data/sttms. Also builds Alteryx provenance."],
+  ["Loaders", "src/load_reports.py", "Phase 4. Report nodes, CONSUMES, BELONGS_TO from reports.csv and the Phase 3 mapping workbook."],
+  ["Loaders", "src/load_phase4_metadata.py", "Phase 4.1. Bulk tables, columns, and domain links from Phase4_Entities_with_UDM_Naming_Convention.xlsx."],
+  ["Loaders", "src/load_sttm.py", "Phase 5. Column nodes, HAS_COLUMN, and column DERIVED_FROM from Data/sttms."],
+  ["Loaders", "src/load_master_data.py", "Phase 6. MasterDataDomain, REALIZED_IN, REFACTORED_TO from the two master-data workbooks."],
+  ["Loaders", "src/load_semantic_views.py", "Phase 7. Semantic Table nodes from every workbook in Data/semantic_views."],
+  ["Loaders", "src/load_retail_payments_views.py", "Phase 7a. Parses SQL in Retail Payments Semantic Views.xlsx and wires DERIVED_FROM."],
+  ["Loaders", "src/load_data_products.py", "Phase 8. One DataProduct per semantic-view workbook. BELONGS_TO a domain, REALIZED_BY its views."],
+  ["Loaders", "src/backfill_replicated_to.py", "Phase 9. Infers Operational tables and REPLICATED_TO from replica_* names already in the graph. No extra file."],
+  ["Loaders", "src/load_legacy_tables.py", "Phase 10. Legacy tables and REFACTORED_TO from Data/legacy_systems.xlsx. Extra KH rows are hardcoded."],
+  ["Loaders", "src/load_report_to_view.py", "Phase 11. Report CONSUMES semantic views from the legacy decommissioning workbook."],
+  ["Loaders", "src/load_data_models.py", "Phase 12. DataModel nodes from Data/Data_Models/UDM Data Model Approval Status.xlsx."],
+  ["Loaders", "src/load_role_assignments.py", "Person and RoleAssignment from CAT_Reports_IDP Index_RV0126.xlsx."],
+  ["Loaders", "src/load_location_idp.py", "Location tables from Location_Tables_In_IDP.xlsx."],
+  ["Loaders", "src/load_powerbi_lineage.py", "Live Power BI report and dataset lineage. SQL Server via db_connect. Credentials from the phase3 workbook_analysis .env, outside this repo."],
+  ["Loaders", "src/data_cleaning_utils/extract_mapping_metadata.py", "Builds schemas.csv, tables.csv, and reports.csv from the Phase 3 mapping workbook."],
+  ["Loaders", "src/data_cleaning_utils/", "Cleans and merges SharePoint + IDP system lists into Source_System_from_IDP.csv. extract_sttm_urls.py writes URLs back into the Phase 3 workbook."],
+  ["Loaders", "src/audit_sttm_sheets.py", "Audits sheet layouts under Data/sttms. Writes Data/sttm_sheets_audit.xlsx."],
+  ["Loaders", "src/_audit_skipped_columns.py", "Finds STTM columns the loader skipped. Writes Data/skipped_sttm_columns_audit.xlsx."],
+  ["Loaders", "db_connect/src/connect/query_sql_server.py", "SQL Server MFA query used only by load_powerbi_lineage.py."],
+  ["Data", "Data/sttms/", "367 STTM workbooks. Standard DD & STTM sheets, plus a few Alteryx mapping sheets. This is the column-lineage source the loaders actually scan. About 10 MB."],
+  ["Data", "Data/semantic_views/", "12 semantic-view workbooks, one per data product. Includes Retail Payments Semantic Views.xlsx. About 1.5 MB."],
+  ["Data", "Data/Data_Models/", "ER Studio approval tracking. The loader reads UDM Data Model Approval Status.xlsx. About 25 KB."],
+  ["Data", "Data/new data system files to process/", "8 one-off workbooks. Loaders open: List of Master Data June5_2025.xlsx, report_alteryx_master_data_requirements_DEC4th.xlsx, the legacy decommissioning workbook, CAT_Reports_IDP Index_RV0126.xlsx, Location_Tables_In_IDP.xlsx. About 0.7 MB."],
+  ["Data", "Data/ (root inputs)", "Phase 3 Reports Full Data Mapping.xlsx (lineage + reports). Phase4_Entities_with_UDM_Naming_Convention.xlsx (bulk conformed entities, about 6 MB). schemas.csv, tables.csv, reports.csv (generated, then loaded). Source_System_from_IDP.csv and Source System Repository from Sharepoint.csv (system inventory). legacy_systems.xlsx (legacy to IDP)."],
+  ["Portal", "neo4j_text2cypher_fullstack/backend/app/main.py", "FastAPI entry. Serves the chat API on port 8000."],
+  ["Portal", "neo4j_text2cypher_fullstack/backend/app/config.py", "Finds neo4j_instance_credentials.env at the repo root."],
+  ["Portal", "neo4j_text2cypher_fullstack/backend/app/api/", "HTTP routes and the question payload."],
+  ["Portal", "neo4j_text2cypher_fullstack/backend/app/generation/", "agent.py turns a question into Cypher. llm.py is the model client."],
+  ["Portal", "neo4j_text2cypher_fullstack/backend/app/retrieval/retriever.py", "Pulls graph context for the answer."],
+  ["Portal", "neo4j_text2cypher_fullstack/backend/app/database/", "Neo4j driver, chat history sqlite, embeddings."],
+  ["Portal", "neo4j_text2cypher_fullstack/frontend/", "Vite React UI. Chat, retrieval panel, theme. Dev server on port 5173."],
+  ["Portal", "neo4j_text2cypher_fullstack/preflight.py", "Checks the Neo4j connection before the portal is used."],
+  ["Agents", ".agents/skills/cypher-query-generator/", "Project skill for generating Cypher against this graph. SKILL.md is the procedure. references/ holds project_overview.md and graph_schema.md. scripts/ validates Cypher and runs evals."]
+];
+
+const tbody = document.getElementById("rows");
+function render(area) {
+  tbody.replaceChildren();
+  for (const [a, path, role] of ROWS) {
+    if (area !== "All" && a !== area) continue;
+    const tr = document.createElement("tr");
+    for (const text of [a, path, role]) {
+      const td = document.createElement("td");
+      td.textContent = text;
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+}
+document.querySelector(".filters").addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  for (const el of document.querySelectorAll(".filters button")) {
+    el.setAttribute("aria-pressed", el === button ? "true" : "false");
+  }
+  render(button.dataset.area);
+});
+render("All");
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+{
+  "nodes": [
+    {"label": "Server", "key_property": {"name": "serverName"}, "properties": [
+      {"name": "createdAt", "type": "DATETIME"}
+    ], "description": "Physical or cloud database host."},
+    {"label": "DataSystem", "key_property": {"name": "name"}, "properties": [
+      {"name": "description"}, {"name": "scope"}, {"name": "systemId"},
+      {"name": "isRecordActive", "type": "BOOLEAN"}, {"name": "applicationType"},
+      {"name": "ingestionMethod"}, {"name": "refreshFrequency"},
+      {"name": "confidentialityClassification"}, {"name": "isSoxRelevant", "type": "BOOLEAN"},
+      {"name": "platform"}, {"name": "status"}, {"name": "dataModality"},
+      {"name": "applicationService"}, {"name": "purviewReplicaSchemaName"},
+      {"name": "createdAt", "type": "DATETIME"}
+    ], "description": "Logical source or platform database."},
+    {"label": "FlatFile", "key_property": {"name": "name"}, "properties": [
+      {"name": "createdAt", "type": "DATETIME"}
+    ], "description": "Spreadsheet or CSV source feeding operational tables."},
+    {"label": "Schema", "key_property": {"name": "qualifiedName"}, "properties": [
+      {"name": "name"}, {"name": "layer"}, {"name": "role"},
+      {"name": "isCrossCutting", "type": "BOOLEAN"}, {"name": "refactorTarget"},
+      {"name": "createdAt", "type": "DATETIME"}
+    ], "description": "Schema; layer follows the medallion rules. Pre-standard schemas also carry :Legacy.", "metadata": {"extraLabels": ["Legacy"]}},
+    {"label": "Table", "key_property": {"name": "qualifiedName"}, "properties": [
+      {"name": "name"}, {"name": "tableName"}, {"name": "layer"}, {"name": "sourceFile"},
+      {"name": "viewDefinition"}, {"name": "sttmLink"}, {"name": "tableauReportEntity"},
+      {"name": "comment"}, {"name": "sourceDataSystem"},
+      {"name": "createdAt", "type": "DATETIME"}, {"name": "updatedAt", "type": "DATETIME"}
+    ], "description": "Table or view at schema.TableName. Role labels :Fact, :Dimension, :View; pre-standard objects carry :Legacy.", "metadata": {"extraLabels": ["Fact", "Dimension", "View", "Legacy"]}},
+    {"label": "Column", "key_property": {"name": "qualifiedName"}, "properties": [
+      {"name": "name"}, {"name": "dataType"}, {"name": "sourceDataType"}, {"name": "keyType"},
+      {"name": "isPrimaryKey", "type": "BOOLEAN"}, {"name": "definition"},
+      {"name": "transformation"}, {"name": "sourceFile"},
+      {"name": "createdAt", "type": "DATETIME"}
+    ], "description": "Column at schema.TableName.ColumnName."},
+    {"label": "Report", "key_property": {"name": "reportKey"}, "properties": [
+      {"name": "name"}, {"name": "webUrl"}, {"name": "workspaceName"}, {"name": "connectionType"},
+      {"name": "source"}, {"name": "state"}, {"name": "lastSeen", "type": "DATETIME"},
+      {"name": "sourceFile"}, {"name": "createdAt", "type": "DATETIME"},
+      {"name": "updatedAt", "type": "DATETIME"}
+    ], "description": "Power BI report. reportKey is the webUrl, or name:<name> when there is none."},
+    {"label": "BusinessArea", "key_property": {"name": "name"}, "properties": [
+      {"name": "description"}, {"name": "createdAt", "type": "DATETIME"}
+    ]},
+    {"label": "CapabilityDataDomain", "key_property": {"name": "name"}, "properties": [
+      {"name": "description"}, {"name": "createdAt", "type": "DATETIME"}
+    ]},
+    {"label": "DataProductLine", "key_property": {"name": "name"}, "properties": []},
+    {"label": "ValueStreamStage", "key_property": {"name": "name"}, "properties": [
+      {"name": "description"}, {"name": "sequenceOrder", "type": "INTEGER"}
+    ]},
+    {"label": "BusinessProcess", "key_property": {"name": "name"}, "properties": [
+      {"name": "description"}, {"name": "sequenceLabel"}
+    ]},
+    {"label": "Policy", "key_property": {"name": "type"}, "properties": [
+      {"name": "description"}, {"name": "confidentialityClassification"},
+      {"name": "isSoxRelevant", "type": "BOOLEAN"}, {"name": "createdAt", "type": "DATETIME"}
+    ]},
+    {"label": "MasterDataDomain", "key_property": {"name": "name"}, "properties": [
+      {"name": "status"}, {"name": "sourceFile"}, {"name": "createdAt", "type": "DATETIME"}
+    ]},
+    {"label": "DataProduct", "key_property": {"name": "name"}, "properties": [
+      {"name": "sourceFile"}, {"name": "createdAt", "type": "DATETIME"}
+    ]},
+    {"label": "DataPipeline", "key_property": {"name": "name"}, "properties": [
+      {"name": "synapseDataflow"}, {"name": "alteryxWorkflow"}, {"name": "sourceFile"},
+      {"name": "createdAt", "type": "DATETIME"}
+    ]},
+    {"label": "DataModel", "key_property": {"name": "name"}, "properties": [
+      {"name": "fileName"}, {"name": "modelType"}, {"name": "folderLink"}, {"name": "sourceFile"},
+      {"name": "createdAt", "type": "DATETIME"}
+    ], "description": "ER Studio conceptual or logical model."},
+    {"label": "Person", "key_property": {"name": "name"}, "properties": [
+      {"name": "createdAt", "type": "DATETIME"}
+    ]},
+    {"label": "RoleAssignment", "key_property": {"name": "scope"}, "properties": [
+      {"name": "type"}, {"name": "status"}, {"name": "createdAt", "type": "DATETIME"}
+    ], "description": "Data Analyst or Data Analyst Backup on one table or report. Identity is (type, scope).", "metadata": {"compositeKey": ["type", "scope"]}},
+    {"label": "Session", "key_property": {"name": "id"}, "properties": [], "description": "Portal chat session. The portal creates these at runtime.", "metadata": {"keyConstraint": "UNIQUE"}},
+    {"label": "Message", "key_property": {"name": "id"}, "properties": [
+      {"name": "question"}, {"name": "cypher"}, {"name": "answer"}, {"name": "feedback"},
+      {"name": "feedbackComment"}, {"name": "timestamp", "type": "DATETIME"}
+    ], "description": "Portal chat turn. feedback is good, poor, or absent. The portal creates turns without an id, so id is unique but optional.", "metadata": {"keyConstraint": "UNIQUE"}}
+  ],
+  "relationships": [
+    {"type": "HOSTS", "start_node_label": "Server", "end_node_label": "DataSystem"},
+    {"type": "HOSTS", "start_node_label": "DataSystem", "end_node_label": "Schema"},
+    {"type": "CONTAINS", "start_node_label": "DataSystem", "end_node_label": "Table"},
+    {"type": "CONTAINS", "start_node_label": "Schema", "end_node_label": "Table"},
+    {"type": "CONTAINS", "start_node_label": "FlatFile", "end_node_label": "Table"},
+    {"type": "HAS_COLUMN", "start_node_label": "Table", "end_node_label": "Column"},
+    {"type": "DERIVED_FROM", "start_node_label": "Table", "end_node_label": "Table", "properties": [{"name": "transformation"}]},
+    {"type": "DERIVED_FROM", "start_node_label": "Column", "end_node_label": "Column"},
+    {"type": "REPLICATED_TO", "start_node_label": "Table", "end_node_label": "Table"},
+    {"type": "REPLICATED_TO", "start_node_label": "DataSystem", "end_node_label": "Schema"},
+    {"type": "MIGRATED_TO", "start_node_label": "DataSystem", "end_node_label": "Table"},
+    {"type": "MIGRATED_FROM", "start_node_label": "Table", "end_node_label": "DataSystem"},
+    {"type": "REFACTORED_TO", "start_node_label": "Table", "end_node_label": "Table"},
+    {"type": "CONSUMES", "start_node_label": "Report", "end_node_label": "Table", "properties": [
+      {"name": "expression"}, {"name": "source"}, {"name": "lastSeen", "type": "DATETIME"}
+    ]},
+    {"type": "BELONGS_TO", "start_node_label": "Report", "end_node_label": "CapabilityDataDomain"},
+    {"type": "BELONGS_TO", "start_node_label": "Table", "end_node_label": "CapabilityDataDomain"},
+    {"type": "BELONGS_TO", "start_node_label": "DataProduct", "end_node_label": "CapabilityDataDomain"},
+    {"type": "BELONGS_TO", "start_node_label": "DataSystem", "end_node_label": "BusinessArea"},
+    {"type": "BELONGS_TO", "start_node_label": "Schema", "end_node_label": "BusinessArea"},
+    {"type": "BELONGS_TO", "start_node_label": "DataModel", "end_node_label": "DataSystem"},
+    {"type": "MODELS", "start_node_label": "DataModel", "end_node_label": "CapabilityDataDomain"},
+    {"type": "REALIZED_BY", "start_node_label": "DataProduct", "end_node_label": "Table"},
+    {"type": "REALIZED_IN", "start_node_label": "MasterDataDomain", "end_node_label": "Table"},
+    {"type": "READS", "start_node_label": "DataPipeline", "end_node_label": "Table"},
+    {"type": "LOADS", "start_node_label": "DataPipeline", "end_node_label": "Table"},
+    {"type": "SUBJECT_TO", "start_node_label": "DataSystem", "end_node_label": "Policy"},
+    {"type": "HAS_PRODUCT_LINE", "start_node_label": "BusinessArea", "end_node_label": "DataProductLine"},
+    {"type": "OWNS", "start_node_label": "DataProductLine", "end_node_label": "CapabilityDataDomain"},
+    {"type": "SUPPORTS", "start_node_label": "CapabilityDataDomain", "end_node_label": "BusinessProcess"},
+    {"type": "HAS_STAGE", "start_node_label": "BusinessArea", "end_node_label": "ValueStreamStage"},
+    {"type": "BELONGS_TO_STAGE", "start_node_label": "BusinessProcess", "end_node_label": "ValueStreamStage"},
+    {"type": "NEXT_STAGE", "start_node_label": "ValueStreamStage", "end_node_label": "ValueStreamStage"},
+    {"type": "LOOPS_BACK_TO", "start_node_label": "ValueStreamStage", "end_node_label": "ValueStreamStage"},
+    {"type": "INFORMS", "start_node_label": "BusinessProcess", "end_node_label": "BusinessProcess"},
+    {"type": "HAS_ROLE", "start_node_label": "Person", "end_node_label": "RoleAssignment"},
+    {"type": "APPLIES_TO", "start_node_label": "RoleAssignment", "end_node_label": "Table"},
+    {"type": "APPLIES_TO", "start_node_label": "RoleAssignment", "end_node_label": "Report"},
+    {"type": "HAS_MESSAGE", "start_node_label": "Session", "end_node_label": "Message"},
+    {"type": "LAST_MESSAGE", "start_node_label": "Session", "end_node_label": "Message"},
+    {"type": "NEXT", "start_node_label": "Message", "end_node_label": "Message"}
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "skill_name": "cypher-query-generator",
+  "description": "Train set (~60%) for description optimization. Use these to identify failures and guide revisions.",
+  "queries": [
+    {
+      "id": 1,
+      "prompt": "Show me full lineage for the Rack Margin view",
+      "should_trigger": true,
+      "category": "explicit-lineage"
+    },
+    {
+      "id": 2,
+      "prompt": "what tables feed into the TransactionType_vw?",
+      "should_trigger": true,
+      "category": "implicit-lineage"
+    },
+    {
+      "id": 3,
+      "prompt": "which reports use data from RightAngle?",
+      "should_trigger": true,
+      "category": "report-consumption"
+    },
+    {
+      "id": 4,
+      "prompt": "can you find all the semantic views assigned to Nkechi Morales?",
+      "should_trigger": true,
+      "category": "analyst-lookup"
+    },
+    {
+      "id": 5,
+      "prompt": "show the data flow from operational to semantic for the Deal table",
+      "should_trigger": true,
+      "category": "explicit-lineage"
+    },
+    {
+      "id": 6,
+      "prompt": "I need to trace where replica_helios.Margin_Detail comes from",
+      "should_trigger": true,
+      "category": "implicit-lineage"
+    },
+    {
+      "id": 7,
+      "prompt": "what legacy tables were refactored into udm_core tables?",
+      "should_trigger": true,
+      "category": "legacy-refactoring"
+    },
+    {
+      "id": 8,
+      "prompt": "show me column level lineage for wholesale_core.Margin_Fact",
+      "should_trigger": true,
+      "category": "column-lineage"
+    },
+    {
+      "id": 9,
+      "prompt": "which business areas does the Wholesale Marketing domain belong to?",
+      "should_trigger": true,
+      "category": "business-context"
+    },
+    {
+      "id": 10,
+      "prompt": "my manager wants to know the upstream sources for our wholesale marketing reports",
+      "should_trigger": true,
+      "category": "implicit-lineage"
+    },
+    {
+      "id": 11,
+      "prompt": "list all flat file sourced tables and where they end up",
+      "should_trigger": true,
+      "category": "flatfile-lineage"
+    },
+    {
+      "id": 12,
+      "prompt": "which gold tables came from Alteryx Sandbox?",
+      "should_trigger": true,
+      "category": "alteryx-migration"
+    },
+    {
+      "id": 13,
+      "prompt": "whats the upstream lineage for the deal tbl?",
+      "should_trigger": true,
+      "category": "casual-typo"
+    },
+    {
+      "id": 14,
+      "prompt": "pls show me column mapping for helios_margin_fact",
+      "should_trigger": true,
+      "category": "casual-abbreviation"
+    },
+    {
+      "id": 15,
+      "prompt": "hey which servers host the Helios datasystem",
+      "should_trigger": true,
+      "category": "casual-infrastructure"
+    },
+    {
+      "id": 16,
+      "prompt": "Write a Python script to load data into Neo4j",
+      "should_trigger": false,
+      "category": "near-miss-code-generation",
+      "rationale": "Involves Neo4j but is code generation, not query generation"
+    },
+    {
+      "id": 17,
+      "prompt": "Create a new STTM Excel file for the Helios tables",
+      "should_trigger": false,
+      "category": "near-miss-document-creation",
+      "rationale": "Mentions the data platform but is document creation"
+    },
+    {
+      "id": 18,
+      "prompt": "Can you help me fix a bug in load_lineage.py?",
+      "should_trigger": false,
+      "category": "near-miss-debugging",
+      "rationale": "Involves the same project but is Python debugging"
+    },
+    {
+      "id": 19,
+      "prompt": "Build a Power BI dashboard showing data quality metrics",
+      "should_trigger": false,
+      "category": "near-miss-bi-development",
+      "rationale": "Involves reports but is BI development not graph querying"
+    },
+    {
+      "id": 20,
+      "prompt": "help me write a SQL query to join the Product_Dim and Margin_Fact tables",
+      "should_trigger": false,
+      "category": "near-miss-sql",
+      "rationale": "Mentions tables from the graph but asks for SQL not Cypher"
+    },
+    {
+      "id": 21,
+      "prompt": "Set up a new Neo4j database instance for our team",
+      "should_trigger": false,
+      "category": "near-miss-infra",
+      "rationale": "Involves Neo4j but is infrastructure setup not querying"
+    }
+  ]
+}
