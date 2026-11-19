@@ -25,6 +25,10 @@ jobs:
         with:
           # Keep uv's package cache between runs, so each check does not download its dependencies again.
           enable-cache: true
-          cache-dependency-glob: scripts/check.sh
+          # The cache key covers every file that names the packages check.sh installs.
+          cache-dependency-glob: |
+            scripts/check.sh
+            data_lineage/uv.lock
+            data_lineage/neo4j_text2cypher_fullstack/backend/requirements.txt
       - name: Run scripts/check.sh
         run: ./scripts/check.sh
