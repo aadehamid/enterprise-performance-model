@@ -321,6 +321,9 @@ class Privacy(unittest.TestCase):
                 data = f.read()
             if b"\0" in data:
                 continue
+            # A package manager's lockfile holds integrity hashes, whose letters can spell a name by chance.
+            if os.path.basename(path) in ("pnpm-lock.yaml", "package-lock.json", "yarn.lock", "uv.lock", "poetry.lock"):
+                continue
             checked += 1
             hits = {t for t in name_tokens(data.decode("utf-8", errors="replace"))
                     if hashlib.sha256(t.encode()).hexdigest()[:16] in NAME_HASHES}
