@@ -56,17 +56,22 @@ Run these before you open a pull request, and again before you push a review fix
    edited wording missed it (the follow-up release's retro, 2026-11-03).
 5. **A different model reviews the diff, and every finding is fixed or answered.**
    Commit first; the review reads committed work only.
-   - **Who reviews:** since 2026-10-25 (EPM-DEC-001-0028, amendment of 2026-10-25),
-     the independent review is the first available of: Kimi on K3.1 Pro at high
-     effort (`herdr-review.sh --kind kimi`), then Pi (`pi-review.sh --role
-     independent`), then Codex on gpt-6-luna (`herdr-review.sh`). A reviewer is not
-     available as the `way-of-working` skill's "Who reviews" section defines it.
-     Inside Rex, `herdr-review.sh` hands off to `rex-review.sh`, and in the Herdr
-     app to `hc-review.sh`, so Kimi and the Cursor agent CLI are available there too
-     (amendments of 2026-10-25, later, and 2026-10-30). Outside Herdr, the Herdr app
-     and Rex, Kimi is not available, and Codex runs through the Codex plugin
-     (below). When none of the three is available, push nothing and tell the
-     decision owner. The Cursor bot gives the PR verdict. Wait up to 20 minutes after
+   - **Who reviews:** since 2026-11-18 (EPM-DEC-001-0028, amendment of 2026-11-18),
+     the independent review is the first available of four reviewers, in this order.
+     First, Antigravity on gemini-4-neon-xhigh, run headless in plan mode and the
+     sandbox (`agy --model gemini-4-neon-xhigh --mode plan --sandbox -p=...`), with
+     the change (`git show` output and the changed files) given in the prompt,
+     because headless mode refuses tool commands; it runs as Claude's own command,
+     or in a Herdr app terminal with `hc run --bg`. Then Pi (`pi-review.sh --role
+     independent`). Then Codex on gpt-6.2-sol at xhigh reasoning with the Fast tier
+     (Claude's own `codex review` command, below; `herdr-review.sh` starts Codex at
+     medium reasoning only). Then Kimi on K3.1 Pro at high effort (`herdr-review.sh
+     --kind kimi`). A reviewer is not available as the `way-of-working` skill's
+     "Who reviews" section defines it. Inside Rex, `herdr-review.sh` hands off to
+     `rex-review.sh`, and in the Herdr app to `hc-review.sh`, so Kimi and the Cursor
+     agent CLI are available there too (amendments of 2026-10-25, later, and
+     2026-10-30). Outside Herdr, the Herdr app and Rex, Kimi is not available. When
+     none of the four is available, push nothing and tell the decision owner. The Cursor bot gives the PR verdict. Wait up to 20 minutes after
      a push for it (`merge-on-verdict.sh <n> <head> --timeout 1200 --bot-check
      "Cursor Automation"`). When it has given no verdict by then, or its check has
      finished without one, the Cursor agent CLI on Auto gives the verdict
@@ -84,10 +89,10 @@ Run these before you open a pull request, and again before you push a review fix
      the whole branch. Round 2 runs only if round 1 found something, and reviews
      the fix commit. Each fix after round 2 gets a quick check of that commit by the
      first available reviewer in the order, plus item 1 and CI, and the PR body
-     says which checks ran and which reviewer ran each (amendments of 2026-10-22 and
-     2026-10-25). PR verdict rounds are uncapped.
-   - **Codex outside Herdr, the Herdr app and Rex:** Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main --model gpt-6-luna "<claims to verify>"`,
-     and Codex CLI runs `codex review -c model="gpt-6-luna" --base main` (it rejects a prompt combined with `--base`).
+     says which checks ran and which reviewer ran each (amendments of 2026-10-22,
+     2026-10-25 and 2026-11-18). PR verdict rounds are uncapped.
+   - **Codex:** Claude runs `codex review -c model="gpt-6.2-sol" -c model_reasoning_effort="xhigh" -c service_tier="fast" --base main`
+     (it rejects a prompt combined with `--base`). Outside Herdr, the Herdr app and Rex, Claude Code can instead run `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main --model gpt-6.2-sol "<claims to verify>"`.
 
    Record any disagreement on a judgement call in the PR body.
 
