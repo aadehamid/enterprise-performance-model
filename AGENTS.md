@@ -56,17 +56,27 @@ Run these before you open a pull request, and again before you push a review fix
    edited wording missed it (the follow-up release's retro, 2026-11-03).
 5. **A different model reviews the diff, and every finding is fixed or answered.**
    Commit first; the review reads committed work only.
-   - **Who reviews:** since 2026-10-25 (EPM-DEC-001-0028, amendment of 2026-10-25),
-     the independent review is the first available of: Kimi on K3.1 Pro at high
-     effort (`herdr-review.sh --kind kimi`), then Pi (`pi-review.sh --role
-     independent`), then Codex on gpt-6-luna (`herdr-review.sh`). A reviewer is not
-     available as the `way-of-working` skill's "Who reviews" section defines it.
-     Inside Rex, `herdr-review.sh` hands off to `rex-review.sh`, and in the Herdr
-     app to `hc-review.sh`, so Kimi and the Cursor agent CLI are available there too
-     (amendments of 2026-10-25, later, and 2026-10-30). Outside Herdr, the Herdr app
-     and Rex, Kimi is not available, and Codex runs through the Codex plugin
-     (below). When none of the three is available, push nothing and tell the
-     decision owner. The Cursor bot gives the PR verdict. Wait up to 20 minutes after
+   - **Who reviews:** since 2026-11-18 (EPM-DEC-001-0028, amendment of 2026-11-18),
+     the independent review is the first available of four reviewers, in this order:
+     Antigravity on gemini-4-neon-xhigh, then Pi, then Codex on gpt-6.2-sol at xhigh
+     reasoning with the Fast tier, then Kimi on K3.1 Pro at high effort. A reviewer is
+     not available as the `way-of-working` skill's "Who reviews" section defines it.
+     When none of the four is available, push nothing and tell the decision owner.
+     The reviewer gets the diff under review: the branch's diff against `main` in
+     round 1, and the fix commit in later rounds and quick checks.
+     - Antigravity: Claude runs `agy --model gemini-4-neon-xhigh --mode plan --sandbox
+       -p="<prompt>"`, with the diff (`git diff main...HEAD` in round 1, `git show
+       <sha>` later) and the changed files in the prompt. Headless Antigravity runs no
+       tools, so it reads only its prompt.
+     - Pi: `pi-review.sh --role independent`.
+     - Codex: Claude runs `codex review -c model="gpt-6.2-sol" -c
+       model_reasoning_effort="xhigh" -c service_tier="fast"`, with `--base main` in
+       round 1 and `--commit <sha>` later. It rejects a prompt combined with `--base`.
+     - Kimi: `herdr-review.sh --kind kimi`. Inside Rex it hands off to `rex-review.sh`,
+       and in the Herdr app to `hc-review.sh` (amendments of 2026-10-25, later, and
+       2026-10-30). Outside Herdr, the Herdr app and Rex, Kimi is not available.
+
+     The Cursor bot gives the PR verdict. Wait up to 20 minutes after
      a push for it (`merge-on-verdict.sh <n> <head> --timeout 1200 --bot-check
      "Cursor Automation"`). When it has given no verdict by then, or its check has
      finished without one, the Cursor agent CLI on Auto gives the verdict
@@ -84,10 +94,8 @@ Run these before you open a pull request, and again before you push a review fix
      the whole branch. Round 2 runs only if round 1 found something, and reviews
      the fix commit. Each fix after round 2 gets a quick check of that commit by the
      first available reviewer in the order, plus item 1 and CI, and the PR body
-     says which checks ran and which reviewer ran each (amendments of 2026-10-22 and
-     2026-10-25). PR verdict rounds are uncapped.
-   - **Codex outside Herdr, the Herdr app and Rex:** Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main --model gpt-6-luna "<claims to verify>"`,
-     and Codex CLI runs `codex review -c model="gpt-6-luna" --base main` (it rejects a prompt combined with `--base`).
+     says which checks ran and which reviewer ran each (amendments of 2026-10-22,
+     2026-10-25 and 2026-11-18). PR verdict rounds are uncapped.
 
    Record any disagreement on a judgement call in the PR body.
 
