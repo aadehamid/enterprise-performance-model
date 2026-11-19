@@ -17,7 +17,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from neo4j.exceptions import ClientError
+from neo4j.exceptions import ClientError, DatabaseError
 
 from neo4j_loader import Neo4jLoader
 
@@ -103,8 +103,10 @@ def community_constraint(query: str) -> str:
 def create_constraint(loader: Neo4jLoader, query: str) -> None:
     try:
         loader.run_write(query)
-    except ClientError:
-        if "IS NODE KEY" not in query:
+    except (ClientError, DatabaseError) as err:   # Neo4j 5 Community raises ClientError, 2025.06 DatabaseError
+        # Only the edition refusal falls back. Enterprise refuses a node key over existing data with the same
+        # error class and code, and that must stop the load.
+        if "IS NODE KEY" not in query or "enterprise edition" not in str(err).lower():
             raise
         loader.run_write(community_constraint(query))
 

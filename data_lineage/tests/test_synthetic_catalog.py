@@ -6,7 +6,7 @@ from pathlib import Path
 
 import duckdb
 import pytest
-from neo4j.exceptions import ClientError
+from neo4j.exceptions import ClientError, DatabaseError
 
 from generate_shareable_catalog import KNOWN_LINEAGE_GAPS, SOURCE_DB_NAME, generate
 from load_synthetic_catalog import INGEST_PATH, assert_safe_target, count_mismatches, create_constraint, parse_steps
@@ -175,23 +175,45 @@ def test_refuses_a_populated_database_without_the_lsc_catalog():
 
 
 class _CommunityLoader:
-    def __init__(self):
-        self.ran = []
+    """Neo4j 5 Community refuses a node key with a ClientError; 2025.06 Community with a DatabaseError
+    (Neo.DatabaseError.Schema.ConstraintCreationFailed)."""
+
+    def __init__(self, error=ClientError):
+        self.ran, self.error = [], error
 
     def run_write(self, query):
         if "NODE KEY" in query:
-            raise ClientError("Node key constraint requires Neo4j Enterprise Edition")
+            raise self.error("Node key constraint requires Neo4j Enterprise Edition")
         self.ran.append(query)
 
 
-def test_every_constraint_falls_back_to_unique_on_community(steps):
-    loader = _CommunityLoader()
+@pytest.mark.parametrize("error", [ClientError, DatabaseError])
+def test_every_constraint_falls_back_to_unique_on_community(steps, error):
+    loader = _CommunityLoader(error)
     constraints = [s.query for s in steps if s.kind == "constraint"]
     for query in constraints:
         create_constraint(loader, query)
     assert len(loader.ran) == len(constraints)
     assert all("IS UNIQUE" in q and "NODE KEY" not in q for q in loader.ran)
     assert any("(n.type, n.scope) IS UNIQUE" in q for q in loader.ran)
+
+
+class _FailingLoader:
+    def __init__(self, error):
+        self.ran, self.error = [], error
+
+    def run_write(self, query):
+        self.ran.append(query)
+        raise self.error("Unable to create Constraint: Node(1) with label `Server` must have the property `serverName`")
+
+
+@pytest.mark.parametrize("error", [ClientError, DatabaseError])
+def test_a_node_key_failure_that_is_not_the_edition_stops_the_load(steps, error):
+    query = next(s.query for s in steps if s.kind == "constraint")
+    loader = _FailingLoader(error)
+    with pytest.raises(error):
+        create_constraint(loader, query)
+    assert loader.ran == [query]   # no IS UNIQUE retry
 
 
 def test_accepts_an_empty_database_or_an_lsc_reload():
