@@ -72,7 +72,7 @@ def test_every_tracked_test_file_is_run():
     files = [f for f in files if not f.startswith("skills" + os.sep)]
     # data_lineage/ is a separate catalog with its own dependencies and its own tests (data_lineage/README.md);
     # the ontology's check does not run them.
-    files = [f for f in files if not f.startswith("data_lineage/")]
+    files = [f for f in files if not f.replace(os.sep, "/").startswith("data_lineage/")]
     text = _commands()
     missing = [f for f in files if f not in text]  # by its full path, in a command, not in a comment
     assert files and not missing, missing
