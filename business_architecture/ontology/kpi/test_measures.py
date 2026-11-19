@@ -303,6 +303,9 @@ def name_tokens(text):
     return set(re.findall(r"[a-z]+", text.lower()))
 
 
+LOCK_HASH = re.compile(r"\b(?:sha(?:1|256|384|512)-[A-Za-z0-9+/=]{20,}|sha256:[0-9a-f]{64})")
+
+
 class Privacy(unittest.TestCase):
     def test_no_person_name_from_the_measure_list_is_in_the_repo(self):
         # EPM-DEC-001-0040: personas stay, the people's names do not. Every tracked file is
@@ -322,7 +325,10 @@ class Privacy(unittest.TestCase):
             if b"\0" in data:
                 continue
             checked += 1
-            hits = {t for t in name_tokens(data.decode("utf-8", errors="replace"))
+            text = data.decode("utf-8", errors="replace")
+            # A lockfile's integrity hashes can spell a name by chance; only the hashes are left out of the scan.
+            text = LOCK_HASH.sub(" ", text)
+            hits = {t for t in name_tokens(text)
                     if hashlib.sha256(t.encode()).hexdigest()[:16] in NAME_HASHES}
             self.assertEqual(hits, set(), os.path.relpath(path, bm.REPO))
         self.assertGreater(checked, 600)

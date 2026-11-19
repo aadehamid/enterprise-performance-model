@@ -2,14 +2,6 @@
 
 These items were found while reconstructing this catalog and opening the pull request. They are still open. The reconstructed files were left as they are.
 
-## The ontology check does not run this catalog's tests
-
-`scripts/test_check_script.py` runs `test_every_tracked_test_file_is_run`. That test requires every tracked `test_*.py` path to appear in `scripts/check.sh`. Twelve test files under `data_lineage/` are tracked, and `scripts/check.sh` does not list them, so the test fails. Those files are this catalog's tests. `scripts/check.sh` was not edited.
-
-## A lockfile hash matches a measure-list name token
-
-`Privacy.test_no_person_name_from_the_measure_list_is_in_the_repo` in `business_architecture/ontology/kpi/test_measures.py` reads every tracked text file for name tokens from the measure list. It matches the letter run `tom` inside two pnpm integrity hashes in `data_lineage/neo4j_text2cypher_fullstack/frontend/pnpm-lock.yaml`. Both hashes belong to `es-object-atoms@1.1.2`, on lines 767 and 2594. The hashes were not edited.
-
 ## The portal accepts every origin and does not authenticate questions
 
 `ALLOWED_ORIGINS` stays a JSON string in `data_lineage/neo4j_text2cypher_fullstack/backend/app/config.py`, `data_lineage/neo4j_text2cypher_fullstack/backend/app/main.py`, and `data_lineage/neo4j_text2cypher_fullstack/backend/app/api/routes.py`. CORS and the `/ask` referer check treat that string as characters, so a `*` allows every origin. `POST /ask` has no authentication.
