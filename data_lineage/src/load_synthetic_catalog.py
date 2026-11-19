@@ -17,7 +17,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from neo4j.exceptions import ClientError
+from neo4j.exceptions import ClientError, DatabaseError
 
 from neo4j_loader import Neo4jLoader
 
@@ -103,7 +103,7 @@ def community_constraint(query: str) -> str:
 def create_constraint(loader: Neo4jLoader, query: str) -> None:
     try:
         loader.run_write(query)
-    except ClientError:
+    except (ClientError, DatabaseError):   # 2025.06 Community raises DatabaseError (ConstraintCreationFailed)
         if "IS NODE KEY" not in query:
             raise
         loader.run_write(community_constraint(query))

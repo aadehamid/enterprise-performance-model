@@ -6,7 +6,7 @@ from pathlib import Path
 
 import duckdb
 import pytest
-from neo4j.exceptions import ClientError
+from neo4j.exceptions import ClientError, DatabaseError
 
 from generate_shareable_catalog import KNOWN_LINEAGE_GAPS, SOURCE_DB_NAME, generate
 from load_synthetic_catalog import INGEST_PATH, assert_safe_target, count_mismatches, create_constraint, parse_steps
@@ -175,17 +175,21 @@ def test_refuses_a_populated_database_without_the_lsc_catalog():
 
 
 class _CommunityLoader:
-    def __init__(self):
-        self.ran = []
+    """Neo4j 5 Community refuses a node key with a ClientError; 2025.06 Community with a DatabaseError
+    (Neo.DatabaseError.Schema.ConstraintCreationFailed)."""
+
+    def __init__(self, error=ClientError):
+        self.ran, self.error = [], error
 
     def run_write(self, query):
         if "NODE KEY" in query:
-            raise ClientError("Node key constraint requires Neo4j Enterprise Edition")
+            raise self.error("Node key constraint requires Neo4j Enterprise Edition")
         self.ran.append(query)
 
 
-def test_every_constraint_falls_back_to_unique_on_community(steps):
-    loader = _CommunityLoader()
+@pytest.mark.parametrize("error", [ClientError, DatabaseError])
+def test_every_constraint_falls_back_to_unique_on_community(steps, error):
+    loader = _CommunityLoader(error)
     constraints = [s.query for s in steps if s.kind == "constraint"]
     for query in constraints:
         create_constraint(loader, query)
