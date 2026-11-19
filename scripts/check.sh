@@ -156,6 +156,19 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
   business_architecture/ontology/projection/test_rebuild_stores.py \
   business_architecture/ontology/projection/test_logical_models.py \
   business_architecture/ontology/projection/skill-run/test_skill_run.py
+# data_lineage/ is a separate project with its own dependencies (data_lineage/pyproject.toml and uv.lock), so its
+# tests run in its own environment. The tests that read the live graph skip when
+# data_lineage/neo4j_instance_credentials.env is absent. The web app's backend pins its packages in requirements.txt.
+run uv run -q --project data_lineage --frozen --group dev python -m pytest -q -p no:cacheprovider \
+  data_lineage/tests/test_excel_cells.py data_lineage/tests/test_export_shareable_zip.py \
+  data_lineage/tests/test_lineage_parsing.py data_lineage/tests/test_loader_queries.py \
+  data_lineage/tests/test_medallion.py data_lineage/tests/test_query_database.py \
+  data_lineage/tests/test_synthetic_catalog.py data_lineage/tests/test_write_batches.py
+run uv run -q --no-project --with-requirements data_lineage/neo4j_text2cypher_fullstack/backend/requirements.txt \
+  --with pytest python -m pytest -q -p no:cacheprovider \
+  data_lineage/neo4j_text2cypher_fullstack/backend/tests/test_ask.py \
+  data_lineage/neo4j_text2cypher_fullstack/backend/tests/test_expand_and_feedback.py \
+  data_lineage/neo4j_text2cypher_fullstack/backend/tests/test_intent_gate.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # EPM-DEC-001-0049: the repo names the decision owner by role, never by name or account.
