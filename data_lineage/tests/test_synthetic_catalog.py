@@ -198,6 +198,24 @@ def test_every_constraint_falls_back_to_unique_on_community(steps, error):
     assert any("(n.type, n.scope) IS UNIQUE" in q for q in loader.ran)
 
 
+class _FailingLoader:
+    def __init__(self, error):
+        self.ran, self.error = [], error
+
+    def run_write(self, query):
+        self.ran.append(query)
+        raise self.error("Unable to create Constraint: Node(1) with label `Server` must have the property `serverName`")
+
+
+@pytest.mark.parametrize("error", [ClientError, DatabaseError])
+def test_a_node_key_failure_that_is_not_the_edition_stops_the_load(steps, error):
+    query = next(s.query for s in steps if s.kind == "constraint")
+    loader = _FailingLoader(error)
+    with pytest.raises(error):
+        create_constraint(loader, query)
+    assert loader.ran == [query]   # no IS UNIQUE retry
+
+
 def test_accepts_an_empty_database_or_an_lsc_reload():
     assert_safe_target(_FakeLoader(total=0, marker=0))
     assert_safe_target(_FakeLoader(total=44885, marker=1))
